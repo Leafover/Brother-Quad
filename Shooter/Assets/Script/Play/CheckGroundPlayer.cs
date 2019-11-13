@@ -8,8 +8,23 @@ public class CheckGroundPlayer : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            // PlayerController.playerController.playerState = PlayerController.PlayerState.Idle;
-            PlayerController.playerController.isGround = true;
+            PlayerController.playerController.DetectGround();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            PlayerController.playerController.isGround = false;
+            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
+            {
+                PlayerController.playerController.isfalldow = false;
+            }
+            else
+            {
+                PlayerController.playerController.isfalldow = true;
+                PlayerController.playerController.playerState = PlayerController.PlayerState.Jump;
+            }
         }
     }
 }

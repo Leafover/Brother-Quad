@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
     public void StopMove()
     {
       //  PlayerController.playerController.speedmove = 0;
-        if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump || PlayerController.playerController.playerState == PlayerController.PlayerState.WaitSit)
+        if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
             return;
         if (PlayerController.playerController.playerState != PlayerController.PlayerState.Idle)
         {
@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour
                     break;
             }
            PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
-            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump || PlayerController.playerController.playerState == PlayerController.PlayerState.WaitSit)
+            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
                 return;
             PlayerController.playerController.playerState = h > 0 ? PlayerController.PlayerState.RunRight : PlayerController.PlayerState.RunLeft;
 
@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
         {
 
-            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump || PlayerController.playerController.playerState == PlayerController.PlayerState.WaitSit)
+            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
                 return;
             PlayerController.playerController.playerState = PlayerController.PlayerState.Sit;
         }
