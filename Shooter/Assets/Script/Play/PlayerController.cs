@@ -5,12 +5,24 @@ using System;
 using Spine.Unity;
 using Spine;
 
+[System.Serializable]
+public class AnimReferenAssetControlMove
+{
+    public AnimationReferenceAsset runForwardAnim, idleAnim, waitstandAnim, jumpAnim, falldownAnim, sitAnim, runBackAnim;
+}
+
 public class PlayerController : MonoBehaviour
 {
 
+    public AnimationReferenceAsset aimTargetAnim;
+
+    public AnimReferenAssetControlMove arac = new AnimReferenAssetControlMove();
+    AnimationReferenceAsset currentAnim;
+
+    [HideInInspector]
+    public bool dirMove;
     [HideInInspector]
     public float speedmove;
-    Vector2 dirMove;
     public Rigidbody2D rid;
     public Transform targetPos;
     public static PlayerController playerController;
@@ -19,79 +31,35 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, RunLeft, RunRight, Sit, Jump
+        Idle, Run, Sit, Jump, WaitStand
     }
     public PlayerState playerState = PlayerState.Idle;
 
     public SkeletonAnimation skeletonAnimation;
-
-    [Serializable]
-    public class StringAnimationState
-    {
-        [SpineAnimation]
-        public string idle;
-        [SpineAnimation]
-        public string run;
-        [SpineAnimation]
-        public string sit;
-        [SpineAnimation]
-        public string jump;
-        [SpineAnimation]
-        public string waitSit;
-        [SpineAnimation]
-        public string falldown;
-
-    }
-    public StringAnimationState stringAnimationState;
-    int idle_Hash;
-    int jump_Hash;
-    int run_Hash;
-    int sit_Hash;
-    int waitsit_Hash;
-    int falldown_Hash;
-    int currentAnimation_Hash;
 
 
     Bone boneOrginGun;
 
     public IEnumerator Move()
     {
-        //if (!playerHealth.isDead)
-        //{
         rid.velocity = new Vector2(speedmove, rid.velocity.y);
         yield return new WaitForEndOfFrame();
         StartCoroutine(Move());
-        //}
-        //else
-        //{
-        //    currentSpeed = 0f;
-        //    rgb.velocity = Vector2.zero;
-        //    StopAllCoroutines();
-        //}
     }
 
     public float forceJump;
     public float timeJump;
     private float force;
-    //private void Update()
-    //{
-    //    if(rid.velocity.y < 0 && isGround)
-    //    {
-    //        if(playerState == PlayerState.Jump)
-    //        {
-    //            playerState = PlayerState.Idle;
-    //        }
-    //    }
-    //}
+
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
             return;
-        if ((playerState != PlayerState.Jump)/* || (playerState == PlayerState.Jump && !candoublejump)*/)
+        if ((playerState != PlayerState.Jump))
             StartCoroutine(Jump());
         else
         {
-            if(candoublejump)
+            if (candoublejump)
             {
                 Debug.Log("double jump");
                 candoublejump = false;
@@ -111,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Jump()
     {
+        skeletonAnimation.ClearState();
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
         AnimJump();
@@ -127,14 +96,7 @@ public class PlayerController : MonoBehaviour
         }
 
         candoublejump = true;
-        Debug.Log("zo");
-
-        //  rid.gravityScale = 1.5f;
-        //if (currentAnimation != jumpDown_Hash)
-        //{
-        //    animationState.SetAnimation(0, stringAnimationState.jump_down, true);
-        //    currentAnimation = jumpDown_Hash;
-        //}
+     //   Debug.Log("zo");
 
     }
 
@@ -146,7 +108,8 @@ public class PlayerController : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.Idle:
-                AnimIdle();
+                 AnimIdle();
+              //  AnimSit();
                 break;
             case PlayerState.Sit:
                 AnimSit();
@@ -168,11 +131,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 break;
-            case PlayerState.RunLeft:
-                AnimRun();
-                break;
-
-            case PlayerState.RunRight:
+            case PlayerState.Run:
                 AnimRun();
                 break;
 
@@ -188,29 +147,16 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        idle_Hash = Animator.StringToHash(stringAnimationState.idle);
-        run_Hash = Animator.StringToHash(stringAnimationState.run);
-        sit_Hash = Animator.StringToHash(stringAnimationState.sit);
-        jump_Hash = Animator.StringToHash(stringAnimationState.jump);
-        waitsit_Hash = Animator.StringToHash(stringAnimationState.waitSit);
-        falldown_Hash = Animator.StringToHash(stringAnimationState.falldown);
-        currentAnimation_Hash = idle_Hash;
 
-        //  boneOrginGun = skeletonAnimation.skeleton.FindBone("aim-constraint-target");
-
-        //  Debug.LogError(":" + boneOrginGun);
-
-        //   Debug.Log("flip:-------------" + FlipX);
 
         StartCoroutine(Move());
 
-        skeletonAnimation.state.Complete += OnComplete;
+        skeletonAnimation.AnimationState.Complete += OnComplete;
 
     }
     private void OnComplete(TrackEntry trackEntry)
     {
-
-        if (/*trackEntry.Animation.Name.Equals(stringAnimationState.waitSit)*/ currentAnimation_Hash == waitsit_Hash)
+        if (trackEntry.Animation.Name.Equals(arac.waitstandAnim.name))
         {
             isWaitStand = false;
         }
@@ -220,7 +166,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetTargetFromDirection(Vector2 direction)
     {
         direction.Normalize();
-        return direction *= 3f;
+        return direction;
     }
 
 
@@ -231,20 +177,18 @@ public class PlayerController : MonoBehaviour
     }
     void AnimWaitStand()
     {
-        if (currentAnimation_Hash != waitsit_Hash)
+        if (currentAnim != arac.waitstandAnim)
         {
-            skeletonAnimation.state.SetAnimation(0, stringAnimationState.waitSit, false);
-            currentAnimation_Hash = waitsit_Hash;
-
-            // Debug.LogError("zoooooooo");
+            skeletonAnimation.AnimationState.SetAnimation(0, arac.waitstandAnim, false);
+            currentAnim = arac.waitstandAnim;
         }
     }
     void AnimFallDow()
     {
-        if (currentAnimation_Hash != falldown_Hash)
+        if (currentAnim != arac.falldownAnim)
         {
-            skeletonAnimation.state.SetAnimation(0, stringAnimationState.falldown, true);
-            currentAnimation_Hash = falldown_Hash;
+            skeletonAnimation.AnimationState.SetAnimation(0, arac.falldownAnim, false);
+            currentAnim = arac.falldownAnim;
         }
     }
     void AnimJump()
@@ -255,21 +199,21 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (currentAnimation_Hash != jump_Hash)
+            if (currentAnim != arac.jumpAnim)
             {
-                skeletonAnimation.state.SetAnimation(0, stringAnimationState.jump, true);
-                currentAnimation_Hash = jump_Hash;
+                skeletonAnimation.AnimationState.SetAnimation(0, arac.jumpAnim, true);
+                currentAnim = arac.jumpAnim;
             }
         }
     }
     void AnimSit()
     {
-        if (currentAnimation_Hash != sit_Hash)
+        if (currentAnim != arac.sitAnim)
         {
-            skeletonAnimation.state.SetAnimation(0, stringAnimationState.sit, true);
-            currentAnimation_Hash = sit_Hash;
+            skeletonAnimation.AnimationState.SetAnimation(0, arac.sitAnim, true);
+            currentAnim = arac.sitAnim;
+            speedmove = 0;
         }
-        speedmove = 0;
     }
 
     void AnimRun()
@@ -279,12 +223,23 @@ public class PlayerController : MonoBehaviour
             AnimFallDow();
             return;
         }
-        if (currentAnimation_Hash != run_Hash)
+
+        if (dirMove == FlipX)
         {
-            skeletonAnimation.state.SetAnimation(0, stringAnimationState.run, true);
-            currentAnimation_Hash = run_Hash;
+            if (currentAnim != arac.runForwardAnim)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(0, arac.runForwardAnim, true);
+                currentAnim = arac.runForwardAnim;
+            }
         }
-        speedmove = FlipX ? -1.5f : 1.5f;
+        else
+        {
+            if (currentAnim != arac.runBackAnim)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(0, arac.runBackAnim, true);
+                currentAnim = arac.runBackAnim;
+            }
+        }
     }
 
     void AnimIdle()
@@ -299,25 +254,39 @@ public class PlayerController : MonoBehaviour
         if (isWaitStand)
         {
             AnimWaitStand();
-            //    Debug.Log("waitstand");
         }
         else
         {
-            if (currentAnimation_Hash != idle_Hash)
+            if (currentAnim != arac.idleAnim)
             {
-                skeletonAnimation.state.SetAnimation(0, stringAnimationState.idle, true);
-                currentAnimation_Hash = idle_Hash;
+                skeletonAnimation.AnimationState.SetAnimation(0, arac.idleAnim, false);
+                currentAnim = arac.idleAnim;
+                speedmove = 0;
+                //  Debug.Log("zo day");
             }
         }
-        speedmove = 0;
     }
 
     public void ShootDown()
     {
-        isShooting = true;
+        if (!isShooting)
+        {
+            isShooting = true;
+        }
+        if (playerState != PlayerState.Jump)
+        {
+            skeletonAnimation.AnimationState.SetAnimation(2, aimTargetAnim, false);
+        }
     }
     public void ShootUp()
     {
-        isShooting = false;
+        if (isShooting)
+        {
+            isShooting = false;
+            //      skeletonAnimation.AnimationState.ClearTrack(2);
+               skeletonAnimation.ClearState();
+          //  skeletonAnimation.AnimationState.ClearTracks();
+        }
+
     }
 }

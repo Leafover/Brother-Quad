@@ -612,6 +612,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e0e810290c789499d46e6419d173be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aimTargetAnim: {fileID: 11400000, guid: 9f3a8869edeb9d24296300d62eccb112, type: 2}
+  arac:
+    runForwardAnim: {fileID: 11400000, guid: 9e216aaa9dc93f544a4b64caa56de881, type: 2}
+    idleAnim: {fileID: 11400000, guid: 4f9bcf89aed54554a88b5d6da94e5f56, type: 2}
+    waitstandAnim: {fileID: 11400000, guid: 9943d66b397b4bd4082e44422ff2a9db, type: 2}
+    jumpAnim: {fileID: 11400000, guid: b0e2fbe001d8ead4899f9afa532e8f63, type: 2}
+    falldownAnim: {fileID: 11400000, guid: 6704240cd380600419a5012734e7d6a2, type: 2}
+    sitAnim: {fileID: 11400000, guid: a614615b4c4eea347983255e7c534f12, type: 2}
+    runBackAnim: {fileID: 11400000, guid: f4a259154171bfa4398811ede78cec55, type: 2}
+  dirMove: 0
   speedmove: 0
   rid: {fileID: 1006835895}
   targetPos: {fileID: 1243483089}
@@ -623,13 +633,6 @@ MonoBehaviour:
   candoublejump: 0
   playerState: 0
   skeletonAnimation: {fileID: 1865721856}
-  stringAnimationState:
-    idle: idle
-    run: run-1
-    sit: idle-walk
-    jump: jump1-2
-    waitSit: jump1-3
-    falldown: Jump01_M4A1
   forceJump: 25
   timeJump: 0.8
 --- !u!4 &1006835893
@@ -1334,11 +1337,11 @@ MonoBehaviour:
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 0
+  immutableTriangles: 1
   pmaVertexColors: 1
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
-  singleSubmesh: 0
+  singleSubmesh: 1
   addNormals: 0
   calculateTangents: 0
   logErrors: 0

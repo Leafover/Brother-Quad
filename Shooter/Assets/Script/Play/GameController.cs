@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class GetReferenAnimAssetForPlayer
+{
+
+}
+
 public class GameController : MonoBehaviour
 {
+
+
+
+
     public UltimateJoystick joystickMove, joystickShot;
     public static GameController gameController;
 
@@ -29,13 +39,13 @@ public class GameController : MonoBehaviour
     }
     public void StopMove()
     {
-      //  PlayerController.playerController.speedmove = 0;
+        //  PlayerController.playerController.speedmove = 0;
         if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
             return;
         if (PlayerController.playerController.playerState != PlayerController.PlayerState.Idle)
         {
             PlayerController.playerController.playerState = PlayerController.PlayerState.Idle;
-            if(PlayerController.playerController.isfalldow)
+            if (PlayerController.playerController.isfalldow)
             {
                 PlayerController.playerController.isWaitStand = true;
             }
@@ -51,22 +61,9 @@ public class GameController : MonoBehaviour
         var h = movePosition.x;
         if (angle <= 135f && angle >= -135.5f)
         {
-            switch (PlayerController.playerController.playerState)
-            {
-                case PlayerController.PlayerState.RunRight:
-                    if (PlayerController.playerController.FlipX)
-                    {
-                        PlayerController.playerController.FlipX = false;
-                    }
-                    break;
-                case PlayerController.PlayerState.RunLeft:
-                    if (!PlayerController.playerController.FlipX)
-                    {
-                        PlayerController.playerController.FlipX = true;
-                    }
-                    break;
-            }
-            PlayerController.playerController.playerState = h > 0 ? PlayerController.PlayerState.RunRight : PlayerController.PlayerState.RunLeft;
+            PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
+            PlayerController.playerController.dirMove = h > 0 ? true : false;
+            PlayerController.playerController.playerState = PlayerController.PlayerState.Run;
         }
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
         {
@@ -85,26 +82,12 @@ public class GameController : MonoBehaviour
         var h = axis.x;
         if (angle <= 135f && angle >= -135.5f)
         {
-
-            switch (PlayerController.playerController.playerState)
-            {
-                case PlayerController.PlayerState.RunRight:
-                    if (PlayerController.playerController.FlipX)
-                    {
-                        PlayerController.playerController.FlipX = false;
-                    }
-                    break;
-                case PlayerController.PlayerState.RunLeft:
-                    if (!PlayerController.playerController.FlipX)
-                    {
-                        PlayerController.playerController.FlipX = true;
-                    }
-                    break;
-            }
-           PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
+            PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
+            PlayerController.playerController.dirMove = h > 0 ? false : true;
             if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
                 return;
-            PlayerController.playerController.playerState = h > 0 ? PlayerController.PlayerState.RunRight : PlayerController.PlayerState.RunLeft;
+            PlayerController.playerController.playerState = PlayerController.PlayerState.Run;
+
 
         }
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
@@ -121,10 +104,7 @@ public class GameController : MonoBehaviour
 
         if (joystick.GetJoystickState())
         {
-            if (!PlayerController.playerController.isShooting)
-            {
-                PlayerController.playerController.ShootDown();
-            }
+            PlayerController.playerController.ShootDown();
             PlayerController.playerController.isBouderJoystick = joystick.GetDistance() >= 0.9f;
             if (PlayerController.playerController.isBouderJoystick)
             {
@@ -136,16 +116,14 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (PlayerController.playerController.isShooting)
-            {
-                PlayerController.playerController.ShootUp();
-                Debug.LogError("stop shot");
-            }
+            PlayerController.playerController.ShootUp();
+
         }
     }
 
     private void Update()
     {
+
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
         PlayerController.playerController.OnUpdate();
@@ -153,6 +131,7 @@ public class GameController : MonoBehaviour
         {
             PlayerController.playerController.TryJump();
         }
+
     }
 
 }
