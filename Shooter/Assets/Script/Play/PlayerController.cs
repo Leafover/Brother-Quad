@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public Transform targetPos;
     public static PlayerController playerController;
     [HideInInspector]
-    public bool isShooting, isBouderJoystick, isWaitStand, isGround,isfalldow,jumpwhenfalldow;
+    public bool isShooting, isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
+
     public enum PlayerState
     {
         Idle, RunLeft, RunRight, Sit, Jump
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState == PlayerState.Sit)
             return;
-        if ((playerState != PlayerState.Jump && !isfalldow) || (playerState == PlayerState.Jump && isfalldow && !jumpwhenfalldow))
+        if ((playerState != PlayerState.Jump)/* || (playerState == PlayerState.Jump && !candoublejump)*/)
             StartCoroutine(Jump());
 
     }
@@ -94,18 +95,13 @@ public class PlayerController : MonoBehaviour
     {
         isGround = true;
         isfalldow = false;
-        jumpwhenfalldow = false;
     }
 
     private IEnumerator Jump()
     {
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
-
-
         AnimJump();
-
-        jumpwhenfalldow = true;
 
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
@@ -116,6 +112,9 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
+
+
+
         //  rid.gravityScale = 1.5f;
         //if (currentAnimation != jumpDown_Hash)
         //{
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     void SetAnim()
     {
-      //  Debug.LogError("------------:" + rid.velocity.y);
+        //  Debug.LogError("------------:" + rid.velocity.y);
         switch (playerState)
         {
             case PlayerState.Idle:
@@ -223,10 +222,10 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.state.SetAnimation(0, stringAnimationState.waitSit, false);
             currentAnimation_Hash = waitsit_Hash;
 
-           // Debug.LogError("zoooooooo");
+            // Debug.LogError("zoooooooo");
         }
     }
-    void AnimFallDown()
+    void AnimFallDow()
     {
         if (currentAnimation_Hash != falldown_Hash)
         {
@@ -238,7 +237,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isfalldow)
         {
-            AnimFallDown();
+            return;
         }
         else
         {
@@ -261,6 +260,11 @@ public class PlayerController : MonoBehaviour
 
     void AnimRun()
     {
+        if (isfalldow)
+        {
+            AnimFallDow();
+            return;
+        }
         if (currentAnimation_Hash != run_Hash)
         {
             skeletonAnimation.state.SetAnimation(0, stringAnimationState.run, true);
@@ -271,10 +275,17 @@ public class PlayerController : MonoBehaviour
 
     void AnimIdle()
     {
+
+        if (isfalldow)
+        {
+            AnimFallDow();
+            return;
+        }
+
         if (isWaitStand)
         {
             AnimWaitStand();
-            Debug.Log("waitstand");
+            //    Debug.Log("waitstand");
         }
         else
         {

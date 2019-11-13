@@ -35,6 +35,10 @@ public class GameController : MonoBehaviour
         if (PlayerController.playerController.playerState != PlayerController.PlayerState.Idle)
         {
             PlayerController.playerController.playerState = PlayerController.PlayerState.Idle;
+            if(PlayerController.playerController.isfalldow)
+            {
+                PlayerController.playerController.isWaitStand = true;
+            }
         }
     }
 

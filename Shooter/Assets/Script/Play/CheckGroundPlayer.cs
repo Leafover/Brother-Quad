@@ -23,7 +23,6 @@ public class CheckGroundPlayer : MonoBehaviour
             else
             {
                 PlayerController.playerController.isfalldow = true;
-                PlayerController.playerController.playerState = PlayerController.PlayerState.Jump;
             }
         }
     }
