@@ -89,13 +89,22 @@ public class PlayerController : MonoBehaviour
             return;
         if ((playerState != PlayerState.Jump)/* || (playerState == PlayerState.Jump && !candoublejump)*/)
             StartCoroutine(Jump());
+        else
+        {
+            if(candoublejump)
+            {
+                Debug.Log("double jump");
+            }
+        }
 
     }
     public void DetectGround()
     {
         isGround = true;
         isfalldow = false;
+        candoublejump = false;
     }
+    int countJump;
 
     private IEnumerator Jump()
     {
@@ -103,6 +112,7 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Jump;
         AnimJump();
 
+        
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
             if (playerState == PlayerState.Jump)
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
-
+        candoublejump = true;
 
 
         //  rid.gravityScale = 1.5f;
