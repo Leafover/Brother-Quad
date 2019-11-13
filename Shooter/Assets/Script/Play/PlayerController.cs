@@ -94,6 +94,9 @@ public class PlayerController : MonoBehaviour
             if(candoublejump)
             {
                 Debug.Log("double jump");
+                candoublejump = false;
+                force = rid.velocity.y + 6f;
+                rid.velocity = new Vector2(rid.velocity.x, force);
             }
         }
 
@@ -111,8 +114,8 @@ public class PlayerController : MonoBehaviour
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
         AnimJump();
+        candoublejump = true;
 
-        
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
             if (playerState == PlayerState.Jump)
@@ -122,8 +125,9 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
-        candoublejump = true;
 
+        candoublejump = true;
+        Debug.Log("zo");
 
         //  rid.gravityScale = 1.5f;
         //if (currentAnimation != jumpDown_Hash)
