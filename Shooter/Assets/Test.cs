@@ -30,7 +30,8 @@ public class Test : MonoBehaviour
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();// goi thang nay de lenh setskin chac chan duoc chay
      // cach khac de set skin;
         skeletonAnimation.Skeleton.SetSkin(skin);
-
+        if (boneTarget == null)
+            Debug.Log("null");
         // khi mà thay đổi skin thì mấy cái anim cũng phải chạy tương ứng à
     }
 

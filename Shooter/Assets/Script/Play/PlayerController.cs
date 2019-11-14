@@ -13,6 +13,8 @@ public class AnimReferenAssetControlMove
 
 public class PlayerController : MonoBehaviour
 {
+     Bone boneBarrelGun,boneOriginGun;
+
 
     #region chay nhay ngoi
     public AnimReferenAssetControlMove arac = new AnimReferenAssetControlMove();
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public SkeletonAnimation skeletonAnimation;
 
 
-    Bone boneOrginGun;
+
 
 
     [HideInInspector]
@@ -179,7 +181,7 @@ public class PlayerController : MonoBehaviour
     {
         playerController = this;
     }
-    Bone boneOriginGun;
+
     void SetBox(Vector2 size, Vector2 offset)
     {
         if (box.offset != offset)
@@ -187,11 +189,24 @@ public class PlayerController : MonoBehaviour
         if (box.size != size)
             box.size = size;
     }
+    [SpineBone]
+    public string strBoneBarrelGun,strBoneOriginGun;
     private void Start()
     {
         // allAnim.AnimationState.GetCurrent(0).Animation.duration;
+        Debug.LogError(skeletonAnimation.valid);
+        boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strBoneBarrelGun);
+        boneOriginGun = skeletonAnimation.Skeleton.FindBone(strBoneOriginGun);
+        //   skeletonAnimation.Skeleton.SetBonesToSetupPose();
 
-        boneOriginGun = skeletonAnimation.Skeleton.FindBone("aim-constraint-target");
+        if (boneBarrelGun == null)
+        {
+            Debug.LogError("null bone");
+        }
+        else
+        {
+            Debug.LogError("not null bone");
+        }
 
         SetBox(sizeBox, offsetBox);
         StartCoroutine(Move());
@@ -199,12 +214,23 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.Complete += OnComplete;
         skeletonAnimation.AnimationState.Event += HandleEvent;
 
+        //for(int i = 0; i < skeletonAnimation.Skeleton.Bones.Items.Length; i ++)
+        //{
+        //    Debug.Log(skeletonAnimation.Skeleton.Bones.Items[i]);
+        //}
     }
+
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
     {
         if (trackEntry.Animation.Name.Equals(fireAnim.name))
         {
-            Debug.Log("Shot Shot Shot");
+            GameObject bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
+            Vector2 dirBullet = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) - boneOriginGun.GetWorldPosition(skeletonAnimation.transform);
+            float angle = Mathf.Atan2(dirBullet.y,dirBullet.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            bullet.transform.rotation = rotation;
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bullet.SetActive(true);
         }
     }
     private void OnComplete(TrackEntry trackEntry)
@@ -217,8 +243,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetOriginGun()
     {
         var vt2 = new Vector2();
-        vt2.x = boneOriginGun.WorldX + transform.position.x;
-        vt2.y = boneOriginGun.WorldY + transform.position.y;
+        vt2 = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         return vt2;
     }
     public LayerMask layerTarget;
@@ -358,6 +383,7 @@ public class PlayerController : MonoBehaviour
         if (playerState != PlayerState.Jump)
         {
             skeletonAnimation.AnimationState.SetAnimation(2, aimTargetAnim, false);
+         //   Debug.Log("wtf???????????????");
         }
     }
     public void ShootUp()
