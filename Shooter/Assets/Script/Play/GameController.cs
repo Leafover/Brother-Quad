@@ -98,26 +98,28 @@ public class GameController : MonoBehaviour
             PlayerController.playerController.playerState = PlayerController.PlayerState.Sit;
         }
     }
+    Vector2 target;
+    Vector3 vt3 = new Vector3();
     private void JoystickShooting(UltimateJoystick joystick)
     {
         shootPosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
 
         if (joystick.GetJoystickState())
         {
-            PlayerController.playerController.ShootDown();
+            TryShot();
             PlayerController.playerController.isBouderJoystick = joystick.GetDistance() >= 0.9f;
             if (PlayerController.playerController.isBouderJoystick)
             {
                 PlayerController.playerController.FlipX = shootPosition.x < 0;
 
-                var target = PlayerController.playerController.GetTargetFromDirection(shootPosition);
+                target = PlayerController.playerController.GetTargetFromDirection(shootPosition);
                 PlayerController.playerController.targetPos.position = Vector2.MoveTowards(PlayerController.playerController.targetPos.position, target, Time.deltaTime * 20);
+
             }
         }
         else
         {
-            PlayerController.playerController.ShootUp();
-
+            StopShot();
         }
     }
 
@@ -131,7 +133,21 @@ public class GameController : MonoBehaviour
         {
             PlayerController.playerController.TryJump();
         }
-
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            PlayerController.playerController.ChangeKnife();
+        }
     }
-
+    public void TryShot()
+    {
+        PlayerController.playerController.ShootDown();
+    }
+    public void StopShot()
+    {
+        PlayerController.playerController.ShootUp();
+    }
+    public void TryJump()
+    {
+        PlayerController.playerController.TryJump();
+    }
 }

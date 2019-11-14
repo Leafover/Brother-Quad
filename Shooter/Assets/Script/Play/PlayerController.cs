@@ -14,20 +14,22 @@ public class AnimReferenAssetControlMove
 public class PlayerController : MonoBehaviour
 {
 
-    public AnimationReferenceAsset aimTargetAnim;
-
+    #region chay nhay ngoi
     public AnimReferenAssetControlMove arac = new AnimReferenAssetControlMove();
     AnimationReferenceAsset currentAnim;
+    #endregion
 
-    [HideInInspector]
-    public bool dirMove;
-    [HideInInspector]
-    public float speedmove;
+    float timePreviousAttack;
+    public float timedelayAttackGun,timedelayAttackKnife;
+
+    public AnimationReferenceAsset aimTargetAnim,fireAnim,knifeAnim;
+
+    bool isKnife;
+
     public Rigidbody2D rid;
     public Transform targetPos;
     public static PlayerController playerController;
-    [HideInInspector]
-    public bool isShooting, isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
+
 
     public enum PlayerState
     {
@@ -35,10 +37,20 @@ public class PlayerController : MonoBehaviour
     }
     public PlayerState playerState = PlayerState.Idle;
 
+
     public SkeletonAnimation skeletonAnimation;
 
 
     Bone boneOrginGun;
+
+
+    [HideInInspector]
+    public bool dirMove;
+    [HideInInspector]
+    public float speedmove;
+    [HideInInspector]
+    public bool isShooting, isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
+
 
     public IEnumerator Move()
     {
@@ -96,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
 
         candoublejump = true;
-     //   Debug.Log("zo");
+        //   Debug.Log("zo");
 
     }
 
@@ -108,8 +120,8 @@ public class PlayerController : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.Idle:
-                 AnimIdle();
-              //  AnimSit();
+                AnimIdle();
+                //  AnimSit();
                 break;
             case PlayerState.Sit:
                 AnimSit();
@@ -145,10 +157,12 @@ public class PlayerController : MonoBehaviour
     {
         playerController = this;
     }
+    Bone boneOriginGun;
     private void Start()
     {
+       // allAnim.AnimationState.GetCurrent(0).Animation.duration;
 
-
+        boneOriginGun = skeletonAnimation.Skeleton.FindBone("aim-constraint-target");
         StartCoroutine(Move());
 
         skeletonAnimation.AnimationState.Complete += OnComplete;
@@ -161,12 +175,28 @@ public class PlayerController : MonoBehaviour
             isWaitStand = false;
         }
     }
-
-
+    public Vector2 GetOriginGun()
+    {
+        var vt2 = new Vector2();
+        vt2.x = boneOriginGun.WorldX + transform.position.x;
+        vt2.y = boneOriginGun.WorldY + transform.position.y;
+        return vt2;
+    }
+    public LayerMask layerTarget;
     public Vector2 GetTargetFromDirection(Vector2 direction)
     {
+        var target = Vector2.zero;
+        var origin = GetOriginGun();
         direction.Normalize();
-        return direction;
+        var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
+#if UNITY_EDITOR
+        Debug.DrawRay(origin, direction * 1000, Color.red);
+#endif
+        if (hit.collider != null)
+        {
+            target = hit.point;
+        }
+        return target;
     }
 
 
@@ -269,6 +299,26 @@ public class PlayerController : MonoBehaviour
 
     public void ShootDown()
     {
+        //if (!isKnife)
+        //{
+            if (Time.time - timePreviousAttack > timedelayAttackGun)
+            {
+                timePreviousAttack = Time.time;
+                skeletonAnimation.AnimationState.SetAnimation(1, fireAnim, false);
+            }
+        //}
+        //else
+        //{
+        //    if (playerState != PlayerState.Jump)
+        //    {
+        //        if (Time.time - timePreviousAttack > timedelayAttackKnife)
+        //        {
+        //            timePreviousAttack = Time.time;
+        //            skeletonAnimation.AnimationState.SetAnimation(1, knifeAnim, false);
+        //        }
+        //    }
+        //}
+
         if (!isShooting)
         {
             isShooting = true;
@@ -284,9 +334,12 @@ public class PlayerController : MonoBehaviour
         {
             isShooting = false;
             //      skeletonAnimation.AnimationState.ClearTrack(2);
-               skeletonAnimation.ClearState();
-          //  skeletonAnimation.AnimationState.ClearTracks();
+            skeletonAnimation.ClearState();
+            //  skeletonAnimation.AnimationState.ClearTracks();
         }
-
+    }
+    public void ChangeKnife()
+    {
+        isKnife = !isKnife;
     }
 }
