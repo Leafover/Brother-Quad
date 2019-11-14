@@ -20,13 +20,21 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     float timePreviousAttack;
-    public float timedelayAttackGun,timedelayAttackKnife;
+    public float timedelayAttackGun, timedelayAttackKnife;
 
-    public AnimationReferenceAsset aimTargetAnim,fireAnim,knifeAnim;
+    public AnimationReferenceAsset aimTargetAnim, fireAnim/*, knifeAnim*/;
 
     bool isKnife;
 
     public Rigidbody2D rid;
+    public BoxCollider2D box;
+    public Transform foot;
+    public LayerMask lm;
+
+    [SerializeField]
+    Vector2 offsetBox, sizeBox;
+    [SerializeField]
+    Vector2 offsetBoxSit, sizeBoxSit;
     public Transform targetPos;
     public static PlayerController playerController;
 
@@ -83,7 +91,6 @@ public class PlayerController : MonoBehaviour
     }
     public void DetectGround()
     {
-        isGround = true;
         isfalldow = false;
         candoublejump = false;
     }
@@ -106,14 +113,12 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
-
         candoublejump = true;
-        //   Debug.Log("zo");
-
     }
-
-
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.15f);
+    }
     void SetAnim()
     {
         //  Debug.LogError("------------:" + rid.velocity.y);
@@ -151,6 +156,23 @@ public class PlayerController : MonoBehaviour
     }
     public void OnUpdate()
     {
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
+
+        if (!isGround)
+        {
+            if (playerState == PlayerState.Jump)
+            {
+                isfalldow = false;
+            }
+            else
+            {
+                isfalldow = true;
+            }
+        }
+        else
+        {
+            DetectGround();
+        }
         SetAnim();
     }
     private void Awake()
@@ -158,15 +180,32 @@ public class PlayerController : MonoBehaviour
         playerController = this;
     }
     Bone boneOriginGun;
+    void SetBox(Vector2 size, Vector2 offset)
+    {
+        if (box.offset != offset)
+            box.offset = offset;
+        if (box.size != size)
+            box.size = size;
+    }
     private void Start()
     {
-       // allAnim.AnimationState.GetCurrent(0).Animation.duration;
+        // allAnim.AnimationState.GetCurrent(0).Animation.duration;
 
         boneOriginGun = skeletonAnimation.Skeleton.FindBone("aim-constraint-target");
+
+        SetBox(sizeBox, offsetBox);
         StartCoroutine(Move());
 
         skeletonAnimation.AnimationState.Complete += OnComplete;
+        skeletonAnimation.AnimationState.Event += HandleEvent;
 
+    }
+    void HandleEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        if (trackEntry.Animation.Name.Equals(fireAnim.name))
+        {
+            Debug.Log("Shot Shot Shot");
+        }
     }
     private void OnComplete(TrackEntry trackEntry)
     {
@@ -211,6 +250,7 @@ public class PlayerController : MonoBehaviour
         {
             skeletonAnimation.AnimationState.SetAnimation(0, arac.waitstandAnim, false);
             currentAnim = arac.waitstandAnim;
+            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
     void AnimFallDow()
@@ -219,6 +259,7 @@ public class PlayerController : MonoBehaviour
         {
             skeletonAnimation.AnimationState.SetAnimation(0, arac.falldownAnim, false);
             currentAnim = arac.falldownAnim;
+            SetBox(sizeBox, offsetBox);
         }
     }
     void AnimJump()
@@ -233,6 +274,7 @@ public class PlayerController : MonoBehaviour
             {
                 skeletonAnimation.AnimationState.SetAnimation(0, arac.jumpAnim, true);
                 currentAnim = arac.jumpAnim;
+                SetBox(sizeBox, offsetBox);
             }
         }
     }
@@ -243,23 +285,26 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, arac.sitAnim, true);
             currentAnim = arac.sitAnim;
             speedmove = 0;
+            SetBox(sizeBoxSit, offsetBoxSit);
+            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
 
     void AnimRun()
     {
-        if (isfalldow)
+        if (isfalldow && rid.velocity.y != 0)
         {
             AnimFallDow();
             return;
         }
-
         if (dirMove == FlipX)
         {
             if (currentAnim != arac.runForwardAnim)
             {
                 skeletonAnimation.AnimationState.SetAnimation(0, arac.runForwardAnim, true);
                 currentAnim = arac.runForwardAnim;
+                SetBox(sizeBox, offsetBox);
+                SetBox(sizeBoxSit, offsetBoxSit);
             }
         }
         else
@@ -268,19 +313,19 @@ public class PlayerController : MonoBehaviour
             {
                 skeletonAnimation.AnimationState.SetAnimation(0, arac.runBackAnim, true);
                 currentAnim = arac.runBackAnim;
+                SetBox(sizeBox, offsetBox);
+                SetBox(sizeBoxSit, offsetBoxSit);
             }
         }
     }
 
     void AnimIdle()
     {
-
-        if (isfalldow)
+        if (isfalldow && rid.velocity.y != 0)
         {
             AnimFallDow();
             return;
         }
-
         if (isWaitStand)
         {
             AnimWaitStand();
@@ -292,33 +337,20 @@ public class PlayerController : MonoBehaviour
                 skeletonAnimation.AnimationState.SetAnimation(0, arac.idleAnim, false);
                 currentAnim = arac.idleAnim;
                 speedmove = 0;
-                //  Debug.Log("zo day");
+                SetBox(sizeBox, offsetBox);
+                SetBox(sizeBoxSit, offsetBoxSit);
             }
         }
     }
 
     public void ShootDown()
     {
-        //if (!isKnife)
-        //{
-            if (Time.time - timePreviousAttack > timedelayAttackGun)
-            {
-                timePreviousAttack = Time.time;
-                skeletonAnimation.AnimationState.SetAnimation(1, fireAnim, false);
-            }
-        //}
-        //else
-        //{
-        //    if (playerState != PlayerState.Jump)
-        //    {
-        //        if (Time.time - timePreviousAttack > timedelayAttackKnife)
-        //        {
-        //            timePreviousAttack = Time.time;
-        //            skeletonAnimation.AnimationState.SetAnimation(1, knifeAnim, false);
-        //        }
-        //    }
-        //}
 
+        if (Time.time - timePreviousAttack > timedelayAttackGun)
+        {
+            timePreviousAttack = Time.time;
+            skeletonAnimation.AnimationState.SetAnimation(1, fireAnim, false);
+        }
         if (!isShooting)
         {
             isShooting = true;
@@ -333,9 +365,7 @@ public class PlayerController : MonoBehaviour
         if (isShooting)
         {
             isShooting = false;
-            //      skeletonAnimation.AnimationState.ClearTrack(2);
-            skeletonAnimation.ClearState();
-            //  skeletonAnimation.AnimationState.ClearTracks();
+            //    skeletonAnimation.ClearState();
         }
     }
     public void ChangeKnife()

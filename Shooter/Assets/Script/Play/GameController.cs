@@ -11,13 +11,12 @@ public class GetReferenAnimAssetForPlayer
 public class GameController : MonoBehaviour
 {
 
-
-
-
     public UltimateJoystick joystickMove, joystickShot;
     public static GameController gameController;
 
     Vector2 movePosition, shootPosition;
+
+
 
     private void Awake()
     {
@@ -120,6 +119,8 @@ public class GameController : MonoBehaviour
         else
         {
             StopShot();
+            target = PlayerController.playerController.GetTargetFromDirection(!PlayerController.playerController.FlipX ? Vector2.right : Vector2.left);
+            PlayerController.playerController.targetPos.position = Vector2.MoveTowards(PlayerController.playerController.targetPos.position, target, Time.deltaTime * 20);
         }
     }
 
@@ -133,10 +134,7 @@ public class GameController : MonoBehaviour
         {
             PlayerController.playerController.TryJump();
         }
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            PlayerController.playerController.ChangeKnife();
-        }
+
     }
     public void TryShot()
     {
