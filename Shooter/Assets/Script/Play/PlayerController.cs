@@ -13,7 +13,7 @@ public class AnimReferenAssetControlMove
 
 public class PlayerController : MonoBehaviour
 {
-     Bone boneBarrelGun,boneOriginGun;
+     Bone boneBarrelGun/*,boneOriginGun*/;
 
 
     #region chay nhay ngoi
@@ -180,6 +180,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerController = this;
+
+
+        Debug.Log("============" + timedelayAttackGun);
     }
 
     void SetBox(Vector2 size, Vector2 offset)
@@ -194,9 +197,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         // allAnim.AnimationState.GetCurrent(0).Animation.duration;
-        Debug.LogError(skeletonAnimation.valid);
+     //   Debug.LogError(skeletonAnimation.valid);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strBoneBarrelGun);
-        boneOriginGun = skeletonAnimation.Skeleton.FindBone(strBoneOriginGun);
+      //  boneOriginGun = skeletonAnimation.Skeleton.FindBone(strBoneOriginGun);
         //   skeletonAnimation.Skeleton.SetBonesToSetupPose();
 
         if (boneBarrelGun == null)
@@ -218,6 +221,9 @@ public class PlayerController : MonoBehaviour
         //{
         //    Debug.Log(skeletonAnimation.Skeleton.Bones.Items[i]);
         //}
+        skeletonAnimation.AnimationState.AddAnimation(1, fireAnim.name, false,0);
+        timedelayAttackGun = skeletonAnimation.AnimationState.GetCurrent(1).Animation.duration;
+        Debug.Log(timedelayAttackGun);
     }
 
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
@@ -225,7 +231,7 @@ public class PlayerController : MonoBehaviour
         if (trackEntry.Animation.Name.Equals(fireAnim.name))
         {
             GameObject bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
-            Vector2 dirBullet = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) - boneOriginGun.GetWorldPosition(skeletonAnimation.transform);
+            Vector2 dirBullet = targetPos.transform.position - boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y,dirBullet.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
