@@ -13,18 +13,19 @@ public class AnimReferenAssetControlMove
 
 public class PlayerController : MonoBehaviour
 {
-     Bone boneBarrelGun/*,boneOriginGun*/;
+    Bone boneBarrelGun/*,boneOriginGun*/, boneHandGrenade;
 
+    public List<EnemyBase> autoTarget;
 
     #region chay nhay ngoi
     public AnimReferenAssetControlMove arac = new AnimReferenAssetControlMove();
     AnimationReferenceAsset currentAnim;
     #endregion
 
-    float timePreviousAttack;
-    public float timedelayAttackGun, timedelayAttackKnife;
+    float timePreviousAttack, timePreviousGrenade;
+    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade;
 
-    public AnimationReferenceAsset aimTargetAnim, fireAnim/*, knifeAnim*/;
+    public AnimationReferenceAsset aimTargetAnim, fireAnim, grenadeStandAnim, grenadeSitAnim;
 
     bool isKnife;
 
@@ -88,6 +89,21 @@ public class PlayerController : MonoBehaviour
                 force = rid.velocity.y + 6f;
                 rid.velocity = new Vector2(rid.velocity.x, force);
             }
+        }
+
+    }
+    public void TryGrenade()
+    {
+        if (!isGround)
+            return;
+        if (Time.time - timePreviousGrenade > timedelayGrenade)
+        {
+            timePreviousGrenade = Time.time;
+            skeletonAnimation.AnimationState.SetAnimation(1, grenadeStandAnim, false);
+            //if (playerState == PlayerState.Sit)
+            //    skeletonAnimation.AnimationState.SetAnimation(1, grenadeSitAnim, false);
+            //else
+            //    skeletonAnimation.AnimationState.SetAnimation(1, grenadeStandAnim, false);
         }
 
     }
@@ -156,6 +172,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    public Vector2 target;
     public void OnUpdate()
     {
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
@@ -176,6 +193,11 @@ public class PlayerController : MonoBehaviour
             DetectGround();
         }
         SetAnim();
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, Time.deltaTime * 20);
+        if (playerState != PlayerState.Jump)
+        {
+            skeletonAnimation.AnimationState.SetAnimation(2, aimTargetAnim, false);
+        }
     }
     private void Awake()
     {
@@ -193,37 +215,26 @@ public class PlayerController : MonoBehaviour
             box.size = size;
     }
     [SpineBone]
-    public string strBoneBarrelGun,strBoneOriginGun;
+    public string strBoneBarrelGun/*, strBoneOriginGun*/, strBoneHandGrenade;
     private void Start()
     {
-        // allAnim.AnimationState.GetCurrent(0).Animation.duration;
-     //   Debug.LogError(skeletonAnimation.valid);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strBoneBarrelGun);
-      //  boneOriginGun = skeletonAnimation.Skeleton.FindBone(strBoneOriginGun);
-        //   skeletonAnimation.Skeleton.SetBonesToSetupPose();
+        boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strBoneHandGrenade);
 
-        if (boneBarrelGun == null)
-        {
-            Debug.LogError("null bone");
-        }
-        else
-        {
-            Debug.LogError("not null bone");
-        }
+        //if (boneBarrelGun == null)
+        //{
+        //    Debug.LogError("null bone");
+        //}
+        //else
+        //{
+        //    Debug.LogError("not null bone");
+        //}
 
         SetBox(sizeBox, offsetBox);
         StartCoroutine(Move());
 
         skeletonAnimation.AnimationState.Complete += OnComplete;
         skeletonAnimation.AnimationState.Event += HandleEvent;
-
-        //for(int i = 0; i < skeletonAnimation.Skeleton.Bones.Items.Length; i ++)
-        //{
-        //    Debug.Log(skeletonAnimation.Skeleton.Bones.Items[i]);
-        //}
-        skeletonAnimation.AnimationState.AddAnimation(1, fireAnim.name, false,0);
-        timedelayAttackGun = skeletonAnimation.AnimationState.GetCurrent(1).Animation.duration;
-        Debug.Log(timedelayAttackGun);
     }
 
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
@@ -232,11 +243,18 @@ public class PlayerController : MonoBehaviour
         {
             GameObject bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
             Vector2 dirBullet = targetPos.transform.position - boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            float angle = Mathf.Atan2(dirBullet.y,dirBullet.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
+        }
+        else if (trackEntry.Animation.Name.Equals(grenadeStandAnim.name) || trackEntry.Animation.Name.Equals(grenadeSitAnim.name))
+        {
+            //  Debug.LogError("--------- nem lu dan");
+            GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+            grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+            grenade.SetActive(true);
         }
     }
     private void OnComplete(TrackEntry trackEntry)
@@ -252,22 +270,9 @@ public class PlayerController : MonoBehaviour
         vt2 = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         return vt2;
     }
+
     public LayerMask layerTarget;
-    public Vector2 GetTargetFromDirection(Vector2 direction)
-    {
-        var target = Vector2.zero;
-        var origin = GetOriginGun();
-        direction.Normalize();
-        var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
-#if UNITY_EDITOR
-        Debug.DrawRay(origin, direction * 1000, Color.red);
-#endif
-        if (hit.collider != null)
-        {
-            target = hit.point;
-        }
-        return target;
-    }
+
 
 
     public bool FlipX
@@ -386,22 +391,71 @@ public class PlayerController : MonoBehaviour
         {
             isShooting = true;
         }
-        if (playerState != PlayerState.Jump)
-        {
-            skeletonAnimation.AnimationState.SetAnimation(2, aimTargetAnim, false);
-         //   Debug.Log("wtf???????????????");
-        }
     }
     public void ShootUp()
     {
         if (isShooting)
         {
             isShooting = false;
-            //    skeletonAnimation.ClearState();
         }
+
     }
+    public EnemyBase currentEnemyTarget;
+
     public void ChangeKnife()
     {
         isKnife = !isKnife;
     }
+
+    Vector2 targetTemp;
+    public Vector2 GetTargetFromDirection(Vector2 direction)
+    {
+        var origin = GetOriginGun();
+        direction.Normalize();
+        var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
+#if UNITY_EDITOR
+        Debug.DrawRay(origin, direction * 1000, Color.red);
+#endif
+        if (hit.collider != null)
+        {
+            targetTemp = hit.point;
+        }
+        return targetTemp;
+    }
+    Vector2 GetTarget()
+    {
+        if (currentEnemyTarget == null)
+        {
+            var dMin = float.MaxValue;
+            for (int i = 0; i < autoTarget.Count; i++)
+            {
+                var enemy = autoTarget[i];
+                //if (!enemy.isInCamera || enemy.HP <= 0 || !enemy.gameObject.activeSelf)
+                //{
+                //    continue;
+                //}
+                var from = (Vector2)transform.position;
+                var to = enemy.Origin();
+                var d = Vector2.Distance(from, to);
+                //Lấy enemy khoảng cach gần nhất
+                if (d < dMin)
+                {
+                    dMin = d;
+                    currentEnemyTarget = enemy;
+                }
+            }
+        }
+        return currentEnemyTarget.transform.position;
+
+    }
+    public void SelectNonTarget(Vector2 pos)
+    {
+        target = GetTargetFromDirection(pos);
+    }
+    public void SelectTarget()
+    {
+        target = GetTarget();
+        FlipX = target.x < transform.position.x;
+    }
+
 }

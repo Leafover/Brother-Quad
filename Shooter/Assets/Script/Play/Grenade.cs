@@ -1,0 +1,41 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Grenade : MonoBehaviour
+{
+    public float force;
+    public Rigidbody2D rid;
+    bool isDestroy;
+
+    Vector2 right = new Vector2(1, 1);
+    Vector2 left = new Vector2(-1, 1);
+
+    private void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
+    }
+    private void OnEnable()
+    {
+        if (!PlayerController.playerController.FlipX)
+        {
+            rid.AddForce(right * force);
+        }
+        else
+        {
+            rid.AddForce(left * force);
+            //   Debug.Log("2");
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 10)
+        {
+            GameObject effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
+            effectGrenade.transform.position = gameObject.transform.position;
+            effectGrenade.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
+}

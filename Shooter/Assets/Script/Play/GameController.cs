@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
         var h = axis.x;
         if (angle <= 135f && angle >= -135.5f)
         {
-            PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
+            PlayerController.playerController.speedmove = h > 0 ? 3f : -3f;
             PlayerController.playerController.dirMove = h > 0 ? false : true;
             if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
                 return;
@@ -97,8 +97,6 @@ public class GameController : MonoBehaviour
             PlayerController.playerController.playerState = PlayerController.PlayerState.Sit;
         }
     }
-    Vector2 target;
-    Vector3 vt3 = new Vector3();
     private void JoystickShooting(UltimateJoystick joystick)
     {
         shootPosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
@@ -107,20 +105,33 @@ public class GameController : MonoBehaviour
         {
             TryShot();
             PlayerController.playerController.isBouderJoystick = joystick.GetDistance() >= 0.9f;
-            if (PlayerController.playerController.isBouderJoystick)
+
+            if (PlayerController.playerController.autoTarget.Count == 0)
             {
-                PlayerController.playerController.FlipX = shootPosition.x < 0;
-
-                target = PlayerController.playerController.GetTargetFromDirection(shootPosition);
-                PlayerController.playerController.targetPos.position = Vector2.MoveTowards(PlayerController.playerController.targetPos.position, target, Time.deltaTime * 20);
-
+                if (PlayerController.playerController.isBouderJoystick)
+                {
+                    PlayerController.playerController.FlipX = shootPosition.x < 0;
+                }
+                PlayerController.playerController.SelectNonTarget(shootPosition);
+             //   Debug.LogError("ko co target");
+            }
+            else
+            {
+                PlayerController.playerController.SelectTarget();
+             //   Debug.LogError(" co target");
             }
         }
         else
         {
             StopShot();
-            target = PlayerController.playerController.GetTargetFromDirection(!PlayerController.playerController.FlipX ? Vector2.right : Vector2.left);
-            PlayerController.playerController.targetPos.position = Vector2.MoveTowards(PlayerController.playerController.targetPos.position, target, Time.deltaTime * 20);
+            if (PlayerController.playerController.autoTarget.Count == 0)
+            {
+                PlayerController.playerController.SelectNonTarget(!PlayerController.playerController.FlipX ? Vector2.right : Vector2.left);
+            }
+            else
+            {
+                PlayerController.playerController.SelectTarget();
+            }
         }
     }
 
@@ -132,7 +143,7 @@ public class GameController : MonoBehaviour
         PlayerController.playerController.OnUpdate();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            PlayerController.playerController.TryJump();
+            PlayerController.playerController.TryGrenade();
         }
 
     }
@@ -147,5 +158,9 @@ public class GameController : MonoBehaviour
     public void TryJump()
     {
         PlayerController.playerController.TryJump();
+    }
+    public void BtnGrenade()
+    {
+        PlayerController.playerController.TryGrenade();
     }
 }
