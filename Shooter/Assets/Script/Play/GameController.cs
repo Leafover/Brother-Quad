@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class GetReferenAnimAssetForPlayer
-{
-
-}
-
 public class GameController : MonoBehaviour
 {
 
     public UltimateJoystick joystickMove, joystickShot;
-    public static GameController gameController;
+    public static GameController instance;
 
     Vector2 movePosition, shootPosition;
 
@@ -20,7 +15,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        gameController = this;
+        instance = this;
     }
 
     private void JoystickMovement(UltimateJoystick joystick)
@@ -38,15 +33,14 @@ public class GameController : MonoBehaviour
     }
     public void StopMove()
     {
-        //  PlayerController.playerController.speedmove = 0;
-        if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
+        if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
             return;
-        if (PlayerController.playerController.playerState != PlayerController.PlayerState.Idle)
+        if (PlayerController.instance.playerState != PlayerController.PlayerState.Idle)
         {
-            PlayerController.playerController.playerState = PlayerController.PlayerState.Idle;
-            if (PlayerController.playerController.isfalldow)
+            PlayerController.instance.playerState = PlayerController.PlayerState.Idle;
+            if (PlayerController.instance.isfalldow)
             {
-                PlayerController.playerController.isWaitStand = true;
+                PlayerController.instance.isWaitStand = true;
             }
         }
     }
@@ -60,13 +54,13 @@ public class GameController : MonoBehaviour
         var h = movePosition.x;
         if (angle <= 135f && angle >= -135.5f)
         {
-            PlayerController.playerController.speedmove = h > 0 ? 1.5f : -1.5f;
-            PlayerController.playerController.dirMove = h > 0 ? true : false;
-            PlayerController.playerController.playerState = PlayerController.PlayerState.Run;
+            PlayerController.instance.speedmove = h > 0 ? 1.5f : -1.5f;
+            PlayerController.instance.dirMove = h > 0 ? true : false;
+            PlayerController.instance.playerState = PlayerController.PlayerState.Run;
         }
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
         {
-            PlayerController.playerController.playerState = PlayerController.PlayerState.Sit;
+            PlayerController.instance.playerState = PlayerController.PlayerState.Sit;
         }
     }
 
@@ -79,22 +73,20 @@ public class GameController : MonoBehaviour
         //}
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
+     //   PlayerController.instance.FlipX = h > 0 ? false : true;
         if (angle <= 135f && angle >= -135.5f)
         {
-            PlayerController.playerController.speedmove = h > 0 ? 3f : -3f;
-            PlayerController.playerController.dirMove = h > 0 ? false : true;
-            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
+            PlayerController.instance.speedmove = h > 0 ? 3f : -3f;
+            PlayerController.instance.dirMove = h > 0 ? false : true;
+            if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;
-            PlayerController.playerController.playerState = PlayerController.PlayerState.Run;
-
-
+            PlayerController.instance.playerState = PlayerController.PlayerState.Run;
         }
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
         {
-
-            if (PlayerController.playerController.playerState == PlayerController.PlayerState.Jump)
+            if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;
-            PlayerController.playerController.playerState = PlayerController.PlayerState.Sit;
+            PlayerController.instance.playerState = PlayerController.PlayerState.Sit;
         }
     }
     private void JoystickShooting(UltimateJoystick joystick)
@@ -104,35 +96,44 @@ public class GameController : MonoBehaviour
         if (joystick.GetJoystickState())
         {
             TryShot();
-            PlayerController.playerController.isBouderJoystick = joystick.GetDistance() >= 0.9f;
+            PlayerController.instance.isBouderJoystick = joystick.GetDistance() >= 0.9f;
 
-            if (PlayerController.playerController.autoTarget.Count == 0)
+            if (PlayerController.instance.autoTarget.Count == 0)
             {
-                if (PlayerController.playerController.isBouderJoystick)
+                if (PlayerController.instance.isBouderJoystick)
                 {
-                    PlayerController.playerController.FlipX = shootPosition.x < 0;
+                    PlayerController.instance.FlipX = shootPosition.x < 0;
                 }
-                PlayerController.playerController.SelectNonTarget(shootPosition);
-             //   Debug.LogError("ko co target");
+                PlayerController.instance.SelectNonTarget(shootPosition);
+                //   Debug.LogError("ko co target");
             }
             else
             {
-                PlayerController.playerController.SelectTarget();
-             //   Debug.LogError(" co target");
+                PlayerController.instance.SelectTarget();
+                //   Debug.LogError(" co target");
             }
         }
         else
         {
             StopShot();
-            if (PlayerController.playerController.autoTarget.Count == 0)
+            if (PlayerController.instance.autoTarget.Count == 0)
             {
-                PlayerController.playerController.SelectNonTarget(!PlayerController.playerController.FlipX ? Vector2.right : Vector2.left);
+                PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             }
             else
             {
-                PlayerController.playerController.SelectTarget();
+                PlayerController.instance.SelectTarget();
             }
         }
+
+        //if (PlayerController.instance.autoTarget.Count == 0)
+        //{
+        //    PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+        //}
+        //else
+        //{
+        //    PlayerController.instance.SelectTarget();
+        //}
     }
 
     private void Update()
@@ -140,27 +141,24 @@ public class GameController : MonoBehaviour
 
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
-        PlayerController.playerController.OnUpdate();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerController.playerController.TryGrenade();
-        }
+        PlayerController.instance.OnUpdate();
+        EnemyManager.instance.OnUpdate();
 
     }
     public void TryShot()
     {
-        PlayerController.playerController.ShootDown();
+        PlayerController.instance.ShootDown();
     }
     public void StopShot()
     {
-        PlayerController.playerController.ShootUp();
+        PlayerController.instance.ShootUp();
     }
     public void TryJump()
     {
-        PlayerController.playerController.TryJump();
+        PlayerController.instance.TryJump();
     }
     public void BtnGrenade()
     {
-        PlayerController.playerController.TryGrenade();
+        PlayerController.instance.TryGrenade();
     }
 }

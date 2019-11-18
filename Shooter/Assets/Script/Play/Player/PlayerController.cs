@@ -4,23 +4,21 @@ using UnityEngine;
 using System;
 using Spine.Unity;
 using Spine;
-
-[System.Serializable]
-public class AnimReferenAssetControlMove
-{
-    public AnimationReferenceAsset runForwardAnim, idleAnim, waitstandAnim, jumpAnim, falldownAnim, sitAnim, runBackAnim;
+[Serializable]
+public class AssetSpineController{
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim;
 }
 
 public class PlayerController : MonoBehaviour
 {
-    Bone boneBarrelGun/*,boneOriginGun*/, boneHandGrenade;
 
     public List<EnemyBase> autoTarget;
+    public AnimationReferenceAsset currentAnim;
+    public AssetSpineController asc;
 
-    #region chay nhay ngoi
-    public AnimReferenAssetControlMove arac = new AnimReferenAssetControlMove();
-    AnimationReferenceAsset currentAnim;
-    #endregion
+    Bone boneBarrelGun, boneHandGrenade;
+    [SpineBone]
+    public string strboneBarrelGun, strboneHandGrenade;
 
     float timePreviousAttack, timePreviousGrenade;
     public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade;
@@ -39,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Vector2 offsetBoxSit, sizeBoxSit;
     public Transform targetPos;
-    public static PlayerController playerController;
+    public static PlayerController instance;
 
 
     public enum PlayerState
@@ -48,12 +46,7 @@ public class PlayerController : MonoBehaviour
     }
     public PlayerState playerState = PlayerState.Idle;
 
-
     public SkeletonAnimation skeletonAnimation;
-
-
-
-
 
     [HideInInspector]
     public bool dirMove;
@@ -94,18 +87,29 @@ public class PlayerController : MonoBehaviour
     }
     public void TryGrenade()
     {
-        if (!isGround)
-            return;
         if (Time.time - timePreviousGrenade > timedelayGrenade)
         {
             timePreviousGrenade = Time.time;
-            skeletonAnimation.AnimationState.SetAnimation(1, grenadeStandAnim, false);
-            //if (playerState == PlayerState.Sit)
-            //    skeletonAnimation.AnimationState.SetAnimation(1, grenadeSitAnim, false);
-            //else
-            //    skeletonAnimation.AnimationState.SetAnimation(1, grenadeStandAnim, false);
+            if (isGround)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(1, grenadeStandAnim, false);
+            }
+            else
+            {
+                GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+                grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+                grenade.SetActive(true);
+            }
         }
 
+    }
+    private void Start()
+    {
+        boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
+        boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);
+        skeletonAnimation.AnimationState.Event += HandleEvent;
+        skeletonAnimation.AnimationState.Complete += OnComplete;
+        StartCoroutine(Move());
     }
     public void DetectGround()
     {
@@ -154,15 +158,16 @@ public class PlayerController : MonoBehaviour
                 //  Debug.LogError(rid.velocity.y);
                 if (isGround && rid.velocity.y <= 0)
                 {
-                    if (!GameController.gameController.joystickMove.GetJoystickState())
+                    if (!GameController.instance.joystickMove.GetJoystickState())
                     {
                         isWaitStand = true;
                         playerState = PlayerState.Idle;
+                        speedmove = 0;
                     }
                     else
                     {
                         isWaitStand = false;
-                        GameController.gameController.CheckAfterJump(GameController.gameController.joystickMove);
+                        GameController.instance.CheckAfterJump(GameController.instance.joystickMove);
                     }
                 }
                 break;
@@ -175,6 +180,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 target;
     public void OnUpdate()
     {
+       // Debug.Log(rid.velocity.x);
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
 
         if (!isGround)
@@ -193,7 +199,8 @@ public class PlayerController : MonoBehaviour
             DetectGround();
         }
         SetAnim();
-        targetPos.position = Vector2.MoveTowards(targetPos.position, target, Time.deltaTime * 20);
+        var deltaTime = Time.deltaTime;
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
         if (playerState != PlayerState.Jump)
         {
             skeletonAnimation.AnimationState.SetAnimation(2, aimTargetAnim, false);
@@ -201,10 +208,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Awake()
     {
-        playerController = this;
-
-
-        Debug.Log("============" + timedelayAttackGun);
+        instance = this;
     }
 
     void SetBox(Vector2 size, Vector2 offset)
@@ -214,28 +218,7 @@ public class PlayerController : MonoBehaviour
         if (box.size != size)
             box.size = size;
     }
-    [SpineBone]
-    public string strBoneBarrelGun/*, strBoneOriginGun*/, strBoneHandGrenade;
-    private void Start()
-    {
-        boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strBoneBarrelGun);
-        boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strBoneHandGrenade);
 
-        //if (boneBarrelGun == null)
-        //{
-        //    Debug.LogError("null bone");
-        //}
-        //else
-        //{
-        //    Debug.LogError("not null bone");
-        //}
-
-        SetBox(sizeBox, offsetBox);
-        StartCoroutine(Move());
-
-        skeletonAnimation.AnimationState.Complete += OnComplete;
-        skeletonAnimation.AnimationState.Event += HandleEvent;
-    }
 
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
     {
@@ -259,7 +242,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnComplete(TrackEntry trackEntry)
     {
-        if (trackEntry.Animation.Name.Equals(arac.waitstandAnim.name))
+        if (trackEntry.Animation.Name.Equals(asc.waitstandAnim.name))
         {
             isWaitStand = false;
         }
@@ -282,19 +265,19 @@ public class PlayerController : MonoBehaviour
     }
     void AnimWaitStand()
     {
-        if (currentAnim != arac.waitstandAnim)
+        if (currentAnim != asc.waitstandAnim)
         {
-            skeletonAnimation.AnimationState.SetAnimation(0, arac.waitstandAnim, false);
-            currentAnim = arac.waitstandAnim;
+            skeletonAnimation.AnimationState.SetAnimation(0, asc.waitstandAnim, false);
+            currentAnim = asc.waitstandAnim;
             SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
     void AnimFallDow()
     {
-        if (currentAnim != arac.falldownAnim)
+        if (currentAnim != asc.falldownAnim)
         {
-            skeletonAnimation.AnimationState.SetAnimation(0, arac.falldownAnim, false);
-            currentAnim = arac.falldownAnim;
+            skeletonAnimation.AnimationState.SetAnimation(0, asc.falldownAnim, false);
+            currentAnim = asc.falldownAnim;
             SetBox(sizeBox, offsetBox);
         }
     }
@@ -306,20 +289,20 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (currentAnim != arac.jumpAnim)
+            if (currentAnim != asc.jumpAnim)
             {
-                skeletonAnimation.AnimationState.SetAnimation(0, arac.jumpAnim, true);
-                currentAnim = arac.jumpAnim;
+                skeletonAnimation.AnimationState.SetAnimation(0, asc.jumpAnim, true);
+                currentAnim = asc.jumpAnim;
                 SetBox(sizeBox, offsetBox);
             }
         }
     }
     void AnimSit()
     {
-        if (currentAnim != arac.sitAnim)
+        if (currentAnim != asc.sitAnim)
         {
-            skeletonAnimation.AnimationState.SetAnimation(0, arac.sitAnim, true);
-            currentAnim = arac.sitAnim;
+            skeletonAnimation.AnimationState.SetAnimation(0, asc.sitAnim, true);
+            currentAnim = asc.sitAnim;
             speedmove = 0;
             SetBox(sizeBoxSit, offsetBoxSit);
             SetBox(sizeBoxSit, offsetBoxSit);
@@ -335,20 +318,20 @@ public class PlayerController : MonoBehaviour
         }
         if (dirMove == FlipX)
         {
-            if (currentAnim != arac.runForwardAnim)
+            if (currentAnim != asc.runForwardAnim)
             {
-                skeletonAnimation.AnimationState.SetAnimation(0, arac.runForwardAnim, true);
-                currentAnim = arac.runForwardAnim;
+                skeletonAnimation.AnimationState.SetAnimation(0, asc.runForwardAnim, true);
+                currentAnim = asc.runForwardAnim;
                 SetBox(sizeBox, offsetBox);
                 SetBox(sizeBoxSit, offsetBoxSit);
             }
         }
         else
         {
-            if (currentAnim != arac.runBackAnim)
+            if (currentAnim != asc.runBackAnim)
             {
-                skeletonAnimation.AnimationState.SetAnimation(0, arac.runBackAnim, true);
-                currentAnim = arac.runBackAnim;
+                skeletonAnimation.AnimationState.SetAnimation(0, asc.runBackAnim, true);
+                currentAnim = asc.runBackAnim;
                 SetBox(sizeBox, offsetBox);
                 SetBox(sizeBoxSit, offsetBoxSit);
             }
@@ -368,10 +351,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (currentAnim != arac.idleAnim)
+            if (currentAnim != asc.idleAnim)
             {
-                skeletonAnimation.AnimationState.SetAnimation(0, arac.idleAnim, false);
-                currentAnim = arac.idleAnim;
+                skeletonAnimation.AnimationState.SetAnimation(0, asc.idleAnim, false);
+                currentAnim = asc.idleAnim;
                 speedmove = 0;
                 SetBox(sizeBox, offsetBox);
                 SetBox(sizeBoxSit, offsetBoxSit);
@@ -424,29 +407,23 @@ public class PlayerController : MonoBehaviour
     }
     Vector2 GetTarget()
     {
-        if (currentEnemyTarget == null)
-        {
+        //if (currentEnemyTarget == null)
+        //{
             var dMin = float.MaxValue;
             for (int i = 0; i < autoTarget.Count; i++)
             {
                 var enemy = autoTarget[i];
-                //if (!enemy.isInCamera || enemy.HP <= 0 || !enemy.gameObject.activeSelf)
-                //{
-                //    continue;
-                //}
                 var from = (Vector2)transform.position;
                 var to = enemy.Origin();
                 var d = Vector2.Distance(from, to);
-                //Lấy enemy khoảng cach gần nhất
                 if (d < dMin)
                 {
                     dMin = d;
                     currentEnemyTarget = enemy;
                 }
             }
-        }
+        //}
         return currentEnemyTarget.transform.position;
-
     }
     public void SelectNonTarget(Vector2 pos)
     {
