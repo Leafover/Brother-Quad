@@ -103,8 +103,9 @@ public class GameController : MonoBehaviour
                 if (PlayerController.instance.isBouderJoystick)
                 {
                     PlayerController.instance.FlipX = shootPosition.x < 0;
+                    PlayerController.instance.SelectNonTarget(shootPosition);
                 }
-                PlayerController.instance.SelectNonTarget(shootPosition);
+
                 //   Debug.LogError("ko co target");
             }
             else

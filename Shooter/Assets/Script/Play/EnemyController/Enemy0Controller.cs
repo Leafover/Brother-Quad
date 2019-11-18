@@ -7,7 +7,14 @@ public class Enemy0Controller : EnemyBase
 {
     public int indexPath;
     float distanceTravelled;
-
+    private void Start()
+    {
+        base.Start();
+        if(!EnemyManager.instance.enemy0s.Contains(this))
+        {
+            EnemyManager.instance.enemy0s.Add(this);
+        }
+    }
     public void OnUpdate()
     {
         base.OnUpdate();

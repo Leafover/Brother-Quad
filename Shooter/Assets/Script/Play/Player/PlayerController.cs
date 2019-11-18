@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             if (candoublejump)
             {
-                Debug.Log("double jump");
+              //  Debug.Log("double jump");
                 candoublejump = false;
                 force = rid.velocity.y + 6f;
                 rid.velocity = new Vector2(rid.velocity.x, force);
@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+    }
+    public float GetTranformPlayer()
+    {
+        return transform.position.x;
     }
     private void Start()
     {
