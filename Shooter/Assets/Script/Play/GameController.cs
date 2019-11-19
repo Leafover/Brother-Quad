@@ -1,7 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
+using Spine;
 
+[System.Serializable]
+public class AssetSpinePlayerController
+{
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim;
+}
+
+[System.Serializable]
+public class AssetSpineEnemyController
+{
+    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim;
+}
 
 public class GameController : MonoBehaviour
 {
@@ -73,7 +86,7 @@ public class GameController : MonoBehaviour
         //}
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
-     //   PlayerController.instance.FlipX = h > 0 ? false : true;
+        //   PlayerController.instance.FlipX = h > 0 ? false : true;
         if (angle <= 135f && angle >= -135.5f)
         {
             PlayerController.instance.speedmove = h > 0 ? 3f : -3f;
@@ -98,13 +111,14 @@ public class GameController : MonoBehaviour
             TryShot();
             PlayerController.instance.isBouderJoystick = joystick.GetDistance() >= 0.9f;
 
+
             if (PlayerController.instance.autoTarget.Count == 0)
             {
-                if (PlayerController.instance.isBouderJoystick)
-                {
-                    PlayerController.instance.FlipX = shootPosition.x < 0;
-                    PlayerController.instance.SelectNonTarget(shootPosition);
-                }
+                //if (PlayerController.instance.isBouderJoystick)
+                //{
+                PlayerController.instance.FlipX = shootPosition.x < 0;
+                PlayerController.instance.SelectNonTarget(shootPosition);
+                //}
 
                 //   Debug.LogError("ko co target");
             }

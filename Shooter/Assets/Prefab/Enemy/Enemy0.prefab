@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 819632424410810485}
   - component: {fileID: 819632424410810480}
   - component: {fileID: 819632424410810483}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Enemy0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.13355005}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -58,7 +58,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.2671001}
   m_EdgeRadius: 0
 --- !u!50 &819632424410810480
 Rigidbody2D:
@@ -80,7 +80,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &819632424410810483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,17 +93,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee8cbda66284d54f84abbcb96bb9de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 0
+  boxAttack1: {fileID: 0}
+  boxAttack2: {fileID: 0}
+  damage: 1
+  randomCrithit: 0
+  currentAnim: {fileID: 0}
+  aec:
+    attack1: {fileID: 0}
+    attack2: {fileID: 0}
+    idle: {fileID: 0}
+    run: {fileID: 0}
   timeDelayAttack: 0
+  timePreviousAttack: 0
   enemyState: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 819632424410810480}
   health: 3
-  speed: 8
-  distanceActive: 5
-  render: {fileID: 4632289134419922518}
-  skeletonAnimation: {fileID: 5437196449325262473}
+  speed: 3
+  speedMove: 0
+  distanceActive: 7
+  render: {fileID: 1949350126841835744}
+  isActive: 0
+  combo: 0
+  skeletonAnimation: {fileID: 2541691189339368422}
   indexPath: 0
 --- !u!1 &1668654952586167945
 GameObject:
@@ -114,9 +129,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5138952577109974924}
-  - component: {fileID: 7623475057662605714}
-  - component: {fileID: 4632289134419922518}
-  - component: {fileID: 5437196449325262473}
+  - component: {fileID: 244249620026298959}
+  - component: {fileID: 1949350126841835744}
+  - component: {fileID: 2541691189339368422}
+  - component: {fileID: 661286541308682957}
   m_Layer: 10
   m_Name: skeletonAnim
   m_TagString: Untagged
@@ -132,13 +148,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668654952586167945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.576, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 819632424410810482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7623475057662605714
+--- !u!33 &244249620026298959
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +162,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668654952586167945}
   m_Mesh: {fileID: 0}
---- !u!23 &4632289134419922518
+--- !u!23 &1949350126841835744
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,7 +199,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5437196449325262473
+--- !u!114 &2541691189339368422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,5 +228,18 @@ MonoBehaviour:
   logErrors: 0
   disableRenderingOnOverride: 1
   _animationName: Idle
-  loop: 0
+  loop: 1
   timeScale: 1
+--- !u!114 &661286541308682957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668654952586167945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3580078255bc09845983ba4cabc17e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEnemyBase: {fileID: 819632424410810483}

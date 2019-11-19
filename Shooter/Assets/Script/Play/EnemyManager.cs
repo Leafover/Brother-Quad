@@ -7,6 +7,8 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     public List<Enemy0Controller> enemy0s;
     public List<Enemy1Controller> enemy1s;
+    public List<Enemy5Controller> enemy5s;
+    public List<Enemy3Controller> enemy3s;
     public void Awake()
     {
         instance = this;
@@ -21,6 +23,14 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemy1s.Count; i++)
         {
             enemy1s[i].OnUpdate();
+        }
+        for (int i = 0; i < enemy5s.Count; i++)
+        {
+            enemy5s[i].OnUpdate();
+        }
+        for (int i = 0; i < enemy3s.Count; i++)
+        {
+            enemy3s[i].OnUpdate();
         }
     }
 }

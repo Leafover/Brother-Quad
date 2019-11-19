@@ -3,8 +3,8 @@ using System.Collections;
 public class ObjectPoolerManager : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler;
-    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab;
+    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler,bulletEnemy3Pooler;
+    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab,bulletEnemy3Prefab;
     [HideInInspector]
     public static ObjectPoolerManager Instance { get; private set; }
 
@@ -52,6 +52,14 @@ public class ObjectPoolerManager : MonoBehaviour
             effectE0ExploPooler.PooledObject = effectE1ExploPrefab;
             go.transform.parent = this.gameObject.transform;
             effectE0ExploPooler.Initialize();
+        }
+        if (bulletEnemy3Pooler == null)
+        {
+            GameObject go = new GameObject("bulletEnemy3Pooler");
+            bulletEnemy3Pooler = go.AddComponent<ObjectPooler>();
+            bulletEnemy3Pooler.PooledObject = bulletEnemy3Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletEnemy3Pooler.Initialize();
         }
     }
 }

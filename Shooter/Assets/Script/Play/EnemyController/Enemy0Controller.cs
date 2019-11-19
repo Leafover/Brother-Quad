@@ -10,15 +10,15 @@ public class Enemy0Controller : EnemyBase
     private void Start()
     {
         base.Start();
-        if(!EnemyManager.instance.enemy0s.Contains(this))
+        if (!EnemyManager.instance.enemy0s.Contains(this))
         {
             EnemyManager.instance.enemy0s.Add(this);
         }
     }
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         base.OnUpdate();
-        if (!render.enabled)
+        if (!isActive)
             return;
 
         var deltaTime = Time.deltaTime;
@@ -35,12 +35,15 @@ public class Enemy0Controller : EnemyBase
             GameObject explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
+            PlayerController.instance.TakeDamage(damage);
         }
     }
-    private void OnBecameInvisible()
+    private void OnDisable()
     {
-        base.OnBecameInvisible();
-        if (render.enabled)
-            gameObject.SetActive(false);
+        base.OnDisable();
+        if (EnemyManager.instance.enemy0s.Contains(this))
+        {
+            EnemyManager.instance.enemy0s.Remove(this);
+        }
     }
 }
