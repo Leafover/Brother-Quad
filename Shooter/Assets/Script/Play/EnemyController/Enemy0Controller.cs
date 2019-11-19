@@ -15,11 +15,18 @@ public class Enemy0Controller : EnemyBase
             EnemyManager.instance.enemy0s.Add(this);
         }
     }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
         if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                isActive = true;
+            }
             return;
+        }
 
         var deltaTime = Time.deltaTime;
         distanceTravelled += speed * deltaTime;

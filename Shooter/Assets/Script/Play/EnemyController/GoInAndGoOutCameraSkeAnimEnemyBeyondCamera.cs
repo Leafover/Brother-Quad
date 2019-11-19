@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoInAndGoOutCameraSkeAnimEnemy : GoInAndGoOutCamera
+public class GoInAndGoOutCameraSkeAnimEnemyBeyondCamera : GoInAndGoOutCamera
 {
-    private void OnBecameInvisible()
+    public override void OnBecameInvisible()
     {
         if (!myEnemyBase.isActive)
             return;

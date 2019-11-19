@@ -10,12 +10,21 @@ public class Enemy1Controller : EnemyBase
     private void Start()
     {
         base.Start();
+        //if (!EnemyManager.instance.enemy1s.Contains(this))
+        //{
+        //    EnemyManager.instance.enemy1s.Add(this);
+        //}
+        StartCoroutine(Move());
+        randomCrithit = Random.Range(2, 4);
+    }
+   public override void AcBecameVisibleCam()
+    {
+        base.AcBecameVisibleCam();
         if (!EnemyManager.instance.enemy1s.Contains(this))
         {
             EnemyManager.instance.enemy1s.Add(this);
+            isActive = true;
         }
-        StartCoroutine(Move());
-        randomCrithit = Random.Range(2, 4);
     }
     public IEnumerator Move()
     {
@@ -33,12 +42,6 @@ public class Enemy1Controller : EnemyBase
 
         if (!isActive)
             return;
-        if (!PlayerController.instance.isGround)
-        {
-            PlayAnim(0, aec.idle, true);
-            speedMove = 0;
-            return;
-        }
 
         switch (enemyState)
         {
@@ -55,9 +58,17 @@ public class Enemy1Controller : EnemyBase
                 break;
             case EnemyState.run:
 
-  
-                PlayAnim(0, aec.run, true);
-                speedMove = CheckDirFollowPlayer();
+                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformPlayer()) <= radius - 0.1f)
+                {
+                    PlayAnim(0, aec.idle, true);
+                    speedMove = 0;
+                }
+                else
+                {
+                    PlayAnim(0, aec.run, true);
+                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                }
+
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
                 if (detectPlayer)
                 {

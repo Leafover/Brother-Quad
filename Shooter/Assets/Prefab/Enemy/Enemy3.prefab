@@ -494,11 +494,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4394167033045538476}
-  - component: {fileID: 3111390541355163585}
   - component: {fileID: 3687851756898174092}
   - component: {fileID: 3687851756898174091}
   - component: {fileID: 3687851756898174090}
   - component: {fileID: 3687851756898174093}
+  - component: {fileID: 720214593}
   m_Layer: 10
   m_Name: skeletonANim
   m_TagString: Untagged
@@ -521,19 +521,6 @@ Transform:
   m_Father: {fileID: 3799922110561815476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3111390541355163585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6543863210636742142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d6183ebb43fcb744b1cda42716c1dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myEnemyBase: {fileID: 6719810791291732679}
 --- !u!33 &3687851756898174092
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -624,6 +611,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boneRoot: {fileID: 1194183378}
   skeletonRenderer: {fileID: 3687851756898174090}
+--- !u!114 &720214593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6543863210636742142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105338ca86d536b4184d09b3387f9957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEnemyBase: {fileID: 6719810791291732679}
 --- !u!1 &7052430583689630726
 GameObject:
   m_ObjectHideFlags: 0

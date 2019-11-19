@@ -12,11 +12,20 @@ public class Enemy3Controller : EnemyBase
     private void Start()
     {
         base.Start();
+        //if (!EnemyManager.instance.enemy3s.Contains(this))
+        //{
+        //    EnemyManager.instance.enemy3s.Add(this);
+        //}
+        timedelayChangePos = maxtimedelayChangePos;
+    }
+    public override void AcBecameVisibleCam()
+    {
+        base.AcBecameVisibleCam();
         if (!EnemyManager.instance.enemy3s.Contains(this))
         {
             EnemyManager.instance.enemy3s.Add(this);
+            isActive = true;
         }
-        timedelayChangePos = maxtimedelayChangePos;
     }
     private void OnDisable()
     {
@@ -41,7 +50,7 @@ public class Enemy3Controller : EnemyBase
         {
             case EnemyState.attack:
                 Shoot(0, aec.attack1, false);
-                CheckFlip(PlayerController.instance.GetTranformPlayer());
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
                 targetPos.transform.position = GetTarget(false);
                 //        Debug.Log(":----------" + targetPos.transform.position);
                 if (!canmove)
@@ -57,7 +66,7 @@ public class Enemy3Controller : EnemyBase
                     else
                         nextPos.x = OriginPos.x + Random.Range(-1f, -3f);
                     nextPos.y = OriginPos.y;
-                    CheckFlip(nextPos.x);
+                    CheckDirFollowPlayer(nextPos.x);
 
                   //  Debug.Log(nextPos + ":" + OriginPos);
                 }

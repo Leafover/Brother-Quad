@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 819632424410810485}
   - component: {fileID: 819632424410810480}
   - component: {fileID: 819632424410810483}
-  m_Layer: 16
+  m_Layer: 10
   m_Name: Enemy0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee8cbda66284d54f84abbcb96bb9de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canmove: 0
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
@@ -104,7 +105,8 @@ MonoBehaviour:
     attack2: {fileID: 0}
     idle: {fileID: 0}
     run: {fileID: 0}
-  timeDelayAttack: 0
+    aimTargetAnim: {fileID: 0}
+  maxtimeDelayAttack: 1
   timePreviousAttack: 0
   enemyState: 0
   lm:
@@ -113,12 +115,14 @@ MonoBehaviour:
   rid: {fileID: 819632424410810480}
   health: 3
   speed: 3
-  speedMove: 0
   distanceActive: 7
+  maxtimedelayChangePos: 0
   render: {fileID: 1949350126841835744}
   isActive: 0
   combo: 0
   skeletonAnimation: {fileID: 2541691189339368422}
+  strboneBarrelGun: 
+  targetPos: {fileID: 0}
   indexPath: 0
 --- !u!1 &1668654952586167945
 GameObject:

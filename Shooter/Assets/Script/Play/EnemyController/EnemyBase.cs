@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public System.Action acBecameVisibleCamera;
+
     public enum EnemyState
     {
         idle,
@@ -70,9 +72,9 @@ public class EnemyBase : MonoBehaviour
         var origin = GetOriginGun();
         direction.Normalize();
         var hit = Physics2D.Raycast(origin, direction, 1000, lm);
-#if UNITY_EDITOR
-        Debug.DrawRay(origin, direction * 1000, Color.red);
-#endif
+//#if UNITY_EDITOR
+//        Debug.DrawRay(origin, direction * 1000, Color.red);
+//#endif
         if (hit.collider != null)
         {
             targetTemp = hit.point;
@@ -129,7 +131,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Start()
     {
-
+        acBecameVisibleCamera += AcBecameVisibleCam;
         skeletonAnimation.AnimationState.Event += Event;
         skeletonAnimation.AnimationState.Complete += Complete;
         currentAnim = aec.idle;
@@ -137,27 +139,28 @@ public class EnemyBase : MonoBehaviour
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
     }
-    public void CheckFlip(float posX)
+    //public void CheckFlip(float posX)
+    //{
+    //    if (transform.position.x < posX)
+    //    {
+    //        FlipX = true;
+    //        speed = speed;
+    //        Debug.Log("zoooooooo 1");
+    //    }
+    //    else
+    //    {
+    //        FlipX = false;
+    //        Debug.Log("zoooooooo 2");
+    //    }
+    //}
+    public int CheckDirFollowPlayer(float posX)
     {
-        if (transform.position.x < posX)
-        {
-            FlipX = true;
-            Debug.Log("zoooooooo 1");
-        }
-        else
-        {
-            FlipX = false;
-            Debug.Log("zoooooooo 2");
-        }
-    }
-    public int CheckDirFollowPlayer()
-    {
-        if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump || Mathf.Abs(transform.position.x- PlayerController.instance.GetTranformPlayerType2()) <= 0.5f)
+        //if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump || Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformPlayerType2()) <= 0.5f)
 
-            return 0;
+        //    return 0;
 
 
-        if (transform.position.x < PlayerController.instance.GetTranformPlayerType2())
+        if (transform.position.x < posX/*PlayerController.instance.GetTranformPlayerType2()*/)
         {
             FlipX = true;
             dir = (int)speed;
@@ -198,14 +201,14 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void OnUpdate()
     {
-        if (isActive)
-            return;
-        if (transform.position.x - Camera.main.transform.position.x <= distanceActive/* && transform.position.x > Camera.main.transform.position.x*/)
-        {
-            //  Debug.Log("enable render");
-            // render.enabled = true;
-            isActive = true;
-        }
+        //if (isActive)
+        //    return;
+        //if (transform.position.x - Camera.main.transform.position.x <= distanceActive/* && transform.position.x > Camera.main.transform.position.x*/)
+        //{
+        //    //  Debug.Log("enable render");
+        //    // render.enabled = true;
+        //    isActive = true;
+        //}
     }
 
     public Vector2 Origin()
@@ -237,4 +240,9 @@ public class EnemyBase : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    public virtual void AcBecameVisibleCam()
+    {
+
+    }
 }
+

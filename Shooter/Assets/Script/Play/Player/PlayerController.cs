@@ -108,18 +108,16 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         xPosCurrent = transform.position.x;
-        StartCoroutine(posEnemyFollow());
+      //  StartCoroutine(posEnemyFollow());
     }
-    public float GetTranformPlayerType2()
-    {
-        Debug.Log(xPosCurrent);
-        return xPosCurrent;
+    //public float GetTranformPlayerType2()
+    //{
+    //    Debug.Log(xPosCurrent);
+    //    return xPosCurrent;
 
-    }
+    //}
     public float GetTranformPlayer()
     {
-        //Debug.Log(xPosCurrent);
-        //return xPosCurrent;
         return transform.position.x;
     }
     private void Start()
