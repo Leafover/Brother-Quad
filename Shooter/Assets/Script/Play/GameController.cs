@@ -13,7 +13,7 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim;
+    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim,run2;
 }
 
 public class GameController : MonoBehaviour
@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
 
     float getSpeed()
     {
-        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : PlayerController.instance.speedMoveMax / 2;
+        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * 50));
         return speedMovetemp;
     }
     public void OnMove(Vector2 axis)

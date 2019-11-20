@@ -7,6 +7,7 @@ public class Enemy0Controller : EnemyBase
 {
     public int indexPath;
     float distanceTravelled;
+
     private void Start()
     {
         base.Start();

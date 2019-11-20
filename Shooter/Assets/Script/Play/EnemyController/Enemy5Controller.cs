@@ -13,7 +13,7 @@ public class Enemy5Controller : EnemyBase
         //{
         //    EnemyManager.instance.enemy5s.Add(this);
         //}
-        StartCoroutine(Move());
+
     }
     public override void AcBecameVisibleCam()
     {
@@ -24,12 +24,7 @@ public class Enemy5Controller : EnemyBase
             isActive = true;
         }
     }
-    public IEnumerator Move()
-    {
-        rid.velocity = new Vector2(speedMove, rid.velocity.y);
-        yield return new WaitForEndOfFrame();
-        StartCoroutine(Move());
-    }
+
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -72,6 +67,7 @@ public class Enemy5Controller : EnemyBase
                 Attack(0, aec.attack1, false);
                 break;
         }
+        rid.velocity = new Vector2(speedMove, rid.velocity.y);
     }
     private void OnDrawGizmos()
     {

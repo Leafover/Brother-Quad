@@ -54,12 +54,12 @@ public class PlayerController : MonoBehaviour
     public bool isShooting, isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
 
 
-    public IEnumerator Move()
-    {
-        rid.velocity = new Vector2(speedmove, rid.velocity.y);
-        yield return new WaitForEndOfFrame();
-        StartCoroutine(Move());
-    }
+    //public IEnumerator Move()
+    //{
+
+    //    yield return new WaitForEndOfFrame();
+    //    StartCoroutine(Move());
+    //}
 
     public float forceJump;
     public float timeJump;
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log("take damage" + health);
+       // Debug.Log("take damage" + health);
     }
     public void TryJump()
     {
@@ -104,13 +104,13 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    float xPosCurrent;
-    IEnumerator posEnemyFollow()
-    {
-        yield return new WaitForSeconds(2f);
-        xPosCurrent = transform.position.x;
-      //  StartCoroutine(posEnemyFollow());
-    }
+    //float xPosCurrent;
+    //IEnumerator posEnemyFollow()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    xPosCurrent = transform.position.x;
+    //  //  StartCoroutine(posEnemyFollow());
+    //}
     //public float GetTranformPlayerType2()
     //{
     //    Debug.Log(xPosCurrent);
@@ -128,8 +128,10 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.Event += HandleEvent;
         skeletonAnimation.AnimationState.Complete += OnComplete;
         health = maxHealth;
-        StartCoroutine(Move());
-        StartCoroutine(posEnemyFollow());
+        //       StartCoroutine(Move());
+        speedmove = 0;
+
+      //  StartCoroutine(posEnemyFollow());
     }
     public void DetectGround()
     {
@@ -227,6 +229,7 @@ public class PlayerController : MonoBehaviour
         {
             skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         }
+        rid.velocity = new Vector2(speedmove, rid.velocity.y);
     }
     private void Awake()
     {

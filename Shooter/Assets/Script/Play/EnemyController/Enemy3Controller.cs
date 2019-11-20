@@ -61,12 +61,13 @@ public class Enemy3Controller : EnemyBase
                     nextPos.y = OriginPos.y;
                     CheckDirFollowPlayer(nextPos.x);
 
-                  //  Debug.Log(nextPos + ":" + OriginPos);
+                    PlayAnim(0, aec.run, true);
+
                 }
 
                 break;
             case EnemyState.run:
-                PlayAnim(0, aec.run, true);
+
                 targetPos.transform.position = GetTarget(true);
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 

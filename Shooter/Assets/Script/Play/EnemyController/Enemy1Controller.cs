@@ -14,7 +14,7 @@ public class Enemy1Controller : EnemyBase
         //{
         //    EnemyManager.instance.enemy1s.Add(this);
         //}
-        StartCoroutine(Move());
+
         randomCrithit = Random.Range(2, 4);
     }
    public override void AcBecameVisibleCam()
@@ -26,12 +26,7 @@ public class Enemy1Controller : EnemyBase
             isActive = true;
         }
     }
-    public IEnumerator Move()
-    {
-        rid.velocity = new Vector2(speedMove, rid.velocity.y);
-        yield return new WaitForEndOfFrame();
-        StartCoroutine(Move());
-    }
+
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawWireSphere(transform.position, 1f);
@@ -83,6 +78,7 @@ public class Enemy1Controller : EnemyBase
                     Attack(0, aec.attack2, false);
                 break;
         }
+        rid.velocity = new Vector2(speedMove, rid.velocity.y);
     }
 
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)

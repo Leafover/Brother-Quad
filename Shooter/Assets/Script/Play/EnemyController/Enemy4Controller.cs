@@ -97,6 +97,7 @@ public class Enemy4Controller : EnemyBase
                         randomCountGrenade = Random.Range(1, 3);
                         isGrenadeStage = false;
                         timedelayShoot = maxtimeDelayAttack / 2;
+                        PlayAnim(0, aec.run, true);
                     }
                 }
                 else
@@ -116,12 +117,14 @@ public class Enemy4Controller : EnemyBase
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
                         timedelayShoot = maxtimeDelayAttack;
+
+                        PlayAnim(0, aec.run, true);
+   
                     }
                 }
 
                 break;
             case EnemyState.run:
-                PlayAnim(0, aec.run, true);
                 targetPos.transform.position = GetTarget(true);
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
@@ -165,7 +168,7 @@ public class Enemy4Controller : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-        Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
+      //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
         if (trackEntry.Animation.name.Equals(aec.attack1.name))
         {
             GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();

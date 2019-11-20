@@ -31,7 +31,7 @@ public class EnemyBase : MonoBehaviour
     public Rigidbody2D rid;
     public float health = 3;
     public float speed = 1, distanceActive = 6;
-    public float maxtimedelayChangePos;
+    public float maxtimedelayChangePos = 6;
     public Renderer render;
     public bool isActive;
     int dir;
@@ -111,7 +111,7 @@ public class EnemyBase : MonoBehaviour
 
         }
     }
-    public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop,float timeDelayAttack)
+    public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop, float timeDelayAttack)
     {
         if (Time.time - timePreviousAttack >= timeDelayAttack)
         {
@@ -125,16 +125,23 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void OnDisable()
     {
-        skeletonAnimation.AnimationState.Event -= Event;
-        skeletonAnimation.AnimationState.Complete -= Complete;
+        if (skeletonAnimation != null)
+        {
+            skeletonAnimation.AnimationState.Event -= Event;
+            skeletonAnimation.AnimationState.Complete -= Complete;
+        }
     }
     public virtual void Start()
     {
         acBecameVisibleCamera += AcBecameVisibleCam;
-        skeletonAnimation.AnimationState.Event += Event;
-        skeletonAnimation.AnimationState.Complete += Complete;
+        if (skeletonAnimation != null)
+        {
+            skeletonAnimation.AnimationState.Event += Event;
+            skeletonAnimation.AnimationState.Complete += Complete;
+        }
         currentAnim = aec.idle;
-        boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
+        if (skeletonAnimation != null)
+            boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
     }

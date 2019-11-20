@@ -8,7 +8,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
     public LayerMask lm;
     public void ShootRayCast()
     {
-        if (!PlayerController.instance.isSlow)
+      //  if (!PlayerController.instance.isSlow)
             PlayerController.instance.isSlow = Physics2D.OverlapCircle(transform.position, radius, lm);
     }
     private void Update()
