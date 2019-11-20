@@ -6,16 +6,12 @@ using Spine.Unity;
 
 public class Enemy3Controller : EnemyBase
 {
-    float timedelayAttack, timedelayChangePos;
+    float timedelayChangePos;
     Vector2 nextPos;
 
     private void Start()
     {
         base.Start();
-        //if (!EnemyManager.instance.enemy3s.Contains(this))
-        //{
-        //    EnemyManager.instance.enemy3s.Add(this);
-        //}
         timedelayChangePos = maxtimedelayChangePos;
     }
     public override void AcBecameVisibleCam()
@@ -43,16 +39,13 @@ public class Enemy3Controller : EnemyBase
         if (!isActive)
             return;
 
-
-        //    Debug.Log(":----------" + targetPos.transform.position);
         var deltaTime = Time.deltaTime;
         switch (enemyState)
         {
             case EnemyState.attack:
-                Shoot(0, aec.attack1, false);
+                Shoot(0, aec.attack1, false,maxtimeDelayAttack);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
                 targetPos.transform.position = GetTarget(false);
-                //        Debug.Log(":----------" + targetPos.transform.position);
                 if (!canmove)
                     return;
 
@@ -80,6 +73,7 @@ public class Enemy3Controller : EnemyBase
                 if (transform.position.x == nextPos.x && transform.position.y == nextPos.y)
                 {
                     //  OriginPos = nextPos;
+                    PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
                    // Debug.LogError("zo day");
                 }
@@ -99,7 +93,7 @@ public class Enemy3Controller : EnemyBase
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
-            Debug.LogError("----------- ngon");
+
         }
     }
 

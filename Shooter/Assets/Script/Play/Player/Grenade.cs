@@ -6,7 +6,7 @@ public class Grenade : MonoBehaviour
 {
     public float force;
     public Rigidbody2D rid;
-    bool isDestroy;
+
 
     Vector2 right = new Vector2(1, 1);
     Vector2 left = new Vector2(-1, 1);

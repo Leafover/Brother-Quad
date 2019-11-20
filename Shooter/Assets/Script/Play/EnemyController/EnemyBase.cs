@@ -72,9 +72,9 @@ public class EnemyBase : MonoBehaviour
         var origin = GetOriginGun();
         direction.Normalize();
         var hit = Physics2D.Raycast(origin, direction, 1000, lm);
-//#if UNITY_EDITOR
-//        Debug.DrawRay(origin, direction * 1000, Color.red);
-//#endif
+        //#if UNITY_EDITOR
+        //        Debug.DrawRay(origin, direction * 1000, Color.red);
+        //#endif
         if (hit.collider != null)
         {
             targetTemp = hit.point;
@@ -85,16 +85,15 @@ public class EnemyBase : MonoBehaviour
     {
         if (!run)
         {
-            if (PlayerController.instance.transform.position.y >= transform.position.y)
-            {
-                return PlayerController.instance.transform.position;
+            //if (PlayerController.instance.transform.position.y >= transform.position.y)
+            //{
+            return PlayerController.instance.transform.position;
+            //}
+            //else
+            //{
+            //    return GetTargetFromDirection(FlipX ? Vector2.right : Vector2.left);
 
-            }
-            else
-            {
-                return GetTargetFromDirection(FlipX ? Vector2.right : Vector2.left);
-
-            }
+            //}
         }
         else
         {
@@ -112,9 +111,9 @@ public class EnemyBase : MonoBehaviour
 
         }
     }
-    public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop)
+    public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop,float timeDelayAttack)
     {
-        if (Time.time - timePreviousAttack >= maxtimeDelayAttack)
+        if (Time.time - timePreviousAttack >= timeDelayAttack)
         {
             timePreviousAttack = Time.time;
 

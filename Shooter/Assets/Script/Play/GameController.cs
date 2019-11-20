@@ -77,6 +77,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    float getSpeed()
+    {
+        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : PlayerController.instance.speedMoveMax / 2;
+        return speedMovetemp;
+    }
     public void OnMove(Vector2 axis)
     {
         //if (PlayerController.playerController.isBouderJoystick && PlayerController.playerController.isShooting)
@@ -89,7 +94,7 @@ public class GameController : MonoBehaviour
         //   PlayerController.instance.FlipX = h > 0 ? false : true;
         if (angle <= 135f && angle >= -135.5f)
         {
-            PlayerController.instance.speedmove = h > 0 ? 3f : -3f;
+            PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
             PlayerController.instance.dirMove = h > 0 ? false : true;
             if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;

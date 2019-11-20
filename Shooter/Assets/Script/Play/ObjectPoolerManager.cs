@@ -3,8 +3,8 @@ using System.Collections;
 public class ObjectPoolerManager : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler,bulletEnemy3Pooler;
-    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab,bulletEnemy3Prefab;
+    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler, bulletEnemy3Pooler, bulletEnemy4Pooler, grenadeEnemy4Pooler, slowArenaGrenadeEnemy4Pooler;
+    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab, bulletEnemy3Prefab, bulletEnemy4Prefab, grenadeEnemy4Prefab, slowArenaGrenadeEnemy4Prefab;
     [HideInInspector]
     public static ObjectPoolerManager Instance { get; private set; }
 
@@ -60,6 +60,30 @@ public class ObjectPoolerManager : MonoBehaviour
             bulletEnemy3Pooler.PooledObject = bulletEnemy3Prefab;
             go.transform.parent = this.gameObject.transform;
             bulletEnemy3Pooler.Initialize();
+        }
+        if (bulletEnemy4Pooler == null)
+        {
+            GameObject go = new GameObject("bulletEnemy4Pooler");
+            bulletEnemy4Pooler = go.AddComponent<ObjectPooler>();
+            bulletEnemy4Pooler.PooledObject = bulletEnemy4Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletEnemy4Pooler.Initialize();
+        }
+        if (grenadeEnemy4Pooler == null)
+        {
+            GameObject go = new GameObject("grenadeEnemy4Pooler");
+            grenadeEnemy4Pooler = go.AddComponent<ObjectPooler>();
+            grenadeEnemy4Pooler.PooledObject = grenadeEnemy4Prefab;
+            go.transform.parent = this.gameObject.transform;
+            grenadeEnemy4Pooler.Initialize();
+        }
+        if (slowArenaGrenadeEnemy4Pooler == null)
+        {
+            GameObject go = new GameObject("slowArenaGrenadeEnemy4Pooler");
+            slowArenaGrenadeEnemy4Pooler = go.AddComponent<ObjectPooler>();
+            slowArenaGrenadeEnemy4Pooler.PooledObject = slowArenaGrenadeEnemy4Prefab;
+            go.transform.parent = this.gameObject.transform;
+            slowArenaGrenadeEnemy4Pooler.Initialize();
         }
     }
 }

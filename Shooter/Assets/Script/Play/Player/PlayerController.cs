@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     Vector2 offsetBoxSit, sizeBoxSit;
     public Transform targetPos;
     public static PlayerController instance;
-
+    public bool isSlow;
 
     public enum PlayerState
     {
@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public SkeletonAnimation skeletonAnimation;
 
+    public float speedMoveMax = 3;
     [HideInInspector]
     public bool dirMove;
     [HideInInspector]
