@@ -7,19 +7,22 @@ public class Enemy0Controller : EnemyBase
 {
     public int indexPath;
     float distanceTravelled;
-
     private void Start()
     {
-        base.Start();
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
         if (!EnemyManager.instance.enemy0s.Contains(this))
         {
             EnemyManager.instance.enemy0s.Add(this);
         }
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
@@ -29,7 +32,6 @@ public class Enemy0Controller : EnemyBase
             return;
         }
 
-        var deltaTime = Time.deltaTime;
         distanceTravelled += speed * deltaTime;
         transform.position = PathCreatorController.instance.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 

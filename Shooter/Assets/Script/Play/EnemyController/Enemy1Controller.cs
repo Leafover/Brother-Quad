@@ -9,12 +9,11 @@ public class Enemy1Controller : EnemyBase
     public bool detectPlayer;
     private void Start()
     {
-        base.Start();
-        //if (!EnemyManager.instance.enemy1s.Contains(this))
-        //{
-        //    EnemyManager.instance.enemy1s.Add(this);
-        //}
-
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
         randomCrithit = Random.Range(2, 4);
     }
    public override void AcBecameVisibleCam()
@@ -31,9 +30,9 @@ public class Enemy1Controller : EnemyBase
     //{
     //    Gizmos.DrawWireSphere(transform.position, 1f);
     //}
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
 
         if (!isActive)
             return;
@@ -69,6 +68,7 @@ public class Enemy1Controller : EnemyBase
                 {
                     enemyState = EnemyState.idle;
                 }
+                rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 break;
             case EnemyState.attack:
                 speedMove = 0;
@@ -78,7 +78,7 @@ public class Enemy1Controller : EnemyBase
                     Attack(0, aec.attack2, false);
                 break;
         }
-        rid.velocity = new Vector2(speedMove, rid.velocity.y);
+
     }
 
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)

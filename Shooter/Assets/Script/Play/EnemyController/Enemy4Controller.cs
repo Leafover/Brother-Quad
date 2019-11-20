@@ -9,10 +9,14 @@ public class Enemy4Controller : EnemyBase
     float timedelayChangePos,timedelayShoot;
     Vector2 nextPos;
     bool isGrenadeStage;
-    int randomCountGrenade, countGrenade;
+    int randomCountGrenade;
     private void Start()
     {
-        base.Start();
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
         timedelayChangePos = maxtimedelayChangePos;
         randomCountGrenade = Random.Range(1, 3);
         isGrenadeStage = true;
@@ -37,14 +41,12 @@ public class Enemy4Controller : EnemyBase
     }
 
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
 
         if (!isActive)
             return;
-
-        var deltaTime = Time.deltaTime;
 
         switch (enemyState)
         {
@@ -56,13 +58,6 @@ public class Enemy4Controller : EnemyBase
                     {
                         Shoot(0, aec.attack1, false, timedelayShoot);
                         targetPos.transform.position = GetTarget(true);
-                        if (countGrenade == randomCountGrenade)
-                        {
-                            countGrenade = 0;
-                            randomCountGrenade = Random.Range(1, 3);
-                            isGrenadeStage = false;
-                            timedelayShoot = maxtimeDelayAttack / 2;
-                        }
                     }
                     else
                     {
@@ -83,22 +78,6 @@ public class Enemy4Controller : EnemyBase
                 {
                     Shoot(0, aec.attack1, false, timedelayShoot);
                     targetPos.transform.position = GetTarget(true);
-                    if (countGrenade == randomCountGrenade)
-                    {
-                        enemyState = EnemyState.run;
-                        timedelayChangePos = maxtimedelayChangePos;
-                        if (transform.position.x < OriginPos.x)
-                            nextPos.x = OriginPos.x + Random.Range(1f, 2f);
-                        else
-                            nextPos.x = OriginPos.x + Random.Range(-1f, -2f);
-                        nextPos.y = OriginPos.y;
-                        CheckDirFollowPlayer(nextPos.x);
-                        countGrenade = 0;
-                        randomCountGrenade = Random.Range(1, 3);
-                        isGrenadeStage = false;
-                        timedelayShoot = maxtimeDelayAttack / 2;
-                        PlayAnim(0, aec.run, true);
-                    }
                 }
                 else
                 {
@@ -118,8 +97,7 @@ public class Enemy4Controller : EnemyBase
                         isGrenadeStage = true;
                         timedelayShoot = maxtimeDelayAttack;
 
-                        PlayAnim(0, aec.run, true);
-   
+                        PlayAnim(0, aec.run, true); 
                     }
                 }
 
@@ -142,18 +120,6 @@ public class Enemy4Controller : EnemyBase
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
-        //Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
-        //if (trackEntry.Animation.Name.Equals(aec.attack1.name))
-        //{
-        //    GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-        //    grenade.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //    if (FlipX)
-        //        grenade.GetComponent<GrenadeEnemy>().dir = new Vector2(1, 1);
-        //    else
-        //        grenade.GetComponent<GrenadeEnemy>().dir = new Vector2(-1, 1);
-        //    grenade.SetActive(true);
-        //    Debug.Log("-------- nem lu dan");
-        //}
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
@@ -174,12 +140,33 @@ public class Enemy4Controller : EnemyBase
             GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
             grenade.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             if (FlipX)
-                grenade.GetComponent<GrenadeEnemy>().dir = new Vector2(1, 1);
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
             else
-                grenade.GetComponent<GrenadeEnemy>().dir = new Vector2(-1, 1);
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
             grenade.SetActive(true);
             Debug.Log("-------- nem lu dan");
-            countGrenade++;
+            combo++;
+
+            if (combo == randomCountGrenade)
+            {
+                if (canmove)
+                {
+                    enemyState = EnemyState.run;
+                    timedelayChangePos = maxtimedelayChangePos;
+                    if (transform.position.x < OriginPos.x)
+                        nextPos.x = OriginPos.x + Random.Range(1f, 2f);
+                    else
+                        nextPos.x = OriginPos.x + Random.Range(-1f, -2f);
+                    nextPos.y = OriginPos.y;
+                    CheckDirFollowPlayer(nextPos.x);
+                    PlayAnim(0, aec.run, true);
+                }
+
+                combo = 0;
+                randomCountGrenade = Random.Range(1, 3);
+                isGrenadeStage = false;
+                timedelayShoot = maxtimeDelayAttack / 2;
+            }
         }
     }
 }

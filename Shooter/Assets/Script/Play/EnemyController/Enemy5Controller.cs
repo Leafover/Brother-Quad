@@ -6,14 +6,14 @@ public class Enemy5Controller : EnemyBase
 {
     public bool detectPlayer;
     float speedMove;
+
     private void Start()
     {
-        base.Start();
-        //if (!EnemyManager.instance.enemy5s.Contains(this))
-        //{
-        //    EnemyManager.instance.enemy5s.Add(this);
-        //}
-
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
     }
     public override void AcBecameVisibleCam()
     {
@@ -25,9 +25,9 @@ public class Enemy5Controller : EnemyBase
         }
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
 
         if (!isActive)
             return;
@@ -61,13 +61,14 @@ public class Enemy5Controller : EnemyBase
                 {
                     enemyState = EnemyState.idle;
                 }
+                rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 break;
             case EnemyState.attack:
                 speedMove = 0;
                 Attack(0, aec.attack1, false);
                 break;
         }
-        rid.velocity = new Vector2(speedMove, rid.velocity.y);
+
     }
     private void OnDrawGizmos()
     {

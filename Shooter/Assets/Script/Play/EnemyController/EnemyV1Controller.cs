@@ -8,10 +8,13 @@ public class EnemyV1Controller : EnemyBase
 {
     float timedelayChangePos;
     Vector2 nextPos;
-
     private void Start()
     {
-        base.Start();
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
         timedelayChangePos = maxtimedelayChangePos;
     }
     public override void AcBecameVisibleCam()
@@ -32,14 +35,13 @@ public class EnemyV1Controller : EnemyBase
         }
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
 
         if (!isActive)
             return;
 
-        var deltaTime = Time.deltaTime;
         switch (enemyState)
         {
             case EnemyState.attack:

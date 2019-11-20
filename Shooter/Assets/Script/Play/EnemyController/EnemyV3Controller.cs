@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class EnemyV3Controller : EnemyBase
 {
-
     private void Start()
     {
-        base.Start();
+        Init();
+    }
+    public override void Init()
+    {
+        base.Init();
         if (!EnemyManager.instance.enemyv3s.Contains(this))
         {
             EnemyManager.instance.enemyv3s.Add(this);
         }
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        base.OnUpdate();
+        base.OnUpdate(deltaTime);
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)

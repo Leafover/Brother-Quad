@@ -131,7 +131,7 @@ public class EnemyBase : MonoBehaviour
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
     }
-    public virtual void Start()
+    public virtual void Init()
     {
         acBecameVisibleCamera += AcBecameVisibleCam;
         if (skeletonAnimation != null)
@@ -145,6 +145,7 @@ public class EnemyBase : MonoBehaviour
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
     }
+
     //public void CheckFlip(float posX)
     //{
     //    if (transform.position.x < posX)
@@ -205,7 +206,7 @@ public class EnemyBase : MonoBehaviour
         get { return skeletonAnimation.skeleton.FlipX; }
         set { skeletonAnimation.skeleton.FlipX = value; }
     }
-    public virtual void OnUpdate()
+    public virtual void OnUpdate(float deltaTime)
     {
         //if (isActive)
         //    return;
@@ -230,13 +231,16 @@ public class EnemyBase : MonoBehaviour
 
             if (PlayerController.instance.currentEnemyTarget != this)
                 return;
-
-            health--;
-            if (health <= 0)
+            else
             {
-                gameObject.SetActive(false);
+                health--;
+                if (health <= 0)
+                {
+                    gameObject.SetActive(false);
+                }
+                PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+                collision.gameObject.SetActive(false);
             }
-            collision.gameObject.SetActive(false);
             //   Debug.LogError("--------------- trung dan");
         }
         else if (collision.gameObject.layer == 14)

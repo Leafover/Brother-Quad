@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class BulletEnemy : MonoBehaviour
 {
+    [HideInInspector]
+    public Vector2 dir = new Vector2(-1,1);
     public Rigidbody2D rid;
     public float speed, damage;
     System.Action hit;
-    public virtual void OnEnable()
+
+    public virtual void Init(int type)
     {
-        rid.AddForce(transform.right * speed);
-        // Debug.Log("------- onenable parent");
+        switch (type)
+        {
+            case 0:
+                rid.AddForce(transform.right * speed);
+                break;
+            case 1:
+                rid.AddForce(dir * speed);
+                break;
+        }
+        StartEvent();
+    }
+    public virtual void StartEvent()
+    {
         hit += Hit;
     }
+
     private void OnDisable()
     {
         hit -= Hit;

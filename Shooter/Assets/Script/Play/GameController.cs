@@ -13,7 +13,7 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim,run2;
+    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2;
 }
 
 public class GameController : MonoBehaviour
@@ -119,11 +119,11 @@ public class GameController : MonoBehaviour
 
             if (PlayerController.instance.autoTarget.Count == 0)
             {
-                //if (PlayerController.instance.isBouderJoystick)
-                //{
-                PlayerController.instance.FlipX = shootPosition.x < 0;
-                PlayerController.instance.SelectNonTarget(shootPosition);
-                //}
+                if (PlayerController.instance.isBouderJoystick)
+                {
+                    PlayerController.instance.FlipX = shootPosition.x < 0;
+                    PlayerController.instance.SelectNonTarget(shootPosition);
+                }
 
                 //   Debug.LogError("ko co target");
             }

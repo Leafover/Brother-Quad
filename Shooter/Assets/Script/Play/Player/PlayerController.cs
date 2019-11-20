@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
     {
         // Debug.Log(rid.velocity.x);
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
-
+        rid.velocity = new Vector2(speedmove, rid.velocity.y);
         if (!isGround)
         {
             if (playerState == PlayerState.Jump)
@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
         {
             skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         }
-        rid.velocity = new Vector2(speedmove, rid.velocity.y);
+
     }
     private void Awake()
     {

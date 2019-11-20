@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletEnemyV1 : GrenadeEnemy
+public class BulletEnemyV1 : BulletEnemy
 {
     GameObject effectExplo;
     private Vector3 v_diff;
     private float atan2;
-    public override void OnEnable()
+
+    public override void Init(int type)
     {
-        base.OnEnable();
+        base.Init(type);
     }
+
+    private void OnEnable()
+    {
+        Init(1);
+    }
+
     public override void Hit()
     {
         base.Hit();
@@ -22,9 +29,15 @@ public class BulletEnemyV1 : GrenadeEnemy
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+        switch (collision.gameObject.layer)
+        {
+            case 8:
+                Hit();
+                break;
+        }
     }
 
-    public override void Update()
+    public void Update()
     {
         v_diff = transform.position + (Vector3)rid.velocity * 20;
         atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
