@@ -71,7 +71,7 @@ public class Enemy6Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            Debug.Log("--------------------???");
+          //  Debug.Log("--------------------???");
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
             Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;

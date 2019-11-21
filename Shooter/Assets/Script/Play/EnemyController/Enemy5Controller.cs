@@ -25,7 +25,7 @@ public class Enemy5Controller : EnemyBase
     {
         base.AcBecameVisibleCam();
         isActive = true;
-        Debug.Log("==========enable");
+      //  Debug.Log("==========enable");
     }
 
     public override void OnUpdate(float deltaTime)
