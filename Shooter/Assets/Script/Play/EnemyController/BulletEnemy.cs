@@ -5,20 +5,33 @@ using UnityEngine;
 public class BulletEnemy : MonoBehaviour
 {
     [HideInInspector]
-    public Vector2 dir = new Vector2(-1,1);
+    public Vector2 dir = new Vector2(-1, 1);
     public Rigidbody2D rid;
     public float speed, damage;
     System.Action hit;
+    Vector2 myTransform;
 
+    private void OnValidate()
+    {
+        if (rid == null)
+            rid = GetComponent<Rigidbody2D>();
+    }
+    public Transform GetTransform()
+    {
+        return transform;
+    }
     public virtual void Init(int type)
     {
         switch (type)
         {
             case 0:
-                rid.AddForce(transform.right * speed);
+                rid.velocity = (transform.right * speed);
                 break;
             case 1:
-                rid.AddForce(dir * speed);
+                rid.velocity = (dir * speed);
+                break;
+            case 2:
+                rid.velocity = (transform.up * speed);
                 break;
         }
         StartEvent();
@@ -32,10 +45,7 @@ public class BulletEnemy : MonoBehaviour
     {
         hit -= Hit;
     }
-    public virtual void OnBecameInvisible()
-    {
-        gameObject.SetActive(false);
-    }
+
     public virtual void Hit()
     {
         gameObject.SetActive(false);

@@ -6,7 +6,7 @@ using Spine.Unity;
 public class EnemyV2Controller : EnemyBase
 {
     int currentPos;
-    int countShoot;
+    public Transform gunRotation;
     private void Start()
     {
         Init();
@@ -15,7 +15,7 @@ public class EnemyV2Controller : EnemyBase
     {
         base.Init();
         currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
-        countShoot = Random.Range(2, 4);
+        randomCombo = Random.Range(2, 4);
     }
     public override void AcBecameVisibleCam()
     {
@@ -46,7 +46,7 @@ public class EnemyV2Controller : EnemyBase
                 transform.position = Vector2.MoveTowards(transform.position,CameraController.instance.posEnemyV2[currentPos].position, deltaTime * speed);
                 if(transform.position.x == CameraController.instance.posEnemyV2[currentPos].position.x && transform.position.y == CameraController.instance.posEnemyV2[currentPos].position.y)
                 {
-                    CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                    CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
                     if (currentPos == 0)
                         currentPos = 1;
@@ -64,7 +64,10 @@ public class EnemyV2Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-
+            GameObject g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
+            g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            g.transform.rotation = gunRotation.rotation;
+            g.SetActive(true);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -73,13 +76,12 @@ public class EnemyV2Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             combo++;
-            if (combo == countShoot)
+            if (combo == randomCombo)
             {
                 combo = 0;
                 enemyState = EnemyState.run;
-                countShoot = Random.Range(2, 4);
+                randomCombo = Random.Range(2, 4);
             }
         }
-
     }
 }

@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-       // Debug.Log("take damage" + health);
+        // Debug.Log("take damage" + health);
     }
     public void TryJump()
     {
@@ -117,12 +117,17 @@ public class PlayerController : MonoBehaviour
     //    return xPosCurrent;
 
     //}
-    public float GetTranformPlayer()
+    public Transform GetTransformPlayer()
+    {
+        return transform;
+    }
+    public float GetTranformXPlayer()
     {
         return transform.position.x;
     }
     private void Start()
     {
+        skeletonAnimation.Initialize(true);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);
         skeletonAnimation.AnimationState.Event += HandleEvent;
@@ -130,8 +135,8 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         //       StartCoroutine(Move());
         speedmove = 0;
-
-      //  StartCoroutine(posEnemyFollow());
+        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        //  StartCoroutine(posEnemyFollow());
     }
     public void DetectGround()
     {
@@ -224,12 +229,20 @@ public class PlayerController : MonoBehaviour
         }
         SetAnim();
         var deltaTime = Time.deltaTime;
-        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
-        if (playerState != PlayerState.Jump)
-        {
-            skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-        }
 
+
+        //if (playerState != PlayerState.Jump)
+        //{
+        //  //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        //}
+
+        if (!MoveTargetPos())
+            return;
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
+    }
+    bool MoveTargetPos()
+    {
+        return (targetPos.position.x == target.x && targetPos.position.y == target.y) ? false : true;
     }
     private void Awake()
     {
@@ -397,6 +410,7 @@ public class PlayerController : MonoBehaviour
         {
             timePreviousAttack = Time.time;
             skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
+
         }
         if (!isShooting)
         {

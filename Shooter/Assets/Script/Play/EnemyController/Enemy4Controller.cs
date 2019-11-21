@@ -9,7 +9,6 @@ public class Enemy4Controller : EnemyBase
     float timedelayChangePos,timedelayShoot;
     Vector2 nextPos;
     bool isGrenadeStage;
-    int randomCountGrenade;
     private void Start()
     {
         Init();
@@ -18,7 +17,7 @@ public class Enemy4Controller : EnemyBase
     {
         base.Init();
         timedelayChangePos = maxtimedelayChangePos;
-        randomCountGrenade = Random.Range(1, 3);
+        randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
         timedelayShoot = maxtimeDelayAttack;
     }
@@ -51,13 +50,12 @@ public class Enemy4Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-                CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (!canmove)
                 {
                     if (isGrenadeStage)
                     {
                         Shoot(0, aec.attack1, false, timedelayShoot);
-                        targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
@@ -77,7 +75,6 @@ public class Enemy4Controller : EnemyBase
                 if (isGrenadeStage)
                 {
                     Shoot(0, aec.attack1, false, timedelayShoot);
-                    targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
@@ -92,25 +89,28 @@ public class Enemy4Controller : EnemyBase
                             nextPos.x = OriginPos.x + Random.Range(1f, 2f);
                         else
                             nextPos.x = OriginPos.x + Random.Range(-1f, -2f);
-                        nextPos.y = OriginPos.y;
+                        nextPos.y = transform.position.y;
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
                         timedelayShoot = maxtimeDelayAttack;
-
-                        PlayAnim(0, aec.run, true); 
+                        skeletonAnimation.ClearState();
+                        targetPos.transform.position = GetTarget(true);
+                        PlayAnim(0, aec.run, true);
+         
                     }
                 }
 
                 break;
             case EnemyState.run:
-                targetPos.transform.position = GetTarget(true);
+
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
-                if (transform.position.x == nextPos.x && transform.position.y == nextPos.y)
+                if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
                     //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
+                    PlayAnim(1, aec.aimTargetAnim, false);
                     // Debug.LogError("zo day");
                 }
                 break;
@@ -144,10 +144,10 @@ public class Enemy4Controller : EnemyBase
             else
                 grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
             grenade.SetActive(true);
-            Debug.Log("-------- nem lu dan");
+          //  Debug.Log("-------- nem lu dan");
             combo++;
 
-            if (combo == randomCountGrenade)
+            if (combo == randomCombo)
             {
                 if (canmove)
                 {
@@ -163,7 +163,7 @@ public class Enemy4Controller : EnemyBase
                 }
 
                 combo = 0;
-                randomCountGrenade = Random.Range(1, 3);
+                randomCombo = Random.Range(1, 3);
                 isGrenadeStage = false;
                 timedelayShoot = maxtimeDelayAttack / 2;
             }

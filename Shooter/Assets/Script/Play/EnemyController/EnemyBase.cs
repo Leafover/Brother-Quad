@@ -22,7 +22,6 @@ public class EnemyBase : MonoBehaviour
     public float radius;
     public Collider2D boxAttack1, boxAttack2;
     public float damage = 3;
-    public int randomCrithit;
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
     public float maxtimeDelayAttack = 1, timePreviousAttack;
@@ -35,7 +34,7 @@ public class EnemyBase : MonoBehaviour
     public Renderer render;
     public bool isActive;
     int dir;
-    public int combo;
+    public int combo, randomCombo;
     public SkeletonAnimation skeletonAnimation;
 
 
@@ -54,11 +53,24 @@ public class EnemyBase : MonoBehaviour
     {
         if (currentAnim != anim)
         {
-            Debug.Log("change anim" + currentAnim.name);
+         //   Debug.Log("change anim" + currentAnim.name);
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
 
         }
+    }
+    private void OnValidate()
+    {
+        if(rid == null)
+        {
+            rid = GetComponent<Rigidbody2D>();          
+        }
+        if (skeletonAnimation == null)
+        {
+            skeletonAnimation = transform.GetChild(0).GetComponent<SkeletonAnimation>();
+            render = transform.GetChild(0).GetComponent<Renderer>();
+        }
+
     }
     public Vector2 GetOriginGun()
     {
@@ -66,21 +78,21 @@ public class EnemyBase : MonoBehaviour
         vt2 = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         return vt2;
     }
-    Vector2 targetTemp;
-    public Vector2 GetTargetFromDirection(Vector2 direction)
-    {
-        var origin = GetOriginGun();
-        direction.Normalize();
-        var hit = Physics2D.Raycast(origin, direction, 1000, lm);
-        //#if UNITY_EDITOR
-        //        Debug.DrawRay(origin, direction * 1000, Color.red);
-        //#endif
-        if (hit.collider != null)
-        {
-            targetTemp = hit.point;
-        }
-        return targetTemp;
-    }
+    //Vector2 targetTemp;
+    //public Vector2 GetTargetFromDirection(Vector2 direction)
+    //{
+    //    var origin = GetOriginGun();
+    //    direction.Normalize();
+    //    var hit = Physics2D.Raycast(origin, direction, 1000, lm);
+    //    //#if UNITY_EDITOR
+    //    //        Debug.DrawRay(origin, direction * 1000, Color.red);
+    //    //#endif
+    //    if (hit.collider != null)
+    //    {
+    //        targetTemp = hit.point;
+    //    }
+    //    return targetTemp;
+    //}
     public Vector2 GetTarget(bool run)
     {
         if (!run)
@@ -97,7 +109,7 @@ public class EnemyBase : MonoBehaviour
         }
         else
         {
-            return GetTargetFromDirection(FlipX ? Vector2.right : Vector2.left);
+            return /*GetTargetFromDirection(*//*FlipX ? Vector2.right : Vector2.left*//*)*/boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         }
     }
     public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop)
@@ -133,6 +145,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
+        skeletonAnimation.Initialize(true);
         acBecameVisibleCamera += AcBecameVisibleCam;
         if (skeletonAnimation != null)
         {
@@ -146,28 +159,10 @@ public class EnemyBase : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
     }
 
-    //public void CheckFlip(float posX)
-    //{
-    //    if (transform.position.x < posX)
-    //    {
-    //        FlipX = true;
-    //        speed = speed;
-    //        Debug.Log("zoooooooo 1");
-    //    }
-    //    else
-    //    {
-    //        FlipX = false;
-    //        Debug.Log("zoooooooo 2");
-    //    }
-    //}
     public int CheckDirFollowPlayer(float posX)
     {
-        //if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump || Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformPlayerType2()) <= 0.5f)
 
-        //    return 0;
-
-
-        if (transform.position.x < posX/*PlayerController.instance.GetTranformPlayerType2()*/)
+        if (transform.position.x < posX)
         {
             FlipX = true;
             dir = (int)speed;
@@ -208,14 +203,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void OnUpdate(float deltaTime)
     {
-        //if (isActive)
-        //    return;
-        //if (transform.position.x - Camera.main.transform.position.x <= distanceActive/* && transform.position.x > Camera.main.transform.position.x*/)
-        //{
-        //    //  Debug.Log("enable render");
-        //    // render.enabled = true;
-        //    isActive = true;
-        //}
+
     }
 
     public Vector2 Origin()

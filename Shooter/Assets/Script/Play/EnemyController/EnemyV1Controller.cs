@@ -8,7 +8,7 @@ public class EnemyV1Controller : EnemyBase
 {
     float timedelayChangePos;
     Vector2 nextPos;
-    private void Start()
+    public void Start()
     {
         Init();
     }
@@ -26,7 +26,7 @@ public class EnemyV1Controller : EnemyBase
             isActive = true;
         }
     }
-    private void OnDisable()
+    public void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemyv1s.Contains(this))

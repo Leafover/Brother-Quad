@@ -15,7 +15,11 @@ public class AssetSpineEnemyController
 {
     public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2;
 }
-
+[System.Serializable]
+public class AssetSpineMiniBossController
+{
+    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2;
+}
 public class GameController : MonoBehaviour
 {
 
@@ -40,7 +44,8 @@ public class GameController : MonoBehaviour
         }
         else
         {
-
+            if (PlayerController.instance == null)
+                return;
             StopMove();
         }
     }
@@ -109,6 +114,9 @@ public class GameController : MonoBehaviour
     }
     private void JoystickShooting(UltimateJoystick joystick)
     {
+        if (PlayerController.instance == null)
+            return;
+
         shootPosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
 
         if (joystick.GetJoystickState())
@@ -155,15 +163,24 @@ public class GameController : MonoBehaviour
         //    PlayerController.instance.SelectTarget();
         //}
     }
-
+    void OnUpdatePlayer()
+    {
+        if (PlayerController.instance == null)
+            return;
+        PlayerController.instance.OnUpdate();
+    }
+    void OnUpdateEnemyManager()
+    {
+        if (EnemyManager.instance == null)
+            return;
+        EnemyManager.instance.OnUpdate();
+    }
     private void Update()
     {
-
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
-        PlayerController.instance.OnUpdate();
-        EnemyManager.instance.OnUpdate();
-
+        OnUpdatePlayer();
+        OnUpdateEnemyManager();
     }
     public void TryShot()
     {

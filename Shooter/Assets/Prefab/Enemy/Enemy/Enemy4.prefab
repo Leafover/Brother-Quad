@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 611528616956364414}
   - component: {fileID: 9201322765659507282}
-  - component: {fileID: 1331244005643680537}
   m_Layer: 0
   m_Name: ban
   m_TagString: Untagged
@@ -52,54 +51,6 @@ MonoBehaviour:
   scale: 1
   zPosition: 1
   overrideAlpha: 1
---- !u!212 &1331244005643680537
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761461829546061503}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300002, guid: f28ad2e38ba9e41429e9a3397db9f820, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 5, y: 5}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &1015165268219155339
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +328,6 @@ MonoBehaviour:
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
   damage: 3
-  randomCrithit: 0
   currentAnim: {fileID: 0}
   aec:
     attack1: {fileID: 11400000, guid: 864931faca0a0a34aa575204b3f31c6d, type: 2}
@@ -385,6 +335,7 @@ MonoBehaviour:
     idle: {fileID: 11400000, guid: 38d44f81cf5470440a5a5da23a841cb2, type: 2}
     run: {fileID: 11400000, guid: cd0ce570894ce334d93e1f2a09a40dbe, type: 2}
     aimTargetAnim: {fileID: 11400000, guid: 028856aa5a71e9846b15cc5f13ef224a, type: 2}
+    run2: {fileID: 0}
   maxtimeDelayAttack: 5
   timePreviousAttack: 0
   enemyState: 2
@@ -399,10 +350,10 @@ MonoBehaviour:
   render: {fileID: 7737209971022323877}
   isActive: 0
   combo: 0
+  randomCombo: 0
   skeletonAnimation: {fileID: 1593482644960559970}
   strboneBarrelGun: gun-tip-1
   targetPos: {fileID: 611528616956364414}
-  slowArenaEnemy4s: []
 --- !u!1 &6060388252317812405
 GameObject:
   m_ObjectHideFlags: 0

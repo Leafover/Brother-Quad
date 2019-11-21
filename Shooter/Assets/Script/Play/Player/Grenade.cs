@@ -17,6 +17,8 @@ public class Grenade : MonoBehaviour
     }
     private void OnEnable()
     {
+        if (PlayerController.instance == null)
+            return;
         if (!PlayerController.instance.FlipX)
         {
             rid.AddForce(right * force);

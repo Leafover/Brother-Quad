@@ -14,7 +14,7 @@ public class Enemy1Controller : EnemyBase
     public override void Init()
     {
         base.Init();
-        randomCrithit = Random.Range(2, 4);
+        randomCombo = Random.Range(2, 4);
     }
    public override void AcBecameVisibleCam()
     {
@@ -52,7 +52,7 @@ public class Enemy1Controller : EnemyBase
                 break;
             case EnemyState.run:
 
-                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformPlayer()) <= radius - 0.1f)
+                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                 {
                     PlayAnim(0, aec.idle, true);
                     speedMove = 0;
@@ -60,7 +60,7 @@ public class Enemy1Controller : EnemyBase
                 else
                 {
                     PlayAnim(0, aec.run, true);
-                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 }
 
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
@@ -72,9 +72,9 @@ public class Enemy1Controller : EnemyBase
                 break;
             case EnemyState.attack:
                 speedMove = 0;
-                if (combo != randomCrithit && combo >= 0)
+                if (combo != randomCombo && combo >= 0)
                     Attack(0, aec.attack1, false);
-                else if (combo == randomCrithit && combo > 0)
+                else if (combo == randomCombo && combo > 0)
                     Attack(0, aec.attack2, false);
                 break;
         }
@@ -109,7 +109,7 @@ public class Enemy1Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             combo = 0;
-            randomCrithit = Random.Range(2, 4);
+            randomCombo = Random.Range(2, 4);
             boxAttack2.gameObject.SetActive(false);
         }
 

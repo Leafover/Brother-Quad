@@ -46,7 +46,7 @@ public class Enemy5Controller : EnemyBase
                 }
                 break;
             case EnemyState.run:
-                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformPlayer()) <= radius - 0.1f)
+                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                 {
                     PlayAnim(0, aec.idle, true);
                     speedMove = 0;
@@ -54,7 +54,7 @@ public class Enemy5Controller : EnemyBase
                 else
                 {
                     PlayAnim(0, aec.run, true);
-                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 }
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
                 if (detectPlayer)

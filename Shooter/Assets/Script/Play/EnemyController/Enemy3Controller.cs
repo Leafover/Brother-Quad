@@ -46,7 +46,7 @@ public class Enemy3Controller : EnemyBase
         {
             case EnemyState.attack:
                 Shoot(0, aec.attack1, false,maxtimeDelayAttack);
-                CheckDirFollowPlayer(PlayerController.instance.GetTranformPlayer());
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
                     return;
@@ -60,24 +60,27 @@ public class Enemy3Controller : EnemyBase
                         nextPos.x = OriginPos.x + Random.Range(1f, 3f);
                     else
                         nextPos.x = OriginPos.x + Random.Range(-1f, -3f);
-                    nextPos.y = OriginPos.y;
+                    nextPos.y = transform.position.y;
                     CheckDirFollowPlayer(nextPos.x);
-
+                    skeletonAnimation.ClearState();
+                    targetPos.transform.position = GetTarget(true);
                     PlayAnim(0, aec.run, true);
+  
 
                 }
                 break;
             case EnemyState.run:
 
-                targetPos.transform.position = GetTarget(true);
+
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
-                if (transform.position.x == nextPos.x && transform.position.y == nextPos.y)
+                if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
                     //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                   // Debug.LogError("zo day");
+                    PlayAnim(1, aec.aimTargetAnim, false);
+                    // Debug.LogError("zo day");
                 }
                 break;
         }

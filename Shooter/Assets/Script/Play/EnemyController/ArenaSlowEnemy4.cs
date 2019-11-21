@@ -19,8 +19,8 @@ public class ArenaSlowEnemy4 : MonoBehaviour
     {
         PlayerController.instance.isSlow = false;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
 }

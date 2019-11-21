@@ -9,10 +9,10 @@ public class Bullet : MonoBehaviour
     {
         rid.AddForce(transform.right * 0.05f);
     }
-    private void OnBecameInvisible()
-    {
-        gameObject.SetActive(false);
-    }
+    //private void OnBecameInvisible()
+    //{
+    //    gameObject.SetActive(false);
+    //}
 
     //void RotateToTarget()
     //{
