@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     public List<Enemy3Controller> enemy3s;
     public List<Enemy4Controller> enemy4s;
     public List<Enemy5Controller> enemy5s;
+    public List<Enemy6Controller> enemy6s;
     public List<EnemyV1Controller> enemyv1s;
     public List<EnemyV2Controller> enemyv2s;
     public List<EnemyV3Controller> enemyv3s;
@@ -25,7 +26,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemy0s.Count; i++)
         {
-            enemy0s[i].OnUpdate(deltaTime);
+            enemy0s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallE1Action(float deltaTime)
@@ -34,7 +35,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemy1s.Count; i++)
         {
-            enemy1s[i].OnUpdate(deltaTime);
+            enemy1s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallE3Action(float deltaTime)
@@ -43,7 +44,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemy3s.Count; i++)
         {
-            enemy3s[i].OnUpdate(deltaTime);
+            enemy3s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallE4Action(float deltaTime)
@@ -52,7 +53,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemy4s.Count; i++)
         {
-            enemy4s[i].OnUpdate(deltaTime);
+            enemy4s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallE5Action(float deltaTime)
@@ -61,7 +62,16 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemy5s.Count; i++)
         {
-            enemy5s[i].OnUpdate(deltaTime);
+            enemy5s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallE6Action(float deltaTime)
+    {
+        if (enemy6s.Count == 0)
+            return;
+        for (int i = 0; i < enemy6s.Count; i++)
+        {
+            enemy6s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallEV1Action(float deltaTime)
@@ -70,7 +80,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemyv1s.Count; i++)
         {
-            enemyv1s[i].OnUpdate(deltaTime);
+            enemyv1s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallEV2Action(float deltaTime)
@@ -79,7 +89,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemyv2s.Count; i++)
         {
-            enemyv2s[i].OnUpdate(deltaTime);
+            enemyv2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallEV3Action(float deltaTime)
@@ -88,7 +98,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < enemyv3s.Count; i++)
         {
-            enemyv3s[i].OnUpdate(deltaTime);
+            enemyv3s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallMiniBoss1Action(float deltaTime)
@@ -97,7 +107,7 @@ public class EnemyManager : MonoBehaviour
             return;
         for (int i = 0; i < miniboss1s.Count; i++)
         {
-            miniboss1s[i].OnUpdate(deltaTime);
+            miniboss1s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     // Update is called once per frame
@@ -109,6 +119,7 @@ public class EnemyManager : MonoBehaviour
         CallE3Action(deltaTime);
         CallE4Action(deltaTime);
         CallE5Action(deltaTime);
+        CallE6Action(deltaTime);
         CallEV1Action(deltaTime);
         CallEV2Action(deltaTime);
         CallEV3Action(deltaTime);

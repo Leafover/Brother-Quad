@@ -10,21 +10,23 @@ public class EnemyV1Controller : EnemyBase
     Vector2 nextPos;
     public void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
     {
         base.Init();
         timedelayChangePos = maxtimedelayChangePos;
+        if (!EnemyManager.instance.enemyv1s.Contains(this))
+        {
+            EnemyManager.instance.enemyv1s.Add(this);
+        }
     }
     public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemyv1s.Contains(this))
-        {
-            EnemyManager.instance.enemyv1s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
+        enemyState = EnemyState.attack;
     }
     public void OnDisable()
     {
@@ -41,7 +43,8 @@ public class EnemyV1Controller : EnemyBase
 
         if (!isActive)
             return;
-
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.attack:
@@ -91,12 +94,21 @@ public class EnemyV1Controller : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-         //   Debug.LogError("aec.attack1.name");
+            //   Debug.LogError("aec.attack1.name");
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.transform.eulerAngles = new Vector3(0, 0, 150);
             bullet.SetActive(true);
         }
     }
+
+    //protected override void OnComplete(TrackEntry trackEntry)
+    //{
+    //    base.OnComplete(trackEntry);
+    //    if (trackEntry.Animation.Name.Equals(aec.die.name))
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 
 }

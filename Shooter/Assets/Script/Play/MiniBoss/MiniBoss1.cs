@@ -9,6 +9,7 @@ public class MiniBoss1 : EnemyBase
     public Transform gunRotation;
     private void Start()
     {
+        base.Start();
         Init();
     }
     private void Init()
@@ -24,6 +25,7 @@ public class MiniBoss1 : EnemyBase
         {
             EnemyManager.instance.miniboss1s.Add(this);
             isActive = true;
+            enemyState = EnemyState.run;
         }
     }
     private void OnDisable()
@@ -39,7 +41,9 @@ public class MiniBoss1 : EnemyBase
         base.OnUpdate(deltaTime);
         if (!isActive)
             return;
-        switch(enemyState)
+        if (enemyState == EnemyState.die)
+            return;
+        switch (enemyState)
         {
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);

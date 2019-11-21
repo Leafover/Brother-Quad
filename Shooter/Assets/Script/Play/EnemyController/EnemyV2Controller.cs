@@ -9,6 +9,7 @@ public class EnemyV2Controller : EnemyBase
     public Transform gunRotation;
     private void Start()
     {
+        base.Start();
         Init();
     }
     private void Init()
@@ -16,15 +17,16 @@ public class EnemyV2Controller : EnemyBase
         base.Init();
         currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
         randomCombo = Random.Range(2, 4);
+        if (!EnemyManager.instance.enemyv2s.Contains(this))
+        {
+            EnemyManager.instance.enemyv2s.Add(this);
+        }
     }
     public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemyv2s.Contains(this))
-        {
-            EnemyManager.instance.enemyv2s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
+        enemyState = EnemyState.run;
     }
     private void OnDisable()
     {
@@ -39,7 +41,9 @@ public class EnemyV2Controller : EnemyBase
         base.OnUpdate(deltaTime);
         if (!isActive)
             return;
-        switch(enemyState)
+        if (enemyState == EnemyState.die)
+            return;
+        switch (enemyState)
         {
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
@@ -83,5 +87,9 @@ public class EnemyV2Controller : EnemyBase
                 randomCombo = Random.Range(2, 4);
             }
         }
+        //else if (trackEntry.Animation.Name.Equals(aec.die.name))
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 }

@@ -13,6 +13,7 @@ public class BoomEnemy : BulletEnemy
         GameObject effect = ObjectPoolerManager.Instance.effectExploBoomEnemyV3Pooler.GetPooledObject();
         effect.transform.position = gameObject.transform.position;
         effect.SetActive(true);
+        gameObject.SetActive(false);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {

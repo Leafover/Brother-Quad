@@ -13,13 +13,9 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2;
+    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2, die;
 }
-[System.Serializable]
-public class AssetSpineMiniBossController
-{
-    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2;
-}
+
 public class GameController : MonoBehaviour
 {
 
@@ -33,6 +29,14 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+#if UNITY_EDITOR
+        Application.targetFrameRate = 300;
+#else
+        Application.targetFrameRate = 60;
+#endif
+
+
     }
 
     private void JoystickMovement(UltimateJoystick joystick)

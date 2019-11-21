@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PathCreation;
+using Spine;
 
 public class Enemy0Controller : EnemyBase
 {
@@ -9,6 +10,7 @@ public class Enemy0Controller : EnemyBase
     float distanceTravelled;
     private void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
@@ -31,7 +33,8 @@ public class Enemy0Controller : EnemyBase
             }
             return;
         }
-
+        if (enemyState == EnemyState.die)
+            return;
         distanceTravelled += speed * deltaTime;
         transform.position = PathCreatorController.instance.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 
@@ -56,4 +59,12 @@ public class Enemy0Controller : EnemyBase
             EnemyManager.instance.enemy0s.Remove(this);
         }
     }
+    //protected override void OnComplete(TrackEntry trackEntry)
+    //{
+    //    base.OnComplete(trackEntry);
+    //    if (trackEntry.Animation.Name.Equals(aec.die.name))
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 }

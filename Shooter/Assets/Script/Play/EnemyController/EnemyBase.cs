@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public System.Action<float> acOnUpdate;
     public System.Action acBecameVisibleCamera;
 
     public enum EnemyState
@@ -16,11 +17,12 @@ public class EnemyBase : MonoBehaviour
         idle,
         run,
         attack,
+        die
     }
     public bool canmove;
     Vector2 originPos;
     public float radius;
-    public Collider2D boxAttack1, boxAttack2;
+    public Collider2D boxAttack1, boxAttack2,takeDamageBox;
     public float damage = 3;
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
@@ -53,7 +55,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (currentAnim != anim)
         {
-         //   Debug.Log("change anim" + currentAnim.name);
+            //   Debug.Log("change anim" + currentAnim.name);
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
 
@@ -61,15 +63,17 @@ public class EnemyBase : MonoBehaviour
     }
     private void OnValidate()
     {
-        if(rid == null)
+        if (rid == null)
         {
-            rid = GetComponent<Rigidbody2D>();          
+            rid = GetComponent<Rigidbody2D>();
         }
         if (skeletonAnimation == null)
         {
             skeletonAnimation = transform.GetChild(0).GetComponent<SkeletonAnimation>();
             render = transform.GetChild(0).GetComponent<Renderer>();
         }
+        if (takeDamageBox == null)
+            takeDamageBox = GetComponent<Collider2D>();
 
     }
     public Vector2 GetOriginGun()
@@ -78,38 +82,15 @@ public class EnemyBase : MonoBehaviour
         vt2 = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         return vt2;
     }
-    //Vector2 targetTemp;
-    //public Vector2 GetTargetFromDirection(Vector2 direction)
-    //{
-    //    var origin = GetOriginGun();
-    //    direction.Normalize();
-    //    var hit = Physics2D.Raycast(origin, direction, 1000, lm);
-    //    //#if UNITY_EDITOR
-    //    //        Debug.DrawRay(origin, direction * 1000, Color.red);
-    //    //#endif
-    //    if (hit.collider != null)
-    //    {
-    //        targetTemp = hit.point;
-    //    }
-    //    return targetTemp;
-    //}
     public Vector2 GetTarget(bool run)
     {
         if (!run)
         {
-            //if (PlayerController.instance.transform.position.y >= transform.position.y)
-            //{
             return PlayerController.instance.transform.position;
-            //}
-            //else
-            //{
-            //    return GetTargetFromDirection(FlipX ? Vector2.right : Vector2.left);
-
-            //}
         }
         else
         {
-            return /*GetTargetFromDirection(*//*FlipX ? Vector2.right : Vector2.left*//*)*/boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            return boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         }
     }
     public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop)
@@ -142,21 +123,42 @@ public class EnemyBase : MonoBehaviour
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
+        acBecameVisibleCamera -= AcBecameVisibleCam;
+        acOnUpdate -= OnUpdate;
+
+        // Debug.Log("-----zoooooooooooooo");
+    }
+    public virtual void Start()
+    {
+        skeletonAnimation.Initialize(true);
+      //  Debug.Log("init =====");
     }
     public virtual void Init()
     {
-        skeletonAnimation.Initialize(true);
+        isActive = false;
+        if (boxAttack1 != null)
+            boxAttack1.gameObject.SetActive(false);
+        if (boxAttack2 != null)
+            boxAttack2.gameObject.SetActive(false);
+
+        takeDamageBox.enabled = true;
+        enemyState = EnemyState.idle;
+
+
+        acOnUpdate += OnUpdate;
         acBecameVisibleCamera += AcBecameVisibleCam;
         if (skeletonAnimation != null)
         {
             skeletonAnimation.AnimationState.Event += Event;
             skeletonAnimation.AnimationState.Complete += Complete;
         }
+
         currentAnim = aec.idle;
         if (skeletonAnimation != null)
             boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
+        distanceActive = Camera.main.orthographicSize * 2 + 1;
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -192,7 +194,14 @@ public class EnemyBase : MonoBehaviour
     }
 
     protected virtual void OnComplete(TrackEntry trackEntry)
-    { }
+    {
+        if (aec.die == null || trackEntry == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.die.name))
+        {
+            gameObject.SetActive(false);
+        }
+    }
 
 
 
@@ -205,10 +214,29 @@ public class EnemyBase : MonoBehaviour
     {
 
     }
-
+    public void UpdateActionForEnemyManager(float deltaTime)
+    {
+        if (acOnUpdate == null)
+            return;
+        acOnUpdate(deltaTime);
+    }
     public Vector2 Origin()
     {
         return transform.position;
+    }
+    public virtual void Dead()
+    {
+        enemyState = EnemyState.die;
+        rid.velocity = Vector2.zero;
+        takeDamageBox.enabled = false;
+        if (aec.die == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+      //  skeletonAnimation.ClearState();
+        PlayAnim(0, aec.die, false);
+        PlayerController.instance.RemoveTarget(this);
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -217,18 +245,19 @@ public class EnemyBase : MonoBehaviour
             if (!isActive)
                 return;
 
-            if (PlayerController.instance.currentEnemyTarget != this)
-                return;
-            else
+            //if (PlayerController.instance.currentEnemyTarget != this)
+            //    return;
+            //else
+            //{
+            health--;
+            if (health <= 0)
             {
-                health--;
-                if (health <= 0)
-                {
-                    gameObject.SetActive(false);
-                }
-                PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
-                collision.gameObject.SetActive(false);
+                // gameObject.SetActive(false);
+                Dead();
             }
+            PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+            collision.gameObject.SetActive(false);
+            //}
             //   Debug.LogError("--------------- trung dan");
         }
         else if (collision.gameObject.layer == 14)

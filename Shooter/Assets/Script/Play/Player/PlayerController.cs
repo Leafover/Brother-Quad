@@ -69,6 +69,13 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         // Debug.Log("take damage" + health);
     }
+    public void RemoveTarget(EnemyBase enemy)
+    {
+        if (autoTarget.Contains(enemy))
+            autoTarget.Remove(enemy);
+        if (currentEnemyTarget == enemy)
+            currentEnemyTarget = null;
+    }
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
@@ -192,11 +199,15 @@ public class PlayerController : MonoBehaviour
                         isWaitStand = true;
                         playerState = PlayerState.Idle;
                         speedmove = 0;
+                        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                        //    Debug.Log("--------------------- zo day 1");
                     }
                     else
                     {
                         isWaitStand = false;
                         GameController.instance.CheckAfterJump(GameController.instance.joystickMove);
+                        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                        //   Debug.Log("--------------------- zo day 2");
                     }
                 }
                 break;
@@ -207,11 +218,14 @@ public class PlayerController : MonoBehaviour
         }
     }
     public Vector2 target;
+    Vector2 movePos;
     public void OnUpdate()
     {
         // Debug.Log(rid.velocity.x);
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
-        rid.velocity = new Vector2(speedmove, rid.velocity.y);
+        movePos.x = speedmove;
+        movePos.y = rid.velocity.y;
+        rid.velocity = movePos;
         if (!isGround)
         {
             if (playerState == PlayerState.Jump)
@@ -287,6 +301,11 @@ public class PlayerController : MonoBehaviour
         {
             isWaitStand = false;
         }
+        //else if(trackEntry.Animation.Name.Equals(apc.jumpAnim.name))
+        //{
+        //    //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        //    Debug.Log("end jump");
+        //}
     }
     public Vector2 GetOriginGun()
     {
@@ -324,6 +343,7 @@ public class PlayerController : MonoBehaviour
     }
     void AnimJump()
     {
+        //  skeletonAnimation.AnimationState.ClearTrack(2);
         if (isfalldow)
         {
             return;
@@ -337,6 +357,7 @@ public class PlayerController : MonoBehaviour
                 SetBox(sizeBox, offsetBox);
             }
         }
+
     }
     void AnimSit()
     {

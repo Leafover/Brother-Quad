@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Spine;
 using UnityEngine;
 
 public class EnemyV3Controller : EnemyBase
 {
     private void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
@@ -29,7 +31,8 @@ public class EnemyV3Controller : EnemyBase
             }
             return;
         }
-
+        if (enemyState == EnemyState.die)
+            return;
         Boom();
     }
     void Boom()
@@ -42,6 +45,14 @@ public class EnemyV3Controller : EnemyBase
             g.SetActive(true);
         }
     }
+    //protected override void OnComplete(TrackEntry trackEntry)
+    //{
+    //    base.OnComplete(trackEntry);
+    //    //if (trackEntry.Animation.Name.Equals(aec.die.name))
+    //    //{
+    //    //    gameObject.SetActive(false);
+    //    //}
+    //}
     private void OnDisable()
     {
         base.OnDisable();

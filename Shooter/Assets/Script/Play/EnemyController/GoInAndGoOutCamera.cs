@@ -7,9 +7,8 @@ public class GoInAndGoOutCamera : MonoBehaviour
     public EnemyBase myEnemyBase;
     public virtual void OnBecameInvisible()
     {
-        PlayerController.instance.autoTarget.Remove(myEnemyBase);
-        if (PlayerController.instance.currentEnemyTarget == this)
-            PlayerController.instance.currentEnemyTarget = null;
+        PlayerController.instance.RemoveTarget(myEnemyBase);
+        Debug.Log("becamvisible");
     }
     public virtual void OnBecameVisible()
     {

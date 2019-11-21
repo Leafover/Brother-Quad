@@ -10,21 +10,24 @@ public class Enemy3Controller : EnemyBase
     Vector2 nextPos;
     private void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
     {
         base.Init();
         timedelayChangePos = maxtimedelayChangePos;
+        if (!EnemyManager.instance.enemy3s.Contains(this))
+        {
+            EnemyManager.instance.enemy3s.Add(this);
+
+        }
     }
     public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemy3s.Contains(this))
-        {
-            EnemyManager.instance.enemy3s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
+        enemyState = EnemyState.attack;
     }
     private void OnDisable()
     {
@@ -41,11 +44,12 @@ public class Enemy3Controller : EnemyBase
 
         if (!isActive)
             return;
-
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.attack:
-                Shoot(0, aec.attack1, false,maxtimeDelayAttack);
+                Shoot(0, aec.attack1, false, maxtimeDelayAttack);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
@@ -65,7 +69,7 @@ public class Enemy3Controller : EnemyBase
                     skeletonAnimation.ClearState();
                     targetPos.transform.position = GetTarget(true);
                     PlayAnim(0, aec.run, true);
-  
+
 
                 }
                 break;
@@ -98,8 +102,14 @@ public class Enemy3Controller : EnemyBase
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
-
         }
     }
-
+    //protected override void OnComplete(TrackEntry trackEntry)
+    //{
+    //    base.OnComplete(trackEntry);
+    //    //if (trackEntry.Animation.Name.Equals(aec.die.name))
+    //    //{
+    //    //    gameObject.SetActive(false);
+    //    //}
+    //}
 }

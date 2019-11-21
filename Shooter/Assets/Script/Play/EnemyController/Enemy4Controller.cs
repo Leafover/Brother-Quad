@@ -6,11 +6,12 @@ using Spine.Unity;
 
 public class Enemy4Controller : EnemyBase
 {
-    float timedelayChangePos,timedelayShoot;
+    float timedelayChangePos, timedelayShoot;
     Vector2 nextPos;
     bool isGrenadeStage;
     private void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
@@ -20,15 +21,17 @@ public class Enemy4Controller : EnemyBase
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
         timedelayShoot = maxtimeDelayAttack;
+        if (!EnemyManager.instance.enemy4s.Contains(this))
+        {
+            EnemyManager.instance.enemy4s.Add(this);
+
+        }
     }
     public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemy4s.Contains(this))
-        {
-            EnemyManager.instance.enemy4s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
+        enemyState = EnemyState.attack;
     }
     private void OnDisable()
     {
@@ -46,7 +49,8 @@ public class Enemy4Controller : EnemyBase
 
         if (!isActive)
             return;
-
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.attack:
@@ -96,7 +100,7 @@ public class Enemy4Controller : EnemyBase
                         skeletonAnimation.ClearState();
                         targetPos.transform.position = GetTarget(true);
                         PlayAnim(0, aec.run, true);
-         
+
                     }
                 }
 
@@ -134,7 +138,7 @@ public class Enemy4Controller : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-      //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
+        //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
         if (trackEntry.Animation.name.Equals(aec.attack1.name))
         {
             GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
@@ -144,7 +148,7 @@ public class Enemy4Controller : EnemyBase
             else
                 grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
             grenade.SetActive(true);
-          //  Debug.Log("-------- nem lu dan");
+            //  Debug.Log("-------- nem lu dan");
             combo++;
 
             if (combo == randomCombo)
@@ -168,5 +172,9 @@ public class Enemy4Controller : EnemyBase
                 timedelayShoot = maxtimeDelayAttack / 2;
             }
         }
+        //else if (trackEntry.Animation.Name.Equals(aec.die.name))
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 }

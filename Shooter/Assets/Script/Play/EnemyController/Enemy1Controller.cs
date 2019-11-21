@@ -9,21 +9,22 @@ public class Enemy1Controller : EnemyBase
     public bool detectPlayer;
     private void Start()
     {
+        base.Start();
         Init();
     }
     public override void Init()
     {
         base.Init();
         randomCombo = Random.Range(2, 4);
+        if (!EnemyManager.instance.enemy1s.Contains(this))
+        {
+            EnemyManager.instance.enemy1s.Add(this);
+        }
     }
    public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemy1s.Contains(this))
-        {
-            EnemyManager.instance.enemy1s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
     }
 
     //private void OnDrawGizmos()
@@ -36,7 +37,8 @@ public class Enemy1Controller : EnemyBase
 
         if (!isActive)
             return;
-
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -105,15 +107,19 @@ public class Enemy1Controller : EnemyBase
         {
             boxAttack1.gameObject.SetActive(false);
             combo++;
+            enemyState = EnemyState.idle;
         }
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             combo = 0;
             randomCombo = Random.Range(2, 4);
             boxAttack2.gameObject.SetActive(false);
+            enemyState = EnemyState.idle;
         }
-
-        enemyState = EnemyState.idle;
+        //if (trackEntry.Animation.Name.Equals(aec.die.name))
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
     private void OnDisable()
     {

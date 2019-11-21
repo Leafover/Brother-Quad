@@ -3,8 +3,8 @@ using System.Collections;
 public class ObjectPoolerManager : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler, bulletEnemy3Pooler, bulletEnemy4Pooler, grenadeEnemy4Pooler, slowArenaGrenadeEnemy4Pooler, bulletEnemyV1Pooler, effectExploBulletEnemyV1Pooler, boomEnemyV3Pooler, effectExploBoomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler;
-    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab, bulletEnemy3Prefab, bulletEnemy4Prefab, grenadeEnemy4Prefab, slowArenaGrenadeEnemy4Prefab, bulletEnemyV1Prefab, effectExploBulletEnemyV1Prefab, boomEnemyV3Prefab, effectExploBoomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab;
+    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, effectE0ExploPooler, bulletEnemy3Pooler, bulletEnemy4Pooler, grenadeEnemy4Pooler, slowArenaGrenadeEnemy4Pooler, bulletEnemyV1Pooler, effectExploBulletEnemyV1Pooler, boomEnemyV3Pooler, effectExploBoomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, enemy5Pooler, bulletEnemy6Pooler;
+    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, effectE1ExploPrefab, bulletEnemy3Prefab, bulletEnemy4Prefab, grenadeEnemy4Prefab, slowArenaGrenadeEnemy4Prefab, bulletEnemyV1Prefab, effectExploBulletEnemyV1Prefab, boomEnemyV3Prefab, effectExploBoomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, enemy5Prefab, bulletEnemy6Prefab;
     [HideInInspector]
     public static ObjectPoolerManager Instance { get; private set; }
 
@@ -132,6 +132,22 @@ public class ObjectPoolerManager : MonoBehaviour
             rocketMiniBoss1Pooler.PooledObject = rocketMiniBoss1Prefab;
             go.transform.parent = this.gameObject.transform;
             rocketMiniBoss1Pooler.Initialize();
+        }
+        if (enemy5Pooler == null)
+        {
+            GameObject go = new GameObject("enemy5Pooler");
+            enemy5Pooler = go.AddComponent<ObjectPooler>();
+            enemy5Pooler.PooledObject = enemy5Prefab;
+            go.transform.parent = this.gameObject.transform;
+            enemy5Pooler.Initialize();
+        }
+        if (bulletEnemy6Pooler == null)
+        {
+            GameObject go = new GameObject("bulletEnemy6Pooler");
+            bulletEnemy6Pooler = go.AddComponent<ObjectPooler>();
+            bulletEnemy6Pooler.PooledObject = bulletEnemy6Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletEnemy6Pooler.Initialize();
         }
     }
 }

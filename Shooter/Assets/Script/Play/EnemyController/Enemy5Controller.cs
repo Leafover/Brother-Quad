@@ -9,20 +9,23 @@ public class Enemy5Controller : EnemyBase
 
     private void Start()
     {
+        base.Start();
         Init();
+
     }
     public override void Init()
     {
         base.Init();
+        if (!EnemyManager.instance.enemy5s.Contains(this))
+        {
+            EnemyManager.instance.enemy5s.Add(this);
+        }
     }
     public override void AcBecameVisibleCam()
     {
         base.AcBecameVisibleCam();
-        if (!EnemyManager.instance.enemy5s.Contains(this))
-        {
-            EnemyManager.instance.enemy5s.Add(this);
-            isActive = true;
-        }
+        isActive = true;
+        Debug.Log("==========enable");
     }
 
     public override void OnUpdate(float deltaTime)
@@ -31,7 +34,8 @@ public class Enemy5Controller : EnemyBase
 
         if (!isActive)
             return;
-
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -88,8 +92,13 @@ public class Enemy5Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             boxAttack1.gameObject.SetActive(false);
+            enemyState = EnemyState.idle;
         }
-        enemyState = EnemyState.idle;
+        //else if (trackEntry.Animation.Name.Equals(aec.die.name))
+        //{
+        //    gameObject.SetActive(false);
+        //}
+
     }
     private void OnDisable()
     {

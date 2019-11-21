@@ -6,9 +6,9 @@ public class GoInAndGoOutCameraSkeAnimEnemyBeyondCamera : GoInAndGoOutCamera
 {
     public override void OnBecameInvisible()
     {
+        base.OnBecameInvisible();
         if (!myEnemyBase.isActive)
             return;
-        base.OnBecameInvisible();
         myEnemyBase.gameObject.SetActive(false);
     }
     
