@@ -17,17 +17,12 @@ public class MiniBoss1 : EnemyBase
         base.Init();
         currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
         randomCombo = Random.Range(2, 4);
-    }
-    public override void AcBecameVisibleCam()
-    {
-        base.AcBecameVisibleCam();
         if (!EnemyManager.instance.miniboss1s.Contains(this))
         {
             EnemyManager.instance.miniboss1s.Add(this);
-            isActive = true;
-            enemyState = EnemyState.run;
         }
     }
+
     private void OnDisable()
     {
         base.OnDisable();
@@ -39,10 +34,19 @@ public class MiniBoss1 : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (!isActive)
-            return;
         if (enemyState == EnemyState.die)
             return;
+
+        if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                isActive = true;
+                enemyState = EnemyState.run;
+            }
+            return;
+        }
+
         switch (enemyState)
         {
             case EnemyState.run:

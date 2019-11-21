@@ -34,6 +34,9 @@ public class Enemy6Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
+        if (enemyState == EnemyState.die)
+            return;
+
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
@@ -44,8 +47,6 @@ public class Enemy6Controller : EnemyBase
             }
             return;
         }
-        if (enemyState == EnemyState.die)
-            return;
         switch(enemyState)
         {
             case EnemyState.run:

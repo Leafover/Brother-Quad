@@ -22,12 +22,6 @@ public class EnemyV1Controller : EnemyBase
             EnemyManager.instance.enemyv1s.Add(this);
         }
     }
-    public override void AcBecameVisibleCam()
-    {
-        base.AcBecameVisibleCam();
-        isActive = true;
-        enemyState = EnemyState.attack;
-    }
     public void OnDisable()
     {
         base.OnDisable();
@@ -41,10 +35,19 @@ public class EnemyV1Controller : EnemyBase
     {
         base.OnUpdate(deltaTime);
 
-        if (!isActive)
-            return;
         if (enemyState == EnemyState.die)
             return;
+
+        if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                isActive = true;
+                enemyState = EnemyState.attack;
+            }
+            return;
+        }
+
         switch (enemyState)
         {
             case EnemyState.attack:

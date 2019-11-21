@@ -25,6 +25,9 @@ public class Enemy0Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
+        if (enemyState == EnemyState.die)
+            return;
+
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
@@ -33,8 +36,7 @@ public class Enemy0Controller : EnemyBase
             }
             return;
         }
-        if (enemyState == EnemyState.die)
-            return;
+
         distanceTravelled += speed * deltaTime;
         transform.position = PathCreatorController.instance.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 

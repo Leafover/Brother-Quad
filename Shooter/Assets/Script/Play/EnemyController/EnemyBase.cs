@@ -10,8 +10,7 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
     public System.Action<float> acOnUpdate;
-    public System.Action acBecameVisibleCamera;
-
+    public bool canoutcam, incam, activefar;
     public enum EnemyState
     {
         idle,
@@ -22,7 +21,7 @@ public class EnemyBase : MonoBehaviour
     public bool canmove;
     Vector2 originPos;
     public float radius;
-    public Collider2D boxAttack1, boxAttack2,takeDamageBox;
+    public Collider2D boxAttack1, boxAttack2, takeDamageBox;
     public float damage = 3;
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
@@ -123,7 +122,6 @@ public class EnemyBase : MonoBehaviour
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
-        acBecameVisibleCamera -= AcBecameVisibleCam;
         acOnUpdate -= OnUpdate;
 
         // Debug.Log("-----zoooooooooooooo");
@@ -131,7 +129,7 @@ public class EnemyBase : MonoBehaviour
     public virtual void Start()
     {
         skeletonAnimation.Initialize(true);
-      //  Debug.Log("init =====");
+        //  Debug.Log("init =====");
     }
     public virtual void Init()
     {
@@ -146,7 +144,6 @@ public class EnemyBase : MonoBehaviour
 
 
         acOnUpdate += OnUpdate;
-        acBecameVisibleCamera += AcBecameVisibleCam;
         if (skeletonAnimation != null)
         {
             skeletonAnimation.AnimationState.Event += Event;
@@ -158,7 +155,12 @@ public class EnemyBase : MonoBehaviour
             boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
-        distanceActive = Camera.main.orthographicSize * 2 + 1;
+        if (activefar)
+            distanceActive = Camera.main.orthographicSize * 2 + 1;
+        else
+            distanceActive = Camera.main.orthographicSize * 1.8f;
+
+        //  Debug.Log("init =====");
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -200,7 +202,10 @@ public class EnemyBase : MonoBehaviour
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
+       //     Debug.LogError("dead");
+      //      return;
         }
+
     }
 
 
@@ -234,7 +239,7 @@ public class EnemyBase : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-      //  skeletonAnimation.ClearState();
+        skeletonAnimation.ClearState();
         PlayAnim(0, aec.die, false);
         PlayerController.instance.RemoveTarget(this);
     }
@@ -242,13 +247,14 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            if (!isActive)
+            if (!incam)
                 return;
 
             //if (PlayerController.instance.currentEnemyTarget != this)
             //    return;
             //else
             //{
+
             health--;
             if (health <= 0)
             {
@@ -262,14 +268,10 @@ public class EnemyBase : MonoBehaviour
         }
         else if (collision.gameObject.layer == 14)
         {
-            if (!isActive)
+            if (!incam)
                 return;
             gameObject.SetActive(false);
         }
-    }
-    public virtual void AcBecameVisibleCam()
-    {
-
     }
 }
 

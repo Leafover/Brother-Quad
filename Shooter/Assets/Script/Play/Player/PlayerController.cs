@@ -71,10 +71,17 @@ public class PlayerController : MonoBehaviour
     }
     public void RemoveTarget(EnemyBase enemy)
     {
-        if (autoTarget.Contains(enemy))
-            autoTarget.Remove(enemy);
         if (currentEnemyTarget == enemy)
             currentEnemyTarget = null;
+
+        if (autoTarget.Contains(enemy))
+            autoTarget.Remove(enemy);
+
+        if (enemy.canoutcam)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+
     }
     public void TryJump()
     {

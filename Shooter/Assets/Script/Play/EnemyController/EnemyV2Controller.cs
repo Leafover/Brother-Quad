@@ -22,12 +22,7 @@ public class EnemyV2Controller : EnemyBase
             EnemyManager.instance.enemyv2s.Add(this);
         }
     }
-    public override void AcBecameVisibleCam()
-    {
-        base.AcBecameVisibleCam();
-        isActive = true;
-        enemyState = EnemyState.run;
-    }
+
     private void OnDisable()
     {
         base.OnDisable();
@@ -39,10 +34,19 @@ public class EnemyV2Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (!isActive)
-            return;
         if (enemyState == EnemyState.die)
             return;
+
+        if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                isActive = true;
+                enemyState = EnemyState.run;
+            }
+            return;
+        }
+
         switch (enemyState)
         {
             case EnemyState.run:
@@ -85,6 +89,7 @@ public class EnemyV2Controller : EnemyBase
                 combo = 0;
                 enemyState = EnemyState.run;
                 randomCombo = Random.Range(2, 4);
+                Debug.LogError("re turn run");
             }
         }
         //else if (trackEntry.Animation.Name.Equals(aec.die.name))

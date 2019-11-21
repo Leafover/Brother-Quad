@@ -20,22 +20,24 @@ public class Enemy5Controller : EnemyBase
         {
             EnemyManager.instance.enemy5s.Add(this);
         }
-    }
-    public override void AcBecameVisibleCam()
-    {
-        base.AcBecameVisibleCam();
-        isActive = true;
-      //  Debug.Log("==========enable");
+        enemyState = EnemyState.idle;
     }
 
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-
-        if (!isActive)
-            return;
         if (enemyState == EnemyState.die)
             return;
+
+        if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                isActive = true;
+            }
+            return;
+        }
+
         switch (enemyState)
         {
             case EnemyState.idle:
