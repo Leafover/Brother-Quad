@@ -337,7 +337,6 @@ public class PlayerController : MonoBehaviour
         currentAnim = apc.sitAnim;
         speedmove = 0;
         SetBox(sizeBoxSit, offsetBoxSit);
-        SetBox(sizeBoxSit, offsetBoxSit);
     }
 
     void AnimRun()
@@ -354,7 +353,6 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
             currentAnim = apc.runForwardAnim;
             SetBox(sizeBox, offsetBox);
-            SetBox(sizeBoxSit, offsetBoxSit);
         }
         else
         {
@@ -363,7 +361,6 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);
-            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
 
@@ -386,7 +383,6 @@ public class PlayerController : MonoBehaviour
             currentAnim = apc.idleAnim;
             speedmove = 0;
             SetBox(sizeBox, offsetBox);
-            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
 

@@ -17,6 +17,8 @@ public class ArenaSlowEnemy4 : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (PlayerController.instance == null)
+            return;
         PlayerController.instance.isSlow = false;
     }
     //private void OnDrawGizmos()

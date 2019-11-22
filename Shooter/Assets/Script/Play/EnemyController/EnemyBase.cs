@@ -29,12 +29,13 @@ public class EnemyBase : MonoBehaviour
     public EnemyState enemyState = EnemyState.idle;
     public LayerMask lm = 13;
     public Rigidbody2D rid;
-    public float health = 3;
+    public float health = 3, currentHealth;
     public float speed = 1, distanceActive = 6;
     public float maxtimedelayChangePos = 6;
     public Renderer render;
     public bool isActive;
     int dir;
+    [HideInInspector]
     public int combo, randomCombo;
     public SkeletonAnimation skeletonAnimation;
 
@@ -50,7 +51,7 @@ public class EnemyBase : MonoBehaviour
         set { originPos = value; }
     }
 
-    public void PlayAnim(int indexTrack, AnimationReferenceAsset anim, bool loop)
+    public virtual void PlayAnim(int indexTrack, AnimationReferenceAsset anim, bool loop)
     {
         if (currentAnim != anim)
         {
@@ -156,11 +157,11 @@ public class EnemyBase : MonoBehaviour
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
         if (activefar)
-            distanceActive = Camera.main.orthographicSize * 2 + 1;
+            distanceActive = Camera.main.orthographicSize * 2 + 2;
         else
             distanceActive = Camera.main.orthographicSize * 1.8f;
 
-        //  Debug.Log("init =====");
+        currentHealth = health;
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -202,8 +203,8 @@ public class EnemyBase : MonoBehaviour
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
-       //     Debug.LogError("dead");
-      //      return;
+            //     Debug.LogError("dead");
+            //      return;
         }
 
     }
@@ -243,34 +244,31 @@ public class EnemyBase : MonoBehaviour
         PlayAnim(0, aec.die, false);
         PlayerController.instance.RemoveTarget(this);
     }
+    public virtual void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Dead();
+        }
+    }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 11)
         {
             if (!incam)
                 return;
-
-            //if (PlayerController.instance.currentEnemyTarget != this)
-            //    return;
-            //else
-            //{
-
-            health--;
-            if (health <= 0)
-            {
-                // gameObject.SetActive(false);
-                Dead();
-            }
+            TakeDamage(1);
             PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             collision.gameObject.SetActive(false);
-            //}
-            //   Debug.LogError("--------------- trung dan");
         }
         else if (collision.gameObject.layer == 14)
         {
             if (!incam)
                 return;
-            gameObject.SetActive(false);
+
+            TakeDamage(3);
+            collision.gameObject.SetActive(false);
         }
     }
 }

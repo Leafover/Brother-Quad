@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.instance.gameState == GameController.GameState.begin)
+            return;
         if (PlayerController.instance == null)
             return;
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(PlayerController.instance.transform.position.x + 1, transform.position.y, transform.position.z), Time.deltaTime * 5);

@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyV2Controller> enemyv2s;
     public List<EnemyV3Controller> enemyv3s;
     public List<MiniBoss1> miniboss1s;
+    public List<Boss1Controller> boss1s;
 
     public void Awake()
     {
@@ -120,6 +121,15 @@ public class EnemyManager : MonoBehaviour
             miniboss1s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
+    void CallBoss1Action(float deltaTime)
+    {
+        if (boss1s.Count == 0)
+            return;
+        for (int i = 0; i < boss1s.Count; i++)
+        {
+            boss1s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
     // Update is called once per frame
     public void OnUpdate(float deltaTime)
     {
@@ -134,5 +144,6 @@ public class EnemyManager : MonoBehaviour
         CallEV2Action(deltaTime);
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
+        CallBoss1Action(deltaTime);
     }
 }

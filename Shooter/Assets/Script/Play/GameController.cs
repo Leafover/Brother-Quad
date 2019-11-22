@@ -13,18 +13,32 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, idle, run, aimTargetAnim, run2, die;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die;
 }
 
 public class GameController : MonoBehaviour
 {
-
+    public GameObject UIControll, UIBegin;
+    public enum GameState
+    {
+        begin,
+        play,
+        gameover
+    }
+    public GameState gameState = GameState.begin;
     public UltimateJoystick joystickMove, joystickShot;
     public static GameController instance;
 
     Vector2 movePosition, shootPosition;
+    public PlayerController player;
 
-
+    public void BeginPanel()
+    {
+        UIControll.SetActive(true);
+        UIBegin.SetActive(false);
+        player.gameObject.SetActive(true);
+        gameState = GameState.play;
+    }
 
     private void Awake()
     {
@@ -35,8 +49,8 @@ public class GameController : MonoBehaviour
 #else
         Application.targetFrameRate = 60;
 #endif
-
-
+        gameState = GameState.begin;
+        player.gameObject.SetActive(false);
     }
 
     private void JoystickMovement(UltimateJoystick joystick)
@@ -169,6 +183,8 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        if (gameState == GameState.begin)
+            return;
         var deltaTime = Time.deltaTime;
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);

@@ -7,11 +7,11 @@ public class BulletEnemy2 : BulletEnemy
     public override void Init(int type)
     {
         base.Init(type);
-        rid.gravityScale = 1.5f;
+        rid.gravityScale = 1.3f;
     }
     private void OnEnable()
     {
-        Init(3);
+        Init(4);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,6 +30,6 @@ public class BulletEnemy2 : BulletEnemy
     {
         yield return new WaitForSeconds(0.85f);
         rid.velocity = (dir * speed);
-        rid.gravityScale = 1.5f;
+        rid.gravityScale = 1.3f;
     }
 }

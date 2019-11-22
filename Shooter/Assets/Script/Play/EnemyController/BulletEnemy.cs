@@ -6,6 +6,8 @@ public class BulletEnemy : MonoBehaviour
 {
     [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);
+    [HideInInspector]
+    public Vector2 dir1 = new Vector2(-1, 0);
     public Rigidbody2D rid;
     public float speed, damage;
     System.Action hit;
@@ -34,6 +36,9 @@ public class BulletEnemy : MonoBehaviour
                 rid.velocity = (transform.up * speed);
                 break;
             case 3:
+                rid.velocity = (dir1 * speed);
+                break;
+            case 4:
 
                 break;
         }

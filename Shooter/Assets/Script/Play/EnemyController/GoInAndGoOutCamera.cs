@@ -7,6 +7,8 @@ public class GoInAndGoOutCamera : MonoBehaviour
     public EnemyBase myEnemyBase;
     public virtual void OnBecameInvisible()
     {
+        if (PlayerController.instance == null)
+            return;
         if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
             return;
         PlayerController.instance.RemoveTarget(myEnemyBase);
@@ -16,6 +18,8 @@ public class GoInAndGoOutCamera : MonoBehaviour
     }
     public virtual void OnBecameVisible()
     {
+        if (PlayerController.instance == null)
+            return;
         if (!PlayerController.instance.autoTarget.Contains(myEnemyBase))
             PlayerController.instance.autoTarget.Add(myEnemyBase);
         myEnemyBase.OriginPos = myEnemyBase.transform.position;

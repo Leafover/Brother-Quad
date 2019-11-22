@@ -98,10 +98,10 @@ public class Enemy1Controller : EnemyBase
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
