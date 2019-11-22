@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float speedmove;
     [HideInInspector]
-    public bool isShooting, isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
+    public bool isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
 
 
     //public IEnumerator Move()
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
             currentEnemyTarget = null;
 
         if (autoTarget.Contains(enemy))
-             autoTarget.Remove(enemy);
+            autoTarget.Remove(enemy);
 
         if (enemy.canoutcam)
         {
@@ -91,13 +91,11 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Jump());
         else
         {
-            if (candoublejump)
-            {
-                //  Debug.Log("double jump");
-                candoublejump = false;
-                force = rid.velocity.y + 6f;
-                rid.velocity = new Vector2(rid.velocity.x, force);
-            }
+            if (!candoublejump)
+                return;
+            candoublejump = false;
+            force = rid.velocity.y + 6f;
+            rid.velocity = new Vector2(rid.velocity.x, force);
         }
 
     }
@@ -118,19 +116,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    //float xPosCurrent;
-    //IEnumerator posEnemyFollow()
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    xPosCurrent = transform.position.x;
-    //  //  StartCoroutine(posEnemyFollow());
-    //}
-    //public float GetTranformPlayerType2()
-    //{
-    //    Debug.Log(xPosCurrent);
-    //    return xPosCurrent;
-
-    //}
     public Transform GetTransformPlayer()
     {
         return transform;
@@ -147,10 +132,8 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.Event += HandleEvent;
         skeletonAnimation.AnimationState.Complete += OnComplete;
         health = maxHealth;
-        //       StartCoroutine(Move());
         speedmove = 0;
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-        //  StartCoroutine(posEnemyFollow());
     }
     public void DetectGround()
     {
@@ -180,25 +163,22 @@ public class PlayerController : MonoBehaviour
         }
         candoublejump = true;
     }
-    private void OnDrawGizmos()
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.15f);
+    //}
+    public void SetAnim()
     {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.15f);
-    }
-    void SetAnim()
-    {
-        //  Debug.LogError("------------:" + rid.velocity.y);
         switch (playerState)
         {
             case PlayerState.Idle:
                 AnimIdle();
-                //  AnimSit();
                 break;
             case PlayerState.Sit:
                 AnimSit();
                 break;
             case PlayerState.Jump:
                 AnimJump();
-                //  Debug.LogError(rid.velocity.y);
                 if (isGround && rid.velocity.y <= 0)
                 {
                     if (!GameController.instance.joystickMove.GetJoystickState())
@@ -207,14 +187,12 @@ public class PlayerController : MonoBehaviour
                         playerState = PlayerState.Idle;
                         speedmove = 0;
                         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-                        //    Debug.Log("--------------------- zo day 1");
                     }
                     else
                     {
                         isWaitStand = false;
                         GameController.instance.CheckAfterJump(GameController.instance.joystickMove);
                         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-                        //   Debug.Log("--------------------- zo day 2");
                     }
                 }
                 break;
@@ -226,6 +204,7 @@ public class PlayerController : MonoBehaviour
     }
     public Vector2 target;
     Vector2 movePos;
+
     public void OnUpdate(float deltaTime)
     {
         // Debug.Log(rid.velocity.x);
@@ -248,7 +227,7 @@ public class PlayerController : MonoBehaviour
         {
             DetectGround();
         }
-      SetAnim();
+        SetAnim();
 
 
         if (!MoveTargetPos())
@@ -290,7 +269,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
         {
-            //  Debug.LogError("--------- nem lu dan");
             GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
@@ -302,11 +280,6 @@ public class PlayerController : MonoBehaviour
         {
             isWaitStand = false;
         }
-        //else if(trackEntry.Animation.Name.Equals(apc.jumpAnim.name))
-        //{
-        //    //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-        //    Debug.Log("end jump");
-        //}
     }
     public Vector2 GetOriginGun()
     {
@@ -326,50 +299,45 @@ public class PlayerController : MonoBehaviour
     }
     void AnimWaitStand()
     {
-        if (currentAnim != apc.waitstandAnim)
-        {
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.waitstandAnim, false);
-            currentAnim = apc.waitstandAnim;
-            SetBox(sizeBoxSit, offsetBoxSit);
-        }
+        if (currentAnim == apc.waitstandAnim)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.waitstandAnim, false);
+        currentAnim = apc.waitstandAnim;
+        SetBox(sizeBoxSit, offsetBoxSit);
     }
     void AnimFallDow()
     {
-        if (currentAnim != apc.falldownAnim)
-        {
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.falldownAnim, false);
-            currentAnim = apc.falldownAnim;
-            SetBox(sizeBox, offsetBox);
-        }
+        if (currentAnim == apc.falldownAnim)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.falldownAnim, false);
+        currentAnim = apc.falldownAnim;
+        SetBox(sizeBox, offsetBox);
     }
     void AnimJump()
     {
-        //  skeletonAnimation.AnimationState.ClearTrack(2);
         if (isfalldow)
         {
             return;
         }
         else
         {
-            if (currentAnim != apc.jumpAnim)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(0, apc.jumpAnim, true);
-                currentAnim = apc.jumpAnim;
-                SetBox(sizeBox, offsetBox);
-            }
+            if (currentAnim == apc.jumpAnim)
+                return;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.jumpAnim, true);
+            currentAnim = apc.jumpAnim;
+            SetBox(sizeBox, offsetBox);
         }
 
     }
     void AnimSit()
     {
-        if (currentAnim != apc.sitAnim)
-        {
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.sitAnim, true);
-            currentAnim = apc.sitAnim;
-            speedmove = 0;
-            SetBox(sizeBoxSit, offsetBoxSit);
-            SetBox(sizeBoxSit, offsetBoxSit);
-        }
+        if (currentAnim == apc.sitAnim)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.sitAnim, true);
+        currentAnim = apc.sitAnim;
+        speedmove = 0;
+        SetBox(sizeBoxSit, offsetBoxSit);
+        SetBox(sizeBoxSit, offsetBoxSit);
     }
 
     void AnimRun()
@@ -381,23 +349,21 @@ public class PlayerController : MonoBehaviour
         }
         if (dirMove == FlipX)
         {
-            if (currentAnim != apc.runForwardAnim)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
-                currentAnim = apc.runForwardAnim;
-                SetBox(sizeBox, offsetBox);
-                SetBox(sizeBoxSit, offsetBoxSit);
-            }
+            if (currentAnim == apc.runForwardAnim)
+                return;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
+            currentAnim = apc.runForwardAnim;
+            SetBox(sizeBox, offsetBox);
+            SetBox(sizeBoxSit, offsetBoxSit);
         }
         else
         {
-            if (currentAnim != apc.runBackAnim)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
-                currentAnim = apc.runBackAnim;
-                SetBox(sizeBox, offsetBox);
-                SetBox(sizeBoxSit, offsetBoxSit);
-            }
+            if (currentAnim == apc.runBackAnim)
+                return;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
+            currentAnim = apc.runBackAnim;
+            SetBox(sizeBox, offsetBox);
+            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
 
@@ -414,37 +380,24 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (currentAnim != apc.idleAnim)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, false);
-                currentAnim = apc.idleAnim;
-                speedmove = 0;
-                SetBox(sizeBox, offsetBox);
-                SetBox(sizeBoxSit, offsetBoxSit);
-            }
+            if (currentAnim == apc.idleAnim)
+                return;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, false);
+            currentAnim = apc.idleAnim;
+            speedmove = 0;
+            SetBox(sizeBox, offsetBox);
+            SetBox(sizeBoxSit, offsetBoxSit);
         }
     }
 
     public void ShootDown()
     {
 
-        if (Time.time - timePreviousAttack > timedelayAttackGun)
-        {
-            timePreviousAttack = Time.time;
-            skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
+        if (Time.time - timePreviousAttack < timedelayAttackGun)
+            return;
+        timePreviousAttack = Time.time;
+        skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
 
-        }
-        if (!isShooting)
-        {
-            isShooting = true;
-        }
-    }
-    public void ShootUp()
-    {
-        if (isShooting)
-        {
-            isShooting = false;
-        }
 
     }
     public EnemyBase currentEnemyTarget;

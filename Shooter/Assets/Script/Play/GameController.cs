@@ -108,6 +108,7 @@ public class GameController : MonoBehaviour
             if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;
             PlayerController.instance.playerState = PlayerController.PlayerState.Run;
+
         }
         else if ((angle > -180f && angle < -135f) || (angle > 135f && angle < 180f))
         {
@@ -136,18 +137,14 @@ public class GameController : MonoBehaviour
                     PlayerController.instance.FlipX = shootPosition.x < 0;
                     PlayerController.instance.SelectNonTarget(shootPosition);
                 }
-
-                //   Debug.LogError("ko co target");
             }
             else
             {
                 PlayerController.instance.SelectTarget();
-                //   Debug.LogError(" co target");
             }
         }
         else
         {
-            StopShot();
             if (PlayerController.instance.autoTarget.Count == 0)
             {
                 PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
@@ -157,15 +154,6 @@ public class GameController : MonoBehaviour
                 PlayerController.instance.SelectTarget();
             }
         }
-
-        //if (PlayerController.instance.autoTarget.Count == 0)
-        //{
-        //    PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
-        //}
-        //else
-        //{
-        //    PlayerController.instance.SelectTarget();
-        //}
     }
     void OnUpdatePlayer(float deltaTime)
     {
@@ -190,10 +178,6 @@ public class GameController : MonoBehaviour
     public void TryShot()
     {
         PlayerController.instance.ShootDown();
-    }
-    public void StopShot()
-    {
-        PlayerController.instance.ShootUp();
     }
     public void TryJump()
     {
