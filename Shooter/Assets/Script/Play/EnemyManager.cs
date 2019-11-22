@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     public List<Enemy0Controller> enemy0s;
     public List<Enemy1Controller> enemy1s;
+    public List<Enemy2Controller> enemy2s;
     public List<Enemy3Controller> enemy3s;
     public List<Enemy4Controller> enemy4s;
     public List<Enemy5Controller> enemy5s;
@@ -36,6 +37,15 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemy1s.Count; i++)
         {
             enemy1s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallE2Action(float deltaTime)
+    {
+        if (enemy2s.Count == 0)
+            return;
+        for (int i = 0; i < enemy2s.Count; i++)
+        {
+            enemy2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
     void CallE3Action(float deltaTime)
@@ -111,11 +121,11 @@ public class EnemyManager : MonoBehaviour
         }
     }
     // Update is called once per frame
-    public void OnUpdate()
+    public void OnUpdate(float deltaTime)
     {
-        var deltaTime = Time.deltaTime;
         CallE0Action(deltaTime);
         CallE1Action(deltaTime);
+        CallE2Action(deltaTime);
         CallE3Action(deltaTime);
         CallE4Action(deltaTime);
         CallE5Action(deltaTime);

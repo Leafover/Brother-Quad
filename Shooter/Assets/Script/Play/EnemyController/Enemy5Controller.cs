@@ -11,7 +11,6 @@ public class Enemy5Controller : EnemyBase
     {
         base.Start();
         Init();
-
     }
     public override void Init()
     {
@@ -76,10 +75,10 @@ public class Enemy5Controller : EnemyBase
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -96,10 +95,6 @@ public class Enemy5Controller : EnemyBase
             boxAttack1.gameObject.SetActive(false);
             enemyState = EnemyState.idle;
         }
-        //else if (trackEntry.Animation.Name.Equals(aec.die.name))
-        //{
-        //    gameObject.SetActive(false);
-        //}
 
     }
     private void OnDisable()

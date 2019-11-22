@@ -167,24 +167,25 @@ public class GameController : MonoBehaviour
         //    PlayerController.instance.SelectTarget();
         //}
     }
-    void OnUpdatePlayer()
+    void OnUpdatePlayer(float deltaTime)
     {
         if (PlayerController.instance == null)
             return;
-        PlayerController.instance.OnUpdate();
+        PlayerController.instance.OnUpdate(deltaTime);
     }
-    void OnUpdateEnemyManager()
+    void OnUpdateEnemyManager(float deltaTime)
     {
         if (EnemyManager.instance == null)
             return;
-        EnemyManager.instance.OnUpdate();
+        EnemyManager.instance.OnUpdate(deltaTime);
     }
     private void Update()
     {
+        var deltaTime = Time.deltaTime;
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
-        OnUpdatePlayer();
-        OnUpdateEnemyManager();
+        OnUpdatePlayer(deltaTime);
+        OnUpdateEnemyManager(deltaTime);
     }
     public void TryShot()
     {

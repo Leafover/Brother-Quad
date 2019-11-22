@@ -33,6 +33,9 @@ public class BulletEnemy : MonoBehaviour
             case 2:
                 rid.velocity = (transform.up * speed);
                 break;
+            case 3:
+
+                break;
         }
         StartEvent();
     }
@@ -44,6 +47,7 @@ public class BulletEnemy : MonoBehaviour
     private void OnDisable()
     {
         hit -= Hit;
+        rid.velocity = Vector2.zero ;
     }
 
     public virtual void Hit()

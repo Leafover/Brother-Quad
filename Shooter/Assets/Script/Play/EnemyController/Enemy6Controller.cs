@@ -59,6 +59,7 @@ public class Enemy6Controller : EnemyBase
                 }
                 break;
             case EnemyState.attack:
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 Shoot(0, aec.attack1, false, maxtimeDelayAttack);
                 targetPos.position = GetTarget(false);
                 break;

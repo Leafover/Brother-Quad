@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
             currentEnemyTarget = null;
 
         if (autoTarget.Contains(enemy))
-            autoTarget.Remove(enemy);
+             autoTarget.Remove(enemy);
 
         if (enemy.canoutcam)
         {
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
     }
     public Vector2 target;
     Vector2 movePos;
-    public void OnUpdate()
+    public void OnUpdate(float deltaTime)
     {
         // Debug.Log(rid.velocity.x);
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
@@ -248,14 +248,8 @@ public class PlayerController : MonoBehaviour
         {
             DetectGround();
         }
-        SetAnim();
-        var deltaTime = Time.deltaTime;
+      SetAnim();
 
-
-        //if (playerState != PlayerState.Jump)
-        //{
-        //  //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-        //}
 
         if (!MoveTargetPos())
             return;
