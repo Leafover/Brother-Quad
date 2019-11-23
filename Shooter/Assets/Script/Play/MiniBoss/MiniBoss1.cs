@@ -7,12 +7,12 @@ public class MiniBoss1 : EnemyBase
 {
         int currentPos;
     public Transform gunRotation;
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
     }
-    private void Init()
+    public override void Init()
     {
         base.Init();
         currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
@@ -23,7 +23,7 @@ public class MiniBoss1 : EnemyBase
         }
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.miniboss1s.Contains(this))

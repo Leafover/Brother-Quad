@@ -8,7 +8,7 @@ public class Enemy3Controller : EnemyBase
 {
     float timedelayChangePos;
     Vector2 nextPos;
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -23,7 +23,7 @@ public class Enemy3Controller : EnemyBase
 
         }
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy3s.Contains(this))

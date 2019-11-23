@@ -7,7 +7,7 @@ public class Enemy5Controller : EnemyBase
     public bool detectPlayer;
     float speedMove;
 
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -97,7 +97,7 @@ public class Enemy5Controller : EnemyBase
         }
 
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy5s.Contains(this))

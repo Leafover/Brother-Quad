@@ -7,7 +7,7 @@ public class Enemy1Controller : EnemyBase
 {
     float speedMove;
     public bool detectPlayer;
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -123,7 +123,7 @@ public class Enemy1Controller : EnemyBase
         //    gameObject.SetActive(false);
         //}
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy1s.Contains(this))

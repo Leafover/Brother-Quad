@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyV3Controller : EnemyBase
 {
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -55,7 +55,7 @@ public class EnemyV3Controller : EnemyBase
     //    //    gameObject.SetActive(false);
     //    //}
     //}
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemyv3s.Contains(this))

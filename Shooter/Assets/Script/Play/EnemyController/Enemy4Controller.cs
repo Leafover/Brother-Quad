@@ -9,7 +9,7 @@ public class Enemy4Controller : EnemyBase
     float timedelayChangePos, timedelayShoot;
     Vector2 nextPos;
     bool isGrenadeStage;
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -27,7 +27,7 @@ public class Enemy4Controller : EnemyBase
 
         }
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy4s.Contains(this))

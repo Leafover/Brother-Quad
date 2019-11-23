@@ -5,8 +5,8 @@ using Spine;
 using Spine.Unity;
 public class Enemy6Controller : EnemyBase
 {
-   public float speedMove;
-    private void Start()
+    public float speedMove;
+    public override void Start()
     {
         base.Start();
         Init();
@@ -20,10 +20,10 @@ public class Enemy6Controller : EnemyBase
         }
         speedMove = -speed;
 
-     //   Debug.Log("----------------:" + speedMove);
+        //   Debug.Log("----------------:" + speedMove);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy6s.Contains(this))
@@ -47,11 +47,11 @@ public class Enemy6Controller : EnemyBase
             }
             return;
         }
-        switch(enemyState)
+        switch (enemyState)
         {
             case EnemyState.run:
                 rid.velocity = new Vector2(speedMove, rid.velocity.y);
-                if(Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 5)
+                if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 5)
                 {
                     PlayAnim(0, aec.idle, false);
                     enemyState = EnemyState.attack;
@@ -73,7 +73,7 @@ public class Enemy6Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-          //  Debug.Log("--------------------???");
+            //  Debug.Log("--------------------???");
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
             Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;

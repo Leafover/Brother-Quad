@@ -22,7 +22,7 @@ public class EnemyV1Controller : EnemyBase
             EnemyManager.instance.enemyv1s.Add(this);
         }
     }
-    public void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemyv1s.Contains(this))
@@ -104,14 +104,5 @@ public class EnemyV1Controller : EnemyBase
             bullet.SetActive(true);
         }
     }
-
-    //protected override void OnComplete(TrackEntry trackEntry)
-    //{
-    //    base.OnComplete(trackEntry);
-    //    if (trackEntry.Animation.Name.Equals(aec.die.name))
-    //    {
-    //        gameObject.SetActive(false);
-    //    }
-    //}
 
 }

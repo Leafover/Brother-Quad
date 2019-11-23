@@ -18,7 +18,10 @@ public class GoInAndGoOutCamera : MonoBehaviour
     }
     public virtual void OnBecameVisible()
     {
+
         if (PlayerController.instance == null)
+            return;
+        if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
             return;
         if (!PlayerController.instance.autoTarget.Contains(myEnemyBase))
             PlayerController.instance.autoTarget.Add(myEnemyBase);

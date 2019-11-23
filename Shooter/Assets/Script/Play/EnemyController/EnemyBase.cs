@@ -4,9 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class EnemyBase : MonoBehaviour
 {
     public System.Action<float> acOnUpdate;
@@ -53,6 +50,8 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void PlayAnim(int indexTrack, AnimationReferenceAsset anim, bool loop)
     {
+        if (enemyState == EnemyState.die)
+            return;
         if (currentAnim != anim)
         {
             //   Debug.Log("change anim" + currentAnim.name);
@@ -106,6 +105,8 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop, float timeDelayAttack)
     {
+        if (enemyState == EnemyState.die)
+            return;
         if (Time.time - timePreviousAttack >= timeDelayAttack)
         {
             timePreviousAttack = Time.time;
@@ -232,7 +233,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Dead()
     {
-        enemyState = EnemyState.die;
+
         rid.velocity = Vector2.zero;
         takeDamageBox.enabled = false;
         if (aec.die == null)
@@ -242,6 +243,7 @@ public class EnemyBase : MonoBehaviour
         }
         skeletonAnimation.ClearState();
         PlayAnim(0, aec.die, false);
+        enemyState = EnemyState.die;
         PlayerController.instance.RemoveTarget(this);
     }
     public virtual void TakeDamage(float damage)

@@ -19,7 +19,7 @@ public class Enemy2Controller : EnemyBase
     //{
     //    Gizmos.DrawWireSphere(GetposRay(), radius);
     //}
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -36,7 +36,7 @@ public class Enemy2Controller : EnemyBase
         //   Debug.Log("----------------:" + speedMove);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy2s.Contains(this))

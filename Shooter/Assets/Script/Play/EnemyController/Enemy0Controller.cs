@@ -8,7 +8,7 @@ public class Enemy0Controller : EnemyBase
 {
     public int indexPath;
     float distanceTravelled;
-    private void Start()
+    public override void Start()
     {
         base.Start();
         Init();
@@ -41,7 +41,7 @@ public class Enemy0Controller : EnemyBase
         transform.position = PathCreatorController.instance.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.layer == 13)
@@ -53,7 +53,7 @@ public class Enemy0Controller : EnemyBase
             PlayerController.instance.TakeDamage(damage);
         }
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
         base.OnDisable();
         if (EnemyManager.instance.enemy0s.Contains(this))
