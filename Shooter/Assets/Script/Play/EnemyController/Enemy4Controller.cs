@@ -41,17 +41,20 @@ public class Enemy4Controller : EnemyBase
     {
         base.OnUpdate(deltaTime);
 
-        if (enemyState == EnemyState.die)
-            return;
+
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
                 enemyState = EnemyState.attack;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
+
 
         switch (enemyState)
         {
@@ -128,6 +131,8 @@ public class Enemy4Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+            if (!incam)
+                return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
             Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -143,14 +148,7 @@ public class Enemy4Controller : EnemyBase
         //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
         if (trackEntry.Animation.name.Equals(aec.attack1.name))
         {
-            GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            grenade.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            if (FlipX)
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
-            else
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
-            grenade.SetActive(true);
-            //  Debug.Log("-------- nem lu dan");
+
             combo++;
 
             if (combo == randomCombo)
@@ -173,6 +171,18 @@ public class Enemy4Controller : EnemyBase
                 isGrenadeStage = false;
                 timedelayShoot = maxtimeDelayAttack / 2;
             }
+
+            if (!incam)
+                return;
+            GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
+            grenade.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            if (FlipX)
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
+            else
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
+            grenade.SetActive(true);
+            //  Debug.Log("-------- nem lu dan");
+
         }
         //else if (trackEntry.Animation.Name.Equals(aec.die.name))
         //{

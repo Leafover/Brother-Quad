@@ -25,17 +25,19 @@ public class Enemy5Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
+
 
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
 
         switch (enemyState)
         {
@@ -84,6 +86,8 @@ public class Enemy5Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            if (!incam)
+                return;
             boxAttack1.gameObject.SetActive(true);
         }
     }
@@ -92,8 +96,11 @@ public class Enemy5Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            boxAttack1.gameObject.SetActive(false);
             enemyState = EnemyState.idle;
+            if (!incam)
+                return;
+            boxAttack1.gameObject.SetActive(false);
+
         }
 
     }

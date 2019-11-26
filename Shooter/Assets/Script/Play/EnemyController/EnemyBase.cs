@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
     public System.Action<float> acOnUpdate;
-    public bool canoutcam, incam, activefar;
+    public bool canoutcam, incam;
     public enum EnemyState
     {
         idle,
@@ -60,6 +60,7 @@ public class EnemyBase : MonoBehaviour
 
         }
     }
+
     private void OnValidate()
     {
         if (rid == null)
@@ -157,12 +158,11 @@ public class EnemyBase : MonoBehaviour
             boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
-        if (activefar)
-            distanceActive = Camera.main.orthographicSize * 2 + 2;
-        else
-            distanceActive = Camera.main.orthographicSize * 1.8f;
 
+        distanceActive = Camera.main.orthographicSize * 2;
         currentHealth = health;
+
+        render.gameObject.SetActive(false);
     }
 
     public int CheckDirFollowPlayer(float posX)

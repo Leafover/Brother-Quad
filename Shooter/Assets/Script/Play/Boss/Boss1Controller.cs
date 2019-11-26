@@ -44,9 +44,6 @@ public class Boss1Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
-
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
@@ -54,9 +51,12 @@ public class Boss1Controller : EnemyBase
                 isActive = true;
                 PlayAnim(0, aec.run, true);
                 enemyState = EnemyState.idle;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -172,20 +172,22 @@ public class Boss1Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            boxAttack1.gameObject.SetActive(true);
             combo++;
+            if (!incam)
+                return;
+            boxAttack1.gameObject.SetActive(true);
+
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
-            boxAttack2.gameObject.SetActive(true);
             combo++;
+            if (!incam)
+                return;
+            boxAttack2.gameObject.SetActive(true);
+    
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
-            GameObject bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
-            bullet.SetActive(true);
             combo++;
             if (combo == randomCombo + 1)
             {
@@ -197,6 +199,13 @@ public class Boss1Controller : EnemyBase
             {
                 canAttack = false;
             }
+            if (!incam)
+                return;
+            GameObject bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
+            bullet.SetActive(true);
+
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)

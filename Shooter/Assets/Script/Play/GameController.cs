@@ -181,6 +181,18 @@ public class GameController : MonoBehaviour
             return;
         EnemyManager.instance.OnUpdate(deltaTime);
     }
+    void OnUpdateCamera(float deltaTime)
+    {
+        if (CameraController.instance == null)
+            return;
+        CameraController.instance.OnUpdate(deltaTime);
+    }
+    //void OnUpdateCam(float deltaTime)
+    //{
+    //    if (CameraController.instance == null)
+    //        return;
+    //    CameraController.instance.OnUpdate(deltaTime);
+    //}
     private void Update()
     {
         if (gameState == GameState.begin)
@@ -190,6 +202,8 @@ public class GameController : MonoBehaviour
         JoystickShooting(joystickShot);
         OnUpdatePlayer(deltaTime);
         OnUpdateEnemyManager(deltaTime);
+        OnUpdateCamera(deltaTime);
+
     }
     public void TryShot()
     {

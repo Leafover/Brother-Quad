@@ -60,6 +60,7 @@ public class Enemy2Controller : EnemyBase
             }
             return;
         }
+
         switch (enemyState)
         {
             case EnemyState.run:
@@ -96,10 +97,14 @@ public class Enemy2Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            if (!incam)
+                return;
             boxAttack1.gameObject.SetActive(true);
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+            if (!incam)
+                return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
             bullet.transform.position = gameObject.transform.position;
             switch (FlipX)

@@ -34,8 +34,7 @@ public class Enemy6Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
+
 
         if (!isActive)
         {
@@ -44,9 +43,13 @@ public class Enemy6Controller : EnemyBase
                 isActive = true;
                 PlayAnim(0, aec.run, true);
                 enemyState = EnemyState.run;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
+
         switch (enemyState)
         {
             case EnemyState.run:
@@ -73,7 +76,8 @@ public class Enemy6Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            //  Debug.Log("--------------------???");
+            if (!incam)
+                return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
             Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;

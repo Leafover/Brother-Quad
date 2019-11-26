@@ -35,18 +35,20 @@ public class Enemy3Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
-
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
                 enemyState = EnemyState.attack;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
+
+
 
         switch (enemyState)
         {
@@ -72,7 +74,7 @@ public class Enemy3Controller : EnemyBase
                     targetPos.transform.position = GetTarget(true);
                     PlayAnim(0, aec.run, true);
 
-
+                    //    Debug.LogError("--------:"  +nextPos.x);
                 }
                 break;
             case EnemyState.run:
@@ -80,13 +82,11 @@ public class Enemy3Controller : EnemyBase
 
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
-                if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
+                if (transform.position.x == nextPos.x)
                 {
-                    //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
                     PlayAnim(1, aec.aimTargetAnim, false);
-                    // Debug.LogError("zo day");
                 }
                 break;
         }
@@ -97,6 +97,8 @@ public class Enemy3Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            if (!incam)
+                return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
             Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;

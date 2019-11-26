@@ -34,8 +34,7 @@ public class MiniBoss1 : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
+
 
         if (!isActive)
         {
@@ -43,9 +42,12 @@ public class MiniBoss1 : EnemyBase
             {
                 isActive = true;
                 enemyState = EnemyState.run;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
 
         switch (enemyState)
         {
@@ -70,7 +72,8 @@ public class MiniBoss1 : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-          //  Debug.Log("66666666aec.attack1.name");
+            if (!incam)
+                return;
             GameObject g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.transform.rotation = gunRotation.rotation;

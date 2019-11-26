@@ -94,6 +94,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 		public void TestTrigger()
 		{
 			var triggerPos = ProCamera2D.TargetsMidPoint;
+         //   Debug.LogError("trigger pos:" + triggerPos);
 			if (!UseTargetsMidPoint && TriggerTarget != null)
 				triggerPos = TriggerTarget.position;
 

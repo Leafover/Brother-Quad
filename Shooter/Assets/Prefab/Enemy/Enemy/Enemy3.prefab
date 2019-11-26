@@ -438,8 +438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canoutcam: 0
   incam: 0
-  activefar: 0
   canmove: 0
+  mustInCamToAction: 1
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
@@ -449,6 +449,7 @@ MonoBehaviour:
   aec:
     attack1: {fileID: 11400000, guid: 8d2b338238a17c94eb5512d39e52c2ad, type: 2}
     attack2: {fileID: 0}
+    attack3: {fileID: 0}
     idle: {fileID: 11400000, guid: dad7035d225842e489d0ed7bc7f173ea, type: 2}
     run: {fileID: 11400000, guid: 622b7f75d6f2e504a8a62c1d93951a21, type: 2}
     aimTargetAnim: {fileID: 11400000, guid: c7c5693460e50574eaa346a08621b98c, type: 2}
@@ -462,6 +463,7 @@ MonoBehaviour:
     m_Bits: 512
   rid: {fileID: 7312691356272888404}
   health: 3
+  currentHealth: 0
   speed: 1.5
   distanceActive: 6
   maxtimedelayChangePos: 3

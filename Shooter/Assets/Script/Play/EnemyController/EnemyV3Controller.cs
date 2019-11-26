@@ -22,8 +22,6 @@ public class EnemyV3Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
 
         if (!isActive)
         {
@@ -31,9 +29,12 @@ public class EnemyV3Controller : EnemyBase
             {
                 isActive = true;
                 rid.velocity = new Vector2(-speed, rid.velocity.y);
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
 
         Boom();
     }
@@ -42,6 +43,8 @@ public class EnemyV3Controller : EnemyBase
         if (Time.time - timePreviousAttack >= maxtimeDelayAttack)
         {
             timePreviousAttack = Time.time;
+            if (!incam)
+                return;
             GameObject g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
             g.transform.position = gameObject.transform.position;
             g.SetActive(true);

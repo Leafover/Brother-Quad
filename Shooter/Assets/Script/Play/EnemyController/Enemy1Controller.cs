@@ -22,24 +22,22 @@ public class Enemy1Controller : EnemyBase
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(transform.position, 1f);
-    //}
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
+
 
         if (!isActive)
         {
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
 
         switch (enemyState)
         {
@@ -90,10 +88,14 @@ public class Enemy1Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            if (!incam)
+                return;
             boxAttack1.gameObject.SetActive(true);
         }
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+            if (!incam)
+                return;
             boxAttack2.gameObject.SetActive(true);
         }
 

@@ -233,7 +233,37 @@ public class PlayerController : MonoBehaviour
         if (!MoveTargetPos())
             return;
         targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
+        LockPlayer();
     }
+    Vector2 posTemp;
+    void LockPlayer()
+    {
+        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 1)
+        {
+            posTemp = transform.position;
+            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1;
+            transform.position = posTemp;
+        }
+        if(transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1)
+        {
+            posTemp = transform.position;
+            posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1;
+            transform.position = posTemp;
+        }
+        if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)
+        {
+            posTemp = transform.position;
+            posTemp.y = CameraController.instance.bouders[0].transform.position.y - 1;
+            transform.position = posTemp;
+        }
+        if (transform.position.y <= CameraController.instance.bouders[1].transform.position.y + 1)
+        {
+            posTemp = transform.position;
+            posTemp.y = CameraController.instance.bouders[1].transform.position.y + 1;
+            transform.position = posTemp;
+        }
+    }
+
     bool MoveTargetPos()
     {
         return (targetPos.position.x == target.x && targetPos.position.y == target.y) ? false : true;

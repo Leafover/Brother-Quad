@@ -35,8 +35,6 @@ public class EnemyV1Controller : EnemyBase
     {
         base.OnUpdate(deltaTime);
 
-        if (enemyState == EnemyState.die)
-            return;
 
         if (!isActive)
         {
@@ -44,9 +42,13 @@ public class EnemyV1Controller : EnemyBase
             {
                 isActive = true;
                 enemyState = EnemyState.attack;
+                render.gameObject.SetActive(true);
             }
             return;
         }
+
+        if (enemyState == EnemyState.die)
+            return;
 
         switch (enemyState)
         {
@@ -97,7 +99,8 @@ public class EnemyV1Controller : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            //   Debug.LogError("aec.attack1.name");
+            if (!incam)
+                return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.transform.eulerAngles = new Vector3(0, 0, 150);
