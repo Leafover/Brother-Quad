@@ -145,6 +145,11 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         {
             base.EnteredTrigger();
 
+            //  Debug.LogError("------- cham -------");
+
+
+            
+
             if (NumericBoundaries.CurrentBoundariesTrigger != null)
                 StartCoroutine(TurnOffPreviousTrigger(NumericBoundaries.CurrentBoundariesTrigger));
 
@@ -156,6 +161,11 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
                 StartCoroutine(Transition());
             }
+            if (!CameraController.instance.setBoudariesLeft)
+                return;
+            CameraController.instance.setBoudariesLeft = false;
+           //  CameraController.instance.procam2DTriggerBoudaries[CameraController.instance.currentCamBoidaries].gameObject.SetActive(false);
+
         }
 
         IEnumerator TurnOffPreviousTrigger(ProCamera2DTriggerBoundaries trigger)
@@ -163,6 +173,8 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             yield return new WaitForEndOfFrame();
 
             trigger._transitioning = false;
+
+         //   Debug.LogError("cham lan 2");
         }
 
         //Reset Bound
@@ -227,6 +239,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
         IEnumerator Transition()
         {
+
             if (!UseTopBoundary && !UseBottomBoundary && !UseLeftBoundary && !UseRightBoundary)
             {
                 NumericBoundaries.UseTopBoundary = false;
@@ -287,6 +300,9 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             // Start bounds animation
             yield return new WaitForEndOfFrame();
             _boundsAnim.Transition();
+
+
+         //   Debug.LogError("cham lan dau");
         }
 
         IEnumerator MoveCameraToTarget()

@@ -47,8 +47,6 @@ public class Enemy2Controller : EnemyBase
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-        if (enemyState == EnemyState.die)
-            return;
 
         if (!isActive)
         {
@@ -60,6 +58,8 @@ public class Enemy2Controller : EnemyBase
             }
             return;
         }
+        if (enemyState == EnemyState.die)
+            return;
 
         switch (enemyState)
         {

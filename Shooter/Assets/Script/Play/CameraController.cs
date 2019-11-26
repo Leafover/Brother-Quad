@@ -5,6 +5,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CameraController : MonoBehaviour
 {
+    public GameObject nextPointCheck;
     public static CameraController instance;
     public List<Transform> posEnemyV2, posMiniBoss1;
     public List<GameObject> bouders;
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
         NumericBoundaries.RightBoundary = procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
 
     }
+
     Vector2 _cameraSize;
     float velocity;
     public void Start()
@@ -40,21 +42,34 @@ public class CameraController : MonoBehaviour
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
     }
-    bool setBoudariesLeft = true;
+    public bool setBoudariesLeft = true;
+    public void NextPoint()
+    {
+        currentCamBoidaries++;
+        nextPointCheck.gameObject.SetActive(false);
+    }
     public void OnUpdate(float deltaTime)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (currentCamBoidaries < procam2DTriggerBoudaries.Count)
-            {
-                currentCamBoidaries++;
 
-            }
+        if (!nextPointCheck.activeSelf)
+        {
+            var x1 = NumericBoundaries.RightBoundary;
+            var x2 = procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
+            var s = Mathf.Abs(x2 - x1);
+            var v = speed;
+            NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, s / v, speed * speed);
         }
-        //  NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, deltaTime * speed);
-        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, speed);
         if (!setBoudariesLeft)
+        {
+            if (GameController.instance.autoTarget.Count == 0)
+            {
+                nextPointCheck.gameObject.SetActive(true);
+                setBoudariesLeft = true;
+                //  Debug.Log("active next pos Cam");
+            }
             return;
+        }
+
 
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;

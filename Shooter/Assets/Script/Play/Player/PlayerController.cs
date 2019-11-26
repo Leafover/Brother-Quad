@@ -9,7 +9,6 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-    public List<EnemyBase> autoTarget;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
 
@@ -69,20 +68,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         // Debug.Log("take damage" + health);
     }
-    public void RemoveTarget(EnemyBase enemy)
-    {
-        if (currentEnemyTarget == enemy)
-            currentEnemyTarget = null;
 
-        if (autoTarget.Contains(enemy))
-            autoTarget.Remove(enemy);
-
-        if (enemy.canoutcam)
-        {
-            enemy.gameObject.SetActive(false);
-        }
-
-    }
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
@@ -230,10 +216,8 @@ public class PlayerController : MonoBehaviour
         SetAnim();
 
 
-        if (!MoveTargetPos())
-            return;
-        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
         LockPlayer();
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
     }
     Vector2 posTemp;
     void LockPlayer()
@@ -244,7 +228,7 @@ public class PlayerController : MonoBehaviour
             posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1;
             transform.position = posTemp;
         }
-        if(transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1)
+        if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1)
         {
             posTemp = transform.position;
             posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1;
@@ -264,10 +248,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool MoveTargetPos()
-    {
-        return (targetPos.position.x == target.x && targetPos.position.y == target.y) ? false : true;
-    }
     private void Awake()
     {
         instance = this;
@@ -424,9 +404,8 @@ public class PlayerController : MonoBehaviour
         timePreviousAttack = Time.time;
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
 
-
     }
-    public EnemyBase currentEnemyTarget;
+
 
     public void ChangeKnife()
     {
@@ -450,32 +429,71 @@ public class PlayerController : MonoBehaviour
     }
     Vector2 GetTarget()
     {
-        //if (currentEnemyTarget == null)
-        //{
+        //  targetTemp = new Vector2(float.MaxValue, float.MaxValue);
         var dMin = float.MaxValue;
-        for (int i = 0; i < autoTarget.Count; i++)
+        for (int i = 0; i < GameController.instance.autoTarget.Count; i++)
         {
-            var enemy = autoTarget[i];
-            var from = (Vector2)transform.position;
-            var to = enemy.Origin();
-            var d = Vector2.Distance(from, to);
-            if (d < dMin)
+            var enemy = GameController.instance.autoTarget[i];
+
+            if (enemy.incam)
             {
-                dMin = d;
-                currentEnemyTarget = enemy;
+                var from = (Vector2)transform.position;
+                var to = enemy.Origin();
+                var d = Vector2.Distance(from, to);
+                if (d < dMin)
+                {
+                    dMin = d;
+                    if (d >= 0.2f)
+                    {
+                        targetTemp = enemy.transform.position;
+                        GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
+                        GameController.instance.targetDetectSprite.SetActive(true);
+                    }
+
+                    else
+                    {
+                        targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                        GameController.instance.targetDetectSprite.SetActive(false);
+                    }
+                }
             }
+            else
+            {
+                if (!GameController.instance.joystickShot.GetJoystickState())
+                {
+                    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                }
+                else
+                {
+                    targetTemp = GetTargetFromDirection(GameController.instance.shootPosition);
+                }
+            }
+
         }
-        //}
-        return currentEnemyTarget.transform.position;
+
+        return targetTemp;
     }
     public void SelectNonTarget(Vector2 pos)
     {
         target = GetTargetFromDirection(pos);
     }
+
     public void SelectTarget()
     {
+
         target = GetTarget();
-        FlipX = target.x < transform.position.x;
+        FlipX = GetTarget().x < transform.position.x;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.layer)
+        {
+            case 18:
+                CameraController.instance.NextPoint();
+                break;
+        }
     }
 
 }

@@ -95,7 +95,7 @@ public class EnemyV2Controller : EnemyBase
                 combo = 0;
                 enemyState = EnemyState.run;
                 randomCombo = Random.Range(2, 4);
-                Debug.LogError("re turn run");
+             //   Debug.LogError("re turn run");
             }
         }
         //else if (trackEntry.Animation.Name.Equals(aec.die.name))

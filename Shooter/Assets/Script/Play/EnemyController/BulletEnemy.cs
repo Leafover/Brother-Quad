@@ -52,7 +52,7 @@ public class BulletEnemy : MonoBehaviour
     private void OnDisable()
     {
         hit -= Hit;
-        rid.velocity = Vector2.zero ;
+        rid.velocity = Vector2.zero;
     }
 
     public virtual void Hit()
@@ -65,7 +65,8 @@ public class BulletEnemy : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 13:
-                hit();
+                if (hit != null)
+                    hit();
                 break;
         }
     }

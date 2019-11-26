@@ -18,6 +18,8 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
+    public GameObject targetDetectSprite;
+    public List<EnemyBase> autoTarget;
     public GameObject UIControll, UIBegin;
     public enum GameState
     {
@@ -28,8 +30,8 @@ public class GameController : MonoBehaviour
     public GameState gameState = GameState.begin;
     public UltimateJoystick joystickMove, joystickShot;
     public static GameController instance;
-
-    Vector2 movePosition, shootPosition;
+    [HideInInspector]
+   public Vector2 movePosition, shootPosition;
     public PlayerController player;
 
     public void BeginPanel()
@@ -52,7 +54,12 @@ public class GameController : MonoBehaviour
         gameState = GameState.begin;
         player.gameObject.SetActive(false);
     }
-
+ //   public EnemyBase currentEnemyTarget;
+    public void RemoveTarget(EnemyBase enemy)
+    {
+        if (autoTarget.Contains(enemy))
+            autoTarget.Remove(enemy);
+    }
     private void JoystickMovement(UltimateJoystick joystick)
     {
         movePosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
@@ -144,7 +151,7 @@ public class GameController : MonoBehaviour
             PlayerController.instance.isBouderJoystick = joystick.GetDistance() >= 0.9f;
 
 
-            if (PlayerController.instance.autoTarget.Count == 0)
+            if (autoTarget.Count == 0)
             {
                 if (PlayerController.instance.isBouderJoystick)
                 {
@@ -154,14 +161,14 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                PlayerController.instance.SelectTarget();
+               PlayerController.instance.SelectTarget();
             }
         }
         else
         {
-            if (PlayerController.instance.autoTarget.Count == 0)
+            if (autoTarget.Count == 0)
             {
-                PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+               PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             }
             else
             {

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public bool isBoss;
     public System.Action<float> acOnUpdate;
     public bool canoutcam, incam;
     public enum EnemyState
@@ -126,7 +127,7 @@ public class EnemyBase : MonoBehaviour
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
         acOnUpdate -= OnUpdate;
-
+        GameController.instance.RemoveTarget(this);
         // Debug.Log("-----zoooooooooooooo");
     }
     public virtual void Start()
@@ -136,6 +137,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
+        render.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
             boxAttack1.gameObject.SetActive(false);
@@ -159,10 +161,13 @@ public class EnemyBase : MonoBehaviour
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
 
-        distanceActive = Camera.main.orthographicSize * 2;
+        if (!isBoss)
+            distanceActive = Camera.main.orthographicSize * 2;
+        else
+            distanceActive = Camera.main.orthographicSize * 2 + 5;
         currentHealth = health;
 
-        render.gameObject.SetActive(false);
+
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -238,13 +243,16 @@ public class EnemyBase : MonoBehaviour
         takeDamageBox.enabled = false;
         if (aec.die == null)
         {
+            GameController.instance.targetDetectSprite.SetActive(false);
             gameObject.SetActive(false);
             return;
         }
+        GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
         PlayAnim(0, aec.die, false);
         enemyState = EnemyState.die;
-        PlayerController.instance.RemoveTarget(this);
+        GameController.instance.RemoveTarget(this);
+        PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
     }
     public virtual void TakeDamage(float damage)
     {
@@ -261,8 +269,8 @@ public class EnemyBase : MonoBehaviour
             if (!incam)
                 return;
             TakeDamage(1);
-            PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             collision.gameObject.SetActive(false);
+            Debug.LogError("----------take damage 1");
         }
         else if (collision.gameObject.layer == 14)
         {
@@ -271,6 +279,7 @@ public class EnemyBase : MonoBehaviour
 
             TakeDamage(3);
             collision.gameObject.SetActive(false);
+            Debug.LogError("----------take damage 2");
         }
     }
 }
