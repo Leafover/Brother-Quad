@@ -246,41 +246,44 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Dead()
     {
-
-        if (lineBlood != null)
-        {
-            lineBlood.Hide();
-        }
-        rid.velocity = Vector2.zero;
-        takeDamageBox.enabled = false;
-        if (aec.die == null)
-        {
-            GameController.instance.targetDetectSprite.SetActive(false);
-            gameObject.SetActive(false);
+        if (enemyState == EnemyState.die)
             return;
-        }
-        GameController.instance.targetDetectSprite.SetActive(false);
-        skeletonAnimation.ClearState();
-        PlayAnim(0, aec.die, false);
-        enemyState = EnemyState.die;
-        GameController.instance.RemoveTarget(this);
-        PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+            if (lineBlood != null)
+            {
+                lineBlood.Hide();
+            }
+            rid.velocity = Vector2.zero;
+            takeDamageBox.enabled = false;
+            if (aec.die == null)
+            {
+                GameController.instance.targetDetectSprite.SetActive(false);
+                gameObject.SetActive(false);
+                return;
+            }
+            GameController.instance.targetDetectSprite.SetActive(false);
+            skeletonAnimation.ClearState();
+            PlayAnim(0, aec.die, false);
+            enemyState = EnemyState.die;
+            GameController.instance.RemoveTarget(this);
+            PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+        //    Debug.LogError("zooooooooooo day");
+            if (isBoss)
+                GameController.instance.gameState = GameController.GameState.gameover;
 
-        if (isBoss)
-            GameController.instance.gameState = GameController.GameState.gameover;
     }
 
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if (lineBlood != null)
-        {
-            lineBlood.Show(currentHealth, health);
-        }
+
         if (currentHealth <= 0)
         {
             Dead();
             //    Debug.LogError("dead");
+        }
+        if (lineBlood != null)
+        {
+            lineBlood.Show(currentHealth, health);
         }
 
     }
@@ -288,7 +291,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            if (!incam)
+            if (!incam || enemyState == EnemyState.die)
                 return;
             TakeDamage(1);
             collision.gameObject.SetActive(false);
@@ -297,10 +300,11 @@ public class EnemyBase : MonoBehaviour
         }
         else if (collision.gameObject.layer == 14)
         {
-            if (!incam)
+            if (!incam || enemyState == EnemyState.die)
                 return;
 
             TakeDamage(3);
+        //    Debug.LogError("take damge:" + collision.name);
             //collision.gameObject.SetActive(false);
              // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
