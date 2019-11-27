@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class UIPanel : MonoBehaviour
 {
-    public void EventEndAnim()
-    {
-        GameController.instance.BeginPanel();
-    }
+
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);

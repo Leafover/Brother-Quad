@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject targetDetectSprite;
     public List<EnemyBase> autoTarget;
-    public GameObject UIControll, UIBegin;
+    public GameObject UIControll;
     public enum GameState
     {
         begin,
@@ -34,13 +34,6 @@ public class GameController : MonoBehaviour
    public Vector2 movePosition, shootPosition;
     public PlayerController player;
 
-    public void BeginPanel()
-    {
-        UIControll.SetActive(true);
-        UIBegin.SetActive(false);
-        player.gameObject.SetActive(true);
-        gameState = GameState.play;
-    }
 
     private void Awake()
     {
@@ -51,8 +44,7 @@ public class GameController : MonoBehaviour
 #else
         Application.targetFrameRate = 60;
 #endif
-        gameState = GameState.begin;
-        player.gameObject.SetActive(false);
+        gameState = GameState.play;
     }
  //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)

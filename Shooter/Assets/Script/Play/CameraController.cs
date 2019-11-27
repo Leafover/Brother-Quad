@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
     }
     public void OnUpdate(float deltaTime)
     {
-
+        CacheSizeAndViewPos();
         if (!nextPointCheck.activeSelf)
         {
             var x1 = NumericBoundaries.RightBoundary;
@@ -69,10 +69,6 @@ public class CameraController : MonoBehaviour
             }
             return;
         }
-
-
-        _cameraSize.y = Camera.main.orthographicSize;
-        _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
         var leftBoundary = transform.position.x - Size().x;
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
@@ -81,4 +77,22 @@ public class CameraController : MonoBehaviour
     {
         return _cameraSize;
     }
+    private void CacheSizeAndViewPos()
+    {
+        _cameraSize.y = Camera.main.orthographicSize;
+        _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
+        viewPos.minX = transform.position.x - _cameraSize.x;
+        viewPos.minY = transform.position.y - _cameraSize.y;
+        viewPos.maxX = transform.position.x + _cameraSize.x;
+        viewPos.maxY = transform.position.y + _cameraSize.y;
+    }
+    public ViewPos viewPos;
+}
+[System.Serializable]
+public struct ViewPos
+{
+    public float minX;
+    public float minY;
+    public float maxX;
+    public float maxY;
 }

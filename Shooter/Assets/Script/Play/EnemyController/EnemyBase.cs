@@ -270,7 +270,7 @@ public class EnemyBase : MonoBehaviour
                 return;
             TakeDamage(1);
             collision.gameObject.SetActive(false);
-            Debug.LogError("----------take damage 1");
+          //  Debug.LogError("----------take damage 1");
         }
         else if (collision.gameObject.layer == 14)
         {
@@ -279,7 +279,7 @@ public class EnemyBase : MonoBehaviour
 
             TakeDamage(3);
             collision.gameObject.SetActive(false);
-            Debug.LogError("----------take damage 2");
+        //    Debug.LogError("----------take damage 2");
         }
     }
 }

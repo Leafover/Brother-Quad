@@ -55,6 +55,7 @@ public class Enemy2Controller : EnemyBase
                 isActive = true;
                 PlayAnim(0, aec.run, true);
                 enemyState = EnemyState.run;
+                render.gameObject.SetActive(true);
             }
             return;
         }
