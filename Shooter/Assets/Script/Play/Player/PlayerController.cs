@@ -9,6 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+    public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
 
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        // Debug.Log("take damage" + health);
+        lineBlood.Show(health, maxHealth);
     }
 
     public void TryJump()
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        lineBlood.Reset();
         skeletonAnimation.Initialize(true);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);

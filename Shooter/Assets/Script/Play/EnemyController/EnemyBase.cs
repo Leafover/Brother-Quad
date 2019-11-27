@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public LineBlood lineBlood;
     public bool isBoss;
     public System.Action<float> acOnUpdate;
     public bool canoutcam, incam;
@@ -139,6 +140,11 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
+        if (lineBlood != null)
+        {
+            lineBlood.Reset();
+        }
+
         render.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
@@ -241,6 +247,10 @@ public class EnemyBase : MonoBehaviour
     public virtual void Dead()
     {
 
+        if (lineBlood != null)
+        {
+            lineBlood.Hide();
+        }
         rid.velocity = Vector2.zero;
         takeDamageBox.enabled = false;
         if (aec.die == null)
@@ -263,10 +273,14 @@ public class EnemyBase : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        if (lineBlood != null)
+        {
+            lineBlood.Show(currentHealth, health);
+        }
         if (currentHealth <= 0)
         {
             Dead();
-        //    Debug.LogError("dead");
+            //    Debug.LogError("dead");
         }
 
     }
@@ -278,7 +292,7 @@ public class EnemyBase : MonoBehaviour
                 return;
             TakeDamage(1);
             collision.gameObject.SetActive(false);
-          //  Debug.LogError("take damage 1" + gameObject.name +":"+ collision.name);
+            //  Debug.LogError("take damage 1" + gameObject.name +":"+ collision.name);
             //  Debug.LogError("----------take damage 1");
         }
         else if (collision.gameObject.layer == 14)
@@ -288,7 +302,7 @@ public class EnemyBase : MonoBehaviour
 
             TakeDamage(3);
             collision.gameObject.SetActive(false);
-          //  Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
+            //  Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
         }
 
