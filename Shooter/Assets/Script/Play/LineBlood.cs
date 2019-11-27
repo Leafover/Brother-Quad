@@ -62,6 +62,7 @@ public class LineBlood : MonoBehaviour
         lineFx.transform.localScale = lineSprite[1].transform.localScale = Vector3.one;
         lineFx.color = lineSprite[0].color = lineSprite[1].color = new Color(1, 1, 1, 0);
         countdown = 0;
+        gameObject.SetActive(true);
     }
 
     public void Hide()

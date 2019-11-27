@@ -144,7 +144,7 @@ public class EnemyBase : MonoBehaviour
         {
             lineBlood.Reset();
         }
-
+        
         render.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
@@ -301,7 +301,7 @@ public class EnemyBase : MonoBehaviour
                 return;
 
             TakeDamage(3);
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
             //  Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
         }
