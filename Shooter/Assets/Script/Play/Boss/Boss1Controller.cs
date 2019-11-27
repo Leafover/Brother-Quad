@@ -23,7 +23,7 @@ public class Boss1Controller : EnemyBase
         typeAttack = 0;
 
         takeDamageBox.enabled = false;
-        maxtimeDelayAttack = 0.7f;
+        maxtimeDelayAttack = 0.4f;
 
     }
 
@@ -194,7 +194,7 @@ public class Boss1Controller : EnemyBase
                 maxtimeDelayAttack = 1.5f;
             }
             if (combo == (randomCombo + 2) && maxtimeDelayAttack == 1.5f)
-                maxtimeDelayAttack = 0.3f;
+                maxtimeDelayAttack = 0.4f;
             if (combo == 4)
             {
                 canAttack = false;
@@ -257,7 +257,7 @@ public class Boss1Controller : EnemyBase
                 PlayAnim(0, aec.idle, true);
                 StartCoroutine(ActiveMove());
                 combo = 0;
-                maxtimeDelayAttack = 0.3f;
+                maxtimeDelayAttack = 0.4f;
             }
             //   Debug.LogError("------------------- posTemp:" + posTemp.x);
         }
