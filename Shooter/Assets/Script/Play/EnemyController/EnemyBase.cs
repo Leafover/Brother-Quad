@@ -96,6 +96,8 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop)
     {
+        if (enemyState == EnemyState.die)
+            return;
         if (Time.time - timePreviousAttack >= maxtimeDelayAttack)
         {
             timePreviousAttack = Time.time;
@@ -253,14 +255,20 @@ public class EnemyBase : MonoBehaviour
         enemyState = EnemyState.die;
         GameController.instance.RemoveTarget(this);
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+
+        if (isBoss)
+            GameController.instance.gameState = GameController.GameState.gameover;
     }
+
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
             Dead();
+        //    Debug.LogError("dead");
         }
+
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -270,7 +278,8 @@ public class EnemyBase : MonoBehaviour
                 return;
             TakeDamage(1);
             collision.gameObject.SetActive(false);
-          //  Debug.LogError("----------take damage 1");
+          //  Debug.LogError("take damage 1" + gameObject.name +":"+ collision.name);
+            //  Debug.LogError("----------take damage 1");
         }
         else if (collision.gameObject.layer == 14)
         {
@@ -279,8 +288,10 @@ public class EnemyBase : MonoBehaviour
 
             TakeDamage(3);
             collision.gameObject.SetActive(false);
-        //    Debug.LogError("----------take damage 2");
+          //  Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
+            //    Debug.LogError("----------take damage 2");
         }
+
     }
 }
 

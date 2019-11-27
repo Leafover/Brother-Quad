@@ -18,7 +18,13 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
+    public UIPanel uiPanel;
+    public List<MapController> listMap;
+
     public MapController currentMap;
+
+    public static int indexMap = 0;
+
     public GameObject targetDetectSprite;
     public List<EnemyBase> autoTarget;
     public GameObject UIControll;
@@ -32,12 +38,12 @@ public class GameController : MonoBehaviour
     public UltimateJoystick joystickMove, joystickShot;
     public static GameController instance;
     [HideInInspector]
-   public Vector2 movePosition, shootPosition;
-    public PlayerController player;
+    public Vector2 movePosition, shootPosition;
 
 
     private void Awake()
     {
+
         instance = this;
 
 #if UNITY_EDITOR
@@ -47,7 +53,16 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.play;
     }
- //   public EnemyBase currentEnemyTarget;
+    private void Start()
+    {
+        currentMap = Instantiate(listMap[indexMap]);
+        currentMap.transform.position = Vector2.zero;
+
+        CameraController.instance.Init();
+
+        PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
+    }
+    //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
     {
         if (autoTarget.Contains(enemy))
@@ -154,14 +169,14 @@ public class GameController : MonoBehaviour
             }
             else
             {
-               PlayerController.instance.SelectTarget();
+                PlayerController.instance.SelectTarget();
             }
         }
         else
         {
             if (autoTarget.Count == 0)
             {
-               PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+                PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             }
             else
             {
@@ -193,10 +208,22 @@ public class GameController : MonoBehaviour
     //        return;
     //    CameraController.instance.OnUpdate(deltaTime);
     //}
+    IEnumerator delayDisplayFinish()
+    {
+        yield return new WaitForSeconds(1.5f);
+        uiPanel.DisplayFinish();
+    }
     private void Update()
     {
-        if (gameState == GameState.begin)
+        if (gameState == GameState.begin || gameState == GameState.gameover)
+        {
+            if(gameState == GameState.gameover)
+            {
+                StartCoroutine(delayDisplayFinish());
+            }
             return;
+        }
+  
         var deltaTime = Time.deltaTime;
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);

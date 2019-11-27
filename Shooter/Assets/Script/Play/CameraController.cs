@@ -23,16 +23,14 @@ public class CameraController : MonoBehaviour
     {
         instance = this;
 
-
-    }
-    void Init()
-    {
         bouders[0].transform.localPosition = new Vector2(bouders[0].transform.localPosition.x, Camera.main.orthographicSize + 0.5f);
         bouders[1].transform.localPosition = new Vector2(bouders[1].transform.localPosition.x, -Camera.main.orthographicSize - 0.5f);
         bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 3.61f, bouders[2].transform.localPosition.y);
         bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 3.61f, bouders[3].transform.localPosition.y);
-
         currentCamBoidaries = 0;
+    }
+    public void Init()
+    {
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
     }
     Vector2 _cameraSize;
@@ -44,16 +42,17 @@ public class CameraController : MonoBehaviour
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
 
-        Init();
     }
     public bool setBoudariesLeft = true;
     public void NextPoint()
     {
-        currentCamBoidaries++;
+        if (currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1)
+            currentCamBoidaries++;
         nextPointCheck.gameObject.SetActive(false);
     }
     public void OnUpdate(float deltaTime)
     {
+
         CacheSizeAndViewPos();
         if (!nextPointCheck.activeSelf)
         {
