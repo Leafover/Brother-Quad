@@ -40,7 +40,7 @@ public class Enemy0Controller : EnemyBase
             return;
 
         distanceTravelled += speed * deltaTime;
-        transform.position = PathCreatorController.instance.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
+        transform.position = GameController.instance.currentMap.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 
     }
     public override void OnTriggerEnter2D(Collider2D collision)
