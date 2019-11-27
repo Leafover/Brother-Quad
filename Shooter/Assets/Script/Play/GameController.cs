@@ -223,6 +223,7 @@ public class GameController : MonoBehaviour
             }
             return;
         }
+
   
         var deltaTime = Time.deltaTime;
         JoystickMovement(joystickMove);
@@ -230,6 +231,8 @@ public class GameController : MonoBehaviour
         OnUpdatePlayer(deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
+
+
 
     }
     public void TryShot()

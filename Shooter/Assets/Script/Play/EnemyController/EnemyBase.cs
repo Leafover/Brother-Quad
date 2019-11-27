@@ -302,7 +302,7 @@ public class EnemyBase : MonoBehaviour
 
             TakeDamage(3);
             //collision.gameObject.SetActive(false);
-            //  Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
+             // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
         }
 
