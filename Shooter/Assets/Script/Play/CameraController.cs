@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
     public List<Transform> posEnemyV2, posMiniBoss1;
     public List<GameObject> bouders;
     public float speed;
-    public List<ProCamera2DTriggerBoundaries> procam2DTriggerBoudaries;
 
     public ProCamera2DNumericBoundaries NumericBoundaries;
 
@@ -23,16 +22,19 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+
+    }
+    void Init()
+    {
         bouders[0].transform.localPosition = new Vector2(bouders[0].transform.localPosition.x, Camera.main.orthographicSize + 0.5f);
         bouders[1].transform.localPosition = new Vector2(bouders[1].transform.localPosition.x, -Camera.main.orthographicSize - 0.5f);
         bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 3.61f, bouders[2].transform.localPosition.y);
         bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 3.61f, bouders[3].transform.localPosition.y);
 
         currentCamBoidaries = 0;
-        NumericBoundaries.RightBoundary = procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
-
+        NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
     }
-
     Vector2 _cameraSize;
     float velocity;
     public void Start()
@@ -41,6 +43,8 @@ public class CameraController : MonoBehaviour
         ProCamera2D.Instance.OffsetY = 0f;
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
+
+        Init();
     }
     public bool setBoudariesLeft = true;
     public void NextPoint()
@@ -54,10 +58,10 @@ public class CameraController : MonoBehaviour
         if (!nextPointCheck.activeSelf)
         {
             var x1 = NumericBoundaries.RightBoundary;
-            var x2 = procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
+            var x2 = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
             var s = Mathf.Abs(x2 - x1);
             var v = speed;
-            NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, s / v, speed * speed);
+            NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, s / v, speed * speed);
         }
         if (!setBoudariesLeft)
         {

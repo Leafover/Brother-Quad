@@ -285,12 +285,6 @@ MonoBehaviour:
   - {fileID: 18960776}
   - {fileID: 2084983722}
   speed: 10
-  procam2DTriggerBoudaries:
-  - {fileID: 1659901421}
-  - {fileID: 984427492}
-  - {fileID: 1580263554}
-  - {fileID: 2093230185}
-  - {fileID: 731784641}
   NumericBoundaries: {fileID: 168577838}
   currentCamBoidaries: 0
   setBoudariesLeft: 1
@@ -1022,72 +1016,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &731784640
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 731784642}
-  - component: {fileID: 731784641}
-  m_Layer: 0
-  m_Name: ProCamera2DTriggerBoundaries (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &731784641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731784640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b478e2db66d4cb7b7963570736e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 168577837}
-  UpdateInterval: 0.1
-  TriggerShape: 1
-  UseTargetsMidPoint: 1
-  TriggerTarget: {fileID: 0}
-  NumericBoundaries: {fileID: 168577838}
-  AreBoundariesRelative: 1
-  UseTopBoundary: 1
-  TopBoundary: 3.64
-  UseBottomBoundary: 1
-  BottomBoundary: -4.36
-  UseLeftBoundary: 1
-  LeftBoundary: -9.47
-  UseRightBoundary: 1
-  RightBoundary: 7.43
-  IsSpawnEnemies: 0
-  TransitionDuration: 1
-  TransitionEaseType: 0
-  ChangeZoom: 0
-  TargetZoom: 1.5
-  ZoomSmoothness: 1
-  _setAsStartingBoundaries: 0
---- !u!4 &731784642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731784640}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.46, y: 13.36, z: -10}
-  m_LocalScale: {x: 1, y: 9, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &772144667
 PrefabInstance:
@@ -1563,71 +1492,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918930661}
   m_CullTransparentMesh: 0
---- !u!1 &984427491
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 984427493}
-  - component: {fileID: 984427492}
-  m_Layer: 0
-  m_Name: ProCamera2DTriggerBoundaries (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &984427492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984427491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b478e2db66d4cb7b7963570736e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 168577837}
-  UpdateInterval: 0.1
-  TriggerShape: 1
-  UseTargetsMidPoint: 1
-  TriggerTarget: {fileID: 0}
-  NumericBoundaries: {fileID: 168577838}
-  AreBoundariesRelative: 1
-  UseTopBoundary: 1
-  TopBoundary: 3.64
-  UseBottomBoundary: 1
-  BottomBoundary: -4.36
-  UseLeftBoundary: 1
-  LeftBoundary: -9.47
-  UseRightBoundary: 1
-  RightBoundary: 7.43
-  IsSpawnEnemies: 0
-  TransitionDuration: 1
-  TransitionEaseType: 0
-  ChangeZoom: 0
-  TargetZoom: 1.5
-  ZoomSmoothness: 1
-  _setAsStartingBoundaries: 0
---- !u!4 &984427493
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984427491}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.16, y: 13.36, z: -10}
-  m_LocalScale: {x: 1, y: 9, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1038684467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1928,6 +1792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25b8ec42d666894eaaab3bc358225d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMap: {fileID: 6177684124081709971}
   targetDetectSprite: {fileID: 719464241}
   autoTarget: []
   UIControll: {fileID: 2054930464}
@@ -2047,71 +1912,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1580263553
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1580263555}
-  - component: {fileID: 1580263554}
-  m_Layer: 0
-  m_Name: ProCamera2DTriggerBoundaries (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1580263554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580263553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b478e2db66d4cb7b7963570736e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 168577837}
-  UpdateInterval: 0.1
-  TriggerShape: 1
-  UseTargetsMidPoint: 1
-  TriggerTarget: {fileID: 0}
-  NumericBoundaries: {fileID: 168577838}
-  AreBoundariesRelative: 1
-  UseTopBoundary: 1
-  TopBoundary: 3.64
-  UseBottomBoundary: 1
-  BottomBoundary: -4.36
-  UseLeftBoundary: 1
-  LeftBoundary: -9.47
-  UseRightBoundary: 1
-  RightBoundary: 7.43
-  IsSpawnEnemies: 0
-  TransitionDuration: 1
-  TransitionEaseType: 0
-  ChangeZoom: 0
-  TargetZoom: 1.5
-  ZoomSmoothness: 1
-  _setAsStartingBoundaries: 0
---- !u!4 &1580263555
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580263553}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.69, y: 13.36, z: -10}
-  m_LocalScale: {x: 1, y: 9, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1645598074
 PrefabInstance:
@@ -2242,71 +2042,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a5154ebeae449e4994357609381b281, type: 3}
---- !u!1 &1659901420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1659901422}
-  - component: {fileID: 1659901421}
-  m_Layer: 0
-  m_Name: ProCamera2DTriggerBoundaries
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1659901421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659901420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b478e2db66d4cb7b7963570736e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 168577837}
-  UpdateInterval: 0.1
-  TriggerShape: 1
-  UseTargetsMidPoint: 1
-  TriggerTarget: {fileID: 0}
-  NumericBoundaries: {fileID: 168577838}
-  AreBoundariesRelative: 1
-  UseTopBoundary: 1
-  TopBoundary: 3.64
-  UseBottomBoundary: 1
-  BottomBoundary: -4.36
-  UseLeftBoundary: 1
-  LeftBoundary: -9.47
-  UseRightBoundary: 1
-  RightBoundary: 7.43
-  IsSpawnEnemies: 0
-  TransitionDuration: 1
-  TransitionEaseType: 0
-  ChangeZoom: 0
-  TargetZoom: 1.5
-  ZoomSmoothness: 1
-  _setAsStartingBoundaries: 0
---- !u!4 &1659901422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659901420}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.52, y: 13.36, z: -10}
-  m_LocalScale: {x: 1, y: 9, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1780143149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,71 +2256,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 23.026949, y: 1}
   m_EdgeRadius: 0
---- !u!1 &2093230184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2093230186}
-  - component: {fileID: 2093230185}
-  m_Layer: 0
-  m_Name: ProCamera2DTriggerBoundaries (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2093230185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093230184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b478e2db66d4cb7b7963570736e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 168577837}
-  UpdateInterval: 0.1
-  TriggerShape: 1
-  UseTargetsMidPoint: 1
-  TriggerTarget: {fileID: 0}
-  NumericBoundaries: {fileID: 168577838}
-  AreBoundariesRelative: 1
-  UseTopBoundary: 1
-  TopBoundary: 3.64
-  UseBottomBoundary: 1
-  BottomBoundary: -4.36
-  UseLeftBoundary: 1
-  LeftBoundary: -9.47
-  UseRightBoundary: 1
-  RightBoundary: 7.43
-  IsSpawnEnemies: 0
-  TransitionDuration: 1
-  TransitionEaseType: 0
-  ChangeZoom: 0
-  TargetZoom: 1.5
-  ZoomSmoothness: 1
-  _setAsStartingBoundaries: 0
---- !u!4 &2093230186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093230184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 98.27, y: 13.36, z: -10}
-  m_LocalScale: {x: 1, y: 9, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &514898214052493198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2803,166 +2473,46 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[5].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[5].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[6].minY
-      value: 13.076
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[6].maxY
-      value: 13.7439995
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[7].minY
-      value: 14.576
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[7].maxY
-      value: 15.2439995
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[8].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[8].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[9].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[9].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[10].minY
-      value: 7.5804605
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[10].maxY
-      value: 14.119538
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[11].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[11].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[12].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[12].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[13].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[13].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[14].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[14].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[15].minY
-      value: 13.076
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[15].maxY
-      value: 13.7439995
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[16].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[16].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[17].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[17].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[18].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[18].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[19].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[19].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[20].minY
-      value: 8.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031929207849625538, guid: 9b1945c7114ebe5458daac14beb77312,
-        type: 3}
-      propertyPath: listViewPos.Array.data[20].maxY
-      value: 11.37
-      objectReference: {fileID: 0}
+    - target: {fileID: 1659901421, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: _pc2D
+      value: 
+      objectReference: {fileID: 168577837}
+    - target: {fileID: 1659901421, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: NumericBoundaries
+      value: 
+      objectReference: {fileID: 168577838}
+    - target: {fileID: 984427492, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: _pc2D
+      value: 
+      objectReference: {fileID: 168577837}
+    - target: {fileID: 984427492, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: NumericBoundaries
+      value: 
+      objectReference: {fileID: 168577838}
+    - target: {fileID: 1580263554, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: _pc2D
+      value: 
+      objectReference: {fileID: 168577837}
+    - target: {fileID: 1580263554, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: NumericBoundaries
+      value: 
+      objectReference: {fileID: 168577838}
+    - target: {fileID: 2093230185, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: _pc2D
+      value: 
+      objectReference: {fileID: 168577837}
+    - target: {fileID: 2093230185, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: NumericBoundaries
+      value: 
+      objectReference: {fileID: 168577838}
+    - target: {fileID: 731784641, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: _pc2D
+      value: 
+      objectReference: {fileID: 168577837}
+    - target: {fileID: 731784641, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
+      propertyPath: NumericBoundaries
+      value: 
+      objectReference: {fileID: 168577838}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b1945c7114ebe5458daac14beb77312, type: 3}
 --- !u!1001 &4988408815225519909
@@ -3164,6 +2714,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 216bbadda82836145ab25f7046fca15a, type: 3}
+--- !u!114 &6177684124081709971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6177684124081709971, guid: 9b1945c7114ebe5458daac14beb77312,
+    type: 3}
+  m_PrefabInstance: {fileID: 514898214052493198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb4e81fbc87f744ba57a6d5b7e41f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8566759334856833595
 PrefabInstance:
   m_ObjectHideFlags: 0

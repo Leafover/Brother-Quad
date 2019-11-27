@@ -18,6 +18,7 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
+    public MapController currentMap;
     public GameObject targetDetectSprite;
     public List<EnemyBase> autoTarget;
     public GameObject UIControll;
