@@ -134,6 +134,8 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DoubleJump()
     {
         float timeUp = timeJump * 0.5f;
+        playerState = PlayerState.Jump;
+        AnimJump();
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
             if (playerState == PlayerState.Jump)
