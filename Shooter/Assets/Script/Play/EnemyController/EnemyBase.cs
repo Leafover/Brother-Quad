@@ -4,8 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : DataUnit
 {
+
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
     public bool isBoss;
@@ -18,27 +19,37 @@ public class EnemyBase : MonoBehaviour
         attack,
         die
     }
+    public EnemyState enemyState = EnemyState.idle;
     public bool canmove;
-    Vector2 originPos;
+
     public float radius;
     public Collider2D boxAttack1, boxAttack2, takeDamageBox;
-    public float damage = 3;
+    [HideInInspector]
+    public float damage;
+    [HideInInspector]
+    public float health, timePreviousAttack;
+    [HideInInspector]
+    public float maxtimedelayChangePos = 6;
+
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
-    public float maxtimeDelayAttack = 1, timePreviousAttack;
-    public EnemyState enemyState = EnemyState.idle;
+    public float maxtimeDelayAttack = 1;
+
     public LayerMask lm = 13;
     public Rigidbody2D rid;
-    public float health = 3, currentHealth;
-    public float speed = 1, distanceActive = 6;
-    public float maxtimedelayChangePos = 6;
+
+    public float currentHealth, distanceActive = 6;
+    public float speed;
+
     public Renderer render;
+    [HideInInspector]
     public bool isActive;
     int dir;
     [HideInInspector]
     public int combo, randomCombo;
     public SkeletonAnimation skeletonAnimation;
 
+    Vector2 originPos;
 
     public Bone boneBarrelGun;
     [SpineBone]
@@ -174,8 +185,12 @@ public class EnemyBase : MonoBehaviour
             distanceActive = Camera.main.orthographicSize * 2;
         else
             distanceActive = Camera.main.orthographicSize * 2 + 5;
-        currentHealth = health;
 
+        damage = baseDamage * baseLevel;
+        health = baseHealth * baseLevel;
+        speed = baseSpeed;
+        currentHealth = health;
+  
 
     }
 

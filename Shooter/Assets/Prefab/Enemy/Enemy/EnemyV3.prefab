@@ -196,16 +196,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a03edeba473424391e5d762ef93077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseLevel: 1
+  baseHealth: 3
+  baseSpeed: 5
+  baseDamage: 1
+  listMyBullet: []
   lineBlood: {fileID: 0}
   isBoss: 0
   canoutcam: 1
   incam: 0
+  enemyState: 0
   canmove: 0
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
   takeDamageBox: {fileID: 4081383611729863851}
   damage: 3
+  health: 3
+  timePreviousAttack: 0
+  maxtimedelayChangePos: 6
   currentAnim: {fileID: 0}
   aec:
     attack1: {fileID: 0}
@@ -217,17 +226,13 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 0}
   maxtimeDelayAttack: 1
-  timePreviousAttack: 0
-  enemyState: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 4081383611729863849}
-  health: 3
   currentHealth: 0
-  speed: 5
   distanceActive: 10
-  maxtimedelayChangePos: 6
+  speed: 5
   render: {fileID: 4081383611243641142}
   isActive: 0
   combo: 0
