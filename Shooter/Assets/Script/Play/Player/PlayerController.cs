@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade;
-    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade;
+    float timePreviousAttack, timePreviousGrenade,timePreviousRocket;
+    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade,timedelayRocket;
 
     public float health, maxHealth = 100;
 
@@ -104,6 +104,23 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    //public void TryRocket()
+    //{
+    //    if (Time.time - timePreviousRocket > timedelayRocket)
+    //    {
+    //        timePreviousRocket = Time.time;
+    //        if (isGround)
+    //        {
+    //            skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
+    //        }
+    //        else
+    //        {
+    //            GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+    //            grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+    //            grenade.SetActive(true);
+    //        }
+    //    }
+    //}
     public Transform GetTransformPlayer()
     {
         return transform;

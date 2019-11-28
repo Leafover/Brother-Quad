@@ -18,13 +18,13 @@ public class rocketEnemyV2 : BulletEnemy
 
     IEnumerator ActiveTarget()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         target = PlayerController.instance.GetTransformPlayer();
         StartCoroutine(NoneActiveTarget());
     }
     IEnumerator NoneActiveTarget()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         target = null;
     }
     private void Update()
