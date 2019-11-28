@@ -8,5 +8,6 @@ public class GoOutCameraBulletEnemy : MonoBehaviour
     public virtual void OnBecameInvisible()
     {
        myBullet.gameObject.SetActive(false);
+        Debug.Log("disable");
     }
 }

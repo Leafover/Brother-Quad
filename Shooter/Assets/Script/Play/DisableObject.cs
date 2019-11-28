@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DisableObject : MonoBehaviour
 {
-    public float time;
+    public float time = 2;
     WaitForSeconds waitforsecond;
+    public BulletEnemy bulletEnemy;
     private void OnEnable()
     {
         if (waitforsecond == null)
@@ -17,5 +18,7 @@ public class DisableObject : MonoBehaviour
     {
         yield return waitforsecond;
         gameObject.SetActive(false);
+        if (bulletEnemy)
+            bulletEnemy.AutoRemoveMe();
     }
 }

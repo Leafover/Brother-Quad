@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GoInAndGoOutCamera : MonoBehaviour
 {
+    public bool enemyNotJoinAutoTarget;
     public EnemyBase myEnemyBase;
     public virtual void OnBecameInvisible()
     {
@@ -21,9 +22,13 @@ public class GoInAndGoOutCamera : MonoBehaviour
     {
         if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
             return;
-        if (!GameController.instance.autoTarget.Contains(myEnemyBase))
-            GameController.instance.autoTarget.Add(myEnemyBase);
         myEnemyBase.OriginPos = myEnemyBase.transform.position;
         myEnemyBase.incam = true;
+
+        if (enemyNotJoinAutoTarget)
+            return;
+        if (!GameController.instance.autoTarget.Contains(myEnemyBase))
+            GameController.instance.autoTarget.Add(myEnemyBase);
+
     }
 }

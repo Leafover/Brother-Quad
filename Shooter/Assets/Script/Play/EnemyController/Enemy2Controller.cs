@@ -108,15 +108,18 @@ public class Enemy2Controller : EnemyBase
                 return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
             bullet.transform.position = gameObject.transform.position;
+            var _bulletScript = bullet.GetComponent<BulletEnemy>();
             switch (FlipX)
             {
+                
                 case true:
-                    bullet.GetComponent<BulletEnemy>().dir = right;
+                    _bulletScript.BeginDisplay(right,this);
                     break;
                 case false:
-                    bullet.GetComponent<BulletEnemy>().dir = left;
+                    _bulletScript.BeginDisplay(left, this);
                     break;
             }
+            listMyBullet.Add(_bulletScript);
             bullet.SetActive(true);
         }
     }

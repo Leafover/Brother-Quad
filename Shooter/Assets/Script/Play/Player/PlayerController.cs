@@ -81,8 +81,9 @@ public class PlayerController : MonoBehaviour
             if (!candoublejump)
                 return;
             candoublejump = false;
-            force = rid.velocity.y + 6f;
-            rid.velocity = new Vector2(rid.velocity.x, force);
+            StartCoroutine(DoubleJump());
+            //force = rid.velocity.y + 6f;
+            //rid.velocity = new Vector2(rid.velocity.x, force);
         }
 
     }
@@ -130,15 +131,26 @@ public class PlayerController : MonoBehaviour
         isfalldow = false;
         candoublejump = false;
     }
-    int countJump;
-
+    private IEnumerator DoubleJump()
+    {
+        float timeUp = timeJump * 0.5f;
+        for (float t = 0; t <= timeUp; t += Time.deltaTime)
+        {
+            if (playerState == PlayerState.Jump)
+            {
+                force = forceJump * (timeUp - t);
+                rid.velocity = new Vector2(rid.velocity.x, force/2);
+                yield return null;
+            }
+        }
+    }
     private IEnumerator Jump()
     {
         skeletonAnimation.ClearState();
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
         AnimJump();
-        candoublejump = true;
+    //    candoublejump = true;
 
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
@@ -429,6 +441,7 @@ public class PlayerController : MonoBehaviour
         }
         return targetTemp;
     }
+    public bool haveTarget;
     Vector2 GetTarget()
     {
         //  targetTemp = new Vector2(float.MaxValue, float.MaxValue);
@@ -450,12 +463,14 @@ public class PlayerController : MonoBehaviour
                         targetTemp = enemy.transform.position;
                         GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
                         GameController.instance.targetDetectSprite.SetActive(true);
+                        haveTarget = true;
                     }
 
                     else
                     {
                         targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
                         GameController.instance.targetDetectSprite.SetActive(false);
+                        haveTarget = false;
                     }
                 }
             }
@@ -464,10 +479,12 @@ public class PlayerController : MonoBehaviour
                 if (!GameController.instance.joystickShot.GetJoystickState())
                 {
                     targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                    haveTarget = false;
                 }
                 else
                 {
                     targetTemp = GetTargetFromDirection(GameController.instance.shootPosition);
+                    haveTarget = false;
                 }
             }
 
@@ -478,6 +495,7 @@ public class PlayerController : MonoBehaviour
     public void SelectNonTarget(Vector2 pos)
     {
         target = GetTargetFromDirection(pos);
+        haveTarget = false;
     }
 
     public void SelectTarget()

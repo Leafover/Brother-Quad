@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
     public bool isBoss;
     public System.Action<float> acOnUpdate;
@@ -144,7 +145,7 @@ public class EnemyBase : MonoBehaviour
         {
             lineBlood.Reset();
         }
-        
+
         render.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
@@ -248,36 +249,53 @@ public class EnemyBase : MonoBehaviour
     {
         if (enemyState == EnemyState.die)
             return;
-            if (lineBlood != null)
-            {
-                lineBlood.Hide();
-            }
-            rid.velocity = Vector2.zero;
-            takeDamageBox.enabled = false;
-            if (aec.die == null)
-            {
-                GameController.instance.targetDetectSprite.SetActive(false);
-                gameObject.SetActive(false);
-                return;
-            }
-            GameController.instance.targetDetectSprite.SetActive(false);
-            skeletonAnimation.ClearState();
-            PlayAnim(0, aec.die, false);
-            enemyState = EnemyState.die;
-            GameController.instance.RemoveTarget(this);
-            PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
+
+        // DisableAllBullet();
+        if (lineBlood != null)
+        {
+            lineBlood.Hide();
+        }
+        rid.velocity = Vector2.zero;
+        takeDamageBox.enabled = false;
+        //if (aec.die == null)
+        //{
+        //    GameController.instance.targetDetectSprite.SetActive(false);
+        //    gameObject.SetActive(false);
+        //    return;
+        //}
+        GameController.instance.targetDetectSprite.SetActive(false);
+        skeletonAnimation.ClearState();
+        PlayAnim(0, aec.die, false);
+        enemyState = EnemyState.die;
+        GameController.instance.RemoveTarget(this);
+        PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         //    Debug.LogError("zooooooooooo day");
-            if (isBoss)
-                GameController.instance.gameState = GameController.GameState.gameover;
+        if (isBoss)
+            GameController.instance.gameState = GameController.GameState.gameover;
+        DisableAllBullet();
+    }
+    void DisableAllBullet()
+    {
+      //  Debug.LogError(":::::::" + listMyBullet.Count);
+        if (listMyBullet.Count == 0)
+            return;
+        for (int i = 0; i < listMyBullet.Count; i++)
+        {
+            listMyBullet[i].myEnemy = null;
+            listMyBullet[i].gameObject.SetActive(false);
+           // Debug.Log("---------disable");
+        }
+        listMyBullet.Clear();
 
     }
-
     public virtual void TakeDamage(float damage)
     {
+
         currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
+
             Dead();
             //    Debug.LogError("dead");
         }
@@ -304,9 +322,9 @@ public class EnemyBase : MonoBehaviour
                 return;
 
             TakeDamage(3);
-        //    Debug.LogError("take damge:" + collision.name);
+            //    Debug.LogError("take damge:" + collision.name);
             //collision.gameObject.SetActive(false);
-             // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
+            // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
         }
 

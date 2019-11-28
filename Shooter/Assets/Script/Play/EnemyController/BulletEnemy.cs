@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletEnemy : MonoBehaviour
 {
+    public EnemyBase myEnemy;
     [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);
     [HideInInspector]
@@ -12,7 +13,14 @@ public class BulletEnemy : MonoBehaviour
     public float speed, damage;
     System.Action hit;
     Vector2 myTransform;
-
+    public void AutoRemoveMe()
+    {
+        if (myEnemy == null)
+            return;
+        if (myEnemy.listMyBullet.Contains(this))
+            myEnemy.listMyBullet.Remove(this);
+        myEnemy = null;
+    }
     private void OnValidate()
     {
         if (rid == null)
@@ -44,21 +52,28 @@ public class BulletEnemy : MonoBehaviour
         }
         StartEvent();
     }
+
     public virtual void StartEvent()
     {
         hit += Hit;
     }
-
+    public void BeginDisplay(Vector2 _dir,EnemyBase _myEnemy)
+    {
+        dir = _dir;
+        myEnemy = _myEnemy;
+    }
     private void OnDisable()
     {
         hit -= Hit;
         rid.velocity = Vector2.zero;
+
     }
 
     public virtual void Hit()
     {
         gameObject.SetActive(false);
         PlayerController.instance.TakeDamage(damage);
+        AutoRemoveMe();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {

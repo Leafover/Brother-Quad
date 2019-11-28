@@ -122,11 +122,7 @@ public class GameController : MonoBehaviour
     }
     public void OnMove(Vector2 axis)
     {
-        //if (PlayerController.playerController.isBouderJoystick && PlayerController.playerController.isShooting)
-        //{
-        //    var target = PlayerController.playerController.GetTargetFromDirection(axis);
-        //    PlayerController.playerController.targetPos.position = Vector2.MoveTowards(PlayerController.playerController.targetPos.position, target, Time.deltaTime * 20);
-        //}
+
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
         //   PlayerController.instance.FlipX = h > 0 ? false : true;
@@ -145,6 +141,11 @@ public class GameController : MonoBehaviour
                 return;
             PlayerController.instance.playerState = PlayerController.PlayerState.Sit;
         }
+
+        if (joystickShot.GetJoystickState())
+            return;
+        if (!PlayerController.instance.haveTarget)
+            PlayerController.instance.FlipX = h < 0;
     }
     private void JoystickShooting(UltimateJoystick joystick)
     {
@@ -217,14 +218,14 @@ public class GameController : MonoBehaviour
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
-            if(gameState == GameState.gameover)
+            if (gameState == GameState.gameover)
             {
                 StartCoroutine(delayDisplayFinish());
             }
             return;
         }
 
-  
+
         var deltaTime = Time.deltaTime;
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
