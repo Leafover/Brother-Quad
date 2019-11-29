@@ -33,6 +33,7 @@ public class Enemy0Controller : EnemyBase
             {
                 isActive = true;
                 render.gameObject.SetActive(true);
+                PlayAnim(0, aec.run, true);
             }
             return;
         }
@@ -62,6 +63,13 @@ public class Enemy0Controller : EnemyBase
         {
             EnemyManager.instance.enemy0s.Remove(this);
         }
+    }
+    public override void Dead()
+    {
+        base.Dead();
+        GameObject explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
+        explo.transform.position = gameObject.transform.position;
+        explo.SetActive(true);
     }
     //protected override void OnComplete(TrackEntry trackEntry)
     //{

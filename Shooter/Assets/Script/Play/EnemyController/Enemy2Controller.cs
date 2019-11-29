@@ -12,13 +12,13 @@ public class Enemy2Controller : EnemyBase
     Vector2 GetposRay()
     {
         posRay.x = transform.position.x;
-        posRay.y = transform.position.y + 1;
+        posRay.y = transform.position.y;
         return posRay;
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(GetposRay(), radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(GetposRay(), radius);
+    }
     public override void Start()
     {
         base.Start();

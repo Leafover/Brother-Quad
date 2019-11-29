@@ -56,13 +56,19 @@ public class Enemy1Controller : EnemyBase
 
                 if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                 {
-                    PlayAnim(0, aec.idle, true);
-                    speedMove = 0;
+
+                    if (speedMove != 0)
+                    {
+                        speedMove = 0;
+                        rid.velocity = Vector2.zero;
+                        PlayAnim(0, aec.idle, true);
+                    }
                 }
                 else
                 {
                     PlayAnim(0, aec.run, true);
                     speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                    rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 }
 
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
@@ -70,10 +76,15 @@ public class Enemy1Controller : EnemyBase
                 {
                     enemyState = EnemyState.idle;
                 }
-                rid.velocity = new Vector2(speedMove, rid.velocity.y);
+
                 break;
             case EnemyState.attack:
-                speedMove = 0;
+                if (speedMove != 0)
+                {
+                    speedMove = 0;
+                    rid.velocity = Vector2.zero;
+                    PlayAnim(0, aec.idle, true);
+                }
                 if (combo != randomCombo && combo >= 0)
                     Attack(0, aec.attack1, false);
                 else if (combo == randomCombo && combo > 0)
@@ -100,10 +111,10 @@ public class Enemy1Controller : EnemyBase
         }
 
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(transform.position, radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);

@@ -146,7 +146,7 @@ public class Enemy4Controller : EnemyBase
     {
         base.OnComplete(trackEntry);
         //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
-        if (trackEntry.Animation.name.Equals(aec.attack1.name))
+        if (trackEntry.Animation.Equals(aec.attack1.name))
         {
 
             combo++;

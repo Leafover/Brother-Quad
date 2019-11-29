@@ -136,14 +136,13 @@ public class EnemyBase : DataUnit
     }
     public virtual void OnDisable()
     {
-        if (skeletonAnimation != null)
+        if (skeletonAnimation != null && skeletonAnimation.AnimationState != null)
         {
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
         acOnUpdate -= OnUpdate;
         GameController.instance.RemoveTarget(this);
-        // Debug.Log("-----zoooooooooooooo");
     }
     public virtual void Start()
     {
