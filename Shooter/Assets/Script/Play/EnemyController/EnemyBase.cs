@@ -30,7 +30,7 @@ public class EnemyBase : DataUnit
     public float damage;
     [HideInInspector]
     public float health, timePreviousAttack;
-    [HideInInspector]
+  //  [HideInInspector]
     public float maxtimedelayChangePos = 6;
 
     public AnimationReferenceAsset currentAnim;
@@ -151,7 +151,7 @@ public class EnemyBase : DataUnit
     }
     public virtual void OnDisable()
     {
-        if (skeletonAnimation != null && skeletonAnimation.AnimationState != null)
+        if (skeletonAnimation != null/* && skeletonAnimation.AnimationState != null*/)
         {
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;

@@ -34,6 +34,7 @@ public class Enemy4Controller : EnemyBase
         {
             EnemyManager.instance.enemy4s.Remove(this);
         }
+       // Debug.LogError("tu nhien bien mat");
     }
 
 
@@ -49,7 +50,9 @@ public class Enemy4Controller : EnemyBase
                 isActive = true;
                 enemyState = EnemyState.attack;
                 render.gameObject.SetActive(true);
-                Debug.LogError("zoooooooo");
+                PlayAnim(0, aec.idle, true);
+                //   Debug.LogError("zoooooooo");
+                // PlayAnim(0, aec.run, true);
             }
             return;
         }
@@ -60,6 +63,7 @@ public class Enemy4Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
+             //   Debug.LogError("zoooooooo atack");
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (!canmove)
                 {
@@ -87,9 +91,11 @@ public class Enemy4Controller : EnemyBase
                 {
                     Shoot(0, aec.attack1, false, timedelayShoot);
                     targetPos.transform.position = GetTarget(true);
+
                 }
                 else
                 {
+
                     Shoot(0, aec.attack2, false, timedelayShoot);
                     targetPos.transform.position = GetTarget(false);
                     timedelayChangePos -= deltaTime;
@@ -135,7 +141,6 @@ public class Enemy4Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
-            Debug.LogError("zoooooooooooo 1");
             if (!incam)
                 return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
@@ -148,29 +153,8 @@ public class Enemy4Controller : EnemyBase
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            Debug.LogError("zoooooooooooo 1");
             combo++;
 
-            //if (combo == randomCombo)
-            //{
-            //    if (canmove)
-            //    {
-            //        enemyState = EnemyState.run;
-            //        timedelayChangePos = maxtimedelayChangePos;
-            //        if (transform.position.x < OriginPos.x)
-            //            nextPos.x = OriginPos.x + Random.Range(1f, 2f);
-            //        else
-            //            nextPos.x = OriginPos.x + Random.Range(-1f, -2f);
-            //        nextPos.y = OriginPos.y;
-            //        CheckDirFollowPlayer(nextPos.x);
-            //        PlayAnim(0, aec.run, true);
-            //    }
-
-            //    combo = 0;
-            //    randomCombo = Random.Range(1, 3);
-            //    isGrenadeStage = false;
-            //    timedelayShoot = maxtimeDelayAttack / 2;
-            //}
 
             if (!incam)
                 return;
@@ -191,8 +175,6 @@ public class Enemy4Controller : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            Debug.LogError("zoooooooooooo 2");
-           // combo++;
 
             if (combo == randomCombo)
             {
@@ -214,16 +196,6 @@ public class Enemy4Controller : EnemyBase
                 isGrenadeStage = false;
                 timedelayShoot = maxtimeDelayAttack / 2;
             }
-
-            //if (!incam)
-            //    return;
-            //GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            //grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            //if (FlipX)
-            //    grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
-            //else
-            //    grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
-            //grenade.SetActive(true);
 
         }
 

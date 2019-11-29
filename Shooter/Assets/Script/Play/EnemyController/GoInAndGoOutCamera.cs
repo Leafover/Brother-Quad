@@ -16,7 +16,6 @@ public class GoInAndGoOutCamera : MonoBehaviour
             myEnemyBase.gameObject.SetActive(false);
         }
 
-          Debug.Log("becaminvisible");
     }
     public virtual void OnBecameVisible()
     {
@@ -30,7 +29,5 @@ public class GoInAndGoOutCamera : MonoBehaviour
         if (!GameController.instance.autoTarget.Contains(myEnemyBase))
             GameController.instance.autoTarget.Add(myEnemyBase);
 
-
-        Debug.Log("becamvisible");
     }
 }
