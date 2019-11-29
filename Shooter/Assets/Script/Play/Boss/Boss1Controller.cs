@@ -23,7 +23,7 @@ public class Boss1Controller : EnemyBase
         typeAttack = 0;
 
         takeDamageBox.enabled = false;
-        maxtimeDelayAttack = 0.4f;
+        maxtimeDelayAttack = 1f;
 
     }
 
@@ -49,7 +49,7 @@ public class Boss1Controller : EnemyBase
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
-                PlayAnim(0, aec.run, true);
+                PlayAnim(1, aec.run, true);
                 enemyState = EnemyState.idle;
                 render.gameObject.SetActive(true);
             }
@@ -63,7 +63,7 @@ public class Boss1Controller : EnemyBase
                 rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize * 1.1f)
                 {
-                    PlayAnim(0, aec.idle, true);
+                    PlayAnim(1, aec.idle, true);    
                     enemyState = EnemyState.attack;
                     rid.velocity = Vector2.zero;
                     OriginPos = Origin();
@@ -83,7 +83,7 @@ public class Boss1Controller : EnemyBase
                             if (transform.position.x != posTemp.x)
                                 return;
                             move = false;
-                            PlayAnim(0, aec.idle, true);
+                            PlayAnim(1, aec.idle, true);
                             StartCoroutine(ActiveAttack());
                             randomCombo = Random.Range(0, 3);
                         }
@@ -92,7 +92,8 @@ public class Boss1Controller : EnemyBase
                             CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                             if (!canAttack)
                                 return;
-                            PlayAnim(0, aec.attack1, false);
+                            // PlayAnim(0, aec.attack1, false);
+                            Shoot(1, aec.attack3, false, maxtimeDelayAttack);
                         }
                         break;
                     case 1:
@@ -103,12 +104,13 @@ public class Boss1Controller : EnemyBase
                             if (transform.position.x != posTemp.x)
                                 return;
                             move = false;
-                            PlayAnim(0, aec.idle, true);
+                            PlayAnim(1, aec.idle, true);
+                          //  combo = 0; //đhs
                             randomCombo = Random.Range(0, 3);
                         }
                         else
                         {
-                            PlayAnim(0, aec.attack2, false);
+                            PlayAnim(1, aec.attack2, false);
                         }
                         break;
                     case 3:
@@ -118,7 +120,7 @@ public class Boss1Controller : EnemyBase
                             if (transform.position.x != posTemp.x)
                                 return;
                             move = false;
-                            PlayAnim(0, aec.idle, true);
+                            PlayAnim(1, aec.idle, true);
                             StartCoroutine(ActiveAttack());
                             randomCombo = Random.Range(0, 3);
                         }
@@ -127,7 +129,7 @@ public class Boss1Controller : EnemyBase
                             CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                             if (!canAttack)
                                 return;
-                            Shoot(0, aec.attack3, false, maxtimeDelayAttack);
+                            Shoot(1, aec.attack3, false, maxtimeDelayAttack);
                         }
                         break;
                 }
@@ -152,7 +154,7 @@ public class Boss1Controller : EnemyBase
     {
         yield return new WaitForSeconds(2);
         move = true;
-        PlayAnim(0, aec.run, true);
+        PlayAnim(1, aec.run, true);
         typeAttack = 1;
         switch (FlipX)
         {
@@ -172,29 +174,19 @@ public class Boss1Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            combo++;
-            if (!incam)
-                return;
-            boxAttack1.gameObject.SetActive(true);
+            //combo++;
+            //if (!incam)
+            //    return;
+            //boxAttack1.gameObject.SetActive(true);
 
-        }
-        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
-        {
-            combo++;
-            if (!incam)
-                return;
-            boxAttack2.gameObject.SetActive(true);
-    
-        }
-        else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
-        {
+
             combo++;
             if (combo == randomCombo + 1)
             {
-                maxtimeDelayAttack = 1.5f;
+                maxtimeDelayAttack = 2f;
             }
-            if (combo == (randomCombo + 2) && maxtimeDelayAttack == 1.5f)
-                maxtimeDelayAttack = 0.4f;
+            if (combo == (randomCombo + 2) && maxtimeDelayAttack == 2f)
+                maxtimeDelayAttack = 1f;
             if (combo == 4)
             {
                 canAttack = false;
@@ -206,6 +198,40 @@ public class Boss1Controller : EnemyBase
             bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
             bullet.SetActive(true);
 
+
+            Debug.LogError("----------- 1");
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        {
+            combo++;
+            if (!incam)
+                return;
+            boxAttack2.gameObject.SetActive(true);
+
+            Debug.LogError("----------- 2 :" + combo);
+
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
+        {
+            combo++;
+            if (combo == randomCombo + 1)
+            {
+                maxtimeDelayAttack = 2f;
+            }
+            if (combo == (randomCombo + 2) && maxtimeDelayAttack == 2f)
+                maxtimeDelayAttack = 1f;
+            if (combo == 4)
+            {
+                canAttack = false;
+            }
+            if (!incam)
+                return;
+            GameObject bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
+            bullet.SetActive(true);
+
+            Debug.LogError("----------- 3");
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -213,20 +239,28 @@ public class Boss1Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            boxAttack1.gameObject.SetActive(false);
-            if (combo == randomCombo + 1)
-            {
-                combo = 0;
-                PlayAnim(0, aec.idle, true);
-                StartCoroutine(ActiveMove());
+            //boxAttack1.gameObject.SetActive(false);
+            //if (combo == randomCombo + 1)
+            //{
+            //    combo = 0;
+            //    PlayAnim(0, aec.idle, true);
+            //    StartCoroutine(ActiveMove());
 
-            }
-            else
+            //}
+            //else
+            //{
+            //    PlayAnim(0, aec.idle, true);
+            //    PlayAnim(0, aec.attack1, false);
+            //}
+
+            if (combo == 4)
             {
-                PlayAnim(0, aec.idle, true);
-                PlayAnim(0, aec.attack1, false);
+                PlayAnim(1, aec.idle, true);
+                StartCoroutine(ActiveMove());
+                combo = 0;
+                maxtimeDelayAttack = 1f;
             }
-            //   Debug.LogError("------------------- posTemp:" + posTemp.x);
+
         }
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
@@ -240,24 +274,30 @@ public class Boss1Controller : EnemyBase
                 GetPosTemp(OriginPos.x);
 
                 move = true;
-                PlayAnim(0, aec.run, true);
+                PlayAnim(1, aec.run, true);
                 combo = 0;
                 CheckDirFollowPlayer(OriginPos.x);
+
+                Debug.LogError("done" + combo + ":" + randomCombo);
+
             }
             else
             {
-                PlayAnim(0, aec.idle, true);
-                PlayAnim(0, aec.attack2, false);
+                PlayAnim(1, aec.idle, true);
+                PlayAnim(1, aec.attack2, false);
+
+                Debug.LogError("tiep" + combo + ":" + randomCombo);
             }
+
         }
         if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
             if (combo == 4)
             {
-                PlayAnim(0, aec.idle, true);
+                PlayAnim(1, aec.idle, true);
                 StartCoroutine(ActiveMove());
                 combo = 0;
-                maxtimeDelayAttack = 0.4f;
+                maxtimeDelayAttack = 1f;
             }
             //   Debug.LogError("------------------- posTemp:" + posTemp.x);
         }
