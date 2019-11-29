@@ -55,23 +55,33 @@ public class Enemy5Controller : EnemyBase
             case EnemyState.run:
                 if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                 {
+
                     PlayAnim(0, aec.idle, true);
-                    speedMove = 0;
+                    if (speedMove != 0)
+                    {
+                        speedMove = 0;
+                        rid.velocity = Vector2.zero;
+                    }
                 }
                 else
                 {
                     PlayAnim(0, aec.run, true);
                     speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                    rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 }
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
                 if (detectPlayer)
                 {
                     enemyState = EnemyState.idle;
                 }
-                rid.velocity = new Vector2(speedMove, rid.velocity.y);
+
                 break;
             case EnemyState.attack:
-                speedMove = 0;
+                if (speedMove != 0)
+                {
+                    speedMove = 0;
+                    rid.velocity = Vector2.zero;
+                }
                 Attack(0, aec.attack1, false);
                 break;
         }

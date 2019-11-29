@@ -22,6 +22,8 @@ public class Enemy3Controller : EnemyBase
             EnemyManager.instance.enemy3s.Add(this);
 
         }
+
+      //  Debug.LogError(leftFace.transform.position + ":" + rightFace.transform.position);
     }
     public override void OnDisable()
     {
@@ -70,8 +72,10 @@ public class Enemy3Controller : EnemyBase
                         nextPos.x = OriginPos.x + Random.Range(-1f, -3f);
                     nextPos.y = transform.position.y;
                     CheckDirFollowPlayer(nextPos.x);
-                    skeletonAnimation.ClearState();
-                    targetPos.transform.position = GetTarget(true);
+                     skeletonAnimation.ClearState();
+                    //skeletonAnimation.AnimationState.ClearTrack(1);
+                    //skeletonAnimation.AnimationState.ClearTracks();
+    
                     PlayAnim(0, aec.run, true);
 
                     //    Debug.LogError("--------:"  +nextPos.x);
@@ -81,7 +85,7 @@ public class Enemy3Controller : EnemyBase
 
 
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
-
+                targetPos.transform.position = GetTarget(true);
                 if (transform.position.x == nextPos.x)
                 {
                     PlayAnim(0, aec.idle, true);

@@ -80,6 +80,7 @@ public class EnemyV2Controller : EnemyBase
                 return;
             GameObject g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            g.transform.rotation = Quaternion.identity;
             g.transform.rotation = gunRotation.rotation;
             g.SetActive(true);
         }

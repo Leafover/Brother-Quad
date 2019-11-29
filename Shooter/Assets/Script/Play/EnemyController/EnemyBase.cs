@@ -7,6 +7,8 @@ using UnityEngine;
 public class EnemyBase : DataUnit
 {
 
+    public Transform leftFace, rightFace;
+
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
     public bool isBoss;
@@ -51,9 +53,9 @@ public class EnemyBase : DataUnit
 
     Vector2 originPos;
 
-    public Bone boneBarrelGun;
+    public Bone boneBarrelGun, boneBarrelGun1, boneBarrelGun2;
     [SpineBone]
-    public string strboneBarrelGun;
+    public string strboneBarrelGun, strboneBarrelGun1, strboneBarrelGun2;
     public Transform targetPos;
 
     public Vector2 OriginPos
@@ -104,7 +106,20 @@ public class EnemyBase : DataUnit
         }
         else
         {
-            return boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            // Debug.LogError(":" + FlipX);
+            //if (FlipX)
+            //{
+            //    Debug.Log("zo day 1" + ":" + rightFace.transform.position + ":" + targetPos.transform.position);
+            //    return rightFace.position;
+
+            //}
+            //else
+            //{
+            //    Debug.Log("zo day 2" + ":" + leftFace.transform.position + ":" + targetPos.transform.position);
+            //    return leftFace.position;
+            //}
+
+            return /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/FlipX ? rightFace.position : leftFace.position;
         }
     }
     public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop)
@@ -176,7 +191,11 @@ public class EnemyBase : DataUnit
 
         currentAnim = aec.idle;
         if (skeletonAnimation != null)
+        {
             boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
+            boneBarrelGun1 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun1);
+            boneBarrelGun2 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun2);
+        }
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
 
@@ -189,7 +208,7 @@ public class EnemyBase : DataUnit
         health = baseHealth * baseLevel;
         speed = baseSpeed;
         currentHealth = health;
-  
+
 
     }
 
@@ -290,14 +309,14 @@ public class EnemyBase : DataUnit
     }
     void DisableAllBullet()
     {
-      //  Debug.LogError(":::::::" + listMyBullet.Count);
+        //  Debug.LogError(":::::::" + listMyBullet.Count);
         if (listMyBullet.Count == 0)
             return;
         for (int i = 0; i < listMyBullet.Count; i++)
         {
             listMyBullet[i].myEnemy = null;
             listMyBullet[i].gameObject.SetActive(false);
-           // Debug.Log("---------disable");
+            // Debug.Log("---------disable");
         }
         listMyBullet.Clear();
 

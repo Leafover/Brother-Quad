@@ -7,7 +7,7 @@ using Spine;
 [System.Serializable]
 public class AssetSpinePlayerController
 {
-    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim,beginJumpAnim,dieAnim;
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim,dieAnim;
 }
 
 [System.Serializable]

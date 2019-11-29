@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
-    public string strboneBarrelGun, strboneHandGrenade,strboneAIM;
+    public string strboneBarrelGun, strboneHandGrenade;
 
     float timePreviousAttack, timePreviousGrenade,timePreviousRocket;
     public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade,timedelayRocket;
@@ -324,13 +324,6 @@ public class PlayerController : MonoBehaviour
         {
             isWaitStand = false;
         }
-        //else if(trackEntry.Animation.Name.Equals(apc.beginJumpAnim))
-        //{
-        //    if (currentAnim == apc.jumpAnim)
-        //        return;
-        //    skeletonAnimation.AnimationState.SetAnimation(0, apc.jumpAnim, false);
-        //    currentAnim = apc.jumpAnim;
-        //}
     }
     public Vector2 GetOriginGun()
     {

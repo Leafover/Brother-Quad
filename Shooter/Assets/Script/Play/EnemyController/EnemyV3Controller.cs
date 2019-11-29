@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Spine;
 using UnityEngine;
-
+using Spine.Unity;
 public class EnemyV3Controller : EnemyBase
 {
     public override void Start()
@@ -46,7 +46,7 @@ public class EnemyV3Controller : EnemyBase
             if (!incam)
                 return;
             GameObject g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
-            g.transform.position = gameObject.transform.position;
+            g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.SetActive(true);
         }
     }

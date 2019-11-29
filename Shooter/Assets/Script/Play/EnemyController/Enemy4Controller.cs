@@ -103,7 +103,7 @@ public class Enemy4Controller : EnemyBase
                         isGrenadeStage = true;
                         timedelayShoot = maxtimeDelayAttack;
                         skeletonAnimation.ClearState();
-                        targetPos.transform.position = GetTarget(true);
+
                         PlayAnim(0, aec.run, true);
 
                     }
@@ -113,6 +113,7 @@ public class Enemy4Controller : EnemyBase
             case EnemyState.run:
 
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
+                targetPos.transform.position = GetTarget(true);
 
                 if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
@@ -145,10 +146,10 @@ public class Enemy4Controller : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-        //  Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
-        if (trackEntry.Animation.Equals(aec.attack1.name))
+        Debug.LogError("------------ aec.attack1.name:" + aec.attack1.name);
+        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-
+            Debug.Log("-------- nem lu dan");
             combo++;
 
             if (combo == randomCombo)
@@ -175,14 +176,13 @@ public class Enemy4Controller : EnemyBase
             if (!incam)
                 return;
             GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            grenade.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             if (FlipX)
                 grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
             else
                 grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
             grenade.SetActive(true);
-            //  Debug.Log("-------- nem lu dan");
-
+              Debug.Log("-------- nem lu dan");
         }
         //else if (trackEntry.Animation.Name.Equals(aec.die.name))
         //{

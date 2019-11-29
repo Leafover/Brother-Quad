@@ -107,7 +107,7 @@ public class Enemy2Controller : EnemyBase
             if (!incam)
                 return;
             GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
-            bullet.transform.position = gameObject.transform.position;
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             var _bulletScript = bullet.GetComponent<BulletEnemy>();
             switch (FlipX)
             {

@@ -5,8 +5,8 @@ using Spine;
 using Spine.Unity;
 public class MiniBoss1 : EnemyBase
 {
-        int currentPos;
-    public Transform gunRotation;
+    int currentPos;
+    public Transform gunRotation, gunRotation1, gunRotation2;
     public override void Start()
     {
         base.Start();
@@ -66,6 +66,7 @@ public class MiniBoss1 : EnemyBase
                 break;
         }
     }
+    GameObject g;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -74,9 +75,19 @@ public class MiniBoss1 : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.transform.rotation = gunRotation.rotation;
+            g.SetActive(true);
+
+            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+            g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            g.transform.rotation = gunRotation1.rotation;
+            g.SetActive(true);
+
+            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+            g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+            g.transform.rotation = gunRotation2.rotation;
             g.SetActive(true);
         }
     }
