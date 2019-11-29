@@ -139,6 +139,7 @@ public class EnemyBase : DataUnit
     {
         if (enemyState == EnemyState.die)
             return;
+     //   Debug.LogError(timePreviousAttack + ":" + timeDelayAttack);
         if (Time.time - timePreviousAttack >= timeDelayAttack)
         {
             timePreviousAttack = Time.time;
@@ -146,7 +147,7 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             if (currentAnim != anim)
                 currentAnim = anim;
-
+          //  Debug.Log("nem luu dan:" + timeDelayAttack);
         }
     }
     public virtual void OnDisable()
@@ -170,7 +171,7 @@ public class EnemyBase : DataUnit
         {
             lineBlood.Reset();
         }
-
+        timePreviousAttack = maxtimeDelayAttack / 2;
         render.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
@@ -251,6 +252,7 @@ public class EnemyBase : DataUnit
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
+            Debug.LogError("die?????");
             //     Debug.LogError("dead");
             //      return;
         }

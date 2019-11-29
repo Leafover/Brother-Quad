@@ -7,6 +7,7 @@ using Spine.Unity;
 public class Testfindbone : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
+    public AnimationReferenceAsset anim;
     private Bone boneTarget;
     [SpineBone]
     public string strBoneTarget;
@@ -14,18 +15,17 @@ public class Testfindbone : MonoBehaviour
     void Start()
     {
 
-        Debug.LogError("wtfffffffffffffffffffff");
-        boneTarget = skeletonAnimation.Skeleton.FindBone(strBoneTarget);
-        if (boneTarget == null)
-            Debug.Log("null");
-        else
-            Debug.Log("not null");
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+            skeletonAnimation.AnimationState.SetAnimation(0, anim, false);
+    }
+    private void OnDisable()
+    {
+        Debug.LogError("zooooooooo");
     }
 }

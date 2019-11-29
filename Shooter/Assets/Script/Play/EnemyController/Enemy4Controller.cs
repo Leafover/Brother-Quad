@@ -34,10 +34,14 @@ public class Enemy4Controller : EnemyBase
         {
             EnemyManager.instance.enemy4s.Remove(this);
         }
-       // Debug.LogError("tu nhien bien mat");
+        // Debug.LogError("tu nhien bien mat");
     }
 
-
+    IEnumerator delayActive()
+    {
+        yield return new WaitForSeconds(0.1f);
+        enemyState = EnemyState.attack;
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -48,11 +52,10 @@ public class Enemy4Controller : EnemyBase
             if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
             {
                 isActive = true;
-                enemyState = EnemyState.attack;
+                enemyState = EnemyState.idle;
                 render.gameObject.SetActive(true);
                 PlayAnim(0, aec.idle, true);
-                //   Debug.LogError("zoooooooo");
-                // PlayAnim(0, aec.run, true);
+                StartCoroutine(delayActive());
             }
             return;
         }
@@ -63,12 +66,13 @@ public class Enemy4Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-             //   Debug.LogError("zoooooooo atack");
+                //   Debug.LogError("zoooooooo atack");
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (!canmove)
                 {
                     if (isGrenadeStage)
                     {
+
                         Shoot(0, aec.attack1, false, timedelayShoot);
                         targetPos.transform.position = GetTarget(true);
                     }
