@@ -21,20 +21,17 @@ public class Enemy0Controller : EnemyBase
             EnemyManager.instance.enemy0s.Add(this);
         }
     }
-
+    public override void Active()
+    {
+        base.Active();
+        PlayAnim(0, aec.run, true);
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
-
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                render.gameObject.SetActive(true);
-                PlayAnim(0, aec.run, true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -44,13 +41,14 @@ public class Enemy0Controller : EnemyBase
         transform.position = GameController.instance.currentMap.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
 
     }
+    GameObject explo;
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.layer == 13)
         {
             gameObject.SetActive(false);
-            GameObject explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
+            explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
             PlayerController.instance.TakeDamage(damage);
@@ -67,7 +65,7 @@ public class Enemy0Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        GameObject explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
+        explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
         explo.transform.position = gameObject.transform.position;
         explo.SetActive(true);
     }

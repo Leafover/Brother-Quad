@@ -31,6 +31,11 @@ public class MiniBoss1 : EnemyBase
             EnemyManager.instance.miniboss1s.Remove(this);
         }
     }
+    public override void Active()
+    {
+        base.Active();
+        enemyState = EnemyState.run;
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -38,12 +43,6 @@ public class MiniBoss1 : EnemyBase
 
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                enemyState = EnemyState.run;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)

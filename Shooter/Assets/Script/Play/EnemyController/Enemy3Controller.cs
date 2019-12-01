@@ -23,7 +23,7 @@ public class Enemy3Controller : EnemyBase
 
         }
 
-      //  Debug.LogError(leftFace.transform.position + ":" + rightFace.transform.position);
+        //  Debug.LogError(leftFace.transform.position + ":" + rightFace.transform.position);
     }
     public override void OnDisable()
     {
@@ -33,18 +33,16 @@ public class Enemy3Controller : EnemyBase
             EnemyManager.instance.enemy3s.Remove(this);
         }
     }
-
+    public override void Active()
+    {
+        base.Active();
+        enemyState = EnemyState.attack;
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                enemyState = EnemyState.attack;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -72,10 +70,10 @@ public class Enemy3Controller : EnemyBase
                         nextPos.x = OriginPos.x + Random.Range(-1f, -3f);
                     nextPos.y = transform.position.y;
                     CheckDirFollowPlayer(nextPos.x);
-                     skeletonAnimation.ClearState();
+                    skeletonAnimation.ClearState();
                     //skeletonAnimation.AnimationState.ClearTrack(1);
                     //skeletonAnimation.AnimationState.ClearTracks();
-    
+
                     PlayAnim(0, aec.run, true);
 
                     //    Debug.LogError("--------:"  +nextPos.x);
@@ -95,7 +93,10 @@ public class Enemy3Controller : EnemyBase
                 break;
         }
     }
-
+    GameObject bullet;
+    Vector2 dirBullet;
+    Quaternion rotation;
+    float angle;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -103,10 +104,10 @@ public class Enemy3Controller : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
-            Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
+            dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);

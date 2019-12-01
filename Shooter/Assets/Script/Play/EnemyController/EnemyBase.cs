@@ -33,7 +33,7 @@ public class EnemyBase : DataUnit
     public float damage;
     [HideInInspector]
     public float health, timePreviousAttack;
-  //  [HideInInspector]
+    //  [HideInInspector]
     public float maxtimedelayChangePos = 6;
     [HideInInspector]
     public AnimationReferenceAsset currentAnim;
@@ -47,7 +47,6 @@ public class EnemyBase : DataUnit
     public float currentHealth, distanceActive = 6;
     public float speed;
 
-    public Renderer render;
     [HideInInspector]
     public bool isActive;
     int dir;
@@ -90,7 +89,6 @@ public class EnemyBase : DataUnit
         if (skeletonAnimation == null)
         {
             skeletonAnimation = transform.GetChild(0).GetComponent<SkeletonAnimation>();
-            render = transform.GetChild(0).GetComponent<Renderer>();
         }
         if (takeDamageBox == null)
             takeDamageBox = GetComponent<Collider2D>();
@@ -143,7 +141,7 @@ public class EnemyBase : DataUnit
     {
         if (enemyState == EnemyState.die)
             return;
-     //   Debug.LogError(timePreviousAttack + ":" + timeDelayAttack);
+        //   Debug.LogError(timePreviousAttack + ":" + timeDelayAttack);
         if (Time.time - timePreviousAttack >= timeDelayAttack)
         {
             timePreviousAttack = Time.time;
@@ -151,7 +149,7 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             if (currentAnim != anim)
                 currentAnim = anim;
-          //  Debug.Log("nem luu dan:" + timeDelayAttack);
+            //  Debug.Log("nem luu dan:" + timeDelayAttack);
         }
     }
     public virtual void OnDisable()
@@ -176,7 +174,7 @@ public class EnemyBase : DataUnit
             lineBlood.Reset();
         }
         timePreviousAttack = maxtimeDelayAttack / 2;
-        render.gameObject.SetActive(false);
+        skeletonAnimation.gameObject.SetActive(false);
         isActive = false;
         if (boxAttack1 != null)
             boxAttack1.gameObject.SetActive(false);
@@ -259,7 +257,7 @@ public class EnemyBase : DataUnit
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
-            Debug.LogError("die?????");
+         //   Debug.LogError("die?????");
             //     Debug.LogError("dead");
             //      return;
         }
@@ -273,9 +271,22 @@ public class EnemyBase : DataUnit
         get { return skeletonAnimation.skeleton.FlipX; }
         set { skeletonAnimation.skeleton.FlipX = value; }
     }
+    public virtual void Active()
+    {
+        isActive = true;
+        skeletonAnimation.gameObject.SetActive(true);
+      //  Debug.LogError("---------active");
+
+    }
     public virtual void OnUpdate(float deltaTime)
     {
-
+        if (!isActive)
+        {
+            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            {
+                Active();
+            }
+        }
     }
     public void UpdateActionForEnemyManager(float deltaTime)
     {

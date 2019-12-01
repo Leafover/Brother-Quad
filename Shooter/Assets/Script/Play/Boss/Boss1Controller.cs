@@ -36,23 +36,23 @@ public class Boss1Controller : EnemyBase
         }
     }
     Vector2 posTemp;
+    Vector2 moveVelocity;
     void GetPosTemp(float x)
     {
         posTemp.x = x;
         posTemp.y = transform.position.y;
+    }
+    public override void Active()
+    {
+        base.Active();
+        PlayAnim(1, aec.run, true);
+        enemyState = EnemyState.idle;
     }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                PlayAnim(1, aec.run, true);
-                enemyState = EnemyState.idle;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -60,7 +60,10 @@ public class Boss1Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-                rid.velocity = new Vector2(speedMove, rid.velocity.y);
+                moveVelocity = rid.velocity;
+                moveVelocity.x = speedMove;
+                moveVelocity.y = rid.velocity.y;
+                rid.velocity = moveVelocity;
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize * 1.1f)
                 {
                     PlayAnim(1, aec.idle, true);    
@@ -169,6 +172,7 @@ public class Boss1Controller : EnemyBase
         }
 
     }
+    GameObject bullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -193,13 +197,11 @@ public class Boss1Controller : EnemyBase
             }
             if (!incam)
                 return;
-            GameObject bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
+            bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
             bullet.SetActive(true);
 
-
-            Debug.LogError("----------- 1");
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
@@ -208,7 +210,7 @@ public class Boss1Controller : EnemyBase
                 return;
             boxAttack2.gameObject.SetActive(true);
 
-            Debug.LogError("----------- 2 :" + combo);
+
 
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
@@ -231,7 +233,7 @@ public class Boss1Controller : EnemyBase
             bullet.GetComponent<BulletEnemy>().dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
             bullet.SetActive(true);
 
-            Debug.LogError("----------- 3");
+
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -278,7 +280,7 @@ public class Boss1Controller : EnemyBase
                 combo = 0;
                 CheckDirFollowPlayer(OriginPos.x);
 
-                Debug.LogError("done" + combo + ":" + randomCombo);
+
 
             }
             else
@@ -286,7 +288,7 @@ public class Boss1Controller : EnemyBase
                 PlayAnim(1, aec.idle, true);
                 PlayAnim(1, aec.attack2, false);
 
-                Debug.LogError("tiep" + combo + ":" + randomCombo);
+
             }
 
         }
@@ -299,7 +301,7 @@ public class Boss1Controller : EnemyBase
                 combo = 0;
                 maxtimeDelayAttack = 1f;
             }
-            //   Debug.LogError("------------------- posTemp:" + posTemp.x);
+
         }
     }
     public int activeType3 = 0;

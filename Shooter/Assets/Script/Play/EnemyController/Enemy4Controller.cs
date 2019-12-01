@@ -42,21 +42,20 @@ public class Enemy4Controller : EnemyBase
         yield return new WaitForSeconds(0.1f);
         enemyState = EnemyState.attack;
     }
+    public override void Active()
+    {
+        base.Active();
+        enemyState = EnemyState.idle;
+
+        PlayAnim(0, aec.idle, true);
+        StartCoroutine(delayActive());
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
-
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                enemyState = EnemyState.idle;
-                render.gameObject.SetActive(true);
-                PlayAnim(0, aec.idle, true);
-                StartCoroutine(delayActive());
-            }
             return;
         }
         if (enemyState == EnemyState.die)

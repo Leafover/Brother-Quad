@@ -25,27 +25,23 @@ public class Enemy5Controller : EnemyBase
 
     }
 
+    public override void Active()
+    {
+        base.Active();
+        if (jumpOut)
+        {
+            takeDamageBox.enabled = false;
+            PlayAnim(0, aec.jumpOut, false);
+            CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+        }
+    }
+    Vector2 move;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
-
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                render.gameObject.SetActive(true);
-
-
-                if (jumpOut)
-                {
-                    takeDamageBox.enabled = false;
-                    PlayAnim(0, aec.jumpOut, false);
-                 //   Debug.LogError("jump");
-                }
-
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -80,7 +76,10 @@ public class Enemy5Controller : EnemyBase
                 {
                     PlayAnim(0, aec.run, true);
                     speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                    rid.velocity = new Vector2(speedMove, rid.velocity.y);
+                    move = rid.velocity;
+                    move.x = speedMove;
+                    move.y = rid.velocity.y;
+                    rid.velocity = move;
                 }
                 detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
                 if (detectPlayer)

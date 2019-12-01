@@ -21,19 +21,17 @@ public class Enemy1Controller : EnemyBase
             EnemyManager.instance.enemy1s.Add(this);
         }
     }
+    public override void Active()
+    {
+        base.Active();
+    }
 
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
-
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)

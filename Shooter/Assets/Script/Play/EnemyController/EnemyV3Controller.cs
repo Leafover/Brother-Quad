@@ -18,19 +18,21 @@ public class EnemyV3Controller : EnemyBase
             EnemyManager.instance.enemyv3s.Add(this);
         }
     }
-
+    Vector2 move;
+    public override void Active()
+    {
+        base.Active();
+        move = rid.velocity;
+        move.x = -speed;
+        move.y = rid.velocity.y;
+        rid.velocity = move;
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                rid.velocity = new Vector2(-speed, rid.velocity.y);
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)

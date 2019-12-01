@@ -30,7 +30,11 @@ public class EnemyV1Controller : EnemyBase
             EnemyManager.instance.enemyv1s.Remove(this);
         }
     }
-
+    public override void Active()
+    {
+        base.Active();
+        enemyState = EnemyState.attack;
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -38,12 +42,6 @@ public class EnemyV1Controller : EnemyBase
 
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                enemyState = EnemyState.attack;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
 

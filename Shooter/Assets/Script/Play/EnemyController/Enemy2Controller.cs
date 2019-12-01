@@ -44,19 +44,19 @@ public class Enemy2Controller : EnemyBase
             EnemyManager.instance.enemy2s.Remove(this);
         }
     }
+    public override void Active()
+    {
+        base.Active();
+        PlayAnim(0, aec.run, true);
+        enemyState = EnemyState.run;
+    }
+    Vector2 move;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                PlayAnim(0, aec.run, true);
-                enemyState = EnemyState.run;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -65,7 +65,10 @@ public class Enemy2Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.run:
-                rid.velocity = new Vector2(speedMove, rid.velocity.y);
+                move = rid.velocity;
+                move.x = speedMove;
+                move.y = rid.velocity.y;
+                rid.velocity = move;
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 5)
                 {
                     PlayAnim(0, aec.idle, true);
@@ -93,6 +96,7 @@ public class Enemy2Controller : EnemyBase
 
     Vector2 left = new Vector2(-0.2f, 1.5f);
     Vector2 right = new Vector2(0.2f, 1.5f);
+    GameObject bullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -106,7 +110,7 @@ public class Enemy2Controller : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
+             bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             var _bulletScript = bullet.GetComponent<BulletEnemy>();
             switch (FlipX)

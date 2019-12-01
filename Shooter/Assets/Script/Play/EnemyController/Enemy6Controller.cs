@@ -38,20 +38,19 @@ public class Enemy6Controller : EnemyBase
             EnemyManager.instance.enemy6s.Remove(this);
         }
     }
+    public override void Active()
+    {
+        base.Active();
+        PlayAnim(0, aec.run, true);
+        enemyState = EnemyState.run;
+       // Debug.LogError("-------active" + isActive);
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
 
-
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
-            {
-                isActive = true;
-                PlayAnim(0, aec.run, true);
-                enemyState = EnemyState.run;
-                render.gameObject.SetActive(true);
-            }
             return;
         }
         if (enemyState == EnemyState.die)
@@ -122,6 +121,8 @@ public class Enemy6Controller : EnemyBase
             var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
             _enemy5Script.jumpOut = true;
             _enemy5Script.Init();
+
+
             enemy5.SetActive(true);
         }
     }
