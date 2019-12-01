@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class EnemyBase : DataUnit
 {
-
+    [HideInInspector]
+    public bool jumpOut = false;
     public Transform leftFace, rightFace;
-
+    [HideInInspector]
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
     public bool isBoss;
@@ -25,19 +26,22 @@ public class EnemyBase : DataUnit
     public bool canmove;
 
     public float radius;
-    public Collider2D boxAttack1, boxAttack2, takeDamageBox;
+    public Collider2D boxAttack1, boxAttack2;
+    [HideInInspector]
+    public Collider2D takeDamageBox;
     [HideInInspector]
     public float damage;
     [HideInInspector]
     public float health, timePreviousAttack;
   //  [HideInInspector]
     public float maxtimedelayChangePos = 6;
-
+    [HideInInspector]
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
     public float maxtimeDelayAttack = 1;
 
     public LayerMask lm = 13;
+    [HideInInspector]
     public Rigidbody2D rid;
 
     public float currentHealth, distanceActive = 6;
@@ -193,9 +197,12 @@ public class EnemyBase : DataUnit
         currentAnim = aec.idle;
         if (skeletonAnimation != null)
         {
-            boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
-            boneBarrelGun1 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun1);
-            boneBarrelGun2 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun2);
+            if (boneBarrelGun == null)
+            {
+                boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
+                boneBarrelGun1 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun1);
+                boneBarrelGun2 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun2);
+            }
         }
         if (aec.aimTargetAnim != null)
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);

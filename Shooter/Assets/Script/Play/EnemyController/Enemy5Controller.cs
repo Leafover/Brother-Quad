@@ -7,6 +7,7 @@ public class Enemy5Controller : EnemyBase
     public bool detectPlayer;
     float speedMove;
 
+
     public override void Start()
     {
         base.Start();
@@ -20,6 +21,8 @@ public class Enemy5Controller : EnemyBase
             EnemyManager.instance.enemy5s.Add(this);
         }
         enemyState = EnemyState.idle;
+
+
     }
 
     public override void OnUpdate(float deltaTime)
@@ -33,12 +36,22 @@ public class Enemy5Controller : EnemyBase
             {
                 isActive = true;
                 render.gameObject.SetActive(true);
+
+
+                if (jumpOut)
+                {
+                    takeDamageBox.enabled = false;
+                    PlayAnim(0, aec.jumpOut, false);
+                 //   Debug.LogError("jump");
+                }
+
             }
             return;
         }
         if (enemyState == EnemyState.die)
             return;
-
+        if (jumpOut)
+            return;
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -111,6 +124,14 @@ public class Enemy5Controller : EnemyBase
                 return;
             boxAttack1.gameObject.SetActive(false);
 
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.jumpOut.name))
+        {
+            PlayAnim(0, aec.idle, true);
+            takeDamageBox.enabled = true;
+            jumpOut = false;
+            if (!GameController.instance.autoTarget.Contains(this))
+                GameController.instance.autoTarget.Add(this);
         }
 
     }

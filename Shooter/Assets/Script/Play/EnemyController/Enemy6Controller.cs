@@ -5,11 +5,18 @@ using Spine;
 using Spine.Unity;
 public class Enemy6Controller : EnemyBase
 {
+
+    public Bone boneBody;
+    [SpineBone]
+    public string strboneBody;
+
     public float speedMove;
     public override void Start()
     {
         base.Start();
         Init();
+        if (boneBody == null)
+            boneBody = skeletonAnimation.Skeleton.FindBone(strboneBody);
     }
     public override void Init()
     {
@@ -85,7 +92,7 @@ public class Enemy6Controller : EnemyBase
             bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
@@ -101,14 +108,20 @@ public class Enemy6Controller : EnemyBase
 
         }
     }
+    GameObject enemy5;
+
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
-            GameObject enemy5 = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
-            enemy5.transform.position = gameObject.transform.position;
-            enemy5.GetComponent<Enemy5Controller>().Init();
+            enemy5 = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
+
+            enemy5.transform.position = boneBody.GetWorldPosition(skeletonAnimation.transform); 
+
+            var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
+            _enemy5Script.jumpOut = true;
+            _enemy5Script.Init();
             enemy5.SetActive(true);
         }
     }

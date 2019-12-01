@@ -24,7 +24,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
         myEnemyBase.OriginPos = myEnemyBase.transform.position;
         myEnemyBase.incam = true;
 
-        if (enemyNotJoinAutoTarget)
+        if (enemyNotJoinAutoTarget || myEnemyBase.jumpOut == true)
             return;
         if (!GameController.instance.autoTarget.Contains(myEnemyBase))
             GameController.instance.autoTarget.Add(myEnemyBase);

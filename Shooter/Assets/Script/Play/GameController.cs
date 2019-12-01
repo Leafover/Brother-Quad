@@ -7,13 +7,13 @@ using Spine;
 [System.Serializable]
 public class AssetSpinePlayerController
 {
-    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim,dieAnim;
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim;
 }
 
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut;
 }
 
 public class GameController : MonoBehaviour
