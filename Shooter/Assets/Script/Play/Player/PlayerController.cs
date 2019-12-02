@@ -183,10 +183,10 @@ public class PlayerController : MonoBehaviour
         }
         candoublejump = true;
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, 0.15f);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, radius);
+    }
     public void SetAnim()
     {
         switch (playerState)
@@ -224,11 +224,11 @@ public class PlayerController : MonoBehaviour
     }
     public Vector2 target;
     Vector2 movePos;
-
+    public float radius;
     public void OnUpdate(float deltaTime)
     {
         // Debug.Log(rid.velocity.x);
-        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.15f, lm);
+        isGround = Physics2D.OverlapCircle(foot.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
         rid.velocity = movePos;

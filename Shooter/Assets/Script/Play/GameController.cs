@@ -234,6 +234,11 @@ public class GameController : MonoBehaviour
         OnUpdateCamera(deltaTime);
 
 
+        //if(Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    TryShot();
+        //}
+
 
     }
     public void TryShot()

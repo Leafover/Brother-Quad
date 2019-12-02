@@ -55,7 +55,8 @@ public class EnemyV2Controller : EnemyBase
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
                 transform.position = Vector2.MoveTowards(transform.position,CameraController.instance.posEnemyV2[currentPos].position, deltaTime * speed);
-                if(transform.position.x == CameraController.instance.posEnemyV2[currentPos].position.x && transform.position.y == CameraController.instance.posEnemyV2[currentPos].position.y)
+                CheckDirFollowPlayer(CameraController.instance.posEnemyV2[currentPos].position.x);
+                if (transform.position.x == CameraController.instance.posEnemyV2[currentPos].position.x && transform.position.y == CameraController.instance.posEnemyV2[currentPos].position.y)
                 {
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
@@ -70,6 +71,7 @@ public class EnemyV2Controller : EnemyBase
                 break;
         }
     }
+    GameObject g;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -77,7 +79,7 @@ public class EnemyV2Controller : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
+            g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.transform.rotation = Quaternion.identity;
             g.transform.rotation = gunRotation.rotation;

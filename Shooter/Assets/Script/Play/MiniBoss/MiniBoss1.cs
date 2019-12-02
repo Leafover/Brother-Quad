@@ -53,7 +53,8 @@ public class MiniBoss1 : EnemyBase
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
                 transform.position = Vector2.MoveTowards(transform.position,CameraController.instance.posMiniBoss1[currentPos].position, deltaTime * speed);
-                if(transform.position.x == CameraController.instance.posMiniBoss1[currentPos].position.x && transform.position.y == CameraController.instance.posMiniBoss1[currentPos].position.y)
+                CheckDirFollowPlayer(CameraController.instance.posMiniBoss1[currentPos].position.x);
+                if (transform.position.x == CameraController.instance.posMiniBoss1[currentPos].position.x && transform.position.y == CameraController.instance.posMiniBoss1[currentPos].position.y)
                 {
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
