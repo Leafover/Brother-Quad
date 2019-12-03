@@ -161,9 +161,12 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
                 StartCoroutine(Transition());
             }
-            if (!CameraController.instance.setBoudariesLeft)
-                return;
-            CameraController.instance.setBoudariesLeft = false;
+
+         //   Debug.LogError("zooooooooooooo");
+
+            //if (!CameraController.instance.setBoudariesLeft)
+            //    return;
+            //CameraController.instance.setBoudariesLeft = false;
            //  CameraController.instance.procam2DTriggerBoudaries[CameraController.instance.currentCamBoidaries].gameObject.SetActive(false);
 
         }
@@ -303,6 +306,11 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
 
          //   Debug.LogError("cham lan dau");
+
+            if (CameraController.instance.setBoudariesLeft)
+            {
+                CameraController.instance.setBoudariesLeft = false;
+            }
         }
 
         IEnumerator MoveCameraToTarget()

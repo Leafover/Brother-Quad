@@ -18,6 +18,9 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
+
+    public bool win;
+
     public UIPanel uiPanel;
     public List<MapController> listMap;
 
@@ -234,11 +237,14 @@ public class GameController : MonoBehaviour
         OnUpdateCamera(deltaTime);
 
 
-        //if(Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    TryShot();
-        //}
-
+        if (Input.GetKey(KeyCode.S))
+        {
+            TryShot();
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            TryJump();
+        }
 
     }
     public void TryShot()

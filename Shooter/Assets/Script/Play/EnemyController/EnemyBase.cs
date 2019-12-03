@@ -257,7 +257,7 @@ public class EnemyBase : DataUnit
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
-         //   Debug.LogError("die?????");
+            //   Debug.LogError("die?????");
             //     Debug.LogError("dead");
             //      return;
         }
@@ -275,7 +275,7 @@ public class EnemyBase : DataUnit
     {
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
-      //  Debug.LogError("---------active");
+        //  Debug.LogError("---------active");
 
     }
     public virtual void OnUpdate(float deltaTime)
@@ -324,7 +324,9 @@ public class EnemyBase : DataUnit
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         //    Debug.LogError("zooooooooooo day");
         if (isBoss)
-            GameController.instance.gameState = GameController.GameState.gameover;
+        {
+            PlayerController.instance.DoneMission(true);
+        }
         DisableAllBullet();
     }
     void DisableAllBullet()

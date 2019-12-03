@@ -62,7 +62,7 @@ public class BulletEnemy : MonoBehaviour
         dir = _dir;
         myEnemy = _myEnemy;
     }
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         hit -= Hit;
         rid.velocity = Vector2.zero;

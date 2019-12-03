@@ -47,7 +47,14 @@ public class CameraController : MonoBehaviour
     public void NextPoint()
     {
         if (currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1)
+        {
             currentCamBoidaries++;
+        }
+        else
+        {
+            PlayerController.instance.DoneMission(true);
+
+        }
         nextPointCheck.gameObject.SetActive(false);
     }
     public void OnUpdate(float deltaTime)
@@ -73,6 +80,9 @@ public class CameraController : MonoBehaviour
             return;
         }
         var leftBoundary = transform.position.x - Size().x;
+
+        //   NumericBoundaries.LeftBoundary = Mathf.SmoothDamp(NumericBoundaries.LeftBoundary, leftBoundary, ref velocity, 0.5f);
+
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
 

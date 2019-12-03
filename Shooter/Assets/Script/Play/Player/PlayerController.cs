@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, Run, Sit, Jump, WaitStand
+        Idle, Run, Sit, Jump, WaitStand,Die
     }
     public PlayerState playerState = PlayerState.Idle;
 
@@ -66,10 +66,24 @@ public class PlayerController : MonoBehaviour
     private float force;
     public void TakeDamage(float damage)
     {
+        if (playerState == PlayerState.Die)
+            return;
         health -= damage;
         lineBlood.Show(health, maxHealth);
-    }
 
+        if(health <= 0)
+        {
+            DoneMission(false);
+            AnimDie();
+            playerState = PlayerState.Die;
+        }
+    }
+    public void DoneMission(bool _win)
+    {
+        rid.velocity = Vector2.zero;
+        GameController.instance.gameState = GameController.GameState.gameover;
+        GameController.instance.win = _win;
+    }
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
@@ -268,12 +282,12 @@ public class PlayerController : MonoBehaviour
             posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1;
             transform.position = posTemp;
         }
-        if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)
-        {
-            posTemp = transform.position;
-            posTemp.y = CameraController.instance.bouders[0].transform.position.y - 1;
-            transform.position = posTemp;
-        }
+        //if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)
+        //{
+        //    posTemp = transform.position;
+        //    posTemp.y = CameraController.instance.bouders[0].transform.position.y - 1;
+        //    transform.position = posTemp;
+        //}
         if (transform.position.y <= CameraController.instance.bouders[1].transform.position.y + 1)
         {
             posTemp = transform.position;
@@ -356,6 +370,14 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(0, apc.falldownAnim, false);
         currentAnim = apc.falldownAnim;
         SetBox(sizeBox, offsetBox);
+    }
+    void AnimDie()
+    {
+        skeletonAnimation.ClearState();
+        if (currentAnim == apc.dieAnim)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.dieAnim, false);
+        currentAnim = apc.dieAnim;
     }
     void AnimJump()
     {

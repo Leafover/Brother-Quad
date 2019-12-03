@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIPanel : MonoBehaviour
 {
     public GameObject finishPanel;
+    public GameObject ResetBtn, NextBtn;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
@@ -17,6 +18,16 @@ public class UIPanel : MonoBehaviour
     }
     public void DisplayFinish()
     {
+        if (GameController.instance.win)
+        {
+            ResetBtn.SetActive(true);
+            NextBtn.SetActive(true);
+        }
+        else
+        {
+            ResetBtn.SetActive(true);
+            NextBtn.SetActive(false);
+        }
         finishPanel.SetActive(true);
     }
 }

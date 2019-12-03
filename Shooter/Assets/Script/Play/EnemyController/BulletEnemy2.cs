@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletEnemy2 : BulletEnemy
 {
+    WaitForSeconds wait;
     public override void Init(int type)
     {
         base.Init(type);
@@ -11,6 +12,10 @@ public class BulletEnemy2 : BulletEnemy
     }
     private void OnEnable()
     {
+        if(wait == null)
+        {
+            wait =  new WaitForSeconds(0.85f);
+        }
         Init(4);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -28,8 +33,13 @@ public class BulletEnemy2 : BulletEnemy
     }
     IEnumerator delayAddForce()
     {
-        yield return new WaitForSeconds(0.85f);
+        yield return wait;
         rid.velocity = (dir * speed);
         rid.gravityScale = 1.3f;
+    }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        StopAllCoroutines();
     }
 }
