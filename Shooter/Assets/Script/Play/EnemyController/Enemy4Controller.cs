@@ -164,9 +164,9 @@ public class Enemy4Controller : EnemyBase
             GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
             grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             if (FlipX)
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 1);
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 0.7f);
             else
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 1);
+                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 0.7f);
             grenade.SetActive(true);
 
         }

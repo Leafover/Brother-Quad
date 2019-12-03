@@ -56,16 +56,24 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-         //   PlayerController.instance.DoneMission(true);
+            PlayerController.instance.DoneMission(true);
 
         }
         // nextPointCheck.gameObject.SetActive(false);
     }
-    float currentRightBoudary;
-    public void OnUpdate(float deltaTime)
+    private void LateUpdate()
     {
         CacheSizeAndViewPos();
         NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
+        if (!setBoudariesLeft)
+            return;
+            var leftBoundary = transform.position.x - Size().x;
+        NumericBoundaries.LeftBoundary = leftBoundary;
+    }
+    float currentRightBoudary;
+    public void OnUpdate(float deltaTime)
+    {
+
         if (!setBoudariesLeft)
         {
             if (nextPointCheck.activeSelf)
@@ -86,8 +94,7 @@ public class CameraController : MonoBehaviour
             }
             return;
         }
-        var leftBoundary = transform.position.x - Size().x;
-        NumericBoundaries.LeftBoundary = leftBoundary;
+
 
     }
 
