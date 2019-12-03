@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
             DoneMission(false);
             AnimDie();
             playerState = PlayerState.Die;
+            SoundController.instance.PlaySound(soundGame.playerDie);
         }
     }
     public void DoneMission(bool _win)
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
                 grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
                 grenade.SetActive(true);
             }
+            SoundController.instance.PlaySound(soundGame.throwGrenade);
         }
     }
     //public void TryRocket()
@@ -298,7 +300,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
     }
 
     void SetBox(Vector2 size, Vector2 offset)
@@ -459,6 +462,7 @@ public class PlayerController : MonoBehaviour
             return;
         timePreviousAttack = Time.time;
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
+        SoundController.instance.PlaySound(soundGame.shootnormal);
 
     }
 
@@ -548,14 +552,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        switch (collision.gameObject.layer)
-        {
-            case 18:
-                CameraController.instance.NextPoint();
-                break;
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    switch (collision.gameObject.layer)
+    //    {
+    //        case 18:
+    //            // CameraController.instance.NextPoint();
+    //          //  collision.gameObject.SetActive(false);
+    //            break;
+    //    }
+    //}
 
 }

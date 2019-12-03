@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletEnemy2 : BulletEnemy
 {
+    public float time;
     WaitForSeconds wait;
     public override void Init(int type)
     {
@@ -12,9 +13,9 @@ public class BulletEnemy2 : BulletEnemy
     }
     private void OnEnable()
     {
-        if(wait == null)
+        if (wait == null)
         {
-            wait =  new WaitForSeconds(0.85f);
+            wait = new WaitForSeconds(time);
         }
         Init(4);
     }
@@ -27,7 +28,8 @@ public class BulletEnemy2 : BulletEnemy
             case 8:
                 rid.velocity = Vector2.zero;
                 rid.gravityScale = 0;
-                StartCoroutine(delayAddForce());
+                if (gameObject.active)
+                    StartCoroutine(delayAddForce());
                 break;
         }
     }

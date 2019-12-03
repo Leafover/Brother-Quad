@@ -162,12 +162,10 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 StartCoroutine(Transition());
             }
 
-         //   Debug.LogError("zooooooooooooo");
+            //   Debug.LogError("zooooooooooooo");
 
-            //if (!CameraController.instance.setBoudariesLeft)
-            //    return;
-            //CameraController.instance.setBoudariesLeft = false;
-           //  CameraController.instance.procam2DTriggerBoudaries[CameraController.instance.currentCamBoidaries].gameObject.SetActive(false);
+
+            //  CameraController.instance.procam2DTriggerBoudaries[CameraController.instance.currentCamBoidaries].gameObject.SetActive(false);
 
         }
 
@@ -176,8 +174,6 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             yield return new WaitForEndOfFrame();
 
             trigger._transitioning = false;
-
-         //   Debug.LogError("cham lan 2");
         }
 
         //Reset Bound
@@ -305,7 +301,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             _boundsAnim.Transition();
 
 
-         //   Debug.LogError("cham lan dau");
+            //Debug.LogError("cham lan dau");
 
             if (CameraController.instance.setBoudariesLeft)
             {

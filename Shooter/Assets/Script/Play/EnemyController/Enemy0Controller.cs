@@ -52,6 +52,7 @@ public class Enemy0Controller : EnemyBase
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
             PlayerController.instance.TakeDamage(damage);
+            SoundController.instance.PlaySound(soundGame.exploGrenade);
         }
     }
     public override void OnDisable()
@@ -68,6 +69,7 @@ public class Enemy0Controller : EnemyBase
         explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
         explo.transform.position = gameObject.transform.position;
         explo.SetActive(true);
+        SoundController.instance.PlaySound(soundGame.exploGrenade);
     }
     //protected override void OnComplete(TrackEntry trackEntry)
     //{

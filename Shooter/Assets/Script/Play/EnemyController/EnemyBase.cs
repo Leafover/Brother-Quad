@@ -14,7 +14,7 @@ public class EnemyBase : DataUnit
     public LineBlood lineBlood;
     public bool isBoss;
     public System.Action<float> acOnUpdate;
-    public bool canoutcam, incam;
+    public bool canoutcam, incam, isMachine = false;
     public enum EnemyState
     {
         idle,
@@ -328,6 +328,9 @@ public class EnemyBase : DataUnit
             PlayerController.instance.DoneMission(true);
         }
         DisableAllBullet();
+
+        if (isMachine)
+            SoundController.instance.PlaySound(soundGame.exploGrenade);
     }
     void DisableAllBullet()
     {

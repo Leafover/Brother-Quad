@@ -46,8 +46,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-
-        instance = this;
+        if (instance == null)
+            instance = this;
 
 #if UNITY_EDITOR
         Application.targetFrameRate = 300;

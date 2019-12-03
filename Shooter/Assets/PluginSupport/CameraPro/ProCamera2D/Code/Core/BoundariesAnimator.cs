@@ -191,6 +191,8 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             {
                 NumericBoundaries.UseBottomBoundary = false;
             }
+
+          //  Debug.Log("chuyenr????????");
         }
 
         IEnumerator LeftTransitionRoutine(float duration, bool turnOffBoundaryAfterwards = false)

@@ -25,6 +25,7 @@ public class BulletEnemyV1 : BulletEnemy
         effectExplo.transform.position = gameObject.transform.position;
         effectExplo.SetActive(true);
         gameObject.SetActive(false);
+        SoundController.instance.PlaySound(soundGame.exploGrenade);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {

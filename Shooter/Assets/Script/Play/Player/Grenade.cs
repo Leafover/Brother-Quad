@@ -37,6 +37,7 @@ public class Grenade : MonoBehaviour
             effectGrenade.transform.position = gameObject.transform.position;
             effectGrenade.SetActive(true);
             gameObject.SetActive(false);
+            SoundController.instance.PlaySound(soundGame.exploGrenade);
         }
     }
 

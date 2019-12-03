@@ -20,7 +20,7 @@ public class GrenadeEnemy4 : BulletEnemy
         slowArena = ObjectPoolerManager.Instance.slowArenaGrenadeEnemy4Pooler.GetPooledObject();
         slowArena.transform.position = gameObject.transform.position;
         slowArena.SetActive(true);
-
+        SoundController.instance.PlaySound(soundGame.exploGrenade);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
