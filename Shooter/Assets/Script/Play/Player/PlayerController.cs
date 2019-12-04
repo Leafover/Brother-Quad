@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Jump()
     {
-        skeletonAnimation.ClearState();
+       // skeletonAnimation.ClearState();
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
         AnimJump();
@@ -219,13 +219,13 @@ public class PlayerController : MonoBehaviour
                         isWaitStand = true;
                         playerState = PlayerState.Idle;
                         speedmove = 0;
-                        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                      //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
                     }
                     else
                     {
                         isWaitStand = false;
                         GameController.instance.CheckAfterJump(GameController.instance.joystickMove);
-                        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                      //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
                     }
                 }
                 break;
