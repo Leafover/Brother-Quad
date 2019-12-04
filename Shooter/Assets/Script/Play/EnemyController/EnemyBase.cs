@@ -206,7 +206,7 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
 
         if (!isBoss)
-            distanceActive = Camera.main.orthographicSize * 2;
+            distanceActive = Camera.main.orthographicSize * 2f;
         else
             distanceActive = Camera.main.orthographicSize * 2 + 5;
 

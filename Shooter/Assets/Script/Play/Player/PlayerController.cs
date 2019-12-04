@@ -501,6 +501,7 @@ public class PlayerController : MonoBehaviour
                 var from = (Vector2)transform.position;
                 var to = enemy.Origin();
                 var d = Vector2.Distance(from, to);
+
                 if (d < dMin)
                 {
                     dMin = d;
@@ -517,6 +518,7 @@ public class PlayerController : MonoBehaviour
                         targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
                         GameController.instance.targetDetectSprite.SetActive(false);
                         haveTarget = false;
+                        continue;
                     }
                 }
             }
