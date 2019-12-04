@@ -564,6 +564,9 @@ public class PlayerController : MonoBehaviour
                 if (GameController.instance.waitForWin)
                     GameController.instance.DoneMission(true);
                 break;
+            case 20:
+                transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+                break;
         }
     }
 

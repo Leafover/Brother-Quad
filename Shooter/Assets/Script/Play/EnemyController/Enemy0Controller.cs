@@ -8,10 +8,12 @@ public class Enemy0Controller : EnemyBase
 {
     public int indexPath;
     float distanceTravelled;
+    VertexPath myPath;
     public override void Start()
     {
         base.Start();
         Init();
+        myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
     }
     public override void Init()
     {
@@ -20,6 +22,7 @@ public class Enemy0Controller : EnemyBase
         {
             EnemyManager.instance.enemy0s.Add(this);
         }
+
     }
     public override void Active()
     {
@@ -38,7 +41,11 @@ public class Enemy0Controller : EnemyBase
             return;
 
         distanceTravelled += speed * deltaTime;
-        transform.position = GameController.instance.currentMap.pathCreator[indexPath].path.GetPointAtDistance(distanceTravelled);
+        transform.position = myPath.GetPointAtDistance(distanceTravelled,EndOfPathInstruction.Stop);
+        if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))
+        {
+            gameObject.SetActive(false);
+        }
 
     }
     GameObject explo;

@@ -385,6 +385,8 @@ public class EnemyBase : DataUnit
             // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
             //    Debug.LogError("----------take damage 2");
         }
+        else if (collision.gameObject.layer == 20)
+            gameObject.SetActive(false);
 
     }
 }
