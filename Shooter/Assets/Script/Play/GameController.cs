@@ -217,6 +217,15 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         uiPanel.DisplayFinish();
     }
+    [HideInInspector]
+    public bool waitForWin;
+    public void DoneMission(bool _win)
+    {
+        PlayerController.instance.rid.velocity = Vector2.zero;
+        PlayerController.instance.AnimIdle();
+        gameState = GameState.gameover;
+        win = _win;
+    }
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)

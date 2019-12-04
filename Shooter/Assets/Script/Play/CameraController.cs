@@ -56,23 +56,32 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            PlayerController.instance.DoneMission(true);
-
+            nextPointCheck.gameObject.SetActive(true);
+            setBoudariesLeft = true;
+            GameController.instance.waitForWin = true;
         }
         // nextPointCheck.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
         CacheSizeAndViewPos();
-        NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
+        var x1 = NumericBoundaries.RightBoundary;
+        var x2 = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
+        var s = Mathf.Abs(x2 - x1);
+        var v = speed * 500;
+        // NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
+        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity,/*speed * 100*/s / v);
+
         if (!setBoudariesLeft)
             return;
-            var leftBoundary = transform.position.x - Size().x;
+        var leftBoundary = transform.position.x - Size().x;
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
     float currentRightBoudary;
     public void OnUpdate(float deltaTime)
     {
+        if (GameController.instance.waitForWin)
+            return;
 
         if (!setBoudariesLeft)
         {
@@ -82,7 +91,7 @@ public class CameraController : MonoBehaviour
                 {
                     nextPointCheck.SetActive(false);
                     setBoudariesLeft = true;
-                 //   Debug.LogError("--------------active again");
+                    //   Debug.LogError("--------------active again");
                 }
             }
             else

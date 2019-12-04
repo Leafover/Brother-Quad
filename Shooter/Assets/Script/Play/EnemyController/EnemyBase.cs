@@ -323,10 +323,10 @@ public class EnemyBase : DataUnit
         GameController.instance.RemoveTarget(this);
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         //    Debug.LogError("zooooooooooo day");
-        if (isBoss)
-        {
-            PlayerController.instance.DoneMission(true);
-        }
+        //if (isBoss)
+        //{
+        //    GameController.instance.DoneMission(true);
+        //}
         DisableAllBullet();
 
         if (isMachine)

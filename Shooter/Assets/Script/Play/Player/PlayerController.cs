@@ -73,18 +73,13 @@ public class PlayerController : MonoBehaviour
 
         if(health <= 0)
         {
-            DoneMission(false);
+            GameController.instance.DoneMission(false);
             AnimDie();
             playerState = PlayerState.Die;
             SoundController.instance.PlaySound(soundGame.playerDie);
         }
     }
-    public void DoneMission(bool _win)
-    {
-        rid.velocity = Vector2.zero;
-        GameController.instance.gameState = GameController.GameState.gameover;
-        GameController.instance.win = _win;
-    }
+
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
@@ -164,7 +159,9 @@ public class PlayerController : MonoBehaviour
             speedmove = 0;
         isfalldow = false;
         candoublejump = false;
+
     }
+
     private IEnumerator DoubleJump()
     {
         float timeUp = timeJump * 0.5f;
@@ -199,10 +196,10 @@ public class PlayerController : MonoBehaviour
         }
         candoublejump = true;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, radius);
+    //}
     public void SetAnim()
     {
         switch (playerState)
@@ -262,6 +259,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             DetectGround();
+
         }
         SetAnim();
 
@@ -316,21 +314,25 @@ public class PlayerController : MonoBehaviour
     {
         return targetPos.transform.position;
     }
+    GameObject bullet,grenade;
+    Vector2 dirBullet;
+    float angle;
+    Quaternion rotation;
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-            GameObject bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
-            Vector2 dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+             bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
+             dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
         {
-            GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+             grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
         }
@@ -433,7 +435,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AnimIdle()
+   public void AnimIdle()
     {
         if (isfalldow && rid.velocity.y != 0)
         {
@@ -554,15 +556,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    switch (collision.gameObject.layer)
-    //    {
-    //        case 18:
-    //            // CameraController.instance.NextPoint();
-    //          //  collision.gameObject.SetActive(false);
-    //            break;
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.layer)
+        {
+            case 18:
+                if (GameController.instance.waitForWin)
+                    GameController.instance.DoneMission(true);
+                break;
+        }
+    }
 
 }
