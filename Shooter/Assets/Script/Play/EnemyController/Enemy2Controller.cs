@@ -62,6 +62,9 @@ public class Enemy2Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+        if (canoutcam && !incam)
+            return;
+
         switch (enemyState)
         {
             case EnemyState.run:
@@ -133,6 +136,11 @@ public class Enemy2Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             boxAttack1.gameObject.SetActive(false);
+            PlayAnim(0, aec.idle, true);
+        }
+        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        {
+            PlayAnim(0, aec.idle, true);
         }
 
     }

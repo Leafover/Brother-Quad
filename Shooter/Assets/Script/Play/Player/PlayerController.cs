@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Physics2D.IgnoreLayerCollision(foot.gameObject.layer, colliderStand.gameObject.layer, true);
                 Physics2D.IgnoreCollision(foot, colliderStand, true);
-                Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
+              //  Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
                 //Physics2D.r
             }
 
@@ -495,7 +495,7 @@ public class PlayerController : MonoBehaviour
         {
             if (currentAnim == apc.idleAnim)
                 return;
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, false);
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
             currentAnim = apc.idleAnim;
             speedmove = 0;
             SetBox(sizeBox, offsetBox);
@@ -552,7 +552,7 @@ public class PlayerController : MonoBehaviour
                 if (d < dMin)
                 {
                     dMin = d;
-                    if (d >= 0.2f)
+                    if (d >= 0.1f)
                     {
                         targetTemp = enemy.transform.position;
                         GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;

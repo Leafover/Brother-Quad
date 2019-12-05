@@ -48,12 +48,17 @@ public class Enemy3Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+        if (transform.position.x > Camera.main.transform.position.x + 6f)
+        {
+            return;
+        }
+
 
 
         switch (enemyState)
         {
             case EnemyState.attack:
-                Shoot(0, aec.attack1, false, maxtimeDelayAttack);
+                Shoot(1, aec.attack1, false, maxtimeDelayAttack);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
@@ -88,7 +93,7 @@ public class Enemy3Controller : EnemyBase
                 {
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                    PlayAnim(1, aec.aimTargetAnim, false);
+                    PlayAnim(2, aec.aimTargetAnim, false);
                 }
                 break;
         }
@@ -113,12 +118,12 @@ public class Enemy3Controller : EnemyBase
             bullet.SetActive(true);
         }
     }
-    //protected override void OnComplete(TrackEntry trackEntry)
-    //{
-    //    base.OnComplete(trackEntry);
-    //    //if (trackEntry.Animation.Name.Equals(aec.die.name))
-    //    //{
-    //    //    gameObject.SetActive(false);
-    //    //}
-    //}
+    protected override void OnComplete(TrackEntry trackEntry)
+    {
+        base.OnComplete(trackEntry);
+        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
+        {
+            PlayAnim(0, aec.idle, true);
+        }
+    }
 }

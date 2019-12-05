@@ -46,8 +46,6 @@ public class Enemy4Controller : EnemyBase
     {
         base.Active();
         enemyState = EnemyState.idle;
-
-        PlayAnim(0, aec.idle, true);
         StartCoroutine(delayActive());
     }
     public override void OnUpdate(float deltaTime)
@@ -61,6 +59,10 @@ public class Enemy4Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+        if (transform.position.x > Camera.main.transform.position.x + 6f)
+        {
+            return;
+        }
 
         switch (enemyState)
         {
@@ -71,12 +73,12 @@ public class Enemy4Controller : EnemyBase
                 {
                     if (isGrenadeStage)
                     {
-
                         Shoot(0, aec.attack1, false, timedelayShoot);
                         targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
+
                         Shoot(0, aec.attack2, false, timedelayShoot);
                         targetPos.transform.position = GetTarget(false);
                         timedelayChangePos -= deltaTime;
@@ -94,7 +96,6 @@ public class Enemy4Controller : EnemyBase
                 {
                     Shoot(0, aec.attack1, false, timedelayShoot);
                     targetPos.transform.position = GetTarget(true);
-
                 }
                 else
                 {
@@ -132,13 +133,17 @@ public class Enemy4Controller : EnemyBase
                     //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                    PlayAnim(1, aec.aimTargetAnim, false);
+                    PlayAnim(2, aec.aimTargetAnim, false);
                     // Debug.LogError("zo day");
                 }
                 break;
         }
     }
-
+    GameObject bullet;
+    GameObject grenade;
+    Vector2 dirBullet;
+    float angle;
+    Quaternion rotation;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -146,10 +151,10 @@ public class Enemy4Controller : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
-            Vector2 dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            float angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+             bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
+             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
@@ -157,11 +162,9 @@ public class Enemy4Controller : EnemyBase
         else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             combo++;
-
-
             if (!incam)
                 return;
-            GameObject grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
+             grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
             grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             if (FlipX)
                 grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 0.7f);
@@ -178,7 +181,7 @@ public class Enemy4Controller : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-
+            PlayAnim(0, aec.idle, true);
             if (combo == randomCombo)
             {
                 if (canmove)
@@ -201,6 +204,12 @@ public class Enemy4Controller : EnemyBase
             }
 
         }
+
+        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        {
+            PlayAnim(0, aec.idle, true);
+        }
+
 
     }
 }

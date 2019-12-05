@@ -409,6 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9077856134680710417}
   - component: {fileID: 7301749192678598296}
+  - component: {fileID: 8712029301018967106}
   m_Layer: 15
   m_Name: foot
   m_TagString: Untagged
@@ -456,6 +457,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27761173, y: 0.19944191}
   m_EdgeRadius: 0.01
+--- !u!114 &8712029301018967106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301749192678598295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e775a41ec877fc42be3a15d0a53270f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7565418803537842172
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e0e810290c789499d46e6419d173be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliderStand: {fileID: 0}
   lineBlood: {fileID: 2112873319}
   currentAnim: {fileID: 0}
   apc:
@@ -583,7 +597,7 @@ MonoBehaviour:
   foot: {fileID: 7301749192678598296}
   lm:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2097408
   offsetBox: {x: 0.01812363, y: 0.03262973}
   sizeBox: {x: 0.2823029, y: 1.297242}
   offsetBoxSit: {x: 0.01812363, y: -0.1991107}
@@ -602,6 +616,9 @@ MonoBehaviour:
   candoublejump: 0
   forceJump: 60
   timeJump: 0.5
+  lmgroundcandown:
+    serializedVersion: 2
+    m_Bits: 2097152
   target: {x: 0, y: 0}
   radius: 0.13
   layerTarget:

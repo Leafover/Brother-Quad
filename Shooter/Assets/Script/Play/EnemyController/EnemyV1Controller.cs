@@ -47,7 +47,10 @@ public class EnemyV1Controller : EnemyBase
 
         if (enemyState == EnemyState.die)
             return;
-
+        if (transform.position.x > Camera.main.transform.position.x + 6f)
+        {
+            return;
+        }
         switch (enemyState)
         {
             case EnemyState.attack:
@@ -105,5 +108,12 @@ public class EnemyV1Controller : EnemyBase
             bullet.SetActive(true);
         }
     }
-
+    protected override void OnComplete(TrackEntry trackEntry)
+    {
+        base.OnComplete(trackEntry);
+        if(trackEntry.Animation.Name.Equals(aec.attack1.name))
+        {
+            PlayAnim(0, aec.idle, true);
+        }
+    }
 }

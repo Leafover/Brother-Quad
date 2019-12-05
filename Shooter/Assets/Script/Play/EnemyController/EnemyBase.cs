@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : DataUnit
 {
+   // public bool activeFar;
     [HideInInspector]
     public bool jumpOut = false;
     public Transform leftFace, rightFace;
@@ -76,7 +77,6 @@ public class EnemyBase : DataUnit
             //   Debug.Log("change anim" + currentAnim.name);
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
-
         }
     }
 
@@ -174,7 +174,7 @@ public class EnemyBase : DataUnit
             lineBlood.Reset();
         }
         timePreviousAttack = maxtimeDelayAttack / 2;
-        skeletonAnimation.gameObject.SetActive(false);
+
         isActive = false;
         if (boxAttack1 != null)
             boxAttack1.gameObject.SetActive(false);
@@ -192,7 +192,7 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.Complete += Complete;
         }
 
-        currentAnim = aec.idle;
+       // currentAnim = aec.idle;
         if (skeletonAnimation != null)
         {
             if (boneBarrelGun == null)
@@ -202,11 +202,20 @@ public class EnemyBase : DataUnit
                 boneBarrelGun2 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun2);
             }
         }
-        if (aec.aimTargetAnim != null)
-            skeletonAnimation.AnimationState.SetAnimation(1, aec.aimTargetAnim, false);
+        //if (aec.aimTargetAnim != null)
+        //{
+        //    skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
+        //    PlayAnim(0, aec.idle, true);
+        //}
 
         if (!isBoss)
-            distanceActive = Camera.main.orthographicSize * 2f;
+        {
+            distanceActive = Camera.main.orthographicSize * 2f + 2f;
+            //if (!activeFar)
+            //    distanceActive = Camera.main.orthographicSize * 2f;
+            //else
+
+        }
         else
             distanceActive = Camera.main.orthographicSize * 2 + 5;
 
@@ -215,7 +224,7 @@ public class EnemyBase : DataUnit
         speed = baseSpeed;
         currentHealth = health;
 
-
+        skeletonAnimation.gameObject.SetActive(false);
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -275,8 +284,10 @@ public class EnemyBase : DataUnit
     {
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
-        //  Debug.LogError("---------active");
-
+        if (aec.aimTargetAnim == null)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
+        PlayAnim(0, aec.idle, true);
     }
     public virtual void OnUpdate(float deltaTime)
     {

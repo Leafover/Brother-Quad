@@ -62,7 +62,7 @@ public class Enemy6Controller : EnemyBase
                 rid.velocity = new Vector2(speedMove, rid.velocity.y);
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 5)
                 {
-                    PlayAnim(0, aec.idle, false);
+                    PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
                     rid.velocity = Vector2.zero;
                 }
@@ -125,5 +125,7 @@ public class Enemy6Controller : EnemyBase
 
             enemy5.SetActive(true);
         }
+        else if(trackEntry.Animation.Name.Equals(aec.attack1.name))
+            PlayAnim(0, aec.idle, true);
     }
 }
