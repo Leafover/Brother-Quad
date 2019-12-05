@@ -19,6 +19,13 @@ public class BulletEnemy2 : BulletEnemy
         }
         Init(4);
     }
+    void AddForceForBullet()
+    {
+        rid.velocity = Vector2.zero;
+        rid.gravityScale = 0;
+        if (gameObject.active)
+            StartCoroutine(delayAddForce());
+    }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -26,10 +33,10 @@ public class BulletEnemy2 : BulletEnemy
         switch (collision.gameObject.layer)
         {
             case 8:
-                rid.velocity = Vector2.zero;
-                rid.gravityScale = 0;
-                if (gameObject.active)
-                    StartCoroutine(delayAddForce());
+                AddForceForBullet();
+                break;
+            case 21:
+                AddForceForBullet();
                 break;
         }
     }

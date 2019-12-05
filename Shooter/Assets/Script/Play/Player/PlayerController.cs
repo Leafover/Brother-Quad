@@ -9,6 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Collider2D colliderStand/*,currentStand, colliderwaitmedown*/;
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
@@ -17,8 +18,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade,timePreviousRocket;
-    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade,timedelayRocket;
+    float timePreviousAttack, timePreviousGrenade, timePreviousRocket;
+    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade, timedelayRocket;
 
     public float health, maxHealth = 100;
 
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rid;
     public BoxCollider2D box;
-    public Transform foot;
+    public Collider2D foot;
     public LayerMask lm;
 
     [SerializeField]
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, Run, Sit, Jump, WaitStand,Die
+        Idle, Run, Sit, Jump, WaitStand, Die
     }
     public PlayerState playerState = PlayerState.Idle;
 
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         lineBlood.Show(health, maxHealth);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             GameController.instance.DoneMission(false);
             AnimDie();
@@ -79,13 +80,44 @@ public class PlayerController : MonoBehaviour
             SoundController.instance.PlaySound(soundGame.playerDie);
         }
     }
-
+    public LayerMask lmgroundcandown;
+    public void CheckColliderStand(Collider2D _collider)
+    {
+        if (_collider == null)
+        {
+            if (colliderStand != null)
+                Physics2D.IgnoreCollision(foot, colliderStand, false);
+        }
+        else
+        {
+            if(_collider != colliderStand)
+            {
+                if (colliderStand != null)
+                    Physics2D.IgnoreCollision(foot, colliderStand, false);
+            }
+        }
+        colliderStand = _collider;
+    }
     public void TryJump()
     {
         if (playerState == PlayerState.Sit)
+        {
+
+            if (colliderStand != null)
+            {
+                // Physics2D.IgnoreLayerCollision(foot.gameObject.layer, colliderStand.gameObject.layer, true);
+                Physics2D.IgnoreCollision(foot, colliderStand, true);
+                Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
+                //Physics2D.r
+            }
+
             return;
+        }
+
         if ((playerState != PlayerState.Jump))
+        {
             StartCoroutine(Jump());
+        }
         else
         {
             if (!candoublejump)
@@ -160,6 +192,8 @@ public class PlayerController : MonoBehaviour
         isfalldow = false;
         candoublejump = false;
 
+
+
     }
 
     private IEnumerator DoubleJump()
@@ -172,18 +206,20 @@ public class PlayerController : MonoBehaviour
             if (playerState == PlayerState.Jump)
             {
                 force = forceJump * (timeUp - t);
-                rid.velocity = new Vector2(rid.velocity.x, force/2);
+                rid.velocity = new Vector2(rid.velocity.x, force / 2);
                 yield return null;
             }
         }
     }
     private IEnumerator Jump()
     {
-       // skeletonAnimation.ClearState();
+        // skeletonAnimation.ClearState();
         float timeUp = timeJump * 0.5f;
+        //  colliderStand = null;
+        //   currentStand = null;
         playerState = PlayerState.Jump;
         AnimJump();
-    //    candoublejump = true;
+        //    candoublejump = true;
 
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
@@ -219,13 +255,13 @@ public class PlayerController : MonoBehaviour
                         isWaitStand = true;
                         playerState = PlayerState.Idle;
                         speedmove = 0;
-                      //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                        //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
                     }
                     else
                     {
                         isWaitStand = false;
                         GameController.instance.CheckAfterJump(GameController.instance.joystickMove);
-                      //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+                        //  skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
                     }
                 }
                 break;
@@ -314,7 +350,7 @@ public class PlayerController : MonoBehaviour
     {
         return targetPos.transform.position;
     }
-    GameObject bullet,grenade;
+    GameObject bullet, grenade;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -322,17 +358,17 @@ public class PlayerController : MonoBehaviour
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-             bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
-             dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
+            dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
         {
-             grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+            grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
         }
@@ -402,12 +438,21 @@ public class PlayerController : MonoBehaviour
     }
     void AnimSit()
     {
-        if (currentAnim == apc.sitAnim)
+        if (isfalldow && rid.velocity.y != 0)
+        {
+            AnimFallDow();
             return;
-        skeletonAnimation.AnimationState.SetAnimation(0, apc.sitAnim, true);
-        currentAnim = apc.sitAnim;
-        speedmove = 0;
-        SetBox(sizeBoxSit, offsetBoxSit);
+        }
+        else
+        {
+
+            if (currentAnim == apc.sitAnim)
+                return;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.sitAnim, true);
+            currentAnim = apc.sitAnim;
+            speedmove = 0;
+            SetBox(sizeBoxSit, offsetBoxSit);
+        }
     }
 
     void AnimRun()
@@ -435,7 +480,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   public void AnimIdle()
+    public void AnimIdle()
     {
         if (isfalldow && rid.velocity.y != 0)
         {

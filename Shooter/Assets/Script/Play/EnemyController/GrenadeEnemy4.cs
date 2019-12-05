@@ -30,6 +30,9 @@ public class GrenadeEnemy4 : BulletEnemy
             case 8:
                 Hit();
                 break;
+            case 21:
+                Hit();
+                break;
         }
     }
 }

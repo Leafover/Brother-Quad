@@ -35,6 +35,9 @@ public class BulletEnemyV1 : BulletEnemy
             case 8:
                 Hit();
                 break;
+            case 21:
+                Hit();
+                break;
         }
     }
 

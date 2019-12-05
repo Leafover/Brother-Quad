@@ -24,6 +24,9 @@ public class BoomEnemy : BulletEnemy
             case 8:
                 Hit();
                 break;
+            case 21:
+                Hit();
+                break;
         }
     }
 }
