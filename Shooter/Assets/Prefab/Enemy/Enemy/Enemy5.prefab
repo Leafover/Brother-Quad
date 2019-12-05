@@ -159,6 +159,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &3795189255392048493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8012540557346391570}
+  m_Layer: 10
+  m_Name: rightface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8012540557346391570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795189255392048493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.804, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7909004431032077230}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4289915488614152805
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +236,36 @@ MonoBehaviour:
   lineSprite:
   - {fileID: 5902644751527776753}
   - {fileID: 8734591806586210161}
+--- !u!1 &7449193093253135810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5483256012677151955}
+  m_Layer: 10
+  m_Name: leftface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5483256012677151955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449193093253135810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.804, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7909004431032077230}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7909004429654058805
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +524,8 @@ Transform:
   - {fileID: 7909004430656520933}
   - {fileID: 7909004431652964385}
   - {fileID: 1855425262014047515}
+  - {fileID: 5483256012677151955}
+  - {fileID: 8012540557346391570}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -505,9 +567,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -531,8 +593,8 @@ MonoBehaviour:
   baseSpeed: 3
   baseDamage: 1
   jumpOut: 0
-  leftFace: {fileID: 0}
-  rightFace: {fileID: 0}
+  leftFace: {fileID: 5483256012677151955}
+  rightFace: {fileID: 8012540557346391570}
   listMyBullet: []
   lineBlood: {fileID: 9001712486705907194}
   isBoss: 0
@@ -560,10 +622,10 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
     jumpOut: {fileID: 11400000, guid: 00cfb824c73c479499a08acae3539947, type: 2}
-  maxtimeDelayAttack: 1
+  maxtimeDelayAttack: 2
   lm:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 4202752
   rid: {fileID: 7909004431032077224}
   currentHealth: 0
   distanceActive: 6
@@ -576,7 +638,6 @@ MonoBehaviour:
   strboneBarrelGun1: 
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
-  detectPlayer: 0
 --- !u!1 &7909004431652964384
 GameObject:
   m_ObjectHideFlags: 0

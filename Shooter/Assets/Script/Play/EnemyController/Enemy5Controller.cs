@@ -4,8 +4,9 @@ using UnityEngine;
 using Spine;
 public class Enemy5Controller : EnemyBase
 {
-    public bool detectPlayer;
+    public RaycastHit2D detectPlayer;
     float speedMove;
+
 
     public override void Start()
     {
@@ -21,7 +22,7 @@ public class Enemy5Controller : EnemyBase
         }
         enemyState = EnemyState.idle;
 
-
+      //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
     }
 
     public override void Active()
@@ -50,40 +51,62 @@ public class Enemy5Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-                detectPlayer = Physics2D.OverlapCircle(Origin(), radius, lm);
-                if (!detectPlayer)
+                //  detectPlayer = Physics2D.OverlapCircle(Origin(), radius, lm);
+                detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
+
+                if (detectPlayer.collider == null)
                 {
                     enemyState = EnemyState.run;
                 }
                 else
                 {
-                    enemyState = EnemyState.attack;
+                    if (detectPlayer.collider.gameObject.layer == 13)
+                    {
+                        enemyState = EnemyState.attack;
+                   //     Debug.LogError("zo day");
+                    }
+                    else
+                    {
+                        PlayAnim(0, aec.idle, true);
+                        CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                        //  Debug.LogError("-----zo day");
+                    }
                 }
                 break;
             case EnemyState.run:
-                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                //    detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
+                detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
+                if (detectPlayer.collider != null)
                 {
-
-                    PlayAnim(0, aec.idle, true);
                     if (speedMove != 0)
                     {
                         speedMove = 0;
                         rid.velocity = Vector2.zero;
                     }
+                    enemyState = EnemyState.idle;
+                //    Debug.Log("fat hien");
                 }
                 else
                 {
-                    PlayAnim(0, aec.run, true);
-                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                    move = rid.velocity;
-                    move.x = speedMove;
-                    move.y = rid.velocity.y;
-                    rid.velocity = move;
-                }
-                detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
-                if (detectPlayer)
-                {
-                    enemyState = EnemyState.idle;
+                    if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    {
+                        //    Debug.Log("zp dau à?");
+                        PlayAnim(0, aec.idle, true);
+                        if (speedMove != 0)
+                        {
+                            speedMove = 0;
+                            rid.velocity = Vector2.zero;
+                        }
+                    }
+                    else
+                    {
+                        PlayAnim(0, aec.run, true);
+                        speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                        move = rid.velocity;
+                        move.x = speedMove;
+                        move.y = rid.velocity.y;
+                        rid.velocity = move;
+                    }
                 }
 
                 break;
@@ -100,7 +123,7 @@ public class Enemy5Controller : EnemyBase
     }
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //    Gizmos.DrawWireSphere(Origin(), radius);
     //}
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {

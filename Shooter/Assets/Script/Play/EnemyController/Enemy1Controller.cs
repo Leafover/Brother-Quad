@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy1Controller : EnemyBase
 {
     float speedMove;
-    public bool detectPlayer;
+    public RaycastHit2D detectPlayer;
     public override void Start()
     {
         base.Start();
@@ -40,21 +40,32 @@ public class Enemy1Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-                detectPlayer = Physics2D.OverlapCircle(Origin(), radius, lm);
-                if (!detectPlayer)
+                detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
+                if (detectPlayer.collider == null)
                 {
                     enemyState = EnemyState.run;
                 }
                 else
                 {
-                    enemyState = EnemyState.attack;
+                    if (detectPlayer.collider.gameObject.layer == 13)
+                    {
+                        enemyState = EnemyState.attack;
+                        //     Debug.LogError("zo day");
+                    }
+                    else
+                    {
+                        PlayAnim(0, aec.idle, true);
+                        CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                        //  Debug.LogError("-----zo day");
+                    }
                 }
                 break;
             case EnemyState.run:
 
-                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
+                if (detectPlayer.collider != null)
                 {
-
+                    enemyState = EnemyState.idle;
                     if (speedMove != 0)
                     {
                         speedMove = 0;
@@ -64,15 +75,22 @@ public class Enemy1Controller : EnemyBase
                 }
                 else
                 {
-                    PlayAnim(0, aec.run, true);
-                    speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                    rid.velocity = new Vector2(speedMove, rid.velocity.y);
-                }
+                    if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    {
 
-                detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
-                if (detectPlayer)
-                {
-                    enemyState = EnemyState.idle;
+                        if (speedMove != 0)
+                        {
+                            speedMove = 0;
+                            rid.velocity = Vector2.zero;
+                            PlayAnim(0, aec.idle, true);
+                        }
+                    }
+                    else
+                    {
+                        PlayAnim(0, aec.run, true);
+                        speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+                        rid.velocity = new Vector2(speedMove, rid.velocity.y);
+                    }
                 }
 
                 break;
