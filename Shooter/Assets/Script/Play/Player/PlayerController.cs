@@ -372,6 +372,11 @@ public class PlayerController : MonoBehaviour
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
+            if(reload)
+            {
+                reload = false;
+                return;
+            }
             bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
             dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -379,6 +384,16 @@ public class PlayerController : MonoBehaviour
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
+
+            numberBullet--;
+            SoundController.instance.PlaySound(soundGame.shootnormal);
+            if (numberBullet == 0)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
+                reload = true;
+                StartCoroutine(Reload());
+            }
+
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
         {
@@ -525,23 +540,14 @@ public class PlayerController : MonoBehaviour
 
         if (timePreviousAttack > 0)
             return;
-
         timePreviousAttack = timedelayAttackGun;
-
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
-        SoundController.instance.PlaySound(soundGame.shootnormal);
-        numberBullet--;
-        if (numberBullet <= 0)
-        {
-            reload = true;
-            skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
-            StartCoroutine(Reload());
-        }
+
     }
     IEnumerator Reload()
     {
         yield return waitReload;
-        reload = false;
+        skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
         numberBullet = maxNumberBullet;
     }
 
