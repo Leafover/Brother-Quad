@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : DataUnit
 {
-   // public bool activeFar;
+    // public bool activeFar;
     [HideInInspector]
     public bool jumpOut = false;
     public Transform leftFace, rightFace;
@@ -61,6 +61,8 @@ public class EnemyBase : DataUnit
     [SpineBone]
     public string strboneBarrelGun, strboneBarrelGun1, strboneBarrelGun2;
     public Transform targetPos;
+    [HideInInspector]
+    public float tempXBegin;
 
     public Vector2 OriginPos
     {
@@ -169,6 +171,7 @@ public class EnemyBase : DataUnit
     }
     public virtual void Init()
     {
+        tempXBegin = transform.position.x;
         if (lineBlood != null)
         {
             lineBlood.Reset();
@@ -192,7 +195,7 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.Complete += Complete;
         }
 
-       // currentAnim = aec.idle;
+        // currentAnim = aec.idle;
         if (skeletonAnimation != null)
         {
             if (boneBarrelGun == null)
@@ -289,11 +292,13 @@ public class EnemyBase : DataUnit
         skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
         PlayAnim(0, aec.idle, true);
     }
+
     public virtual void OnUpdate(float deltaTime)
     {
         if (!isActive)
         {
-            if (transform.position.x - Camera.main.transform.position.x <= distanceActive)
+            var tempCamX = Camera.main.transform.position.x;
+            if (tempXBegin - tempCamX <= distanceActive)
             {
                 Active();
             }

@@ -13,7 +13,7 @@ public class Enemy0Controller : EnemyBase
     {
         base.Start();
         Init();
-        myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
+
     }
     public override void Init()
     {
@@ -22,12 +22,13 @@ public class Enemy0Controller : EnemyBase
         {
             EnemyManager.instance.enemy0s.Add(this);
         }
-
+        myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
     }
     public override void Active()
     {
         base.Active();
         PlayAnim(0, aec.run, true);
+
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -39,7 +40,7 @@ public class Enemy0Controller : EnemyBase
         }
         if (enemyState == EnemyState.die)
             return;
-
+        CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
         distanceTravelled += speed * deltaTime;
         transform.position = myPath.GetPointAtDistance(distanceTravelled,EndOfPathInstruction.Stop);
         if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))

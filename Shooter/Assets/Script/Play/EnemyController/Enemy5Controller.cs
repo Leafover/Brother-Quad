@@ -22,7 +22,7 @@ public class Enemy5Controller : EnemyBase
         }
         enemyState = EnemyState.idle;
 
-      //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
+        //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
     }
 
     public override void Active()
@@ -63,7 +63,7 @@ public class Enemy5Controller : EnemyBase
                     if (detectPlayer.collider.gameObject.layer == 13)
                     {
                         enemyState = EnemyState.attack;
-                   //     Debug.LogError("zo day");
+                        //     Debug.LogError("zo day");
                     }
                     else
                     {
@@ -84,11 +84,12 @@ public class Enemy5Controller : EnemyBase
                         rid.velocity = Vector2.zero;
                     }
                     enemyState = EnemyState.idle;
-                //    Debug.Log("fat hien");
+                    //    Debug.Log("fat hien");
                 }
                 else
                 {
-                    if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    var tempX = transform.position.x;
+                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                     {
                         //    Debug.Log("zp dau à?");
                         PlayAnim(0, aec.idle, true);

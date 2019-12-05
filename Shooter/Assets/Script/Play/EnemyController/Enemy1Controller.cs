@@ -75,7 +75,8 @@ public class Enemy1Controller : EnemyBase
                 }
                 else
                 {
-                    if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    var tempX = transform.position.x;
+                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                     {
 
                         if (speedMove != 0)
@@ -127,10 +128,10 @@ public class Enemy1Controller : EnemyBase
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
