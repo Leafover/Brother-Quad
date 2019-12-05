@@ -7,7 +7,6 @@ public class Enemy5Controller : EnemyBase
     public bool detectPlayer;
     float speedMove;
 
-
     public override void Start()
     {
         base.Start();

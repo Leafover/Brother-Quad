@@ -9,6 +9,10 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    bool reload;
+    WaitForSeconds waitReload;
+
     public Collider2D colliderStand/*,currentStand, colliderwaitmedown*/;
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
     float timePreviousAttack, timePreviousGrenade, timePreviousRocket;
     public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade, timedelayRocket;
 
+    public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
 
     bool isKnife;
@@ -90,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(_collider != colliderStand)
+            if (_collider != colliderStand)
             {
                 if (colliderStand != null)
                     Physics2D.IgnoreCollision(foot, colliderStand, false);
@@ -107,7 +112,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Physics2D.IgnoreLayerCollision(foot.gameObject.layer, colliderStand.gameObject.layer, true);
                 Physics2D.IgnoreCollision(foot, colliderStand, true);
-              //  Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
+                //  Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
                 //Physics2D.r
             }
 
@@ -131,21 +136,21 @@ public class PlayerController : MonoBehaviour
     }
     public void TryGrenade()
     {
-        if (Time.time - timePreviousGrenade > timedelayGrenade)
+        if (timePreviousGrenade > 0)
+            return;
+        timePreviousGrenade = timedelayGrenade;
+        //    Debug.Log(timePreviousGrenade);
+        if (isGround)
         {
-            timePreviousGrenade = Time.time;
-            if (isGround)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
-            }
-            else
-            {
-                GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
-                grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
-                grenade.SetActive(true);
-            }
-            SoundController.instance.PlaySound(soundGame.throwGrenade);
+            skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
         }
+        else
+        {
+            GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+            grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+            grenade.SetActive(true);
+        }
+        SoundController.instance.PlaySound(soundGame.throwGrenade);
     }
     //public void TryRocket()
     //{
@@ -183,7 +188,11 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         speedmove = 0;
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        numberBullet = maxNumberBullet;
+        waitReload = new WaitForSeconds(1f);
 
+        timePreviousGrenade = 0;
+        timePreviousAttack = 0;
     }
     public void DetectGround()
     {
@@ -302,6 +311,11 @@ public class PlayerController : MonoBehaviour
 
         LockPlayer();
         targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
+        if (timePreviousAttack > 0)
+            timePreviousAttack -= deltaTime;
+        if (timePreviousGrenade > 0)
+            timePreviousGrenade -= deltaTime;
+        GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
     }
     Vector2 posTemp;
     void LockPlayer()
@@ -504,15 +518,32 @@ public class PlayerController : MonoBehaviour
 
     public void ShootDown()
     {
-
-        if (Time.time - timePreviousAttack < timedelayAttackGun)
+        if (reload)
+        {
             return;
-        timePreviousAttack = Time.time;
+        }
+
+        if (timePreviousAttack > 0)
+            return;
+
+        timePreviousAttack = timedelayAttackGun;
+
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
         SoundController.instance.PlaySound(soundGame.shootnormal);
-
+        numberBullet--;
+        if (numberBullet <= 0)
+        {
+            reload = true;
+            skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
+            StartCoroutine(Reload());
+        }
     }
-
+    IEnumerator Reload()
+    {
+        yield return waitReload;
+        reload = false;
+        numberBullet = maxNumberBullet;
+    }
 
     public void ChangeKnife()
     {
