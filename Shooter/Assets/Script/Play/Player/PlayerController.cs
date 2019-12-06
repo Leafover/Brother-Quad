@@ -222,10 +222,10 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Jump()
     {
-        // skeletonAnimation.ClearState();
+        if (colliderStand != null)
+            Physics2D.IgnoreCollision(foot, colliderStand, false);
         float timeUp = timeJump * 0.5f;
-        //  colliderStand = null;
-        //   currentStand = null;
+
         playerState = PlayerState.Jump;
         AnimJump();
         //    candoublejump = true;
