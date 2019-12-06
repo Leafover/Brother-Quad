@@ -16,6 +16,9 @@ public class BulletEnemyV1 : BulletEnemy
     private void OnEnable()
     {
         Init(1);
+        v_diff = transform.position + (Vector3)rid.velocity * 20;
+        atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
+        transform.rotation = Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg);
     }
 
     public override void Hit()

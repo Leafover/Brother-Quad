@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoomEnemy : BulletEnemy
 {
-    private void OnEnable()
+    public void OnEnable()
     {
         StartEvent();
     }

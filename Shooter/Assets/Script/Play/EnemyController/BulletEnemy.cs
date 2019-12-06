@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Spine.Unity;
 public class BulletEnemy : MonoBehaviour
 {
     public EnemyBase myEnemy;
@@ -13,6 +13,7 @@ public class BulletEnemy : MonoBehaviour
     public float speed, damage;
     System.Action hit;
     Vector2 myTransform;
+    public SkeletonAnimation skelatonAnim;
     public void AutoRemoveMe()
     {
         if (myEnemy == null)
@@ -25,6 +26,15 @@ public class BulletEnemy : MonoBehaviour
     {
         if (rid == null)
             rid = GetComponent<Rigidbody2D>();
+
+        if (skelatonAnim == null)
+            skelatonAnim = GetComponentInChildren<SkeletonAnimation>();
+
+    }
+    public virtual void Start()
+    {
+        if (skelatonAnim != null)
+            skelatonAnim.Initialize(true);
     }
     public Transform GetTransform()
     {
@@ -57,7 +67,7 @@ public class BulletEnemy : MonoBehaviour
     {
         hit += Hit;
     }
-    public void BeginDisplay(Vector2 _dir,EnemyBase _myEnemy)
+    public void BeginDisplay(Vector2 _dir, EnemyBase _myEnemy)
     {
         dir = _dir;
         myEnemy = _myEnemy;

@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour
         CameraController.instance.Init();
 
         PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
+        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3,Camera.main.transform.position.y,Camera.main.transform.position.z);
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
