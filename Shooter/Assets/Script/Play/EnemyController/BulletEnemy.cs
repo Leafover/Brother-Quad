@@ -82,7 +82,6 @@ public class BulletEnemy : MonoBehaviour
     public virtual void Hit()
     {
         gameObject.SetActive(false);
-        PlayerController.instance.TakeDamage(damage);
         AutoRemoveMe();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -90,6 +89,7 @@ public class BulletEnemy : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 13:
+                PlayerController.instance.TakeDamage(damage);
                 if (hit != null)
                     hit();
                 break;

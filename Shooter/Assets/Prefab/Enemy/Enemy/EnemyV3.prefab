@@ -205,6 +205,7 @@ MonoBehaviour:
   baseHealth: 3
   baseSpeed: 5
   baseDamage: 1
+  activeFar: 1
   jumpOut: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
@@ -214,7 +215,6 @@ MonoBehaviour:
   canoutcam: 1
   incam: 0
   isMachine: 1
-  canpasscam: 0
   enemyState: 0
   canmove: 0
   radius: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: be220a0a8e80dca44b88de232b9a4b77, type: 2}
     jumpOut: {fileID: 0}
-  maxtimeDelayAttack: 1
+  maxtimeDelayAttack: 0.6
   lm:
     serializedVersion: 2
     m_Bits: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   strboneBarrelGun1: 
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
+  tempXBegin: 0
 --- !u!50 &4081383611729863849
 Rigidbody2D:
   serializedVersion: 4
@@ -264,9 +265,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0

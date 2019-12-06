@@ -38,6 +38,9 @@ public class BulletEnemy2 : BulletEnemy
             case 21:
                 AddForceForBullet();
                 break;
+            case 23:
+                AddForceForBullet();
+                break;
         }
     }
     IEnumerator delayAddForce()

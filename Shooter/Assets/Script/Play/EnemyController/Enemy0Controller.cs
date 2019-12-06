@@ -56,7 +56,7 @@ public class Enemy0Controller : EnemyBase
         if (collision.gameObject.layer == 13)
         {
             gameObject.SetActive(false);
-            explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
+            explo = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
             PlayerController.instance.TakeDamage(damage);
@@ -71,14 +71,14 @@ public class Enemy0Controller : EnemyBase
             EnemyManager.instance.enemy0s.Remove(this);
         }
     }
-    public override void Dead()
-    {
-        base.Dead();
-        explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
-        explo.transform.position = gameObject.transform.position;
-        explo.SetActive(true);
-        SoundController.instance.PlaySound(soundGame.exploGrenade);
-    }
+    //public override void Dead()
+    //{
+    //    base.Dead();
+    //    explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
+    //    explo.transform.position = gameObject.transform.position;
+    //    explo.SetActive(true);
+    //    SoundController.instance.PlaySound(soundGame.exploGrenade);
+    //}
     //protected override void OnComplete(TrackEntry trackEntry)
     //{
     //    base.OnComplete(trackEntry);

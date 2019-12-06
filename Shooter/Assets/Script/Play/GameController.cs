@@ -26,8 +26,6 @@ public class GameController : MonoBehaviour
 
     public MapController currentMap;
 
-    public static int indexMap = 0;
-
     public GameObject targetDetectSprite;
     public List<EnemyBase> autoTarget;
     public GameObject UIControll;
@@ -58,13 +56,15 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        currentMap = Instantiate(listMap[indexMap]);
+        currentMap = Instantiate(listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
 
         CameraController.instance.Init();
 
         PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
         Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3,Camera.main.transform.position.y,Camera.main.transform.position.z);
+
+        uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)

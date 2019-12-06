@@ -108,9 +108,9 @@ public class Enemy4Controller : EnemyBase
                         enemyState = EnemyState.run;
                         timedelayChangePos = maxtimedelayChangePos;
                         if (transform.position.x < OriginPos.x)
-                            nextPos.x = OriginPos.x + Random.Range(0.5f, 1f);
+                            nextPos.x = OriginPos.x + 0.5f;
                         else
-                            nextPos.x = OriginPos.x + Random.Range(-0.5f, -1f);
+                            nextPos.x = OriginPos.x + -0.5f;
                         nextPos.y = transform.position.y;
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
@@ -189,9 +189,9 @@ public class Enemy4Controller : EnemyBase
                     enemyState = EnemyState.run;
                     timedelayChangePos = maxtimedelayChangePos;
                     if (transform.position.x < OriginPos.x)
-                        nextPos.x = OriginPos.x + Random.Range(0.5f, 1f);
+                        nextPos.x = OriginPos.x + 0.5f;
                     else
-                        nextPos.x = OriginPos.x + Random.Range(-0.5f, -1f);
+                        nextPos.x = OriginPos.x + -0.5f;
                     nextPos.y = OriginPos.y;
                     CheckDirFollowPlayer(nextPos.x);
                     PlayAnim(0, aec.run, true);

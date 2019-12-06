@@ -160,6 +160,10 @@ public class Enemy5Controller : EnemyBase
     public override void OnDisable()
     {
         base.OnDisable();
+
+        if (EnemyManager.instance == null)
+            return;
+
         if (EnemyManager.instance.enemy5s.Contains(this))
         {
             EnemyManager.instance.enemy5s.Remove(this);

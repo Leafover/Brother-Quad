@@ -271,9 +271,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -296,6 +296,7 @@ MonoBehaviour:
   baseHealth: 3
   baseSpeed: 2
   baseDamage: 1
+  activeFar: 0
   jumpOut: 0
   leftFace: {fileID: 7919789370046704806}
   rightFace: {fileID: 6561772195430948403}
@@ -342,6 +343,7 @@ MonoBehaviour:
   strboneBarrelGun1: L_Hand_3
   strboneBarrelGun2: 
   targetPos: {fileID: 5985147744913349281}
+  tempXBegin: 0
 --- !u!1 &2095537625956863567
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2095537626139200215}
   - component: {fileID: 2095537626139200214}
-  m_Layer: 15
+  m_Layer: 24
   m_Name: checkground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

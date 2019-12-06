@@ -70,9 +70,9 @@ public class Enemy3Controller : EnemyBase
                     enemyState = EnemyState.run;
                     timedelayChangePos = maxtimedelayChangePos;
                     if (transform.position.x < OriginPos.x)
-                        nextPos.x = OriginPos.x + Random.Range(0.5f, 1f);
+                        nextPos.x = OriginPos.x + 0.5f;
                     else
-                        nextPos.x = OriginPos.x + Random.Range(-0.5f, -1f);
+                        nextPos.x = OriginPos.x + -0.5f;
                     nextPos.y = transform.position.y;
                     CheckDirFollowPlayer(nextPos.x);
                     skeletonAnimation.ClearState();

@@ -162,7 +162,8 @@ public class EnemyBase : DataUnit
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
         acOnUpdate -= OnUpdate;
-        GameController.instance.RemoveTarget(this);
+        if (GameController.instance != null)
+            GameController.instance.RemoveTarget(this);
     }
     public virtual void Start()
     {
@@ -302,10 +303,11 @@ public class EnemyBase : DataUnit
     {
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
+        PlayAnim(0, aec.idle, true);
         if (aec.aimTargetAnim == null)
             return;
         skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
-        PlayAnim(0, aec.idle, true);
+
     }
 
     public virtual void OnUpdate(float deltaTime)
@@ -388,21 +390,15 @@ public class EnemyBase : DataUnit
         {
             if (!incam || enemyState == EnemyState.die)
                 return;
-            TakeDamage(1);
+            TakeDamage(PlayerController.instance.damageBullet);
             collision.gameObject.SetActive(false);
-            //  Debug.LogError("take damage 1" + gameObject.name +":"+ collision.name);
-            //  Debug.LogError("----------take damage 1");
         }
         else if (collision.gameObject.layer == 14)
         {
             if (!incam || enemyState == EnemyState.die)
                 return;
 
-            TakeDamage(3);
-            //    Debug.LogError("take damge:" + collision.name);
-            //collision.gameObject.SetActive(false);
-            // Debug.LogError("take damage 2" + gameObject.name + ":" + collision.name); 
-            //    Debug.LogError("----------take damage 2");
+            TakeDamage(PlayerController.instance.damgeGrenade);
         }
         else if (collision.gameObject.layer == 20)
             gameObject.SetActive(false);

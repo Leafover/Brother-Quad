@@ -612,7 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7723718082773618240}
   - component: {fileID: 7723718082773618243}
-  m_Layer: 15
+  m_Layer: 24
   m_Name: checkground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -881,9 +881,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -906,6 +906,7 @@ MonoBehaviour:
   baseHealth: 200
   baseSpeed: 2
   baseDamage: 1
+  activeFar: 0
   jumpOut: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
@@ -952,6 +953,7 @@ MonoBehaviour:
   strboneBarrelGun1: 
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
+  tempXBegin: 0
   speedMove: 0
   typeAttack: 0
   move: 0

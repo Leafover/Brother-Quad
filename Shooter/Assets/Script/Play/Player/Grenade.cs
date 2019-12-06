@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 10 || collision.gameObject.layer == 19 || collision.gameObject.layer == 21)
+        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 10 || collision.gameObject.layer == 19 || collision.gameObject.layer == 21 || collision.gameObject.layer == 23)
         {
             GameObject effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
             effectGrenade.transform.position = gameObject.transform.position;

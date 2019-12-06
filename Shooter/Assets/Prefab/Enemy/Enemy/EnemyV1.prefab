@@ -370,7 +370,7 @@ MonoBehaviour:
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: idle
-  loop: 0
+  loop: 1
   timeScale: 1
 --- !u!1 &6648909517732511427
 GameObject:
@@ -382,7 +382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6648909517732511452}
   - component: {fileID: 6648909517732511453}
-  m_Layer: 15
+  m_Layer: 24
   m_Name: checkground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,9 +599,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -624,6 +624,7 @@ MonoBehaviour:
   baseHealth: 3
   baseSpeed: 2
   baseDamage: 1
+  activeFar: 1
   jumpOut: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
@@ -670,6 +671,7 @@ MonoBehaviour:
   strboneBarrelGun1: 
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
+  tempXBegin: 0
 --- !u!1 &6972482611676610024
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,14 @@ public class UIPanel : MonoBehaviour
     public GameObject finishPanel;
     public GameObject ResetBtn, NextBtn;
     public Image grenadeFillAmout;
+    public Text levelText;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
+    }
+    public void BtnBack()
+    {
+        Application.LoadLevel(0);
     }
     public void FillGrenade(float _current,float _max)
     {
@@ -17,8 +22,8 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnNext()
     {
-        if (GameController.indexMap < GameController.instance.listMap.Count - 1)
-            GameController.indexMap++;
+        if (DataParam.indexMap < GameController.instance.listMap.Count - 1)
+            DataParam.indexMap++;
         Application.LoadLevel(Application.loadedLevel);
     }
     public void DisplayFinish()

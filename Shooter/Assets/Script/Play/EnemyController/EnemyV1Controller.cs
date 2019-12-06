@@ -65,12 +65,12 @@ public class EnemyV1Controller : EnemyBase
                     timedelayChangePos = maxtimedelayChangePos;
                     if (transform.position.x < OriginPos.x)
                     {
-                        nextPos.x = OriginPos.x + Random.Range(1f, 3f);
+                        nextPos.x = OriginPos.x + 0.5f;
                         PlayAnim(0, aec.run2, true);
                     }
                     else
                     {
-                        nextPos.x = OriginPos.x + Random.Range(-1f, -3f);
+                        nextPos.x = OriginPos.x + -0.5f;
                         PlayAnim(0, aec.run, true);
                     }
                     nextPos.y = OriginPos.y;

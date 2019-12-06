@@ -9,7 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
     WaitForSeconds waitReload;
 
@@ -201,7 +201,8 @@ public class PlayerController : MonoBehaviour
         isfalldow = false;
         candoublejump = false;
 
-
+        if (rid.gravityScale == .2f)
+            rid.gravityScale = 1;
 
     }
 
@@ -222,6 +223,8 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Jump()
     {
+        if (rid.gravityScale == .2f)
+            rid.gravityScale = 1;
         if (colliderStand != null)
             Physics2D.IgnoreCollision(foot, colliderStand, false);
         float timeUp = timeJump * 0.5f;
@@ -578,6 +581,7 @@ public class PlayerController : MonoBehaviour
         var dMin = float.MaxValue;
         for (int i = 0; i < GameController.instance.autoTarget.Count; i++)
         {
+            
             var enemy = GameController.instance.autoTarget[i];
 
             if (enemy.incam)
@@ -648,6 +652,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case 20:
                 transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+                rid.gravityScale = 0.2f;
                 break;
         }
     }
