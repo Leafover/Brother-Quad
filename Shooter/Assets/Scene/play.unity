@@ -2279,6 +2279,8 @@ MonoBehaviour:
   bulletEnemy6Pooler: {fileID: 0}
   bulletEnemy2Pooler: {fileID: 0}
   bulletBoss1Pooler: {fileID: 0}
+  enemyExploPooler: {fileID: 0}
+  boss1ExploPooler: {fileID: 0}
   bulletPrefab: {fileID: 3725905814373189489, guid: a0c8570614187ae41bef7ff791a3f155,
     type: 3}
   grenadePrefab: {fileID: 8543515004345668029, guid: 8ac3e36d9151d0541bda3a7c5dedba78,
@@ -2315,6 +2317,9 @@ MonoBehaviour:
     type: 3}
   bulletBoss1Prefab: {fileID: 7008869537005031207, guid: e825440d07e7169479b87a6fc53acc30,
     type: 3}
+  enemyExploPrefab: {fileID: 1577658703705914, guid: 6f67496519469c54cb7f3cdcc69acfc2,
+    type: 3}
+  boss1ExploPrefab: {fileID: 100012, guid: 4bf65b68a8ffd4531a0e93ae4fcbf63b, type: 3}
 --- !u!4 &1532263854
 Transform:
   m_ObjectHideFlags: 0
@@ -3313,6 +3318,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8566759334118433423, guid: bdb89c7c850c8684c929a76cc19e6e2c,
+        type: 3}
+      propertyPath: lm.m_Bits
+      value: 10486016
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdb89c7c850c8684c929a76cc19e6e2c, type: 3}

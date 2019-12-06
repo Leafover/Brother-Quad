@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : DataUnit
 {
-    // public bool activeFar;
+    public bool activeFar;
     [HideInInspector]
     public bool jumpOut = false;
     public Transform leftFace, rightFace;
@@ -213,14 +213,14 @@ public class EnemyBase : DataUnit
 
         if (!isBoss)
         {
-            distanceActive = Camera.main.orthographicSize * 2f + 2f;
-            //if (!activeFar)
-            //    distanceActive = Camera.main.orthographicSize * 2f;
-            //else
 
+            if (!activeFar)
+                distanceActive = Camera.main.orthographicSize * 2f;
+            else
+                distanceActive = Camera.main.orthographicSize * 2f + 2f;
         }
         else
-            distanceActive = Camera.main.orthographicSize * 2 + 5;
+            distanceActive = Camera.main.orthographicSize * 2 + 3;
 
         damage = baseDamage * baseLevel;
         health = baseHealth * baseLevel;
@@ -261,7 +261,7 @@ public class EnemyBase : DataUnit
     {
 
     }
-
+    GameObject exploDie;
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
         if (aec.die == null || trackEntry == null)
@@ -269,9 +269,24 @@ public class EnemyBase : DataUnit
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
             gameObject.SetActive(false);
-            //   Debug.LogError("die?????");
-            //     Debug.LogError("dead");
-            //      return;
+
+            if (!isBoss)
+            {
+                if (isMachine)
+                {
+                    SoundController.instance.PlaySound(soundGame.exploGrenade);
+                    exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
+                    exploDie.transform.position = gameObject.transform.position;
+                    exploDie.SetActive(true);
+                }
+            }
+            else
+            {
+                SoundController.instance.PlaySound(soundGame.exploGrenade);
+                exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
+                exploDie.transform.position = gameObject.transform.position;
+                exploDie.SetActive(true);
+            }
         }
 
     }
@@ -326,27 +341,15 @@ public class EnemyBase : DataUnit
         }
         rid.velocity = Vector2.zero;
         takeDamageBox.enabled = false;
-        //if (aec.die == null)
-        //{
-        //    GameController.instance.targetDetectSprite.SetActive(false);
-        //    gameObject.SetActive(false);
-        //    return;
-        //}
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
         PlayAnim(0, aec.die, false);
         enemyState = EnemyState.die;
         GameController.instance.RemoveTarget(this);
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
-        //    Debug.LogError("zooooooooooo day");
-        //if (isBoss)
-        //{
-        //    GameController.instance.DoneMission(true);
-        //}
         DisableAllBullet();
 
-        if (isMachine)
-            SoundController.instance.PlaySound(soundGame.exploGrenade);
+
     }
     void DisableAllBullet()
     {

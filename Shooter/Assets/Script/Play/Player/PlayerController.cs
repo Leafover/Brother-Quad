@@ -589,21 +589,21 @@ public class PlayerController : MonoBehaviour
                 if (d < dMin)
                 {
                     dMin = d;
-                    if (d >= 0.1f)
-                    {
+                    //if (d >= 0.1f)
+                    //{
                         targetTemp = enemy.transform.position;
                         GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
                         GameController.instance.targetDetectSprite.SetActive(true);
                         haveTarget = true;
-                    }
+                    //}
 
-                    else
-                    {
-                        targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-                        GameController.instance.targetDetectSprite.SetActive(false);
-                        haveTarget = false;
-                        continue;
-                    }
+                    //else
+                    //{
+                    //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                    //    GameController.instance.targetDetectSprite.SetActive(false);
+                    //    haveTarget = false;
+                    //    continue;
+                    //}
                 }
             }
             else
