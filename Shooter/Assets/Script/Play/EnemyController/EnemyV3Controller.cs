@@ -17,6 +17,7 @@ public class EnemyV3Controller : EnemyBase
         {
             EnemyManager.instance.enemyv3s.Add(this);
         }
+        timePreviousAttack = 0;
     }
     Vector2 move;
     public override void Active()
@@ -37,16 +38,16 @@ public class EnemyV3Controller : EnemyBase
         }
         if (enemyState == EnemyState.die)
             return;
-
+        timePreviousAttack -= deltaTime;
         Boom();
     }
     void Boom()
     {
-        if (Time.time - timePreviousAttack >= maxtimeDelayAttack)
+
+
+        if (timePreviousAttack <= 0)
         {
-            timePreviousAttack = Time.time;
-            if (!incam)
-                return;
+            timePreviousAttack = maxtimeDelayAttack;
             GameObject g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.SetActive(true);

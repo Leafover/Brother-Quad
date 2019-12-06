@@ -83,13 +83,17 @@ public class Boss1Controller : EnemyBase
                         if (move)
                         {
                             transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
-                            if (transform.position.x != posTemp.x)
-                                return;
-                            move = false;
-                            PlayAnim(1, aec.idle, true);
-                            StartCoroutine(ActiveAttack());
-                            randomCombo = Random.Range(0, 3);
+                            Debug.Log(posTemp.x);
+                            if (transform.position.x == posTemp.x)
+                            {
+                                move = false;
+                                PlayAnim(1, aec.idle, true);
+                                StartCoroutine(ActiveAttack());
+                                randomCombo = Random.Range(0, 3);
+                            }
                         }
+
+
                         else
                         {
                             CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
@@ -104,12 +108,15 @@ public class Boss1Controller : EnemyBase
                         if (move)
                         {
                             transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
-                            if (transform.position.x != posTemp.x)
-                                return;
-                            move = false;
-                            PlayAnim(1, aec.idle, true);
-                          //  combo = 0; //đhs
-                            randomCombo = Random.Range(0, 3);
+                          //  Debug.Log(posTemp.x +":" + transform.position.x);
+                            if (transform.position.x == posTemp.x)
+                            {
+                                move = false;
+                                PlayAnim(1, aec.idle, true);
+                                //  combo = 0; //đhs
+                                randomCombo = Random.Range(0, 3);
+                              //  Debug.LogError("-------toi noi");
+                            }
                         }
                         else
                         {
@@ -120,12 +127,14 @@ public class Boss1Controller : EnemyBase
                         if (move)
                         {
                             transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
-                            if (transform.position.x != posTemp.x)
-                                return;
-                            move = false;
-                            PlayAnim(1, aec.idle, true);
-                            StartCoroutine(ActiveAttack());
-                            randomCombo = Random.Range(0, 3);
+                            if (transform.position.x == posTemp.x)
+                            {
+                                move = false;
+                                PlayAnim(1, aec.idle, true);
+                                StartCoroutine(ActiveAttack());
+                                randomCombo = Random.Range(0, 3);
+                            }
+
                         }
                         else
                         {
@@ -163,11 +172,14 @@ public class Boss1Controller : EnemyBase
         {
             case true:
                 GetPosTemp(PlayerController.instance.GetTranformXPlayer() - 2);
+
+              //  Debug.LogError("begin:--------" + posTemp.x);
              //   Debug.Log("ziiiiiiii");
                 break;
             case false:
                 GetPosTemp(PlayerController.instance.GetTranformXPlayer() + 2);
-            //    Debug.Log("ziiiiiiii 11111");
+              //  Debug.LogError("begin:--------" + posTemp.x);
+                //    Debug.Log("ziiiiiiii 11111");
                 break;
         }
 
