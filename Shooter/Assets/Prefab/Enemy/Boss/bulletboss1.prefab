@@ -73,6 +73,8 @@ MonoBehaviour:
   rid: {fileID: 7726648869073136244}
   speed: 4.5
   damage: 5
+  timeExist: 0
+  skelatonAnim: {fileID: 0}
 --- !u!58 &6300524348629316338
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -98,8 +100,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8135151726557908030}
-  - component: {fileID: 7193546027413976231}
   - component: {fileID: 4293790429888688242}
+  - component: {fileID: 2465883097765962629}
   m_Layer: 0
   m_Name: sprite (1)
   m_TagString: Untagged
@@ -114,14 +116,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8705417162716630408}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 1985031666713510470}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7193546027413976231
+--- !u!114 &4293790429888688242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705417162716630408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192f7a9596a341e4888361eac07b0cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myBullet: {fileID: 5758460600616910645}
+--- !u!212 &2465883097765962629
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,22 +178,9 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.56, y: 0.41}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4293790429888688242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705417162716630408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 192f7a9596a341e4888361eac07b0cb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myBullet: {fileID: 5758460600616910645}

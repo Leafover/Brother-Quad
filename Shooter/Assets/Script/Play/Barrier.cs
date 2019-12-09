@@ -24,6 +24,7 @@ public class Barrier : MonoBehaviour
                     explo = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
                     explo.transform.position = transform.position;
                     explo.SetActive(true);
+                    SoundController.instance.PlaySound(soundGame.exploGrenade);
                     break;
             }
             gameObject.SetActive(false);

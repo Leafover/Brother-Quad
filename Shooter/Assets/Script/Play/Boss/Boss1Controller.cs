@@ -185,6 +185,9 @@ public class Boss1Controller : EnemyBase
     }
     GameObject bullet;
     BulletEnemy bulletScript;
+    //Vector3 dirBullet;
+    //float angle;
+    //Quaternion rotation;
     void ShootBullet()
     {
         bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
@@ -192,6 +195,12 @@ public class Boss1Controller : EnemyBase
         bulletScript = bullet.GetComponent<BulletEnemy>();
         bulletScript.AddProperties(damage1, bulletspeed1);
         bulletScript.dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
+
+        //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+        //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //bullet.transform.rotation = rotation;
+
         bullet.SetActive(true);
     }
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)

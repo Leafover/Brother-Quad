@@ -133,6 +133,10 @@ public class GameController : MonoBehaviour
         if (angle <= 135f && angle >= -135.5f)
         {
             PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
+
+            if (!PlayerController.instance.dust.activeSelf && PlayerController.instance.rid.velocity.x == 0)
+                PlayerController.instance.dust.SetActive(true);
+
             PlayerController.instance.dirMove = h > 0 ? false : true;
             if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;
@@ -223,8 +227,11 @@ public class GameController : MonoBehaviour
     public void DoneMission(bool _win)
     {
         PlayerController.instance.rid.velocity = Vector2.zero;
-        if (win)
+        if (_win)
+        {
             PlayerController.instance.AnimWin();
+          //  Debug.LogError("wiiiiiiiiiinn");
+        }
         gameState = GameState.gameover;
         win = _win;
     }

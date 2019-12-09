@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
     WaitForSeconds waitReload;
+    public GameObject dust;
 
     public Collider2D colliderStand/*,currentStand, colliderwaitmedown*/;
     public LineBlood lineBlood;
@@ -102,6 +103,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         colliderStand = _collider;
+        if (!dust.activeSelf)
+            dust.SetActive(true);
     }
     public void TryJump()
     {
@@ -203,7 +206,6 @@ public class PlayerController : MonoBehaviour
 
         if (rid.gravityScale == .2f)
             rid.gravityScale = 1;
-
     }
 
     private IEnumerator DoubleJump()
@@ -512,8 +514,11 @@ public class PlayerController : MonoBehaviour
     }
     public void AnimWin()
     {
+
         if (currentAnim == apc.winAnim)
             return;
+        //  skeletonAnimation.ClearState();+
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
         skeletonAnimation.AnimationState.SetAnimation(1, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
@@ -595,7 +600,7 @@ public class PlayerController : MonoBehaviour
                 var from = (Vector2)transform.position;
                 var to = enemy.Origin();
                 var d = Vector2.Distance(from, to);
-
+              //  Debug.LogError(d + ":" + dMin);
                 if (d < dMin)
                 {
                     dMin = d;
@@ -614,6 +619,8 @@ public class PlayerController : MonoBehaviour
                     //    haveTarget = false;
                     //    continue;
                     //}
+
+
                 }
             }
             else
@@ -659,7 +666,7 @@ public class PlayerController : MonoBehaviour
             case 20:
                 transform.position = new Vector2(transform.position.x, transform.position.y + 2);
                 rid.velocity = Vector2.zero;
-                rid.gravityScale = 0.2f;
+                rid.gravityScale = 0.3f;
 
                 break;
         }
