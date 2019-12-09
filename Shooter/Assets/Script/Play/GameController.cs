@@ -7,7 +7,7 @@ using Spine;
 [System.Serializable]
 public class AssetSpinePlayerController
 {
-    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim;
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim, winAnim;
 }
 
 [System.Serializable]
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour
         CameraController.instance.Init();
 
         PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
-        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3,Camera.main.transform.position.y,Camera.main.transform.position.z);
+        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
     }
@@ -223,7 +223,7 @@ public class GameController : MonoBehaviour
     public void DoneMission(bool _win)
     {
         PlayerController.instance.rid.velocity = Vector2.zero;
-        PlayerController.instance.AnimIdle();
+        PlayerController.instance.AnimWin();
         gameState = GameState.gameover;
         win = _win;
     }

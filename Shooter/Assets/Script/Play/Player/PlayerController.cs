@@ -228,7 +228,6 @@ public class PlayerController : MonoBehaviour
         if (colliderStand != null)
             Physics2D.IgnoreCollision(foot, colliderStand, false);
         float timeUp = timeJump * 0.5f;
-
         playerState = PlayerState.Jump;
         AnimJump();
         //    candoublejump = true;
@@ -375,7 +374,7 @@ public class PlayerController : MonoBehaviour
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-            if(reload)
+            if (reload)
             {
                 reload = false;
                 return;
@@ -511,7 +510,14 @@ public class PlayerController : MonoBehaviour
             SetBox(sizeBox, offsetBox);
         }
     }
-
+    public void AnimWin()
+    {
+        if (currentAnim == apc.winAnim)
+            return;
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
+        currentAnim = apc.winAnim;
+        speedmove = 0;
+    }
     public void AnimIdle()
     {
         if (isfalldow && rid.velocity.y != 0)
@@ -581,7 +587,7 @@ public class PlayerController : MonoBehaviour
         var dMin = float.MaxValue;
         for (int i = 0; i < GameController.instance.autoTarget.Count; i++)
         {
-            
+
             var enemy = GameController.instance.autoTarget[i];
 
             if (enemy.incam)
@@ -595,10 +601,10 @@ public class PlayerController : MonoBehaviour
                     dMin = d;
                     //if (d >= 0.1f)
                     //{
-                        targetTemp = enemy.transform.position;
-                        GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
-                        GameController.instance.targetDetectSprite.SetActive(true);
-                        haveTarget = true;
+                    targetTemp = enemy.transform.position;
+                    GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
+                    GameController.instance.targetDetectSprite.SetActive(true);
+                    haveTarget = true;
                     //}
 
                     //else
@@ -652,7 +658,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case 20:
                 transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+                rid.velocity = Vector2.zero;
                 rid.gravityScale = 0.2f;
+
                 break;
         }
     }
