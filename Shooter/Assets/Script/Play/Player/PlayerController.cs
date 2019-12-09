@@ -514,7 +514,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentAnim == apc.winAnim)
             return;
-        skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
+        skeletonAnimation.AnimationState.SetAnimation(1, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
     }

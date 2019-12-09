@@ -5,15 +5,35 @@ using Spine.Unity;
 public class BulletEnemy : MonoBehaviour
 {
     public EnemyBase myEnemy;
-    [HideInInspector]
+   // [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);
     [HideInInspector]
     public Vector2 dir1 = new Vector2(-1, 0);
     public Rigidbody2D rid;
-    public float speed, damage;
+    public float speed, damage,timeExist;
     System.Action hit;
     Vector2 myTransform;
     public SkeletonAnimation skelatonAnim;
+
+    public void AddProperties(float _damage,float _speed)
+    {
+        damage = _damage;
+        speed = _speed;
+    }
+    public void SetDir(float _attackrank)
+    {
+        dir.x = -1 * _attackrank;
+        dir.y = 1 * speed;
+       // Debug.LogError("dir:" + dir);
+    }
+    public void SetGravity(float _gravity)
+    {
+        rid.gravityScale = _gravity / 6;
+    }
+    public void SetTimeExist(float _time)
+    {
+        timeExist = _time;
+    }
     public void AutoRemoveMe()
     {
         if (myEnemy == null)
@@ -22,6 +42,7 @@ public class BulletEnemy : MonoBehaviour
             myEnemy.listMyBullet.Remove(this);
         myEnemy = null;
     }
+
     private void OnValidate()
     {
         if (rid == null)
@@ -42,13 +63,14 @@ public class BulletEnemy : MonoBehaviour
     }
     public virtual void Init(int type)
     {
+
         switch (type)
         {
             case 0:
                 rid.velocity = (transform.right * speed);
                 break;
             case 1:
-                rid.velocity = (dir * speed);
+                rid.velocity = (dir);
                 break;
             case 2:
                 rid.velocity = (transform.up * speed);
@@ -76,7 +98,7 @@ public class BulletEnemy : MonoBehaviour
     {
         hit -= Hit;
         rid.velocity = Vector2.zero;
-
+        transform.rotation = Quaternion.identity;
     }
 
     public virtual void Hit()

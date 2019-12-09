@@ -62,11 +62,43 @@ public class MiniBoss1 : EnemyBase
                 }
                 break;
             case EnemyState.attack:
-                Attack(1, aec.attack1, false);
+                Attack(1, aec.attack1, false,maxtimeDelayAttack1);
                 break;
         }
     }
     GameObject g;
+    BulletEnemy bulletScript;
+
+    void ShootRocket()
+    {
+        for(int i = 0; i < 3; i ++)
+        {
+            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+            bulletScript = g.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
+            bulletScript.SetTimeExist(bulletimeexist);
+
+
+            switch (i)
+            {
+                case 0:
+                    g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                    g.transform.rotation = gunRotation.rotation;
+                    break;
+                case 1:
+                    g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+                    g.transform.rotation = gunRotation1.rotation;
+                    break;
+                case 2:
+                    g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+                    g.transform.rotation = gunRotation2.rotation;
+                    break;
+            }
+
+            g.SetActive(true);
+        }
+    }
+
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -75,20 +107,7 @@ public class MiniBoss1 : EnemyBase
         {
             if (!incam)
                 return;
-            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
-            g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            g.transform.rotation = gunRotation.rotation;
-            g.SetActive(true);
-
-            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
-            g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            g.transform.rotation = gunRotation1.rotation;
-            g.SetActive(true);
-
-            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
-            g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-            g.transform.rotation = gunRotation2.rotation;
-            g.SetActive(true);
+            ShootRocket();
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)

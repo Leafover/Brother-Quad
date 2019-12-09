@@ -4,8 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : DataUnit
+public class EnemyBase : MonoBehaviour
 {
+
+    public int index, levelBase = 1;
+
     public bool activeFar;
     [HideInInspector]
     public bool jumpOut = false;
@@ -31,22 +34,21 @@ public class EnemyBase : DataUnit
     [HideInInspector]
     public Collider2D takeDamageBox;
     [HideInInspector]
-    public float damage;
-    [HideInInspector]
-    public float health, timePreviousAttack;
-    //  [HideInInspector]
-    public float maxtimedelayChangePos = 6;
+    public float damage1, damage2, damage3, health, bulletspeed1, bulletspeed2, bulletspeed3, attackrank, bulletimeexist, exp, speed, maxtimeDelayAttack1, maxtimeDelayAttack2, maxtimeDelayAttack3;
+
+    public float maxtimedelayChangePos = 4;
     [HideInInspector]
     public AnimationReferenceAsset currentAnim;
     public AssetSpineEnemyController aec;
-    public float maxtimeDelayAttack = 1;
+    [HideInInspector]
+    public float timePreviousAttack;
 
     public LayerMask lm = 13;
     [HideInInspector]
     public Rigidbody2D rid;
 
-    public float currentHealth, distanceActive = 6;
-    public float speed;
+    public float currentHealth;
+    public float distanceActive = 6;
 
     [HideInInspector]
     public bool isActive;
@@ -76,7 +78,6 @@ public class EnemyBase : DataUnit
             return;
         if (currentAnim != anim)
         {
-            //   Debug.Log("change anim" + currentAnim.name);
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
         }
@@ -94,6 +95,8 @@ public class EnemyBase : DataUnit
         }
         if (takeDamageBox == null)
             takeDamageBox = GetComponent<Collider2D>();
+
+
 
     }
     public Vector2 GetOriginGun()
@@ -126,11 +129,11 @@ public class EnemyBase : DataUnit
             return /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/FlipX ? rightFace.position : leftFace.position;
         }
     }
-    public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop)
+    public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop, float _maxTimedelayAttack)
     {
         if (enemyState == EnemyState.die)
             return;
-        if (Time.time - timePreviousAttack >= maxtimeDelayAttack)
+        if (Time.time - timePreviousAttack >= _maxTimedelayAttack)
         {
             timePreviousAttack = Time.time;
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
@@ -139,21 +142,21 @@ public class EnemyBase : DataUnit
 
         }
     }
-    public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop, float timeDelayAttack)
-    {
-        if (enemyState == EnemyState.die)
-            return;
-        //   Debug.LogError(timePreviousAttack + ":" + timeDelayAttack);
-        if (Time.time - timePreviousAttack >= timeDelayAttack)
-        {
-            timePreviousAttack = Time.time;
+    //public virtual void Shoot(int indexTrack, AnimationReferenceAsset anim, bool loop, float timeDelayAttack,float _timePreviousAttack)
+    //{
+    //    if (enemyState == EnemyState.die)
+    //        return;
+    //    //   Debug.LogError(timePreviousAttack + ":" + timeDelayAttack);
+    //    if (Time.time - _timePreviousAttack >= timeDelayAttack)
+    //    {
+    //        _timePreviousAttack = Time.time;
 
-            skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
-            if (currentAnim != anim)
-                currentAnim = anim;
-            //  Debug.Log("nem luu dan:" + timeDelayAttack);
-        }
-    }
+    //        skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
+    //        if (currentAnim != anim)
+    //            currentAnim = anim;
+    //        //  Debug.Log("nem luu dan:" + timeDelayAttack);
+    //    }
+    //}
     public virtual void OnDisable()
     {
         if (skeletonAnimation != null/* && skeletonAnimation.AnimationState != null*/)
@@ -177,7 +180,7 @@ public class EnemyBase : DataUnit
         {
             lineBlood.Reset();
         }
-        timePreviousAttack = maxtimeDelayAttack / 2;
+        //  _timePreviousAttack = maxtimeDelayAttack / 2;
 
         isActive = false;
         if (boxAttack1 != null)
@@ -223,12 +226,38 @@ public class EnemyBase : DataUnit
         else
             distanceActive = Camera.main.orthographicSize * 2 + 3;
 
-        damage = baseDamage * baseLevel;
-        health = baseHealth * baseLevel;
-        speed = baseSpeed;
+        AddProperties();
+
         currentHealth = health;
 
         skeletonAnimation.gameObject.SetActive(false);
+    }
+
+    void AddProperties()
+    {
+
+      //  Debug.Log(DataController.instance.allDataEnemy[index].enemyData.Count);
+
+        damage1 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].dmg1;
+        damage2 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].dmg2;
+        damage3 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].dmg3;
+
+        bulletspeed1 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].bulletspeed1;
+        bulletspeed2 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].bulletspeed2pixels;
+        bulletspeed3 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].bulletspeed3;
+
+        maxtimeDelayAttack1 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].atksecond1;
+        maxtimeDelayAttack2 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].atksecond2;
+        maxtimeDelayAttack3 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].atksecond3;
+
+        attackrank = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].atkrange;
+
+        bulletimeexist = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].bulletexisttime;
+
+        health = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].hp;
+        speed = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].movespeed;
+
+        exp = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].exp;
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -285,7 +314,7 @@ public class EnemyBase : DataUnit
             {
                 SoundController.instance.PlaySound(soundGame.exploGrenade);
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-                exploDie.transform.position = gameObject.transform.position;
+                exploDie.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
             }
         }

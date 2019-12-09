@@ -58,7 +58,7 @@ public class Enemy3Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-                Shoot(1, aec.attack1, false, maxtimeDelayAttack);
+                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
@@ -110,6 +110,8 @@ public class Enemy3Controller : EnemyBase
             if (!incam)
                 return;
             bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
+            var _bulletScript = bullet.GetComponent<BulletEnemy>();
+            _bulletScript.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);

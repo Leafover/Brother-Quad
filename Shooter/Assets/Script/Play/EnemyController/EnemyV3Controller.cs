@@ -41,14 +41,18 @@ public class EnemyV3Controller : EnemyBase
         timePreviousAttack -= deltaTime;
         Boom();
     }
+    GameObject g;
     void Boom()
     {
 
 
         if (timePreviousAttack <= 0)
         {
-            timePreviousAttack = maxtimeDelayAttack;
-            GameObject g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
+            timePreviousAttack = maxtimeDelayAttack1;
+            g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
+            var bulletScript = g.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
+            bulletScript.SetGravity(bulletspeed1);
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.SetActive(true);
         }

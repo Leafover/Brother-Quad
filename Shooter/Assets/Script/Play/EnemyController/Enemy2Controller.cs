@@ -86,11 +86,11 @@ public class Enemy2Controller : EnemyBase
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (detectPlayer)
                 {
-                    Shoot(1, aec.attack1, false, maxtimeDelayAttack / 3);
+                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 }
                 else
                 {
-                    Shoot(1, aec.attack2, false, maxtimeDelayAttack / 4);
+                    Attack(1, aec.attack2, false, maxtimeDelayAttack2);
                 }
                 break;
         }
@@ -116,9 +116,9 @@ public class Enemy2Controller : EnemyBase
              bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             var _bulletScript = bullet.GetComponent<BulletEnemy>();
+            _bulletScript.AddProperties(damage1, 3.5f);
             switch (FlipX)
-            {
-                
+            {                
                 case true:
                     _bulletScript.BeginDisplay(right,this);
                     break;

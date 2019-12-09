@@ -6,7 +6,7 @@ using Spine.Unity;
 
 public class Enemy4Controller : EnemyBase
 {
-    float timedelayChangePos, timedelayShoot;
+    float timedelayChangePos/*, timedelayShoot*/;
     Vector2 nextPos;
     bool isGrenadeStage;
     public override void Start()
@@ -20,7 +20,7 @@ public class Enemy4Controller : EnemyBase
         timedelayChangePos = maxtimedelayChangePos;
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
-        timedelayShoot = maxtimeDelayAttack;
+     //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemy4s.Contains(this))
         {
             EnemyManager.instance.enemy4s.Add(this);
@@ -73,19 +73,18 @@ public class Enemy4Controller : EnemyBase
                 {
                     if (isGrenadeStage)
                     {
-                        Shoot(0, aec.attack1, false, timedelayShoot);
+                        Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                         targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
 
-                        Shoot(0, aec.attack2, false, timedelayShoot);
+                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                         targetPos.transform.position = GetTarget(false);
                         timedelayChangePos -= deltaTime;
                         if (timedelayChangePos <= 0)
                         {
                             isGrenadeStage = true;
-                            timedelayShoot = maxtimeDelayAttack;
                         }
                     }
                     return;
@@ -94,13 +93,13 @@ public class Enemy4Controller : EnemyBase
 
                 if (isGrenadeStage)
                 {
-                    Shoot(0, aec.attack1, false, timedelayShoot);
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                     targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
 
-                    Shoot(0, aec.attack2, false, timedelayShoot);
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                     targetPos.transform.position = GetTarget(false);
                     timedelayChangePos -= deltaTime;
                     if (timedelayChangePos <= 0)
@@ -114,7 +113,6 @@ public class Enemy4Controller : EnemyBase
                         nextPos.y = transform.position.y;
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
-                        timedelayShoot = maxtimeDelayAttack;
                         skeletonAnimation.ClearState();
 
                         PlayAnim(0, aec.run, true);
@@ -152,6 +150,8 @@ public class Enemy4Controller : EnemyBase
             if (!incam)
                 return;
              bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
+            var bulletScript = bullet.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage2, bulletspeed1);
              dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
              angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
              rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -166,10 +166,13 @@ public class Enemy4Controller : EnemyBase
                 return;
              grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
             grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            var grenadeScript = grenade.GetComponent<BulletEnemy>();
+            grenadeScript.AddProperties(0, 6);
+
             if (FlipX)
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(1, 0.7f);
+                grenadeScript.SetDir(-6);
             else
-                grenade.GetComponent<BulletEnemy>().dir = new Vector2(-1, 0.7f);
+                grenadeScript.SetDir(6);
             grenade.SetActive(true);
 
         }
@@ -200,7 +203,6 @@ public class Enemy4Controller : EnemyBase
                 combo = 0;
                 randomCombo = Random.Range(1, 3);
                 isGrenadeStage = false;
-                timedelayShoot = maxtimeDelayAttack / 2;
             }
 
         }

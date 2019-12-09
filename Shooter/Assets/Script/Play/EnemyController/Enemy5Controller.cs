@@ -117,7 +117,7 @@ public class Enemy5Controller : EnemyBase
                     speedMove = 0;
                     rid.velocity = Vector2.zero;
                 }
-                Attack(0, aec.attack1, false);
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 break;
         }
 

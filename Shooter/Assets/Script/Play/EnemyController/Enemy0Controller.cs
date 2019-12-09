@@ -59,7 +59,7 @@ public class Enemy0Controller : EnemyBase
             explo = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
-            PlayerController.instance.TakeDamage(damage);
+            PlayerController.instance.TakeDamage(damage1);
             SoundController.instance.PlaySound(soundGame.exploGrenade);
         }
     }

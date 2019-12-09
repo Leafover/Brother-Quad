@@ -54,7 +54,7 @@ public class EnemyV1Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-                Shoot(0, aec.attack1, false, maxtimeDelayAttack);
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 if (!canmove)
                     return;
 
@@ -93,7 +93,7 @@ public class EnemyV1Controller : EnemyBase
         }
     }
 
-
+    GameObject bullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -102,9 +102,13 @@ public class EnemyV1Controller : EnemyBase
         {
             if (!incam)
                 return;
-            GameObject bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
+            bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
+            var bulletScript = bullet.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
+            bulletScript.SetDir(attackrank);
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.transform.eulerAngles = new Vector3(0, 0, 150);
+            Debug.LogError(bullet.transform.eulerAngles.z);
             bullet.SetActive(true);
         }
     }

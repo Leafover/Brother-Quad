@@ -15,7 +15,7 @@ public class EnemyV2Controller : EnemyBase
     public override void Init()
     {
         base.Init();
-        currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
+        currentPos = Random.Range(0, CameraController.instance.posEnemyV2.Count);
         randomCombo = Random.Range(2, 4);
         if (!EnemyManager.instance.enemyv2s.Contains(this))
         {
@@ -55,7 +55,7 @@ public class EnemyV2Controller : EnemyBase
         {
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
-                transform.position = Vector2.MoveTowards(transform.position,CameraController.instance.posEnemyV2[currentPos].position, deltaTime * speed);
+                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posEnemyV2[currentPos].position, deltaTime * speed);
                 CheckDirFollowPlayer(CameraController.instance.posEnemyV2[currentPos].position.x);
                 if (transform.position.x == CameraController.instance.posEnemyV2[currentPos].position.x && transform.position.y == CameraController.instance.posEnemyV2[currentPos].position.y)
                 {
@@ -68,7 +68,7 @@ public class EnemyV2Controller : EnemyBase
                 }
                 break;
             case EnemyState.attack:
-                Attack(1, aec.attack1, false);
+                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 break;
         }
     }
@@ -81,6 +81,9 @@ public class EnemyV2Controller : EnemyBase
             if (!incam)
                 return;
             g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
+            var bulletScript = g.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
+            bulletScript.SetTimeExist(bulletimeexist);
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.transform.rotation = Quaternion.identity;
             g.transform.rotation = gunRotation.rotation;
@@ -98,7 +101,7 @@ public class EnemyV2Controller : EnemyBase
                 combo = 0;
                 enemyState = EnemyState.run;
                 randomCombo = Random.Range(2, 4);
-             //   Debug.LogError("re turn run");
+                //   Debug.LogError("re turn run");
             }
         }
         //else if (trackEntry.Animation.Name.Equals(aec.die.name))

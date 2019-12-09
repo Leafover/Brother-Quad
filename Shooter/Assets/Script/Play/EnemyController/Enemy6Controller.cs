@@ -69,7 +69,7 @@ public class Enemy6Controller : EnemyBase
                 break;
             case EnemyState.attack:
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                Shoot(0, aec.attack1, false, maxtimeDelayAttack);
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 targetPos.position = GetTarget(false);
                 break;
         }
@@ -80,6 +80,9 @@ public class Enemy6Controller : EnemyBase
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
+
+    BulletEnemy bulletScript;
+
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -88,7 +91,11 @@ public class Enemy6Controller : EnemyBase
             if (!incam)
                 return;
 
+            
+
             bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
+            bulletScript = bullet.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -98,6 +105,8 @@ public class Enemy6Controller : EnemyBase
 
 
             bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
+            bulletScript = bullet.GetComponent<BulletEnemy>();
+            bulletScript.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);

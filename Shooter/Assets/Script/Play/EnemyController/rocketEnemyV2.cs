@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rocketEnemyV2 : BulletEnemy
 {
+    WaitForSeconds wait;
     public Transform target;
     float turning;
     public override void Init(int type)
@@ -13,18 +14,21 @@ public class rocketEnemyV2 : BulletEnemy
     }
     private void OnEnable()
     {
+
+        if (wait == null)
+            wait = new WaitForSeconds(0.5f);
         Init(2);
     }
 
     IEnumerator ActiveTarget()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return wait;
         target = PlayerController.instance.GetTransformPlayer();
         StartCoroutine(NoneActiveTarget());
     }
     IEnumerator NoneActiveTarget()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(timeExist);
         target = null;
     }
     private void Update()
@@ -33,9 +37,13 @@ public class rocketEnemyV2 : BulletEnemy
             return;
         RotateToTarget();
     }
+    Vector3 direction;
     void RotateToTarget()
     {
-        Vector3 direction = new Vector3(GetTransform().position.x - target.position.x, GetTransform().position.y - target.position.y - 0.5f, 0f);
+        direction.x = GetTransform().position.x - target.position.x;
+        direction.y = GetTransform().position.y - target.position.y - 0.5f;
+        direction.z = 0;
+
         var rota = Quaternion.LookRotation(direction, Vector3.forward);
         rota.x = 0f;
         rota.y = 0f;

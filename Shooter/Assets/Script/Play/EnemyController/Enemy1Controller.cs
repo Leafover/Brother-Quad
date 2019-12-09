@@ -50,13 +50,13 @@ public class Enemy1Controller : EnemyBase
                     if (detectPlayer.collider.gameObject.layer == 13)
                     {
                         enemyState = EnemyState.attack;
-                        //     Debug.LogError("zo day");
+                      //     Debug.LogError("zo day:" + detectPlayer.collider.name);
                     }
                     else
                     {
                         PlayAnim(0, aec.idle, true);
                         CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                        //  Debug.LogError("-----zo day");
+                   //    Debug.LogError("-----zo day:"+ detectPlayer.collider.name);
                     }
                 }
                 break;
@@ -90,7 +90,9 @@ public class Enemy1Controller : EnemyBase
                     {
                         PlayAnim(0, aec.run, true);
                         speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                        rid.velocity = new Vector2(speedMove, rid.velocity.y);
+                        moveTemp.x = speedMove;
+                        moveTemp.y = rid.velocity.y;
+                        rid.velocity = moveTemp;
                     }
                 }
 
@@ -103,14 +105,14 @@ public class Enemy1Controller : EnemyBase
                     PlayAnim(0, aec.idle, true);
                 }
                 if (combo != randomCombo && combo >= 0)
-                    Attack(0, aec.attack1, false);
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 else if (combo == randomCombo && combo > 0)
-                    Attack(0, aec.attack2, false);
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack1);
                 break;
         }
 
     }
-
+    Vector2 moveTemp;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);

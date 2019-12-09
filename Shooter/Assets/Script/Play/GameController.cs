@@ -215,7 +215,7 @@ public class GameController : MonoBehaviour
     //}
     IEnumerator delayDisplayFinish()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         uiPanel.DisplayFinish();
     }
     [HideInInspector]
@@ -223,7 +223,8 @@ public class GameController : MonoBehaviour
     public void DoneMission(bool _win)
     {
         PlayerController.instance.rid.velocity = Vector2.zero;
-        PlayerController.instance.AnimWin();
+        if (win)
+            PlayerController.instance.AnimWin();
         gameState = GameState.gameover;
         win = _win;
     }
