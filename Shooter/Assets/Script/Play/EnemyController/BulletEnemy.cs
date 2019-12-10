@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using Spine;
+
 public class BulletEnemy : MonoBehaviour
 {
     public EnemyBase myEnemy;
-   // [HideInInspector]
+    // [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);
     [HideInInspector]
     public Vector2 dir1 = new Vector2(-1, 0);
     public Rigidbody2D rid;
-    public float speed, damage,timeExist;
+    public float speed, damage, timeExist;
     System.Action hit;
     Vector2 myTransform;
     public SkeletonAnimation skelatonAnim;
 
-    public void AddProperties(float _damage,float _speed)
+    public void AddProperties(float _damage, float _speed)
     {
         damage = _damage;
         speed = _speed;
@@ -24,7 +26,7 @@ public class BulletEnemy : MonoBehaviour
     {
         dir.x = -1 * _attackrank;
         dir.y = 1 * speed;
-       // Debug.LogError("dir:" + dir);
+        // Debug.LogError("dir:" + dir);
     }
     public void SetGravity(float _gravity)
     {
@@ -88,6 +90,12 @@ public class BulletEnemy : MonoBehaviour
     public virtual void StartEvent()
     {
         hit += Hit;
+        //if (/*skelatonAnim != null && skelatonAnim.AnimationState != null*/GameController.instance != null)
+        //{
+        //    //  skelatonAnim.AnimationState.Event -= Event;
+        //    skelatonAnim.AnimationState.Complete += Complete;
+        //}
+
     }
     public void BeginDisplay(Vector2 _dir, EnemyBase _myEnemy)
     {
@@ -99,6 +107,12 @@ public class BulletEnemy : MonoBehaviour
         hit -= Hit;
         rid.velocity = Vector2.zero;
         transform.rotation = Quaternion.identity;
+
+        //if (skelatonAnim != null)
+        //{
+        //  //  skelatonAnim.AnimationState.Event -= Event;
+        //    skelatonAnim.AnimationState.Complete -= Complete;
+        //}
     }
 
     public virtual void Hit()
@@ -117,4 +131,27 @@ public class BulletEnemy : MonoBehaviour
                 break;
         }
     }
+
+
+
+    //private void Event(TrackEntry trackEntry, Spine.Event e)
+    //{
+    //    OnEvent(trackEntry, e);
+    //}
+
+    //private void Complete(TrackEntry trackEntry)
+    //{
+    //    OnComplete(trackEntry);
+    //}
+
+    //protected virtual void OnEvent(TrackEntry trackEntry, Spine.Event e)
+    //{
+
+    //}
+
+    //protected virtual void OnComplete(TrackEntry trackEntry)
+    //{
+
+
+    //}
 }
