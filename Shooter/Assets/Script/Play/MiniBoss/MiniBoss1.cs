@@ -69,17 +69,22 @@ public class MiniBoss1 : EnemyBase
     GameObject g;
     BulletEnemy bulletScript;
 
+    int randomSlot;
+
     void ShootRocket()
     {
-        for(int i = 0; i < 3; i ++)
-        {
+        //for(int i = 0; i < 3; i ++)
+        //{
+        randomSlot = Random.Range(0, 3);
+
+
             g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
             bulletScript = g.GetComponent<BulletEnemy>();
             bulletScript.AddProperties(damage1, bulletspeed1);
             bulletScript.SetTimeExist(bulletimeexist);
 
 
-            switch (i)
+            switch (randomSlot)
             {
                 case 0:
                     g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
@@ -96,7 +101,7 @@ public class MiniBoss1 : EnemyBase
             }
 
             g.SetActive(true);
-        }
+      //  }
     }
 
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
