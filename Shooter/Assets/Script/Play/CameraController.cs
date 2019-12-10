@@ -5,7 +5,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject nextPointCheck;
+    public SpriteRenderer nextPointCheck;
     public static CameraController instance;
     public List<Transform> posEnemyV2, posMiniBoss1;
     public List<GameObject> bouders;
@@ -57,6 +57,7 @@ public class CameraController : MonoBehaviour
         else
         {
             nextPointCheck.gameObject.SetActive(true);
+            nextPointCheck.enabled = false;
             setBoudariesLeft = true;
             GameController.instance.waitForWin = true;
         }
@@ -85,11 +86,11 @@ public class CameraController : MonoBehaviour
 
         if (!setBoudariesLeft)
         {
-            if (nextPointCheck.activeSelf)
+            if (nextPointCheck.gameObject.activeSelf)
             {
                 if (Camera.main.transform.position.x - currentRightBoudary >= 1f)
                 {
-                    nextPointCheck.SetActive(false);
+                    nextPointCheck.gameObject.SetActive(false);
                     setBoudariesLeft = true;
                     //   Debug.LogError("--------------active again");
                 }

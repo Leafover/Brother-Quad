@@ -129,6 +129,7 @@ public class Enemy6Controller : EnemyBase
 
             var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
             _enemy5Script.jumpOut = true;
+            _enemy5Script.takeDamageBox.enabled = false;
             _enemy5Script.Init();
 
 

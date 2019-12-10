@@ -26,6 +26,13 @@ public class BulletEnemy2 : BulletEnemy
         if (gameObject.active)
             StartCoroutine(delayAddForce());
     }
+    public override void Hit()
+    {
+        base.Hit();
+        GameObject g = ObjectPoolerManager.Instance.explobulletenemy2Pooler.GetPooledObject();
+        g.transform.position = gameObject.transform.position;
+        g.SetActive(true);
+    }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
 

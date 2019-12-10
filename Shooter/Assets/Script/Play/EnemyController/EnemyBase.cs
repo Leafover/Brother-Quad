@@ -167,6 +167,8 @@ public class EnemyBase : MonoBehaviour
         acOnUpdate -= OnUpdate;
         if (GameController.instance != null)
             GameController.instance.RemoveTarget(this);
+        if (takeDamageBox != null)
+            takeDamageBox.enabled = false;
     }
     public virtual void Start()
     {
