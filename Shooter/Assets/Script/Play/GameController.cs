@@ -18,7 +18,7 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
-
+    public int countStar;
     public bool win;
 
     public UIPanel uiPanel;
@@ -41,6 +41,8 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
 
+
+    System.DateTime startTime, endTime;
 
     private void Awake()
     {
@@ -65,6 +67,8 @@ public class GameController : MonoBehaviour
         Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
+
+        startTime = System.DateTime.Now;
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
@@ -124,6 +128,7 @@ public class GameController : MonoBehaviour
         float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * 50));
         return speedMovetemp;
     }
+    Vector3 dustLeft = new Vector3(-180, -90, 0), dustRight = new Vector3(-180, 90, 0);
     public void OnMove(Vector2 axis)
     {
 
@@ -134,8 +139,11 @@ public class GameController : MonoBehaviour
         {
             PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
 
-            if (!PlayerController.instance.dust.activeSelf && PlayerController.instance.rid.velocity.x == 0)
-                PlayerController.instance.dust.SetActive(true);
+            if (!PlayerController.instance.dustrun.activeSelf && PlayerController.instance.rid.velocity.x == 0)
+            {
+                PlayerController.instance.dustrun.transform.localEulerAngles = h > 0 ? dustRight : dustLeft;
+                PlayerController.instance.dustrun.SetActive(true);
+            }
 
             PlayerController.instance.dirMove = h > 0 ? false : true;
             if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
@@ -229,8 +237,22 @@ public class GameController : MonoBehaviour
         PlayerController.instance.rid.velocity = Vector2.zero;
         if (_win)
         {
+            if (countStar == 0)
+                countStar = 1;
+
+            if (PlayerController.instance.health >= PlayerController.instance.maxHealth / 2)
+            {
+                countStar++;
+            }
+            if ((endTime - startTime).TotalSeconds <= 120)
+            {
+                countStar++;
+            }
+
+
+            uiPanel.DisplayStar(countStar);
             PlayerController.instance.AnimWin();
-          //  Debug.LogError("wiiiiiiiiiinn");
+            //  Debug.LogError("wiiiiiiiiiinn");
         }
         gameState = GameState.gameover;
         win = _win;

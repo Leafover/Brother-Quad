@@ -22,6 +22,7 @@ public class DataController : MonoBehaviour
 {
     public List<AllDataEnemy> allDataEnemy = new List<AllDataEnemy>();
     public static DataController instance;
+    string[] nameDataText = { "enemy0", "enemy1", "enemy2", "enemy3", "enemy4", "enemy5", "enemy6", "enemyv1", "enemyv2", "enemyv3", "enemymn1", "enemyb1" };
 
     private void Awake()
     {
@@ -33,18 +34,23 @@ public class DataController : MonoBehaviour
 
         if (!loaddatabegin)
         {
-            LoadData("enemy0", 0);
-            LoadData("enemy1", 1);
-            LoadData("enemy2", 2);
-            LoadData("enemy3", 3);
-            LoadData("enemy4", 4);
-            LoadData("enemy5", 5);
-            LoadData("enemy6", 6);
-            LoadData("enemyv1", 7);
-            LoadData("enemyv2", 8);
-            LoadData("enemyv3", 9);
-            LoadData("enemymn1", 10);
-            LoadData("enemyb1", 11);
+            //LoadData("enemy0", 0);
+            //LoadData("enemy1", 1);
+            //LoadData("enemy2", 2);
+            //LoadData("enemy3", 3);
+            //LoadData("enemy4", 4);
+            //LoadData("enemy5", 5);
+            //LoadData("enemy6", 6);
+            //LoadData("enemyv1", 7);
+            //LoadData("enemyv2", 8);
+            //LoadData("enemyv3", 9);
+            //LoadData("enemymn1", 10);
+            //LoadData("enemyb1", 11);
+
+            for(int i = 0; i < nameDataText.Length; i ++)
+            {
+                LoadData(nameDataText[i], i);
+            }
 
             loaddatabegin = true;
         }

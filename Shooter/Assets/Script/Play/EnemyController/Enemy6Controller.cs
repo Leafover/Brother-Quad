@@ -60,7 +60,7 @@ public class Enemy6Controller : EnemyBase
         {
             case EnemyState.run:
                 rid.velocity = new Vector2(speedMove, rid.velocity.y);
-                if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 5)
+                if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 6.5f)
                 {
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;

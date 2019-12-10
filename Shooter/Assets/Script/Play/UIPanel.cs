@@ -8,9 +8,20 @@ public class UIPanel : MonoBehaviour
     public GameObject ResetBtn, NextBtn;
     public Image grenadeFillAmout;
     public Text levelText;
+    public GameObject starbouder;
+    public List<GameObject> starCount;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
+    }
+    public void DisplayStar(int total)
+    {
+        for(int i = 0; i < total; i ++)
+        {
+            starCount[i].SetActive(true);
+        }
+
+        starbouder.SetActive(true);
     }
     public void BtnBack()
     {

@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
     WaitForSeconds waitReload;
-    public GameObject dust;
-
-    public Collider2D colliderStand/*,currentStand, colliderwaitmedown*/;
+    public GameObject dustdown,dustrun;
+    [HideInInspector]
+    public Collider2D colliderStand;
+   // [HideInInspector]
+    public GameObject currentStand;
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
@@ -103,8 +105,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         colliderStand = _collider;
-        if (!dust.activeSelf)
-            dust.SetActive(true);
     }
     public void TryJump()
     {
@@ -514,11 +514,10 @@ public class PlayerController : MonoBehaviour
     }
     public void AnimWin()
     {
-
+        skeletonAnimation.ClearState();
         if (currentAnim == apc.winAnim)
             return;
-        //  skeletonAnimation.ClearState();+
-        skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
+       // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
         skeletonAnimation.AnimationState.SetAnimation(1, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
@@ -663,12 +662,12 @@ public class PlayerController : MonoBehaviour
                 if (GameController.instance.waitForWin)
                     GameController.instance.DoneMission(true);
                 break;
-            case 20:
-                transform.position = new Vector2(transform.position.x, transform.position.y + 2);
-                rid.velocity = Vector2.zero;
-                rid.gravityScale = 0.3f;
+            //case 20:
+            //    transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+            //    rid.velocity = Vector2.zero;
+            //    rid.gravityScale = 0.3f;
 
-                break;
+            //    break;
         }
     }
 

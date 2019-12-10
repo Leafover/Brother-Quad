@@ -7,7 +7,7 @@ public class Barrier : MonoBehaviour
     public float health;
     public enum TYPE
     {
-        normal,
+        smoke,
         wood,
         explo
     }
@@ -21,12 +21,18 @@ public class Barrier : MonoBehaviour
             switch(types)
             {
                 case TYPE.explo:
-                    explo = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
-                    explo.transform.position = transform.position;
-                    explo.SetActive(true);
-                    SoundController.instance.PlaySound(soundGame.exploGrenade);
+                    explo = ObjectPoolerManager.Instance.explofuel1Pooler.GetPooledObject();
+                    break;
+                case TYPE.smoke:
+                    explo = ObjectPoolerManager.Instance.explofuel2Pooler.GetPooledObject();
+                    break;
+                case TYPE.wood:
+                    explo = ObjectPoolerManager.Instance.explowoodPooler.GetPooledObject();
                     break;
             }
+            explo.transform.position = transform.position;
+            explo.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.exploGrenade);
             gameObject.SetActive(false);
         }
     }

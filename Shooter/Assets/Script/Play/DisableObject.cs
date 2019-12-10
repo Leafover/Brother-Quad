@@ -7,6 +7,13 @@ public class DisableObject : MonoBehaviour
     public float time = 2;
     WaitForSeconds waitforsecond;
     public BulletEnemy bulletEnemy;
+    public enum TypeExplo
+    {
+        normal,
+        exploE2
+
+    }
+    public TypeExplo typeExplo;
     private void OnEnable()
     {
         if (waitforsecond == null)
@@ -20,5 +27,11 @@ public class DisableObject : MonoBehaviour
         gameObject.SetActive(false);
         if (bulletEnemy)
             bulletEnemy.AutoRemoveMe();
+        if(typeExplo == TypeExplo.exploE2)
+        {
+            GameObject g = ObjectPoolerManager.Instance.explobulletenemy2Pooler.GetPooledObject();
+            g.transform.position = gameObject.transform.position;
+            g.SetActive(true);
+        }
     }
 }
