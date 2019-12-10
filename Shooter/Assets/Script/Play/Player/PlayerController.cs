@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
 {
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
-    WaitForSeconds waitReload;
-    public GameObject dustdown,dustrun;
+
+    public GameObject dustdown, dustrun;
     [HideInInspector]
     public Collider2D colliderStand;
-   // [HideInInspector]
+    // [HideInInspector]
     public GameObject currentStand;
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
@@ -192,7 +192,6 @@ public class PlayerController : MonoBehaviour
         speedmove = 0;
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         numberBullet = maxNumberBullet;
-        waitReload = new WaitForSeconds(1f);
 
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
@@ -319,7 +318,21 @@ public class PlayerController : MonoBehaviour
             timePreviousAttack -= deltaTime;
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
+
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
+        if (!reload)
+            return;
+        if (timeReload > 0)
+        {
+            timeReload -= deltaTime;
+            if(timeReload <= 0)
+            {
+                // skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
+                skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+                numberBullet = maxNumberBullet;
+                reload = false;
+            }
+        }
     }
     Vector2 posTemp;
     void LockPlayer()
@@ -376,11 +389,11 @@ public class PlayerController : MonoBehaviour
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-            if (reload)
-            {
-                reload = false;
-                return;
-            }
+            //if (reload)
+            //{
+            //    reload = false;
+            //    return;
+            //}
             bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
             dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -395,7 +408,7 @@ public class PlayerController : MonoBehaviour
             {
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
-                StartCoroutine(Reload());
+                timeReload = 1;
             }
 
         }
@@ -512,13 +525,31 @@ public class PlayerController : MonoBehaviour
             SetBox(sizeBox, offsetBox);
         }
     }
+ //   int randomWin;
     public void AnimWin()
     {
-        skeletonAnimation.ClearState();
+        //   skeletonAnimation.ClearState();
+        //randomWin = UnityEngine.Random.Range(0, 2);
+        //Debug.Log(randomWin);
+        //if (randomWin == 0)
+        //{
+        //    if (currentAnim == apc.winAnim)
+        //        return;
+        //    // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
+        //    skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
+        //    currentAnim = apc.winAnim;
+        //}
+        //else
+        //{
+        //    if (currentAnim == apc.winAnim2)
+        //        return;
+        //    // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
+        //    skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim2, true);
+        //    currentAnim = apc.winAnim2;
+        //}
         if (currentAnim == apc.winAnim)
             return;
-       // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
-        skeletonAnimation.AnimationState.SetAnimation(1, apc.winAnim, true);
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
     }
@@ -557,12 +588,8 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
 
     }
-    IEnumerator Reload()
-    {
-        yield return waitReload;
-        skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
-        numberBullet = maxNumberBullet;
-    }
+    float timeReload;
+
 
     public void ChangeKnife()
     {
@@ -599,7 +626,7 @@ public class PlayerController : MonoBehaviour
                 var from = (Vector2)transform.position;
                 var to = enemy.Origin();
                 var d = Vector2.Distance(from, to);
-              //  Debug.LogError(d + ":" + dMin);
+                //  Debug.LogError(d + ":" + dMin);
                 if (d < dMin)
                 {
                     dMin = d;
@@ -662,12 +689,12 @@ public class PlayerController : MonoBehaviour
                 if (GameController.instance.waitForWin)
                     GameController.instance.DoneMission(true);
                 break;
-            //case 20:
-            //    transform.position = new Vector2(transform.position.x, transform.position.y + 2);
-            //    rid.velocity = Vector2.zero;
-            //    rid.gravityScale = 0.3f;
+                //case 20:
+                //    transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+                //    rid.velocity = Vector2.zero;
+                //    rid.gravityScale = 0.3f;
 
-            //    break;
+                //    break;
         }
     }
 

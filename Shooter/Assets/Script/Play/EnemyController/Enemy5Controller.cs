@@ -91,12 +91,11 @@ public class Enemy5Controller : EnemyBase
                     var tempX = transform.position.x;
                     if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
                     {
-                        //    Debug.Log("zp dau à?");
-                        PlayAnim(0, aec.idle, true);
                         if (speedMove != 0)
                         {
                             speedMove = 0;
                             rid.velocity = Vector2.zero;
+                            PlayAnim(0, aec.idle, true);
                         }
                     }
                     else

@@ -116,7 +116,7 @@ public class Enemy2Controller : EnemyBase
              bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             var _bulletScript = bullet.GetComponent<BulletEnemy>();
-            _bulletScript.AddProperties(damage1, 3.5f);
+            _bulletScript.AddProperties(damage1, 3f);
             switch (FlipX)
             {                
                 case true:

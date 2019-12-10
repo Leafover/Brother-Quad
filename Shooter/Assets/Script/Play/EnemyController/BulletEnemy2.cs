@@ -9,7 +9,7 @@ public class BulletEnemy2 : BulletEnemy
     public override void Init(int type)
     {
         base.Init(type);
-        rid.gravityScale = 1.3f;
+        rid.gravityScale = 1f;
     }
     private void OnEnable()
     {
@@ -47,7 +47,7 @@ public class BulletEnemy2 : BulletEnemy
     {
         yield return wait;
         rid.velocity = (dir * speed);
-        rid.gravityScale = 1.3f;
+        rid.gravityScale = 1f;
     }
     public override void OnDisable()
     {

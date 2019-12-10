@@ -41,7 +41,7 @@ public class rocketEnemyV2 : BulletEnemy
     void RotateToTarget()
     {
         direction.x = GetTransform().position.x - target.position.x;
-        direction.y = GetTransform().position.y - target.position.y - 0.5f;
+        direction.y = GetTransform().position.y - target.position.y /*- 0.5f*/;
         direction.z = 0;
 
         var rota = Quaternion.LookRotation(direction, Vector3.forward);
