@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
             return;
         health -= damage;
         lineBlood.Show(health, maxHealth);
-
+        StartCoroutine(BeAttackFill());
         if (health <= 0)
         {
             GameController.instance.DoneMission(false);
@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour
 
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
+
+        waitBeAttack = new WaitForSeconds(0.075f);
     }
     public void DetectGround()
     {
@@ -525,7 +527,25 @@ public class PlayerController : MonoBehaviour
             SetBox(sizeBox, offsetBox);
         }
     }
- //   int randomWin;
+    WaitForSeconds waitBeAttack;
+    //   int randomWin;
+    IEnumerator BeAttackFill()
+    {
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(Color.white);
+    }
+
     public void AnimWin()
     {
         //   skeletonAnimation.ClearState();
@@ -547,11 +567,18 @@ public class PlayerController : MonoBehaviour
         //    skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim2, true);
         //    currentAnim = apc.winAnim2;
         //}
+        skeletonAnimation.ClearState();
         if (currentAnim == apc.winAnim)
             return;
+        //   skeletonAnimation.AnimationState.SetEmptyAnimation(2, 0);
+        //targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+        //target = targetTemp;
+        //targetPos.position = targetTemp;
+
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
+
     }
     public void AnimIdle()
     {

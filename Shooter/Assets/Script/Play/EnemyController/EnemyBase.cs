@@ -398,6 +398,24 @@ public class EnemyBase : MonoBehaviour
         listMyBullet.Clear();
 
     }
+
+    IEnumerator BeAttackFill()
+    {
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
+        yield return new WaitForSeconds(0.075f);
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 0.5f));
+        yield return new WaitForSeconds(0.075f);
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
+        yield return new WaitForSeconds(0.075f);
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 0.5f));
+        yield return new WaitForSeconds(0.075f);
+
+        skeletonAnimation.skeleton.SetColor(Color.white);
+    }
+
     public virtual void TakeDamage(float damage)
     {
 
@@ -405,7 +423,6 @@ public class EnemyBase : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-
             Dead();
             //    Debug.LogError("dead");
         }
@@ -413,6 +430,20 @@ public class EnemyBase : MonoBehaviour
         {
             lineBlood.Show(currentHealth, health);
         }
+        //if(!isMachine)
+        //{
+        //    StartCoroutine(BeAttackFill());
+        //}
+        //else
+        //{
+        //    GameObject hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
+        //    hiteffect.transform.position = gameObject.transform.position;
+        //    hiteffect.SetActive(true);
+        //}
+
+        GameObject hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
+        hiteffect.transform.position = gameObject.transform.position;
+        hiteffect.SetActive(true);
 
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)

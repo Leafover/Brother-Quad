@@ -7,9 +7,10 @@ public class UIPanel : MonoBehaviour
     public GameObject finishPanel;
     public GameObject ResetBtn, NextBtn;
     public Image grenadeFillAmout;
-    public Text levelText;
+    public Text levelText,gameoverText;
     public GameObject starbouder;
     public List<GameObject> starCount;
+
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
@@ -43,11 +44,13 @@ public class UIPanel : MonoBehaviour
         {
             ResetBtn.SetActive(true);
             NextBtn.SetActive(true);
+            gameoverText.text = "WIN";
         }
         else
         {
             ResetBtn.SetActive(true);
             NextBtn.SetActive(false);
+            gameoverText.text = "DIE";
         }
         finishPanel.SetActive(true);
     }

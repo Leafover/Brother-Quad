@@ -53,6 +53,8 @@ public class CameraController : MonoBehaviour
             currentCamBoidaries++;
             nextPointCheck.gameObject.SetActive(true);
             currentRightBoudary = Camera.main.transform.position.x;
+            nextPointCheck.enabled = true;
+        //    Debug.LogError("active");
         }
         else
         {
