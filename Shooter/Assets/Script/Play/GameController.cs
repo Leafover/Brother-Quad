@@ -261,7 +261,7 @@ public class GameController : MonoBehaviour
 
           //  uiPanel.DisplayStar(countStar);
             PlayerController.instance.AnimWin();
-            Debug.Log("------------------ :" + countStar);
+         //   Debug.Log("------------------ :" + countStar);
         }
 
     }
