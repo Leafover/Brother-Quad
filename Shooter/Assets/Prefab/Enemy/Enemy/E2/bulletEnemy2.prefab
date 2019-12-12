@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c9d18ecbfe6da41a75cfd5220be3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrenade: 0
   myEnemy: {fileID: 0}
   dir: {x: -1, y: 1}
   dir1: {x: -1, y: 0}
@@ -122,6 +123,7 @@ GameObject:
   - component: {fileID: 8835289861601970213}
   - component: {fileID: 1241379966112685941}
   - component: {fileID: 1723067765486503864}
+  - component: {fileID: 4300922462896965475}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -224,3 +226,16 @@ MonoBehaviour:
   _animationName: Dan Enemy E2 tron
   loop: 1
   timeScale: 1
+--- !u!114 &4300922462896965475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872500338323302840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192f7a9596a341e4888361eac07b0cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myBullet: {fileID: 444467097}

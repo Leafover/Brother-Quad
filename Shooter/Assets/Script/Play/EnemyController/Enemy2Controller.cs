@@ -15,10 +15,10 @@ public class Enemy2Controller : EnemyBase
         posRay.y = transform.position.y;
         return posRay;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(GetposRay(), radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(GetposRay(), radius);
+    //}
     public override void Start()
     {
         base.Start();

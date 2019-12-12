@@ -29,11 +29,23 @@ public class Grenade : MonoBehaviour
             //   Debug.Log("2");
         }
     }
+    GameObject effectGrenade;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 10 || collision.gameObject.layer == 19 || collision.gameObject.layer == 21 || collision.gameObject.layer == 23)
+        if (/*collision.gameObject.layer == 8 ||*/ collision.gameObject.layer == 10 || collision.gameObject.layer == 19/* || collision.gameObject.layer == 21*/ /*|| collision.gameObject.layer == 23*/)
         {
-            GameObject effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
+             effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
+            effectGrenade.transform.position = gameObject.transform.position;
+            effectGrenade.SetActive(true);
+            gameObject.SetActive(false);
+            SoundController.instance.PlaySound(soundGame.exploGrenade);
+        }
+        else if(collision.gameObject.layer == 8 || collision.gameObject.layer == 21 || collision.gameObject.layer == 23)
+        {
+            if (transform.position.y <= collision.gameObject.transform.position.y)
+                return;
+
+            effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
             effectGrenade.transform.position = gameObject.transform.position;
             effectGrenade.SetActive(true);
             gameObject.SetActive(false);

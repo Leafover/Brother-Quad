@@ -84,6 +84,8 @@ public class EnemyV2Controller : EnemyBase
             var bulletScript = g.GetComponent<BulletEnemy>();
             bulletScript.AddProperties(damage1, bulletspeed1);
             bulletScript.SetTimeExist(bulletimeexist);
+            bulletScript.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletScript);
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.transform.rotation = Quaternion.identity;
             g.transform.rotation = gunRotation.rotation;

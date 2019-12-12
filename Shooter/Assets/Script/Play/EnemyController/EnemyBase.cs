@@ -13,7 +13,7 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public bool jumpOut = false;
     public Transform leftFace, rightFace;
-    [HideInInspector]
+  //  [HideInInspector]
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
     public bool isBoss;

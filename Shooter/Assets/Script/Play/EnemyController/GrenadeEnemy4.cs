@@ -28,12 +28,18 @@ public class GrenadeEnemy4 : BulletEnemy
         switch (collision.gameObject.layer)
         {
             case 8:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
                 Hit();
                 break;
             case 21:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
                 Hit();
                 break;
             case 23:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
                 Hit();
                 break;
         }

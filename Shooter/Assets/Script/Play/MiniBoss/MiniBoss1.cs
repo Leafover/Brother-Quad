@@ -82,7 +82,7 @@ public class MiniBoss1 : EnemyBase
         bulletScript = g.GetComponent<BulletEnemy>();
         bulletScript.AddProperties(damage1, bulletspeed1);
         bulletScript.SetTimeExist(bulletimeexist);
-
+        bulletScript.BeginDisplay(Vector2.zero,this);
         SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         switch (randomSlot)
         {
@@ -99,7 +99,7 @@ public class MiniBoss1 : EnemyBase
                 g.transform.rotation = gunRotation2.rotation;
                 break;
         }
-
+        listMyBullet.Add(bulletScript);
         g.SetActive(true);
         //  }
     }

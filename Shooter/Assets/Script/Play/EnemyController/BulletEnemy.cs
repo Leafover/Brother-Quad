@@ -6,6 +6,7 @@ using Spine;
 
 public class BulletEnemy : MonoBehaviour
 {
+    public bool isGrenade;
     public EnemyBase myEnemy;
     // [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);

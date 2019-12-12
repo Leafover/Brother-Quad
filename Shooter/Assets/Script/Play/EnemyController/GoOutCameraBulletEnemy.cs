@@ -7,6 +7,9 @@ public class GoOutCameraBulletEnemy : MonoBehaviour
     public BulletEnemy myBullet;
     public virtual void OnBecameInvisible()
     {
-       myBullet.gameObject.SetActive(false);
+        if (!myBullet.isGrenade)
+            myBullet.gameObject.SetActive(false);
+        if (myBullet.myEnemy != null)
+            myBullet.AutoRemoveMe();
     }
 }

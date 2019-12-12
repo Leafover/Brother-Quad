@@ -106,9 +106,12 @@ public class EnemyV1Controller : EnemyBase
             var bulletScript = bullet.GetComponent<BulletEnemy>();
             bulletScript.AddProperties(damage1, bulletspeed1);
             bulletScript.SetDir(attackrank);
+            bulletScript.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletScript);
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.transform.eulerAngles = new Vector3(0, 0, 150);
-           // Debug.LogError(bullet.transform.eulerAngles.z);
+
+            // Debug.LogError(bullet.transform.eulerAngles.z);
             bullet.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundv1attack);
         }
