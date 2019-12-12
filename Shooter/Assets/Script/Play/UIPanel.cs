@@ -10,7 +10,7 @@ public class UIPanel : MonoBehaviour
     public Text levelText,gameoverText;
     public GameObject starbouder;
     public List<GameObject> starCount;
-
+   public Animator animGamOver;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
@@ -38,25 +38,52 @@ public class UIPanel : MonoBehaviour
             DataParam.indexMap++;
         Application.LoadLevel(Application.loadedLevel);
     }
-    public void DisplayFinish()
+    public void DisplayFinish(int _countstar)
     {
+
         if (finishPanel.activeSelf)
             return;
+        finishPanel.SetActive(true);
         if (GameController.instance.win)
         {
+            starbouder.SetActive(true);
             ResetBtn.SetActive(true);
             NextBtn.SetActive(true);
             gameoverText.text = "WIN";
-            SoundController.instance.PlaySound(soundGame.soundwin);
+            //   SoundController.instance.PlaySound(soundGame.soundwin);
+            switch (_countstar)
+            {
+                case 1:
 
+                    animGamOver.Play("GameOver1star");
+                 //   Debug.LogError("zo 1");
+                    break;
+                case 2:
+
+                    animGamOver.Play("Gameover2star");
+                  //  Debug.LogError("zo 2");
+                    break;
+                case 3:
+
+                    animGamOver.Play("GameOver3star");
+                  //  Debug.LogError("zo 3");
+                    break;
+            }
+            //Debug.Log("count star win:" + _countstar);
+            //animGamOver.SetInteger("star", _countstar);
         }
         else
         {
             ResetBtn.SetActive(true);
             NextBtn.SetActive(false);
             gameoverText.text = "DIE";
+          //  Debug.Log("count star die:" + _countstar);
+            animGamOver.Play("GameOverDie");
             SoundController.instance.PlaySound(soundGame.soundlose);
         }
-        finishPanel.SetActive(true);
+
+
+
+
     }
 }

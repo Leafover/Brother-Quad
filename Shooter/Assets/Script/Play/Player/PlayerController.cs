@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour
                 AnimSit();
                 break;
             case PlayerState.Jump:
-                //  AnimJump();
+                  AnimJump();
                 if (isGround && rid.velocity.y <= 0)
                 {
                     if (!GameController.instance.joystickMove.GetJoystickState())

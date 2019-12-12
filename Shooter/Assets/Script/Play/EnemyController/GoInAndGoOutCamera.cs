@@ -11,15 +11,15 @@ public class GoInAndGoOutCamera : MonoBehaviour
         if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
             return;
         myEnemyBase.incam = false;
-        if (myEnemyBase.canoutcam)
-        {
-            if (Camera.main == null)
-                return;
+        //if (myEnemyBase.canoutcam)
+        //{
+        //    if (Camera.main == null)
+        //        return;
 
-            if (myEnemyBase.transform.position.x < Camera.main.transform.position.x)
-                myEnemyBase.gameObject.SetActive(false);
+        //    if (myEnemyBase.transform.position.x < Camera.main.transform.position.x)
+        //        myEnemyBase.gameObject.SetActive(false);
 
-        }
+        //}
     }
     public virtual void OnBecameVisible()
     {

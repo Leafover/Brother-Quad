@@ -48,6 +48,7 @@ public class Enemy5Controller : EnemyBase
             return;
         if (jumpOut)
             return;
+
         switch (enemyState)
         {
             case EnemyState.idle:

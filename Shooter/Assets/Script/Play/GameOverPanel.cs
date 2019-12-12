@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
 {
+
     public void EventDisplayStar(int i)
     {
         switch(i)
@@ -18,5 +19,9 @@ public class GameOverPanel : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundstar3);
                 break;
         }
+    }
+    public void WinSound()
+    {
+        SoundController.instance.PlaySound(soundGame.soundwin);
     }
 }

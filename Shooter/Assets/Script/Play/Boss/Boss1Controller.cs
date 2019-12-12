@@ -82,7 +82,7 @@ public class Boss1Controller : EnemyBase
                         if (move)
                         {
                             transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
-                            Debug.Log(posTemp.x);
+                           // Debug.Log(posTemp.x);
                             if (transform.position.x == posTemp.x)
                             {
                                 move = false;

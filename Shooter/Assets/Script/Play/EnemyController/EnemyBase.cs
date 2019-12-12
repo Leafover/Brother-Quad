@@ -352,6 +352,16 @@ public class EnemyBase : MonoBehaviour
                 Active();
             }
         }
+        else
+        {
+            if (!incam)
+            {
+                if (transform.position.x < CameraController.instance.NumericBoundaries.LeftBoundary)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
     }
     public void UpdateActionForEnemyManager(float deltaTime)
     {

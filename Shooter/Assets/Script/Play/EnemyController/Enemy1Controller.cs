@@ -37,6 +37,8 @@ public class Enemy1Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+
+
         switch (enemyState)
         {
             case EnemyState.idle:

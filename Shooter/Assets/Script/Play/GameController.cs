@@ -228,7 +228,7 @@ public class GameController : MonoBehaviour
     IEnumerator delayDisplayFinish()
     {
         yield return new WaitForSeconds(2f);
-        uiPanel.DisplayFinish();
+        uiPanel.DisplayFinish(countStar);
     }
     [HideInInspector]
     public bool waitForWin;
@@ -259,9 +259,9 @@ public class GameController : MonoBehaviour
             }
 
 
-            uiPanel.DisplayStar(countStar);
+          //  uiPanel.DisplayStar(countStar);
             PlayerController.instance.AnimWin();
-            //  Debug.LogError("wiiiiiiiiiinn");
+            Debug.Log("------------------ :" + countStar);
         }
 
     }
