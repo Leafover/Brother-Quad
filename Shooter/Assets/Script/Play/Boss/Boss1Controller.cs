@@ -195,7 +195,7 @@ public class Boss1Controller : EnemyBase
         bulletScript = bullet.GetComponent<BulletEnemy>();
         bulletScript.AddProperties(damage1, bulletspeed1);
         bulletScript.dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
-
+        SoundController.instance.PlaySound(soundGame.soundb1fire);
         //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -203,6 +203,7 @@ public class Boss1Controller : EnemyBase
 
         bullet.SetActive(true);
     }
+    int randomsoundchem;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -232,12 +233,21 @@ public class Boss1Controller : EnemyBase
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+
+            randomsoundchem = Random.Range(0, 2);
             combo++;
             if (!incam)
                 return;
             boxAttack2.gameObject.SetActive(true);
-
-
+            if(randomsoundchem == 0)
+            {
+                SoundController.instance.PlaySound(soundGame.soundb1chem1);
+            }
+            else
+            {
+                SoundController.instance.PlaySound(soundGame.soundb1chem2);
+            }
+            
 
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
@@ -256,6 +266,11 @@ public class Boss1Controller : EnemyBase
             if (!incam)
                 return;
             ShootBullet();
+        }
+
+        else if(trackEntry.Animation.Name.Equals(aec.run.name))
+        {
+            SoundController.instance.PlaySound(soundGame.soundb1move);
         }
     }
 

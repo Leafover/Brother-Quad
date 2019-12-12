@@ -235,6 +235,15 @@ public class GameController : MonoBehaviour
     public void DoneMission(bool _win)
     {
         PlayerController.instance.rid.velocity = Vector2.zero;
+        PlayerController.instance.box.enabled = false;
+        gameState = GameState.gameover;
+        win = _win;
+
+        if(!_win)
+        {
+            return;
+        }
+
         if (_win)
         {
             if (countStar == 0)
@@ -254,8 +263,7 @@ public class GameController : MonoBehaviour
             PlayerController.instance.AnimWin();
             //  Debug.LogError("wiiiiiiiiiinn");
         }
-        gameState = GameState.gameover;
-        win = _win;
+
     }
     private void Update()
     {

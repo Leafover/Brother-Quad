@@ -28,7 +28,7 @@ public class Enemy0Controller : EnemyBase
     {
         base.Active();
         PlayAnim(0, aec.run, true);
-
+        SoundController.instance.PlaySound(soundGame.sounde0move);
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -42,7 +42,7 @@ public class Enemy0Controller : EnemyBase
             return;
         CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
         distanceTravelled += speed * deltaTime;
-        transform.position = myPath.GetPointAtDistance(distanceTravelled,EndOfPathInstruction.Stop);
+        transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
         if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))
         {
             gameObject.SetActive(false);
@@ -71,20 +71,10 @@ public class Enemy0Controller : EnemyBase
             EnemyManager.instance.enemy0s.Remove(this);
         }
     }
-    //public override void Dead()
-    //{
-    //    base.Dead();
-    //    explo = ObjectPoolerManager.Instance.effectE0ExploPooler.GetPooledObject();
-    //    explo.transform.position = gameObject.transform.position;
-    //    explo.SetActive(true);
-    //    SoundController.instance.PlaySound(soundGame.exploGrenade);
-    //}
-    //protected override void OnComplete(TrackEntry trackEntry)
-    //{
-    //    base.OnComplete(trackEntry);
-    //    if (trackEntry.Animation.Name.Equals(aec.die.name))
-    //    {
-    //        gameObject.SetActive(false);
-    //    }
-    //}
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde0die);
+    }
 }

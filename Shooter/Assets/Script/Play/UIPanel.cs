@@ -40,17 +40,22 @@ public class UIPanel : MonoBehaviour
     }
     public void DisplayFinish()
     {
+        if (finishPanel.activeSelf)
+            return;
         if (GameController.instance.win)
         {
             ResetBtn.SetActive(true);
             NextBtn.SetActive(true);
             gameoverText.text = "WIN";
+            SoundController.instance.PlaySound(soundGame.soundwin);
+
         }
         else
         {
             ResetBtn.SetActive(true);
             NextBtn.SetActive(false);
             gameoverText.text = "DIE";
+            SoundController.instance.PlaySound(soundGame.soundlose);
         }
         finishPanel.SetActive(true);
     }

@@ -130,6 +130,13 @@ public class Enemy2Controller : EnemyBase
             bullet.SetActive(true);
         }
     }
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde2die);
+    }
+
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
@@ -138,7 +145,7 @@ public class Enemy2Controller : EnemyBase
             boxAttack1.gameObject.SetActive(false);
             PlayAnim(0, aec.idle, true);
         }
-        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             PlayAnim(0, aec.idle, true);
         }

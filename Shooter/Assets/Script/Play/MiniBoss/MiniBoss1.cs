@@ -15,7 +15,7 @@ public class MiniBoss1 : EnemyBase
     public override void Init()
     {
         base.Init();
-        currentPos = Random.Range(0,CameraController.instance.posEnemyV2.Count);
+        currentPos = Random.Range(0, CameraController.instance.posEnemyV2.Count);
         randomCombo = Random.Range(2, 4);
         if (!EnemyManager.instance.miniboss1s.Contains(this))
         {
@@ -52,17 +52,17 @@ public class MiniBoss1 : EnemyBase
         {
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
-                transform.position = Vector2.MoveTowards(transform.position,CameraController.instance.posMiniBoss1[currentPos].position, deltaTime * speed);
+                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posMiniBoss1[currentPos].position, deltaTime * speed);
                 CheckDirFollowPlayer(CameraController.instance.posMiniBoss1[currentPos].position.x);
                 if (transform.position.x == CameraController.instance.posMiniBoss1[currentPos].position.x && transform.position.y == CameraController.instance.posMiniBoss1[currentPos].position.y)
                 {
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
-                    currentPos = Random.Range(0,CameraController.instance.posMiniBoss1.Count);
+                    currentPos = Random.Range(0, CameraController.instance.posMiniBoss1.Count);
                 }
                 break;
             case EnemyState.attack:
-                Attack(1, aec.attack1, false,maxtimeDelayAttack1);
+                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 break;
         }
     }
@@ -78,30 +78,30 @@ public class MiniBoss1 : EnemyBase
         randomSlot = Random.Range(0, 3);
 
 
-            g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
-            bulletScript = g.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage1, bulletspeed1);
-            bulletScript.SetTimeExist(bulletimeexist);
+        g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+        bulletScript = g.GetComponent<BulletEnemy>();
+        bulletScript.AddProperties(damage1, bulletspeed1);
+        bulletScript.SetTimeExist(bulletimeexist);
 
+        SoundController.instance.PlaySound(soundGame.soundmissilewarning);
+        switch (randomSlot)
+        {
+            case 0:
+                g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                g.transform.rotation = gunRotation.rotation;
+                break;
+            case 1:
+                g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+                g.transform.rotation = gunRotation1.rotation;
+                break;
+            case 2:
+                g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+                g.transform.rotation = gunRotation2.rotation;
+                break;
+        }
 
-            switch (randomSlot)
-            {
-                case 0:
-                    g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-                    g.transform.rotation = gunRotation.rotation;
-                    break;
-                case 1:
-                    g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-                    g.transform.rotation = gunRotation1.rotation;
-                    break;
-                case 2:
-                    g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-                    g.transform.rotation = gunRotation2.rotation;
-                    break;
-            }
-
-            g.SetActive(true);
-      //  }
+        g.SetActive(true);
+        //  }
     }
 
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
@@ -120,7 +120,7 @@ public class MiniBoss1 : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-         //   Debug.Log("---------aec.attack1.name");
+            //   Debug.Log("---------aec.attack1.name");
             combo++;
             if (combo == randomCombo)
             {

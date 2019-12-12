@@ -154,7 +154,6 @@ public class Enemy5Controller : EnemyBase
             if (!GameController.instance.autoTarget.Contains(this))
                 GameController.instance.autoTarget.Add(this);
         }
-
     }
     public override void OnDisable()
     {
@@ -167,5 +166,13 @@ public class Enemy5Controller : EnemyBase
         {
             EnemyManager.instance.enemy5s.Remove(this);
         }
+    }
+
+
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde5die);
     }
 }

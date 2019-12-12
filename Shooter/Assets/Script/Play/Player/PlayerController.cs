@@ -9,6 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+    bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
 
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         lineBlood.Show(health, maxHealth);
         StartCoroutine(BeAttackFill());
+        SoundController.instance.PlaySound(soundGame.soundplayerhit);
         if (health <= 0)
         {
             GameController.instance.DoneMission(false);
@@ -142,16 +144,19 @@ public class PlayerController : MonoBehaviour
         if (timePreviousGrenade > 0)
             return;
         timePreviousGrenade = timedelayGrenade;
+
         //    Debug.Log(timePreviousGrenade);
         if (isGround)
         {
             skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
+            isGrenade = true;
         }
         else
         {
             GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
+
         }
         SoundController.instance.PlaySound(soundGame.throwGrenade);
     }
@@ -213,6 +218,7 @@ public class PlayerController : MonoBehaviour
     {
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
+        SoundController.instance.PlaySound(soundGame.sounddoublejump);
         AnimJump();
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
         {
@@ -226,6 +232,9 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Jump()
     {
+
+        SoundController.instance.PlaySound(soundGame.soundjump);
+
         if (rid.gravityScale == .2f)
             rid.gravityScale = 1;
         if (colliderStand != null)
@@ -261,7 +270,7 @@ public class PlayerController : MonoBehaviour
                 AnimSit();
                 break;
             case PlayerState.Jump:
-                AnimJump();
+                //  AnimJump();
                 if (isGround && rid.velocity.y <= 0)
                 {
                     if (!GameController.instance.joystickMove.GetJoystickState())
@@ -327,12 +336,13 @@ public class PlayerController : MonoBehaviour
         if (timeReload > 0)
         {
             timeReload -= deltaTime;
-            if(timeReload <= 0)
+            if (timeReload <= 0)
             {
                 // skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
                 skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
                 numberBullet = maxNumberBullet;
                 reload = false;
+                SoundController.instance.PlaySound(soundGame.soundreload);
             }
         }
     }
@@ -411,6 +421,7 @@ public class PlayerController : MonoBehaviour
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
                 timeReload = 1;
+                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
             }
 
         }
@@ -419,6 +430,7 @@ public class PlayerController : MonoBehaviour
             grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
+            isGrenade = false;
         }
     }
     private void OnComplete(TrackEntry trackEntry)
@@ -604,7 +616,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShootDown()
     {
-        if (reload)
+        if (reload || isGrenade)
         {
             return;
         }

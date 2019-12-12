@@ -110,6 +110,7 @@ public class EnemyV1Controller : EnemyBase
             bullet.transform.eulerAngles = new Vector3(0, 0, 150);
            // Debug.LogError(bullet.transform.eulerAngles.z);
             bullet.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundv1attack);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -119,5 +120,10 @@ public class EnemyV1Controller : EnemyBase
         {
             PlayAnim(0, aec.idle, true);
         }
+    }
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.soundv1die);
     }
 }

@@ -12,7 +12,7 @@ public class DestroyAll : MonoBehaviour
         {
             case 13:
                 PlayerController.instance.rid.velocity = Vector2.zero;
-           //     PlayerController.instance.rid.gravityScale = 0.3f;
+                SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
                 if (PlayerController.instance.currentStand != null)
                 {
                     if (PlayerController.instance.currentStand.transform.position.x < transform.position.x)

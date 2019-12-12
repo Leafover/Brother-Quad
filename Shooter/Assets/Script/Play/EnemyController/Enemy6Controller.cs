@@ -114,6 +114,8 @@ public class Enemy6Controller : EnemyBase
             bullet.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
 
+
+            SoundController.instance.PlaySound(soundGame.sounde6fire);
         }
     }
     GameObject enemy5;
@@ -137,5 +139,12 @@ public class Enemy6Controller : EnemyBase
         }
         else if(trackEntry.Animation.Name.Equals(aec.attack1.name))
             PlayAnim(0, aec.idle, true);
+
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde6die);
     }
 }

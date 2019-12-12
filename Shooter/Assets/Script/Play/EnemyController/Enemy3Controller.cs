@@ -127,5 +127,12 @@ public class Enemy3Controller : EnemyBase
         {
             PlayAnim(0, aec.idle, true);
         }
+
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde3die);
     }
 }

@@ -207,11 +207,18 @@ public class Enemy4Controller : EnemyBase
 
         }
 
-        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             PlayAnim(0, aec.idle, true);
         }
 
 
+    }
+
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde4die);
     }
 }

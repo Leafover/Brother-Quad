@@ -143,18 +143,22 @@ public class Enemy1Controller : EnemyBase
             combo++;
             enemyState = EnemyState.idle;
         }
-        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             combo = 0;
             randomCombo = Random.Range(2, 4);
             boxAttack2.gameObject.SetActive(false);
             enemyState = EnemyState.idle;
         }
-        //if (trackEntry.Animation.Name.Equals(aec.die.name))
-        //{
-        //    gameObject.SetActive(false);
-        //}
+
     }
+
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.sounde1die);
+    }
+
     public override void OnDisable()
     {
         base.OnDisable();

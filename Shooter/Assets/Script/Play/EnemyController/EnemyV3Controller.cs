@@ -55,16 +55,10 @@ public class EnemyV3Controller : EnemyBase
             bulletScript.SetGravity(bulletspeed1);
             g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             g.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundev3dropbomb);
         }
     }
-    //protected override void OnComplete(TrackEntry trackEntry)
-    //{
-    //    base.OnComplete(trackEntry);
-    //    //if (trackEntry.Animation.Name.Equals(aec.die.name))
-    //    //{
-    //    //    gameObject.SetActive(false);
-    //    //}
-    //}
+
     public override void OnDisable()
     {
         base.OnDisable();
@@ -73,4 +67,10 @@ public class EnemyV3Controller : EnemyBase
             EnemyManager.instance.enemyv3s.Remove(this);
         }
     }
+
+    //public override void Dead()
+    //{
+    //    base.Dead();
+    //    SoundController.instance.PlaySound(soundGame.soundv3die);
+    //}
 }

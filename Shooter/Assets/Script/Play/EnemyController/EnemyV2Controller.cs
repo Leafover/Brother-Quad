@@ -88,6 +88,8 @@ public class EnemyV2Controller : EnemyBase
             g.transform.rotation = Quaternion.identity;
             g.transform.rotation = gunRotation.rotation;
             g.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundv2attack);
+            SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -108,5 +110,10 @@ public class EnemyV2Controller : EnemyBase
         //{
         //    gameObject.SetActive(false);
         //}
+    }
+    public override void Dead()
+    {
+        base.Dead();
+        SoundController.instance.PlaySound(soundGame.soundv2die);
     }
 }

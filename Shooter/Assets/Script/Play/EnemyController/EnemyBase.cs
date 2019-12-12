@@ -306,7 +306,7 @@ public class EnemyBase : MonoBehaviour
             {
                 if (isMachine)
                 {
-                    SoundController.instance.PlaySound(soundGame.exploGrenade);
+                    SoundController.instance.PlaySound(soundGame.soundexploenemy);
                     exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
                     exploDie.transform.position = gameObject.transform.position;
                     exploDie.SetActive(true);
@@ -314,7 +314,8 @@ public class EnemyBase : MonoBehaviour
             }
             else
             {
-                SoundController.instance.PlaySound(soundGame.exploGrenade);
+                // SoundController.instance.PlaySound(soundGame.exploGrenade);
+                SoundController.instance.PlaySound(soundGame.soundexploenemy);
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
                 exploDie.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
