@@ -365,6 +365,8 @@ public class EnemyBase : MonoBehaviour
         }
         else
         {
+            if (isBoss || isMiniBoss)
+                return;
             if (!incam)
             {
                 if (transform.position.x < CameraController.instance.NumericBoundaries.LeftBoundary)

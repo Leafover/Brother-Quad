@@ -29,6 +29,12 @@ public class DestroyAll : MonoBehaviour
                     PlayerController.instance.transform.position = pointList[0].transform.position;
                 }
                 break;
+            case 12:
+                collision.gameObject.SetActive(false);
+                break;
+            case 17:
+                collision.gameObject.SetActive(false);
+                break;
         }
     }
 }
