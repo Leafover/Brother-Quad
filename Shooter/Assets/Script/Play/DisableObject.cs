@@ -25,8 +25,8 @@ public class DisableObject : MonoBehaviour
     {
         yield return waitforsecond;
         gameObject.SetActive(false);
-        if (bulletEnemy)
-            bulletEnemy.AutoRemoveMe();
+        //if (bulletEnemy)
+        //    bulletEnemy.AutoRemoveMe();
         if(typeExplo == TypeExplo.exploE2)
         {
             GameObject g = ObjectPoolerManager.Instance.explobulletenemy2Pooler.GetPooledObject();

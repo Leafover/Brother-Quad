@@ -246,6 +246,7 @@ public class GameController : MonoBehaviour
 
         if (_win)
         {
+            endTime = System.DateTime.Now;
             if (countStar == 0)
                 countStar = 1;
 
@@ -257,7 +258,7 @@ public class GameController : MonoBehaviour
             {
                 countStar++;
             }
-
+           // Debug.LogError((endTime - startTime).TotalSeconds);
 
           //  uiPanel.DisplayStar(countStar);
             PlayerController.instance.AnimWin();

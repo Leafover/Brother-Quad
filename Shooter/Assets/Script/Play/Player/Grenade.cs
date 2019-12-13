@@ -43,7 +43,11 @@ public class Grenade : MonoBehaviour
         else if(collision.gameObject.layer == 8 || collision.gameObject.layer == 21 || collision.gameObject.layer == 23)
         {
             if (transform.position.y <= collision.gameObject.transform.position.y)
+            {
+             //   Debug.Log("zooooooooooooooooo");
                 return;
+            }
+
 
             effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
             effectGrenade.transform.position = gameObject.transform.position;

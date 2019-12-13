@@ -114,12 +114,13 @@ public class BulletEnemy : MonoBehaviour
         //  //  skelatonAnim.AnimationState.Event -= Event;
         //    skelatonAnim.AnimationState.Complete -= Complete;
         //}
+        AutoRemoveMe();
     }
 
     public virtual void Hit()
     {
         gameObject.SetActive(false);
-        AutoRemoveMe();
+     //   AutoRemoveMe();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
