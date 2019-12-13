@@ -218,6 +218,7 @@ public class PlayerController : MonoBehaviour
     {
         float timeUp = timeJump * 0.5f;
         playerState = PlayerState.Jump;
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         SoundController.instance.PlaySound(soundGame.sounddoublejump);
         AnimJump();
         for (float t = 0; t <= timeUp; t += Time.deltaTime)
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Jump()
     {
-
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         SoundController.instance.PlaySound(soundGame.soundjump);
 
         if (rid.gravityScale == .2f)

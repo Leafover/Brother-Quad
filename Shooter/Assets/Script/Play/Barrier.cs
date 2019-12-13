@@ -26,11 +26,11 @@ public class Barrier : MonoBehaviour
                     break;
                 case TYPE.smoke:
                     explo = ObjectPoolerManager.Instance.explofuel2Pooler.GetPooledObject();
-                    SoundController.instance.PlaySound(soundGame.soundexploboxsmoke);
+                    SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
                     break;
                 case TYPE.wood:
                     explo = ObjectPoolerManager.Instance.explowoodPooler.GetPooledObject();
-                    SoundController.instance.PlaySound(soundGame.soundexploboxwood);
+                    SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
                     break;
             }
             explo.transform.position = transform.position;

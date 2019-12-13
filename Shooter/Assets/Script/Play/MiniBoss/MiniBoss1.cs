@@ -83,6 +83,7 @@ public class MiniBoss1 : EnemyBase
         bulletScript.AddProperties(damage1, bulletspeed1);
         bulletScript.SetTimeExist(bulletimeexist);
         bulletScript.BeginDisplay(Vector2.zero,this);
+        SoundController.instance.PlaySound(soundGame.soundminibossfire);
         SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         switch (randomSlot)
         {

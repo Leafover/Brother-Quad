@@ -4,7 +4,7 @@ public enum soundGame
 {
     shootnormal, exploGrenade, playerDie, throwGrenade, soundb1chem1, soundb1chem2, soundb1fire, soundb1move, sounde0die, sounde0move, sounde1die, sounde2die, sounde3die, sounde4die, sounde5die, sounde6die,
     sounde6fire, soundmissilewarning, soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundwin, soundlose, soundroixuongnuoc, soundreload,
-    soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxwood, soundexploboxsmoke
+    soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick
 }
 
 public class SoundController : MonoBehaviour
@@ -12,9 +12,9 @@ public class SoundController : MonoBehaviour
     public static SoundController instance;
     public AudioClip soundshootnormal, soundExploGrenade, soundPlayerDie, soundThrowGrenade, soundb1chem1, soundb1chem2, soundb1fire, soundb1move;
     public AudioClip sounde0die, sounde0move, sounde1die, sounde2die, sounde3die, sounde4die, sounde5die, sounde6die, sounde6fire, soundmissilewarning;
-    public AudioClip soundev3dropbomb, soundv3die, soundv3bombexplo,soundv1die,soundv1attack,soundv2die,soundv2attack,soundexploenemy,soundplayerhit;
-    public AudioClip soundwin,soundlose,soundroixuongnuoc,soundreload,soundjump,sounddoublejump,soundbulletdrop,soundstar1,soundstar2,soundstar3;
-    public AudioClip soundexploboxwood, soundexploboxsmoke;
+    public AudioClip soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundplayerhit;
+    public AudioClip soundwin, soundlose, soundroixuongnuoc, soundreload, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3;
+    public AudioClip soundexploboxcantexplo, soundminibossfire, soundbtnclick;
     public AudioSource au;
     public AudioSource bg;
     void Awake()
@@ -225,15 +225,18 @@ public class SoundController : MonoBehaviour
                         au.PlayOneShot(instance.soundstar3);
                     }
                     break;
-                case soundGame.soundexploboxsmoke:
+                case soundGame.soundexploboxcantexplo:
                     {
-                        au.PlayOneShot(instance.soundexploboxsmoke);
+                        au.PlayOneShot(instance.soundexploboxcantexplo);
                     }
                     break;
-                case soundGame.soundexploboxwood:
+                case soundGame.soundminibossfire:
                     {
-                        au.PlayOneShot(instance.soundexploboxwood);
+                        au.PlayOneShot(instance.soundminibossfire);
                     }
+                    break;
+                case soundGame.soundbtnclick:
+                    au.PlayOneShot(instance.soundbtnclick);
                     break;
             }
         }
