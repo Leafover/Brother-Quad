@@ -215,45 +215,52 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoubleJump()
     {
-        float timeUp = timeJump * 0.5f;
-        playerState = PlayerState.Jump;
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        SoundController.instance.PlaySound(soundGame.sounddoublejump);
-        AnimJump();
-        for (float t = 0; t <= timeUp; t += Time.deltaTime)
+        if (GameController.instance.gameState != GameController.GameState.gameover)
         {
-            if (playerState == PlayerState.Jump)
+
+            float timeUp = timeJump * 0.5f;
+            playerState = PlayerState.Jump;
+            SoundController.instance.PlaySound(soundGame.soundbtnclick);
+            SoundController.instance.PlaySound(soundGame.sounddoublejump);
+            AnimJump();
+            for (float t = 0; t <= timeUp; t += Time.deltaTime)
             {
-                force = forceJump * (timeUp - t);
-                rid.velocity = new Vector2(rid.velocity.x, force / 2);
-                yield return null;
+                if (playerState == PlayerState.Jump)
+                {
+                    force = forceJump * (timeUp - t);
+                    rid.velocity = new Vector2(rid.velocity.x, force / 2);
+                    yield return null;
+                }
             }
         }
     }
     private IEnumerator Jump()
     {
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        SoundController.instance.PlaySound(soundGame.soundjump);
-
-        if (rid.gravityScale == .2f)
-            rid.gravityScale = 1;
-        if (colliderStand != null)
-            Physics2D.IgnoreCollision(foot, colliderStand, false);
-        float timeUp = timeJump * 0.5f;
-        playerState = PlayerState.Jump;
-        AnimJump();
-        //    candoublejump = true;
-
-        for (float t = 0; t <= timeUp; t += Time.deltaTime)
+        if (GameController.instance.gameState != GameController.GameState.gameover)
         {
-            if (playerState == PlayerState.Jump)
+            SoundController.instance.PlaySound(soundGame.soundbtnclick);
+            SoundController.instance.PlaySound(soundGame.soundjump);
+
+            if (rid.gravityScale == .2f)
+                rid.gravityScale = 1;
+            if (colliderStand != null)
+                Physics2D.IgnoreCollision(foot, colliderStand, false);
+            float timeUp = timeJump * 0.5f;
+            playerState = PlayerState.Jump;
+            AnimJump();
+            //    candoublejump = true;
+
+            for (float t = 0; t <= timeUp; t += Time.deltaTime)
             {
-                force = forceJump * (timeUp - t);
-                rid.velocity = new Vector2(rid.velocity.x, force);
-                yield return null;
+                if (playerState == PlayerState.Jump)
+                {
+                    force = forceJump * (timeUp - t);
+                    rid.velocity = new Vector2(rid.velocity.x, force);
+                    yield return null;
+                }
             }
+            candoublejump = true;
         }
-        candoublejump = true;
     }
     //private void OnDrawGizmos()
     //{
@@ -658,54 +665,57 @@ public class PlayerController : MonoBehaviour
     public bool haveTarget;
     Vector2 GetTarget()
     {
-        //  targetTemp = new Vector2(float.MaxValue, float.MaxValue);
+        targetTemp = new Vector2(float.MaxValue, float.MaxValue);
         var dMin = float.MaxValue;
         for (int i = 0; i < GameController.instance.autoTarget.Count; i++)
         {
 
             var enemy = GameController.instance.autoTarget[i];
 
-            if (enemy.incam)
+            if (!enemy.incam || enemy.currentHealth <= 0 || !enemy.gameObject.activeSelf)
             {
+                haveTarget = false;
+                targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                GameController.instance.targetDetectSprite.SetActive(false);
+                continue;
+            }
+
+            //if (enemy.incam)
+            //{
                 var from = (Vector2)transform.position;
                 var to = enemy.Origin();
                 var d = Vector2.Distance(from, to);
-                //  Debug.LogError(d + ":" + dMin);
+
                 if (d < dMin)
                 {
                     dMin = d;
-                    //if (d >= 0.1f)
-                    //{
                     targetTemp = enemy.transform.position;
                     GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
                     GameController.instance.targetDetectSprite.SetActive(true);
                     haveTarget = true;
-                    //}
 
-                    //else
+                    //if (dMin < 0.5f || target.x >= float.MaxValue || target.y >= float.MaxValue)
                     //{
-                    //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-                    //    GameController.instance.targetDetectSprite.SetActive(false);
                     //    haveTarget = false;
-                    //    continue;
+                    //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
                     //}
 
-
                 }
-            }
-            else
-            {
-                if (!GameController.instance.joystickShot.GetJoystickState())
-                {
-                    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-                    haveTarget = false;
-                }
-                else
-                {
-                    targetTemp = GetTargetFromDirection(GameController.instance.shootPosition);
-                    haveTarget = false;
-                }
-            }
+                
+            //}
+            //else
+            //{
+            //    if (!GameController.instance.joystickShot.GetJoystickState())
+            //    {
+            //        targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+            //        haveTarget = false;
+            //    }
+            //    else
+            //    {
+            //        targetTemp = GetTargetFromDirection(GameController.instance.shootPosition);
+            //        haveTarget = false;
+            //    }
+            //}
 
         }
 
@@ -713,6 +723,7 @@ public class PlayerController : MonoBehaviour
     }
     public void SelectNonTarget(Vector2 pos)
     {
+        GameController.instance.targetDetectSprite.SetActive(false);
         target = GetTargetFromDirection(pos);
         haveTarget = false;
     }
