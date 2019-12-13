@@ -48,7 +48,7 @@ public class Enemy3Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        if (tempXBegin > Camera.main.transform.position.x + 7f)
+        if (tempXBegin > Camera.main.transform.position.x + 8f)
         {
             return;
         }

@@ -35,6 +35,7 @@ public class EnemyV2Controller : EnemyBase
     {
         base.Active();
         enemyState = EnemyState.run;
+        SoundController.instance.PlaySound(soundGame.soundmissilewarning);
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -91,7 +92,7 @@ public class EnemyV2Controller : EnemyBase
             g.transform.rotation = gunRotation.rotation;
             g.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundv2attack);
-            SoundController.instance.PlaySound(soundGame.soundmissilewarning);
+           // SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
