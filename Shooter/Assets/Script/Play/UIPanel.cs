@@ -6,18 +6,19 @@ public class UIPanel : MonoBehaviour
 {
     public GameObject finishPanel;
     public GameObject ResetBtn, NextBtn;
-    public Image grenadeFillAmout,fillbouderGrenade;
-    public Text levelText,gameoverText;
+    public Image grenadeFillAmout, fillbouderGrenade;
+    public Text levelText, gameoverText, bulletText, timeText;
     public GameObject starbouder;
     public List<GameObject> starCount;
-   public Animator animGamOver;
+    public Animator animGamOver;
+    public HealthBarBoss healthBarBoss;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
     public void DisplayStar(int total)
     {
-        for(int i = 0; i < total; i ++)
+        for (int i = 0; i < total; i++)
         {
             starCount[i].SetActive(true);
         }
@@ -28,7 +29,7 @@ public class UIPanel : MonoBehaviour
     {
         Application.LoadLevel(0);
     }
-    public void FillGrenade(float _current,float _max)
+    public void FillGrenade(float _current, float _max)
     {
         fillbouderGrenade.fillAmount = grenadeFillAmout.fillAmount = _current / _max;
     }
@@ -56,17 +57,17 @@ public class UIPanel : MonoBehaviour
                 case 1:
 
                     animGamOver.Play("GameOver1star");
-                 //   Debug.LogError("zo 1");
+                    //   Debug.LogError("zo 1");
                     break;
                 case 2:
 
                     animGamOver.Play("Gameover2star");
-                  //  Debug.LogError("zo 2");
+                    //  Debug.LogError("zo 2");
                     break;
                 case 3:
 
                     animGamOver.Play("GameOver3star");
-                  //  Debug.LogError("zo 3");
+                    //  Debug.LogError("zo 3");
                     break;
             }
             //Debug.Log("count star win:" + _countstar);
@@ -77,7 +78,7 @@ public class UIPanel : MonoBehaviour
             ResetBtn.SetActive(true);
             NextBtn.SetActive(false);
             gameoverText.text = "DIE";
-          //  Debug.Log("count star die:" + _countstar);
+            //  Debug.Log("count star die:" + _countstar);
             animGamOver.Play("GameOverDie");
             SoundController.instance.PlaySound(soundGame.soundlose);
         }

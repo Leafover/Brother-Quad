@@ -41,9 +41,6 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
 
-
-    System.DateTime startTime, endTime;
-
     private void Awake()
     {
         if (instance == null)
@@ -68,7 +65,10 @@ public class GameController : MonoBehaviour
 
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
-        startTime = System.DateTime.Now;
+        timeCountPlay = new WaitForSecondsRealtime(1);
+
+        StartCoroutine(CountTimePlay());
+
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
@@ -230,6 +230,24 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         uiPanel.DisplayFinish(countStar);
     }
+    float timePlay;
+    WaitForSecondsRealtime timeCountPlay;
+
+    System.TimeSpan timeSpanTemp;
+    IEnumerator CountTimePlay()
+    {
+        yield return timeCountPlay;
+
+        if (gameState == GameState.play)
+        {
+
+            timePlay++;
+
+            timeSpanTemp = System.TimeSpan.FromSeconds(timePlay);
+            uiPanel.timeText.text = timeSpanTemp.ToString("mm':'ss");
+        }
+        StartCoroutine(CountTimePlay());
+    }
     [HideInInspector]
     public bool waitForWin;
     public void DoneMission(bool _win)
@@ -246,7 +264,6 @@ public class GameController : MonoBehaviour
 
         if (_win)
         {
-            endTime = System.DateTime.Now;
             if (countStar == 0)
                 countStar = 1;
 
@@ -254,7 +271,7 @@ public class GameController : MonoBehaviour
             {
                 countStar++;
             }
-            if ((endTime - startTime).TotalSeconds <= 120)
+            if (timePlay <= 120)
             {
                 countStar++;
             }

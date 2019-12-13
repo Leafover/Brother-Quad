@@ -196,8 +196,7 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         speedmove = 0;
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-        numberBullet = maxNumberBullet;
-
+        AddNumberBullet(-maxNumberBullet);
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
 
@@ -341,11 +340,16 @@ public class PlayerController : MonoBehaviour
             {
                 // skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
                 skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
-                numberBullet = maxNumberBullet;
+                AddNumberBullet(-maxNumberBullet);
                 reload = false;
                 SoundController.instance.PlaySound(soundGame.soundreload);
             }
         }
+    }
+    void AddNumberBullet(int _sub)
+    {
+        numberBullet -= _sub;
+        GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
     }
     Vector2 posTemp;
     void LockPlayer()
@@ -415,7 +419,7 @@ public class PlayerController : MonoBehaviour
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
 
-            numberBullet--;
+            AddNumberBullet(1);
             SoundController.instance.PlaySound(soundGame.shootnormal);
             if (numberBullet == 0)
             {

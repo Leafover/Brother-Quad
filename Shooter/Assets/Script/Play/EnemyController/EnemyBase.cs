@@ -13,10 +13,10 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public bool jumpOut = false;
     public Transform leftFace, rightFace;
-  //  [HideInInspector]
+    //  [HideInInspector]
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
-    public bool isBoss;
+    public bool isBoss, isMiniBoss;
     public System.Action<float> acOnUpdate;
     public bool canoutcam, incam, isMachine = false;
     public enum EnemyState
@@ -238,7 +238,7 @@ public class EnemyBase : MonoBehaviour
     void AddProperties()
     {
 
-      //  Debug.Log(DataController.instance.allDataEnemy[index].enemyData.Count);
+        //  Debug.Log(DataController.instance.allDataEnemy[index].enemyData.Count);
 
         damage1 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].dmg1;
         damage2 = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].dmg2;
@@ -317,7 +317,7 @@ public class EnemyBase : MonoBehaviour
                 // SoundController.instance.PlaySound(soundGame.exploGrenade);
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-                exploDie.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y - 1);
+                exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
             }
         }
@@ -336,6 +336,17 @@ public class EnemyBase : MonoBehaviour
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
         PlayAnim(0, aec.idle, true);
+
+        if (isBoss || isMiniBoss)
+        {
+            GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currentHealth, health);
+            if (isMiniBoss)
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Mini Boss " + "Mission " + (DataParam.indexMap + 1));
+            if (isBoss)
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Boss " + "Mission " + (DataParam.indexMap + 1));
+        }
+
+
         if (aec.aimTargetAnim == null)
             return;
         skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
@@ -393,6 +404,8 @@ public class EnemyBase : MonoBehaviour
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         DisableAllBullet();
 
+        if(isBoss || isMiniBoss)
+        GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
 
     }
     void DisableAllBullet()
@@ -440,6 +453,13 @@ public class EnemyBase : MonoBehaviour
         if (lineBlood != null)
         {
             lineBlood.Show(currentHealth, health);
+        }
+        else
+        {
+            if (isBoss || isMiniBoss)
+            {
+                GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currentHealth, health);
+            }
         }
         //if(!isMachine)
         //{
