@@ -5,9 +5,10 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public Rigidbody2D rid;
+    public float speed;
     private void OnEnable()
     {
-        rid.AddForce(transform.right * 0.05f);
+        rid.AddForce(transform.right * speed);
     }
     //private void OnBecameInvisible()
     //{
