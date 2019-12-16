@@ -7,6 +7,9 @@ public class DisableObject : MonoBehaviour
     public float time = 2;
     WaitForSeconds waitforsecond;
     public BulletEnemy bulletEnemy;
+
+    public bool isExploOffboss;
+
     public enum TypeExplo
     {
         normal,
@@ -32,6 +35,11 @@ public class DisableObject : MonoBehaviour
             GameObject g = ObjectPoolerManager.Instance.explobulletenemy2Pooler.GetPooledObject();
             g.transform.position = gameObject.transform.position;
             g.SetActive(true);
+        }
+        if(isExploOffboss)
+        {
+            GameController.instance.win = true;
+            GameController.instance.WinGame();
         }
     }
 }

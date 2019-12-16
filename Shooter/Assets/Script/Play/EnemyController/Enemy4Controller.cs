@@ -20,7 +20,7 @@ public class Enemy4Controller : EnemyBase
         timedelayChangePos = maxtimedelayChangePos;
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
-     //   timedelayShoot = maxtimeDelayAttack;
+        //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemy4s.Contains(this))
         {
             EnemyManager.instance.enemy4s.Add(this);
@@ -81,11 +81,11 @@ public class Enemy4Controller : EnemyBase
 
                         Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                         targetPos.transform.position = GetTarget(false);
-                        timedelayChangePos -= deltaTime;
-                        if (timedelayChangePos <= 0)
-                        {
-                            isGrenadeStage = true;
-                        }
+                        //timedelayChangePos -= deltaTime;
+                        //if (timedelayChangePos <= 0)
+                        //{
+                        //    isGrenadeStage = true;
+                        //}
                     }
                     return;
                 }
@@ -147,14 +147,15 @@ public class Enemy4Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+            combo++;
             if (!incam)
                 return;
-             bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
+            bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
             var bulletScript = bullet.GetComponent<BulletEnemy>();
             bulletScript.AddProperties(damage2, bulletspeed1);
-             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
@@ -164,15 +165,15 @@ public class Enemy4Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
-             grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
+            grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
             grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             var grenadeScript = grenade.GetComponent<BulletEnemy>();
             grenadeScript.AddProperties(0, 6);
 
             if (FlipX)
-                grenadeScript.SetDir(-6);
+                grenadeScript.SetDir(-6,false);
             else
-                grenadeScript.SetDir(6);
+                grenadeScript.SetDir(6,false);
             grenade.SetActive(true);
 
         }
@@ -201,7 +202,7 @@ public class Enemy4Controller : EnemyBase
                 }
 
                 combo = 0;
-                randomCombo = Random.Range(1, 3);
+                randomCombo = 2;
                 isGrenadeStage = false;
             }
 
@@ -210,6 +211,26 @@ public class Enemy4Controller : EnemyBase
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             PlayAnim(0, aec.idle, true);
+
+            if (combo == randomCombo)
+            {
+                if (canmove)
+                {
+                    enemyState = EnemyState.run;
+                    timedelayChangePos = maxtimedelayChangePos;
+                    if (transform.position.x < OriginPos.x)
+                        nextPos.x = OriginPos.x + 0.5f;
+                    else
+                        nextPos.x = OriginPos.x + -0.5f;
+                    nextPos.y = OriginPos.y;
+                    CheckDirFollowPlayer(nextPos.x);
+                    PlayAnim(0, aec.run, true);
+                }
+
+                combo = 0;
+                randomCombo = Random.Range(1, 3);
+                isGrenadeStage = true;
+            }
         }
 
 

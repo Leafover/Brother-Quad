@@ -248,38 +248,42 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(CountTimePlay());
     }
+    public bool isDestroyBoss;
     [HideInInspector]
     public bool waitForWin;
-    public void DoneMission(bool _win)
+
+    public void WinGame()
     {
+        gameState = GameState.gameover;
+        PlayerController.instance.AnimWin();
         PlayerController.instance.rid.velocity = Vector2.zero;
         PlayerController.instance.box.enabled = false;
-        gameState = GameState.gameover;
+        if (countStar == 0)
+            countStar = 1;
+
+        if (PlayerController.instance.health >= PlayerController.instance.maxHealth / 2)
+        {
+            countStar++;
+        }
+        if (timePlay <= 120)
+        {
+            countStar++;
+        }
+    }
+
+    public void DoneMission(bool _win)
+    {
         win = _win;
 
-        if(!_win)
+        if (!_win)
         {
             return;
         }
 
         if (_win)
         {
-            if (countStar == 0)
-                countStar = 1;
+            WinGame();
 
-            if (PlayerController.instance.health >= PlayerController.instance.maxHealth / 2)
-            {
-                countStar++;
-            }
-            if (timePlay <= 120)
-            {
-                countStar++;
-            }
-           // Debug.LogError((endTime - startTime).TotalSeconds);
-
-          //  uiPanel.DisplayStar(countStar);
-            PlayerController.instance.AnimWin();
-         //   Debug.Log("------------------ :" + countStar);
         }
 
     }

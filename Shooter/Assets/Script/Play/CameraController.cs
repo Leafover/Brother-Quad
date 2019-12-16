@@ -5,6 +5,13 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CameraController : MonoBehaviour
 {
+
+    public enum ShakeType
+    {
+        ExplosionShake,
+        ExplosionBossShake
+    }
+    public ShakeType shakeType;
     public SpriteRenderer nextPointCheck;
     public static CameraController instance;
     public List<Transform> posEnemyV2, posMiniBoss1;
@@ -54,16 +61,19 @@ public class CameraController : MonoBehaviour
             nextPointCheck.gameObject.SetActive(true);
             currentRightBoudary = Camera.main.transform.position.x;
             nextPointCheck.enabled = true;
-        //    Debug.LogError("active");
         }
         else
         {
+
+            if (GameController.instance.isDestroyBoss)
+            {
+                return;
+            }
+            setBoudariesLeft = true;
             nextPointCheck.gameObject.SetActive(true);
             nextPointCheck.enabled = false;
-            setBoudariesLeft = true;
             GameController.instance.waitForWin = true;
         }
-        // nextPointCheck.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
@@ -73,7 +83,7 @@ public class CameraController : MonoBehaviour
         //var s = Mathf.Abs(x2 - x1);
         //var v = speed * 500;
         // NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
-        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity,speed * 100/*s / v*/);
+        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, speed * 100/*s / v*/);
 
         if (!setBoudariesLeft)
             return;
@@ -124,6 +134,15 @@ public class CameraController : MonoBehaviour
         viewPos.maxY = transform.position.y + _cameraSize.y;
     }
     public ViewPos viewPos;
+
+
+
+    public void Shake(ShakeType type = ShakeType.ExplosionShake)
+    {
+        var shakePreset = ProCamera2DShake.Instance.ShakePresets[(int)type];
+        ProCamera2DShake.Instance.Shake(shakePreset);
+    }
+
 }
 [System.Serializable]
 public struct ViewPos
@@ -133,3 +152,6 @@ public struct ViewPos
     public float maxX;
     public float maxY;
 }
+
+
+

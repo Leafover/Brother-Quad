@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 168577836}
   - component: {fileID: 168577837}
   - component: {fileID: 168577838}
+  - component: {fileID: 168577839}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -500,6 +501,25 @@ MonoBehaviour:
   UseSoftBoundaries: 1
   Softness: 0.5
   SoftAreaSize: 0.1
+--- !u!114 &168577839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168577832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ec3d6ad5f4a3d9d184bc3773a3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pc2D: {fileID: 168577837}
+  ShakePresets:
+  - {fileID: 11400000, guid: bdeb758c7bbd24b29bc19493062ef65e, type: 2}
+  - {fileID: 11400000, guid: 865c0998fbb884706bc8e9216bc17d0c, type: 2}
+  ConstantShakePresets: []
+  StartConstantShakePreset: {fileID: 0}
+  CurrentConstantShakePreset: {fileID: 0}
 --- !u!1 &190730813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3194,7 +3214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.123, y: 0.13185655}
   m_AnchorMax: {x: 0.8915157, y: 0.8681435}
-  m_AnchoredPosition: {x: -0.0099983215, y: -0.13999987}
+  m_AnchoredPosition: {x: -0.0099983215, y: -0.13999939}
   m_SizeDelta: {x: 0.06, y: -0.9499998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1080830383
@@ -4033,6 +4053,7 @@ MonoBehaviour:
   joystickShot: {fileID: 782930793}
   movePosition: {x: 0, y: 0}
   shootPosition: {x: 0, y: 0}
+  isDestroyBoss: 0
   waitForWin: 0
 --- !u!4 &1467663266
 Transform:

@@ -35,6 +35,7 @@ public class MiniBoss1 : EnemyBase
     {
         base.Active();
         enemyState = EnemyState.run;
+
     }
     public override void OnUpdate(float deltaTime)
     {

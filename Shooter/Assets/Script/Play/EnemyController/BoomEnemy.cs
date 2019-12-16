@@ -10,10 +10,10 @@ public class BoomEnemy : BulletEnemy
     }
     public override void Hit()
     {
+        base.Hit();
         GameObject effect = ObjectPoolerManager.Instance.effectExploBoomEnemyV3Pooler.GetPooledObject();
         effect.transform.position = gameObject.transform.position;
         effect.SetActive(true);
-        gameObject.SetActive(false);
         SoundController.instance.PlaySound(soundGame.soundv3bombexplo);
     }
     public override void OnTriggerEnter2D(Collider2D collision)

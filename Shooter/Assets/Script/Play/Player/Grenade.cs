@@ -34,11 +34,7 @@ public class Grenade : MonoBehaviour
     {
         if (/*collision.gameObject.layer == 8 ||*/ collision.gameObject.layer == 10 || collision.gameObject.layer == 19/* || collision.gameObject.layer == 21*/ /*|| collision.gameObject.layer == 23*/)
         {
-             effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
-            effectGrenade.transform.position = gameObject.transform.position;
-            effectGrenade.SetActive(true);
-            gameObject.SetActive(false);
-            SoundController.instance.PlaySound(soundGame.exploGrenade);
+            HitGrenade();
         }
         else if(collision.gameObject.layer == 8 || collision.gameObject.layer == 21 || collision.gameObject.layer == 23)
         {
@@ -48,13 +44,16 @@ public class Grenade : MonoBehaviour
                 return;
             }
 
-
-            effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
-            effectGrenade.transform.position = gameObject.transform.position;
-            effectGrenade.SetActive(true);
-            gameObject.SetActive(false);
-            SoundController.instance.PlaySound(soundGame.exploGrenade);
+            HitGrenade();
         }
     }
-
+     void HitGrenade()
+    {
+        CameraController.instance.Shake();
+        effectGrenade = ObjectPoolerManager.Instance.effectGrenadePooler.GetPooledObject();
+        effectGrenade.transform.position = gameObject.transform.position;
+        effectGrenade.SetActive(true);
+        gameObject.SetActive(false);
+        SoundController.instance.PlaySound(soundGame.exploGrenade);
+    }
 }

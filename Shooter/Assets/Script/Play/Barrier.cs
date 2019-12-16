@@ -23,6 +23,7 @@ public class Barrier : MonoBehaviour
                 case TYPE.explo:
                     explo = ObjectPoolerManager.Instance.explofuel1Pooler.GetPooledObject();
                     SoundController.instance.PlaySound(soundGame.exploGrenade);
+                    CameraController.instance.Shake();
                     break;
                 case TYPE.smoke:
                     explo = ObjectPoolerManager.Instance.explofuel2Pooler.GetPooledObject();

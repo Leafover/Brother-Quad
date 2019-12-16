@@ -23,11 +23,18 @@ public class BulletEnemy : MonoBehaviour
         damage = _damage;
         speed = _speed;
     }
-    public void SetDir(float _attackrank)
+
+    int tempRange;
+    public void SetDir(float _attackrank, bool randomtempRange)
     {
-        dir.x = -1 * _attackrank;
-        dir.y = 1 * speed;
-        // Debug.LogError("dir:" + dir);
+        if (randomtempRange)
+            tempRange = Random.Range(0, 100);
+        else
+            tempRange = Random.Range(0, 50);
+
+        dir.x = -1 * _attackrank + (-_attackrank / 100 * tempRange);
+        dir.y = 1 * speed /*+ (speed / 50 * tempRange)*/;
+      //  Debug.LogError("dir:" + ":" + tempRange + ":" + dir);
     }
     public void SetGravity(float _gravity)
     {
@@ -120,7 +127,10 @@ public class BulletEnemy : MonoBehaviour
     public virtual void Hit()
     {
         gameObject.SetActive(false);
-     //   AutoRemoveMe();
+
+        if (isGrenade)
+            CameraController.instance.Shake();
+        //   AutoRemoveMe();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {

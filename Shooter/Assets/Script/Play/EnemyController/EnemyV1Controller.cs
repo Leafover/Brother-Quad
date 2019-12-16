@@ -105,7 +105,7 @@ public class EnemyV1Controller : EnemyBase
             bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
             var bulletScript = bullet.GetComponent<BulletEnemy>();
             bulletScript.AddProperties(damage1, bulletspeed1);
-            bulletScript.SetDir(attackrank);
+            bulletScript.SetDir(attackrank, true);
             //bulletScript.BeginDisplay(Vector2.zero, this);
             //listMyBullet.Add(bulletScript);
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
@@ -119,7 +119,7 @@ public class EnemyV1Controller : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-        if(trackEntry.Animation.Name.Equals(aec.attack1.name))
+        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             PlayAnim(0, aec.idle, true);
         }

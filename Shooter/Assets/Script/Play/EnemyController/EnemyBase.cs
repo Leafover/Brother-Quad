@@ -166,9 +166,15 @@ public class EnemyBase : MonoBehaviour
         }
         acOnUpdate -= OnUpdate;
         if (GameController.instance != null)
+        {
             GameController.instance.RemoveTarget(this);
+
+
+        }
         if (takeDamageBox != null)
             takeDamageBox.enabled = false;
+
+
     }
     public virtual void Start()
     {
@@ -319,6 +325,7 @@ public class EnemyBase : MonoBehaviour
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
                 exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
+                CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
             }
         }
 
@@ -339,11 +346,15 @@ public class EnemyBase : MonoBehaviour
 
         if (isBoss || isMiniBoss)
         {
+
             GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currentHealth, health);
             if (isMiniBoss)
                 GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Mini Boss " + "Mission " + (DataParam.indexMap + 1));
             if (isBoss)
                 GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Boss " + "Mission " + (DataParam.indexMap + 1));
+
+            if (isBoss)
+                GameController.instance.isDestroyBoss = true;
         }
 
 
@@ -425,23 +436,9 @@ public class EnemyBase : MonoBehaviour
 
     }
 
-    IEnumerator BeAttackFill()
-    {
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
-        yield return new WaitForSeconds(0.075f);
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 0.5f));
-        yield return new WaitForSeconds(0.075f);
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
-        yield return new WaitForSeconds(0.075f);
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 0.5f));
-        yield return new WaitForSeconds(0.075f);
-
-        skeletonAnimation.skeleton.SetColor(Color.white);
-    }
-
+    Vector2 posHitTemp;
+    GameObject hiteffect;
+    float hitPosTemp;
     public virtual void TakeDamage(float damage)
     {
 
@@ -473,11 +470,19 @@ public class EnemyBase : MonoBehaviour
         //    hiteffect.transform.position = gameObject.transform.position;
         //    hiteffect.SetActive(true);
         //}
+        //if (isBoss || isMiniBoss)
+        //    hitPosTemp = 1.5f;
+        //else
+        if (isBoss || isMiniBoss || isMachine)
+        {
+            hitPosTemp = 0.2f;
+            posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
+            posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
 
-        GameObject hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
-        hiteffect.transform.position = gameObject.transform.position;
-        hiteffect.SetActive(true);
-
+            hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
+            hiteffect.transform.position = posHitTemp;
+            hiteffect.SetActive(true);
+        }
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {

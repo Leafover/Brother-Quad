@@ -46,6 +46,7 @@ public class Boss1Controller : EnemyBase
         base.Active();
         PlayAnim(1, aec.run, true);
         enemyState = EnemyState.idle;
+
     }
     public override void OnUpdate(float deltaTime)
     {
