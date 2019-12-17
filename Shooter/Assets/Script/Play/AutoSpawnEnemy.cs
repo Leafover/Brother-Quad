@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class AutoSpawnEnemy : MonoBehaviour
 {
-
+    public bool autoSpawnEnemy;
 }

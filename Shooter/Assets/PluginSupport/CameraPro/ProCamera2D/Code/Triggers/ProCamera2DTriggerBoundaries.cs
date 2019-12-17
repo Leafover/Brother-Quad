@@ -316,7 +316,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             {
                 CameraController.instance.setBoudariesLeft = false;
 
-                if (/*CameraController.instance.currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1*/IsSpawnEnemies)
+                if (GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy)
                     GameController.instance.currentMap.BeginAutoSpawn();
             }
         }

@@ -6,6 +6,9 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 {
 	abstract public class BaseTrigger : BasePC2D
 	{
+
+        public bool isSpawnEnemy;
+
 		public Action OnEnteredTrigger;
 		public Action OnExitedTrigger;
 

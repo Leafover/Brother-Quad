@@ -39,6 +39,7 @@ public class CameraController : MonoBehaviour
     public void Init()
     {
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
+      //  NumericBoundaries.TopBoundary = 4;
     }
     Vector2 _cameraSize;
     float velocity;

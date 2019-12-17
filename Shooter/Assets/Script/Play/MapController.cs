@@ -71,11 +71,14 @@ public class MapController : MonoBehaviour
     }
 
     public ProCamera2DTriggerBoundaries[] procam2DTriggerBoudaries;
+    public AutoSpawnEnemy[] autoSpawnEnemys;
     public PathCreator[] pathCreator;
     public GameObject pointBeginPlayer;
     private void OnValidate()
     {
         procam2DTriggerBoudaries = GetComponentsInChildren<ProCamera2DTriggerBoundaries>();
         pathCreator = GetComponentsInChildren<PathCreator>();
+        autoSpawnEnemys = GetComponentsInChildren<AutoSpawnEnemy>();
+
     }
 }
