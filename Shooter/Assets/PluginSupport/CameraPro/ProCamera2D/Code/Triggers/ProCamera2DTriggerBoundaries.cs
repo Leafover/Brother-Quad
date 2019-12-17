@@ -34,6 +34,13 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
         public bool IsCurrentTrigger { get { return NumericBoundaries.CurrentBoundariesTrigger._instanceID == _instanceID; } }
 
+        //public void OnValidate()
+        //{
+        //    autospawnenemy = GetComponent<AutoSpawnEnemy>();
+        //    if (autospawnenemy != null)
+        //        autospawnenemy.enabled = false;
+        //}
+
         public bool SetAsStartingBoundaries
         {
             set
@@ -121,6 +128,8 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 SetBoundaries();
 
             _initialCamSize = ProCamera2D.ScreenSizeInWorldCoordinates.y * .5f;
+
+
         }
 
         #region IPositionOverrider implementation
@@ -148,7 +157,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             //  Debug.LogError("------- cham -------");
 
 
-            
+
 
             if (NumericBoundaries.CurrentBoundariesTrigger != null)
                 StartCoroutine(TurnOffPreviousTrigger(NumericBoundaries.CurrentBoundariesTrigger));
@@ -181,13 +190,13 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         {
             try
             {
-                var scalex = Mathf.Max(1, Camera.main.aspect/16*9);
+                var scalex = Mathf.Max(1, Camera.main.aspect / 16 * 9);
                 var scaley = Mathf.Max(1, Screen.height / 720f);
                 TopBoundary = Mathf.Max(TopBoundary, scaley * 3.6f);
-				//BottomBoundary = Mathf.Min(BottomBoundary, -CameraController.Instance.Size().y);
-				LeftBoundary *= scalex;
-				RightBoundary *= scalex;
-			}
+                //BottomBoundary = Mathf.Min(BottomBoundary, -CameraController.Instance.Size().y);
+                LeftBoundary *= scalex;
+                RightBoundary *= scalex;
+            }
             catch { }
         }
 
@@ -306,6 +315,9 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             if (CameraController.instance.setBoudariesLeft)
             {
                 CameraController.instance.setBoudariesLeft = false;
+
+                if (/*CameraController.instance.currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1*/IsSpawnEnemies)
+                    GameController.instance.currentMap.BeginAutoSpawn();
             }
         }
 

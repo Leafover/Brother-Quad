@@ -11,6 +11,7 @@ public class Enemy1Controller : EnemyBase
     {
         base.Start();
         Init();
+       // Debug.LogError("----------------start");
     }
     public override void Init()
     {
@@ -164,6 +165,8 @@ public class Enemy1Controller : EnemyBase
     public override void OnDisable()
     {
         base.OnDisable();
+        if (EnemyManager.instance == null)
+            return;
         if (EnemyManager.instance.enemy1s.Contains(this))
         {
             EnemyManager.instance.enemy1s.Remove(this);

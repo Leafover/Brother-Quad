@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09667b1a3be063146a80a87313f2964a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAutoSpawn: 0
   index: 4
   levelBase: 1
   activeFar: 0
@@ -301,6 +302,7 @@ MonoBehaviour:
   listMyBullet: []
   lineBlood: {fileID: 5717780540075524634}
   isBoss: 0
+  isMiniBoss: 0
   canoutcam: 1
   incam: 0
   isMachine: 0
@@ -310,9 +312,20 @@ MonoBehaviour:
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
   takeDamageBox: {fileID: 2095537625340298549}
-  damage: 3
+  damage1: 0
+  damage2: 0
+  damage3: 0
   health: 3
-  timePreviousAttack: 0
+  bulletspeed1: 0
+  bulletspeed2: 0
+  bulletspeed3: 0
+  attackrank: 0
+  bulletimeexist: 0
+  exp: 0
+  speed: 1
+  maxtimeDelayAttack1: 0
+  maxtimeDelayAttack2: 0
+  maxtimeDelayAttack3: 0
   maxtimedelayChangePos: 6
   currentAnim: {fileID: 0}
   aec:
@@ -325,14 +338,13 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: fe03111d0f9630f4097f2f8b5b75b9a8, type: 2}
     jumpOut: {fileID: 0}
-  maxtimeDelayAttack: 5
+  timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 512
   rid: {fileID: 2095537625340298546}
   currentHealth: 0
   distanceActive: 6
-  speed: 1
   isActive: 0
   combo: 0
   randomCombo: 0
@@ -389,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  index: 0
 --- !u!58 &2095537625956863552
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -466,7 +479,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2095537626139200212}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 39e099b309f64024cbe4da2e19b7ee9d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -556,6 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  index: 0
 --- !u!50 &2095537626663820772
 Rigidbody2D:
   serializedVersion: 4

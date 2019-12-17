@@ -9,7 +9,12 @@ public class AllDataEnemy
 {
     public List<EnemyData> enemyData = new List<EnemyData>();
 }
-
+[System.Serializable]
+public class PlayerData
+{
+    public string level, ID;
+    public double hp, DmgGrenade,MoveSpeed;
+}
 [System.Serializable]
 public class EnemyData
 {
@@ -21,9 +26,10 @@ public class EnemyData
 public class DataController : MonoBehaviour
 {
     public List<AllDataEnemy> allDataEnemy = new List<AllDataEnemy>();
+    public List<PlayerData> playerData = new List<PlayerData>();
     public static DataController instance;
     string[] nameDataText = { "enemy0", "enemy1", "enemy2", "enemy3", "enemy4", "enemy5", "enemy6", "enemyv1", "enemyv2", "enemyv3", "enemymn1", "enemyb1" };
-
+    string nameDataPlayerText = "player";
     private void Awake()
     {
         instance = this;
@@ -34,30 +40,17 @@ public class DataController : MonoBehaviour
 
         if (!loaddatabegin)
         {
-            //LoadData("enemy0", 0);
-            //LoadData("enemy1", 1);
-            //LoadData("enemy2", 2);
-            //LoadData("enemy3", 3);
-            //LoadData("enemy4", 4);
-            //LoadData("enemy5", 5);
-            //LoadData("enemy6", 6);
-            //LoadData("enemyv1", 7);
-            //LoadData("enemyv2", 8);
-            //LoadData("enemyv3", 9);
-            //LoadData("enemymn1", 10);
-            //LoadData("enemyb1", 11);
-
-            for(int i = 0; i < nameDataText.Length; i ++)
+            for (int i = 0; i < nameDataText.Length; i++)
             {
-                LoadData(nameDataText[i], i);
+                LoadDataEnemy(nameDataText[i], i);
             }
-
+            LoadDataPlayer(nameDataPlayerText);
             loaddatabegin = true;
         }
     }
     TextAsset _ta;
     JsonData jData;
-    public void LoadData(string path, int index)
+    public void LoadDataEnemy(string path, int index)
     {
         if (allDataEnemy[index].enemyData.Count == 10)
             return;
@@ -70,10 +63,18 @@ public class DataController : MonoBehaviour
             EnemyData _enemyData = JsonMapper.ToObject<EnemyData>(jData[i].ToJson());
             allDataEnemy[index].enemyData.Add(_enemyData);
         }
-
-
-
     }
-
+    public void LoadDataPlayer(string path)
+    {
+        if (playerData.Count == 10)
+            return;
+        _ta = Resources.Load<TextAsset>("JsonData/" + path);
+        jData = JsonMapper.ToObject(_ta.text);
+        for (int i = 0; i < jData.Count; i++)
+        {
+            PlayerData _playerDate = JsonMapper.ToObject<PlayerData>(jData[i].ToJson());
+            playerData.Add(_playerDate);
+        }
+    }
 
 }

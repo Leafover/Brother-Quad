@@ -9,6 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int level = 1;
     bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
@@ -193,14 +194,25 @@ public class PlayerController : MonoBehaviour
         boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);
         skeletonAnimation.AnimationState.Event += HandleEvent;
         skeletonAnimation.AnimationState.Complete += OnComplete;
-        health = maxHealth;
-        speedmove = 0;
+
+
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         AddNumberBullet(-maxNumberBullet);
+
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
-
         waitBeAttack = new WaitForSeconds(0.075f);
+
+        AddProperties();
+    }
+    public void AddProperties()
+    {
+        damgeGrenade = (float)DataController.instance.playerData[level - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[level - 1].MoveSpeed;
+        maxHealth = (float)DataController.instance.playerData[level - 1].hp;
+
+        health = maxHealth;
+        speedmove = 0;
     }
     public void DetectGround()
     {
@@ -361,16 +373,16 @@ public class PlayerController : MonoBehaviour
     Vector2 posTemp;
     void LockPlayer()
     {
-        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 1)
+        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 2)
         {
             posTemp = transform.position;
-            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1;
+            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 2;
             transform.position = posTemp;
         }
-        if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1)
+        if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 0.7f)
         {
             posTemp = transform.position;
-            posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1;
+            posTemp.x = CameraController.instance.bouders[3].transform.position.x + 0.7f;
             transform.position = posTemp;
         }
         //if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)

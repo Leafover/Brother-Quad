@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
     public MapController currentMap;
 
     public GameObject targetDetectSprite;
-    public List<EnemyBase> autoTarget;
+    public List<EnemyBase> autoTarget,enemyLockCam;
     public GameObject UIControll;
     public enum GameState
     {

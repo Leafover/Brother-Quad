@@ -12,6 +12,7 @@ public class DestroyAll : MonoBehaviour
         {
             case 13:
                 PlayerController.instance.rid.velocity = Vector2.zero;
+                PlayerController.instance.speedmove = 0;
                 SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
                 if (PlayerController.instance.currentStand != null)
                 {
@@ -36,6 +37,9 @@ public class DestroyAll : MonoBehaviour
                 collision.gameObject.SetActive(false);
                 break;
             case 16:
+                collision.gameObject.SetActive(false);
+                break;
+            case 10:
                 collision.gameObject.SetActive(false);
                 break;
         }

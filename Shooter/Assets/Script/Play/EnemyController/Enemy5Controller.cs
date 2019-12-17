@@ -152,7 +152,7 @@ public class Enemy5Controller : EnemyBase
             PlayAnim(0, aec.idle, true);
             takeDamageBox.enabled = true;
             jumpOut = false;
-            if (!GameController.instance.autoTarget.Contains(this))
+            if (!GameController.instance.autoTarget.Contains(this) && incam)
                 GameController.instance.autoTarget.Add(this);
         }
     }

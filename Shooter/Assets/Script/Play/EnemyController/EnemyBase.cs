@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-
+    public bool enemyAutoSpawn;
     public int index, levelBase = 1;
 
     public bool activeFar;
@@ -50,7 +50,7 @@ public class EnemyBase : MonoBehaviour
     public float currentHealth;
     public float distanceActive = 6;
 
-    [HideInInspector]
+   // [HideInInspector]
     public bool isActive;
     int dir;
     [HideInInspector]
@@ -169,12 +169,14 @@ public class EnemyBase : MonoBehaviour
         {
             GameController.instance.RemoveTarget(this);
 
-
+            if (GameController.instance.enemyLockCam.Contains(this))
+                GameController.instance.enemyLockCam.Remove(this);
         }
         if (takeDamageBox != null)
             takeDamageBox.enabled = false;
 
-
+        enemyAutoSpawn = false;
+        incam = false;
     }
     public virtual void Start()
     {
@@ -183,6 +185,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
+      //  enemyAutoSpawn = false;
         tempXBegin = transform.position.x;
         if (lineBlood != null)
         {
@@ -369,7 +372,7 @@ public class EnemyBase : MonoBehaviour
         if (!isActive)
         {
             var tempCamX = Camera.main.transform.position.x;
-            if (tempXBegin - tempCamX <= distanceActive)
+            if (tempXBegin - tempCamX <= distanceActive || enemyAutoSpawn)
             {
                 Active();
             }
@@ -417,8 +420,10 @@ public class EnemyBase : MonoBehaviour
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         DisableAllBullet();
 
-        if(isBoss || isMiniBoss)
-        GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
+        if (isBoss || isMiniBoss)
+            GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
+
+
 
     }
     void DisableAllBullet()

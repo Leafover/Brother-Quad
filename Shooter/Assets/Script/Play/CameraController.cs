@@ -5,7 +5,6 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class CameraController : MonoBehaviour
 {
-
     public enum ShakeType
     {
         ExplosionShake,
@@ -52,10 +51,16 @@ public class CameraController : MonoBehaviour
 
     }
     public bool setBoudariesLeft = true;
+
+    public bool CheckPoint()
+    {
+        return currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1;
+    }
+
     public void NextPoint()
     {
 
-        if (currentCamBoidaries < GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1)
+        if (CheckPoint())
         {
             currentCamBoidaries++;
             nextPointCheck.gameObject.SetActive(true);
@@ -104,17 +109,21 @@ public class CameraController : MonoBehaviour
                 {
                     nextPointCheck.gameObject.SetActive(false);
                     setBoudariesLeft = true;
+                    GameController.instance.currentMap.ResetAutoSpawn();
                     //   Debug.LogError("--------------active again");
                 }
             }
             else
             {
-                if (GameController.instance.autoTarget.Count == 0)
+                if (GameController.instance.enemyLockCam.Count == 0)
                 {
                     NextPoint();
                 }
             }
-            return;
+
+            GameController.instance.currentMap.SpawnEnemy(deltaTime);
+                
+
         }
 
 
