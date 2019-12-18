@@ -297,21 +297,10 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void DoneMission(bool _win)
+    public void DIE()
     {
-        win = _win;
-
-        if (!_win)
-        {
-            return;
-        }
-
-        if (_win)
-        {
-            WinGame();
-
-        }
-
+        win = false;
+        gameState = GameState.gameover;
     }
     void OnUpdateItemDrop(float deltaTime)
     {
@@ -368,13 +357,13 @@ public class GameController : MonoBehaviour
     }
     public void DelayWinFunc()
     {
+        win = true;
         StartCoroutine(delayWin());
     }
     WaitForSeconds delaywinwait;
      IEnumerator delayWin()
     {
         yield return delaywinwait;
-        win = true;
         WinGame();
     }
 }

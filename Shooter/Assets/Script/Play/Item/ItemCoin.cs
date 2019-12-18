@@ -8,6 +8,7 @@ public class ItemCoin : ItemBase
     {
         base.Hit();
         DataParam.AddCoin(1);
+        SoundController.instance.PlaySound(soundGame.soundEatCoin);
     }
     public override void OnEnable()
     {

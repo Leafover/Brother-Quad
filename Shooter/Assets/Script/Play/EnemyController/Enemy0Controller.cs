@@ -56,7 +56,7 @@ public class Enemy0Controller : EnemyBase
         if (collision.gameObject.layer == 13)
         {
             gameObject.SetActive(false);
-            explo = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
+            explo = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
             explo.transform.position = gameObject.transform.position;
             explo.SetActive(true);
             PlayerController.instance.TakeDamage(damage1);

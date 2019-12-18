@@ -4,7 +4,7 @@ public enum soundGame
 {
     shootnormal, exploGrenade, playerDie, throwGrenade, soundb1chem1, soundb1chem2, soundb1fire, soundb1move, sounde0die, sounde0move, sounde1die, sounde2die, sounde3die, sounde4die, sounde5die, sounde6die,
     sounde6fire, soundmissilewarning, soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundwin, soundlose, soundroixuongnuoc, soundreload,
-    soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick
+    soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin
 }
 
 public class SoundController : MonoBehaviour
@@ -14,7 +14,7 @@ public class SoundController : MonoBehaviour
     public AudioClip sounde0die, sounde0move, sounde1die, sounde2die, sounde3die, sounde4die, sounde5die, sounde6die, sounde6fire, soundmissilewarning;
     public AudioClip soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundplayerhit;
     public AudioClip soundwin, soundlose, soundroixuongnuoc, soundreload, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3;
-    public AudioClip soundexploboxcantexplo, soundminibossfire, soundbtnclick;
+    public AudioClip soundexploboxcantexplo, soundminibossfire, soundbtnclick,soundEatHP,soundEatCoin;
     public AudioSource au;
     public AudioSource bg;
     void Awake()
@@ -237,6 +237,12 @@ public class SoundController : MonoBehaviour
                     break;
                 case soundGame.soundbtnclick:
                     au.PlayOneShot(instance.soundbtnclick);
+                    break;
+                case soundGame.soundEatHP:
+                    au.PlayOneShot(instance.soundEatHP);
+                    break;
+                case soundGame.soundEatCoin:
+                    au.PlayOneShot(instance.soundEatCoin);
                     break;
             }
         }

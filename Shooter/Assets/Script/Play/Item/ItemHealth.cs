@@ -9,5 +9,6 @@ public class ItemHealth : ItemBase
     {
         base.Hit();
         PlayerController.instance.AddHealth(PlayerController.instance.maxHealth / 100 * numberTemp);
+        SoundController.instance.PlaySound(soundGame.soundEatHP);
     }
 }

@@ -333,6 +333,15 @@ public class EnemyBase : MonoBehaviour
                 if (isMachine)
                 {
                     SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
+                    exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
+                    exploDie.transform.position = gameObject.transform.position;
+                    exploDie.SetActive(true);
+                }
+                else
+                {
+                    SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
                     exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
                     exploDie.transform.position = gameObject.transform.position;
                     exploDie.SetActive(true);

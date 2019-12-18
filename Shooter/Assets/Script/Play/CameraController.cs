@@ -70,15 +70,16 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-
+            GameController.instance.waitForWin = true;
             if (GameController.instance.isDestroyBoss)
             {
                 return;
             }
-            setBoudariesLeft = true;
-            nextPointCheck.gameObject.SetActive(true);
-            nextPointCheck.enabled = false;
-            GameController.instance.waitForWin = true;
+            GameController.instance.DelayWinFunc();
+        //    setBoudariesLeft = true;
+            //nextPointCheck.gameObject.SetActive(true);
+            //nextPointCheck.enabled = false;
+
         }
     }
     private void LateUpdate()

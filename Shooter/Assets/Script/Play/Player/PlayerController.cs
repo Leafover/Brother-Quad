@@ -9,6 +9,9 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public AudioSource au;
+
     public int level = 1;
     bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
@@ -84,15 +87,20 @@ public class PlayerController : MonoBehaviour
         if (playerState == PlayerState.Die)
             return;
         health -= damage;
+        if (health <= maxHealth - (maxHealth / 100 * 90))
+        {
+            au.mute = false;
+        }
         ShowLineBlood();
         StartCoroutine(BeAttackFill());
         SoundController.instance.PlaySound(soundGame.soundplayerhit);
         if (health <= 0)
         {
-            GameController.instance.DoneMission(false);
+            GameController.instance.DIE();
             AnimDie();
             playerState = PlayerState.Die;
             SoundController.instance.PlaySound(soundGame.playerDie);
+            au.mute = true;
         }
     }
     public LayerMask lmgroundcandown;
@@ -236,7 +244,7 @@ public class PlayerController : MonoBehaviour
 
             float timeUp = timeJump * 0.5f;
             playerState = PlayerState.Jump;
-          //  SoundController.instance.PlaySound(soundGame.soundbtnclick);
+            //  SoundController.instance.PlaySound(soundGame.soundbtnclick);
             SoundController.instance.PlaySound(soundGame.sounddoublejump);
             AnimJump();
             for (float t = 0; t <= timeUp; t += Time.deltaTime)
@@ -254,7 +262,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GameController.instance.gameState != GameController.GameState.gameover)
         {
-         //   SoundController.instance.PlaySound(soundGame.soundbtnclick);
+            //   SoundController.instance.PlaySound(soundGame.soundbtnclick);
             SoundController.instance.PlaySound(soundGame.soundjump);
 
             if (rid.gravityScale == .2f)
@@ -293,7 +301,7 @@ public class PlayerController : MonoBehaviour
                 AnimSit();
                 break;
             case PlayerState.Jump:
-                  AnimJump();
+                AnimJump();
                 if (isGround && rid.velocity.y <= 0)
                 {
                     if (!GameController.instance.joystickMove.GetJoystickState())
@@ -698,26 +706,26 @@ public class PlayerController : MonoBehaviour
 
             //if (enemy.incam)
             //{
-                var from = (Vector2)transform.position;
-                var to = enemy.Origin();
-                var d = Vector2.Distance(from, to);
+            var from = (Vector2)transform.position;
+            var to = enemy.Origin();
+            var d = Vector2.Distance(from, to);
 
-                if (d < dMin)
-                {
-                    dMin = d;
-                    targetTemp = enemy.transform.position;
-                    GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
-                    GameController.instance.targetDetectSprite.SetActive(true);
-                    haveTarget = true;
+            if (d < dMin)
+            {
+                dMin = d;
+                targetTemp = enemy.transform.position;
+                GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
+                GameController.instance.targetDetectSprite.SetActive(true);
+                haveTarget = true;
 
-                    //if (dMin < 0.5f || target.x >= float.MaxValue || target.y >= float.MaxValue)
-                    //{
-                    //    haveTarget = false;
-                    //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-                    //}
+                //if (dMin < 0.5f || target.x >= float.MaxValue || target.y >= float.MaxValue)
+                //{
+                //    haveTarget = false;
+                //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                //}
 
-                }
-                
+            }
+
             //}
             //else
             //{
@@ -756,10 +764,10 @@ public class PlayerController : MonoBehaviour
     {
         switch (collision.gameObject.layer)
         {
-            case 18:
-                if (GameController.instance.waitForWin)
-                    GameController.instance.DoneMission(true);
-                break;
+            //case 18:
+            //    if (GameController.instance.waitForWin)
+            //        GameController.instance.DoneMission(true);
+            //    break;
             case 26:
                 TakeDamage(damgeGrenade / 3);
                 break;
@@ -772,6 +780,10 @@ public class PlayerController : MonoBehaviour
             return;
 
         health += _health;
+        if (health > maxHealth - (maxHealth / 100 * 90))
+        {
+            au.mute = true;
+        }
         ShowLineBlood();
         if (health >= maxHealth)
             health = maxHealth;

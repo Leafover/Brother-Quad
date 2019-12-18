@@ -1146,6 +1146,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550205062}
   m_CullTransparentMesh: 0
+--- !u!1001 &572060940
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2493386533894420356, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_Name
+      value: ObjectPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493386533894420358, guid: 930f6f5defb3a6d45a0e923c211b17b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 930f6f5defb3a6d45a0e923c211b17b3, type: 3}
 --- !u!1 &590829292
 GameObject:
   m_ObjectHideFlags: 0
@@ -4033,6 +4102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25b8ec42d666894eaaab3bc358225d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalDropCoin: 0
   countStar: 0
   win: 0
   uiPanel: {fileID: 435739670}
@@ -4049,6 +4119,7 @@ MonoBehaviour:
   targetDetectSprite: {fileID: 719464241}
   autoTarget: []
   enemyLockCam: []
+  itemDrops: []
   UIControll: {fileID: 2054930464}
   gameState: 0
   joystickMove: {fileID: 1656403976}
