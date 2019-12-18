@@ -337,41 +337,49 @@ public class EnemyBase : MonoBehaviour
                     exploDie.transform.position = gameObject.transform.position;
                     exploDie.SetActive(true);
                 }
-                if (haveCoin && GameController.instance.totalDropCoin > 0)
+
+                if (!haveHealhItem)
                 {
-                    randomCoin = Random.Range(3, 5);
-                    if (GameController.instance.totalDropCoin - randomCoin < 0)
+                    if (haveCoin && GameController.instance.totalDropCoin > 0)
                     {
-                        randomCoin = GameController.instance.totalDropCoin;
+                        randomCoin = Random.Range(3, 5);
+                        if (GameController.instance.totalDropCoin - randomCoin < 0)
+                        {
+                            randomCoin = GameController.instance.totalDropCoin;
+                        }
+                        GameController.instance.totalDropCoin -= randomCoin;
+                        GameController.instance.SpawnCoin(randomCoin, transform.position);
+                        Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
                     }
-                    GameController.instance.totalDropCoin -= randomCoin;
-                    GameController.instance.SpawnCoin(randomCoin, transform.position);
-                    Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
                 }
             }
-            else if(isBoss)
+            else if (isBoss)
             {
                 // SoundController.instance.PlaySound(soundGame.exploGrenade);
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-                exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
+                posExplo.x = gameObject.transform.position.x;
+                posExplo.y = gameObject.transform.position.y - 1;
+                exploDie.transform.position = posExplo;
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
                 GameController.instance.SpawnCoin(15, transform.position);
             }
-            else if(isMiniBoss)
+            else if (isMiniBoss)
             {
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
-                exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-                exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
+                exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
+                posExplo.x = gameObject.transform.position.x;
+                posExplo.y = gameObject.transform.position.y;
+                exploDie.transform.position = posExplo;
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-                GameController.instance.SpawnCoin(8,transform.position);
+                GameController.instance.SpawnCoin(8, transform.position);
             }
         }
 
     }
-
+    Vector2 posExplo;
 
 
     public bool FlipX
@@ -394,8 +402,7 @@ public class EnemyBase : MonoBehaviour
             if (isBoss)
                 GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Boss " + "Mission " + (DataParam.indexMap + 1));
 
-            if (isBoss)
-                GameController.instance.isDestroyBoss = true;
+            GameController.instance.isDestroyBoss = true;
         }
 
 
@@ -529,23 +536,31 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 11)
-        {
-            if (!incam || enemyState == EnemyState.die)
-                return;
-            TakeDamage(PlayerController.instance.damageBullet);
-            collision.gameObject.SetActive(false);
-        }
-        else if (collision.gameObject.layer == 14)
-        {
-            if (!incam || enemyState == EnemyState.die)
-                return;
 
-            TakeDamage(PlayerController.instance.damgeGrenade);
-        }
-        else if (collision.gameObject.layer == 20)
-            gameObject.SetActive(false);
+        switch (collision.gameObject.layer)
+        {
+            case 11:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
+                TakeDamage(PlayerController.instance.damageBullet);
+                collision.gameObject.SetActive(false);
+                break;
+            case 14:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
 
+                TakeDamage(PlayerController.instance.damgeGrenade);
+                break;
+            case 26:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
+                TakeDamage(PlayerController.instance.damgeGrenade);
+                break;
+            case 20:
+                gameObject.SetActive(false);
+                break;
+
+        }
     }
 }
 

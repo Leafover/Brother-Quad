@@ -377,10 +377,10 @@ public class PlayerController : MonoBehaviour
     Vector2 posTemp;
     void LockPlayer()
     {
-        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 2)
+        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 1.5f)
         {
             posTemp = transform.position;
-            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 2;
+            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1.5f;
             transform.position = posTemp;
         }
         if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 0.7f)
@@ -759,6 +759,9 @@ public class PlayerController : MonoBehaviour
             case 18:
                 if (GameController.instance.waitForWin)
                     GameController.instance.DoneMission(true);
+                break;
+            case 26:
+                TakeDamage(damgeGrenade / 3);
                 break;
         }
     }

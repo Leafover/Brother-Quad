@@ -62,29 +62,9 @@ public class Barrier : MonoBehaviour
             case 14:
                 TakeDamage(PlayerController.instance.damgeGrenade);
                 break;
-            //case 8:
-            //    if (transform.position.y <= collision.transform.position.y)
-            //        return;
-
-            //    switch (types)
-            //    {
-            //        case TYPE.explo:
-            //            explo = ObjectPoolerManager.Instance.explofuel1Pooler.GetPooledObject();
-            //            SoundController.instance.PlaySound(soundGame.exploGrenade);
-            //            break;
-            //        case TYPE.smoke:
-            //            explo = ObjectPoolerManager.Instance.explofuel2Pooler.GetPooledObject();
-            //            SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
-            //            break;
-            //        case TYPE.wood:
-            //            explo = ObjectPoolerManager.Instance.explowoodPooler.GetPooledObject();
-            //            SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
-            //            break;
-            //    }
-            //    explo.transform.position = transform.position;
-            //    explo.SetActive(true);
-
-           //     break;
+            case 26:
+                TakeDamage(PlayerController.instance.damgeGrenade);
+                break;
         }
     }
 }

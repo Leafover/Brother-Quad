@@ -89,6 +89,7 @@ public class GameController : MonoBehaviour
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
         timeCountPlay = new WaitForSecondsRealtime(1);
+        delaywinwait = new WaitForSeconds(3.5f);
 
         StartCoroutine(CountTimePlay());
 
@@ -364,5 +365,16 @@ public class GameController : MonoBehaviour
     public void BtnGrenade()
     {
         PlayerController.instance.TryGrenade();
+    }
+    public void DelayWinFunc()
+    {
+        StartCoroutine(delayWin());
+    }
+    WaitForSeconds delaywinwait;
+     IEnumerator delayWin()
+    {
+        yield return delaywinwait;
+        win = true;
+        WinGame();
     }
 }

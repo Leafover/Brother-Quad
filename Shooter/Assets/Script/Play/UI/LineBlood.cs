@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LineBlood : MonoBehaviour
 {
-    const float TIME_HIDE = 3;
+    const float TIME_HIDE = 2;
     public SpriteRenderer[] lineSprite;
     private float countdown;
     private bool isAutoHide;

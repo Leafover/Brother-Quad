@@ -29,10 +29,10 @@ using System;
         //    }
         //}
 
-        public void Initialize()
+        public void Initialize(int length)
         {
             PooledObjects = new List<GameObject>();
-            for (int i = 0; i < PoolLength; i++)
+            for (int i = 0; i < length; i++)
             {
                 CreateObjectInPool();
             }
@@ -46,10 +46,10 @@ using System;
             }
         }
 
-        public void Initialize(params Type[] componentsToAdd)
+        public void Initialize(int length, params Type[] componentsToAdd)
         {
             this.componentsToAdd = componentsToAdd;
-            Initialize();
+            Initialize(length);
         }
 
         public GameObject GetPooledObject()
