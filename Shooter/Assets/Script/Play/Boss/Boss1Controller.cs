@@ -5,6 +5,8 @@ using Spine;
 using Spine.Unity;
 public class Boss1Controller : EnemyBase
 {
+
+    public GameObject effectwhenDie,effectwhenlowhealth;
     public float speedMove;
     public int typeAttack;
     public override void Start()
@@ -273,6 +275,10 @@ public class Boss1Controller : EnemyBase
         {
             SoundController.instance.PlaySound(soundGame.soundb1move);
         }
+        else if(trackEntry.Animation.Name.Equals(aec.die.name))
+        {
+            effectwhenDie.SetActive(true);
+        }
     }
 
     protected override void OnComplete(TrackEntry trackEntry)
@@ -350,7 +356,11 @@ public class Boss1Controller : EnemyBase
         if (currentHealth <= health / 2)
         {
             if (activeType3 == 0)
+            {
+                PlayAnim(2, aec.lowHPAnim, true);
                 activeType3 = /*1*/2;
+                effectwhenlowhealth.SetActive(true);
+            }
         }
     }
 }

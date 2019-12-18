@@ -13,7 +13,7 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut,lowHPAnim;
 }
 
 public class GameController : MonoBehaviour

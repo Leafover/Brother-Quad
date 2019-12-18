@@ -368,7 +368,7 @@ public class EnemyBase : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
                 exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
                 posExplo.x = gameObject.transform.position.x;
-                posExplo.y = gameObject.transform.position.y - 1;
+                posExplo.y = gameObject.transform.position.y - 1.5f;
                 exploDie.transform.position = posExplo;
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
