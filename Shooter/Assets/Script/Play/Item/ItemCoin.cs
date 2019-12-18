@@ -9,4 +9,9 @@ public class ItemCoin : ItemBase
         base.Hit();
         DataParam.AddCoin(1);
     }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        rid.velocity = new Vector2(Random.Range(-2.5f, 2.5f), 3);   
+    }
 }

@@ -58,12 +58,12 @@ public class GameController : MonoBehaviour
         gameState = GameState.play;
     }
     GameObject coinItem;
-    public void SpawnCoin(int total)
+    public void SpawnCoin(int total,Vector2 pos)
     {
         for (int i = 0; i < total; i++)
         {
             coinItem = ObjectPoolerManager.Instance.coinItemPooler.GetPooledObject();
-            coinItem.transform.position = gameObject.transform.position;
+            coinItem.transform.position = pos;
             coinItem.SetActive(true);
         }
     }

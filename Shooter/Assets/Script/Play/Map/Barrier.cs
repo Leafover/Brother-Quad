@@ -12,10 +12,21 @@ public class Barrier : MonoBehaviour
         explo
     }
     public TYPE types;
-    GameObject explo;
+    GameObject explo, hiteffect;
+    float hitPosTemp;
+    Vector2 posHitTemp;
     void TakeDamage(float _damage)
     {
         health -= _damage;
+
+        hitPosTemp = 0.2f;
+        posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
+        posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
+
+        hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
+        hiteffect.transform.position = posHitTemp;
+        hiteffect.SetActive(true);
+
         if (health <= 0)
         {
             switch(types)

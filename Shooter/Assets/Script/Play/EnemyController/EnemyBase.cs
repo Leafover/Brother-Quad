@@ -7,13 +7,10 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
 
-    public bool haveHealhItem, haveCoin;
-
-
-    [HideInInspector]
+    public bool haveHealhItem;
     public float percentHealthForPlayer = 10;
-    public int coinAdd;
-
+    bool haveCoin;
+    [HideInInspector]
     public bool enemyAutoSpawn;
     public int index, levelBase = 1;
 
@@ -348,7 +345,7 @@ public class EnemyBase : MonoBehaviour
                         randomCoin = GameController.instance.totalDropCoin;
                     }
                     GameController.instance.totalDropCoin -= randomCoin;
-                    GameController.instance.SpawnCoin(randomCoin);
+                    GameController.instance.SpawnCoin(randomCoin, transform.position);
                     Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
                 }
             }
@@ -360,7 +357,7 @@ public class EnemyBase : MonoBehaviour
                 exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-                GameController.instance.SpawnCoin(15);
+                GameController.instance.SpawnCoin(15, transform.position);
             }
             else if(isMiniBoss)
             {
@@ -369,7 +366,7 @@ public class EnemyBase : MonoBehaviour
                 exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-                GameController.instance.SpawnCoin(8);
+                GameController.instance.SpawnCoin(8,transform.position);
             }
         }
 

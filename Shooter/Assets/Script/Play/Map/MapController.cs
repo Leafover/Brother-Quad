@@ -51,7 +51,13 @@ public class MapController : MonoBehaviour
             _scriptE.Init();
             _scriptE.enemyAutoSpawn = true;
 
-
+            if (!CameraController.instance.CheckPoint())
+            {
+                if (!GameController.instance.enemyLockCam.Contains(_scriptE))
+                {
+                    GameController.instance.enemyLockCam.Add(_scriptE);
+                }
+            }
 
             timeDelay = timeDelayMax;
             countspawn++;

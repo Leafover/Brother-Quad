@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemBase : MonoBehaviour
 {
     public float numberTemp;
+   public Rigidbody2D rid;
 
     public void AddNumberTemp(float temp)
     {
@@ -13,6 +14,11 @@ public class ItemBase : MonoBehaviour
     public virtual void Hit()
     {
         gameObject.SetActive(false);
+    }
+    private void OnValidate()
+    {
+        if (rid == null)
+            rid = GetComponent<Rigidbody2D>();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,7 +36,7 @@ public class ItemBase : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private void OnEnable()
+    public virtual void OnEnable()
     {
         if (GameController.instance == null)
             return;
@@ -43,7 +49,7 @@ public class ItemBase : MonoBehaviour
     {
         if (GameController.instance == null)
             return;
-        if(GameController.instance.itemDrops.Contains(this))
+        if (GameController.instance.itemDrops.Contains(this))
         {
             GameController.instance.itemDrops.Remove(this);
         }
