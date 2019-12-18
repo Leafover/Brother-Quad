@@ -73,16 +73,16 @@ public class EnemyV1Controller : EnemyBase
                         nextPos.x = OriginPos.x + -0.5f;
                         PlayAnim(0, aec.run, true);
                     }
-                    nextPos.y = OriginPos.y;
+             
                     //  Debug.Log(nextPos + ":" + OriginPos);
                 }
 
                 break;
             case EnemyState.run:
-
+                nextPos.y = OriginPos.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
-                if (transform.position.x == nextPos.x && transform.position.y == nextPos.y)
+                if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
                     //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);

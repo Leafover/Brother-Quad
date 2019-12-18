@@ -73,7 +73,7 @@ public class Enemy3Controller : EnemyBase
                         nextPos.x = OriginPos.x + 0.5f;
                     else
                         nextPos.x = OriginPos.x + -0.5f;
-                    nextPos.y = transform.position.y;
+
                     CheckDirFollowPlayer(nextPos.x);
                     skeletonAnimation.ClearState();
                     //skeletonAnimation.AnimationState.ClearTrack(1);
@@ -86,7 +86,7 @@ public class Enemy3Controller : EnemyBase
                 break;
             case EnemyState.run:
 
-
+                nextPos.y = transform.position.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
                 if (transform.position.x == nextPos.x)

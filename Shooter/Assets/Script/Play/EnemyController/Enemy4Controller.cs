@@ -110,7 +110,7 @@ public class Enemy4Controller : EnemyBase
                             nextPos.x = OriginPos.x + 0.5f;
                         else
                             nextPos.x = OriginPos.x + -0.5f;
-                        nextPos.y = transform.position.y;
+
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
                         skeletonAnimation.ClearState();
@@ -122,7 +122,7 @@ public class Enemy4Controller : EnemyBase
 
                 break;
             case EnemyState.run:
-
+                nextPos.y = transform.position.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
 
@@ -196,7 +196,7 @@ public class Enemy4Controller : EnemyBase
                         nextPos.x = OriginPos.x + 0.5f;
                     else
                         nextPos.x = OriginPos.x + -0.5f;
-                    nextPos.y = OriginPos.y;
+                  //  nextPos.y = OriginPos.y;
                     CheckDirFollowPlayer(nextPos.x);
                     PlayAnim(0, aec.run, true);
                 }
