@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 public class DataParam : MonoBehaviour
 {
-    public static int indexMap;
+    public static int indexMap, nextSceneAfterLoad;
     public static float totalCoin;
 
     public static void AddCoin(float _coin)

@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
         DataParam.indexMap = i;
+        DataParam.nextSceneAfterLoad = 2;
         Application.LoadLevel(1);
     }
 }

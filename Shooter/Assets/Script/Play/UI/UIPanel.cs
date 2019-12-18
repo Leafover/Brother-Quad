@@ -27,7 +27,8 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnBack()
     {
-        Application.LoadLevel(0);
+        DataParam.nextSceneAfterLoad = 0;
+        Application.LoadLevel(1);
     }
     public void FillGrenade(float _current, float _max)
     {

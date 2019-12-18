@@ -358,7 +358,7 @@ public class EnemyBase : MonoBehaviour
                         }
                         GameController.instance.totalDropCoin -= randomCoin;
                         GameController.instance.SpawnCoin(randomCoin, transform.position);
-                        Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
+                      //  Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
                     }
                 }
             }

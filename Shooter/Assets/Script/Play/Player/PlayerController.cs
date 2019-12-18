@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
 
-    public GameObject dustdown, dustrun;
+    public GameObject dustdown, dustrun,effecthealth;
     [HideInInspector]
     public Collider2D colliderStand;
     [HideInInspector]
@@ -780,6 +780,8 @@ public class PlayerController : MonoBehaviour
             return;
 
         health += _health;
+        if (!effecthealth.activeSelf)
+            effecthealth.SetActive(true);
         if (health > maxHealth - (maxHealth / 100 * 90))
         {
             au.mute = true;
