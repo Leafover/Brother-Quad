@@ -6,6 +6,7 @@ using PathCreation;
 
 public class MapController : MonoBehaviour
 {
+    public bool haveMiniBoss,haveBoss;
     public bool moreTypeE = true;
     public float timeDelayMax = 1.25f, timeDelay;
     public int maxSpawn = 3,countspawn;

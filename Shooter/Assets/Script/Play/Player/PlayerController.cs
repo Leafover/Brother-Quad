@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject dustdown, dustrun;
     [HideInInspector]
     public Collider2D colliderStand;
-    // [HideInInspector]
+    [HideInInspector]
     public GameObject currentStand;
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
@@ -75,12 +75,16 @@ public class PlayerController : MonoBehaviour
     public float forceJump;
     public float timeJump;
     private float force;
+    public void ShowLineBlood()
+    {
+        lineBlood.Show(health, maxHealth);
+    }
     public void TakeDamage(float damage)
     {
         if (playerState == PlayerState.Die)
             return;
         health -= damage;
-        lineBlood.Show(health, maxHealth);
+        ShowLineBlood();
         StartCoroutine(BeAttackFill());
         SoundController.instance.PlaySound(soundGame.soundplayerhit);
         if (health <= 0)
@@ -756,13 +760,18 @@ public class PlayerController : MonoBehaviour
                 if (GameController.instance.waitForWin)
                     GameController.instance.DoneMission(true);
                 break;
-                //case 20:
-                //    transform.position = new Vector2(transform.position.x, transform.position.y + 2);
-                //    rid.velocity = Vector2.zero;
-                //    rid.gravityScale = 0.3f;
-
-                //    break;
         }
+    }
+    public void AddHealth(float _health)
+    {
+
+        if (playerState == PlayerState.Die)
+            return;
+
+        health += _health;
+        ShowLineBlood();
+        if (health >= maxHealth)
+            health = maxHealth;
     }
 
 }

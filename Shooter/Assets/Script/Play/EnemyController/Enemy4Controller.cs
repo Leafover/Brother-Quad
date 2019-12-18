@@ -59,7 +59,7 @@ public class Enemy4Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        if (tempXBegin > Camera.main.transform.position.x + 8f)
+        if (tempXBegin > Camera.main.transform.position.x + 7.5f)
         {
             return;
         }
@@ -67,7 +67,6 @@ public class Enemy4Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-                //   Debug.LogError("zoooooooo atack");
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (!canmove)
                 {
@@ -81,11 +80,6 @@ public class Enemy4Controller : EnemyBase
 
                         Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                         targetPos.transform.position = GetTarget(false);
-                        //timedelayChangePos -= deltaTime;
-                        //if (timedelayChangePos <= 0)
-                        //{
-                        //    isGrenadeStage = true;
-                        //}
                     }
                     return;
                 }

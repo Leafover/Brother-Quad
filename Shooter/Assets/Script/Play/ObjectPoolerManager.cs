@@ -3,8 +3,8 @@ using System.Collections;
 public class ObjectPoolerManager : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler/*, effectE0ExploPooler*/, bulletEnemy3Pooler, bulletEnemy4Pooler, grenadeEnemy4Pooler, slowArenaGrenadeEnemy4Pooler, bulletEnemyV1Pooler, effectExploBulletEnemyV1Pooler, boomEnemyV3Pooler, effectExploBoomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, enemy5Pooler, bulletEnemy6Pooler, bulletEnemy2Pooler, bulletBoss1Pooler, enemyExploPooler, boss1ExploPooler, explofuel1Pooler, explofuel2Pooler, explowoodPooler, explobulletenemy2Pooler, hitMachinePooler, enemy1Pooler;
-    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab/*, effectE1ExploPrefab*/, bulletEnemy3Prefab, bulletEnemy4Prefab, grenadeEnemy4Prefab, slowArenaGrenadeEnemy4Prefab, bulletEnemyV1Prefab, effectExploBulletEnemyV1Prefab, boomEnemyV3Prefab, effectExploBoomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, enemy5Prefab, bulletEnemy6Prefab, bulletEnemy2Prefab, bulletBoss1Prefab, enemyExploPrefab, boss1ExploPrefab, explofuel1Prefab, explofuel2Prefab, explowoodPrefab, explobulletenemy2Prefab, hitMachinePrefab, enemy1Prefab;
+    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler/*, effectE0ExploPooler*/, bulletEnemy3Pooler, bulletEnemy4Pooler, grenadeEnemy4Pooler, slowArenaGrenadeEnemy4Pooler, bulletEnemyV1Pooler, effectExploBulletEnemyV1Pooler, boomEnemyV3Pooler, effectExploBoomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, enemy5Pooler, bulletEnemy6Pooler, bulletEnemy2Pooler, bulletBoss1Pooler, enemyExploPooler, boss1ExploPooler, explofuel1Pooler, explofuel2Pooler, explowoodPooler, explobulletenemy2Pooler, hitMachinePooler, enemy1Pooler, healthItemPooler, coinItemPooler;
+    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab/*, effectE1ExploPrefab*/, bulletEnemy3Prefab, bulletEnemy4Prefab, grenadeEnemy4Prefab, slowArenaGrenadeEnemy4Prefab, bulletEnemyV1Prefab, effectExploBulletEnemyV1Prefab, boomEnemyV3Prefab, effectExploBoomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, enemy5Prefab, bulletEnemy6Prefab, bulletEnemy2Prefab, bulletBoss1Prefab, enemyExploPrefab, boss1ExploPrefab, explofuel1Prefab, explofuel2Prefab, explowoodPrefab, explobulletenemy2Prefab, hitMachinePrefab, enemy1Prefab, healthItemPrefab, coinItemPrefab;
     [HideInInspector]
     public static ObjectPoolerManager Instance { get; private set; }
 
@@ -23,7 +23,7 @@ public class ObjectPoolerManager : MonoBehaviour
     {
         if (bulletPooler == null)
         {
-            GameObject go = new GameObject("bulletPooler");
+            go = new GameObject("bulletPooler");
             bulletPooler = go.AddComponent<ObjectPooler>();
             bulletPooler.PooledObject = bulletPrefab;
             go.transform.parent = this.gameObject.transform;
@@ -31,7 +31,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (grenadePooler == null)
         {
-            GameObject go = new GameObject("grenadePooler");
+            go = new GameObject("grenadePooler");
             grenadePooler = go.AddComponent<ObjectPooler>();
             grenadePooler.PooledObject = grenadePrefab;
             go.transform.parent = this.gameObject.transform;
@@ -39,7 +39,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (effectGrenadePooler == null)
         {
-            GameObject go = new GameObject("effectGrenadePooler");
+            go = new GameObject("effectGrenadePooler");
             effectGrenadePooler = go.AddComponent<ObjectPooler>();
             effectGrenadePooler.PooledObject = effectGrenadePrefab;
             go.transform.parent = this.gameObject.transform;
@@ -47,7 +47,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletEnemy3Pooler == null)
         {
-            GameObject go = new GameObject("bulletEnemy3Pooler");
+            go = new GameObject("bulletEnemy3Pooler");
             bulletEnemy3Pooler = go.AddComponent<ObjectPooler>();
             bulletEnemy3Pooler.PooledObject = bulletEnemy3Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -55,7 +55,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletEnemy4Pooler == null)
         {
-            GameObject go = new GameObject("bulletEnemy4Pooler");
+            go = new GameObject("bulletEnemy4Pooler");
             bulletEnemy4Pooler = go.AddComponent<ObjectPooler>();
             bulletEnemy4Pooler.PooledObject = bulletEnemy4Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -63,7 +63,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (grenadeEnemy4Pooler == null)
         {
-            GameObject go = new GameObject("grenadeEnemy4Pooler");
+            go = new GameObject("grenadeEnemy4Pooler");
             grenadeEnemy4Pooler = go.AddComponent<ObjectPooler>();
             grenadeEnemy4Pooler.PooledObject = grenadeEnemy4Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -71,7 +71,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (slowArenaGrenadeEnemy4Pooler == null)
         {
-            GameObject go = new GameObject("slowArenaGrenadeEnemy4Pooler");
+            go = new GameObject("slowArenaGrenadeEnemy4Pooler");
             slowArenaGrenadeEnemy4Pooler = go.AddComponent<ObjectPooler>();
             slowArenaGrenadeEnemy4Pooler.PooledObject = slowArenaGrenadeEnemy4Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -79,7 +79,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletEnemyV1Pooler == null)
         {
-            GameObject go = new GameObject("bulletEnemyV1Pooler");
+            go = new GameObject("bulletEnemyV1Pooler");
             bulletEnemyV1Pooler = go.AddComponent<ObjectPooler>();
             bulletEnemyV1Pooler.PooledObject = bulletEnemyV1Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -87,7 +87,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (effectExploBulletEnemyV1Pooler == null)
         {
-            GameObject go = new GameObject("effectExploBulletEnemyV1Pooler");
+            go = new GameObject("effectExploBulletEnemyV1Pooler");
             effectExploBulletEnemyV1Pooler = go.AddComponent<ObjectPooler>();
             effectExploBulletEnemyV1Pooler.PooledObject = effectExploBulletEnemyV1Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -95,7 +95,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (boomEnemyV3Pooler == null)
         {
-            GameObject go = new GameObject("boomEnemyV3Pooler");
+            go = new GameObject("boomEnemyV3Pooler");
             boomEnemyV3Pooler = go.AddComponent<ObjectPooler>();
             boomEnemyV3Pooler.PooledObject = boomEnemyV3Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -103,7 +103,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (effectExploBoomEnemyV3Pooler == null)
         {
-            GameObject go = new GameObject("effectExploBoomEnemyV3Pooler");
+            go = new GameObject("effectExploBoomEnemyV3Pooler");
             effectExploBoomEnemyV3Pooler = go.AddComponent<ObjectPooler>();
             effectExploBoomEnemyV3Pooler.PooledObject = effectExploBoomEnemyV3Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -111,7 +111,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (rocketEnemyV2Pooler == null)
         {
-            GameObject go = new GameObject("rocketEnemyV2Pooler");
+            go = new GameObject("rocketEnemyV2Pooler");
             rocketEnemyV2Pooler = go.AddComponent<ObjectPooler>();
             rocketEnemyV2Pooler.PooledObject = rocketEnemyV2Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -119,7 +119,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (rocketMiniBoss1Pooler == null)
         {
-            GameObject go = new GameObject("rocketMiniBoss1Pooler");
+            go = new GameObject("rocketMiniBoss1Pooler");
             rocketMiniBoss1Pooler = go.AddComponent<ObjectPooler>();
             rocketMiniBoss1Pooler.PooledObject = rocketMiniBoss1Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -127,7 +127,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (enemy5Pooler == null)
         {
-            GameObject go = new GameObject("enemy5Pooler");
+            go = new GameObject("enemy5Pooler");
             enemy5Pooler = go.AddComponent<ObjectPooler>();
             enemy5Pooler.PooledObject = enemy5Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -135,7 +135,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletEnemy6Pooler == null)
         {
-            GameObject go = new GameObject("bulletEnemy6Pooler");
+            go = new GameObject("bulletEnemy6Pooler");
             bulletEnemy6Pooler = go.AddComponent<ObjectPooler>();
             bulletEnemy6Pooler.PooledObject = bulletEnemy6Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -143,7 +143,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletEnemy2Pooler == null)
         {
-            GameObject go = new GameObject("bulletEnemy2Pooler");
+            go = new GameObject("bulletEnemy2Pooler");
             bulletEnemy2Pooler = go.AddComponent<ObjectPooler>();
             bulletEnemy2Pooler.PooledObject = bulletEnemy2Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -151,7 +151,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (bulletBoss1Pooler == null)
         {
-            GameObject go = new GameObject("bulletBoss1Pooler");
+            go = new GameObject("bulletBoss1Pooler");
             bulletBoss1Pooler = go.AddComponent<ObjectPooler>();
             bulletBoss1Pooler.PooledObject = bulletBoss1Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -159,7 +159,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (enemyExploPooler == null)
         {
-            GameObject go = new GameObject("enemyExploPooler");
+            go = new GameObject("enemyExploPooler");
             enemyExploPooler = go.AddComponent<ObjectPooler>();
             enemyExploPooler.PooledObject = enemyExploPrefab;
             go.transform.parent = this.gameObject.transform;
@@ -167,7 +167,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (boss1ExploPooler == null)
         {
-            GameObject go = new GameObject("boss1ExploPooler");
+            go = new GameObject("boss1ExploPooler");
             boss1ExploPooler = go.AddComponent<ObjectPooler>();
             boss1ExploPooler.PooledObject = boss1ExploPrefab;
             go.transform.parent = this.gameObject.transform;
@@ -175,7 +175,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (explofuel1Pooler == null)
         {
-            GameObject go = new GameObject("explofuel1Pooler");
+            go = new GameObject("explofuel1Pooler");
             explofuel1Pooler = go.AddComponent<ObjectPooler>();
             explofuel1Pooler.PooledObject = explofuel1Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -183,7 +183,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (explofuel2Pooler == null)
         {
-            GameObject go = new GameObject("explofuel2Pooler");
+            go = new GameObject("explofuel2Pooler");
             explofuel2Pooler = go.AddComponent<ObjectPooler>();
             explofuel2Pooler.PooledObject = explofuel2Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -191,7 +191,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (explowoodPooler == null)
         {
-            GameObject go = new GameObject("explowoodPooler");
+            go = new GameObject("explowoodPooler");
             explowoodPooler = go.AddComponent<ObjectPooler>();
             explowoodPooler.PooledObject = explowoodPrefab;
             go.transform.parent = this.gameObject.transform;
@@ -199,7 +199,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (explobulletenemy2Pooler == null)
         {
-            GameObject go = new GameObject("explobulletenemy2Pooler");
+            go = new GameObject("explobulletenemy2Pooler");
             explobulletenemy2Pooler = go.AddComponent<ObjectPooler>();
             explobulletenemy2Pooler.PooledObject = explobulletenemy2Prefab;
             go.transform.parent = this.gameObject.transform;
@@ -207,7 +207,7 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (hitMachinePooler == null)
         {
-            GameObject go = new GameObject("hitMachinePooler");
+            go = new GameObject("hitMachinePooler");
             hitMachinePooler = go.AddComponent<ObjectPooler>();
             hitMachinePooler.PooledObject = hitMachinePrefab;
             go.transform.parent = this.gameObject.transform;
@@ -215,11 +215,28 @@ public class ObjectPoolerManager : MonoBehaviour
         }
         if (enemy1Pooler == null)
         {
-            GameObject go = new GameObject("enemy1Pooler");
+            go = new GameObject("enemy1Pooler");
             enemy1Pooler = go.AddComponent<ObjectPooler>();
             enemy1Pooler.PooledObject = enemy1Prefab;
             go.transform.parent = this.gameObject.transform;
             enemy1Pooler.Initialize();
         }
+        if (healthItemPooler == null)
+        {
+            go = new GameObject("healthItemPooler");
+            healthItemPooler = go.AddComponent<ObjectPooler>();
+            healthItemPooler.PooledObject = healthItemPrefab;
+            go.transform.parent = this.gameObject.transform;
+            healthItemPooler.Initialize();
+        }
+        if (coinItemPooler == null)
+        {
+            go = new GameObject("coinItemPooler");
+            coinItemPooler = go.AddComponent<ObjectPooler>();
+            coinItemPooler.PooledObject = coinItemPrefab;
+            go.transform.parent = this.gameObject.transform;
+            coinItemPooler.Initialize();
+        }
     }
+    GameObject go;
 }

@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+
+    public bool haveHealhItem, haveCoin;
+
+
+    [HideInInspector]
+    public float percentHealthForPlayer = 10;
+    public int coinAdd;
+
     public bool enemyAutoSpawn;
     public int index, levelBase = 1;
 
@@ -50,7 +58,7 @@ public class EnemyBase : MonoBehaviour
     public float currentHealth;
     public float distanceActive = 6;
 
-   // [HideInInspector]
+    // [HideInInspector]
     public bool isActive;
     int dir;
     [HideInInspector]
@@ -185,7 +193,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
-      //  enemyAutoSpawn = false;
+        //  enemyAutoSpawn = false;
         tempXBegin = transform.position.x;
         if (lineBlood != null)
         {
@@ -228,14 +236,18 @@ public class EnemyBase : MonoBehaviour
 
         if (!isBoss)
         {
-
             if (!activeFar)
                 distanceActive = Camera.main.orthographicSize * 2f;
             else
                 distanceActive = Camera.main.orthographicSize * 2f + 2f;
+
+            randomHaveCoin = Random.Range(0, 2);
+            haveCoin = randomHaveCoin == 1 ? true : false;
         }
         else
+        {
             distanceActive = Camera.main.orthographicSize * 2 + 3;
+        }
 
         AddProperties();
 
@@ -243,7 +255,7 @@ public class EnemyBase : MonoBehaviour
 
         skeletonAnimation.gameObject.SetActive(false);
     }
-
+    int randomHaveCoin;
     void AddProperties()
     {
 
@@ -302,7 +314,8 @@ public class EnemyBase : MonoBehaviour
     {
 
     }
-    GameObject exploDie;
+    GameObject exploDie, healthItem;
+    int randomCoin;
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
         if (aec.die == null || trackEntry == null)
@@ -311,7 +324,14 @@ public class EnemyBase : MonoBehaviour
         {
             gameObject.SetActive(false);
 
-            if (!isBoss)
+            if (haveHealhItem)
+            {
+                healthItem = ObjectPoolerManager.Instance.healthItemPooler.GetPooledObject();
+                healthItem.transform.position = gameObject.transform.position;
+                healthItem.GetComponent<ItemBase>().AddNumberTemp(percentHealthForPlayer);
+                healthItem.SetActive(true);
+            }
+            if (!isBoss && !isMiniBoss)
             {
                 if (isMachine)
                 {
@@ -320,8 +340,19 @@ public class EnemyBase : MonoBehaviour
                     exploDie.transform.position = gameObject.transform.position;
                     exploDie.SetActive(true);
                 }
+                if (haveCoin && GameController.instance.totalDropCoin > 0)
+                {
+                    randomCoin = Random.Range(3, 5);
+                    if (GameController.instance.totalDropCoin - randomCoin < 0)
+                    {
+                        randomCoin = GameController.instance.totalDropCoin;
+                    }
+                    GameController.instance.totalDropCoin -= randomCoin;
+                    GameController.instance.SpawnCoin(randomCoin);
+                    Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
+                }
             }
-            else
+            else if(isBoss)
             {
                 // SoundController.instance.PlaySound(soundGame.exploGrenade);
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
@@ -329,6 +360,16 @@ public class EnemyBase : MonoBehaviour
                 exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
                 exploDie.SetActive(true);
                 CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+                GameController.instance.SpawnCoin(15);
+            }
+            else if(isMiniBoss)
+            {
+                SoundController.instance.PlaySound(soundGame.soundexploenemy);
+                exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
+                exploDie.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1);
+                exploDie.SetActive(true);
+                CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+                GameController.instance.SpawnCoin(8);
             }
         }
 

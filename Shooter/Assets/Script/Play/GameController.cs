@@ -18,6 +18,9 @@ public class AssetSpineEnemyController
 
 public class GameController : MonoBehaviour
 {
+
+    public int totalDropCoin;
+
     public int countStar;
     public bool win;
 
@@ -27,7 +30,8 @@ public class GameController : MonoBehaviour
     public MapController currentMap;
 
     public GameObject targetDetectSprite;
-    public List<EnemyBase> autoTarget,enemyLockCam;
+    public List<EnemyBase> autoTarget, enemyLockCam;
+    public List<ItemBase> itemDrops;
     public GameObject UIControll;
     public enum GameState
     {
@@ -53,6 +57,25 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.play;
     }
+    GameObject coinItem;
+    public void SpawnCoin(int total)
+    {
+        for (int i = 0; i < total; i++)
+        {
+            coinItem = ObjectPoolerManager.Instance.coinItemPooler.GetPooledObject();
+            coinItem.transform.position = gameObject.transform.position;
+            coinItem.SetActive(true);
+        }
+    }
+    void AddProperties()
+    {
+        totalDropCoin = (int)DataController.instance.missions[DataParam.indexMap].totaldropcoin;
+        if (currentMap.haveMiniBoss)
+            totalDropCoin -= 8;
+        if (currentMap.haveBoss)
+            totalDropCoin -= 15;
+    }
+
     private void Start()
     {
         currentMap = Instantiate(listMap[DataParam.indexMap]);
@@ -69,6 +92,8 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(CountTimePlay());
 
+
+        AddProperties();
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
@@ -287,6 +312,17 @@ public class GameController : MonoBehaviour
         }
 
     }
+    void OnUpdateItemDrop(float deltaTime)
+    {
+        if (itemDrops.Count == 0)
+            return;
+        for(int i = 0; i < itemDrops.Count; i ++)
+        {
+            itemDrops[i].CalculateDisable();
+
+        }
+    }
+
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
@@ -305,7 +341,7 @@ public class GameController : MonoBehaviour
         OnUpdatePlayer(deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
-
+        OnUpdateItemDrop(deltaTime);
 
         if (Input.GetKey(KeyCode.S))
         {

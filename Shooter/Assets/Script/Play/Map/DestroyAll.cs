@@ -42,6 +42,9 @@ public class DestroyAll : MonoBehaviour
             case 10:
                 collision.gameObject.SetActive(false);
                 break;
+            case 25:
+                collision.gameObject.SetActive(false);
+                break;
         }
     }
 }

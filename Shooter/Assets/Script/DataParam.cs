@@ -5,5 +5,10 @@ using System;
 public class DataParam : MonoBehaviour
 {
     public static int indexMap;
+    public static float totalCoin;
 
+    public static void AddCoin(float _coin)
+    {
+        totalCoin += _coin;
+    }
 }
