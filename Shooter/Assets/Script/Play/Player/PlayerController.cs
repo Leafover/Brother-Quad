@@ -392,7 +392,7 @@ public class PlayerController : MonoBehaviour
             if (timeReload <= 0)
             {
                 // skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
-                skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+             //   skeletonAnimation.AnimationState.SetEmptyAnimation(2, 0);
                 AddNumberBullet(-maxNumberBullet);
                 reload = false;
                 SoundController.instance.PlaySound(soundGame.soundreload);
