@@ -277,7 +277,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8191634057274809669}
-  - component: {fileID: 6642837862201862421}
+  - component: {fileID: 484035387773953508}
+  - component: {fileID: 1629952864323050475}
   m_Layer: 27
   m_Name: meleeatackbox
   m_TagString: Untagged
@@ -299,8 +300,8 @@ Transform:
   m_Father: {fileID: 8566759334118433422}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &6642837862201862421
-CircleCollider2D:
+--- !u!61 &484035387773953508
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -312,9 +313,40 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.028337449}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.361866
+  m_Size: {x: 1, y: 0.44584757}
+  m_EdgeRadius: 0
+--- !u!50 &1629952864323050475
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766442817994050529}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &9158346202514010736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,11 +669,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e0e810290c789499d46e6419d173be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotraycheckenemyMelee: {fileID: 0}
   au: {fileID: 6164854147576179952}
   level: 1
   damageBullet: 3
   damgeGrenade: 30
-  meleeAtackBox: {fileID: 6642837862201862421}
+  meleeAtackBox: {fileID: 484035387773953508}
   dustdown: {fileID: 9123588116278554155}
   dustrun: {fileID: 4521768855224965164}
   effecthealth: {fileID: 8921635498113372643}
@@ -667,7 +700,7 @@ MonoBehaviour:
   strboneBarrelGun: DAUSUNG
   strboneHandGrenade: R_Hand_3_LUU DAN
   timedelayAttackGun: 0.2
-  timedelayAttackKnife: 0.1
+  timedelayMeleeAttack: 0.6
   timedelayGrenade: 5
   timedelayRocket: 0
   numberBullet: 0
@@ -682,7 +715,7 @@ MonoBehaviour:
     m_Bits: 10486016
   lmMeleeAtack:
     serializedVersion: 2
-    m_Bits: 8913920
+    m_Bits: 525312
   offsetBox: {x: 0.01812363, y: 0.03262973}
   sizeBox: {x: 0.2823029, y: 1.297242}
   offsetBoxSit: {x: 0.01812363, y: -0.1991107}
@@ -707,6 +740,8 @@ MonoBehaviour:
     m_Bits: 2097152
   target: {x: 0, y: 0}
   radius: 0.13
+  leftface: {fileID: 0}
+  rightface: {fileID: 0}
   layerTarget:
     serializedVersion: 2
     m_Bits: 512
@@ -1146,15 +1181,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faacd2e100c2cdf4eb3bf1846a6be524, type: 3}
---- !u!4 &4521768855224965161 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8828540774164647804, guid: faacd2e100c2cdf4eb3bf1846a6be524,
-    type: 3}
-  m_PrefabInstance: {fileID: 4919562330858657621}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4521768855224965164 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
+    type: 3}
+  m_PrefabInstance: {fileID: 4919562330858657621}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4521768855224965161 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8828540774164647804, guid: faacd2e100c2cdf4eb3bf1846a6be524,
     type: 3}
   m_PrefabInstance: {fileID: 4919562330858657621}
   m_PrefabAsset: {fileID: 0}

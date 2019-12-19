@@ -7,18 +7,18 @@ using Spine;
 [System.Serializable]
 public class AssetSpinePlayerController
 {
-    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim, winAnim,meleeAttackAnim;
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim, winAnim, meleeAttackAnim;
 }
 
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut,lowHPAnim;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim;
 }
 
 public class GameController : MonoBehaviour
 {
-
+    public int countCombo;
     public int totalDropCoin;
 
     public int countStar;
@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
 
     public UIPanel uiPanel;
     public List<MapController> listMap;
-
+    public List<CritWhamBang> listcirtwhambang;
     public MapController currentMap;
 
     public GameObject targetDetectSprite;
@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
         gameState = GameState.play;
     }
     GameObject coinItem;
-    public void SpawnCoin(int total,Vector2 pos)
+    public void SpawnCoin(int total, Vector2 pos)
     {
         for (int i = 0; i < total; i++)
         {
@@ -93,8 +93,30 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(CountTimePlay());
 
-
+        countCombo = 0;
         AddProperties();
+    }
+    public float timeCountCombo, maxtimeCountCombo;
+    public void AddCombo()
+    {
+        if (countCombo == 0)
+        {
+            uiPanel.comboDisplay.SetActive(true);
+        }
+        timeCountCombo = maxtimeCountCombo;
+        countCombo++;
+        uiPanel.comboNumberText.text = "X" + countCombo;
+        if (countCombo >= 11)
+        {
+            uiPanel.comboText.text = "UNBELIEVABLE";
+        }
+       // Debug.Log("-------- show combo");
+    }
+    public void ResetCombo()
+    {
+        uiPanel.comboDisplay.SetActive(false);
+        countCombo = 0;
+        uiPanel.comboText.text = "Combo Kill";
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
@@ -306,13 +328,29 @@ public class GameController : MonoBehaviour
     {
         if (itemDrops.Count == 0)
             return;
-        for(int i = 0; i < itemDrops.Count; i ++)
+        for (int i = 0; i < itemDrops.Count; i++)
         {
             itemDrops[i].CalculateDisable();
 
         }
     }
-
+    void OnUpdateCountCombo(float deltaTime)
+    {
+        if (!uiPanel.comboDisplay.activeSelf)
+            return;
+        timeCountCombo -= deltaTime;
+        if(timeCountCombo <= 0)
+        {
+            ResetCombo();
+        }
+    }
+    void OnUpdateCritWhambang(float deltaTime)
+    {
+        for(int i = 0; i < listcirtwhambang.Count; i ++)
+        {
+            listcirtwhambang[i].DisableMe(deltaTime);
+        }
+    }
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
@@ -332,7 +370,8 @@ public class GameController : MonoBehaviour
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
         OnUpdateItemDrop(deltaTime);
-
+        OnUpdateCountCombo(deltaTime);
+        OnUpdateCritWhambang(deltaTime);
         if (Input.GetKey(KeyCode.S))
         {
             TryShot();
@@ -345,7 +384,10 @@ public class GameController : MonoBehaviour
     }
     public void TryShot()
     {
-        PlayerController.instance.ShootDown();
+        if (!PlayerController.instance.isMeleeAttack)
+            PlayerController.instance.ShootDown();
+        else
+            PlayerController.instance.MeleeAttack();
     }
     public void TryJump()
     {
@@ -361,7 +403,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(delayWin());
     }
     WaitForSeconds delaywinwait;
-     IEnumerator delayWin()
+    IEnumerator delayWin()
     {
         yield return delaywinwait;
         WinGame();

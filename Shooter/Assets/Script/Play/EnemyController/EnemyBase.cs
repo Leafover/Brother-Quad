@@ -358,7 +358,7 @@ public class EnemyBase : MonoBehaviour
                         }
                         GameController.instance.totalDropCoin -= randomCoin;
                         GameController.instance.SpawnCoin(randomCoin, transform.position);
-                      //  Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
+                        //  Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
                     }
                 }
             }
@@ -473,7 +473,7 @@ public class EnemyBase : MonoBehaviour
         GameController.instance.RemoveTarget(this);
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         DisableAllBullet();
-
+        GameController.instance.AddCombo();
         if (isBoss || isMiniBoss)
             GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
 
@@ -543,6 +543,7 @@ public class EnemyBase : MonoBehaviour
             hiteffect.SetActive(true);
         }
     }
+    int takecrithit;
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -551,7 +552,21 @@ public class EnemyBase : MonoBehaviour
             case 11:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damageBullet);
+
+                takecrithit = Random.Range(0, 100);
+                if (takecrithit <= 10)
+                {
+                    TakeDamage(PlayerController.instance.damageBullet * 2);
+
+                    GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
+                   // Debug.Log("------ chet boi? dan.");
+
+                }
+                else
+                {
+                    TakeDamage(PlayerController.instance.damageBullet);
+                }
+
                 collision.gameObject.SetActive(false);
                 break;
             case 14:
@@ -559,6 +574,12 @@ public class EnemyBase : MonoBehaviour
                     return;
 
                 TakeDamage(PlayerController.instance.damgeGrenade);
+
+                if (currentHealth <= 0)
+                {
+                    GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
+                  //  Debug.Log("------ chet boi? luu dan");
+                }
                 break;
             case 26:
                 if (!incam || enemyState == EnemyState.die)
@@ -569,6 +590,12 @@ public class EnemyBase : MonoBehaviour
                 if (!incam || enemyState == EnemyState.die)
                     return;
                 TakeDamage(PlayerController.instance.damageBullet * 1.5f);
+               // Debug.Log("cham vao dao");
+                if (currentHealth <= 0)
+                {
+                    GameController.instance.listcirtwhambang[2].DisplayMe(transform.position);
+                  //  Debug.Log("------ chet boi? dao");
+                }
                 break;
             case 20:
                 gameObject.SetActive(false);

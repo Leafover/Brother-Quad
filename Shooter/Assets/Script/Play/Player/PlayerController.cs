@@ -9,7 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public Transform shotraycheckenemyMelee;
     public AudioSource au;
 
     public int level = 1;
@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade, timePreviousRocket;
-    public float timedelayAttackGun, timedelayAttackKnife, timedelayGrenade, timedelayRocket;
+    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack;
+    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket;
 
     public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
@@ -217,6 +217,8 @@ public class PlayerController : MonoBehaviour
 
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
+        timePreviousMeleeAttack = 0;
+
         waitBeAttack = new WaitForSeconds(0.075f);
 
         AddProperties();
@@ -291,10 +293,7 @@ public class PlayerController : MonoBehaviour
             candoublejump = true;
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform));
-    }
+
     public void SetAnim()
     {
         switch (playerState)
@@ -333,6 +332,10 @@ public class PlayerController : MonoBehaviour
     public Vector2 target;
     Vector2 movePos;
     public float radius;
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius);
+    //}
     public void OnUpdate(float deltaTime)
     {
         // Debug.Log(rid.velocity.x);
@@ -365,11 +368,16 @@ public class PlayerController : MonoBehaviour
             timePreviousAttack -= deltaTime;
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
-
+        if (timePreviousMeleeAttack > 0)
+            timePreviousMeleeAttack -= deltaTime;
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
 
         if (playerState != PlayerState.Jump)
-            isMeleeAttack = Physics2D.Linecast(transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform),lmMeleeAtack);
+        {
+            isMeleeAttack = Physics2D.Linecast(foot.transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), lmMeleeAtack); /*Physics2D.OverlapCircle(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius, lmMeleeAtack)*/ /*FlipX ? Physics2D.Linecast(transform.position, rightface.position, lmMeleeAtack) : Physics2D.Linecast(transform.position, leftface.position, lmMeleeAtack)*/;
+           // Debug.DrawLine(transform.position, rightface.position);
+
+        }
         else
             isMeleeAttack = false;
 
@@ -391,14 +399,14 @@ public class PlayerController : MonoBehaviour
             timeReload -= deltaTime;
             if (timeReload <= 0)
             {
-                // skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
-             //   skeletonAnimation.AnimationState.SetEmptyAnimation(2, 0);
+                skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
                 AddNumberBullet(-maxNumberBullet);
                 reload = false;
                 SoundController.instance.PlaySound(soundGame.soundreload);
             }
         }
     }
+    public Transform leftface, rightface;
     void AddNumberBullet(int _sub)
     {
         numberBullet -= _sub;
@@ -479,11 +487,7 @@ public class PlayerController : MonoBehaviour
             grenade.SetActive(true);
             isGrenade = false;
         }
-        //else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
-        //{
-        //    meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //    meleeAtackBox.gameObject.SetActive(true);
-        //}
+
     }
     private void OnComplete(TrackEntry trackEntry)
     {
@@ -671,20 +675,21 @@ public class PlayerController : MonoBehaviour
             SetBox(sizeBox, offsetBox);
         }
     }
-
-    public void ShootDown()
+    public void MeleeAttack()
     {
-
-
-        if (!isGrenade && isMeleeAttack && !meleeAtackBox.gameObject.activeSelf)
+        if (isGrenade || meleeAtackBox.gameObject.activeSelf)
         {
-            skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
-            meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            meleeAtackBox.gameObject.SetActive(true);
-         //   Debug.LogError("zo day");
             return;
         }
-
+        if (timePreviousMeleeAttack > 0)
+            return;
+        timePreviousMeleeAttack = timedelayMeleeAttack;
+        skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
+        meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        meleeAtackBox.gameObject.SetActive(true);
+    }
+    public void ShootDown()
+    {
         if (reload || isGrenade || meleeAtackBox.gameObject.activeSelf)
         {
             return;
@@ -697,7 +702,6 @@ public class PlayerController : MonoBehaviour
 
     }
     float timeReload;
-
 
     public void ChangeKnife()
     {
@@ -746,10 +750,21 @@ public class PlayerController : MonoBehaviour
             if (d < dMin)
             {
                 dMin = d;
-                targetTemp = enemy.transform.position;
-                GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
-                GameController.instance.targetDetectSprite.SetActive(true);
-                haveTarget = true;
+
+                if (d >= 0.5f)
+                {
+                    targetTemp = enemy.transform.position;
+                    GameController.instance.targetDetectSprite.transform.position = enemy.transform.position;
+                    GameController.instance.targetDetectSprite.SetActive(true);
+                    haveTarget = true;
+                }
+                else
+                {
+                    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
+                    GameController.instance.targetDetectSprite.SetActive(false);
+                    haveTarget = false;
+                }
+
 
                 //if (dMin < 0.5f || target.x >= float.MaxValue || target.y >= float.MaxValue)
                 //{

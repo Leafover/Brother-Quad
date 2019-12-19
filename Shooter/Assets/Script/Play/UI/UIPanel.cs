@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
@@ -12,6 +13,8 @@ public class UIPanel : MonoBehaviour
     public List<GameObject> starCount;
     public Animator animGamOver;
     public HealthBarBoss healthBarBoss;
+    public GameObject comboDisplay;
+    public TextMeshProUGUI comboText, comboNumberText;
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);

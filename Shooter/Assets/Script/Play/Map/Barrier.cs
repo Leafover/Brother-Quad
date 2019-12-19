@@ -65,9 +65,9 @@ public class Barrier : MonoBehaviour
             case 26:
                 TakeDamage(PlayerController.instance.damgeGrenade);
                 break;
-            case 27:
-                TakeDamage(PlayerController.instance.damageBullet * 1.5f);
-                break;
+            //case 27:
+            //    TakeDamage(PlayerController.instance.damageBullet * 1.5f);
+            //    break;
         }
     }
 }
