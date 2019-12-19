@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
     bool reload;
-
-    public GameObject dustdown, dustrun,effecthealth;
+    public Collider2D meleeAtackBox;
+    public GameObject dustdown, dustrun, effecthealth;
     [HideInInspector]
     public Collider2D colliderStand;
     [HideInInspector]
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rid;
     public BoxCollider2D box;
     public Collider2D foot;
-    public LayerMask lm;
+    public LayerMask lm, lmMeleeAtack;
 
     [SerializeField]
     Vector2 offsetBox, sizeBox;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     public float speedmove;
     [HideInInspector]
     public bool isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
-
+    public bool isMeleeAttack;
 
     //public IEnumerator Move()
     //{
@@ -154,6 +154,10 @@ public class PlayerController : MonoBehaviour
     }
     public void TryGrenade()
     {
+
+        if (meleeAtackBox.gameObject.activeSelf)
+            return;
+
         if (timePreviousGrenade > 0)
             return;
         timePreviousGrenade = timedelayGrenade;
@@ -264,7 +268,8 @@ public class PlayerController : MonoBehaviour
         {
             //   SoundController.instance.PlaySound(soundGame.soundbtnclick);
             SoundController.instance.PlaySound(soundGame.soundjump);
-
+            isMeleeAttack = false;
+            meleeAtackBox.gameObject.SetActive(false);
             if (rid.gravityScale == .2f)
                 rid.gravityScale = 1;
             if (colliderStand != null)
@@ -286,10 +291,10 @@ public class PlayerController : MonoBehaviour
             candoublejump = true;
         }
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform));
+    }
     public void SetAnim()
     {
         switch (playerState)
@@ -362,8 +367,25 @@ public class PlayerController : MonoBehaviour
             timePreviousGrenade -= deltaTime;
 
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
+
+        if (playerState != PlayerState.Jump)
+            isMeleeAttack = Physics2D.Linecast(transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform),lmMeleeAtack);
+        else
+            isMeleeAttack = false;
+
         if (!reload)
+        {
+            if (numberBullet == 0)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
+                reload = true;
+                timeReload = 1;
+                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
+            }
             return;
+        }
+
+
         if (timeReload > 0)
         {
             timeReload -= deltaTime;
@@ -437,11 +459,6 @@ public class PlayerController : MonoBehaviour
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-            //if (reload)
-            //{
-            //    reload = false;
-            //    return;
-            //}
             bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
             dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -452,13 +469,7 @@ public class PlayerController : MonoBehaviour
 
             AddNumberBullet(1);
             SoundController.instance.PlaySound(soundGame.shootnormal);
-            if (numberBullet == 0)
-            {
-                skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
-                reload = true;
-                timeReload = 1;
-                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
-            }
+
 
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
@@ -468,12 +479,23 @@ public class PlayerController : MonoBehaviour
             grenade.SetActive(true);
             isGrenade = false;
         }
+        //else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
+        //{
+        //    meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        //    meleeAtackBox.gameObject.SetActive(true);
+        //}
     }
     private void OnComplete(TrackEntry trackEntry)
     {
         if (trackEntry.Animation.Name.Equals(apc.waitstandAnim.name))
         {
             isWaitStand = false;
+        }
+        else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
+        {
+            meleeAtackBox.gameObject.SetActive(false);
+            //skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+            //skeletonAnimation.AnimationState.SetEmptyAnimation(0, 0);
         }
     }
     public Vector2 GetOriginGun()
@@ -652,7 +674,18 @@ public class PlayerController : MonoBehaviour
 
     public void ShootDown()
     {
-        if (reload || isGrenade)
+
+
+        if (!isGrenade && isMeleeAttack && !meleeAtackBox.gameObject.activeSelf)
+        {
+            skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
+            meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            meleeAtackBox.gameObject.SetActive(true);
+         //   Debug.LogError("zo day");
+            return;
+        }
+
+        if (reload || isGrenade || meleeAtackBox.gameObject.activeSelf)
         {
             return;
         }

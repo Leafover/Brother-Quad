@@ -268,6 +268,53 @@ Transform:
   m_Father: {fileID: 3856721961445178035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3766442817994050529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8191634057274809669}
+  - component: {fileID: 6642837862201862421}
+  m_Layer: 27
+  m_Name: meleeatackbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8191634057274809669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766442817994050529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8566759334118433422}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &6642837862201862421
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766442817994050529}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.361866
 --- !u!114 &9158346202514010736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +621,7 @@ Transform:
   - {fileID: 9077856134680710417}
   - {fileID: 3856721961445178035}
   - {fileID: 2426511855336426418}
+  - {fileID: 8191634057274809669}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -593,6 +641,7 @@ MonoBehaviour:
   level: 1
   damageBullet: 3
   damgeGrenade: 30
+  meleeAtackBox: {fileID: 6642837862201862421}
   dustdown: {fileID: 9123588116278554155}
   dustrun: {fileID: 4521768855224965164}
   effecthealth: {fileID: 8921635498113372643}
@@ -614,6 +663,7 @@ MonoBehaviour:
     dieAnim: {fileID: 11400000, guid: 2b517f5fa99f278438ced138b869ec24, type: 2}
     reloadAnim: {fileID: 11400000, guid: e33c8bbde6e7c6546b042f3ca9fc198f, type: 2}
     winAnim: {fileID: 11400000, guid: 92d88aa993484224788c870e8786d6f6, type: 2}
+    meleeAttackAnim: {fileID: 11400000, guid: fa6eb2f793a5e544091ba6573b436fb3, type: 2}
   strboneBarrelGun: DAUSUNG
   strboneHandGrenade: R_Hand_3_LUU DAN
   timedelayAttackGun: 0.2
@@ -630,6 +680,9 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 10486016
+  lmMeleeAtack:
+    serializedVersion: 2
+    m_Bits: 8913920
   offsetBox: {x: 0.01812363, y: 0.03262973}
   sizeBox: {x: 0.2823029, y: 1.297242}
   offsetBoxSit: {x: 0.01812363, y: -0.1991107}
@@ -646,6 +699,7 @@ MonoBehaviour:
   isGround: 0
   isfalldow: 0
   candoublejump: 0
+  isMeleeAttack: 0
   forceJump: 60
   timeJump: 0.5
   lmgroundcandown:
@@ -1092,15 +1146,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faacd2e100c2cdf4eb3bf1846a6be524, type: 3}
---- !u!1 &4521768855224965164 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
-    type: 3}
-  m_PrefabInstance: {fileID: 4919562330858657621}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4521768855224965161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8828540774164647804, guid: faacd2e100c2cdf4eb3bf1846a6be524,
+    type: 3}
+  m_PrefabInstance: {fileID: 4919562330858657621}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4521768855224965164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
     type: 3}
   m_PrefabInstance: {fileID: 4919562330858657621}
   m_PrefabAsset: {fileID: 0}

@@ -565,6 +565,11 @@ public class EnemyBase : MonoBehaviour
                     return;
                 TakeDamage(PlayerController.instance.damgeGrenade);
                 break;
+            case 27:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
+                TakeDamage(PlayerController.instance.damageBullet * 1.5f);
+                break;
             case 20:
                 gameObject.SetActive(false);
                 break;
