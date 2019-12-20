@@ -11,4 +11,12 @@ public class ItemHealth : ItemBase
         PlayerController.instance.AddHealth(PlayerController.instance.maxHealth / 100 * numberTemp);
         SoundController.instance.PlaySound(soundGame.soundEatHP);
     }
+    public override void CalculateDisable(float deltaTime)
+    {
+        base.CalculateDisable(deltaTime);
+        if (transform.position.x < CameraController.instance.NumericBoundaries.LeftBoundary)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

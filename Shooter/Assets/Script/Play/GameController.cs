@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
             totalDropCoin -= 15;
         }
         uiPanel.Begin();
+        SoundController.instance.PlaySound(soundGame.soundletgo);
     }
 
     private void Start()
@@ -94,7 +95,7 @@ public class GameController : MonoBehaviour
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
         timeCountPlay = new WaitForSecondsRealtime(1);
-        delaywinwait = new WaitForSeconds(3.5f);
+        delaywinwait = new WaitForSeconds(2f);
 
 
         StartCoroutine(CountTimePlay());
@@ -310,7 +311,10 @@ public class GameController : MonoBehaviour
     }
     float timePlay;
     WaitForSecondsRealtime timeCountPlay;
-
+    public void StopAll()
+    {
+        StopAllCoroutines();
+    }
     System.TimeSpan timeSpanTemp;
     IEnumerator CountTimePlay()
     {
@@ -360,8 +364,7 @@ public class GameController : MonoBehaviour
             return;
         for (int i = 0; i < itemDrops.Count; i++)
         {
-            itemDrops[i].CalculateDisable();
-
+            itemDrops[i].CalculateDisable(deltaTime);
         }
     }
     void OnUpdateCountCombo(float deltaTime)

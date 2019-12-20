@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
 {
     public Transform shotraycheckenemyMelee;
     public AudioSource au;
-
+    public Animator animArrow;
     public int level = 1;
-    bool isGrenade;
+    public bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
-    bool reload;
+    public bool reload;
     public Collider2D meleeAtackBox;
     public GameObject dustdown, dustrun, effecthealth;
     [HideInInspector]
@@ -332,12 +332,23 @@ public class PlayerController : MonoBehaviour
     public Vector2 target;
     Vector2 movePos;
     public float radius;
+    float timeStand = 6;
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawWireSphere(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius);
     //}
     public void OnUpdate(float deltaTime)
     {
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            animArrow.SetBool("animarrow", true);
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            animArrow.SetBool("animarrow", false);
+        }
+
         // Debug.Log(rid.velocity.x);
         isGround = Physics2D.OverlapCircle(foot.transform.position, radius, lm);
         movePos.x = speedmove;
@@ -370,12 +381,34 @@ public class PlayerController : MonoBehaviour
             timePreviousGrenade -= deltaTime;
         if (timePreviousMeleeAttack > 0)
             timePreviousMeleeAttack -= deltaTime;
+
+        if (playerState == PlayerState.Idle)
+        {
+            if (timeStand > 0 && !animArrow.GetBool("animarrow"))
+            {
+                timeStand -= deltaTime;
+                if (timeStand <= 0)
+                {
+                    animArrow.SetBool("animarrow", true);
+                    //Debug.Log("----chay anim arrow--");
+                }
+            }
+        }
+        else
+        {
+            if (timeStand != 6 && animArrow.GetBool("animarrow"))
+            {
+                timeStand = 6;
+                animArrow.SetBool("animarrow", false);
+                 //  Debug.Log("------stop anim arrow----");
+            }
+        }
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
 
         if (playerState != PlayerState.Jump)
         {
             isMeleeAttack = Physics2D.Linecast(foot.transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), lmMeleeAtack); /*Physics2D.OverlapCircle(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius, lmMeleeAtack)*/ /*FlipX ? Physics2D.Linecast(transform.position, rightface.position, lmMeleeAtack) : Physics2D.Linecast(transform.position, leftface.position, lmMeleeAtack)*/;
-           // Debug.DrawLine(transform.position, rightface.position);
+            // Debug.DrawLine(transform.position, rightface.position);
 
         }
         else
@@ -600,6 +633,7 @@ public class PlayerController : MonoBehaviour
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);
         }
+
     }
     WaitForSeconds waitBeAttack;
     //   int randomWin;

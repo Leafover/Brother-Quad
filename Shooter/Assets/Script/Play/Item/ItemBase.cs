@@ -5,7 +5,8 @@ using UnityEngine;
 public class ItemBase : MonoBehaviour
 {
     public float numberTemp;
-   public Rigidbody2D rid;
+    public Rigidbody2D rid;
+    public Collider2D collider;
 
     public void AddNumberTemp(float temp)
     {
@@ -19,6 +20,8 @@ public class ItemBase : MonoBehaviour
     {
         if (rid == null)
             rid = GetComponent<Rigidbody2D>();
+        if (collider == null)
+            collider = GetComponent<Collider2D>();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,12 +32,12 @@ public class ItemBase : MonoBehaviour
                 break;
         }
     }
-    public void CalculateDisable()
+    public virtual void CalculateDisable(float deltaTime)
     {
-        if (transform.position.x < CameraController.instance.NumericBoundaries.LeftBoundary)
-        {
-            gameObject.SetActive(false);
-        }
+        //if (transform.position.x < CameraController.instance.NumericBoundaries.LeftBoundary)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
     public virtual void OnEnable()
     {

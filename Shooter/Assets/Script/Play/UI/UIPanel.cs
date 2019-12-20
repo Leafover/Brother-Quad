@@ -31,12 +31,14 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnReset()
     {
+
         Application.LoadLevel(Application.loadedLevel);
     }
 
     public void BtnBack()
     {
         DataParam.nextSceneAfterLoad = 0;
+
         Application.LoadLevel(1);
     }
     public void FillGrenade(float _current, float _max)
@@ -45,8 +47,11 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnNext()
     {
+
+        GameController.instance.StopAll();
         if (DataParam.indexMap < GameController.instance.listMap.Count - 1)
             DataParam.indexMap++;
+
         Application.LoadLevel(Application.loadedLevel);
     }
     public void DisplayFinish(int _countstar)

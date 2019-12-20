@@ -69,6 +69,7 @@ public class CameraController : MonoBehaviour
             nextPointCheck.gameObject.SetActive(true);
             currentRightBoudary = Camera.main.transform.position.x;
             nextPointCheck.enabled = true;
+            SoundController.instance.PlaySound(soundGame.soundletgo);
         }
         else
         {
