@@ -558,6 +558,8 @@ public class EnemyBase : MonoBehaviour
                 {
                     TakeDamage(PlayerController.instance.damageBullet * 2);
 
+                    if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
+                        SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
                    // Debug.Log("------ chet boi? dan.");
 
@@ -577,6 +579,8 @@ public class EnemyBase : MonoBehaviour
 
                 if (currentHealth <= 0)
                 {
+                    if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
+                        SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                   //  Debug.Log("------ chet boi? luu dan");
                 }
@@ -590,9 +594,12 @@ public class EnemyBase : MonoBehaviour
                 if (!incam || enemyState == EnemyState.die)
                     return;
                 TakeDamage(PlayerController.instance.damageBullet * 1.5f);
-               // Debug.Log("cham vao dao");
+                SoundController.instance.PlaySound(soundGame.sounddapchao);
+                // Debug.Log("cham vao dao");
                 if (currentHealth <= 0)
                 {
+                    if (!GameController.instance.listcirtwhambang[2].gameObject.activeSelf)
+                        SoundController.instance.PlaySound(soundGame.soundWham);
                     GameController.instance.listcirtwhambang[2].DisplayMe(transform.position);
                   //  Debug.Log("------ chet boi? dao");
                 }

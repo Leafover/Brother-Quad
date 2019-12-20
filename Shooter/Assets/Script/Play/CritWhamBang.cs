@@ -8,11 +8,14 @@ public class CritWhamBang : MonoBehaviour
     Vector2 temp;
     public void DisplayMe(Vector2 pos)
     {
+
         temp.x = pos.x - 0.5f;
         temp.y = pos.y + 0.5f;
         timeDisplay = 1;
         gameObject.transform.position = temp;
         gameObject.SetActive(true);
+
+        
     }
     public void DisableMe(float deltaTime)
     {

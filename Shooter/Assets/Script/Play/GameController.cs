@@ -71,9 +71,14 @@ public class GameController : MonoBehaviour
     {
         totalDropCoin = (int)DataController.instance.missions[DataParam.indexMap].totaldropcoin;
         if (currentMap.haveMiniBoss)
+        {
             totalDropCoin -= 8;
+        }
         if (currentMap.haveBoss)
+        {
             totalDropCoin -= 15;
+        }
+        uiPanel.Begin();
     }
 
     private void Start()
@@ -91,6 +96,7 @@ public class GameController : MonoBehaviour
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(3.5f);
 
+
         StartCoroutine(CountTimePlay());
 
         countCombo = 0;
@@ -105,6 +111,30 @@ public class GameController : MonoBehaviour
         }
         timeCountCombo = maxtimeCountCombo;
         countCombo++;
+        if(countCombo == 2)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillx2);
+        }
+        else if (countCombo == 4)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillx4);
+        }
+        else if (countCombo == 6)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillx6);
+        }
+        else if(countCombo == 8)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillx8);
+        }
+       else if (countCombo == 10)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillx10);
+        }
+        else if (countCombo >= 12)
+        {
+            SoundController.instance.PlaySound(soundGame.soundmultikillmax);
+        }
         uiPanel.comboNumberText.text = "X" + countCombo;
         if (countCombo >= 11)
         {
@@ -372,6 +402,7 @@ public class GameController : MonoBehaviour
         OnUpdateItemDrop(deltaTime);
         OnUpdateCountCombo(deltaTime);
         OnUpdateCritWhambang(deltaTime);
+        uiPanel.CalculateMiniMap();
         if (Input.GetKey(KeyCode.S))
         {
             TryShot();

@@ -415,7 +415,10 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
             ShakeCompleted();
         }
-
+        public bool CheckShaking()
+        {
+            return true ? _shakeCoroutine != null : _shakeCoroutine == null;
+        }
         void ShakeCompleted()
         {
             _shakeParent.localPosition = _influencesSum;

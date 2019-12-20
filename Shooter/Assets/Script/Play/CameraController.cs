@@ -16,14 +16,15 @@ public class CameraController : MonoBehaviour
     public List<Transform> posEnemyV2, posMiniBoss1;
     public List<GameObject> bouders;
     public float speed;
-
     public ProCamera2DNumericBoundaries NumericBoundaries;
+    public ProCamera2DShake prcShake;
 
     public int currentCamBoidaries;
 
     private void OnValidate()
     {
         NumericBoundaries = GetComponent<ProCamera2DNumericBoundaries>();
+        prcShake = GetComponent<ProCamera2DShake>();
     }
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class CameraController : MonoBehaviour
         //ProCamera2D.Instance.OffsetY = 0f;
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
+
 
     }
     public bool setBoudariesLeft = true;
@@ -92,8 +94,9 @@ public class CameraController : MonoBehaviour
         // NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
         NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, speed * 100/*s / v*/);
 
-        if (!setBoudariesLeft)
+        if (!setBoudariesLeft || prcShake.CheckShaking())
             return;
+
         var leftBoundary = transform.position.x - Size().x;
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
@@ -150,6 +153,8 @@ public class CameraController : MonoBehaviour
 
     public void Shake(ShakeType type = ShakeType.ExplosionShake)
     {
+        if (GameController.instance.gameState == GameController.GameState.gameover)
+            return;
         var shakePreset = ProCamera2DShake.Instance.ShakePresets[(int)type];
         ProCamera2DShake.Instance.Shake(shakePreset);
     }

@@ -5,29 +5,35 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
-    public GameObject finishPanel;
-    public GameObject ResetBtn, NextBtn;
+    public List<Text> missionTexts;
+    public GameObject winPanel,defeatPanel;
     public Image grenadeFillAmout, fillbouderGrenade;
-    public Text levelText, gameoverText, bulletText, timeText;
-    public GameObject starbouder;
-    public List<GameObject> starCount;
+    public Text levelText, bulletText, timeText;
+
     public Animator animGamOver;
     public HealthBarBoss healthBarBoss;
     public GameObject comboDisplay;
     public TextMeshProUGUI comboText, comboNumberText;
+
+    public Slider slideMiniMap;
+    public GameObject haveBossInMiniMap;
+    public void CalculateMiniMap()
+    {
+        if (slideMiniMap.value == 1)
+            return;
+        slideMiniMap.value = (PlayerController.instance.transform.position.x - GameController.instance.currentMap.pointBeginPlayer.transform.position.x)  / GameController.instance.currentMap.distanceMap;
+    }
+    public void Begin()
+    {
+        slideMiniMap.value = 0;
+        if (GameController.instance.currentMap.haveBoss || GameController.instance.currentMap.haveMiniBoss)
+            haveBossInMiniMap.SetActive(true);
+    }
     public void BtnReset()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
-    public void DisplayStar(int total)
-    {
-        for (int i = 0; i < total; i++)
-        {
-            starCount[i].SetActive(true);
-        }
 
-        starbouder.SetActive(true);
-    }
     public void BtnBack()
     {
         DataParam.nextSceneAfterLoad = 0;
@@ -45,50 +51,32 @@ public class UIPanel : MonoBehaviour
     }
     public void DisplayFinish(int _countstar)
     {
-
-        if (finishPanel.activeSelf)
-            return;
-        finishPanel.SetActive(true);
         if (GameController.instance.win)
         {
-            starbouder.SetActive(true);
-            ResetBtn.SetActive(true);
-            NextBtn.SetActive(true);
-            gameoverText.text = "WIN";
-            //   SoundController.instance.PlaySound(soundGame.soundwin);
+            missionTexts[0].text = DataController.instance.missions[DataParam.indexMap].mission1name;
+            missionTexts[1].text = DataController.instance.missions[DataParam.indexMap].mission2name;
+            missionTexts[2].text = DataController.instance.missions[DataParam.indexMap].mission3name;
+            winPanel.SetActive(true);
             switch (_countstar)
             {
                 case 1:
-
-                    animGamOver.Play("GameOver1star");
-                    //   Debug.LogError("zo 1");
+                    animGamOver.Play("Win1Star");
                     break;
                 case 2:
 
-                    animGamOver.Play("Gameover2star");
-                    //  Debug.LogError("zo 2");
+                    animGamOver.Play("Win2Star");
                     break;
                 case 3:
 
-                    animGamOver.Play("GameOver3star");
-                    //  Debug.LogError("zo 3");
+                    animGamOver.Play("Win3Star");
                     break;
             }
-            //Debug.Log("count star win:" + _countstar);
-            //animGamOver.SetInteger("star", _countstar);
         }
         else
         {
-            ResetBtn.SetActive(true);
-            NextBtn.SetActive(false);
-            gameoverText.text = "DIE";
-            //  Debug.Log("count star die:" + _countstar);
-            animGamOver.Play("GameOverDie");
+            defeatPanel.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundlose);
         }
-
-
-
 
     }
 }

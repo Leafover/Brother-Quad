@@ -6,6 +6,7 @@ using PathCreation;
 
 public class MapController : MonoBehaviour
 {
+    public float distanceMap;
     public bool haveMiniBoss,haveBoss;
     public bool moreTypeE = true;
     public float timeDelayMax = 1.25f, timeDelay;
@@ -80,12 +81,12 @@ public class MapController : MonoBehaviour
     public ProCamera2DTriggerBoundaries[] procam2DTriggerBoudaries;
     public AutoSpawnEnemy[] autoSpawnEnemys;
     public PathCreator[] pathCreator;
-    public GameObject pointBeginPlayer;
+    public GameObject pointBeginPlayer,endMap;
     private void OnValidate()
     {
         procam2DTriggerBoudaries = GetComponentsInChildren<ProCamera2DTriggerBoundaries>();
         pathCreator = GetComponentsInChildren<PathCreator>();
         autoSpawnEnemys = GetComponentsInChildren<AutoSpawnEnemy>();
-
+        distanceMap = Mathf.Abs(endMap.transform.position.x - pointBeginPlayer.transform.position.x);      
     }
 }
