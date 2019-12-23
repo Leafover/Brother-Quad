@@ -38,7 +38,7 @@ using System;
             }
         }
 
-        void DisableAllObject()
+      public  void DisableAllObject()
         {
             foreach (GameObject go in PooledObjects)
             {
@@ -107,4 +107,37 @@ using System;
             else
                 go.transform.parent = transform;
         }
-    }
+
+
+    //private void CreateObjectInPoolHaveScript()
+    //{
+    //    //if we don't have a prefab set, instantiate a new gameobject
+    //    //else instantiate the prefab
+    //    NumberDamageTextController go;
+    //    if (PooledObject == null)
+    //        go = new GameObject(this.name + " PooledObject");
+    //    else
+    //    {
+    //        go = Instantiate(PooledObject) as GameObject;
+    //    }
+
+    //    //set the new object as inactive and add it to the list
+    //    go.SetActive(false);
+    //    PooledObjects.Add(go);
+
+    //    //if we have components to add
+    //    //add them
+    //    if (componentsToAdd != null)
+    //        foreach (Type itemType in componentsToAdd)
+    //        {
+    //            go.AddComponent(itemType);
+    //        }
+
+    //    //if we have set the parent, assign it as the new object's parent
+    //    if (Parent != null)
+    //        go.transform.parent = this.Parent;
+    //    else
+    //        go.transform.parent = transform;
+    //}
+
+}
