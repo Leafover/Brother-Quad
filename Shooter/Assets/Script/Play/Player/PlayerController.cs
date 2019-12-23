@@ -380,8 +380,11 @@ public class PlayerController : MonoBehaviour
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
         if (timePreviousMeleeAttack > 0)
+        {
             timePreviousMeleeAttack -= deltaTime;
-
+            if (timePreviousMeleeAttack <= 0 && meleeAtackBox.gameObject.activeSelf)
+                meleeAtackBox.gameObject.SetActive(false);
+        }
         if (playerState == PlayerState.Idle)
         {
             if (timeStand > 0 && !animArrow.GetBool("animarrow"))

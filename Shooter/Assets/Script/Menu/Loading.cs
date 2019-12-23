@@ -8,6 +8,7 @@ public class Loading : MonoBehaviour
     void Start()
     {
         ObjectPoolerManager.Instance.ClearAllPool();
+        ObjectPoolManagerHaveScript.Instance.ClearAllPool();
         StartCoroutine(DelayChangeScene());
     }
     IEnumerator DelayChangeScene()

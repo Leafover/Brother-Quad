@@ -502,6 +502,10 @@ public class EnemyBase : MonoBehaviour
     {
 
         currentHealth -= damage;
+        NumberDamageTextController numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetPooledObject();
+        numberText.transform.position = transform.position;
+        numberText.Display(""+(int)damage);
+        numberText.gameObject.SetActive(true);
 
         if (currentHealth <= 0)
         {

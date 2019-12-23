@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NumberDamageTextController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public TextMeshPro tmp;
+    public void Display(string text)
     {
-        
+        tmp.text = text;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DisableMe()
     {
-        
+        gameObject.SetActive(false);
     }
 }

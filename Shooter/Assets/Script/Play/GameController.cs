@@ -414,6 +414,10 @@ public class GameController : MonoBehaviour
         {
             TryJump();
         }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+
+        }
 
     }
     public void TryShot()

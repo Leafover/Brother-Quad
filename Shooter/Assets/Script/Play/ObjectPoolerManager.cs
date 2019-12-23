@@ -275,6 +275,7 @@ public class ObjectPoolerManager : MonoBehaviour
             coinItemPooler = go.AddComponent<ObjectPooler>();
             coinItemPooler.PooledObject = coinItemPrefab;
             go.transform.parent = this.gameObject.transform;
+
             coinItemPooler.Initialize(20);
             AllPool.Add(coinItemPooler);
         }
