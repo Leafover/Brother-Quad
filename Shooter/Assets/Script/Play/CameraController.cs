@@ -33,8 +33,8 @@ public class CameraController : MonoBehaviour
 
         bouders[0].transform.localPosition = new Vector2(bouders[0].transform.localPosition.x, Camera.main.orthographicSize + 0.5f);
         bouders[1].transform.localPosition = new Vector2(bouders[1].transform.localPosition.x, -Camera.main.orthographicSize - 0.5f);
-        bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 3.61f, bouders[2].transform.localPosition.y);
-        bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 3.61f, bouders[3].transform.localPosition.y);
+        bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 4.5f, bouders[2].transform.localPosition.y);
+        bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 4.5f, bouders[3].transform.localPosition.y);
         currentCamBoidaries = 0;
     }
     public void Init()

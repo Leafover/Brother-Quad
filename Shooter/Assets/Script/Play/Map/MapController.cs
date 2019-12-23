@@ -13,7 +13,7 @@ public class MapController : MonoBehaviour
     public int maxSpawn = 3,countspawn;
     public bool autoSpawn;
 
-    GameObject enemy;
+   // GameObject enemy;
     EnemyBase _scriptE;
     Vector2 posSpawn;
     int randomPosY;
@@ -39,16 +39,20 @@ public class MapController : MonoBehaviour
             switch (randomTypeEnemy)
             {
                 case 0:
-                    enemy = ObjectPoolerManager.Instance.enemy1Pooler.GetPooledObject();
+                    //     enemy = ObjectPoolerManager.Instance.enemy1Pooler.GetPooledObject();
+                     _scriptE = ObjectPoolManagerHaveScript.Instance.enemy1Pooler.GetEnemyPooledObject();
+
                     break;
                 case 1:
-                    enemy = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
+                    //  enemy = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
+                     _scriptE = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
+
                     break;
             }
 
-            enemy.transform.position = posSpawn;
-
-            _scriptE = enemy.GetComponent<EnemyBase>();
+            // enemy.transform.position = posSpawn;
+            _scriptE.transform.position = posSpawn;
+          //   _scriptE = enemy.GetComponent<EnemyBase>();
             _scriptE.Init();
             _scriptE.enemyAutoSpawn = true;
 
@@ -63,7 +67,8 @@ public class MapController : MonoBehaviour
             timeDelay = timeDelayMax;
             countspawn++;
 
-            enemy.SetActive(true);
+            //    enemy.SetActive(true);
+            _scriptE.gameObject.SetActive(true);
         }
 
     }

@@ -93,7 +93,7 @@ public class EnemyV1Controller : EnemyBase
         }
     }
 
-    GameObject bullet;
+    //GameObject bullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -102,17 +102,21 @@ public class EnemyV1Controller : EnemyBase
         {
             if (!incam)
                 return;
-            bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
-            var bulletScript = bullet.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage1, bulletspeed1);
-            bulletScript.SetDir(attackrank, true);
-            //bulletScript.BeginDisplay(Vector2.zero, this);
-            //listMyBullet.Add(bulletScript);
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.transform.eulerAngles = new Vector3(0, 0, 150);
+            //bullet = ObjectPoolerManager.Instance.bulletEnemyV1Pooler.GetPooledObject();
+            //var bulletScript = bullet.GetComponent<BulletEnemy>();
+            //bulletScript.AddProperties(damage1, bulletspeed1);
+            //bulletScript.SetDir(attackrank, true);
+            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //bullet.transform.eulerAngles = new Vector3(0, 0, 150);
+            //bullet.SetActive(true);
 
-            // Debug.LogError(bullet.transform.eulerAngles.z);
-            bullet.SetActive(true);
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyV1Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
+            bulletEnemy.SetDir(attackrank, true);
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.transform.eulerAngles = new Vector3(0, 0, 150);
+            bulletEnemy.gameObject.SetActive(true);
+
             SoundController.instance.PlaySound(soundGame.soundv1attack);
         }
     }

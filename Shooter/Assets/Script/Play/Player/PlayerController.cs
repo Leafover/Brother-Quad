@@ -457,10 +457,10 @@ public class PlayerController : MonoBehaviour
             posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1.5f;
             transform.position = posTemp;
         }
-        if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 0.7f)
+        if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1.5f)
         {
             posTemp = transform.position;
-            posTemp.x = CameraController.instance.bouders[3].transform.position.x + 0.7f;
+            posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1.5f;
             transform.position = posTemp;
         }
         //if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)

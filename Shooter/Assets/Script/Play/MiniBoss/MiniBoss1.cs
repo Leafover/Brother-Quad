@@ -67,8 +67,8 @@ public class MiniBoss1 : EnemyBase
                 break;
         }
     }
-    GameObject g;
-    BulletEnemy bulletScript;
+  //  GameObject g;
+  //  BulletEnemy bulletScript;
 
     int randomSlot;
 
@@ -79,30 +79,45 @@ public class MiniBoss1 : EnemyBase
         randomSlot = Random.Range(0, 3);
 
 
-        g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
-        bulletScript = g.GetComponent<BulletEnemy>();
-        bulletScript.AddProperties(damage1, bulletspeed1);
-        bulletScript.SetTimeExist(bulletimeexist);
-        bulletScript.BeginDisplay(Vector2.zero,this);
+        //g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
+        //bulletScript = g.GetComponent<BulletEnemy>();
+        //bulletScript.AddProperties(damage1, bulletspeed1);
+        //bulletScript.SetTimeExist(bulletimeexist);
+        //bulletScript.BeginDisplay(Vector2.zero,this);
+
+
+        bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketMiniBoss1Pooler.GetBulletEnemyPooledObject();
+        bulletEnemy.AddProperties(damage1, bulletspeed1);
+        bulletEnemy.SetTimeExist(bulletimeexist);
+        bulletEnemy.BeginDisplay(Vector2.zero, this);
+
         SoundController.instance.PlaySound(soundGame.soundminibossfire);
    //     SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         switch (randomSlot)
         {
             case 0:
-                g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-                g.transform.rotation = gunRotation.rotation;
+                bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                bulletEnemy.transform.rotation = gunRotation.rotation;
+                //g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                //g.transform.rotation = gunRotation.rotation;
                 break;
             case 1:
-                g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-                g.transform.rotation = gunRotation1.rotation;
+                bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+                bulletEnemy.transform.rotation = gunRotation1.rotation;
+                //g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+                //g.transform.rotation = gunRotation1.rotation;
                 break;
             case 2:
-                g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-                g.transform.rotation = gunRotation2.rotation;
+                bulletEnemy.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+                bulletEnemy.transform.rotation = gunRotation2.rotation;
+                //g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+                //g.transform.rotation = gunRotation2.rotation;
                 break;
         }
-        listMyBullet.Add(bulletScript);
-        g.SetActive(true);
+        listMyBullet.Add(bulletEnemy);
+        bulletEnemy.gameObject.SetActive(true);
+        //listMyBullet.Add(bulletScript);
+        //g.SetActive(true);
         //  }
     }
 

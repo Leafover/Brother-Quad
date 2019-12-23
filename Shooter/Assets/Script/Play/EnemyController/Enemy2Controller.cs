@@ -99,7 +99,7 @@ public class Enemy2Controller : EnemyBase
 
     Vector2 left = new Vector2(-0.2f, 1.5f);
     Vector2 right = new Vector2(0.2f, 1.5f);
-    GameObject bullet;
+  //  GameObject bullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -113,21 +113,29 @@ public class Enemy2Controller : EnemyBase
         {
             if (!incam)
                 return;
-             bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            var _bulletScript = bullet.GetComponent<BulletEnemy>();
-            _bulletScript.AddProperties(damage1, speed);
+            // bullet = ObjectPoolerManager.Instance.bulletEnemy2Pooler.GetPooledObject();
+            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //var _bulletScript = bullet.GetComponent<BulletEnemy>();
+            //_bulletScript.AddProperties(damage1, speed);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemy2Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.AddProperties(damage1, speed);
             switch (FlipX)
             {                
                 case true:
-                    _bulletScript.BeginDisplay(right,this);
+                    bulletEnemy.BeginDisplay(right, this);
+                    //  _bulletScript.BeginDisplay(right,this);
                     break;
                 case false:
-                    _bulletScript.BeginDisplay(left, this);
+                    bulletEnemy.BeginDisplay(left, this);
+                    //  _bulletScript.BeginDisplay(left, this);
                     break;
             }
-            listMyBullet.Add(_bulletScript);
-            bullet.SetActive(true);
+            listMyBullet.Add(bulletEnemy);
+            bulletEnemy.gameObject.SetActive(true);
+            //listMyBullet.Add(_bulletScript);
+            //bullet.SetActive(true);
         }
     }
 

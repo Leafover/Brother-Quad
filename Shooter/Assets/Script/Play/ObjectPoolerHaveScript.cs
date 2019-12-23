@@ -5,8 +5,15 @@ using UnityEngine;
 public class ObjectPoolerHaveScript : MonoBehaviour
 {
     public Transform Parent;
-    public NumberDamageTextController PooledObject;
-    private List<NumberDamageTextController> PooledObjects;
+    public NumberDamageTextController numberDamageTextPooledObject;
+    private List<NumberDamageTextController> PooledNumberDamageTextObjects;
+
+    public BulletEnemy bulletEnemyPooledObject;
+    public List<BulletEnemy> PooledBulletEnemy;
+
+
+    public EnemyBase enemyPooledObject;
+    public List<EnemyBase> PooledEnemy;
 
     public int PoolLength;
 
@@ -15,65 +22,137 @@ public class ObjectPoolerHaveScript : MonoBehaviour
         PoolLength = 10;
     }
 
-
-    public void Initialize(int length)
+    #region text number damage
+    public void InitializeNumberDamageText(int length)
     {
-        PooledObjects = new List<NumberDamageTextController>();
+        PooledNumberDamageTextObjects = new List<NumberDamageTextController>();
         for (int i = 0; i < length; i++)
         {
-            CreateObjectInPool();
+            CreateNumberDamageTextObjectInPool();
         }
     }
 
-    public void DisableAllObject()
+    public NumberDamageTextController GetNumberDamageTextPooledObject()
     {
-        foreach (NumberDamageTextController go in PooledObjects)
+        for (int i = 0; i < PooledNumberDamageTextObjects.Count; i++)
         {
-            if (go.gameObject.activeInHierarchy) go.gameObject.SetActive(false);
-        }
-    }
-
-    public NumberDamageTextController GetPooledObject()
-    {
-        for (int i = 0; i < PooledObjects.Count; i++)
-        {
-            if (!PooledObjects[i].gameObject.activeInHierarchy)
+            if (!PooledNumberDamageTextObjects[i].gameObject.activeInHierarchy)
             {
-                return PooledObjects[i];
+                return PooledNumberDamageTextObjects[i];
             }
         }
-        int indexToReturn = PooledObjects.Count;
+        int indexToReturn = PooledNumberDamageTextObjects.Count;
         //create more
-        CreateObjectInPool();
+        CreateNumberDamageTextObjectInPool();
         //will return the first one that we created
-        return PooledObjects[indexToReturn];
+        return PooledNumberDamageTextObjects[indexToReturn];
     }
 
-    public bool CheckPoolerObjectActive()
-    {
-        foreach (NumberDamageTextController go in PooledObjects)
-        {
-            if (go.gameObject.activeInHierarchy) return true;
-        }
-        return false;
-    }
 
-    private void CreateObjectInPool()
+    private void CreateNumberDamageTextObjectInPool()
     {
         NumberDamageTextController go;
-        if (PooledObject == null)
+        if (numberDamageTextPooledObject == null)
             go = new NumberDamageTextController();
         else
         {
-            go = Instantiate(PooledObject) as NumberDamageTextController;
+            go = Instantiate(numberDamageTextPooledObject) as NumberDamageTextController;
         }
 
         go.gameObject.SetActive(false);
-        PooledObjects.Add(go);
+        PooledNumberDamageTextObjects.Add(go);
         if (Parent != null)
             go.transform.parent = this.Parent;
         else
             go.transform.parent = transform;
     }
+    #endregion
 
+    #region Bullet Enemy
+    public void InitializeBulletEnemy(int length)
+    {
+        PooledBulletEnemy = new List<BulletEnemy>();
+        for (int i = 0; i < length; i++)
+        {
+            CreateBulletEnemyObjectInPool();
+        }
+    }
+
+    public BulletEnemy GetBulletEnemyPooledObject()
+    {
+        for (int i = 0; i < PooledBulletEnemy.Count; i++)
+        {
+            if (!PooledBulletEnemy[i].gameObject.activeInHierarchy)
+            {
+                return PooledBulletEnemy[i];
+            }
+        }
+        int indexToReturn = PooledBulletEnemy.Count;
+        //create more
+        CreateBulletEnemyObjectInPool();
+        //will return the first one that we created
+        return PooledBulletEnemy[indexToReturn];
+    }
+
+
+    private void CreateBulletEnemyObjectInPool()
+    {
+        BulletEnemy go;
+        if (bulletEnemyPooledObject == null)
+            go = new BulletEnemy();
+        else
+        {
+            go = Instantiate(bulletEnemyPooledObject) as BulletEnemy;
+        }
+
+        go.gameObject.SetActive(false);
+        PooledBulletEnemy.Add(go);
+        if (Parent != null)
+            go.transform.parent = this.Parent;
+        else
+            go.transform.parent = transform;
+    }
+    #endregion
+
+    #region Enemy
+    public void InitializeEnemy(int length)
+    {
+        PooledEnemy = new List<EnemyBase>();
+        for (int i = 0; i < length; i++)
+        {
+            CreateEnemyObjectInPool();
+        }
+    }
+    public EnemyBase GetEnemyPooledObject()
+    {
+        for (int i = 0; i < PooledEnemy.Count; i++)
+        {
+            if (!PooledEnemy[i].gameObject.activeInHierarchy)
+            {
+                return PooledEnemy[i];
+            }
+        }
+        int indexToReturn = PooledEnemy.Count;
+        CreateEnemyObjectInPool();
+        return PooledEnemy[indexToReturn];
+    }
+
+    private void CreateEnemyObjectInPool()
+    {
+        EnemyBase go;
+        if (enemyPooledObject == null)
+            go = new EnemyBase();
+        else
+        {
+            go = Instantiate(enemyPooledObject) as EnemyBase;
+        }
+
+        go.gameObject.SetActive(false);
+        PooledEnemy.Add(go);
+        if (Parent != null)
+            go.transform.parent = this.Parent;
+        else
+            go.transform.parent = transform;
+    }
+    #endregion
 }

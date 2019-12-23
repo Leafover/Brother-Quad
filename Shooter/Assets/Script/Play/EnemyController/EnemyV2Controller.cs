@@ -73,7 +73,7 @@ public class EnemyV2Controller : EnemyBase
                 break;
         }
     }
-    GameObject g;
+ //   GameObject g;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -81,17 +81,30 @@ public class EnemyV2Controller : EnemyBase
         {
             if (!incam)
                 return;
-            g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
-            var bulletScript = g.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage1, bulletspeed1);
-            bulletScript.SetTimeExist(bulletimeexist);
-            bulletScript.BeginDisplay(Vector2.zero, this);
-            listMyBullet.Add(bulletScript);
-            g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            g.transform.rotation = Quaternion.identity;
-            g.transform.rotation = gunRotation.rotation;
-            g.SetActive(true);
+
+            //g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
+            //var bulletScript = g.GetComponent<BulletEnemy>();
+            //bulletScript.AddProperties(damage1, bulletspeed1);
+            //bulletScript.SetTimeExist(bulletimeexist);
+            //bulletScript.BeginDisplay(Vector2.zero, this);
+            //listMyBullet.Add(bulletScript);
+            //g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //g.transform.rotation = Quaternion.identity;
+            //g.transform.rotation = gunRotation.rotation;
+            //g.SetActive(true);
+
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
+            bulletEnemy.SetTimeExist(bulletimeexist);
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.transform.rotation = Quaternion.identity;
+            bulletEnemy.transform.rotation = gunRotation.rotation;
+            bulletEnemy.gameObject.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundv2attack);
+
            // SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         }
     }

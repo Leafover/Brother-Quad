@@ -131,8 +131,8 @@ public class Enemy4Controller : EnemyBase
                 break;
         }
     }
-    GameObject bullet;
-    GameObject grenade;
+  //  GameObject bullet;
+  //  GameObject grenade;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -144,32 +144,52 @@ public class Enemy4Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
-            bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
-            var bulletScript = bullet.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage2, bulletspeed1);
+            //bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
+            //var bulletScript = bullet.GetComponent<BulletEnemy>();
+            //bulletScript.AddProperties(damage2, bulletspeed1);
+            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //bullet.transform.rotation = rotation;
+            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //bullet.SetActive(true);
+
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet4EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage2, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bullet.transform.rotation = rotation;
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
+            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.gameObject.SetActive(true);
+
+
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             combo++;
             if (!incam)
                 return;
-            grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            var grenadeScript = grenade.GetComponent<BulletEnemy>();
-            grenadeScript.AddProperties(0, 6);
 
+
+            //grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
+            //grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            //var grenadeScript = grenade.GetComponent<BulletEnemy>();
+            //grenadeScript.AddProperties(0, 6);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenade4EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.AddProperties(0, 6);
             if (FlipX)
-                grenadeScript.SetDir(-6,false);
+                bulletEnemy.SetDir(-6, false);
+            //grenadeScript.SetDir(-6,false);
             else
-                grenadeScript.SetDir(6,false);
-            grenade.SetActive(true);
+                bulletEnemy.SetDir(6, false);
+            //  grenadeScript.SetDir(6,false);
 
+            //    grenade.SetActive(true);
+            bulletEnemy.gameObject.SetActive(true);
         }
 
     }

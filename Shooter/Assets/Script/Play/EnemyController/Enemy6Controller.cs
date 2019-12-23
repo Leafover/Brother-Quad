@@ -76,12 +76,12 @@ public class Enemy6Controller : EnemyBase
 
     }
 
-    GameObject bullet;
+   // GameObject bullet;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
 
-    BulletEnemy bulletScript;
+  //  BulletEnemy bulletScript;
 
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
@@ -91,51 +91,69 @@ public class Enemy6Controller : EnemyBase
             if (!incam)
                 return;
 
-            
 
-            bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
-            bulletScript = bullet.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage1, bulletspeed1);
+
+            //bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
+            //bulletScript = bullet.GetComponent<BulletEnemy>();
+            //bulletScript.AddProperties(damage1, bulletspeed1);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemy6Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bullet.transform.rotation = rotation;
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
+            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.gameObject.SetActive(true);
+
+            //bullet.transform.rotation = rotation;
+            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //bullet.SetActive(true);
 
 
-            bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
-            bulletScript = bullet.GetComponent<BulletEnemy>();
-            bulletScript.AddProperties(damage1, bulletspeed1);
+            //bullet = ObjectPoolerManager.Instance.bulletEnemy6Pooler.GetPooledObject();
+            //bulletScript = bullet.GetComponent<BulletEnemy>();
+            //bulletScript.AddProperties(damage1, bulletspeed1);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemy6Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bullet.transform.rotation = rotation;
-            bullet.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
+            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.gameObject.SetActive(true);
+
+            //bullet.transform.rotation = rotation;
+            //bullet.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            //bullet.SetActive(true);
 
 
             SoundController.instance.PlaySound(soundGame.sounde6fire);
         }
     }
-    GameObject enemy5;
+    EnemyBase enemy5;
 
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
-            enemy5 = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
-
+            //   enemy5 = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
+            enemy5 = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
             enemy5.transform.position = boneBody.GetWorldPosition(skeletonAnimation.transform); 
+            enemy5.jumpOut = true;
+            enemy5.takeDamageBox.enabled = false;
+            enemy5.Init();
+            enemy5.gameObject.SetActive(true);
 
-            var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
-            _enemy5Script.jumpOut = true;
-            _enemy5Script.takeDamageBox.enabled = false;
-            _enemy5Script.Init();
+            //var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
+            //_enemy5Script.jumpOut = true;
+            //_enemy5Script.takeDamageBox.enabled = false;
+            //_enemy5Script.Init();
 
 
-            enemy5.SetActive(true);
+            //   enemy5.SetActive(true);
         }
         else if(trackEntry.Animation.Name.Equals(aec.attack1.name))
             PlayAnim(0, aec.idle, true);

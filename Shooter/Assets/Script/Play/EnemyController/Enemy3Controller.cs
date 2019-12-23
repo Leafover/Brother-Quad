@@ -98,7 +98,7 @@ public class Enemy3Controller : EnemyBase
                 break;
         }
     }
-    GameObject bullet;
+  //  GameObject bullet;
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
@@ -109,15 +109,24 @@ public class Enemy3Controller : EnemyBase
         {
             if (!incam)
                 return;
-            bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
-            var _bulletScript = bullet.GetComponent<BulletEnemy>();
-            _bulletScript.AddProperties(damage1, bulletspeed1);
+            //bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
+            //var _bulletScript = bullet.GetComponent<BulletEnemy>();
+            //_bulletScript.AddProperties(damage1, bulletspeed1);
+            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //bullet.transform.rotation = rotation;
+            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            //bullet.SetActive(true);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bullet.transform.rotation = rotation;
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
+            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.gameObject.SetActive(true);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
