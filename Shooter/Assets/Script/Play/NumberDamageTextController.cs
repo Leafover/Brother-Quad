@@ -13,10 +13,19 @@ public class NumberDamageTextController : MonoBehaviour
             anim = GetComponent<Animator>();
     }
 
-    public void Display(string text)
+    public void Display(string text,bool crit)
     {
+        if (!crit)
+        {
+            tmp.fontSize = 5;
+            tmp.color = Color.red;
+        }
+        else
+        {
+            tmp.fontSize = 8;
+            tmp.color = Color.yellow;
+        }
         tmp.text = text;
-
     }
 
     public void DisableMe()

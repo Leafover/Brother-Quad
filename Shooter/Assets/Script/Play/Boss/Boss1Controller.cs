@@ -353,7 +353,7 @@ public class Boss1Controller : EnemyBase
         }
     }
     public int activeType3 = 0;
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage,bool crit = false)
     {
         base.TakeDamage(damage);
         if (currentHealth <= health / 2)

@@ -499,14 +499,11 @@ public class EnemyBase : MonoBehaviour
     Vector2 posHitTemp;
     GameObject hiteffect;
     float hitPosTemp;
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage,bool crit = false)
     {
 
         currentHealth -= damage;
-        NumberDamageTextController numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
-        numberText.transform.position = transform.position;
-        numberText.Display("" + (int)damage);
-        numberText.gameObject.SetActive(true);
+
 
         if (currentHealth <= 0)
         {
@@ -547,6 +544,12 @@ public class EnemyBase : MonoBehaviour
             hiteffect.transform.position = posHitTemp;
             hiteffect.SetActive(true);
         }
+
+
+        NumberDamageTextController numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
+        numberText.transform.position = transform.position;
+        numberText.Display("" + (int)damage * 10, crit);
+        numberText.gameObject.SetActive(true);
     }
     int takecrithit;
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -561,8 +564,7 @@ public class EnemyBase : MonoBehaviour
                 takecrithit = Random.Range(0, 100);
                 if (takecrithit <= 10)
                 {
-                    TakeDamage(PlayerController.instance.damageBullet * 2);
-
+                    TakeDamage(PlayerController.instance.damageBullet * 2,true);
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
