@@ -100,10 +100,10 @@ public class Enemy4Controller : EnemyBase
                     {
                         enemyState = EnemyState.run;
                         timedelayChangePos = maxtimedelayChangePos;
-                        if (transform.position.x < OriginPos.x)
-                            nextPos.x = OriginPos.x + 0.5f;
+                        if (transform.position.x < PosBegin.x)
+                            nextPos.x = PosBegin.x + 0.5f;
                         else
-                            nextPos.x = OriginPos.x + -0.5f;
+                            nextPos.x = PosBegin.x + -0.5f;
 
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
@@ -206,10 +206,10 @@ public class Enemy4Controller : EnemyBase
                 {
                     enemyState = EnemyState.run;
                     timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < OriginPos.x)
-                        nextPos.x = OriginPos.x + 0.5f;
+                    if (transform.position.x < PosBegin.x)
+                        nextPos.x = PosBegin.x + 0.5f;
                     else
-                        nextPos.x = OriginPos.x + -0.5f;
+                        nextPos.x = PosBegin.x + -0.5f;
                   //  nextPos.y = OriginPos.y;
                     CheckDirFollowPlayer(nextPos.x);
                     PlayAnim(0, aec.run, true);
@@ -232,11 +232,11 @@ public class Enemy4Controller : EnemyBase
                 {
                     enemyState = EnemyState.run;
                     timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < OriginPos.x)
-                        nextPos.x = OriginPos.x + 0.5f;
+                    if (transform.position.x < PosBegin.x)
+                        nextPos.x = PosBegin.x + 0.5f;
                     else
-                        nextPos.x = OriginPos.x + -0.5f;
-                    nextPos.y = OriginPos.y;
+                        nextPos.x = PosBegin.x + -0.5f;
+                    nextPos.y = PosBegin.y;
                     CheckDirFollowPlayer(nextPos.x);
                     PlayAnim(0, aec.run, true);
                 }

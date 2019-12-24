@@ -72,12 +72,15 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public float tempXBegin;
 
-    public Vector2 OriginPos
+    public Vector2 PosBegin
     {
         get { return originPos; }
         set { originPos = value; }
     }
-
+    public Vector2 Origin()
+    {
+        return transform.position;
+    }
     public virtual void PlayAnim(int indexTrack, AnimationReferenceAsset anim, bool loop)
     {
         if (enemyState == EnemyState.die)
@@ -451,10 +454,7 @@ public class EnemyBase : MonoBehaviour
             return;
         acOnUpdate(deltaTime);
     }
-    public Vector2 Origin()
-    {
-        return transform.position;
-    }
+
     public virtual void Dead()
     {
         if (enemyState == EnemyState.die)

@@ -22,22 +22,33 @@ public class PlayerData
     public string level, ID;
     public double hp, DmgGrenade, MoveSpeed;
 }
+#region datamission
 [System.Serializable]
 public class Mission
 {
     public string level, mission1name, mission2name, mission3name;
     public double bonusgem, coin1star, exp1star, coin2star, exp2star, coin3star, exp3star, totaldropcoin;
-
 }
+[System.Serializable]
+public class AllMission
+{
+    public List<Mission> missionData = new List<Mission>();
+}
+#endregion
 public class DataController : MonoBehaviour
 {
     public List<AllDataEnemy> allDataEnemy = new List<AllDataEnemy>();
+    public List<AllMission> allMission = new List<AllMission>();
+
     public List<PlayerData> playerData = new List<PlayerData>();
-    public List<Mission> missions = new List<Mission>();
+    //  public List<Mission> missions = new List<Mission>();
+
+
     public static DataController instance;
-    string[] nameDataText = { "enemy0", "enemy1", "enemy2", "enemy3", "enemy4", "enemy5", "enemy6", "enemyv1", "enemyv2", "enemyv3", "enemymn1", "enemyb1" };
-    string nameDataPlayerText = "player";
-    string nameDataMissionText = "rewards";
+    public string[] nameDataText;
+    public string[] nameDataMissionText;
+    public string nameDataPlayerText;
+
     private void Awake()
     {
         instance = this;
@@ -53,7 +64,12 @@ public class DataController : MonoBehaviour
                 LoadDataEnemy(nameDataText[i], i);
             }
             LoadDataPlayer(nameDataPlayerText);
-            LoadDataMission(nameDataMissionText);
+
+            for (int i = 0; i < nameDataMissionText.Length; i++)
+            {
+                LoadDataMission(nameDataMissionText[i], i);
+            }
+
             loaddatabegin = true;
         }
     }
@@ -85,16 +101,20 @@ public class DataController : MonoBehaviour
             playerData.Add(_playerDate);
         }
     }
-    public void LoadDataMission(string path)
+    public void LoadDataMission(string path, int index)
     {
-        if (missions.Count == 8)
+
+        if (allMission[index].missionData.Count == 8)
             return;
+
         _ta = Resources.Load<TextAsset>("JsonData/" + path);
+
         jData = JsonMapper.ToObject(_ta.text);
+
         for (int i = 0; i < jData.Count; i++)
         {
-            Mission _mission= JsonMapper.ToObject<Mission>(jData[i].ToJson());
-            missions.Add(_mission);
+            Mission _missionData = JsonMapper.ToObject<Mission>(jData[i].ToJson());
+            allMission[index].missionData.Add(_missionData);
         }
     }
 

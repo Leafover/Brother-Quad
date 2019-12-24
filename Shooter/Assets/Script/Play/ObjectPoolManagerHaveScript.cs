@@ -5,10 +5,10 @@ using UnityEngine;
 public class ObjectPoolManagerHaveScript : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler;
+    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler;
     public NumberDamageTextController numberDamgageTextPrefab;
-    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab;
-    public EnemyBase enemy1Prefab, enemy5Prefab;
+    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab;
+    public EnemyBase enemy1Prefab, enemy5Prefab, enemyN1Prefab;
     [HideInInspector]
     public static ObjectPoolManagerHaveScript Instance { get; private set; }
     public List<ObjectPoolerHaveScript> AllPool = new List<ObjectPoolerHaveScript>();
@@ -153,6 +153,24 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
             go.transform.parent = this.gameObject.transform;
             enemy5Pooler.InitializeEnemy(6);
             AllPool.Add(enemy5Pooler);
+        }
+        if (bulletEnemyEN0Pooler == null)
+        {
+            go = new GameObject("bulletEnemyEN0Pooler");
+            bulletEnemyEN0Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            bulletEnemyEN0Pooler.bulletEnemyPooledObject = bulletEnemyEN0Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletEnemyEN0Pooler.InitializeBulletEnemy(10);
+            AllPool.Add(bulletEnemyEN0Pooler);
+        }
+        if (enemyN1Pooler == null)
+        {
+            go = new GameObject("enemyN1Pooler");
+            enemyN1Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            enemyN1Pooler.enemyPooledObject = enemyN1Prefab;
+            go.transform.parent = this.gameObject.transform;
+            enemyN1Pooler.InitializeEnemy(6);
+            AllPool.Add(enemyN1Pooler);
         }
     }
     GameObject go;

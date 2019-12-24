@@ -26,7 +26,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
     {
         if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
             return;
-        myEnemyBase.OriginPos = myEnemyBase.transform.position;
+        myEnemyBase.PosBegin = myEnemyBase.transform.position;
         myEnemyBase.incam = true;
 
         if (enemyNotJoinAutoTarget /*|| myEnemyBase.jumpOut == true*/)

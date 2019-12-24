@@ -63,14 +63,14 @@ public class EnemyV1Controller : EnemyBase
                 {
                     enemyState = EnemyState.run;
                     timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < OriginPos.x)
+                    if (transform.position.x < PosBegin.x)
                     {
-                        nextPos.x = OriginPos.x + 0.5f;
+                        nextPos.x = PosBegin.x + 0.5f;
                         PlayAnim(0, aec.run2, true);
                     }
                     else
                     {
-                        nextPos.x = OriginPos.x + -0.5f;
+                        nextPos.x = PosBegin.x + -0.5f;
                         PlayAnim(0, aec.run, true);
                     }
              
@@ -79,7 +79,7 @@ public class EnemyV1Controller : EnemyBase
 
                 break;
             case EnemyState.run:
-                nextPos.y = OriginPos.y;
+                nextPos.y = PosBegin.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
 
                 if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)

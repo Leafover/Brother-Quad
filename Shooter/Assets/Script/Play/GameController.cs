@@ -15,6 +15,12 @@ public class AssetSpineEnemyController
 {
     public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim;
 }
+[System.Serializable]
+public class AllMap
+{
+    public List<MapController> listMap;
+}
+
 
 public class GameController : MonoBehaviour
 {
@@ -25,7 +31,7 @@ public class GameController : MonoBehaviour
     public bool win;
 
     public UIPanel uiPanel;
-    public List<MapController> listMap;
+    public List<AllMap> listMaps;
     public List<CritWhamBang> listcirtwhambang;
     public MapController currentMap;
 
@@ -69,7 +75,7 @@ public class GameController : MonoBehaviour
     }
     void AddProperties()
     {
-        totalDropCoin = (int)DataController.instance.missions[DataParam.indexMap].totaldropcoin;
+        totalDropCoin = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin;
         if (currentMap.haveMiniBoss)
         {
             totalDropCoin -= 8;
@@ -80,11 +86,16 @@ public class GameController : MonoBehaviour
         }
         uiPanel.Begin();
         SoundController.instance.PlaySound(soundGame.soundletgo);
+
+
+      //  DataParam.indexMap = 1;
     }
 
     private void Start()
     {
-        currentMap = Instantiate(listMap[DataParam.indexMap]);
+        DataParam.indexStage = 1;
+
+        currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
 
         CameraController.instance.Init();
@@ -396,16 +407,11 @@ public class GameController : MonoBehaviour
         }
 
 
+
+
+
         var deltaTime = Time.deltaTime;
-        JoystickMovement(joystickMove);
-        JoystickShooting(joystickShot);
-        OnUpdatePlayer(deltaTime);
-        OnUpdateEnemyManager(deltaTime);
-        OnUpdateCamera(deltaTime);
-        OnUpdateItemDrop(deltaTime);
-        OnUpdateCountCombo(deltaTime);
-        OnUpdateCritWhambang(deltaTime);
-        uiPanel.CalculateMiniMap();
+
         if (Input.GetKey(KeyCode.S))
         {
             TryShot();
@@ -414,14 +420,36 @@ public class GameController : MonoBehaviour
         {
             TryJump();
         }
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
 
         }
 
+
+        OnUpdateEnemyManager(deltaTime);
+        OnUpdateCamera(deltaTime);
+        OnUpdateItemDrop(deltaTime);
+        OnUpdateCountCombo(deltaTime);
+        OnUpdateCritWhambang(deltaTime);
+        uiPanel.CalculateMiniMap();
+
+        if (PlayerController.instance.stun)
+        {
+            PlayerController.instance.CalculateTimeStun(deltaTime);
+            return;
+        }
+
+        JoystickMovement(joystickMove);
+        JoystickShooting(joystickShot);
+        OnUpdatePlayer(deltaTime);
+
+
+
     }
     public void TryShot()
     {
+        if (PlayerController.instance.stun)
+            return;
         if (!PlayerController.instance.isMeleeAttack)
             PlayerController.instance.ShootDown();
         else
@@ -429,10 +457,14 @@ public class GameController : MonoBehaviour
     }
     public void TryJump()
     {
+        if (PlayerController.instance.stun)
+            return;
         PlayerController.instance.TryJump();
     }
     public void BtnGrenade()
     {
+        if (PlayerController.instance.stun)
+            return;
         PlayerController.instance.TryGrenade();
     }
     public void DelayWinFunc()

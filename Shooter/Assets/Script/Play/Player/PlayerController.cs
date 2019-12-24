@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public int level = 1;
     public bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
-    public bool reload;
+    [HideInInspector]
+    public bool reload,stun;
     public Collider2D meleeAtackBox;
     public GameObject dustdown, dustrun, effecthealth;
     [HideInInspector]
@@ -30,8 +31,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack;
-    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket;
+    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack,timestun;
+    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket,maxtimestun;
 
     public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
@@ -103,6 +104,15 @@ public class PlayerController : MonoBehaviour
             au.mute = true;
         }
     }
+    public void CalculateTimeStun(float deltaTime)
+    {
+        timestun -= deltaTime;
+        if(timestun <= 0)
+        {
+            timestun = maxtimestun;
+            stun = false;
+        }
+    }
     public LayerMask lmgroundcandown;
     public void CheckColliderStand(Collider2D _collider)
     {
@@ -152,6 +162,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
     public void TryGrenade()
     {
 

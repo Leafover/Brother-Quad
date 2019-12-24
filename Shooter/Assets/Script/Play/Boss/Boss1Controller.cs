@@ -71,7 +71,7 @@ public class Boss1Controller : EnemyBase
                     PlayAnim(1, aec.idle, true);    
                     enemyState = EnemyState.attack;
                     rid.velocity = Vector2.zero;
-                    OriginPos = Origin();
+                    PosBegin = Origin();
                     takeDamageBox.enabled = true;
                     StartCoroutine(ActiveAttack());
                     randomCombo = Random.Range(0, 3);
@@ -321,12 +321,12 @@ public class Boss1Controller : EnemyBase
                     typeAttack = 0;
                 else
                     typeAttack = 3;
-                GetPosTemp(OriginPos.x);
+                GetPosTemp(PosBegin.x);
 
                 move = true;
                 PlayAnim(1, aec.run, true);
                 combo = 0;
-                CheckDirFollowPlayer(OriginPos.x);
+                CheckDirFollowPlayer(PosBegin.x);
 
 
 

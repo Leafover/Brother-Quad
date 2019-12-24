@@ -49,7 +49,7 @@ public class UIPanel : MonoBehaviour
     {
 
         GameController.instance.StopAll();
-        if (DataParam.indexMap < GameController.instance.listMap.Count - 1)
+        if (DataParam.indexMap < GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
             DataParam.indexMap++;
 
         Application.LoadLevel(Application.loadedLevel);
@@ -58,9 +58,9 @@ public class UIPanel : MonoBehaviour
     {
         if (GameController.instance.win)
         {
-            missionTexts[0].text = DataController.instance.missions[DataParam.indexMap].mission1name;
-            missionTexts[1].text = DataController.instance.missions[DataParam.indexMap].mission2name;
-            missionTexts[2].text = DataController.instance.missions[DataParam.indexMap].mission3name;
+            missionTexts[0].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission1name;
+            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
             winPanel.SetActive(true);
             switch (_countstar)
             {

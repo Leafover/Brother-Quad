@@ -14,7 +14,7 @@ public class ItemCoin : ItemBase
     public override void OnEnable()
     {
         if (wait == null)
-            wait = new WaitForSeconds(1f);
+            wait = new WaitForSeconds(2.5f);
         rid.gravityScale = 1;
         collider.isTrigger = false;
         base.OnEnable();

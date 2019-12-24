@@ -40,12 +40,29 @@ public class MapController : MonoBehaviour
             {
                 case 0:
                     //     enemy = ObjectPoolerManager.Instance.enemy1Pooler.GetPooledObject();
-                     _scriptE = ObjectPoolManagerHaveScript.Instance.enemy1Pooler.GetEnemyPooledObject();
+                    switch(DataParam.indexStage)
+                    {
+                        case 0:
+                            _scriptE = ObjectPoolManagerHaveScript.Instance.enemy1Pooler.GetEnemyPooledObject();
+                            break;
+                        case 1:
+                            _scriptE = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
+                            break;
+                    }
+
 
                     break;
                 case 1:
                     //  enemy = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
-                     _scriptE = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
+                    switch (DataParam.indexStage)
+                    {
+                        case 0:
+                            _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN1Pooler.GetEnemyPooledObject();
+                            break;
+                        case 1:
+                            break;
+                    }
+
 
                     break;
             }
