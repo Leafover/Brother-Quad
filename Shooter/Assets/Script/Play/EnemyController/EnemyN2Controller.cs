@@ -3,27 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyN1Controller : EnemyBase
+public class EnemyN2Controller : EnemyBase
 {
     public RaycastHit2D detectPlayer;
     float speedMove;
 
 
+    public Transform frameSprite;
+    Vector2 scale;
+    public void SetPosFrameSprite()
+    {
+        scale.x = FlipX ? 1 : -1;
+        scale.y = 1;
+        frameSprite.transform.position = boxAttack1.transform.position = FlipX ? rightFace.position : leftFace.position;
+        frameSprite.localScale = scale;
+
+
+    }
+    public override void Active()
+    {
+        base.Active();
+        frameSprite.gameObject.SetActive(true);
+    }
+
     public override void Start()
     {
+
         base.Start();
         Init();
     }
     public override void Init()
     {
         base.Init();
-        if (!EnemyManager.instance.enemyn1s.Contains(this))
+        if (!EnemyManager.instance.enemyn2s.Contains(this))
         {
-            EnemyManager.instance.enemyn1s.Add(this);
+            EnemyManager.instance.enemyn2s.Add(this);
         }
         enemyState = EnemyState.idle;
-
-        //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
+        frameSprite.gameObject.SetActive(false);
     }
 
     Vector2 move;
@@ -37,11 +54,20 @@ public class EnemyN1Controller : EnemyBase
         }
         if (enemyState == EnemyState.die)
             return;
+        SetPosFrameSprite();
+
+
+
+        timePreviousAttack -= deltaTime;
+        if (timePreviousAttack <= 0)
+        {
+            timePreviousAttack = maxtimeDelayAttack1;
+            boxAttack1.gameObject.SetActive(true);
+        }
 
         switch (enemyState)
         {
             case EnemyState.idle:
-                //  detectPlayer = Physics2D.OverlapCircle(Origin(), radius, lm);
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
 
                 if (detectPlayer.collider == null)
@@ -50,21 +76,11 @@ public class EnemyN1Controller : EnemyBase
                 }
                 else
                 {
-                    if (detectPlayer.collider.gameObject.layer == 13)
-                    {
-                        enemyState = EnemyState.attack;
-                        //     Debug.LogError("zo day");
-                    }
-                    else
-                    {
-                        PlayAnim(0, aec.idle, true);
-                        CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                        //  Debug.LogError("-----zo day");
-                    }
+                    PlayAnim(0, aec.idle, true);
+                    CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 }
                 break;
             case EnemyState.run:
-                //    detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
                 if (detectPlayer.collider != null)
                 {
@@ -74,7 +90,6 @@ public class EnemyN1Controller : EnemyBase
                         rid.velocity = Vector2.zero;
                     }
                     enemyState = EnemyState.idle;
-                    //    Debug.Log("fat hien");
                 }
                 else
                 {
@@ -98,16 +113,8 @@ public class EnemyN1Controller : EnemyBase
                         rid.velocity = move;
                     }
                 }
+                break;
 
-                break;
-            case EnemyState.attack:
-                if (speedMove != 0)
-                {
-                    speedMove = 0;
-                    rid.velocity = Vector2.zero;
-                }
-                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                break;
         }
 
     }
@@ -115,28 +122,7 @@ public class EnemyN1Controller : EnemyBase
     //{
     //    Gizmos.DrawWireSphere(Origin(), radius);
     //}
-    protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
-    {
-        base.OnEvent(trackEntry, e);
-        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
-        {
-            if (!incam)
-                return;
-            boxAttack1.gameObject.SetActive(true);
-        }
-    }
-    protected override void OnComplete(TrackEntry trackEntry)
-    {
-        base.OnComplete(trackEntry);
-        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
-        {
-            enemyState = EnemyState.idle;
-            if (!incam)
-                return;
-            boxAttack1.gameObject.SetActive(false);
 
-        }
-    }
     public override void OnDisable()
     {
         base.OnDisable();
@@ -144,9 +130,9 @@ public class EnemyN1Controller : EnemyBase
         if (EnemyManager.instance == null)
             return;
 
-        if (EnemyManager.instance.enemyn1s.Contains(this))
+        if (EnemyManager.instance.enemyn2s.Contains(this))
         {
-            EnemyManager.instance.enemyn1s.Remove(this);
+            EnemyManager.instance.enemyn2s.Remove(this);
         }
     }
 

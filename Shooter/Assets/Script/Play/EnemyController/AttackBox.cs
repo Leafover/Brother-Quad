@@ -5,8 +5,9 @@ using UnityEngine;
 public class AttackBox : MonoBehaviour
 {
     public EnemyBase myEnemy;
-    public bool critHit, stun;
+    public bool critHit, stun, isflame;
     public int index;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 13)
@@ -14,6 +15,27 @@ public class AttackBox : MonoBehaviour
             Damage();
         }
     }
+
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == 13)
+    //    {
+    //        if (!isflame)
+    //            return;
+    //        try
+    //        {
+    //            if (myEnemy.timePreviousAttack <= 0)
+    //            {
+    //                PlayerController.instance.TakeDamage(myEnemy.damage1);
+    //                myEnemy.timePreviousAttack = myEnemy.maxtimeDelayAttack1;
+    //            }
+    //        }
+    //        catch
+    //        {
+
+    //        }
+    //    }
+    //}
 
     public void Damage()
     {
@@ -25,10 +47,13 @@ public class AttackBox : MonoBehaviour
                 else
                     PlayerController.instance.TakeDamage(myEnemy.damage1 + (myEnemy.damage1 / 100 * 30));
 
-                if(stun)
+                if (stun)
                 {
-                    PlayerController.instance.stun = true;
+                    PlayerController.instance.Stun();
                 }
+
+                if (isflame)
+                    gameObject.SetActive(false);
 
                 break;
             case 1:
@@ -39,4 +64,6 @@ public class AttackBox : MonoBehaviour
                 break;
         }
     }
+
+
 }

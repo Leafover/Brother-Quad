@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1263747364498956363}
   - component: {fileID: 7855196460699037660}
   - component: {fileID: 6666860221836410647}
-  m_Layer: 0
+  - component: {fileID: 2665254028848258859}
+  m_Layer: 28
   m_Name: slowArenaEnemy4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 2.35
   bulletEnemy: {fileID: 0}
+  isExploOffboss: 0
   typeExplo: 0
 --- !u!114 &6666860221836410647
 MonoBehaviour:
@@ -61,10 +63,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0246cf58b49e6e940b6c3b25a6583ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1.8
-  lm:
-    serializedVersion: 2
-    m_Bits: 8192
+--- !u!58 &2665254028848258859
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681565375209144339}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.07549918, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.9345051
 --- !u!1001 &5058612563995749774
 PrefabInstance:
   m_ObjectHideFlags: 0

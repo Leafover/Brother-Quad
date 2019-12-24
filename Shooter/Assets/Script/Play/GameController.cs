@@ -87,13 +87,10 @@ public class GameController : MonoBehaviour
         uiPanel.Begin();
         SoundController.instance.PlaySound(soundGame.soundletgo);
 
-
-      //  DataParam.indexMap = 1;
     }
 
     private void Start()
     {
-        DataParam.indexStage = 1;
 
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
@@ -233,6 +230,7 @@ public class GameController : MonoBehaviour
             {
                 PlayerController.instance.dustrun.transform.localEulerAngles = h > 0 ? dustRight : dustLeft;
                 PlayerController.instance.dustrun.SetActive(true);
+                PlayerController.instance.SetAnim();
             }
 
             PlayerController.instance.dirMove = h > 0 ? false : true;

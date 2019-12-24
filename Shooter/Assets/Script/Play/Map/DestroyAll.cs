@@ -11,6 +11,8 @@ public class DestroyAll : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 13:
+                if (GameController.instance.gameState == GameController.GameState.gameover)
+                    return;
                 PlayerController.instance.rid.velocity = Vector2.zero;
                 PlayerController.instance.speedmove = 0;
                 SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);

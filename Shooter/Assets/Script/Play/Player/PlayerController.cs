@@ -9,7 +9,6 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Transform shotraycheckenemyMelee;
     public AudioSource au;
     public Animator animArrow;
     public int level = 1;
@@ -83,6 +82,17 @@ public class PlayerController : MonoBehaviour
     {
         lineBlood.Show(health, maxHealth);
     }
+    public void Stun()
+    {
+        if (playerState == PlayerState.Jump)
+            return;
+        stun = true;
+        rid.velocity = Vector2.zero;
+        speedmove = 0;
+     //   skeletonAnimation.ClearState();
+        skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
+       playerState = PlayerState.Idle;
+    }
     public void TakeDamage(float damage)
     {
         if (playerState == PlayerState.Die)
@@ -102,6 +112,8 @@ public class PlayerController : MonoBehaviour
             playerState = PlayerState.Die;
             SoundController.instance.PlaySound(soundGame.playerDie);
             au.mute = true;
+            rid.velocity = Vector2.zero;
+            speedmove = 0;
         }
     }
     public void CalculateTimeStun(float deltaTime)

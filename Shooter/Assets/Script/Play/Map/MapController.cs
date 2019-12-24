@@ -60,6 +60,7 @@ public class MapController : MonoBehaviour
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN1Pooler.GetEnemyPooledObject();
                             break;
                         case 1:
+                            _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN2Pooler.GetEnemyPooledObject();
                             break;
                     }
 
