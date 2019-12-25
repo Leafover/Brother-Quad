@@ -31,14 +31,13 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnReset()
     {
-
-        Application.LoadLevel(Application.loadedLevel);
+        DataParam.nextSceneAfterLoad = 2;
+        Application.LoadLevel(1);
     }
 
     public void BtnBack()
     {
         DataParam.nextSceneAfterLoad = 0;
-
         Application.LoadLevel(1);
     }
     public void FillGrenade(float _current, float _max)

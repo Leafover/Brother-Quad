@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3;
     [HideInInspector]
-    public bool reload,stun;
+    public bool reload, stun;
     public Collider2D meleeAtackBox;
-    public GameObject dustdown, dustrun, effecthealth;
+    public GameObject dustdown, dustrun, effecthealth, stunEffect;
     [HideInInspector]
     public Collider2D colliderStand;
     [HideInInspector]
@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack,timestun;
-    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket,maxtimestun;
+    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack, timestun;
+    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket, maxtimestun;
 
     public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
@@ -84,14 +84,15 @@ public class PlayerController : MonoBehaviour
     }
     public void Stun()
     {
-        if (playerState == PlayerState.Jump)
+        if (playerState == PlayerState.Jump || playerState == PlayerState.Die)
             return;
         stun = true;
         rid.velocity = Vector2.zero;
         speedmove = 0;
-     //   skeletonAnimation.ClearState();
+        //   skeletonAnimation.ClearState();
         skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
-       playerState = PlayerState.Idle;
+        playerState = PlayerState.Idle;
+        stunEffect.SetActive(true);
     }
     public void TakeDamage(float damage)
     {
@@ -114,15 +115,18 @@ public class PlayerController : MonoBehaviour
             au.mute = true;
             rid.velocity = Vector2.zero;
             speedmove = 0;
+            stunEffect.SetActive(false);
         }
     }
     public void CalculateTimeStun(float deltaTime)
     {
         timestun -= deltaTime;
-        if(timestun <= 0)
+        if (timestun <= 0)
         {
             timestun = maxtimestun;
             stun = false;
+            stunEffect.SetActive(false);
+            meleeAtackBox.gameObject.SetActive(false);
         }
     }
     public LayerMask lmgroundcandown;
@@ -426,7 +430,7 @@ public class PlayerController : MonoBehaviour
             {
                 timeStand = 6;
                 animArrow.SetBool("animarrow", false);
-                 //  Debug.Log("------stop anim arrow----");
+                //  Debug.Log("------stop anim arrow----");
             }
         }
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);

@@ -20,8 +20,13 @@ public class GameOverPanel : MonoBehaviour
                 break;
         }
     }
+    int randonvictorysound;
     public void WinSound()
     {
-        SoundController.instance.PlaySound(soundGame.soundwin);
+        randonvictorysound = Random.Range(0, 2);
+        if (randonvictorysound == 1)
+            SoundController.instance.PlaySound(soundGame.soundwin);
+        else
+            SoundController.instance.PlaySound(soundGame.soundvictory1);
     }
 }

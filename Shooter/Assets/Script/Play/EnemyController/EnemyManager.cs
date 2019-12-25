@@ -20,6 +20,9 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyEN0Controller> enemyen0s;
     public List<EnemyN1Controller> enemyn1s;
     public List<EnemyN2Controller> enemyn2s;
+    public List<EnemyN3Controller> enemyn3s;
+    public List<EnemyN4Controller> enemyn4s;
+    public List<EnemyVN2Controller> enemyvn2s;
     public void Awake()
     {
         instance = this;
@@ -159,6 +162,34 @@ public class EnemyManager : MonoBehaviour
             enemyn2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
+    void CallN3Action(float deltaTime)
+    {
+        if (enemyn3s.Count == 0)
+            return;
+        for (int i = 0; i < enemyn3s.Count; i++)
+        {
+            enemyn3s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+
+    void CallN4Action(float deltaTime)
+    {
+        if (enemyn4s.Count == 0)
+            return;
+        for (int i = 0; i < enemyn4s.Count; i++)
+        {
+            enemyn4s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallVN2Action(float deltaTime)
+    {
+        if (enemyvn2s.Count == 0)
+            return;
+        for (int i = 0; i < enemyvn2s.Count; i++)
+        {
+            enemyvn2s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
     public void OnUpdate(float deltaTime)
     {
         CallE0Action(deltaTime);
@@ -176,5 +207,8 @@ public class EnemyManager : MonoBehaviour
         CallEN0Action(deltaTime);
         CallN1Action(deltaTime);
         CallN2Action(deltaTime);
+        CallN3Action(deltaTime);
+        CallN4Action(deltaTime);
+        CallVN2Action(deltaTime);
     }
 }

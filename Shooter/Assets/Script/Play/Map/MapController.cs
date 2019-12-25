@@ -36,11 +36,12 @@ public class MapController : MonoBehaviour
 
             posSpawn.x = CameraController.instance.bouders[3].transform.position.x - 3;
             posSpawn.y = CameraController.instance.transform.position.y + randomPosY;
-            switch (randomTypeEnemy)
+
+
+            switch(DataParam.indexStage)
             {
                 case 0:
-                    //     enemy = ObjectPoolerManager.Instance.enemy1Pooler.GetPooledObject();
-                    switch(DataParam.indexStage)
+                    switch(randomTypeEnemy)
                     {
                         case 0:
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemy1Pooler.GetEnemyPooledObject();
@@ -49,12 +50,9 @@ public class MapController : MonoBehaviour
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
                             break;
                     }
-
-
                     break;
                 case 1:
-                    //  enemy = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
-                    switch (DataParam.indexStage)
+                    switch (randomTypeEnemy)
                     {
                         case 0:
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN1Pooler.GetEnemyPooledObject();
@@ -63,9 +61,8 @@ public class MapController : MonoBehaviour
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN2Pooler.GetEnemyPooledObject();
                             break;
                     }
-
-
                     break;
+                    
             }
 
             // enemy.transform.position = posSpawn;

@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+
+    public List<float> healthFill;
+
     [HideInInspector]
     public BulletEnemy bulletEnemy;
     public bool haveHealhItem;
@@ -187,14 +190,17 @@ public class EnemyBase : MonoBehaviour
         enemyAutoSpawn = false;
         incam = false;
     }
+    float healthTotalTempBoss;
     public virtual void Start()
     {
+
         skeletonAnimation.Initialize(true);
+
         //  Debug.Log("init =====");
     }
     public virtual void Init()
     {
-        //  enemyAutoSpawn = false;
+        isShield = false;
         tempXBegin = transform.position.x;
         if (lineBlood != null)
         {
@@ -282,6 +288,42 @@ public class EnemyBase : MonoBehaviour
         speed = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].movespeed;
 
         exp = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].exp;
+
+        if (isBoss || isMiniBoss)
+            CalculateBenginHealthBoss();
+
+    }
+    int numberCountLayerHelthBarBoss = 0;
+    public void CalculateBenginHealthBoss()
+    {
+
+        healthTotalTempBoss = health;
+
+        if (isBoss)
+        {
+            numberCountLayerHelthBarBoss = 10;
+        }
+        else if (isMiniBoss)
+        {
+            numberCountLayerHelthBarBoss = 5;
+        }
+        float addhealth = healthTotalTempBoss / numberCountLayerHelthBarBoss;
+        for (int i = 0; i < numberCountLayerHelthBarBoss; i++)
+        {
+            if (i < numberCountLayerHelthBarBoss - 1)
+            {
+                healthFill.Add(addhealth);
+                healthTotalTempBoss -= addhealth;
+            }
+            else
+            {
+                healthFill.Add(healthTotalTempBoss);
+
+            }
+
+        }
+        indexHealthFill = 0;
+        currenthealthfill = healthFill[indexHealthFill];
     }
 
     public int CheckDirFollowPlayer(float posX)
@@ -408,8 +450,12 @@ public class EnemyBase : MonoBehaviour
 
         if (isBoss || isMiniBoss)
         {
-
-            GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currentHealth, health);
+            GameController.instance.uiPanel.healthBarBoss.healthbossText.text = "X" + numberCountLayerHelthBarBoss;
+            //      GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
+            for (int i = 0; i < numberCountLayerHelthBarBoss; i++)
+            {
+                GameController.instance.uiPanel.healthBarBoss.healthFill[i].fillAmount = 1;
+            }
             if (isMiniBoss)
                 GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Mini Boss " + "Mission " + (DataParam.indexMap + 1));
             if (isBoss)
@@ -495,45 +541,58 @@ public class EnemyBase : MonoBehaviour
         listMyBullet.Clear();
 
     }
-
+    public bool isShield;
     Vector2 posHitTemp;
     GameObject hiteffect;
     float hitPosTemp;
-    public virtual void TakeDamage(float damage,bool crit = false)
+    int indexHealthFill;
+    float currenthealthfill;
+    public virtual void TakeDamage(float damage, bool crit = false)
     {
 
-        currentHealth -= damage;
+        if (isShield)
+            return;
 
+        currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
             Dead();
-            //    Debug.LogError("dead");
         }
         if (lineBlood != null)
         {
+            //currentHealth -= damage;
+
+            //if (currentHealth <= 0)
+            //{
+            //    Dead();
+            //}
             lineBlood.Show(currentHealth, health);
         }
         else
         {
             if (isBoss || isMiniBoss)
             {
-                GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currentHealth, health);
+                currenthealthfill -= damage;
+                GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
+                if (currenthealthfill <= 0)
+                {
+                    numberCountLayerHelthBarBoss--;
+                    GameController.instance.uiPanel.healthBarBoss.healthbossText.text = "X" + numberCountLayerHelthBarBoss;
+                    if (indexHealthFill < healthFill.Count - 1)
+                    {
+                        indexHealthFill++;
+                        currenthealthfill += healthFill[indexHealthFill];
+                        GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
+                    }
+                }
+                //if(currenthealthfill <= 0 && numberCountLayerHelthBarBoss == 0)
+                //{
+                //    Dead();
+                //}
             }
         }
-        //if(!isMachine)
-        //{
-        //    StartCoroutine(BeAttackFill());
-        //}
-        //else
-        //{
-        //    GameObject hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
-        //    hiteffect.transform.position = gameObject.transform.position;
-        //    hiteffect.SetActive(true);
-        //}
-        //if (isBoss || isMiniBoss)
-        //    hitPosTemp = 1.5f;
-        //else
+
         if (isBoss || isMiniBoss || isMachine)
         {
             hitPosTemp = 0.2f;
@@ -546,11 +605,12 @@ public class EnemyBase : MonoBehaviour
         }
 
 
-        NumberDamageTextController numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
+        numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
         numberText.transform.position = transform.position;
         numberText.Display("" + (int)damage * 10, crit);
         numberText.gameObject.SetActive(true);
     }
+    NumberDamageTextController numberText;
     int takecrithit;
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
@@ -564,11 +624,11 @@ public class EnemyBase : MonoBehaviour
                 takecrithit = Random.Range(0, 100);
                 if (takecrithit <= 10)
                 {
-                    TakeDamage(PlayerController.instance.damageBullet * 2,true);
+                    TakeDamage(PlayerController.instance.damageBullet * 2, true);
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
-                   // Debug.Log("------ chet boi? dan.");
+                    // Debug.Log("------ chet boi? dan.");
 
                 }
                 else
@@ -589,7 +649,7 @@ public class EnemyBase : MonoBehaviour
                     if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
-                  //  Debug.Log("------ chet boi? luu dan");
+                    //  Debug.Log("------ chet boi? luu dan");
                 }
                 break;
             case 26:
@@ -608,7 +668,7 @@ public class EnemyBase : MonoBehaviour
                     if (!GameController.instance.listcirtwhambang[2].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundWham);
                     GameController.instance.listcirtwhambang[2].DisplayMe(transform.position);
-                  //  Debug.Log("------ chet boi? dao");
+                    //  Debug.Log("------ chet boi? dao");
                 }
                 break;
             case 20:
