@@ -6,6 +6,10 @@ using Spine.Unity;
 public class Boss1Controller : EnemyBase
 {
 
+    public Bone[] boneExplo = new Bone[7];
+    [SpineBone]
+    public string[] strBoneExplo = new string[7];
+
     public GameObject effectwhenDie, effectsmoke, effectexplohand;
     public float speedMove;
     public int typeAttack;
@@ -14,9 +18,12 @@ public class Boss1Controller : EnemyBase
         base.Start();
         Init();
         if (waitBeAttack == null)
-            waitBeAttack = new WaitForSeconds(0.3f);
+            waitBeAttack = new WaitForSeconds(0.1f);
 
-
+        for(int i = 0; i < strBoneExplo.Length; i ++)
+        {
+            boneExplo[i] = skeletonAnimation.Skeleton.FindBone(strBoneExplo[i]);
+        }
     }
     public override void Init()
     {
@@ -314,10 +321,15 @@ public class Boss1Controller : EnemyBase
         }
         else if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
-            effectwhenDie.SetActive(true);
+            if (!displayeffect)
+            {
+                effectwhenDie.SetActive(true);
+                StartCoroutine(BeDie());
+                displayeffect = true;
+            }
         }
     }
-
+    bool displayeffect = false;
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
@@ -403,28 +415,69 @@ public class Boss1Controller : EnemyBase
                 StartCoroutine(BeAttackFill());
             }
         }
+
     }
 
     WaitForSeconds waitBeAttack;
     //   int randomWin;
     IEnumerator BeAttackFill()
     {
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
+        yield return waitBeAttack;
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+        yield return waitBeAttack;
         skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
         yield return waitBeAttack;
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1f));
-        yield return waitBeAttack;
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-        yield return waitBeAttack;
-
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1f));
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
         yield return waitBeAttack;
         skeletonAnimation.skeleton.SetColor(Color.white);
-
+        yield return waitBeAttack;
         effectsmoke.transform.position = effectexplohand.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         effectexplohand.SetActive(true);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        yield return waitBeAttack;
         effectsmoke.SetActive(true);
 
+    }
+    void EffectWhendie(int index)
+    {
+        effectexploandsmokewhendie = ObjectPoolerManager.Instance.effectbosswhendiePooler.GetPooledObject();
+        effectexploandsmokewhendie.transform.position = boneExplo[index].GetWorldPosition(skeletonAnimation.transform);
+        effectsss.Add(effectexploandsmokewhendie);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        effectexploandsmokewhendie.SetActive(true);
+      //  Debug.LogError("---------- zo day coi :D");
+    }
+    List<GameObject> effectsss = new List<GameObject>();
+    public void ExploOffBoss()
+    {
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
+        posExplo.x = gameObject.transform.position.x;
+        posExplo.y = gameObject.transform.position.y - 1.5f;
+        exploDie.transform.position = posExplo;
+        exploDie.SetActive(true);
+        CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+        GameController.instance.SpawnCoin(15, transform.position);
+    }
+    GameObject effectexploandsmokewhendie;
+    IEnumerator BeDie()
+    {
+        for (int i = 0; i < strBoneExplo.Length; i++)
+        {
+          //  Debug.LogError("---------- zo day coi :D");
+            yield return new WaitForSeconds(0.3f);
+            EffectWhendie(i);
+        }
+        StartCoroutine(delayDie());
+    }
+    IEnumerator delayDie()
+    {
+        yield return new WaitForSeconds(1);
+        ExploOffBoss();
+        gameObject.SetActive(false);
+
+        foreach (GameObject _explo in effectsss)
+            _explo.SetActive(false);
     }
 }

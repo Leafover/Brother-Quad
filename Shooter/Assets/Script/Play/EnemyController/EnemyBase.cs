@@ -357,7 +357,8 @@ public class EnemyBase : MonoBehaviour
     {
 
     }
-    GameObject exploDie, healthItem;
+    [HideInInspector]
+  public  GameObject exploDie, healthItem;
     int randomCoin;
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
@@ -365,7 +366,8 @@ public class EnemyBase : MonoBehaviour
             return;
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
-            gameObject.SetActive(false);
+            if (!isBoss)
+                gameObject.SetActive(false);
 
             if (haveHealhItem)
             {
@@ -408,18 +410,18 @@ public class EnemyBase : MonoBehaviour
                     }
                 }
             }
-            else if (isBoss)
-            {
-                // SoundController.instance.PlaySound(soundGame.exploGrenade);
-                SoundController.instance.PlaySound(soundGame.soundexploenemy);
-                exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-                posExplo.x = gameObject.transform.position.x;
-                posExplo.y = gameObject.transform.position.y - 1.5f;
-                exploDie.transform.position = posExplo;
-                exploDie.SetActive(true);
-                CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-                GameController.instance.SpawnCoin(15, transform.position);
-            }
+            //else if (isBoss)
+            //{
+            //    // SoundController.instance.PlaySound(soundGame.exploGrenade);
+            //    SoundController.instance.PlaySound(soundGame.soundexploenemy);
+            //    exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
+            //    posExplo.x = gameObject.transform.position.x;
+            //    posExplo.y = gameObject.transform.position.y - 1.5f;
+            //    exploDie.transform.position = posExplo;
+            //    exploDie.SetActive(true);
+            //    CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+            //    GameController.instance.SpawnCoin(15, transform.position);
+            //}
             else if (isMiniBoss)
             {
                 SoundController.instance.PlaySound(soundGame.soundexploenemy);
@@ -434,7 +436,8 @@ public class EnemyBase : MonoBehaviour
         }
 
     }
-    Vector2 posExplo;
+    [HideInInspector]
+  public  Vector2 posExplo;
 
 
     public bool FlipX
@@ -515,7 +518,11 @@ public class EnemyBase : MonoBehaviour
         takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
-        PlayAnim(0, aec.die, false);
+        if(!isBoss)
+            PlayAnim(0, aec.die, false);
+        else
+            PlayAnim(0, aec.die, true);
+
         enemyState = EnemyState.die;
         GameController.instance.RemoveTarget(this);
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
