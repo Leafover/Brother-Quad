@@ -89,9 +89,12 @@ public class GameController : MonoBehaviour
         }
         uiPanel.Begin();
         SoundController.instance.PlaySound(soundGame.soundletgo);
-        MissionController.Instance.listMissions[0].currentValue = 0;
-        MissionController.Instance.listMissions[1].currentValue = 0;
 
+        for(int i = 0; i < MissionController.Instance.listMissions.Count; i++)
+        {
+            MissionController.Instance.listMissions[i].currentValue = 0;
+            MissionController.Instance.listMissions[i].isDone = false;
+        }
     }
 
     private void Start()
@@ -360,11 +363,11 @@ public class GameController : MonoBehaviour
         PlayerController.instance.box.enabled = false;
 
         MissionController.Instance.DoMission(0, timePlay);
+        Debug.Log("------- timeplay:" + timePlay);
         // Debug.LogError("% health:" + (PlayerController.instance.health / PlayerController.instance.maxHealth) * 100);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         if (countStar == 0)
             countStar = 1;
-
         // Debug.LogError(MissionController.Instance.listMissions[0].currentValue + ": type" + MissionController.Instance.listMissions[0].typeMission + ": value" + MissionController.Instance.listMissions[0].typeMission);
         // Debug.LogError(MissionController.Instance.listMissions[1].currentValue + ": type" + MissionController.Instance.listMissions[1].typeMission + ": value" + MissionController.Instance.listMissions[1].typeMission);
         //if (MissionController.Instance.listMissions[0].typeMission != 0)

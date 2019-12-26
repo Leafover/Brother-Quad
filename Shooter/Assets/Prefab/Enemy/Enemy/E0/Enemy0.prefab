@@ -145,7 +145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3952403219186082166
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee8cbda66284d54f84abbcb96bb9de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  au: {fileID: 0}
+  healthFill: []
+  bulletEnemy: {fileID: 0}
+  haveHealhItem: 0
+  percentHealthForPlayer: 10
+  enemyAutoSpawn: 0
   index: 0
   levelBase: 1
   activeFar: 0
@@ -358,6 +364,7 @@ MonoBehaviour:
   listMyBullet: []
   lineBlood: {fileID: 8044888355956255121}
   isBoss: 0
+  isMiniBoss: 0
   canoutcam: 0
   incam: 0
   isMachine: 1
@@ -393,6 +400,7 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: 005be4803fd52e644818645276dcd6c3, type: 2}
     jumpOut: {fileID: 0}
+    lowHPAnim: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
@@ -409,6 +417,10 @@ MonoBehaviour:
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
+  exploDie: {fileID: 0}
+  healthItem: {fileID: 0}
+  posExplo: {x: 0, y: 0}
+  isShield: 0
   indexPath: 0
 --- !u!1 &9003857327863084991
 GameObject:

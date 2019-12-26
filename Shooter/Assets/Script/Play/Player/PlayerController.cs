@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour
             grenade.SetActive(true);
 
         }
+        MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
     }
     //public void TryRocket()

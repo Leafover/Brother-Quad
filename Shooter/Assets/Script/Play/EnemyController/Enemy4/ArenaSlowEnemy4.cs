@@ -14,9 +14,17 @@ public class ArenaSlowEnemy4 : MonoBehaviour
     //{
     //    ShootRayCast();
     //}
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (PlayerController.instance == null)
+            return;
+        if (collision.gameObject.layer == 13)
+            PlayerController.instance.isSlow = false;
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (PlayerController.instance == null)
+            return;
         if (collision.gameObject.layer == 13)
             PlayerController.instance.isSlow = true;
     }

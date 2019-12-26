@@ -52,7 +52,6 @@ public class Enemy5Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-                //  detectPlayer = Physics2D.OverlapCircle(Origin(), radius, lm);
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
 
                 if (detectPlayer.collider == null)
@@ -122,10 +121,7 @@ public class Enemy5Controller : EnemyBase
         }
 
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(Origin(), radius);
-    //}
+
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);

@@ -214,6 +214,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  stun: 0
+  isflame: 0
+  index: 0
 --- !u!50 &3397279598227537406
 Rigidbody2D:
   serializedVersion: 4
@@ -428,6 +431,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  stun: 0
+  isflame: 0
+  index: 0
 --- !u!58 &3397279599157153435
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -483,7 +489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3397279599427514347
 Transform:
   m_ObjectHideFlags: 0
@@ -562,6 +568,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be16aa53e67b15f4e9bdb6b9fdb73f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  au: {fileID: 0}
+  healthFill: []
+  bulletEnemy: {fileID: 0}
+  haveHealhItem: 0
+  percentHealthForPlayer: 10
+  enemyAutoSpawn: 0
   index: 6
   levelBase: 1
   activeFar: 1
@@ -571,6 +583,7 @@ MonoBehaviour:
   listMyBullet: []
   lineBlood: {fileID: 3525686343945718385}
   isBoss: 0
+  isMiniBoss: 0
   canoutcam: 1
   incam: 0
   isMachine: 1
@@ -580,9 +593,20 @@ MonoBehaviour:
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
   takeDamageBox: {fileID: 3397279599427514344}
-  damage: 3
+  damage1: 0
+  damage2: 0
+  damage3: 0
   health: 3
-  timePreviousAttack: 0
+  bulletspeed1: 0
+  bulletspeed2: 0
+  bulletspeed3: 0
+  attackrank: 0
+  bulletimeexist: 0
+  exp: 0
+  speed: 2.5
+  maxtimeDelayAttack1: 0
+  maxtimeDelayAttack2: 0
+  maxtimeDelayAttack3: 0
   maxtimedelayChangePos: 6
   currentAnim: {fileID: 0}
   aec:
@@ -595,14 +619,14 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: 0a02a52f4ee3e7042893edca1796533c, type: 2}
     jumpOut: {fileID: 0}
-  maxtimeDelayAttack: 2.5
+    lowHPAnim: {fileID: 0}
+  timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 3397279599427514345}
   currentHealth: 0
   distanceActive: 10
-  speed: 2.5
   isActive: 0
   combo: 0
   randomCombo: 0
@@ -612,6 +636,10 @@ MonoBehaviour:
   strboneBarrelGun2: 
   targetPos: {fileID: 9131913223575920684}
   tempXBegin: 0
+  exploDie: {fileID: 0}
+  healthItem: {fileID: 0}
+  posExplo: {x: 0, y: 0}
+  isShield: 0
   strboneBody: Head E
   speedMove: 0
 --- !u!1 &3397279599996830238

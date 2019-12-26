@@ -171,7 +171,7 @@ public class EnemyBase : MonoBehaviour
     //}
     public virtual void OnDisable()
     {
-        if (skeletonAnimation != null/* && skeletonAnimation.AnimationState != null*/)
+        if (skeletonAnimation != null && skeletonAnimation.AnimationState != null)
         {
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
@@ -219,7 +219,7 @@ public class EnemyBase : MonoBehaviour
 
 
         acOnUpdate += OnUpdate;
-        if (skeletonAnimation != null)
+        if (skeletonAnimation != null && skeletonAnimation.AnimationState != null)
         {
             skeletonAnimation.AnimationState.Event += Event;
             skeletonAnimation.AnimationState.Complete += Complete;
@@ -358,7 +358,7 @@ public class EnemyBase : MonoBehaviour
 
     }
     [HideInInspector]
-  public  GameObject exploDie, healthItem;
+    public GameObject exploDie, healthItem;
     int randomCoin;
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
@@ -437,7 +437,7 @@ public class EnemyBase : MonoBehaviour
 
     }
     [HideInInspector]
-  public  Vector2 posExplo;
+    public Vector2 posExplo;
 
 
     public bool FlipX
@@ -518,7 +518,7 @@ public class EnemyBase : MonoBehaviour
         takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
-        if(!isBoss)
+        if (!isBoss)
             PlayAnim(0, aec.die, false);
         else
             PlayAnim(0, aec.die, true);
@@ -656,6 +656,7 @@ public class EnemyBase : MonoBehaviour
                     if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
+                    MissionController.Instance.DoMission(1, 1);
                     //  Debug.Log("------ chet boi? luu dan");
                 }
                 break;
@@ -675,6 +676,7 @@ public class EnemyBase : MonoBehaviour
                     if (!GameController.instance.listcirtwhambang[2].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundWham);
                     GameController.instance.listcirtwhambang[2].DisplayMe(transform.position);
+                    MissionController.Instance.DoMission(5, 1);
                     //  Debug.Log("------ chet boi? dao");
                 }
                 break;

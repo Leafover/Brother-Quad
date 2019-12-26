@@ -484,6 +484,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  stun: 0
+  isflame: 0
+  index: 0
 --- !u!50 &7312691354944575144
 Rigidbody2D:
   serializedVersion: 4
@@ -582,7 +585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7312691356240719519
 Transform:
   m_ObjectHideFlags: 0
@@ -807,6 +810,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaae205e711a9544c9db2ee28e132b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  au: {fileID: 0}
+  healthFill: []
+  bulletEnemy: {fileID: 0}
+  haveHealhItem: 0
+  percentHealthForPlayer: 10
+  enemyAutoSpawn: 0
   index: 3
   levelBase: 1
   activeFar: 0
@@ -816,6 +825,7 @@ MonoBehaviour:
   listMyBullet: []
   lineBlood: {fileID: 3022760653662855394}
   isBoss: 0
+  isMiniBoss: 0
   canoutcam: 1
   incam: 0
   isMachine: 0
@@ -825,9 +835,20 @@ MonoBehaviour:
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
   takeDamageBox: {fileID: 7312691356272888411}
-  damage: 3
+  damage1: 0
+  damage2: 0
+  damage3: 0
   health: 3
-  timePreviousAttack: 0
+  bulletspeed1: 0
+  bulletspeed2: 0
+  bulletspeed3: 0
+  attackrank: 0
+  bulletimeexist: 0
+  exp: 0
+  speed: 1.5
+  maxtimeDelayAttack1: 0
+  maxtimeDelayAttack2: 0
+  maxtimeDelayAttack3: 0
   maxtimedelayChangePos: 3
   currentAnim: {fileID: 0}
   aec:
@@ -840,14 +861,14 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: 75c400538b69941459d2e701e92f1e64, type: 2}
     jumpOut: {fileID: 0}
-  maxtimeDelayAttack: 1
+    lowHPAnim: {fileID: 0}
+  timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 512
   rid: {fileID: 7312691356272888404}
   currentHealth: 0
   distanceActive: 6
-  speed: 1.5
   isActive: 0
   combo: 0
   randomCombo: 0
@@ -857,6 +878,10 @@ MonoBehaviour:
   strboneBarrelGun2: 
   targetPos: {fileID: 8071723197090142294}
   tempXBegin: 0
+  exploDie: {fileID: 0}
+  healthItem: {fileID: 0}
+  posExplo: {x: 0, y: 0}
+  isShield: 0
 --- !u!1 &7312691356917367423
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,6 +929,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myEnemy: {fileID: 0}
   critHit: 0
+  stun: 0
+  isflame: 0
+  index: 0
 --- !u!58 &7312691356917367420
 CircleCollider2D:
   m_ObjectHideFlags: 0

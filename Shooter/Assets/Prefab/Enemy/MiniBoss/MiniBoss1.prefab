@@ -444,7 +444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7656062263031787859
 Transform:
   m_ObjectHideFlags: 0
@@ -663,6 +663,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae183d549d10a9f42999a92c0156cbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  au: {fileID: 0}
+  healthFill: []
+  bulletEnemy: {fileID: 0}
+  haveHealhItem: 0
+  percentHealthForPlayer: 10
+  enemyAutoSpawn: 0
   index: 10
   levelBase: 1
   activeFar: 0
@@ -708,6 +714,7 @@ MonoBehaviour:
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: 142de63fb9d2d1041839af241bed7d44, type: 2}
     jumpOut: {fileID: 0}
+    lowHPAnim: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
@@ -724,6 +731,10 @@ MonoBehaviour:
   strboneBarrelGun2: DAUSUNG 3
   targetPos: {fileID: 0}
   tempXBegin: 0
+  exploDie: {fileID: 0}
+  healthItem: {fileID: 0}
+  posExplo: {x: 0, y: 0}
+  isShield: 0
   gunRotation: {fileID: 8234671969350060606}
   gunRotation1: {fileID: 3280974880246269102}
   gunRotation2: {fileID: 5372168872521623284}

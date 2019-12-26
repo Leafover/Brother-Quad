@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public List<Text> missionTexts;
-    public GameObject winPanel,defeatPanel;
+    public GameObject winPanel, defeatPanel;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
 
@@ -21,7 +21,7 @@ public class UIPanel : MonoBehaviour
     {
         if (slideMiniMap.value == 1)
             return;
-        slideMiniMap.value = (PlayerController.instance.transform.position.x - GameController.instance.currentMap.pointBeginPlayer.transform.position.x)  / GameController.instance.currentMap.distanceMap;
+        slideMiniMap.value = (PlayerController.instance.transform.position.x - GameController.instance.currentMap.pointBeginPlayer.transform.position.x) / GameController.instance.currentMap.distanceMap;
     }
     public void Begin()
     {
@@ -51,15 +51,42 @@ public class UIPanel : MonoBehaviour
         if (DataParam.indexMap < GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
             DataParam.indexMap++;
 
-        Application.LoadLevel(Application.loadedLevel);
+        DataParam.nextSceneAfterLoad = 2;
+        Application.LoadLevel(1);
     }
     public void DisplayFinish(int _countstar)
     {
         if (GameController.instance.win)
         {
+            if (winPanel.activeSelf)
+                return;
             missionTexts[0].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission1name;
-            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+
+            if (MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
+            {
+                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+                Debug.LogError("TH1");
+            }
+            else if (MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
+            {
+                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+                Debug.LogError("TH2");
+            }
+            else if (!MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
+            {
+                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+                Debug.LogError("TH3");
+            }
+            else if (!MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
+            {
+                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+                Debug.LogError("TH4");
+            }
+
             winPanel.SetActive(true);
             switch (_countstar)
             {
@@ -78,9 +105,15 @@ public class UIPanel : MonoBehaviour
         }
         else
         {
+            if (defeatPanel.activeSelf)
+                return;
             defeatPanel.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundlose);
         }
 
+    }
+    public void Revive()
+    {
+        MissionController.Instance.DoMission(6, 1);
     }
 }

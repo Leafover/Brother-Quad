@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6934740704032403255
 Transform:
   m_ObjectHideFlags: 0
@@ -413,6 +413,7 @@ MonoBehaviour:
   myEnemy: {fileID: 1130247817951043593}
   critHit: 0
   stun: 1
+  isflame: 0
   index: 0
 --- !u!58 &6934740704462275021
 CircleCollider2D:
@@ -607,6 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c118af5016dbb4d9e56d198602708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  au: {fileID: 0}
+  healthFill: []
   bulletEnemy: {fileID: 0}
   haveHealhItem: 0
   percentHealthForPlayer: 10
@@ -673,6 +676,10 @@ MonoBehaviour:
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
+  exploDie: {fileID: 0}
+  healthItem: {fileID: 0}
+  posExplo: {x: 0, y: 0}
+  isShield: 0
 --- !u!1 &6934740705177471738
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +754,7 @@ MonoBehaviour:
   myEnemy: {fileID: 1130247817951043593}
   critHit: 0
   stun: 0
+  isflame: 0
   index: 0
 --- !u!50 &6934740705177471684
 Rigidbody2D:
