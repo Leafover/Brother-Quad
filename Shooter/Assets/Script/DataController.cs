@@ -28,6 +28,7 @@ public class Mission
 {
     public string level, mission1name, mission2name, mission3name;
     public double bonusgem, coin1star, exp1star, coin2star, exp2star, coin3star, exp3star, totaldropcoin;
+    public int typemission2, valuemission2, typemission3, valuemission3;
 }
 [System.Serializable]
 public class AllMission

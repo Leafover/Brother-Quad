@@ -51,6 +51,9 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
 
+
+
+
     private void Awake()
     {
         if (instance == null)
@@ -86,6 +89,8 @@ public class GameController : MonoBehaviour
         }
         uiPanel.Begin();
         SoundController.instance.PlaySound(soundGame.soundletgo);
+        MissionController.Instance.listMissions[0].currentValue = 0;
+        MissionController.Instance.listMissions[1].currentValue = 0;
 
     }
 
@@ -120,7 +125,7 @@ public class GameController : MonoBehaviour
         }
         timeCountCombo = maxtimeCountCombo;
         countCombo++;
-        if(countCombo == 2)
+        if (countCombo == 2)
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx2);
         }
@@ -132,11 +137,11 @@ public class GameController : MonoBehaviour
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx6);
         }
-        else if(countCombo == 8)
+        else if (countCombo == 8)
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx8);
         }
-       else if (countCombo == 10)
+        else if (countCombo == 10)
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx10);
         }
@@ -149,7 +154,13 @@ public class GameController : MonoBehaviour
         {
             uiPanel.comboText.text = "UNBELIEVABLE";
         }
-       // Debug.Log("-------- show combo");
+
+        if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[0].valueMission)
+            MissionController.Instance.DoMission(2, countCombo);
+        if (MissionController.Instance.listMissions[1].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[1].valueMission)
+            MissionController.Instance.DoMission(2, countCombo);
+
+        // Debug.Log("-------- show combo");
     }
     public void ResetCombo()
     {
@@ -318,7 +329,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         uiPanel.DisplayFinish(countStar);
     }
-    float timePlay;
+    int timePlay;
     WaitForSecondsRealtime timeCountPlay;
     public void StopAll()
     {
@@ -331,9 +342,7 @@ public class GameController : MonoBehaviour
 
         if (gameState == GameState.play)
         {
-
             timePlay++;
-
             timeSpanTemp = System.TimeSpan.FromSeconds(timePlay);
             uiPanel.timeText.text = timeSpanTemp.ToString("mm':'ss");
         }
@@ -349,18 +358,51 @@ public class GameController : MonoBehaviour
         PlayerController.instance.AnimWin();
         PlayerController.instance.rid.velocity = Vector2.zero;
         PlayerController.instance.box.enabled = false;
+
+        MissionController.Instance.DoMission(0, timePlay);
+        // Debug.LogError("% health:" + (PlayerController.instance.health / PlayerController.instance.maxHealth) * 100);
+        MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         if (countStar == 0)
             countStar = 1;
 
-        if (PlayerController.instance.health >= PlayerController.instance.maxHealth / 2)
-        {
+        // Debug.LogError(MissionController.Instance.listMissions[0].currentValue + ": type" + MissionController.Instance.listMissions[0].typeMission + ": value" + MissionController.Instance.listMissions[0].typeMission);
+        // Debug.LogError(MissionController.Instance.listMissions[1].currentValue + ": type" + MissionController.Instance.listMissions[1].typeMission + ": value" + MissionController.Instance.listMissions[1].typeMission);
+        //if (MissionController.Instance.listMissions[0].typeMission != 0)
+        //{
+        //    if (MissionController.Instance.listMissions[0].currentValue >= MissionController.Instance.listMissions[0].valueMission)
+        //    {
+        //        countStar++;
+        //    }          
+        //}
+        //else
+        //{
+        //    if (MissionController.Instance.listMissions[0].currentValue <= MissionController.Instance.listMissions[0].valueMission)
+        //    {
+        //        countStar++;
+        //    }
+        //}
+        //if (MissionController.Instance.listMissions[1].typeMission != 0)
+        //{
+        //    if (MissionController.Instance.listMissions[1].currentValue >= MissionController.Instance.listMissions[1].valueMission)
+        //    {
+        //        countStar++;
+        //    }
+        //}
+        //else
+        //{
+        //    if (MissionController.Instance.listMissions[1].currentValue <= MissionController.Instance.listMissions[1].valueMission)
+        //    {
+        //        countStar++;
+        //    }
+        //}
+
+        if (MissionController.Instance.listMissions[0].isDone)
             countStar++;
-        }
-        if (timePlay <= 120)
-        {
+        if (MissionController.Instance.listMissions[1].isDone)
             countStar++;
-        }
     }
+
+
 
     public void DIE()
     {
@@ -381,14 +423,14 @@ public class GameController : MonoBehaviour
         if (!uiPanel.comboDisplay.activeSelf)
             return;
         timeCountCombo -= deltaTime;
-        if(timeCountCombo <= 0)
+        if (timeCountCombo <= 0)
         {
             ResetCombo();
         }
     }
     void OnUpdateCritWhambang(float deltaTime)
     {
-        for(int i = 0; i < listcirtwhambang.Count; i ++)
+        for (int i = 0; i < listcirtwhambang.Count; i++)
         {
             listcirtwhambang[i].DisableMe(deltaTime);
         }
@@ -403,11 +445,6 @@ public class GameController : MonoBehaviour
             }
             return;
         }
-
-
-
-
-
         var deltaTime = Time.deltaTime;
 
         if (Input.GetKey(KeyCode.S))
