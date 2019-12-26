@@ -177,6 +177,6 @@ public class EnemyN3Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        SoundController.instance.PlaySound(soundGame.sounde4die);
+        SoundController.instance.PlaySound(soundGame.soundEN3die);
     }
 }

@@ -9,6 +9,7 @@ public class EnemyN2Controller : EnemyBase
     float speedMove;
 
 
+
     public Transform frameSprite;
     Vector2 scale;
     public void SetPosFrameSprite()
@@ -24,6 +25,7 @@ public class EnemyN2Controller : EnemyBase
     {
         base.Active();
         frameSprite.gameObject.SetActive(true);
+        au.Play();
     }
 
     public override void Start()
@@ -142,6 +144,7 @@ public class EnemyN2Controller : EnemyBase
     {
         base.Dead();
         frameSprite.gameObject.SetActive(false);
-        SoundController.instance.PlaySound(soundGame.sounde5die);
+        SoundController.instance.PlaySound(soundGame.soundEN2die);
+        au.Stop();
     }
 }

@@ -114,8 +114,8 @@ public class EnemyN4Controller : EnemyBase
             }
             else
             {
-                bulletEnemy.AddProperties(damage1, bulletspeed1);
-                bulletEnemy.SetDir(bulletspeed1, false);
+                bulletEnemy.AddProperties(damage1, bulletspeed1/2);
+                bulletEnemy.SetDir(bulletspeed1/2, true);
                 bulletEnemy.rid.gravityScale = 1;
                 bulletEnemy.isGrenade = true;
                 bulletEnemy.transform.position = rightFace.transform.position;

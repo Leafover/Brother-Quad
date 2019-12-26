@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-
+    public AudioSource au;
     public List<float> healthFill;
 
     [HideInInspector]

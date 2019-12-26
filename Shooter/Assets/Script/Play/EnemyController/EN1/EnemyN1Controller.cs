@@ -124,6 +124,7 @@ public class EnemyN1Controller : EnemyBase
         {
             if (!incam)
                 return;
+            SoundController.instance.PlaySound(soundGame.soundEN1Attack);
             boxAttack1.gameObject.SetActive(true);
         }
     }
@@ -157,6 +158,6 @@ public class EnemyN1Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        SoundController.instance.PlaySound(soundGame.sounde5die);
+        SoundController.instance.PlaySound(soundGame.soundEN1Die);
     }
 }

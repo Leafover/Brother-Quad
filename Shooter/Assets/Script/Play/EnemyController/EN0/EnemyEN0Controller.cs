@@ -36,7 +36,7 @@ public class EnemyEN0Controller : EnemyBase
     {
         base.Active();
         PlayAnim(0, aec.run, true);
-        SoundController.instance.PlaySound(soundGame.sounde0move);
+        SoundController.instance.PlaySound(soundGame.soundEN0Move);
     }
     public void DetecPosPlayer()
     {
@@ -117,15 +117,7 @@ public class EnemyEN0Controller : EnemyBase
         {
             if (!incam)
                 return;
-            //bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
-            //var _bulletScript = bullet.GetComponent<BulletEnemy>();
-            //_bulletScript.AddProperties(damage1, bulletspeed1);
-            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //bullet.transform.rotation = rotation;
-            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //bullet.SetActive(true);
+
             DetecPosPlayer();
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyEN0Pooler.GetBulletEnemyPooledObject();
@@ -138,6 +130,8 @@ public class EnemyEN0Controller : EnemyBase
             bulletEnemy.gameObject.SetActive(true);
 
             combo++;
+
+            SoundController.instance.PlaySound(soundGame.soundEN0Attack);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
