@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226593913147886540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.91, y: 0.41, z: 0}
+  m_LocalPosition: {x: -1.725, y: 0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2192584439997243095}
@@ -224,9 +224,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2192584439137112711}
   - component: {fileID: 6131205405092871045}
-  - component: {fileID: 7546476785363377700}
-  - component: {fileID: 1198107975553720292}
-  - component: {fileID: 5139544843110368519}
+  - component: {fileID: 30089008826197873}
+  - component: {fileID: 7431978497697734976}
+  - component: {fileID: 7642221013237771418}
   m_Layer: 0
   m_Name: skeletonANim
   m_TagString: Untagged
@@ -242,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2192584439137112707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.72, z: 0}
+  m_LocalPosition: {x: 0, y: -0.652, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2192584439997243095}
@@ -262,7 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 2545068249929699992}
---- !u!33 &7546476785363377700
+  frameOn: 0
+--- !u!33 &30089008826197873
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,7 +271,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2192584439137112707}
   m_Mesh: {fileID: 0}
---- !u!23 &1198107975553720292
+--- !u!23 &7431978497697734976
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,7 +288,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d523aaae70aa9f498330bddd79d91fc, type: 2}
+  - {fileID: 2100000, guid: e3c29dd54fa586142b531dbf242fbb46, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -307,7 +308,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &5139544843110368519
+--- !u!114 &7642221013237771418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -319,19 +320,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 9332a9066baa6534ca111bfa1802651d, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 0b80d84f0530d2e4a92dd72a7b22aba0, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 1
+  immutableTriangles: 0
   pmaVertexColors: 1
-  clearStateOnDisable: 1
+  clearStateOnDisable: 0
   tintBlack: 0
-  singleSubmesh: 1
-  fixDrawOrder: 1
+  singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -510,6 +511,7 @@ MonoBehaviour:
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 6961216021338001423}
   rightFace: {fileID: 2683667503093005728}
   listMyBullet: []
@@ -542,16 +544,16 @@ MonoBehaviour:
   maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: 9cbfadea0c2f689409f19e92cf32a751, type: 2}
-    attack2: {fileID: 0}
+    attack1: {fileID: 11400000, guid: ae0dcc0e5105e394881bbe2ae15db337, type: 2}
+    attack2: {fileID: 11400000, guid: ce1359ab3db3c2346ad68bb8ac7000b7, type: 2}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: eba3f33c9e3f9e442a8fc729c0fd7d2c, type: 2}
-    run: {fileID: 11400000, guid: 8855dab8831a9e54ca7d12af530dfe39, type: 2}
+    idle: {fileID: 11400000, guid: b45265c20d9ddcf40bbb6c3988e1d98f, type: 2}
+    run: {fileID: 11400000, guid: 0dde827fb11a95241a6c50d6fb6b36a4, type: 2}
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
-    die: {fileID: 11400000, guid: 9ff09e4dfc0745841a75762e87aca03e, type: 2}
-    jumpOut: {fileID: 0}
-    lowHPAnim: {fileID: 0}
+    die: {fileID: 11400000, guid: 3225b2f8e80aa91488cb9c929508e356, type: 2}
+    jumpOut: {fileID: 11400000, guid: 81fb6ea415bfed748b7428f404c4ac32, type: 2}
+    lowHPAnim: {fileID: 11400000, guid: 895e8351e41a76a4e906081832a18f14, type: 2}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
@@ -562,7 +564,7 @@ MonoBehaviour:
   isActive: 0
   combo: 0
   randomCombo: 0
-  skeletonAnimation: {fileID: 5139544843110368519}
+  skeletonAnimation: {fileID: 7642221013237771418}
   strboneBarrelGun: 
   strboneBarrelGun1: 
   strboneBarrelGun2: 
@@ -599,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2516122318671394324}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.54, z: 0}
+  m_LocalPosition: {x: 0, y: 0.608, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 537615376914939679}

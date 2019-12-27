@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyN4Controller : EnemyBase
 {
-    public GameObject sheld;
+  //  public GameObject sheld;
     public float speedMove;
     float timechangeShield;
     public override void Start()
@@ -24,7 +24,7 @@ public class EnemyN4Controller : EnemyBase
         }
         speedMove = -speed;
         timechangeShield = maxtimedelayChangePos;
-        sheld.SetActive(false);
+      //  sheld.SetActive(false);
         //   Debug.Log("----------------:" + speedMove);
     }
 
@@ -69,12 +69,19 @@ public class EnemyN4Controller : EnemyBase
             case EnemyState.attack:
                 if (timechangeShield > 0)
                     timechangeShield -= deltaTime;
-                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+
 
                 if (Mathf.Abs(transform.position.y - PlayerController.instance.transform.position.y) <= 0.5f)
-                    parabolBullet = false;
+                {
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                 //   parabolBullet = false;
+                }
+
                 else
-                    parabolBullet = true;
+                {
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack1);
+                  //  parabolBullet = true;
+                }
 
                 break;
             case EnemyState.idle:
@@ -84,14 +91,15 @@ public class EnemyN4Controller : EnemyBase
                 {
                     enemyState = EnemyState.attack;
                     isShield = false;
-                    sheld.SetActive(false);
+              //      sheld.SetActive(false);
                     timechangeShield = maxtimedelayChangePos;
+                    PlayAnim(0, aec.idle, true);
                 }
                 break;
         }
 
     }
-    bool parabolBullet;
+  //  bool parabolBullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -103,24 +111,54 @@ public class EnemyN4Controller : EnemyBase
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEN4Pooler.GetBulletEnemyPooledObject();
 
-            if (!parabolBullet)
-            {
+            //if (!parabolBullet)
+            //{
                 bulletEnemy.AddProperties(damage1, 0);
                 bulletEnemy.SetDir(bulletspeed1, false);
                 bulletEnemy.rid.gravityScale = 0;
                 bulletEnemy.isGrenade = false;
                 bulletEnemy.transform.position = leftFace.transform.position;
                 bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
-            }
-            else
-            {
-                bulletEnemy.AddProperties(damage1, bulletspeed1/2);
-                bulletEnemy.SetDir(bulletspeed1/2, true);
+            //}
+            //else
+            //{
+            //    bulletEnemy.AddProperties(damage1, bulletspeed1/2);
+            //    bulletEnemy.SetDir(bulletspeed1/2, true);
+            //    bulletEnemy.rid.gravityScale = 1;
+            //    bulletEnemy.isGrenade = true;
+            //    bulletEnemy.transform.position = rightFace.transform.position;
+            //    bulletEnemy.transform.eulerAngles = rightFace.transform.eulerAngles;
+            //}
+
+            bulletEnemy.gameObject.SetActive(true);
+
+            SoundController.instance.PlaySound(soundGame.soundv1attack);
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        {
+            if (!incam)
+                return;
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEN4Pooler.GetBulletEnemyPooledObject();
+
+            //if (!parabolBullet)
+            //{
+            //    bulletEnemy.AddProperties(damage1, 0);
+            //    bulletEnemy.SetDir(bulletspeed1, false);
+            //    bulletEnemy.rid.gravityScale = 0;
+            //    bulletEnemy.isGrenade = false;
+            //    bulletEnemy.transform.position = leftFace.transform.position;
+            //    bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
+            //}
+            //else
+            //{
+                bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
+                bulletEnemy.SetDir(bulletspeed1 / 2, true);
                 bulletEnemy.rid.gravityScale = 1;
                 bulletEnemy.isGrenade = true;
                 bulletEnemy.transform.position = rightFace.transform.position;
                 bulletEnemy.transform.eulerAngles = rightFace.transform.eulerAngles;
-            }
+            //}
 
             bulletEnemy.gameObject.SetActive(true);
 
@@ -137,10 +175,15 @@ public class EnemyN4Controller : EnemyBase
             if (timechangeShield <= 0)
             {
                 enemyState = EnemyState.idle;
-                sheld.SetActive(true);
+            //    sheld.SetActive(true);
                 isShield = true;
                 timechangeShield = maxtimedelayChangePos;
+                PlayAnim(0, aec.jumpOut, false);
             }
+        }
+        else if(trackEntry.Animation.Name.Equals(aec.jumpOut.name))
+        {
+            PlayAnim(0, aec.lowHPAnim, true);
         }
     }
     public override void Dead()

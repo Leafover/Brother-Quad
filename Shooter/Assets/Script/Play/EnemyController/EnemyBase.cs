@@ -20,7 +20,7 @@ public class EnemyBase : MonoBehaviour
 
     public bool activeFar;
     [HideInInspector]
-    public bool jumpOut = false;
+    public bool jumpOut = false, frameOn;
     public Transform leftFace, rightFace;
     //  [HideInInspector]
     public List<BulletEnemy> listMyBullet;
@@ -107,8 +107,6 @@ public class EnemyBase : MonoBehaviour
         }
         if (takeDamageBox == null)
             takeDamageBox = GetComponent<Collider2D>();
-
-
 
     }
     public Vector2 GetOriginGun()
@@ -261,6 +259,7 @@ public class EnemyBase : MonoBehaviour
         currentHealth = health;
 
         skeletonAnimation.gameObject.SetActive(false);
+        frameOn = false;
     }
     int randomHaveCoin;
     void AddProperties()
@@ -360,6 +359,60 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public GameObject exploDie, healthItem;
     int randomCoin;
+    public void AfterDead()
+    {
+        if (haveHealhItem)
+        {
+            healthItem = ObjectPoolerManager.Instance.healthItemPooler.GetPooledObject();
+            healthItem.transform.position = gameObject.transform.position;
+            healthItem.GetComponent<ItemBase>().AddNumberTemp(percentHealthForPlayer);
+            healthItem.SetActive(true);
+        }
+        if (!isBoss && !isMiniBoss)
+        {
+            if (isMachine)
+            {
+                SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
+                exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
+                exploDie.transform.position = gameObject.transform.position;
+                exploDie.SetActive(true);
+            }
+            else
+            {
+                SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
+                exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
+                exploDie.transform.position = gameObject.transform.position;
+                exploDie.SetActive(true);
+            }
+
+            if (!haveHealhItem)
+            {
+                if (haveCoin && GameController.instance.totalDropCoin > 0)
+                {
+                    randomCoin = Random.Range(3, 5);
+                    if (GameController.instance.totalDropCoin - randomCoin < 0)
+                    {
+                        randomCoin = GameController.instance.totalDropCoin;
+                    }
+                    GameController.instance.totalDropCoin -= randomCoin;
+                    GameController.instance.SpawnCoin(randomCoin, transform.position);
+                }
+            }
+        }
+        else if (isMiniBoss)
+        {
+            SoundController.instance.PlaySound(soundGame.soundexploenemy);
+            exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
+            posExplo.x = gameObject.transform.position.x;
+            posExplo.y = gameObject.transform.position.y;
+            exploDie.transform.position = posExplo;
+            exploDie.SetActive(true);
+            CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+            GameController.instance.SpawnCoin(8, transform.position);
+        }
+    }
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
         if (aec.die == null || trackEntry == null)
@@ -369,70 +422,7 @@ public class EnemyBase : MonoBehaviour
             if (!isBoss)
                 gameObject.SetActive(false);
 
-            if (haveHealhItem)
-            {
-                healthItem = ObjectPoolerManager.Instance.healthItemPooler.GetPooledObject();
-                healthItem.transform.position = gameObject.transform.position;
-                healthItem.GetComponent<ItemBase>().AddNumberTemp(percentHealthForPlayer);
-                healthItem.SetActive(true);
-            }
-            if (!isBoss && !isMiniBoss)
-            {
-                if (isMachine)
-                {
-                    SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
-                    exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
-                    exploDie.transform.position = gameObject.transform.position;
-                    exploDie.SetActive(true);
-                }
-                else
-                {
-                    SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
-                    exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
-                    exploDie.transform.position = gameObject.transform.position;
-                    exploDie.SetActive(true);
-                }
-
-                if (!haveHealhItem)
-                {
-                    if (haveCoin && GameController.instance.totalDropCoin > 0)
-                    {
-                        randomCoin = Random.Range(3, 5);
-                        if (GameController.instance.totalDropCoin - randomCoin < 0)
-                        {
-                            randomCoin = GameController.instance.totalDropCoin;
-                        }
-                        GameController.instance.totalDropCoin -= randomCoin;
-                        GameController.instance.SpawnCoin(randomCoin, transform.position);
-                        //  Debug.Log("total drop coin:" + GameController.instance.totalDropCoin);
-                    }
-                }
-            }
-            //else if (isBoss)
-            //{
-            //    // SoundController.instance.PlaySound(soundGame.exploGrenade);
-            //    SoundController.instance.PlaySound(soundGame.soundexploenemy);
-            //    exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
-            //    posExplo.x = gameObject.transform.position.x;
-            //    posExplo.y = gameObject.transform.position.y - 1.5f;
-            //    exploDie.transform.position = posExplo;
-            //    exploDie.SetActive(true);
-            //    CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-            //    GameController.instance.SpawnCoin(15, transform.position);
-            //}
-            else if (isMiniBoss)
-            {
-                SoundController.instance.PlaySound(soundGame.soundexploenemy);
-                exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
-                posExplo.x = gameObject.transform.position.x;
-                posExplo.y = gameObject.transform.position.y;
-                exploDie.transform.position = posExplo;
-                exploDie.SetActive(true);
-                CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-                GameController.instance.SpawnCoin(8, transform.position);
-            }
+            AfterDead();
         }
 
     }
@@ -515,13 +505,29 @@ public class EnemyBase : MonoBehaviour
             lineBlood.Hide();
         }
         rid.velocity = Vector2.zero;
+
         takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
         if (!isBoss)
-            PlayAnim(0, aec.die, false);
+        {
+            if (!frameOn)
+                if (aec.die != null)
+                    PlayAnim(0, aec.die, false);
+                else
+                {
+                    AfterDead();
+                    gameObject.SetActive(false);
+                }
+            else
+            {
+                PlayAnim(0, aec.run2, true);
+            }
+        }
         else
+        {
             PlayAnim(0, aec.die, true);
+        }
 
         enemyState = EnemyState.die;
         GameController.instance.RemoveTarget(this);
@@ -558,7 +564,11 @@ public class EnemyBase : MonoBehaviour
     {
 
         if (isShield)
+        {
+            SpawnHitEffect();
+            SpawnNumberDamageText((int)damage, crit);
             return;
+        }
 
         currentHealth -= damage;
 
@@ -568,12 +578,6 @@ public class EnemyBase : MonoBehaviour
         }
         if (lineBlood != null)
         {
-            //currentHealth -= damage;
-
-            //if (currentHealth <= 0)
-            //{
-            //    Dead();
-            //}
             lineBlood.Show(currentHealth, health);
         }
         else
@@ -593,29 +597,32 @@ public class EnemyBase : MonoBehaviour
                         GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                     }
                 }
-                //if(currenthealthfill <= 0 && numberCountLayerHelthBarBoss == 0)
-                //{
-                //    Dead();
-                //}
             }
         }
 
         if (isBoss || isMiniBoss || isMachine)
         {
-            hitPosTemp = 0.2f;
-            posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
-            posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
-
-            hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
-            hiteffect.transform.position = posHitTemp;
-            hiteffect.SetActive(true);
+            SpawnHitEffect();
         }
+        SpawnNumberDamageText((int)damage, crit);
 
-
+    }
+    void SpawnNumberDamageText(int damage, bool crit)
+    {
         numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
         numberText.transform.position = transform.position;
         numberText.Display("" + (int)damage * 10, crit);
         numberText.gameObject.SetActive(true);
+    }
+    void SpawnHitEffect()
+    {
+        hitPosTemp = 0.2f;
+        posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
+        posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
+
+        hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
+        hiteffect.transform.position = posHitTemp;
+        hiteffect.SetActive(true);
     }
     NumberDamageTextController numberText;
     int takecrithit;

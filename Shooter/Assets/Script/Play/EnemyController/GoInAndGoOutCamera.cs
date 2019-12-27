@@ -6,6 +6,8 @@ public class GoInAndGoOutCamera : MonoBehaviour
 {
     public bool enemyNotJoinAutoTarget;
     public EnemyBase myEnemyBase;
+
+    public bool frameOn;
     public virtual void OnBecameInvisible()
     {
         if (myEnemyBase.enemyState == EnemyBase.EnemyState.die)
@@ -28,6 +30,8 @@ public class GoInAndGoOutCamera : MonoBehaviour
             return;
         myEnemyBase.PosBegin = myEnemyBase.transform.position;
         myEnemyBase.incam = true;
+        if (frameOn)
+            myEnemyBase.frameOn = true;
 
         if (enemyNotJoinAutoTarget /*|| myEnemyBase.jumpOut == true*/)
             return;

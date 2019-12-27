@@ -1,4 +1,5 @@
 ﻿using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,28 @@ public class EnemyN2Controller : EnemyBase
 {
     public RaycastHit2D detectPlayer;
     float speedMove;
-
-
-
     public Transform frameSprite;
     Vector2 scale;
+
+    IEnumerator delayPlayShotBegin()
+    {
+        yield return new WaitForSeconds(1);
+        skeletonAnimation.AnimationState.SetAnimation(1, aec.attack1, false);
+    }
+    bool firstgoinscene;
+
+    public void BeginShot()
+    {
+        if (!firstgoinscene)
+        {
+            StartCoroutine(delayPlayShotBegin());
+            firstgoinscene = true;
+          //  Debug.LogError("-----------zoooo day-------");
+        }
+    }
     public void SetPosFrameSprite()
     {
-        scale.x = FlipX ? 1 : -1;
+        scale.x = FlipX ? -1 : 1;
         scale.y = 1;
         frameSprite.transform.position = boxAttack1.transform.position = FlipX ? rightFace.position : leftFace.position;
         frameSprite.localScale = scale;
@@ -24,7 +39,6 @@ public class EnemyN2Controller : EnemyBase
     public override void Active()
     {
         base.Active();
-        frameSprite.gameObject.SetActive(true);
         au.Play();
     }
 
@@ -43,9 +57,29 @@ public class EnemyN2Controller : EnemyBase
         }
         enemyState = EnemyState.idle;
         frameSprite.gameObject.SetActive(false);
+        firstgoinscene = false;
+        waitdie = false;
     }
+    int randomDie;
+    public void RunToDie()
+    {
+        timePreviousAttack = 1f;
+        frameSprite.gameObject.SetActive(false);
+        randomDie = Random.Range(0, 2);
+        if(randomDie == 0)
+        {
+            speedMove = -speed;
+            FlipX = false;
+        }
+        else
+        {
+            speedMove = speed;
+            FlipX = true;
 
+        }
+    }
     Vector2 move;
+    bool waitdie;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -55,16 +89,43 @@ public class EnemyN2Controller : EnemyBase
             return;
         }
         if (enemyState == EnemyState.die)
-            return;
-        SetPosFrameSprite();
-
-
-
-        timePreviousAttack -= deltaTime;
-        if (timePreviousAttack <= 0)
         {
-            timePreviousAttack = maxtimeDelayAttack1;
-            boxAttack1.gameObject.SetActive(true);
+            if (waitdie)
+                return;
+            move = rid.velocity;
+            move.x = speedMove;
+            move.y = rid.velocity.y;
+            rid.velocity = move;
+            timePreviousAttack -= Time.deltaTime;
+            if (timePreviousAttack <= 0)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(0, aec.die, false);
+                waitdie = true;
+                rid.velocity = Vector2.zero;
+                speedMove = 0;
+              //  Debug.LogError("die thoi" + currentAnim.name);
+            }
+                
+            return;
+        }
+
+
+        if (frameSprite.gameObject.activeSelf)
+        {
+            SetPosFrameSprite();
+            timePreviousAttack -= deltaTime;
+            if (timePreviousAttack <= 0)
+            {
+                timePreviousAttack = maxtimeDelayAttack1;
+                boxAttack1.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (frameOn)
+            {
+                BeginShot();
+            }
         }
 
         switch (enemyState)
@@ -120,11 +181,15 @@ public class EnemyN2Controller : EnemyBase
         }
 
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(Origin(), radius);
-    //}
-
+    protected override void OnComplete(TrackEntry trackEntry)
+    {
+        base.OnComplete(trackEntry);
+        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
+        {
+            PlayAnim(1, aec.attack2, true);
+            frameSprite.gameObject.SetActive(true);
+        }
+    }
     public override void OnDisable()
     {
         base.OnDisable();
@@ -143,8 +208,10 @@ public class EnemyN2Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        frameSprite.gameObject.SetActive(false);
+
         SoundController.instance.PlaySound(soundGame.soundEN2die);
         au.Stop();
+        RunToDie();
+      //  Debug.LogError("------------- dead");
     }
 }

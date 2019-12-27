@@ -11,6 +11,8 @@ public class EnemyEN0Controller : EnemyBase
     float distanceTravelled;
     VertexPath myPath;
 
+
+
     int activeAttack;
 
     Vector2 posTemp;
@@ -19,8 +21,8 @@ public class EnemyEN0Controller : EnemyBase
     {
         base.Start();
         Init();
-
     }
+
     public override void Init()
     {
         base.Init();
@@ -30,7 +32,8 @@ public class EnemyEN0Controller : EnemyBase
         }
         myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
         activeAttack = 0;
-        randomCombo = Random.Range(1, 3);
+        randomCombo = 2;
+
     }
     public override void Active()
     {
@@ -57,14 +60,14 @@ public class EnemyEN0Controller : EnemyBase
 
 
 
-     switch(activeAttack)
+        switch (activeAttack)
         {
             case 0:
                 CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
                 distanceTravelled += speed * deltaTime;
                 transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
 
-                if(Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= Random.Range(1.5f,2f))
+                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= Random.Range(3f, 4f))
                 {
                     activeAttack = 2;
                     PosBegin = Origin();
@@ -88,7 +91,7 @@ public class EnemyEN0Controller : EnemyBase
             case 3:
                 transform.position = Vector2.MoveTowards(transform.position, PosBegin, deltaTime * speed);
                 CheckDirFollowPlayer(PosBegin.x);
-                if(transform.position.x == PosBegin.x && transform.position.y == PosBegin.y)
+                if (transform.position.x == PosBegin.x && transform.position.y == PosBegin.y)
                 {
                     activeAttack = 4;
                 }
@@ -122,11 +125,20 @@ public class EnemyEN0Controller : EnemyBase
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyEN0Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
-            dirBullet = posTemp - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            if (combo == 0)
+            {
+                dirBullet = posTemp - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            }
+            else if (combo == 1)
+            {
+                dirBullet = posTemp - (Vector2)boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+                bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            }
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bulletEnemy.transform.rotation = rotation;
-            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+
             bulletEnemy.gameObject.SetActive(true);
 
             combo++;
@@ -139,10 +151,11 @@ public class EnemyEN0Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            if(combo == randomCombo)
+            if (combo == randomCombo)
             {
                 activeAttack = 1;
             }
+            activeAttack = 1;
         }
     }
     void ExPlo()
