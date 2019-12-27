@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestroyAll : MonoBehaviour
 {
-    public List<GameObject> pointList;
+ //   public List<GameObject> pointList;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,24 +13,25 @@ public class DestroyAll : MonoBehaviour
             case 13:
                 if (GameController.instance.gameState == GameController.GameState.gameover)
                     return;
-                PlayerController.instance.rid.velocity = Vector2.zero;
-                PlayerController.instance.speedmove = 0;
+                //PlayerController.instance.rid.velocity = Vector2.zero;
+                //PlayerController.instance.speedmove = 0;
                 SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
-                if (PlayerController.instance.currentStand != null)
-                {
-                    if (PlayerController.instance.currentStand.transform.position.x < transform.position.x)
-                    {
-                        PlayerController.instance.transform.position = pointList[0].transform.position;
-                    }
-                    else
-                    {
-                        PlayerController.instance.transform.position = pointList[1].transform.position;
-                    }
-                }
-                else
-                {
-                    PlayerController.instance.transform.position = pointList[0].transform.position;
-                }
+                PlayerController.instance.TakeDamage(10000);
+                //if (PlayerController.instance.currentStand != null)
+                //{
+                //    if (PlayerController.instance.currentStand.transform.position.x < transform.position.x)
+                //    {
+                //        PlayerController.instance.transform.position = pointList[0].transform.position;
+                //    }
+                //    else
+                //    {
+                //        PlayerController.instance.transform.position = pointList[1].transform.position;
+                //    }
+                //}
+                //else
+                //{
+                //    PlayerController.instance.transform.position = pointList[0].transform.position;
+                //}
                 break;
             case 12:
                 collision.gameObject.SetActive(false);
