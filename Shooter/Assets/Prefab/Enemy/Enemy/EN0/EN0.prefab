@@ -128,7 +128,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.025883675, y: -0.07506418}
+  m_Offset: {x: 0.025883675, y: -0.18577647}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -139,7 +139,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48231697, y: 0.5392618}
+  m_Size: {x: 0.48231697, y: 0.7606864}
   m_EdgeRadius: 0
 --- !u!50 &6361927716044217834
 Rigidbody2D:
@@ -184,6 +184,7 @@ MonoBehaviour:
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
   listMyBullet: []
@@ -192,7 +193,7 @@ MonoBehaviour:
   isMiniBoss: 0
   canoutcam: 0
   incam: 0
-  isMachine: 0
+  isMachine: 1
   enemyState: 0
   canmove: 0
   radius: 0
@@ -216,14 +217,14 @@ MonoBehaviour:
   maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: 9deb32094c074d446900c764b12c682e, type: 2}
+    attack1: {fileID: 11400000, guid: b833ea15a571a094fa8377d7a247b2a5, type: 2}
     attack2: {fileID: 0}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: 22126c595b5e16a42b56df40339e96d7, type: 2}
-    run: {fileID: 11400000, guid: 22126c595b5e16a42b56df40339e96d7, type: 2}
+    idle: {fileID: 11400000, guid: 16afa11f597cb884f9a6feef2e5a613a, type: 2}
+    run: {fileID: 11400000, guid: 16afa11f597cb884f9a6feef2e5a613a, type: 2}
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
-    die: {fileID: 11400000, guid: 75789826f9e5fbc42a61d6d2e75ffef0, type: 2}
+    die: {fileID: 0}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
   timePreviousAttack: 0
@@ -236,9 +237,9 @@ MonoBehaviour:
   isActive: 0
   combo: 0
   randomCombo: 0
-  skeletonAnimation: {fileID: 1017345825622602940}
-  strboneBarrelGun: DAUSUNG
-  strboneBarrelGun1: 
+  skeletonAnimation: {fileID: 7733547119248925635}
+  strboneBarrelGun: Gun L
+  strboneBarrelGun1: Gun R
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
@@ -257,9 +258,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6361927718109788008}
   - component: {fileID: 7631331551279531914}
-  - component: {fileID: 7808590140674277436}
-  - component: {fileID: 6175496665717813063}
-  - component: {fileID: 1017345825622602940}
+  - component: {fileID: 5215408688623327577}
+  - component: {fileID: 7378933215943849559}
+  - component: {fileID: 7733547119248925635}
   m_Layer: 0
   m_Name: skeletonAnim
   m_TagString: Untagged
@@ -275,8 +276,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6361927718109788012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.413, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: -0.895, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6361927716044217832}
   m_RootOrder: 0
@@ -295,7 +296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 5221398455652496630}
---- !u!33 &7808590140674277436
+  frameOn: 0
+--- !u!33 &5215408688623327577
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,7 +305,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6361927718109788012}
   m_Mesh: {fileID: 0}
---- !u!23 &6175496665717813063
+--- !u!23 &7378933215943849559
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,7 +322,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b46138118e009649874246493a35826, type: 2}
+  - {fileID: 2100000, guid: 3b099473c39e1fb4a89c85e395dded7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -340,7 +342,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &1017345825622602940
+--- !u!114 &7733547119248925635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 2ff97ba4ff5c31047b0798d2e4bf5364, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: ff49bb454d70d9540915c318d4a4d032, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -373,7 +375,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: idle
+  _animationName: fly
   loop: 1
   timeScale: 1
 --- !u!1 &7424023529504231589
