@@ -63,9 +63,9 @@ public class EnemyN3Controller : EnemyBase
         }
 
 
-        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+        CheckFallDown();
 
-        switch(enemyState)
+        switch (enemyState)
         {
             case EnemyState.attack:
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
@@ -83,9 +83,16 @@ public class EnemyN3Controller : EnemyBase
                 }
                 break;
             case EnemyState.falldown:
-                PlayAnim(0, aec.falldown, false);
                 if (isGround)
-                    enemyState = EnemyState.attack;
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.attack;
+                    else
+                    {
+                        PlayAnim(0, aec.standup, false);
+                    }
+
+                }
                 break;
         }
 
@@ -183,6 +190,15 @@ public class EnemyN3Controller : EnemyBase
 
         if (!isGround)
             enemyState = EnemyState.falldown;
+
+        if (enemyState == EnemyState.die)
+            return;
+        if (aec.standup == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            enemyState = EnemyState.attack;
+        }
     }
 
     private void OnDrawGizmos()

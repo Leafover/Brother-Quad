@@ -7,7 +7,7 @@ using Spine.Unity;
 public class Enemy4Controller : EnemyBase
 {
     float timedelayChangePos/*, timedelayShoot*/;
-    Vector2 nextPos;
+  //  Vector2 nextPos;
     bool isGrenadeStage;
     public override void Start()
     {
@@ -24,6 +24,7 @@ public class Enemy4Controller : EnemyBase
         timedelayChangePos = maxtimedelayChangePos;
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
+        speedMove = speed;
         //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemy4s.Contains(this))
         {
@@ -49,11 +50,12 @@ public class Enemy4Controller : EnemyBase
     public override void Active()
     {
         base.Active();
-      //  enemyState = EnemyState.idle;
+        //  enemyState = EnemyState.idle;
 
         enemyState = EnemyState.attack;
         //  StartCoroutine(delayActive());
     }
+
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -71,18 +73,12 @@ public class Enemy4Controller : EnemyBase
         }
 
 
-        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+        CheckFallDown();
 
         switch (enemyState)
         {
             case EnemyState.attack:
 
-                if (!isGround)
-                {
-                    enemyState = EnemyState.falldown;
-                    PlayAnim(0, aec.falldown, false);
-                    Debug.Log("zoooooooooo 1");
-                }
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
 
 
@@ -90,13 +86,13 @@ public class Enemy4Controller : EnemyBase
                 {
                     if (isGrenadeStage)
                     {
-                        Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                        Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                         targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
 
-                        Attack(1, aec.attack2, false, maxtimeDelayAttack2);
+                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                         targetPos.transform.position = GetTarget(false);
                     }
                     return;
@@ -105,69 +101,83 @@ public class Enemy4Controller : EnemyBase
                 if (isGrenadeStage)
                 {
 
-                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                     targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
 
-                    Attack(1, aec.attack2, false, maxtimeDelayAttack2);
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                     targetPos.transform.position = GetTarget(false);
-                    timedelayChangePos -= deltaTime;
-                    if (timedelayChangePos <= 0)
-                    {
-                        enemyState = EnemyState.run;
-                        timedelayChangePos = maxtimedelayChangePos;
-                        if (transform.position.x < PosBegin.x)
-                            nextPos.x = PosBegin.x + 0.5f;
-                        else
-                            nextPos.x = PosBegin.x + -0.5f;
+                 //   timedelayChangePos -= deltaTime;
+                    //if (timedelayChangePos <= 0)
+                    //{
+                    //    enemyState = EnemyState.run;
+                    //    timedelayChangePos = maxtimedelayChangePos;
+                    //    if (transform.position.x < PosBegin.x)
+                    //        nextPos.x = PosBegin.x + 0.5f;
+                    //    else
+                    //        nextPos.x = PosBegin.x + -0.5f;
 
-                        CheckDirFollowPlayer(nextPos.x);
-                        isGrenadeStage = true;
-                        skeletonAnimation.ClearState();
-                    }
+                    //   speedMove = CheckDirFollowPlayer(nextPos.x);
+                    //    isGrenadeStage = true;
+                    //    skeletonAnimation.ClearState();
+                    //}
                 }
 
                 break;
             case EnemyState.run:
 
-                if (!isGround)
-                {
-                    enemyState = EnemyState.falldown;
-                    PlayAnim(0, aec.falldown, false);
-                    Debug.Log("zoooooooooo 1");
-                }
+                //nextPos.y = transform.position.y;
+                //transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
+              //  speedMove = CheckDirFollowPlayer(nextPos.x);
 
-                nextPos.y = transform.position.y;
-                transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
+                move = rid.velocity;
+                move.x = speedMove;
+                move.y = rid.velocity.y;
+                rid.velocity = move;
+                timedelayChangePos -= deltaTime;
+
+
                 targetPos.transform.position = GetTarget(true);
 
                 PlayAnim(0, aec.run, true);
 
-                if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
+                if(timedelayChangePos <= 0)
                 {
-                    //  OriginPos = nextPos;
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                    PlayAnim(2, aec.aimTargetAnim, false);
-                    // Debug.LogError("zo day");
+                    PlayAnim(1, aec.aimTargetAnim, false);
+                    timedelayChangePos = maxtimedelayChangePos;
+                    rid.velocity = Vector2.zero;
+                 //   Debug.LogError("zo day chang");
                 }
+
+                //if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
+                //{
+                //    //  OriginPos = nextPos;
+                //    PlayAnim(0, aec.idle, true);
+                //    enemyState = EnemyState.attack;
+                //    PlayAnim(2, aec.aimTargetAnim, false);
+                //    // Debug.LogError("zo day");
+                //}
                 break;
             case EnemyState.falldown:
                 if (isGround)
                 {
                     if (aec.standup == null)
-                        enemyState = EnemyState.attack;
+                        enemyState = EnemyState.run;
                     else
-                        PlayAnim(0,aec.standup, false);
+                    {
+                        PlayAnim(0, aec.standup, false);
+                        Debug.LogError("quy` xuong'");
+                    }
 
                 }
                 break;
         }
     }
-    //  GameObject bullet;
-    //  GameObject grenade;
+    Vector2 move;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -176,6 +186,8 @@ public class Enemy4Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+
+
             combo++;
             if (!incam)
                 return;
@@ -239,15 +251,24 @@ public class Enemy4Controller : EnemyBase
             {
                 if (canmove)
                 {
-                    enemyState = EnemyState.run;
+                    if (enemyState == EnemyState.falldown)
+                        return;
+
                     timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < PosBegin.x)
-                        nextPos.x = PosBegin.x + 0.5f;
+                    speedMove = -speedMove;
+
+                    if (speedMove <= 0)
+                        FlipX = false;
                     else
-                        nextPos.x = PosBegin.x + -0.5f;
+                        FlipX = true;
+                    enemyState = EnemyState.run;
+                    //if (transform.position.x < PosBegin.x)
+                    //    nextPos.x = PosBegin.x + 0.5f;
+                    //else
+                    //    nextPos.x = PosBegin.x + -0.5f;
                     //  nextPos.y = OriginPos.y;
-                    CheckDirFollowPlayer(nextPos.x);
-                    PlayAnim(0, aec.run, true);
+                    //speedMove = CheckDirFollowPlayer(nextPos.x);
+                    //PlayAnim(0, aec.run, true);
                 }
 
                 combo = 0;
@@ -265,15 +286,30 @@ public class Enemy4Controller : EnemyBase
             {
                 if (canmove)
                 {
+                    if (enemyState == EnemyState.falldown)
+                        return;
+
+                    isGrenadeStage = true;
+                    skeletonAnimation.ClearState();
+
                     enemyState = EnemyState.run;
+
                     timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < PosBegin.x)
-                        nextPos.x = PosBegin.x + 0.5f;
+
+                    speedMove = -speedMove;
+
+                    if (speedMove < 0)
+                        FlipX = false;
                     else
-                        nextPos.x = PosBegin.x + -0.5f;
-                    nextPos.y = PosBegin.y;
-                    CheckDirFollowPlayer(nextPos.x);
-                    PlayAnim(0, aec.run, true);
+                        FlipX = true;
+
+                    //if (transform.position.x < PosBegin.x)
+                    //    nextPos.x = PosBegin.x + 0.5f;
+                    //else
+                    //    nextPos.x = PosBegin.x + -0.5f;
+                //    nextPos.y = PosBegin.y;
+                    //speedMove = CheckDirFollowPlayer(nextPos.x);
+                    //PlayAnim(0, aec.run, true);
                 }
 
                 combo = 0;
@@ -281,10 +317,18 @@ public class Enemy4Controller : EnemyBase
                 isGrenadeStage = true;
             }
         }
-
+        if (enemyState == EnemyState.die)
+            return;
+        if (aec.standup == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            enemyState = EnemyState.attack;
+            Debug.Log("-------- end anim");
+        }
 
     }
-
+    public float speedMove;
 
     public override void Dead()
     {

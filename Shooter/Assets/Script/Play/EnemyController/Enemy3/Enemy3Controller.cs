@@ -7,7 +7,8 @@ using Spine.Unity;
 public class Enemy3Controller : EnemyBase
 {
     float timedelayChangePos;
-    Vector2 nextPos;
+    Vector2 move;
+    //  Vector2 nextPos;
     public override void Start()
     {
         base.Start();
@@ -22,6 +23,8 @@ public class Enemy3Controller : EnemyBase
             EnemyManager.instance.enemy3s.Add(this);
 
         }
+        randomCombo = Random.Range(1, 4);
+        speedMove = speed;
 
         //  Debug.LogError(leftFace.transform.position + ":" + rightFace.transform.position);
     }
@@ -59,53 +62,70 @@ public class Enemy3Controller : EnemyBase
             return;
         }
 
-        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+        CheckFallDown();
 
         switch (enemyState)
         {
             case EnemyState.attack:
-                if (!isGround)
-                    enemyState = EnemyState.falldown;
 
-                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
                     return;
 
-                timedelayChangePos -= deltaTime;
-                if (timedelayChangePos <= 0)
-                {
-                    enemyState = EnemyState.run;
-                    timedelayChangePos = maxtimedelayChangePos;
-                    if (transform.position.x < PosBegin.x)
-                        nextPos.x = PosBegin.x + 0.5f;
-                    else
-                        nextPos.x = PosBegin.x + -0.5f;
+                // timedelayChangePos -= deltaTime;
+                //if (timedelayChangePos <= 0)
+                //{
+                //    enemyState = EnemyState.run;
+                //    timedelayChangePos = maxtimedelayChangePos;
+                //    if (transform.position.x < PosBegin.x)
+                //        nextPos.x = PosBegin.x + 0.5f;
+                //    else
+                //        nextPos.x = PosBegin.x + -0.5f;
 
-                    CheckDirFollowPlayer(nextPos.x);
-                    skeletonAnimation.ClearState();
-                }
+                //    CheckDirFollowPlayer(nextPos.x);
+                //    skeletonAnimation.ClearState();
+                //}
                 break;
             case EnemyState.run:
-                if (!isGround)
-                    enemyState = EnemyState.falldown;
 
-                nextPos.y = transform.position.y;
-                transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
+                move = rid.velocity;
+                move.x = speedMove;
+                move.y = rid.velocity.y;
+                rid.velocity = move;
+
+                timedelayChangePos -= deltaTime;
+                //nextPos.y = transform.position.y;
+                //transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
                 PlayAnim(0, aec.run, true);
-                if (transform.position.x == nextPos.x)
+                if (timedelayChangePos <= 0)
                 {
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                    PlayAnim(2, aec.aimTargetAnim, false);
+                    PlayAnim(1, aec.aimTargetAnim, false);
+                    rid.velocity = Vector2.zero;
+                    timedelayChangePos = maxtimedelayChangePos;
                 }
+                //if (transform.position.x == nextPos.x)
+                //{
+                //    PlayAnim(0, aec.idle, true);
+                //    enemyState = EnemyState.attack;
+                //    PlayAnim(1, aec.aimTargetAnim, false);
+                //}
                 break;
             case EnemyState.falldown:
-                PlayAnim(0, aec.falldown, false);
                 if (isGround)
-                    enemyState = EnemyState.attack;
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.run;
+                    else
+                    {
+                        PlayAnim(0, aec.standup, false);
+                    }
+
+                }
                 break;
         }
     }
@@ -138,6 +158,7 @@ public class Enemy3Controller : EnemyBase
             bulletEnemy.transform.rotation = rotation;
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.gameObject.SetActive(true);
+            combo++;
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -145,11 +166,42 @@ public class Enemy3Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+
+            if (enemyState == EnemyState.die)
+                return;
+            if (aec.standup != null)
+            {
+                if (trackEntry.Animation.Name.Equals(aec.standup.name))
+                {
+                    enemyState = EnemyState.attack;
+                }
+            }
+
+            if (enemyState == EnemyState.falldown)
+                return;
+
             PlayAnim(0, aec.idle, true);
+            if (!canmove)
+                return;
+            if (combo == randomCombo)
+            {
+                skeletonAnimation.ClearState();
+                timedelayChangePos = maxtimedelayChangePos;
+                randomCombo = Random.Range(1, 4);
+                combo = 0;
+                timedelayChangePos = maxtimedelayChangePos;
+                speedMove = -speedMove;
+
+                if (speedMove <= 0)
+                    FlipX = false;
+                else
+                    FlipX = true;
+                enemyState = EnemyState.run;
+            }
         }
 
     }
-
+    float speedMove;
     public override void Dead()
     {
         base.Dead();

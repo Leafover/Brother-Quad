@@ -145,6 +145,24 @@ public class EnemyBase : MonoBehaviour
             return /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/FlipX ? rightFace.position : leftFace.position;
         }
     }
+    public void CheckFallDown()
+    {
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+        if (!isGround && enemyState != EnemyState.falldown)
+        {
+            enemyState = EnemyState.falldown;
+            PlayAnim(0, aec.falldown, false);
+            //if (currentAnim == aec.idle)
+            //    PlayAnim(0, aec.falldown, false);
+            //else if (currentAnim == aec.run)
+            //{
+            //    if (aec.jump != null)
+            //        PlayAnim(0, aec.jump, false);
+            //    else
+            //        PlayAnim(0, aec.falldown, false);
+            //}
+        }
+    }
     public virtual void Attack(int indexTrack, AnimationReferenceAsset anim, bool loop, float _maxTimedelayAttack)
     {
         if (enemyState == EnemyState.die)
@@ -153,8 +171,8 @@ public class EnemyBase : MonoBehaviour
         {
             timePreviousAttack = Time.time;
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
-            if (currentAnim != anim)
-                currentAnim = anim;
+            //if (currentAnim != anim)
+            //    currentAnim = anim;
 
         }
     }
@@ -434,12 +452,7 @@ public class EnemyBase : MonoBehaviour
                 AfterDead();
             }
         }
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.attack;
-        }
+
 
     }
     [HideInInspector]

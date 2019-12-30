@@ -284,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 1130247817951043593}
+  frameOn: 0
 --- !u!33 &1960617087324088398
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -608,6 +609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c118af5016dbb4d9e56d198602708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -618,6 +621,7 @@ MonoBehaviour:
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 4748825936779752653}
   rightFace: {fileID: 7119359105516736012}
   listMyBullet: []
@@ -660,10 +664,16 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 12591360
+  lmground:
+    serializedVersion: 2
+    m_Bits: 0
   rid: {fileID: 6934740704873022390}
   currentHealth: 0
   distanceActive: 6

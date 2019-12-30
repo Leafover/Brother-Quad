@@ -38,13 +38,12 @@ public class Enemy1Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+        CheckFallDown();
 
         switch (enemyState)
         {
             case EnemyState.idle:
-                if (!isGround)
-                    enemyState = EnemyState.falldown;
+
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
 
                 if (detectPlayer.collider == null)
@@ -68,8 +67,7 @@ public class Enemy1Controller : EnemyBase
                 }
                 break;
             case EnemyState.run:
-                if (!isGround)
-                    enemyState = EnemyState.falldown;
+
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
                 if (detectPlayer.collider != null)
                 {
@@ -119,9 +117,16 @@ public class Enemy1Controller : EnemyBase
                     Attack(0, aec.attack2, false, maxtimeDelayAttack1);
                 break;
             case EnemyState.falldown:
-                PlayAnim(0, aec.falldown, false);
                 if (isGround)
-                    enemyState = EnemyState.idle;
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.run;
+                    else
+                    {
+                        PlayAnim(0, aec.standup, false);
+                    }
+
+                }
                 break;
         }
 
@@ -164,7 +169,14 @@ public class Enemy1Controller : EnemyBase
             boxAttack2.gameObject.SetActive(false);
             enemyState = EnemyState.idle;
         }
-
+        if (enemyState == EnemyState.die)
+            return;
+        if (aec.standup == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            enemyState = EnemyState.idle;
+        }
     }
 
     public override void Dead()
