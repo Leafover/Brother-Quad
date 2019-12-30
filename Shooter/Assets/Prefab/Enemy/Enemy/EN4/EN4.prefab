@@ -501,6 +501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c062d2e03ecf2045b78c4e3f4222ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -554,10 +556,16 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 3225b2f8e80aa91488cb9c929508e356, type: 2}
     jumpOut: {fileID: 11400000, guid: 81fb6ea415bfed748b7428f404c4ac32, type: 2}
     lowHPAnim: {fileID: 11400000, guid: 895e8351e41a76a4e906081832a18f14, type: 2}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 13
+  lmground:
+    serializedVersion: 2
+    m_Bits: 0
   rid: {fileID: 2192584439997243093}
   currentHealth: 0
   distanceActive: 6
@@ -574,7 +582,6 @@ MonoBehaviour:
   healthItem: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
-  sheld: {fileID: 8755023575373328155}
   speedMove: 0
 --- !u!1 &2516122318671394324
 GameObject:

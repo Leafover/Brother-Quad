@@ -272,6 +272,36 @@ Transform:
   m_Father: {fileID: 5746973058308473850}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5910387697958248731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8107679310634941712}
+  m_Layer: 24
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8107679310634941712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910387697958248731}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.469, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7142604610578354095}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6842636012572849382
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8aaca6b630e1824694924b8bde084cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 5910387697958248731}
+  isGround: 0
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -454,10 +486,16 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 57a76c51cefa1b0408820c657775d9fe, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 11400000, guid: 8e4a7bbc217e04e44bb83d4400446666, type: 2}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
+  lmground:
+    serializedVersion: 2
+    m_Bits: 2097408
   rid: {fileID: 7142604609229865034}
   currentHealth: 0
   distanceActive: 6
@@ -735,7 +773,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8107679310634941712}
   m_Father: {fileID: 7142604609229865036}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -752,7 +791,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4069457}
+  m_Offset: {x: -0.005922094, y: -0.4069457}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -763,7 +802,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51882935, y: 0.18610859}
+  m_Size: {x: 0.20693222, y: 0.18610859}
   m_EdgeRadius: 0.01
 --- !u!1 &7142604611124861082
 GameObject:

@@ -14,6 +14,10 @@ public class Enemy4Controller : EnemyBase
         base.Start();
         Init();
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     public override void Init()
     {
         base.Init();
@@ -45,8 +49,10 @@ public class Enemy4Controller : EnemyBase
     public override void Active()
     {
         base.Active();
-        enemyState = EnemyState.idle;
-        StartCoroutine(delayActive());
+      //  enemyState = EnemyState.idle;
+
+        enemyState = EnemyState.attack;
+        //  StartCoroutine(delayActive());
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -64,36 +70,48 @@ public class Enemy4Controller : EnemyBase
             return;
         }
 
+
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+
         switch (enemyState)
         {
             case EnemyState.attack:
+
+                if (!isGround)
+                {
+                    enemyState = EnemyState.falldown;
+                    PlayAnim(0, aec.falldown, false);
+                    Debug.Log("zoooooooooo 1");
+                }
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+
+
                 if (!canmove)
                 {
                     if (isGrenadeStage)
                     {
-                        Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                        Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                         targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
 
-                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
+                        Attack(1, aec.attack2, false, maxtimeDelayAttack2);
                         targetPos.transform.position = GetTarget(false);
                     }
                     return;
                 }
 
-
                 if (isGrenadeStage)
                 {
-                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+
+                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                     targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
 
-                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
+                    Attack(1, aec.attack2, false, maxtimeDelayAttack2);
                     targetPos.transform.position = GetTarget(false);
                     timedelayChangePos -= deltaTime;
                     if (timedelayChangePos <= 0)
@@ -108,17 +126,24 @@ public class Enemy4Controller : EnemyBase
                         CheckDirFollowPlayer(nextPos.x);
                         isGrenadeStage = true;
                         skeletonAnimation.ClearState();
-
-                        PlayAnim(0, aec.run, true);
-
                     }
                 }
 
                 break;
             case EnemyState.run:
+
+                if (!isGround)
+                {
+                    enemyState = EnemyState.falldown;
+                    PlayAnim(0, aec.falldown, false);
+                    Debug.Log("zoooooooooo 1");
+                }
+
                 nextPos.y = transform.position.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
+
+                PlayAnim(0, aec.run, true);
 
                 if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
@@ -129,10 +154,20 @@ public class Enemy4Controller : EnemyBase
                     // Debug.LogError("zo day");
                 }
                 break;
+            case EnemyState.falldown:
+                if (isGround)
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.attack;
+                    else
+                        PlayAnim(0,aec.standup, false);
+
+                }
+                break;
         }
     }
-  //  GameObject bullet;
-  //  GameObject grenade;
+    //  GameObject bullet;
+    //  GameObject grenade;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -210,7 +245,7 @@ public class Enemy4Controller : EnemyBase
                         nextPos.x = PosBegin.x + 0.5f;
                     else
                         nextPos.x = PosBegin.x + -0.5f;
-                  //  nextPos.y = OriginPos.y;
+                    //  nextPos.y = OriginPos.y;
                     CheckDirFollowPlayer(nextPos.x);
                     PlayAnim(0, aec.run, true);
                 }

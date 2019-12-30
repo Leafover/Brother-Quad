@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1743875683423835812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3016017966577685967}
+  m_Layer: 24
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3016017966577685967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743875683423835812}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.469, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7909004431652964385}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2230004055832683603
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 7909004431032077227}
+  frameOn: 0
 --- !u!33 &1642347767563886672
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -591,6 +622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c98c05239801a4f8ada5743bdf067c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 1743875683423835812}
+  isGround: 0
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -601,6 +634,7 @@ MonoBehaviour:
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 5483256012677151955}
   rightFace: {fileID: 8012540557346391570}
   listMyBullet: []
@@ -643,10 +677,16 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
     jumpOut: {fileID: 11400000, guid: ca44541a341cd75419a5da410c54d412, type: 2}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 11400000, guid: 518fa3a2399199f43b5d48fa846dc3d7, type: 2}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 12591360
+  lmground:
+    serializedVersion: 2
+    m_Bits: 2097408
   rid: {fileID: 7909004431032077224}
   currentHealth: 0
   distanceActive: 6
@@ -690,7 +730,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.123, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3016017966577685967}
   m_Father: {fileID: 7909004431032077230}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -703,11 +744,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 7909004431652964384}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 39e099b309f64024cbe4da2e19b7ee9d, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4069457}
+  m_Offset: {x: -0.005922094, y: -0.4069457}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -718,7 +759,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51882935, y: 0.18610859}
+  m_Size: {x: 0.20693222, y: 0.18610859}
   m_EdgeRadius: 0.01
 --- !u!1 &7909004431711324626
 GameObject:

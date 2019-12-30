@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour
 
     public int currentCamBoidaries;
 
+    public List<GameObject> effectstage;
+
     private void OnValidate()
     {
         NumericBoundaries = GetComponent<ProCamera2DNumericBoundaries>();
@@ -50,8 +52,7 @@ public class CameraController : MonoBehaviour
         //ProCamera2D.Instance.OffsetY = 0f;
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
-
-
+        effectstage[DataParam.indexStage].SetActive(true);
     }
     public bool setBoudariesLeft = true;
 

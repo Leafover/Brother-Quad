@@ -140,6 +140,36 @@ Transform:
   m_Father: {fileID: 2194337553059255894}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2413565408614416348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 152356844220050690}
+  m_Layer: 24
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &152356844220050690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413565408614416348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.469, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7312691355355175118}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3158643116626603742
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +565,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 152356844220050690}
   m_Father: {fileID: 7312691356272888410}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -552,7 +583,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4069457}
+  m_Offset: {x: -0.005922094, y: -0.4069457}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -563,7 +594,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51882935, y: 0.18610859}
+  m_Size: {x: 0.20693222, y: 0.18610859}
   m_EdgeRadius: 0.01
 --- !u!1 &7312691356240719512
 GameObject:
@@ -811,6 +842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaae205e711a9544c9db2ee28e132b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 2413565408614416348}
+  isGround: 0
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -864,10 +897,16 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 75c400538b69941459d2e701e92f1e64, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 11400000, guid: 9aab08d2524f7fc469d02f372b78c1f0, type: 2}
+    falldown: {fileID: 11400000, guid: 64c095fa4b7d10d4a8d2816bb9cfbbec, type: 2}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 512
+  lmground:
+    serializedVersion: 2
+    m_Bits: 2097408
   rid: {fileID: 7312691356272888404}
   currentHealth: 0
   distanceActive: 6

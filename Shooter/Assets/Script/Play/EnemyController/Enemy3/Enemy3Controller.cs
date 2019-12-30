@@ -38,6 +38,10 @@ public class Enemy3Controller : EnemyBase
         base.Active();
         enemyState = EnemyState.attack;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -48,16 +52,21 @@ public class Enemy3Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+
+
         if (tempXBegin > Camera.main.transform.position.x + 7.5f)
         {
             return;
         }
 
-
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
 
         switch (enemyState)
         {
             case EnemyState.attack:
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
+
                 Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 targetPos.transform.position = GetTarget(false);
@@ -76,19 +85,16 @@ public class Enemy3Controller : EnemyBase
 
                     CheckDirFollowPlayer(nextPos.x);
                     skeletonAnimation.ClearState();
-                    //skeletonAnimation.AnimationState.ClearTrack(1);
-                    //skeletonAnimation.AnimationState.ClearTracks();
-
-                    PlayAnim(0, aec.run, true);
-
-                    //    Debug.LogError("--------:"  +nextPos.x);
                 }
                 break;
             case EnemyState.run:
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
 
                 nextPos.y = transform.position.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
+                PlayAnim(0, aec.run, true);
                 if (transform.position.x == nextPos.x)
                 {
                     PlayAnim(0, aec.idle, true);
@@ -96,9 +102,14 @@ public class Enemy3Controller : EnemyBase
                     PlayAnim(2, aec.aimTargetAnim, false);
                 }
                 break;
+            case EnemyState.falldown:
+                PlayAnim(0, aec.falldown, false);
+                if (isGround)
+                    enemyState = EnemyState.attack;
+                break;
         }
     }
-  //  GameObject bullet;
+    //  GameObject bullet;
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;

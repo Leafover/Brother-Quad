@@ -13,7 +13,7 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim, jump, falldown,standup;
 }
 [System.Serializable]
 public class AllMap
@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
         uiPanel.Begin();
         SoundController.instance.PlaySound(soundGame.soundletgo);
 
-        for(int i = 0; i < MissionController.Instance.listMissions.Count; i++)
+        for (int i = 0; i < MissionController.Instance.listMissions.Count; i++)
         {
             MissionController.Instance.listMissions[i].currentValue = 0;
             MissionController.Instance.listMissions[i].isDone = false;
@@ -363,7 +363,7 @@ public class GameController : MonoBehaviour
         PlayerController.instance.box.enabled = false;
 
         MissionController.Instance.DoMission(0, timePlay);
-        Debug.Log("------- timeplay:" + timePlay);
+      //  Debug.Log("------- timeplay:" + timePlay);
         // Debug.LogError("% health:" + (PlayerController.instance.health / PlayerController.instance.maxHealth) * 100);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         if (countStar == 0)

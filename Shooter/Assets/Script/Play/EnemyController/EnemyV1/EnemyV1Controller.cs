@@ -54,7 +54,7 @@ public class EnemyV1Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
-                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 if (!canmove)
                     return;
 

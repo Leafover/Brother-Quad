@@ -41,7 +41,7 @@ public class MissionController : MonoBehaviour
                     if (listMissions[0].currentValue <= listMissions[0].valueMission)
                     {
                         listMissions[0].isDone = true;
-                        Debug.LogError("zoo day" + listMissions[0].currentValue + ":" + listMissions[0].valueMission);
+                       // Debug.LogError("zoo day" + listMissions[0].currentValue + ":" + listMissions[0].valueMission);
                     }
                 }
             }

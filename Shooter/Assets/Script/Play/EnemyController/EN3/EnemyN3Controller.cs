@@ -62,24 +62,35 @@ public class EnemyN3Controller : EnemyBase
             return;
         }
 
-        if (enemyState != EnemyState.attack)
-            return;
 
-        CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-        if (!canmove)
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+
+        switch(enemyState)
         {
-            if (isGrenadeStage)
-            {
-                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                targetPos.transform.position = GetTarget(true);
-            }
-            else
-            {
+            case EnemyState.attack:
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
 
-                Attack(0, aec.attack2, false, maxtimeDelayAttack2);
-                targetPos.transform.position = GetTarget(false);
-            }
+                if (isGrenadeStage)
+                {
+                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                    targetPos.transform.position = GetTarget(true);
+                }
+                else
+                {
+
+                    Attack(1, aec.attack2, false, maxtimeDelayAttack2);
+                    targetPos.transform.position = GetTarget(false);
+                }
+                break;
+            case EnemyState.falldown:
+                PlayAnim(0, aec.falldown, false);
+                if (isGround)
+                    enemyState = EnemyState.attack;
+                break;
         }
+
+
+
     }
     //  GameObject bullet;
     //  GameObject grenade;
@@ -170,10 +181,14 @@ public class EnemyN3Controller : EnemyBase
             }
         }
 
-
+        if (!isGround)
+            enemyState = EnemyState.falldown;
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     public override void Dead()
     {
         base.Dead();

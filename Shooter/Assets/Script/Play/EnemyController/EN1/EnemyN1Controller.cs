@@ -108,7 +108,7 @@ public class EnemyN1Controller : EnemyBase
                     rid.velocity = Vector2.zero;
                 }
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 break;
         }
 

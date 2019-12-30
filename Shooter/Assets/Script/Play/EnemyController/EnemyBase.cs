@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    public GameObject foot;
+ //  [HideInInspector]
+    public bool isGround = true;
     public AudioSource au;
     public List<float> healthFill;
 
@@ -33,6 +36,7 @@ public class EnemyBase : MonoBehaviour
         idle,
         run,
         attack,
+        falldown,
         die
     }
     public EnemyState enemyState = EnemyState.idle;
@@ -52,14 +56,14 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public float timePreviousAttack;
 
-    public LayerMask lm = 13;
+    public LayerMask lm = 13,lmground;
     [HideInInspector]
     public Rigidbody2D rid;
 
     public float currentHealth;
     public float distanceActive = 6;
 
-    // [HideInInspector]
+    [HideInInspector]
     public bool isActive;
     int dir;
     [HideInInspector]
@@ -92,6 +96,8 @@ public class EnemyBase : MonoBehaviour
         {
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
+            //if(anim == aec.falldown && index == 4)
+            //Debug.Log("zopoooooooooooo");
         }
     }
 
@@ -198,6 +204,7 @@ public class EnemyBase : MonoBehaviour
     }
     public virtual void Init()
     {
+        isGround = true;
         isShield = false;
         tempXBegin = transform.position.x;
         if (lineBlood != null)
@@ -415,14 +422,23 @@ public class EnemyBase : MonoBehaviour
     }
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
-        if (aec.die == null || trackEntry == null)
+        if (trackEntry == null)
             return;
-        if (trackEntry.Animation.Name.Equals(aec.die.name))
+        if (aec.die != null)
         {
-            if (!isBoss)
-                gameObject.SetActive(false);
+            if (trackEntry.Animation.Name.Equals(aec.die.name))
+            {
+                if (!isBoss)
+                    gameObject.SetActive(false);
 
-            AfterDead();
+                AfterDead();
+            }
+        }
+        if (aec.standup == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            enemyState = EnemyState.attack;
         }
 
     }

@@ -11,7 +11,7 @@ public class Enemy1Controller : EnemyBase
     {
         base.Start();
         Init();
-       // Debug.LogError("----------------start");
+        // Debug.LogError("----------------start");
     }
     public override void Init()
     {
@@ -38,12 +38,15 @@ public class Enemy1Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
 
         switch (enemyState)
         {
             case EnemyState.idle:
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
+
                 if (detectPlayer.collider == null)
                 {
                     enemyState = EnemyState.run;
@@ -53,18 +56,20 @@ public class Enemy1Controller : EnemyBase
                     if (detectPlayer.collider.gameObject.layer == 13)
                     {
                         enemyState = EnemyState.attack;
-                      //     Debug.LogError("zo day:" + detectPlayer.collider.name);
+                        //     Debug.LogError("zo day:" + detectPlayer.collider.name);
                     }
                     else
                     {
+
                         PlayAnim(0, aec.idle, true);
                         CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                   //    Debug.LogError("-----zo day:"+ detectPlayer.collider.name);
+                        //    Debug.LogError("-----zo day:"+ detectPlayer.collider.name);
                     }
                 }
                 break;
             case EnemyState.run:
-
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
                 if (detectPlayer.collider != null)
                 {
@@ -73,13 +78,13 @@ public class Enemy1Controller : EnemyBase
                     {
                         speedMove = 0;
                         rid.velocity = Vector2.zero;
-                        PlayAnim(0, aec.idle, true);
+                       PlayAnim(0, aec.idle, true);
                     }
                 }
                 else
                 {
                     var tempX = transform.position.x;
-                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f/* && transform.position.y <= PlayerController.instance.GetTransformPlayer().position.y*/)
                     {
 
                         if (speedMove != 0)
@@ -101,6 +106,7 @@ public class Enemy1Controller : EnemyBase
 
                 break;
             case EnemyState.attack:
+
                 if (speedMove != 0)
                 {
                     speedMove = 0;
@@ -111,6 +117,11 @@ public class Enemy1Controller : EnemyBase
                     Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 else if (combo == randomCombo && combo > 0)
                     Attack(0, aec.attack2, false, maxtimeDelayAttack1);
+                break;
+            case EnemyState.falldown:
+                PlayAnim(0, aec.falldown, false);
+                if (isGround)
+                    enemyState = EnemyState.idle;
                 break;
         }
 
@@ -133,10 +144,10 @@ public class Enemy1Controller : EnemyBase
         }
 
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(transform.position, radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);

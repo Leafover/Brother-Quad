@@ -24,7 +24,10 @@ public class Enemy5Controller : EnemyBase
 
         //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     public override void Active()
     {
         base.Active();
@@ -49,9 +52,14 @@ public class Enemy5Controller : EnemyBase
         if (jumpOut)
             return;
 
+
+        isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
+
         switch (enemyState)
         {
             case EnemyState.idle:
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
 
                 if (detectPlayer.collider == null)
@@ -74,7 +82,8 @@ public class Enemy5Controller : EnemyBase
                 }
                 break;
             case EnemyState.run:
-                //    detectPlayer = Physics2D.OverlapCircle(Origin(), 1f, lm);
+                if (!isGround)
+                    enemyState = EnemyState.falldown;
                 detectPlayer = !FlipX ? Physics2D.Linecast(Origin(), leftFace.position, lm) : Physics2D.Linecast(Origin(), rightFace.position, lm);
                 if (detectPlayer.collider != null)
                 {
@@ -84,13 +93,13 @@ public class Enemy5Controller : EnemyBase
                         rid.velocity = Vector2.zero;
                     }
                     enemyState = EnemyState.idle;
-                    //    Debug.Log("fat hien");
                 }
                 else
                 {
                     var tempX = transform.position.x;
-                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f)
+                    if (Mathf.Abs(tempX - PlayerController.instance.GetTranformXPlayer()) <= radius - 0.1f/* && transform.position.y <= PlayerController.instance.GetTransformPlayer().position.y*/)
                     {
+
                         if (speedMove != 0)
                         {
                             speedMove = 0;
@@ -100,6 +109,7 @@ public class Enemy5Controller : EnemyBase
                     }
                     else
                     {
+
                         PlayAnim(0, aec.run, true);
                         speedMove = CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                         move = rid.velocity;
@@ -111,12 +121,18 @@ public class Enemy5Controller : EnemyBase
 
                 break;
             case EnemyState.attack:
+
                 if (speedMove != 0)
                 {
                     speedMove = 0;
                     rid.velocity = Vector2.zero;
                 }
                 Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                break;
+            case EnemyState.falldown:
+                PlayAnim(0, aec.falldown, false);
+                if (isGround)
+                    enemyState = EnemyState.run;
                 break;
         }
 

@@ -73,13 +73,13 @@ public class EnemyN4Controller : EnemyBase
 
                 if (Mathf.Abs(transform.position.y - PlayerController.instance.transform.position.y) <= 0.5f)
                 {
-                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                  //   parabolBullet = false;
                 }
 
                 else
                 {
-                    Attack(0, aec.attack2, false, maxtimeDelayAttack1);
+                    Attack(1, aec.attack2, false, maxtimeDelayAttack1);
                   //  parabolBullet = true;
                 }
 
@@ -178,12 +178,12 @@ public class EnemyN4Controller : EnemyBase
             //    sheld.SetActive(true);
                 isShield = true;
                 timechangeShield = maxtimedelayChangePos;
-                PlayAnim(0, aec.jumpOut, false);
+                PlayAnim(1, aec.jumpOut, false);
             }
         }
         else if(trackEntry.Animation.Name.Equals(aec.jumpOut.name))
         {
-            PlayAnim(0, aec.lowHPAnim, true);
+            PlayAnim(1, aec.lowHPAnim, true);
         }
     }
     public override void Dead()
