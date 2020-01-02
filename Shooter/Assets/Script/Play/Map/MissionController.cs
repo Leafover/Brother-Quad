@@ -29,19 +29,25 @@ public class MissionController : MonoBehaviour
             {
                 listMissions[0].currentValue += temp;
 
-                if (listMissions[0].typeMission != 0)
+                if (listMissions[0].typeMission == 0)
                 {
-                    if (listMissions[0].currentValue >= listMissions[0].valueMission)
+                    if (listMissions[0].currentValue <= listMissions[0].valueMission)
+                    {
+                        listMissions[0].isDone = true;
+                    }
+                }
+                else if (listMissions[0].typeMission == 6)
+                {
+                    if (listMissions[0].currentValue <= listMissions[0].valueMission)
                     {
                         listMissions[0].isDone = true;
                     }
                 }
                 else
                 {
-                    if (listMissions[0].currentValue <= listMissions[0].valueMission)
+                    if (listMissions[0].currentValue >= listMissions[0].valueMission)
                     {
                         listMissions[0].isDone = true;
-                       // Debug.LogError("zoo day" + listMissions[0].currentValue + ":" + listMissions[0].valueMission);
                     }
                 }
             }
@@ -52,22 +58,28 @@ public class MissionController : MonoBehaviour
             {
                 listMissions[1].currentValue += temp;
 
-                if (listMissions[1].typeMission != 0)
+                if (listMissions[1].typeMission == 0)
                 {
-                    if (listMissions[1].currentValue >= listMissions[1].valueMission)
+                    if (listMissions[1].currentValue <= listMissions[1].valueMission)
+                    {
+                        listMissions[1].isDone = true;
+                    }
+                }
+                else if (listMissions[1].typeMission == 6)
+                {
+                    if (listMissions[1].currentValue <= listMissions[1].valueMission)
                     {
                         listMissions[1].isDone = true;
                     }
                 }
                 else
                 {
-                    if (listMissions[1].currentValue <= listMissions[1].valueMission)
+                    if (listMissions[1].currentValue >= listMissions[1].valueMission)
                     {
-
                         listMissions[1].isDone = true;
-                        Debug.LogError("zoo day" + listMissions[1].currentValue + ":" + listMissions[1].valueMission);
                     }
                 }
+
             }
         }
     }

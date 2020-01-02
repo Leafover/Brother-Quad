@@ -79,20 +79,9 @@ public class EnemyV2Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            combo++;
             if (!incam)
                 return;
-
-            //g = ObjectPoolerManager.Instance.rocketEnemyV2Pooler.GetPooledObject();
-            //var bulletScript = g.GetComponent<BulletEnemy>();
-            //bulletScript.AddProperties(damage1, bulletspeed1);
-            //bulletScript.SetTimeExist(bulletimeexist);
-            //bulletScript.BeginDisplay(Vector2.zero, this);
-            //listMyBullet.Add(bulletScript);
-            //g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //g.transform.rotation = Quaternion.identity;
-            //g.transform.rotation = gunRotation.rotation;
-            //g.SetActive(true);
-
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
@@ -113,7 +102,6 @@ public class EnemyV2Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            combo++;
             if (combo == randomCombo)
             {
                 combo = 0;

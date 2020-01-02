@@ -104,6 +104,13 @@ public class EnemyVN2Controller : EnemyBase
 
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            combo++;
+            if (combo == randomCombo)
+            {
+                combo = 0;
+                enemyState = EnemyState.run;
+                randomCombo = Random.Range(2, 4);
+            }
             if (!incam)
                 return;
 
@@ -117,21 +124,7 @@ public class EnemyVN2Controller : EnemyBase
             bulletEnemy.transform.rotation = gunRotation.rotation;
             bulletEnemy.gameObject.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundv2attack);
-
-
-            combo++;
-            if (combo == randomCombo)
-            {
-                combo = 0;
-                enemyState = EnemyState.run;
-                randomCombo = Random.Range(2, 4);
-                //   Debug.LogError("re turn run");
-            }
         }
-        //else if (trackEntry.Animation.Name.Equals(aec.die.name))
-        //{
-        //    gameObject.SetActive(false);
-        //}
     }
     public override void Dead()
     {

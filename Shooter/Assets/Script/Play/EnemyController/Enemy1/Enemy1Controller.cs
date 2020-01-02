@@ -55,14 +55,12 @@ public class Enemy1Controller : EnemyBase
                     if (detectPlayer.collider.gameObject.layer == 13)
                     {
                         enemyState = EnemyState.attack;
-                        //     Debug.LogError("zo day:" + detectPlayer.collider.name);
                     }
                     else
                     {
 
                         PlayAnim(0, aec.idle, true);
                         CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                        //    Debug.LogError("-----zo day:"+ detectPlayer.collider.name);
                     }
                 }
                 break;

@@ -6,8 +6,7 @@ using Spine.Unity;
 
 public class Enemy4Controller : EnemyBase
 {
-    float timedelayChangePos/*, timedelayShoot*/;
-  //  Vector2 nextPos;
+    float timedelayChangePos;
     bool isGrenadeStage;
     public override void Start()
     {
@@ -109,28 +108,10 @@ public class Enemy4Controller : EnemyBase
 
                     Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                     targetPos.transform.position = GetTarget(false);
-                 //   timedelayChangePos -= deltaTime;
-                    //if (timedelayChangePos <= 0)
-                    //{
-                    //    enemyState = EnemyState.run;
-                    //    timedelayChangePos = maxtimedelayChangePos;
-                    //    if (transform.position.x < PosBegin.x)
-                    //        nextPos.x = PosBegin.x + 0.5f;
-                    //    else
-                    //        nextPos.x = PosBegin.x + -0.5f;
-
-                    //   speedMove = CheckDirFollowPlayer(nextPos.x);
-                    //    isGrenadeStage = true;
-                    //    skeletonAnimation.ClearState();
-                    //}
                 }
 
                 break;
             case EnemyState.run:
-
-                //nextPos.y = transform.position.y;
-                //transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
-              //  speedMove = CheckDirFollowPlayer(nextPos.x);
 
                 move = rid.velocity;
                 move.x = speedMove;
@@ -150,17 +131,8 @@ public class Enemy4Controller : EnemyBase
                     PlayAnim(1, aec.aimTargetAnim, false);
                     timedelayChangePos = maxtimedelayChangePos;
                     rid.velocity = Vector2.zero;
-                 //   Debug.LogError("zo day chang");
                 }
 
-                //if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
-                //{
-                //    //  OriginPos = nextPos;
-                //    PlayAnim(0, aec.idle, true);
-                //    enemyState = EnemyState.attack;
-                //    PlayAnim(2, aec.aimTargetAnim, false);
-                //    // Debug.LogError("zo day");
-                //}
                 break;
             case EnemyState.falldown:
                 if (isGround)
@@ -170,7 +142,6 @@ public class Enemy4Controller : EnemyBase
                     else
                     {
                         PlayAnim(0, aec.standup, false);
-                        Debug.LogError("quy` xuong'");
                     }
 
                 }
@@ -187,21 +158,9 @@ public class Enemy4Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
 
-
             combo++;
             if (!incam)
                 return;
-            //bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
-            //var bulletScript = bullet.GetComponent<BulletEnemy>();
-            //bulletScript.AddProperties(damage2, bulletspeed1);
-            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //bullet.transform.rotation = rotation;
-            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //bullet.SetActive(true);
-
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet4EnemyBasepooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
@@ -219,23 +178,13 @@ public class Enemy4Controller : EnemyBase
             if (!incam)
                 return;
 
-
-            //grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            //grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            //var grenadeScript = grenade.GetComponent<BulletEnemy>();
-            //grenadeScript.AddProperties(0, 6);
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenade4EnemyBasepooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.AddProperties(0, 6);
             if (FlipX)
                 bulletEnemy.SetDir(-6, false);
-            //grenadeScript.SetDir(-6,false);
             else
                 bulletEnemy.SetDir(6, false);
-            //  grenadeScript.SetDir(6,false);
-
-            //    grenade.SetActive(true);
             bulletEnemy.gameObject.SetActive(true);
         }
 
@@ -262,13 +211,6 @@ public class Enemy4Controller : EnemyBase
                     else
                         FlipX = true;
                     enemyState = EnemyState.run;
-                    //if (transform.position.x < PosBegin.x)
-                    //    nextPos.x = PosBegin.x + 0.5f;
-                    //else
-                    //    nextPos.x = PosBegin.x + -0.5f;
-                    //  nextPos.y = OriginPos.y;
-                    //speedMove = CheckDirFollowPlayer(nextPos.x);
-                    //PlayAnim(0, aec.run, true);
                 }
 
                 combo = 0;
@@ -302,14 +244,6 @@ public class Enemy4Controller : EnemyBase
                         FlipX = false;
                     else
                         FlipX = true;
-
-                    //if (transform.position.x < PosBegin.x)
-                    //    nextPos.x = PosBegin.x + 0.5f;
-                    //else
-                    //    nextPos.x = PosBegin.x + -0.5f;
-                //    nextPos.y = PosBegin.y;
-                    //speedMove = CheckDirFollowPlayer(nextPos.x);
-                    //PlayAnim(0, aec.run, true);
                 }
 
                 combo = 0;
@@ -324,7 +258,6 @@ public class Enemy4Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.standup.name))
         {
             enemyState = EnemyState.attack;
-            Debug.Log("-------- end anim");
         }
 
     }

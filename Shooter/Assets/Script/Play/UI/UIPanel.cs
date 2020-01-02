@@ -102,6 +102,8 @@ public class UIPanel : MonoBehaviour
                     animGamOver.Play("Win3Star");
                     break;
             }
+
+            GameController.instance.ThemManh();
         }
         else
         {
@@ -114,6 +116,7 @@ public class UIPanel : MonoBehaviour
     }
     public void Revive()
     {
-        MissionController.Instance.DoMission(6, 1);
+        // MissionController.Instance.DoMission(6, 1);
+        GameController.instance.reviveCount++;
     }
 }

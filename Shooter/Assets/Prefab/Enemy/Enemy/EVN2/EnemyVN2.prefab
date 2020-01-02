@@ -362,7 +362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6287636492414652283
 Transform:
   m_ObjectHideFlags: 0
@@ -583,6 +583,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bee10bc5b285b1419d7eb1796652928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -600,6 +602,7 @@ MonoBehaviour:
   lineBlood: {fileID: 7030752932068598145}
   isBoss: 0
   isMiniBoss: 0
+  moveFollowPath: 1
   canoutcam: 0
   incam: 0
   isMachine: 1
@@ -636,8 +639,14 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: bd487d5a676290549b3a447bbc1eefb6, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
+    serializedVersion: 2
+    m_Bits: 0
+  lmground:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 6287636493170739160}

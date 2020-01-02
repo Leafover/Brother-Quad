@@ -6,18 +6,25 @@ using UnityEngine;
 
 public class EnemyN3Controller : EnemyBase
 {
-
+    Vector2 move;
+    float timedelayChangePos;
     bool isGrenadeStage;
     public override void Start()
     {
         base.Start();
         Init();
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     public override void Init()
     {
         base.Init();
-        randomCombo = Random.Range(3, 4);
-        isGrenadeStage = false;
+        timedelayChangePos = maxtimedelayChangePos;
+        randomCombo = Random.Range(1, 3);
+        isGrenadeStage = true;
+        speedMove = speed;
         //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemyn3s.Contains(this))
         {
@@ -43,9 +50,12 @@ public class EnemyN3Controller : EnemyBase
     public override void Active()
     {
         base.Active();
-        enemyState = EnemyState.idle;
-        StartCoroutine(delayActive());
+        //  enemyState = EnemyState.idle;
+
+        enemyState = EnemyState.attack;
+        //  StartCoroutine(delayActive());
     }
+
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -68,25 +78,68 @@ public class EnemyN3Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.attack:
+
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+
+
+                if (!canmove)
+                {
+                    if (isGrenadeStage)
+                    {
+                        Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                        targetPos.transform.position = GetTarget(true);
+                    }
+                    else
+                    {
+
+                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
+                        targetPos.transform.position = GetTarget(false);
+                    }
+                    return;
+                }
 
                 if (isGrenadeStage)
                 {
-                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                     targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
 
-                    Attack(1, aec.attack2, false, maxtimeDelayAttack2);
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
                     targetPos.transform.position = GetTarget(false);
                 }
+
+                break;
+            case EnemyState.run:
+
+                move = rid.velocity;
+                move.x = speedMove;
+                move.y = rid.velocity.y;
+                rid.velocity = move;
+                timedelayChangePos -= deltaTime;
+
+
+                targetPos.transform.position = GetTarget(true);
+
+                PlayAnim(0, aec.run, true);
+
+                if (timedelayChangePos <= 0)
+                {
+                    PlayAnim(0, aec.idle, true);
+                    enemyState = EnemyState.attack;
+                    PlayAnim(1, aec.aimTargetAnim, false);
+                    timedelayChangePos = maxtimedelayChangePos;
+                    rid.velocity = Vector2.zero;
+                }
+
                 break;
             case EnemyState.falldown:
                 if (isGround)
                 {
                     if (aec.standup == null)
-                        enemyState = EnemyState.attack;
+                        enemyState = EnemyState.run;
                     else
                     {
                         PlayAnim(0, aec.standup, false);
@@ -95,12 +148,8 @@ public class EnemyN3Controller : EnemyBase
                 }
                 break;
         }
-
-
-
     }
-    //  GameObject bullet;
-    //  GameObject grenade;
+
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -112,16 +161,6 @@ public class EnemyN3Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
-            //bullet = ObjectPoolerManager.Instance.bulletEnemy4Pooler.GetPooledObject();
-            //var bulletScript = bullet.GetComponent<BulletEnemy>();
-            //bulletScript.AddProperties(damage2, bulletspeed1);
-            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //bullet.transform.rotation = rotation;
-            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //bullet.SetActive(true);
-
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletN3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
@@ -140,23 +179,14 @@ public class EnemyN3Controller : EnemyBase
             if (!incam)
                 return;
 
-
-            //grenade = ObjectPoolerManager.Instance.grenadeEnemy4Pooler.GetPooledObject();
-            //grenade.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            //var grenadeScript = grenade.GetComponent<BulletEnemy>();
-            //grenadeScript.AddProperties(0, 6);
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenadeN3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.AddProperties(damage2, 6);
             if (FlipX)
                 bulletEnemy.SetDir(-6, false);
-            //grenadeScript.SetDir(-6,false);
             else
                 bulletEnemy.SetDir(6, false);
-            //  grenadeScript.SetDir(6,false);
 
-            //    grenade.SetActive(true);
             bulletEnemy.gameObject.SetActive(true);
         }
 
@@ -168,10 +198,25 @@ public class EnemyN3Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             PlayAnim(0, aec.idle, true);
-            if (combo == 1)
+            if (combo == randomCombo)
             {
+                if (canmove)
+                {
+                    if (enemyState == EnemyState.falldown)
+                        return;
+
+                    timedelayChangePos = maxtimedelayChangePos;
+                    speedMove = -speedMove;
+
+                    if (speedMove <= 0)
+                        FlipX = false;
+                    else
+                        FlipX = true;
+                    enemyState = EnemyState.run;
+                }
+
                 combo = 0;
-                randomCombo = Random.Range(3, 4);
+                randomCombo = Random.Range(3,4);
                 isGrenadeStage = false;
             }
 
@@ -183,14 +228,31 @@ public class EnemyN3Controller : EnemyBase
 
             if (combo == randomCombo)
             {
+                if (canmove)
+                {
+                    if (enemyState == EnemyState.falldown)
+                        return;
+
+                    isGrenadeStage = true;
+                    skeletonAnimation.ClearState();
+
+                    enemyState = EnemyState.run;
+
+                    timedelayChangePos = maxtimedelayChangePos;
+
+                    speedMove = -speedMove;
+
+                    if (speedMove < 0)
+                        FlipX = false;
+                    else
+                        FlipX = true;
+                }
+
                 combo = 0;
+                randomCombo = Random.Range(1, 3);
                 isGrenadeStage = true;
             }
         }
-
-        if (!isGround)
-            enemyState = EnemyState.falldown;
-
         if (enemyState == EnemyState.die)
             return;
         if (aec.standup == null)
@@ -199,12 +261,10 @@ public class EnemyN3Controller : EnemyBase
         {
             enemyState = EnemyState.attack;
         }
-    }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
     }
+    public float speedMove;
+
     public override void Dead()
     {
         base.Dead();

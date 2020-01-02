@@ -106,6 +106,8 @@ public class GameController : MonoBehaviour
         }
 
 
+        ThemManh();
+
     }
 
     private void Start()
@@ -365,7 +367,7 @@ public class GameController : MonoBehaviour
     public bool isDestroyBoss;
     [HideInInspector]
     public bool waitForWin;
-
+    public int reviveCount = 0;
     public void WinGame()
     {
         gameState = GameState.gameover;
@@ -374,42 +376,11 @@ public class GameController : MonoBehaviour
         PlayerController.instance.box.enabled = false;
 
         MissionController.Instance.DoMission(0, timePlay);
-        //  Debug.Log("------- timeplay:" + timePlay);
-        // Debug.LogError("% health:" + (PlayerController.instance.health / PlayerController.instance.maxHealth) * 100);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
+        MissionController.Instance.DoMission(6, reviveCount);
+     //   Debug.Log(MissionController.Instance.listMissions[1].currentValue + ":" + MissionController.Instance.listMissions[1].valueMission);
         if (countStar == 0)
             countStar = 1;
-        // Debug.LogError(MissionController.Instance.listMissions[0].currentValue + ": type" + MissionController.Instance.listMissions[0].typeMission + ": value" + MissionController.Instance.listMissions[0].typeMission);
-        // Debug.LogError(MissionController.Instance.listMissions[1].currentValue + ": type" + MissionController.Instance.listMissions[1].typeMission + ": value" + MissionController.Instance.listMissions[1].typeMission);
-        //if (MissionController.Instance.listMissions[0].typeMission != 0)
-        //{
-        //    if (MissionController.Instance.listMissions[0].currentValue >= MissionController.Instance.listMissions[0].valueMission)
-        //    {
-        //        countStar++;
-        //    }          
-        //}
-        //else
-        //{
-        //    if (MissionController.Instance.listMissions[0].currentValue <= MissionController.Instance.listMissions[0].valueMission)
-        //    {
-        //        countStar++;
-        //    }
-        //}
-        //if (MissionController.Instance.listMissions[1].typeMission != 0)
-        //{
-        //    if (MissionController.Instance.listMissions[1].currentValue >= MissionController.Instance.listMissions[1].valueMission)
-        //    {
-        //        countStar++;
-        //    }
-        //}
-        //else
-        //{
-        //    if (MissionController.Instance.listMissions[1].currentValue <= MissionController.Instance.listMissions[1].valueMission)
-        //    {
-        //        countStar++;
-        //    }
-        //}
-
         if (MissionController.Instance.listMissions[0].isDone)
             countStar++;
         if (MissionController.Instance.listMissions[1].isDone)
@@ -526,5 +497,37 @@ public class GameController : MonoBehaviour
     {
         yield return delaywinwait;
         WinGame();
+    }
+
+    int randomCertain;
+    public void ThemManh()
+    {
+        for (int i = 0; i < vatphamnhanduoc.Count; i++)
+        {
+            for (int j = 0; j < vatphamnhanduoc[i].TotalNumber; j++)
+            {
+                randomCertain = Random.Range(0, 100);
+                if (randomCertain < vatphamnhanduoc[i].Normal)
+                {
+                    Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
+                }
+                else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
+                {
+                    Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
+                }
+                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
+                {
+                    Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
+                }
+                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
+                {
+                    Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
+                }
+                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
+                {
+                    Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
+                }
+            }
+        }
     }
 }

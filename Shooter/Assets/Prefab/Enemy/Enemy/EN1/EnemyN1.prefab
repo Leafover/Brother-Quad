@@ -246,9 +246,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6934740704032403255}
   - component: {fileID: 181152747141652358}
-  - component: {fileID: 1960617087324088398}
-  - component: {fileID: 6584828718597446449}
-  - component: {fileID: 2172280826851594303}
+  - component: {fileID: 2858602649196966847}
+  - component: {fileID: 9034154292944955201}
+  - component: {fileID: 2053769443170800009}
   m_Layer: 0
   m_Name: skeletonANim
   m_TagString: Untagged
@@ -285,7 +285,7 @@ MonoBehaviour:
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 1130247817951043593}
   frameOn: 0
---- !u!33 &1960617087324088398
+--- !u!33 &2858602649196966847
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,7 +293,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6934740704032403243}
   m_Mesh: {fileID: 0}
---- !u!23 &6584828718597446449
+--- !u!23 &9034154292944955201
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,7 +310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2f32a2ba6600534d9801910c2f12b80, type: 2}
+  - {fileID: 2100000, guid: 41f074980e91a3043857408e60da4114, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -330,7 +330,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &2172280826851594303
+--- !u!114 &2053769443170800009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ec59dc328ae4c814ab8de71fa9ab6185, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a7ee0b57321f7654aa90b38b4930af53, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -363,8 +363,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: idle
+  loop: 1
   timeScale: 1
 --- !u!1 &6934740704462275020
 GameObject:
@@ -480,7 +480,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.123, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2342603368757210763}
   m_Father: {fileID: 6934740704873022384}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -493,11 +494,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 6934740704520568894}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 39e099b309f64024cbe4da2e19b7ee9d, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4069457}
+  m_Offset: {x: -0.005922094, y: -0.4069457}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -508,7 +509,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51882935, y: 0.18610859}
+  m_Size: {x: 0.20693222, y: 0.18610859}
   m_EdgeRadius: 0.01
 --- !u!1 &6934740704873022388
 GameObject:
@@ -609,7 +610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c118af5016dbb4d9e56d198602708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foot: {fileID: 0}
+  foot: {fileID: 9012523566332406917}
   isGround: 1
   au: {fileID: 0}
   healthFill: []
@@ -628,6 +629,7 @@ MonoBehaviour:
   lineBlood: {fileID: 8148077831042338276}
   isBoss: 0
   isMiniBoss: 0
+  moveFollowPath: 0
   canoutcam: 0
   incam: 0
   isMachine: 0
@@ -654,18 +656,18 @@ MonoBehaviour:
   maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: 7059b80ad651e1749b00200ebe57d2bf, type: 2}
+    attack1: {fileID: 11400000, guid: eaed5aa367a48054981a84e2c31678a9, type: 2}
     attack2: {fileID: 0}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: f46c393a6717ef143b1d00aca841712f, type: 2}
-    run: {fileID: 11400000, guid: 73fe99d9cdb14e648b33db5610fadef6, type: 2}
+    idle: {fileID: 11400000, guid: b5bfc6e3febbdbd41bd14ad0c7fc374a, type: 2}
+    run: {fileID: 11400000, guid: f8435c9b04201ab459a4b39e612bab3a, type: 2}
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
-    die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
+    die: {fileID: 11400000, guid: fb09f46382993664da2b74533db75e28, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
-    falldown: {fileID: 0}
+    falldown: {fileID: 11400000, guid: 837d11d33c21650499421d44fef5c4c5, type: 2}
     standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
@@ -673,14 +675,14 @@ MonoBehaviour:
     m_Bits: 12591360
   lmground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097408
   rid: {fileID: 6934740704873022390}
   currentHealth: 0
   distanceActive: 6
   isActive: 0
   combo: 0
   randomCombo: 0
-  skeletonAnimation: {fileID: 2172280826851594303}
+  skeletonAnimation: {fileID: 2053769443170800009}
   strboneBarrelGun: 
   strboneBarrelGun1: 
   strboneBarrelGun2: 
@@ -816,4 +818,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6934740704873022384}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9012523566332406917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2342603368757210763}
+  m_Layer: 24
+  m_Name: foot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2342603368757210763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9012523566332406917}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.469, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6934740704520568895}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

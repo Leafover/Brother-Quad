@@ -716,6 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc84d06007bd5a43b151bf3ceb10959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -733,6 +735,7 @@ MonoBehaviour:
   lineBlood: {fileID: 4778795518803381036}
   isBoss: 0
   isMiniBoss: 0
+  moveFollowPath: 1
   canoutcam: 0
   incam: 0
   isMachine: 1
@@ -769,8 +772,14 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 75789826f9e5fbc42a61d6d2e75ffef0, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
+    serializedVersion: 2
+    m_Bits: 0
+  lmground:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 8395234918845951349}

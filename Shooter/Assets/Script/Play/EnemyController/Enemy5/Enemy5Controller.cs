@@ -124,6 +124,7 @@ public class Enemy5Controller : EnemyBase
                 {
                     speedMove = 0;
                     rid.velocity = Vector2.zero;
+                    PlayAnim(0, aec.idle, true);
                 }
                 Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 break;

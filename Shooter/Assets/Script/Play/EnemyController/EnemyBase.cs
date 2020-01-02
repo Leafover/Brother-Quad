@@ -28,7 +28,7 @@ public class EnemyBase : MonoBehaviour
     //  [HideInInspector]
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
-    public bool isBoss, isMiniBoss;
+    public bool isBoss, isMiniBoss,moveFollowPath;
     public System.Action<float> acOnUpdate;
     public bool canoutcam, incam, isMachine = false;
     public enum EnemyState
@@ -505,7 +505,7 @@ public class EnemyBase : MonoBehaviour
         }
         else
         {
-            if (isBoss || isMiniBoss)
+            if (isBoss || isMiniBoss || moveFollowPath)
                 return;
             if (!incam)
             {

@@ -37,7 +37,7 @@ public class EnemyN1Controller : EnemyBase
         }
         if (enemyState == EnemyState.die)
             return;
-
+        CheckFallDown();
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -106,17 +106,31 @@ public class EnemyN1Controller : EnemyBase
                 {
                     speedMove = 0;
                     rid.velocity = Vector2.zero;
+                    PlayAnim(0, aec.idle, true);
                 }
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                break;
+
+            case EnemyState.falldown:
+                if (isGround)
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.run;
+                    else
+                    {
+                        PlayAnim(0, aec.standup, false);
+                    }
+
+                }
                 break;
         }
 
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(Origin(), radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    }
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
