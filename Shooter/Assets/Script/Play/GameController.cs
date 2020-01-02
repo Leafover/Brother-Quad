@@ -13,7 +13,7 @@ public class AssetSpinePlayerController
 [System.Serializable]
 public class AssetSpineEnemyController
 {
-    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim, jump, falldown,standup;
+    public AnimationReferenceAsset attack1, attack2, attack3, idle, run, aimTargetAnim, run2, die, jumpOut, lowHPAnim, jump, falldown, standup;
 }
 [System.Serializable]
 public class AllMap
@@ -24,6 +24,8 @@ public class AllMap
 
 public class GameController : MonoBehaviour
 {
+
+    public List<TileVatPhamList> vatphamnhanduoc = new List<TileVatPhamList>();
     public int countCombo;
     public int totalDropCoin;
 
@@ -50,7 +52,6 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
-
 
 
 
@@ -95,6 +96,16 @@ public class GameController : MonoBehaviour
             MissionController.Instance.listMissions[i].currentValue = 0;
             MissionController.Instance.listMissions[i].isDone = false;
         }
+
+        vatphamnhanduoc.Clear();
+
+        for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
+        {
+            if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
+                vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
+        }
+
+
     }
 
     private void Start()
@@ -363,7 +374,7 @@ public class GameController : MonoBehaviour
         PlayerController.instance.box.enabled = false;
 
         MissionController.Instance.DoMission(0, timePlay);
-      //  Debug.Log("------- timeplay:" + timePlay);
+        //  Debug.Log("------- timeplay:" + timePlay);
         // Debug.LogError("% health:" + (PlayerController.instance.health / PlayerController.instance.maxHealth) * 100);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         if (countStar == 0)
