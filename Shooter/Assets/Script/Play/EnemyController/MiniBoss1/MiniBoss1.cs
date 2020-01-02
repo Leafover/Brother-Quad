@@ -15,7 +15,7 @@ public class MiniBoss1 : EnemyBase
     public override void Init()
     {
         base.Init();
-        currentPos = Random.Range(0, CameraController.instance.posEnemyV2.Count);
+        currentPos = Random.Range(0, CameraController.instance.posMove.Count);
         randomCombo = Random.Range(2, 4);
         if (!EnemyManager.instance.miniboss1s.Contains(this))
         {
@@ -53,13 +53,13 @@ public class MiniBoss1 : EnemyBase
         {
             case EnemyState.run:
                 PlayAnim(0, aec.run, true);
-                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posMiniBoss1[currentPos].position, deltaTime * speed);
-                CheckDirFollowPlayer(CameraController.instance.posMiniBoss1[currentPos].position.x);
-                if (transform.position.x == CameraController.instance.posMiniBoss1[currentPos].position.x && transform.position.y == CameraController.instance.posMiniBoss1[currentPos].position.y)
+                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posMove[currentPos].position, deltaTime * speed);
+                CheckDirFollowPlayer(CameraController.instance.posMove[currentPos].position.x);
+                if (transform.position.x == CameraController.instance.posMove[currentPos].position.x && transform.position.y == CameraController.instance.posMove[currentPos].position.y)
                 {
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
-                    currentPos = Random.Range(0, CameraController.instance.posMiniBoss1.Count);
+                    currentPos = Random.Range(0, CameraController.instance.posMove.Count);
                 }
                 break;
             case EnemyState.attack:

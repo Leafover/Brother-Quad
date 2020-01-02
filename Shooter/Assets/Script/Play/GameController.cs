@@ -104,15 +104,11 @@ public class GameController : MonoBehaviour
             if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
                 vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
         }
-
-
-        ThemManh();
-
+      //  ThemManh();
     }
 
     private void Start()
     {
-
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
 

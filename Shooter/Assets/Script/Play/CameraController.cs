@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     public ShakeType shakeType;
     public SpriteRenderer nextPointCheck;
     public static CameraController instance;
-    public List<Transform> posEnemyV2, posMiniBoss1;
+    public List<Transform> posMove;
     public List<GameObject> bouders;
     public float speed;
     public ProCamera2DNumericBoundaries NumericBoundaries;
@@ -117,7 +117,6 @@ public class CameraController : MonoBehaviour
                     nextPointCheck.gameObject.SetActive(false);
                     setBoudariesLeft = true;
                     GameController.instance.currentMap.ResetAutoSpawn();
-                    //   Debug.LogError("--------------active again");
                 }
             }
             else
@@ -127,13 +126,9 @@ public class CameraController : MonoBehaviour
                     NextPoint();
                 }
             }
-
-            GameController.instance.currentMap.SpawnEnemy(deltaTime);
-                
+            GameController.instance.currentMap.SpawnEnemy(deltaTime);              
 
         }
-
-
     }
 
     public Vector2 Size()

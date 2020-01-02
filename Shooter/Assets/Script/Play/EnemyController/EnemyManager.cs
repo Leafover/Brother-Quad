@@ -23,6 +23,7 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyN3Controller> enemyn3s;
     public List<EnemyN4Controller> enemyn4s;
     public List<EnemyVN2Controller> enemyvn2s;
+    public List<MiniBoss2> miniboss2s;
     public void Awake()
     {
         instance = this;
@@ -190,6 +191,15 @@ public class EnemyManager : MonoBehaviour
             enemyvn2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
+    void CallMiniBoss2Action(float deltaTime)
+    {
+        if (miniboss2s.Count == 0)
+            return;
+        for (int i = 0; i < miniboss2s.Count; i++)
+        {
+            miniboss2s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
     public void OnUpdate(float deltaTime)
     {
         CallE0Action(deltaTime);
@@ -203,6 +213,7 @@ public class EnemyManager : MonoBehaviour
         CallEV2Action(deltaTime);
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
+
         CallBoss1Action(deltaTime);
         CallEN0Action(deltaTime);
         CallN1Action(deltaTime);
@@ -210,5 +221,6 @@ public class EnemyManager : MonoBehaviour
         CallN3Action(deltaTime);
         CallN4Action(deltaTime);
         CallVN2Action(deltaTime);
+        CallMiniBoss2Action(deltaTime);
     }
 }

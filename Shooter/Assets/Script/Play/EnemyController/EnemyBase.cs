@@ -566,8 +566,6 @@ public class EnemyBase : MonoBehaviour
         if (isBoss || isMiniBoss)
             GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
 
-
-
     }
     void DisableAllBullet()
     {
@@ -591,16 +589,13 @@ public class EnemyBase : MonoBehaviour
     float currenthealthfill;
     public virtual void TakeDamage(float damage, bool crit = false)
     {
-
         if (isShield)
         {
             SpawnHitEffect();
-            SpawnNumberDamageText((int)damage, crit);
+            SpawnNumberMissionText();
             return;
         }
-
         currentHealth -= damage;
-
         if (currentHealth <= 0)
         {
             Dead();
@@ -634,7 +629,13 @@ public class EnemyBase : MonoBehaviour
             SpawnHitEffect();
         }
         SpawnNumberDamageText((int)damage, crit);
-
+    }
+    void SpawnNumberMissionText()
+    {
+        numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
+        numberText.transform.position = transform.position;
+        numberText.Display("Miss", false);
+        numberText.gameObject.SetActive(true);
     }
     void SpawnNumberDamageText(int damage, bool crit)
     {
@@ -657,7 +658,6 @@ public class EnemyBase : MonoBehaviour
     int takecrithit;
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
         switch (collision.gameObject.layer)
         {
             case 11:
@@ -671,8 +671,6 @@ public class EnemyBase : MonoBehaviour
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
-                    // Debug.Log("------ chet boi? dan.");
-
                 }
                 else
                 {
@@ -693,7 +691,6 @@ public class EnemyBase : MonoBehaviour
                         SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(1, 1);
-                    //  Debug.Log("------ chet boi? luu dan");
                 }
                 break;
             case 26:
@@ -706,14 +703,12 @@ public class EnemyBase : MonoBehaviour
                     return;
                 TakeDamage(PlayerController.instance.damageBullet * 1.5f);
                 SoundController.instance.PlaySound(soundGame.sounddapchao);
-                // Debug.Log("cham vao dao");
                 if (currentHealth <= 0)
                 {
                     if (!GameController.instance.listcirtwhambang[2].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundWham);
                     GameController.instance.listcirtwhambang[2].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(5, 1);
-                    //  Debug.Log("------ chet boi? dao");
                 }
                 break;
             case 20:
