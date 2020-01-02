@@ -72,6 +72,7 @@ public class EnemyN1Controller : EnemyBase
                     {
                         speedMove = 0;
                         rid.velocity = Vector2.zero;
+                        PlayAnim(0, aec.idle, true);
                     }
                     enemyState = EnemyState.idle;
                     //    Debug.Log("fat hien");

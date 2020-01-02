@@ -89,6 +89,7 @@ public class Enemy5Controller : EnemyBase
                     {
                         speedMove = 0;
                         rid.velocity = Vector2.zero;
+                        PlayAnim(0, aec.idle, true);
                     }
                     enemyState = EnemyState.idle;
                 }

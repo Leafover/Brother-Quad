@@ -74,7 +74,7 @@ public class Enemy1Controller : EnemyBase
                     {
                         speedMove = 0;
                         rid.velocity = Vector2.zero;
-                       PlayAnim(0, aec.idle, true);
+                        PlayAnim(0, aec.idle, true);
                     }
                 }
                 else

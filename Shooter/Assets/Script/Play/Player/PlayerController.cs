@@ -497,12 +497,12 @@ public class PlayerController : MonoBehaviour
         //    posTemp.y = CameraController.instance.bouders[0].transform.position.y - 1;
         //    transform.position = posTemp;
         //}
-        if (transform.position.y <= CameraController.instance.bouders[1].transform.position.y + 1)
-        {
-            posTemp = transform.position;
-            posTemp.y = CameraController.instance.bouders[1].transform.position.y + 1;
-            transform.position = posTemp;
-        }
+        //if (transform.position.y <= CameraController.instance.bouders[1].transform.position.y + 1)
+        //{
+        //    posTemp = transform.position;
+        //    posTemp.y = CameraController.instance.bouders[1].transform.position.y + 1;
+        //    transform.position = posTemp;
+        //}
     }
 
     private void Awake()
