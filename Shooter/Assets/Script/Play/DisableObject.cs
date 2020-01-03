@@ -38,7 +38,8 @@ public class DisableObject : MonoBehaviour
         }
         if(isExploOffboss)
         {
-            GameController.instance.DelayWinFunc();
+            //    GameController.instance.DelayWinFunc();
+            GameController.instance.win = true;
         }
     }
 }

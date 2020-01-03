@@ -55,6 +55,7 @@ public class EnemyV1Controller : EnemyBase
         {
             case EnemyState.attack:
                 Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 if (!canmove)
                     return;
 
@@ -81,7 +82,7 @@ public class EnemyV1Controller : EnemyBase
             case EnemyState.run:
                 nextPos.y = PosBegin.y;
                 transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
-
+                CheckDirFollowPlayer(nextPos.x);
                 if (transform.position.x == nextPos.x /*&& transform.position.y == nextPos.y*/)
                 {
                     //  OriginPos = nextPos;
@@ -113,7 +114,10 @@ public class EnemyV1Controller : EnemyBase
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyV1Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
-            bulletEnemy.SetDir(attackrank, true);
+            if (FlipX)
+                bulletEnemy.SetDir(-attackrank, true);
+            else
+                bulletEnemy.SetDir(attackrank, true);
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.transform.eulerAngles = rotationbullet;
             bulletEnemy.gameObject.SetActive(true);

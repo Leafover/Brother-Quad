@@ -38,7 +38,8 @@ public class GameController : MonoBehaviour
     public MapController currentMap;
 
     public GameObject targetDetectSprite;
-    public List<EnemyBase> autoTarget, enemyLockCam;
+    public List<AutoTarget> autoTarget;
+    public List<EnemyBase> enemyLockCam;
     public List<ItemBase> itemDrops;
     public GameObject UIControll;
     public enum GameState
@@ -104,7 +105,7 @@ public class GameController : MonoBehaviour
             if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
                 vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
         }
-      //  ThemManh();
+        //  ThemManh();
     }
 
     private void Start()
@@ -120,7 +121,7 @@ public class GameController : MonoBehaviour
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
         timeCountPlay = new WaitForSecondsRealtime(1);
-        delaywinwait = new WaitForSeconds(2f);
+      //  delaywinwait = new WaitForSeconds(2f);
 
 
         StartCoroutine(CountTimePlay());
@@ -374,7 +375,7 @@ public class GameController : MonoBehaviour
         MissionController.Instance.DoMission(0, timePlay);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         MissionController.Instance.DoMission(6, reviveCount);
-     //   Debug.Log(MissionController.Instance.listMissions[1].currentValue + ":" + MissionController.Instance.listMissions[1].valueMission);
+        //   Debug.Log(MissionController.Instance.listMissions[1].currentValue + ":" + MissionController.Instance.listMissions[1].valueMission);
         if (countStar == 0)
             countStar = 1;
         if (MissionController.Instance.listMissions[0].isDone)
@@ -416,6 +417,25 @@ public class GameController : MonoBehaviour
             listcirtwhambang[i].DisableMe(deltaTime);
         }
     }
+    float timeToWin;
+    public void NotSoFastWin()
+    {
+        win = false;
+        timeToWin = 2;
+    }
+    void CalculateTimeToWin(float deltaTime)
+    {
+        if (gameState == GameState.play)
+        {
+            if (!win)
+                return;
+            timeToWin -= deltaTime;
+            if (timeToWin <= 0)
+            {
+                WinGame();
+            }
+        }
+    }
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
@@ -441,7 +461,7 @@ public class GameController : MonoBehaviour
 
         }
 
-
+        CalculateTimeToWin(deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
         OnUpdateItemDrop(deltaTime);
@@ -483,17 +503,17 @@ public class GameController : MonoBehaviour
             return;
         PlayerController.instance.TryGrenade();
     }
-    public void DelayWinFunc()
-    {
-        win = true;
-        StartCoroutine(delayWin());
-    }
-    WaitForSeconds delaywinwait;
-    IEnumerator delayWin()
-    {
-        yield return delaywinwait;
-        WinGame();
-    }
+    //public void DelayWinFunc()
+    //{
+    //    win = true;
+    //    StartCoroutine(delayWin());
+    //}
+    //WaitForSeconds delaywinwait;
+    //IEnumerator delayWin()
+    //{
+    //    yield return delaywinwait;
+    //    WinGame();
+    //}
 
     int randomCertain;
     public void ThemManh()

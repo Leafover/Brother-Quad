@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4525896378489450222}
   - component: {fileID: 998504628304643330}
+  - component: {fileID: 7414025375328946832}
   m_Layer: 10
   m_Name: gun3
   m_TagString: Untagged
@@ -57,6 +58,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &7414025375328946832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440287310786258516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &833433487538375829
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1016431516485748032}
   - component: {fileID: 4189265234506217021}
+  - component: {fileID: 4017866559666840571}
   m_Layer: 10
   m_Name: gun4
   m_TagString: Untagged
@@ -114,6 +137,106 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &4017866559666840571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833433487538375829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
+--- !u!1 &1257856304960179322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6405226573457054672}
+  - component: {fileID: 8026044046858333635}
+  - component: {fileID: 3132351472899200501}
+  m_Layer: 10
+  m_Name: gun9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6405226573457054672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257856304960179322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.02, y: 0.71, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5269948252877550163}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8026044046858333635
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257856304960179322}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.3}
+  m_EdgeRadius: 0
+--- !u!114 &3132351472899200501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257856304960179322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &2377737895330236028
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8720186933868685238}
   - component: {fileID: 4898271497154924252}
+  - component: {fileID: 8446713209080901001}
   m_Layer: 10
   m_Name: gun7
   m_TagString: Untagged
@@ -171,6 +295,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &8446713209080901001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377737895330236028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &2492259662208571462
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6858203707902656312}
   - component: {fileID: 1048456855781231691}
+  - component: {fileID: 9212569753083350168}
   m_Layer: 10
   m_Name: gun8
   m_TagString: Untagged
@@ -228,6 +374,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &9212569753083350168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492259662208571462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &3087214289854296597
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1500051720064556718}
   - component: {fileID: 7675193612330783347}
+  - component: {fileID: 5368511501179091278}
   m_Layer: 10
   m_Name: gun5
   m_TagString: Untagged
@@ -285,6 +453,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &5368511501179091278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3087214289854296597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &4660702065150860059
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4399728079664581188}
   - component: {fileID: 124173402793772002}
+  - component: {fileID: 8110542162925790193}
   m_Layer: 10
   m_Name: gun2
   m_TagString: Untagged
@@ -342,6 +532,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &8110542162925790193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660702065150860059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &4954593176554736932
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3880565853141613599}
   - component: {fileID: 148976202563293146}
+  - component: {fileID: 8914333946553758137}
   m_Layer: 10
   m_Name: gun1
   m_TagString: Untagged
@@ -399,6 +611,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &8914333946553758137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4954593176554736932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}
 --- !u!1 &5269948252877550162
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +671,7 @@ Transform:
   - {fileID: 3608549081438136638}
   - {fileID: 8720186933868685238}
   - {fileID: 6858203707902656312}
+  - {fileID: 6405226573457054672}
   m_Father: {fileID: 5269948253026889015}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -546,7 +780,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5269948253026889015}
-  - component: {fileID: 5269948253026889014}
   - component: {fileID: 5269948253026889017}
   - component: {fileID: 8390903663828246041}
   m_Layer: 10
@@ -571,32 +804,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &5269948253026889014
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5269948253026889019}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
-  m_EdgeRadius: 0
 --- !u!50 &5269948253026889017
 Rigidbody2D:
   serializedVersion: 4
@@ -630,6 +837,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a564fdd3aff7fc4b8af44b7f2ae040a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 0
+  index: 18
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
   foot: {fileID: 0}
   isGround: 1
   au: {fileID: 0}
@@ -638,7 +853,6 @@ MonoBehaviour:
   haveHealhItem: 0
   percentHealthForPlayer: 10
   enemyAutoSpawn: 0
-  index: 18
   levelBase: 1
   activeFar: 0
   jumpOut: 0
@@ -651,14 +865,13 @@ MonoBehaviour:
   isMiniBoss: 1
   moveFollowPath: 0
   canoutcam: 0
-  incam: 0
   isMachine: 0
   enemyState: 0
   canmove: 0
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
-  takeDamageBox: {fileID: 5269948253026889014}
+  takeDamageBox: {fileID: 0}
   damage1: 0
   damage2: 0
   damage3: 0
@@ -697,7 +910,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rid: {fileID: 5269948253026889017}
-  currentHealth: 0
   distanceActive: 6
   isActive: 0
   combo: 0
@@ -708,10 +920,13 @@ MonoBehaviour:
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
+  numberCountLayerHelthBarBoss: 0
   exploDie: {fileID: 0}
   healthItem: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
+  indexHealthFill: 0
+  currenthealthfill: 0
   die1Anim: {fileID: 11400000, guid: 59f846ea68969e242bc9453cb1263048, type: 2}
   shotguns:
   - {fileID: 11400000, guid: d1c2826941e1b8948a7f033f700d146c, type: 2}
@@ -740,15 +955,16 @@ MonoBehaviour:
   - sung 6 ( off)
   - sung 7 ( off)
   - sung 8 ( off)
-  gunBox:
-  - {fileID: 4954593176554736932}
-  - {fileID: 4660702065150860059}
-  - {fileID: 440287310786258516}
-  - {fileID: 833433487538375829}
-  - {fileID: 3087214289854296597}
-  - {fileID: 8328826108723856325}
-  - {fileID: 2377737895330236028}
-  - {fileID: 2492259662208571462}
+  gunList:
+  - {fileID: 8914333946553758137}
+  - {fileID: 8110542162925790193}
+  - {fileID: 7414025375328946832}
+  - {fileID: 4017866559666840571}
+  - {fileID: 5368511501179091278}
+  - {fileID: 7864706101339683299}
+  - {fileID: 8446713209080901001}
+  - {fileID: 9212569753083350168}
+  gunCenter: {fileID: 3132351472899200501}
 --- !u!1 &8328826108723856325
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +975,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3608549081438136638}
   - component: {fileID: 1521683871334813734}
+  - component: {fileID: 7864706101339683299}
   m_Layer: 10
   m_Name: gun6
   m_TagString: Untagged
@@ -806,3 +1023,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
+--- !u!114 &7864706101339683299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8328826108723856325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98424471aa5ea54ba80591f5309a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 10
+  index: 0
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  myEnemyBase: {fileID: 8390903663828246041}

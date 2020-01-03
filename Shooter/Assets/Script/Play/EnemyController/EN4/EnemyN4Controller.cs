@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyN4Controller : EnemyBase
 {
-  //  public GameObject sheld;
+    //  public GameObject sheld;
     public float speedMove;
     float timechangeShield;
     public override void Start()
@@ -24,7 +24,7 @@ public class EnemyN4Controller : EnemyBase
         }
         speedMove = -speed;
         timechangeShield = maxtimedelayChangePos;
-      //  sheld.SetActive(false);
+        //  sheld.SetActive(false);
         //   Debug.Log("----------------:" + speedMove);
     }
 
@@ -67,6 +67,9 @@ public class EnemyN4Controller : EnemyBase
                 }
                 break;
             case EnemyState.attack:
+
+                CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
+
                 if (timechangeShield > 0)
                     timechangeShield -= deltaTime;
 
@@ -74,13 +77,13 @@ public class EnemyN4Controller : EnemyBase
                 if (Mathf.Abs(transform.position.y - PlayerController.instance.transform.position.y) <= 0.5f)
                 {
                     Attack(1, aec.attack1, false, maxtimeDelayAttack1);
-                 //   parabolBullet = false;
+                    //   parabolBullet = false;
                 }
 
                 else
                 {
                     Attack(1, aec.attack2, false, maxtimeDelayAttack1);
-                  //  parabolBullet = true;
+                    //  parabolBullet = true;
                 }
 
                 break;
@@ -91,7 +94,7 @@ public class EnemyN4Controller : EnemyBase
                 {
                     enemyState = EnemyState.attack;
                     isShield = false;
-              //      sheld.SetActive(false);
+                    //      sheld.SetActive(false);
                     timechangeShield = maxtimedelayChangePos;
                     PlayAnim(0, aec.idle, true);
                 }
@@ -99,7 +102,7 @@ public class EnemyN4Controller : EnemyBase
         }
 
     }
-  //  bool parabolBullet;
+    //  bool parabolBullet;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -113,12 +116,21 @@ public class EnemyN4Controller : EnemyBase
 
             //if (!parabolBullet)
             //{
-                bulletEnemy.AddProperties(damage1, 0);
+            bulletEnemy.AddProperties(damage1, 0);
+            if (FlipX)
+            {
+                bulletEnemy.SetDir(-bulletspeed1, false);
+                Debug.Log("TH1");
+            }
+            else
+            {
                 bulletEnemy.SetDir(bulletspeed1, false);
-                bulletEnemy.rid.gravityScale = 0;
-                bulletEnemy.isGrenade = false;
-                bulletEnemy.transform.position = leftFace.transform.position;
-                bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
+                Debug.Log("TH2");
+            }
+            bulletEnemy.rid.gravityScale = 0;
+            bulletEnemy.isGrenade = false;
+            bulletEnemy.transform.position = leftFace.transform.position;
+            bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
             //}
             //else
             //{
@@ -152,12 +164,24 @@ public class EnemyN4Controller : EnemyBase
             //}
             //else
             //{
-                bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
+            bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
+
+            if (FlipX)
+            {
+                bulletEnemy.SetDir(-bulletspeed1 / 2, true);
+
+            }
+            else
+            {
                 bulletEnemy.SetDir(bulletspeed1 / 2, true);
-                bulletEnemy.rid.gravityScale = 1;
-                bulletEnemy.isGrenade = true;
-                bulletEnemy.transform.position = rightFace.transform.position;
-                bulletEnemy.transform.eulerAngles = rightFace.transform.eulerAngles;
+
+            }
+            bulletEnemy.transform.position = rightFace.transform.position;
+            bulletEnemy.transform.eulerAngles = rightFace.transform.eulerAngles;
+
+            bulletEnemy.rid.gravityScale = 1;
+            bulletEnemy.isGrenade = true;
+
             //}
 
             bulletEnemy.gameObject.SetActive(true);
@@ -175,13 +199,13 @@ public class EnemyN4Controller : EnemyBase
             if (timechangeShield <= 0)
             {
                 enemyState = EnemyState.idle;
-            //    sheld.SetActive(true);
+                //    sheld.SetActive(true);
                 isShield = true;
                 timechangeShield = maxtimedelayChangePos;
                 PlayAnim(1, aec.jumpOut, false);
             }
         }
-        else if(trackEntry.Animation.Name.Equals(aec.jumpOut.name))
+        else if (trackEntry.Animation.Name.Equals(aec.jumpOut.name))
         {
             PlayAnim(1, aec.lowHPAnim, true);
         }

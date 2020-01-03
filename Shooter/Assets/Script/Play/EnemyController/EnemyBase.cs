@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : AutoTarget
 {
+
     public GameObject foot;
- //  [HideInInspector]
+    //  [HideInInspector]
     public bool isGround = true;
     public AudioSource au;
     public List<float> healthFill;
@@ -19,7 +20,7 @@ public class EnemyBase : MonoBehaviour
     bool haveCoin;
     [HideInInspector]
     public bool enemyAutoSpawn;
-    public int index, levelBase = 1;
+    public int levelBase = 1;
 
     public bool activeFar;
     [HideInInspector]
@@ -28,9 +29,9 @@ public class EnemyBase : MonoBehaviour
     //  [HideInInspector]
     public List<BulletEnemy> listMyBullet;
     public LineBlood lineBlood;
-    public bool isBoss, isMiniBoss,moveFollowPath;
+    public bool isBoss, isMiniBoss, moveFollowPath;
     public System.Action<float> acOnUpdate;
-    public bool canoutcam, incam, isMachine = false;
+    public bool canoutcam, isMachine = false;
     public enum EnemyState
     {
         idle,
@@ -56,11 +57,10 @@ public class EnemyBase : MonoBehaviour
     [HideInInspector]
     public float timePreviousAttack;
 
-    public LayerMask lm = 13,lmground;
+    public LayerMask lm = 13, lmground;
     [HideInInspector]
     public Rigidbody2D rid;
 
-    public float currentHealth;
     public float distanceActive = 6;
 
     [HideInInspector]
@@ -84,10 +84,6 @@ public class EnemyBase : MonoBehaviour
         get { return originPos; }
         set { originPos = value; }
     }
-    public Vector2 Origin()
-    {
-        return transform.position;
-    }
     public virtual void PlayAnim(int indexTrack, AnimationReferenceAsset anim, bool loop)
     {
         if (enemyState == EnemyState.die)
@@ -101,7 +97,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    private void OnValidate()
+    public virtual void OnValidate()
     {
         if (rid == null)
         {
@@ -236,8 +232,8 @@ public class EnemyBase : MonoBehaviour
             boxAttack1.gameObject.SetActive(false);
         if (boxAttack2 != null)
             boxAttack2.gameObject.SetActive(false);
-
-        takeDamageBox.enabled = true;
+        if (takeDamageBox != null)
+            takeDamageBox.enabled = true;
         enemyState = EnemyState.idle;
 
 
@@ -317,7 +313,8 @@ public class EnemyBase : MonoBehaviour
             CalculateBenginHealthBoss();
 
     }
-    int numberCountLayerHelthBarBoss = 0;
+    [HideInInspector]
+    public int numberCountLayerHelthBarBoss = 0;
     public void CalculateBenginHealthBoss()
     {
 
@@ -535,7 +532,8 @@ public class EnemyBase : MonoBehaviour
         }
         rid.velocity = Vector2.zero;
 
-        takeDamageBox.enabled = false;
+        if (takeDamageBox != null)
+            takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
         if (!isBoss)
@@ -581,18 +579,42 @@ public class EnemyBase : MonoBehaviour
         listMyBullet.Clear();
 
     }
+    [HideInInspector]
     public bool isShield;
-    Vector2 posHitTemp;
-    GameObject hiteffect;
-    float hitPosTemp;
-    int indexHealthFill;
-    float currenthealthfill;
-    public virtual void TakeDamage(float damage, bool crit = false)
+    [HideInInspector]
+    public int indexHealthFill;
+    [HideInInspector]
+    public float currenthealthfill;
+    public virtual void TakeDamage(float damage, bool crit = false,bool iamGunboss = false)
     {
+        if (iamGunboss)
+        {
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Dead();
+            }
+            currenthealthfill -= damage;
+            GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
+            if (currenthealthfill <= 0)
+            {
+                numberCountLayerHelthBarBoss--;
+                GameController.instance.uiPanel.healthBarBoss.healthbossText.text = "X" + numberCountLayerHelthBarBoss;
+                if (indexHealthFill < healthFill.Count - 1)
+                {
+                    indexHealthFill++;
+                    currenthealthfill += healthFill[indexHealthFill];
+                    GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
+                }
+            }
+            return;
+        }
         if (isShield)
         {
+
             SpawnHitEffect();
             SpawnNumberMissionText();
+
             return;
         }
         currentHealth -= damage;
@@ -608,6 +630,7 @@ public class EnemyBase : MonoBehaviour
         {
             if (isBoss || isMiniBoss)
             {
+
                 currenthealthfill -= damage;
                 GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                 if (currenthealthfill <= 0)
@@ -621,14 +644,19 @@ public class EnemyBase : MonoBehaviour
                         GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                     }
                 }
+
             }
         }
 
         if (isBoss || isMiniBoss || isMachine)
         {
+
             SpawnHitEffect();
         }
+
         SpawnNumberDamageText((int)damage, crit);
+
+
     }
     void SpawnNumberMissionText()
     {
@@ -643,6 +671,8 @@ public class EnemyBase : MonoBehaviour
         numberText.transform.position = transform.position;
         numberText.Display("" + (int)damage * 10, crit);
         numberText.gameObject.SetActive(true);
+
+       // Debug.LogError("zooooo wtf text ");
     }
     void SpawnHitEffect()
     {
@@ -653,11 +683,15 @@ public class EnemyBase : MonoBehaviour
         hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
         hiteffect.transform.position = posHitTemp;
         hiteffect.SetActive(true);
+
+      //  Debug.LogError("zooooo wtf effect");
     }
-    NumberDamageTextController numberText;
-    int takecrithit;
+
+
+
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
+
         switch (collision.gameObject.layer)
         {
             case 11:
@@ -675,6 +709,7 @@ public class EnemyBase : MonoBehaviour
                 else
                 {
                     TakeDamage(PlayerController.instance.damageBullet);
+                    Debug.Log("Take Dâmgwe");
                 }
 
                 collision.gameObject.SetActive(false);
@@ -717,5 +752,6 @@ public class EnemyBase : MonoBehaviour
 
         }
     }
+
 }
 

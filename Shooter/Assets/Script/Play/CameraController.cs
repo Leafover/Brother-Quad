@@ -79,7 +79,8 @@ public class CameraController : MonoBehaviour
             {
                 return;
             }
-            GameController.instance.DelayWinFunc();
+            //GameController.instance.DelayWinFunc();
+            GameController.instance.win = true;
         //    setBoudariesLeft = true;
             //nextPointCheck.gameObject.SetActive(true);
             //nextPointCheck.enabled = false;

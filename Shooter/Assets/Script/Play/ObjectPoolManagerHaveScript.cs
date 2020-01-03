@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPoolManagerHaveScript : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler;
+    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler,bulletMiniBoss2Pooler;
     public NumberDamageTextController numberDamgageTextPrefab;
-    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, bulletN3Prefab, grenadeN3Prefab, rocketEnemyVN2Prefab, bulletEN4Prefab;
+    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, bulletN3Prefab, grenadeN3Prefab, rocketEnemyVN2Prefab, bulletEN4Prefab, bulletMiniBoss2Prefab;
     public EnemyBase enemy1Prefab, enemy5Prefab, enemyN1Prefab, enemyN2Prefab;
     [HideInInspector]
     public static ObjectPoolManagerHaveScript Instance { get; private set; }
@@ -216,6 +216,15 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
             go.transform.parent = this.gameObject.transform;
             bulletEN4Pooler.InitializeBulletEnemy(3);
             AllPool.Add(bulletEN4Pooler);
+        }
+        if (bulletMiniBoss2Pooler == null)
+        {
+            go = new GameObject("bulletMiniBoss2Pooler");
+            bulletMiniBoss2Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            bulletMiniBoss2Pooler.bulletEnemyPooledObject = bulletMiniBoss2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletMiniBoss2Pooler.InitializeBulletEnemy(8);
+            AllPool.Add(bulletMiniBoss2Pooler);
         }
     }
     GameObject go;

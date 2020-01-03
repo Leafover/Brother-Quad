@@ -89,7 +89,7 @@ public class BulletEnemy : MonoBehaviour
                 rid.velocity = (dir1 * speed);
                 break;
             case 4:
-
+             //   rid.velocity = Vector2.zero;
                 break;
         }
         StartEvent();
