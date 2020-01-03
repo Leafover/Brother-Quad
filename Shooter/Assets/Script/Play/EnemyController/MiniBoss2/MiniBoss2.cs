@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MiniBoss2 : EnemyBase
 {
+    public bool haveGun1, haveGun2;
     public AnimationReferenceAsset die1Anim;
     public List<AnimationReferenceAsset> shotguns, dieguns;
     Bone[] boneGun = new Bone[8];
@@ -35,7 +36,7 @@ public class MiniBoss2 : EnemyBase
         else
         {
             GameController.instance.autoTarget.Add(gunCenter);
-            GameController.instance.NotSoFastWin();
+          //  GameController.instance.NotSoFastWin();
             gunCenter.currentHealth = currentHealth;
             gunCenter.gameObject.SetActive(true);
         }
@@ -60,7 +61,7 @@ public class MiniBoss2 : EnemyBase
         gunCenter.currentHealth = currentHealth / 100 * 60;
         gunCenter.gameObject.SetActive(false);
         CalculateHealthAllGun();
-
+        haveGun1 = haveGun2 = true;
         // takeDamageBox.enabled = false;
     }
     public override void Active()
@@ -82,16 +83,37 @@ public class MiniBoss2 : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-
                 break;
-            case EnemyState.attack:
-
-                if (randomCombo == 0)
+            case EnemyState.falldown:
+                if (timechangePos > 0)
                 {
                     timechangePos -= deltaTime;
                     if (timechangePos <= 0)
                     {
                         enemyState = EnemyState.run;
+                    }
+                }
+                break;
+            case EnemyState.attack:
+
+                if (randomCombo == 0)
+                {
+                    if (timePreviousAttack > 0)
+                    {
+                        timePreviousAttack -= deltaTime;
+                        if (timePreviousAttack <= 0)
+                        {
+                            timePreviousAttack = 1f;
+                            for (int i = 0; i < gunList.Count; i++)
+                            {
+                                if (gunList[i].index != 0 && gunList[i].index != 3)
+                                {
+                                    PlayAnim(gunList[i].index + 1, shotguns[gunList[i].index]);
+                                    CreateBullet(gunList[i].transform.position);
+                                }
+                            }
+                            enemyState = EnemyState.falldown;
+                        }
                     }
                 }
                 else
@@ -106,40 +128,42 @@ public class MiniBoss2 : EnemyBase
                 {
                     //  CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     currentPos = Random.Range(0, CameraController.instance.posMove.Count);
-                    enemyState = EnemyState.attack;
-                    randomCombo = 0 /*Random.Range(0, 2)*/;
-                    timechangePos = maxtimedelayChangePos;
+                    randomCombo = 0;
 
-                    if (gunList[0].gameObject.activeSelf && gunList[3].gameObject.activeSelf)
+                    timechangePos = maxtimedelayChangePos;
+                    timePreviousAttack = maxtimeDelayAttack1;
+
+                    if (haveGun1 && haveGun2)
                     {
                         PlayAnim(1, shotguns[0]);
                         PlayAnim(4, shotguns[3]);
-                        StartCoroutine(delayAnimShot());
+                        CreateBullet(gunList[0].transform.position);
+                        CreateBullet(gunList[3].transform.position);
+                        enemyState = EnemyState.attack;
                     }
-                    else if (gunList[0].gameObject.activeSelf && !gunList[3].gameObject.activeSelf)
+                    else if (haveGun1 && !haveGun2)
                     {
                         PlayAnim(1, shotguns[0]);
-                        StartCoroutine(delayAnimShot());
+                        CreateBullet(gunList[0].transform.position);
+                        enemyState = EnemyState.attack;
                     }
-                    else if (!gunList[0].gameObject.activeSelf && gunList[3].gameObject.activeSelf)
+                    else if (!haveGun1 && haveGun2)
                     {
                         PlayAnim(4, shotguns[3]);
-                        StartCoroutine(delayAnimShot());
+                        CreateBullet(gunList[3].transform.position);
+                        enemyState = EnemyState.attack;
                     }
-                    else if (!gunList[0].gameObject.activeSelf && !gunList[3].gameObject.activeSelf)
+                    else if (!haveGun1 && !haveGun2)
                     {
-                        if (gunList[1].gameObject.activeSelf)
-                            PlayAnim(2, shotguns[1]);
-                        if (gunList[2].gameObject.activeSelf)
-                            PlayAnim(3, shotguns[2]);
-                        if (gunList[4].gameObject.activeSelf)
-                            PlayAnim(5, shotguns[4]);
-                        if (gunList[5].gameObject.activeSelf)
-                            PlayAnim(6, shotguns[5]);
-                        if (gunList[6].gameObject.activeSelf)
-                            PlayAnim(7, shotguns[6]);
-                        if (gunList[7].gameObject.activeSelf)
-                            PlayAnim(8, shotguns[7]);
+                        for (int i = 0; i < gunList.Count; i++)
+                        {
+                            if (gunList[i].index != 0 && gunList[i].index != 3)
+                            {
+                                PlayAnim(gunList[i].index + 1, shotguns[gunList[i].index]);
+                                CreateBullet(gunList[i].transform.position);
+                            }
+                        }
+                        enemyState = EnemyState.falldown;
                     }
                 }
                 break;
@@ -161,74 +185,20 @@ public class MiniBoss2 : EnemyBase
             enemyState = EnemyState.run;
             PlayAnim(0, aec.run, true);
         }
-        else if (trackEntry.Animation.Name.Equals(shotguns[0].name))
-        {
-            CreateBullet(0);
-
-
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[3].name))
-        {
-            CreateBullet(3);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[1].name))
-        {
-            CreateBullet(1);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[2].name))
-        {
-            CreateBullet(2);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[4].name))
-        {
-            CreateBullet(4);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[5].name))
-        {
-            CreateBullet(5);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[6].name))
-        {
-            CreateBullet(6);
-        }
-        else if (trackEntry.Animation.Name.Equals(shotguns[7].name))
-        {
-            CreateBullet(7);
-        }
     }
-    void CreateBullet(int index)
+    public void CreateBullet(Vector2 pos)
     {
         bullet = ObjectPoolManagerHaveScript.Instance.bulletMiniBoss2Pooler.GetBulletEnemyPooledObject();
         bullet.AddProperties(damage1, bulletspeed1);
         bullet.SetTimeExist(bulletimeexist);
         bullet.BeginDisplay(Vector2.zero, this);
         listMyBullet.Add(bullet);
-        bullet.transform.position = gunList[index].transform.position;
+        bullet.transform.position = pos;
         bullet.gameObject.SetActive(true);
         // Debug.LogError("zooooooooo");
     }
     BulletEnemy bullet;
-    IEnumerator delayAnimShot()
-    {
-        yield return new WaitForSeconds(1);
-        if (gunList[1].gameObject.activeSelf)
-            PlayAnim(2, shotguns[1]);
-        if (gunList[2].gameObject.activeSelf)
-            PlayAnim(3, shotguns[2]);
-        if (gunList[4].gameObject.activeSelf)
-            PlayAnim(5, shotguns[4]);
-        if (gunList[5].gameObject.activeSelf)
-            PlayAnim(6, shotguns[5]);
-        if (gunList[6].gameObject.activeSelf)
-            PlayAnim(7, shotguns[6]);
-        if (gunList[7].gameObject.activeSelf)
-            PlayAnim(8, shotguns[7]);
-    }
-    IEnumerator delayChangeStage()
-    {
-        yield return new WaitForSeconds(1.5f);
-        enemyState = EnemyState.run;
-    }
+
     public override void Dead()
     {
         base.Dead();

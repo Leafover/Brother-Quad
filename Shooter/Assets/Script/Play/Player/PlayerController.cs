@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, Run, Sit, Jump, WaitStand, Die
+        Idle, Run, Sit, Jump, WaitStand, Die,Win
     }
     public PlayerState playerState = PlayerState.Idle;
 
@@ -368,16 +368,16 @@ public class PlayerController : MonoBehaviour
     public void OnUpdate(float deltaTime)
     {
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            animArrow.SetBool("animarrow", true);
-        }
-        else if (Input.GetKeyDown(KeyCode.O))
-        {
-            animArrow.SetBool("animarrow", false);
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    animArrow.SetBool("animarrow", true);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    animArrow.SetBool("animarrow", false);
+        //}
 
-        // Debug.Log(rid.velocity.x);
+      //  Debug.Log(rid.velocity + ":" + speedmove);
         isGround = Physics2D.OverlapCircle(foot.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
@@ -717,7 +717,7 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
-
+        //Debug.LogError(currentAnim.name);
     }
     public void AnimIdle()
     {

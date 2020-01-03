@@ -709,7 +709,7 @@ public class EnemyBase : AutoTarget
                 else
                 {
                     TakeDamage(PlayerController.instance.damageBullet);
-                    Debug.Log("Take Dâmgwe");
+                  //  Debug.Log("Take Dâmgwe");
                 }
 
                 collision.gameObject.SetActive(false);

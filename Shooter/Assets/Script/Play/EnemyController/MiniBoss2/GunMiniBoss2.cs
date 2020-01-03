@@ -9,6 +9,10 @@ public class GunMiniBoss2 : AutoTarget
     {
         myEnemyBase.PlayAnim(index + 1, myEnemyBase.dieguns[index]);
 
+        if (index == 0)
+            myEnemyBase.haveGun1 = false;
+        if (index == 3)
+            myEnemyBase.haveGun2 = false;
 
         if (GameController.instance.autoTarget.Contains(this))
         {

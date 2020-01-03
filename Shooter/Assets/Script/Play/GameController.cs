@@ -121,7 +121,7 @@ public class GameController : MonoBehaviour
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
         timeCountPlay = new WaitForSecondsRealtime(1);
-      //  delaywinwait = new WaitForSeconds(2f);
+        //  delaywinwait = new WaitForSeconds(2f);
 
 
         StartCoroutine(CountTimePlay());
@@ -368,10 +368,11 @@ public class GameController : MonoBehaviour
     public void WinGame()
     {
         gameState = GameState.gameover;
+        PlayerController.instance.playerState = PlayerController.PlayerState.Win;
         PlayerController.instance.AnimWin();
         PlayerController.instance.rid.velocity = Vector2.zero;
         PlayerController.instance.box.enabled = false;
-
+        PlayerController.instance.speedmove = 0;
         MissionController.Instance.DoMission(0, timePlay);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         MissionController.Instance.DoMission(6, reviveCount);
@@ -382,6 +383,8 @@ public class GameController : MonoBehaviour
             countStar++;
         if (MissionController.Instance.listMissions[1].isDone)
             countStar++;
+
+     //   Debug.LogError("zooooooooooooo win");
     }
 
 
@@ -417,27 +420,31 @@ public class GameController : MonoBehaviour
             listcirtwhambang[i].DisableMe(deltaTime);
         }
     }
-    float timeToWin;
+    //float timeToWin;
     public void NotSoFastWin()
     {
-        win = false;
-        timeToWin = 2;
-    }
-    void CalculateTimeToWin(float deltaTime)
-    {
-        if (gameState == GameState.play)
+        if (win)
         {
-            if (!win)
-                return;
-            timeToWin -= deltaTime;
-            if (timeToWin <= 0)
-            {
-                WinGame();
-            }
+            win = false;
+            //  timeToWin = 2;
         }
     }
+    //void CalculateTimeToWin(float deltaTime)
+    //{
+    //    //if (gameState == GameState.play)
+    //    //{
+    //        if (!win)
+    //            return;
+    //        timeToWin -= deltaTime;
+    //        if (timeToWin <= 0)
+    //        {
+    //            WinGame();
+    //        }
+    //    //}
+    //}
     private void Update()
     {
+
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
             if (gameState == GameState.gameover)
@@ -461,7 +468,7 @@ public class GameController : MonoBehaviour
 
         }
 
-        CalculateTimeToWin(deltaTime);
+        // CalculateTimeToWin(Time.deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
         OnUpdateItemDrop(deltaTime);
@@ -503,17 +510,18 @@ public class GameController : MonoBehaviour
             return;
         PlayerController.instance.TryGrenade();
     }
-    //public void DelayWinFunc()
-    //{
-    //    win = true;
-    //    StartCoroutine(delayWin());
-    //}
-    //WaitForSeconds delaywinwait;
-    //IEnumerator delayWin()
-    //{
-    //    yield return delaywinwait;
-    //    WinGame();
-    //}
+    public void DelayWinFunc()
+    {
+        win = true;
+        StartCoroutine(delayWin());
+    }
+    WaitForSeconds delaywinwait;
+    IEnumerator delayWin()
+    {
+        yield return delaywinwait;
+        if (win)
+            WinGame();
+    }
 
     int randomCertain;
     public void ThemManh()

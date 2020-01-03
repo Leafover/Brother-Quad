@@ -30,16 +30,17 @@ public class DisableObject : MonoBehaviour
         gameObject.SetActive(false);
         //if (bulletEnemy)
         //    bulletEnemy.AutoRemoveMe();
-        if(typeExplo == TypeExplo.exploE2)
+        if (typeExplo == TypeExplo.exploE2)
         {
             GameObject g = ObjectPoolerManager.Instance.explobulletenemy2Pooler.GetPooledObject();
             g.transform.position = gameObject.transform.position;
             g.SetActive(true);
         }
-        if(isExploOffboss)
+        if (isExploOffboss)
         {
-            //    GameController.instance.DelayWinFunc();
-            GameController.instance.win = true;
+            if (GameController.instance.enemyLockCam.Count == 0)
+                GameController.instance.DelayWinFunc();
+            //  GameController.instance.win = true;
         }
     }
 }
