@@ -24,7 +24,8 @@ public class AllMap
 
 public class GameController : MonoBehaviour
 {
-
+    public AudioSource auBG;
+    public List<AudioClip> bgClip;
     public List<TileVatPhamList> vatphamnhanduoc = new List<TileVatPhamList>();
     public int countCombo;
     public int totalDropCoin;
@@ -121,13 +122,16 @@ public class GameController : MonoBehaviour
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
 
         timeCountPlay = new WaitForSecondsRealtime(1);
-        //  delaywinwait = new WaitForSeconds(2f);
+         delaywinwait = new WaitForSeconds(2f);
 
 
         StartCoroutine(CountTimePlay());
 
         countCombo = 0;
         AddProperties();
+
+        auBG.clip = bgClip[DataParam.indexStage];
+        auBG.Play();
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()
@@ -365,9 +369,19 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public bool waitForWin;
     public int reviveCount = 0;
+    int randonvictorysound;
+    public void WinSound()
+    {
+        randonvictorysound = Random.Range(0, 2);
+        if (randonvictorysound == 1)
+            SoundController.instance.PlaySound(soundGame.soundwin);
+        else
+            SoundController.instance.PlaySound(soundGame.soundvictory1);
+    }
     public void WinGame()
     {
         gameState = GameState.gameover;
+        WinSound();
         PlayerController.instance.playerState = PlayerController.PlayerState.Win;
         PlayerController.instance.AnimWin();
         PlayerController.instance.rid.velocity = Vector2.zero;

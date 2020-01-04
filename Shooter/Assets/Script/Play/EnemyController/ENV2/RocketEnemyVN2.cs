@@ -51,4 +51,9 @@ public class RocketEnemyVN2 : BulletEnemy
         turning += 0.005f;
         rid.velocity = (transform.up * speed);
     }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        StopAllCoroutines();
+    }
 }

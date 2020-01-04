@@ -80,22 +80,21 @@ public class CameraController : MonoBehaviour
                 return;
             }
             GameController.instance.DelayWinFunc();
-          //  GameController.instance.win = true;
-        //    setBoudariesLeft = true;
+            //GameController.instance.win = true;
+            //setBoudariesLeft = true;
             //nextPointCheck.gameObject.SetActive(true);
             //nextPointCheck.enabled = false;
-
         }
     }
     private void LateUpdate()
     {
         CacheSizeAndViewPos();
-        //var x1 = NumericBoundaries.RightBoundary;
-        //var x2 = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
-        //var s = Mathf.Abs(x2 - x1);
-        //var v = speed * 500;
+        var x1 = NumericBoundaries.RightBoundary;
+        var x2 = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
+        var s = Mathf.Abs(x2 - x1);
+        var v = speed * 500;
         // NumericBoundaries.RightBoundary = Mathf.SmoothStep(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, speed);
-        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, speed * 100/*s / v*/);
+        NumericBoundaries.RightBoundary = Mathf.SmoothDamp(NumericBoundaries.RightBoundary, GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x, ref velocity, /*speed * 100*/s / v);
 
         if (!setBoudariesLeft || prcShake.CheckShaking())
             return;

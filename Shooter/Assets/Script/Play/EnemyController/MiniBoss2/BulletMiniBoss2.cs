@@ -15,7 +15,7 @@ public class BulletMiniBoss2 : BulletEnemy
     private void OnEnable()
     {
         if (wait == null)
-            wait = new WaitForSeconds(0.5f);
+            wait = new WaitForSeconds(1f);
 
         Init(4);
     }
@@ -50,5 +50,10 @@ public class BulletMiniBoss2 : BulletEnemy
         GetTransform().rotation = Quaternion.Lerp(GetTransform().rotation, rota, turning);
         turning += 0.005f;
         rid.velocity = (transform.up * speed);
+    }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        StopAllCoroutines();
     }
 }

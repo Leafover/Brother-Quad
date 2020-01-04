@@ -21,7 +21,8 @@ public class GunMiniBoss2 : AutoTarget
 
         myEnemyBase.gunList.Remove(this);
 
-        myEnemyBase.CalculateHealthAllGun();
+        //  myEnemyBase.CalculateHealthAllGun();
+        myEnemyBase.CalculateAgainHealthAllGun();
         gameObject.SetActive(false);
 
     }

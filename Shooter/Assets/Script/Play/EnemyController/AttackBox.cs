@@ -53,7 +53,9 @@ public class AttackBox : MonoBehaviour
                 }
 
                 if (isflame)
+                {
                     gameObject.SetActive(false);
+                }
 
                 break;
             case 1:
@@ -61,6 +63,17 @@ public class AttackBox : MonoBehaviour
                     PlayerController.instance.TakeDamage(myEnemy.damage2);
                 else
                     PlayerController.instance.TakeDamage(myEnemy.damage2 + (myEnemy.damage2 / 100 * 30));
+
+                if (stun)
+                {
+                    PlayerController.instance.Stun();
+                }
+
+                if (isflame)
+                {
+                    gameObject.SetActive(false);
+                }
+
                 break;
         }
     }

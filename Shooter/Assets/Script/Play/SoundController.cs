@@ -19,7 +19,6 @@ public class SoundController : MonoBehaviour
     public AudioClip soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo,soundvictory1;
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die;
     public AudioSource au;
-    public AudioSource bg;
     void Awake()
     {
         if (instance == null)
@@ -33,7 +32,7 @@ public class SoundController : MonoBehaviour
     }
     private void Start()
     {
-        bg.Play();
+
     }
 
     public void PlaySound(soundGame currentSound)
