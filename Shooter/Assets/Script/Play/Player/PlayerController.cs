@@ -361,10 +361,10 @@ public class PlayerController : MonoBehaviour
     Vector2 movePos;
     public float radius;
     float timeStand = 6;
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(foot.transform.position, radius);
+    }
     public void OnUpdate(float deltaTime)
     {
 

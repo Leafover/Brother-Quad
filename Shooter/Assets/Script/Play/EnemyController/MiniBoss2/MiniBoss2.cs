@@ -77,6 +77,7 @@ public class MiniBoss2 : EnemyBase
     public override void Active()
     {
         base.Active();
+        SoundController.instance.PlaySound(soundGame.soundDisplayMiniBoss2);
         for (int i = 0; i < gunList.Count; i++)
             GameController.instance.autoTarget.Add(gunList[i]);
     }
@@ -138,6 +139,7 @@ public class MiniBoss2 : EnemyBase
                                     CreateBullet(gunList[i].transform.position);
                                 }
                             }
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                             enemyState = EnemyState.falldown;
                         }
                     }
@@ -188,18 +190,21 @@ public class MiniBoss2 : EnemyBase
                             CreateBullet(gunList[0].transform.position);
                             CreateBullet(gunList[3].transform.position);
                             enemyState = EnemyState.attack;
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                         else if (haveGun1 && !haveGun2)
                         {
                             PlayAnim(1, shotguns[0]);
                             CreateBullet(gunList[0].transform.position);
                             enemyState = EnemyState.attack;
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                         else if (!haveGun1 && haveGun2)
                         {
                             PlayAnim(4, shotguns[3]);
                             CreateBullet(gunList[3].transform.position);
                             enemyState = EnemyState.attack;
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                         else if (!haveGun1 && !haveGun2)
                         {
@@ -212,6 +217,7 @@ public class MiniBoss2 : EnemyBase
                                 }
                             }
                             enemyState = EnemyState.falldown;
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                     }
                     else
@@ -220,6 +226,7 @@ public class MiniBoss2 : EnemyBase
                         posTemp.x = PlayerController.instance.GetTranformXPlayer();
                         posTemp.y = CameraController.instance.transform.position.y + 2;
                         effectLaze.SetActive(true);
+                        SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack2);
                         enemyState = EnemyState.attack;
                     }
                 }

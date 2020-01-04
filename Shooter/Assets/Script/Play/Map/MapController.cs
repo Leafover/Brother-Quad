@@ -84,6 +84,8 @@ public class MapController : MonoBehaviour
 
             //    enemy.SetActive(true);
             _scriptE.gameObject.SetActive(true);
+
+            Debug.Log(":::::::: spawn nó de" + CameraController.instance.currentCamBoidaries);
         }
 
     }
@@ -91,11 +93,13 @@ public class MapController : MonoBehaviour
     {
         autoSpawn = false;
     }
-    public void BeginAutoSpawn()
+    public void BeginAutoSpawn(bool _autospawn)
     {
-        autoSpawn = true;
+        autoSpawn = _autospawn;
         countspawn = 0;
         timeDelay = timeDelayMax;
+
+        //Debug.Log("::::::::" + autoSpawn + ":"  + CameraController.instance.currentCamBoidaries);
     }
 
     public ProCamera2DTriggerBoundaries[] procam2DTriggerBoudaries;

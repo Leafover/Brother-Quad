@@ -120,12 +120,12 @@ public class EnemyN4Controller : EnemyBase
             if (FlipX)
             {
                 bulletEnemy.SetDir(-bulletspeed1, false);
-                Debug.Log("TH1");
+              //  Debug.Log("TH1");
             }
             else
             {
                 bulletEnemy.SetDir(bulletspeed1, false);
-                Debug.Log("TH2");
+             //   Debug.Log("TH2");
             }
             bulletEnemy.rid.gravityScale = 0;
             bulletEnemy.isGrenade = false;
