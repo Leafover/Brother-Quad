@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class PopupManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum POPUP_TYPE { NONE, STARTER_PACK, NOTIFY, SETTING}
+
+    public GameObject gNotify, gStarterPack;
+    public PopupStarterPack pStarterPack;
+    public PopupNotify pNoti;
+    public PopupSetting pSetting;
+
+    public POPUP_TYPE pType;
+
+    private void OnEnable()
     {
-        
+        switch (pType)
+        {
+            case POPUP_TYPE.STARTER_PACK:
+                pStarterPack.gameObject.SetActive(true);
+                break;
+            case POPUP_TYPE.NOTIFY:
+                pNoti.ShowNoti("Coming Soon.");
+                pNoti.gameObject.SetActive(true);
+                break;
+            case POPUP_TYPE.SETTING:
+                pSetting.gameObject.SetActive(true);
+                break;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        pNoti.gameObject.SetActive(false);
+        pStarterPack.gameObject.SetActive(false);
     }
 }

@@ -10,6 +10,8 @@ public class DataUtils
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_EQIUP = GAME_KEY + "KEY_EQIUP";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
+    const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
+    const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
 
     public const string P_DONATE = "com.ohze.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohze.brothersquad.starterpack";
@@ -20,13 +22,38 @@ public class DataUtils
     public static void RemoveAds()
     {
         PlayerPrefs.SetInt(KEY_REMOVE_ADS, 1);
+        PlayerPrefs.Save();
     }
     public static bool HasRemoveAds() {
-        return !PlayerPrefs.HasKey(KEY_REMOVE_ADS) || (PlayerPrefs.GetInt(KEY_REMOVE_ADS, 0) == 1 ? true : false);
+        return (PlayerPrefs.GetInt(KEY_REMOVE_ADS, 0) == 1 ? true : false);
     }
     #endregion
 
+    #region Sound and Music
+    public static void ChangeSound()
+    {
+        bool _b = !IsSoundOn();
+        int curStatus = _b ? 1 : 0;
+        PlayerPrefs.SetInt(KEY_SOUND, curStatus);
+        PlayerPrefs.Save();
+    }
+    public static bool IsSoundOn()
+    {
+        return (PlayerPrefs.GetInt(KEY_SOUND, 0) == 1 ? true : false);
+    }
 
+    public static void ChangeMusic()
+    {
+        bool _b = !IsMusicOn();
+        int curStatus = _b ? 1 : 0;
+        PlayerPrefs.SetInt(KEY_MUSIC, curStatus);
+        PlayerPrefs.Save();
+    }
+    public static bool IsMusicOn()
+    {
+        return (PlayerPrefs.GetInt(KEY_MUSIC, 0) == 1 ? true : false);
+    }
+    #endregion
 
     #region Equipment Data
     public static void SaveEquipment(string id, string level, int pices) {

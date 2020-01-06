@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    public static MainMenuController Instance;
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup;
+    public PopupManager popManager;
     public Text txtStageName;
     public Button[] buttonStages;
     private int stageSelected = 0;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         InitButtonStage();
@@ -40,6 +46,7 @@ public class MainMenuController : MonoBehaviour
     public void ShowStarterPack()
     {
         //gPanelUIButton.SetActive(false);
+        popManager.pType = PopupManager.POPUP_TYPE.STARTER_PACK;
         gPanelPopup.SetActive(true);
     }
     public void ChooseStage(int stage)
@@ -65,7 +72,25 @@ public class MainMenuController : MonoBehaviour
     }
     public void ShowEquipment()
     {
+        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
+        gPanelPopup.SetActive(true);
         Debug.LogError("ShowEquipment");
+    }
+    public void ShowShop()
+    {
+        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
+        gPanelPopup.SetActive(true);
+        Debug.LogError("ShowShop");
+    }
+    public void ShowHeroTab() {
+        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
+        gPanelPopup.SetActive(true);
+        Debug.LogError("Show Hero Infomation");
+    }
+
+    public void BuyRemoveAds()
+    {
+        GameIAPManager.Instance.BuyProduct(DataUtils.P_DONATE);
     }
     public void AddMoreCoin()
     {

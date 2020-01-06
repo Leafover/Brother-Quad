@@ -10,14 +10,13 @@ public class PopupStarterPack : MonoBehaviour
     
     private void OnEnable()
     {
-
     }
 
     private void OnDisable()
     {
         GameIAPManager.Instance.acBuyComplete -= HandleBuyComplete;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         GameIAPManager.Instance.acBuyComplete += HandleBuyComplete;
@@ -40,15 +39,17 @@ public class PopupStarterPack : MonoBehaviour
     {
         Debug.LogError("Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
         DataUtils.RemoveAds();
-        gameObject.transform.parent.gameObject.SetActive(false);
+        ClosePopup();
     }
     public void BuyPack()
     {
         GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
+        ClosePopup();
     }
     
     public void ClosePopup()
     {
+        MainMenuController.Instance.popManager.pType = PopupManager.POPUP_TYPE.NONE;
         gameObject.transform.parent.gameObject.SetActive(false);
     }
 }
