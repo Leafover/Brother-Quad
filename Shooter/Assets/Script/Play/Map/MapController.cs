@@ -85,7 +85,7 @@ public class MapController : MonoBehaviour
             //    enemy.SetActive(true);
             _scriptE.gameObject.SetActive(true);
 
-            Debug.Log(":::::::: spawn nó de" + CameraController.instance.currentCamBoidaries);
+        //    Debug.Log(":::::::: spawn nó de" + CameraController.instance.currentCamBoidaries);
         }
 
     }

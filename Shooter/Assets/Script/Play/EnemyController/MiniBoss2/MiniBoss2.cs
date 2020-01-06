@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MiniBoss2 : EnemyBase
 {
-    public GameObject effectLaze;
+    public List<GameObject> effectLaze;
     public bool haveGun1, haveGun2;
     public AnimationReferenceAsset die1Anim;
     public List<AnimationReferenceAsset> shotguns, dieguns;
@@ -15,6 +15,8 @@ public class MiniBoss2 : EnemyBase
     public string[] strboneGun;
     public List<GunMiniBoss2> gunList;
     public GunMiniBoss2 gunCenter;
+
+
     int currentPos;
     float healthTemp;
 
@@ -29,10 +31,10 @@ public class MiniBoss2 : EnemyBase
 
         //if (gunList.Count > 0)
         //{
-            for (int i = 0; i < gunList.Count; i++)
-            {
-                gunList[i].currentHealth = healthTemp / (gunList.Count);
-            }
+        for (int i = 0; i < gunList.Count; i++)
+        {
+            gunList[i].currentHealth = healthTemp / (gunList.Count);
+        }
         //}
         //else
         //{
@@ -45,11 +47,23 @@ public class MiniBoss2 : EnemyBase
     public void CalculateAgainHealthAllGun()
     {
         if (gunList.Count > 0)
+        {
+            StartCoroutine(delayAddGun());
             return;
+        }
         GameController.instance.autoTarget.Add(gunCenter);
         //  GameController.instance.NotSoFastWin();
         gunCenter.currentHealth = currentHealth;
         gunCenter.gameObject.SetActive(true);
+    }
+    IEnumerator delayAddGun()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (!gunList[0].gameObject.activeSelf)
+        {
+            gunList[0].gameObject.SetActive(true);
+            GameController.instance.autoTarget.Add(gunList[0]);
+        }
     }
     public override void Init()
     {
@@ -69,7 +83,7 @@ public class MiniBoss2 : EnemyBase
         PlayAnim(0, aec.idle, false);
         gunCenter.incam = true;
         gunCenter.currentHealth = currentHealth / 100 * 60;
-        gunCenter.gameObject.SetActive(false);
+        //   gunCenter.gameObject.SetActive(false);
         CalculateHealthAllGun();
         haveGun1 = haveGun2 = true;
         // takeDamageBox.enabled = false;
@@ -78,8 +92,9 @@ public class MiniBoss2 : EnemyBase
     {
         base.Active();
         SoundController.instance.PlaySound(soundGame.soundDisplayMiniBoss2);
-        for (int i = 0; i < gunList.Count; i++)
-            GameController.instance.autoTarget.Add(gunList[i]);
+        // for (int i = 0; i < gunList.Count; i++)
+        gunList[0].gameObject.SetActive(true);
+        GameController.instance.autoTarget.Add(gunList[0]);
     }
     float timechangePos;
     public override void OnUpdate(float deltaTime)
@@ -104,12 +119,21 @@ public class MiniBoss2 : EnemyBase
                         enemyState = EnemyState.run;
                         if (randomCombo == 1)
                         {
-                            effectLaze.SetActive(false);
+                            if (combo == 1)
+                                return;
+                            effectLaze[0].SetActive(false);
+                            effectLaze[1].SetActive(false);
+                            effectLaze[2].SetActive(false);
                             boxAttack1.gameObject.SetActive(false);
+                            boxAttack2.gameObject.SetActive(false);
+                            boxAttack3.gameObject.SetActive(false);
                         }
                     }
                     if (randomCombo == 1)
                     {
+                        if (combo == 1)
+                            return;
+
                         if (!boxAttack1.gameObject.activeSelf)
                         {
                             timePreviousAttack -= deltaTime;
@@ -117,6 +141,10 @@ public class MiniBoss2 : EnemyBase
                             {
                                 timePreviousAttack = maxtimeDelayAttack2;
                                 boxAttack1.gameObject.SetActive(true);
+                                if (effectLaze[1].activeSelf)
+                                    boxAttack2.gameObject.SetActive(true);
+                                if (effectLaze[2].activeSelf)
+                                    boxAttack3.gameObject.SetActive(true);
                             }
                         }
                     }
@@ -146,19 +174,26 @@ public class MiniBoss2 : EnemyBase
                 }
                 else
                 {
-                    if (!boxAttack1.gameObject.activeSelf)
+                    if (combo == 0)
                     {
-                        timePreviousAttack -= deltaTime;
-                        if (timePreviousAttack <= 0)
+                        if (!boxAttack1.gameObject.activeSelf)
                         {
-                            timePreviousAttack = maxtimeDelayAttack2;
-                            boxAttack1.gameObject.SetActive(true);
+                            timePreviousAttack -= deltaTime;
+                            if (timePreviousAttack <= 0)
+                            {
+                                timePreviousAttack = maxtimeDelayAttack2;
+                                boxAttack1.gameObject.SetActive(true);
+                                if (effectLaze[1].activeSelf)
+                                    boxAttack2.gameObject.SetActive(true);
+                                if (effectLaze[2].activeSelf)
+                                    boxAttack3.gameObject.SetActive(true);
+                            }
                         }
-                    }
-                    transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed / 2);
-                    if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
-                    {
-                        enemyState = EnemyState.falldown;
+                        transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed / 2);
+                        if (transform.position.x == posTemp.x /*&& transform.position.y == posTemp.y*/)
+                        {
+                            enemyState = EnemyState.falldown;
+                        }
                     }
                 }
                 break;
@@ -187,22 +222,22 @@ public class MiniBoss2 : EnemyBase
                         {
                             PlayAnim(1, shotguns[0]);
                             PlayAnim(4, shotguns[3]);
-                            CreateBullet(gunList[0].transform.position);
-                            CreateBullet(gunList[3].transform.position);
+                            CreateBullet(boneGun[0].GetWorldPosition(skeletonAnimation.transform));
+                            CreateBullet(boneGun[3].GetWorldPosition(skeletonAnimation.transform));
                             enemyState = EnemyState.attack;
                             SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                         else if (haveGun1 && !haveGun2)
                         {
                             PlayAnim(1, shotguns[0]);
-                            CreateBullet(gunList[0].transform.position);
+                            CreateBullet(boneGun[0].GetWorldPosition(skeletonAnimation.transform));
                             enemyState = EnemyState.attack;
                             SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
                         else if (!haveGun1 && haveGun2)
                         {
                             PlayAnim(4, shotguns[3]);
-                            CreateBullet(gunList[3].transform.position);
+                            CreateBullet(boneGun[3].GetWorldPosition(skeletonAnimation.transform));
                             enemyState = EnemyState.attack;
                             SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
                         }
@@ -222,17 +257,67 @@ public class MiniBoss2 : EnemyBase
                     }
                     else
                     {
-                        timePreviousAttack = maxtimeDelayAttack2;
-                        posTemp.x = PlayerController.instance.GetTranformXPlayer();
-                        posTemp.y = CameraController.instance.transform.position.y + 2;
-                        effectLaze.SetActive(true);
-                        SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack2);
-                        enemyState = EnemyState.attack;
+
+                        if (gunList.Count > 0)
+                        {
+                            effectLaze[0].SetActive(true);
+                            SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack2);
+                            posTemp.x = PlayerController.instance.GetTranformXPlayer();
+                            posTemp.y = transform.position.y;
+                            enemyState = EnemyState.attack;
+                        }
+                        else
+                        {
+
+                            combo = Random.Range(0, 2);
+                            timePreviousAttack = 0;
+                            if (combo == 0)
+                            {
+                                effectLaze[0].SetActive(true);
+                                effectLaze[1].SetActive(true);
+                                effectLaze[2].SetActive(true);
+                                SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack2);
+                                posTemp.x = PlayerController.instance.GetTranformXPlayer();
+                                posTemp.y = Camera.main.transform.position.y;
+                                enemyState = EnemyState.attack;
+                            }
+                            else
+                            {
+                                for (int i = 0; i < effectLaze.Count; i++)
+                                {
+                                    //Debug.LogError("Shooooot energy");
+                                    bulletEnemy = ObjectPoolManagerHaveScript.Instance.superBulletMiniBoss2Pooler.GetBulletEnemyPooledObject();
+                                    bulletEnemy.AddProperties(damage1, bulletspeed1);
+                                    //switch(i)
+                                    //{
+                                    //    case 0:
+                                    //        bulletEnemy.transform.eulerAngles = effectLaze[0].transform.eulerAngles;
+                                    //        break;
+                                    //    case 1:
+                                    //        bulletEnemy.transform.eulerAngles = effectLaze[1].transform.eulerAngles;
+                                    //        break;
+                                    //    case 2:
+                                    //        bulletEnemy.transform.eulerAngles = effectLaze[2].transform.eulerAngles;
+                                    //        break;
+                                    //}
+                                    bulletEnemy.transform.eulerAngles = effectLaze[i].transform.eulerAngles;
+                                    listMyBullet.Add(bulletEnemy);
+                                    bulletEnemy.transform.position = gunCenter.transform.position;
+                                    bulletEnemy.gameObject.SetActive(true);
+                                }
+                                SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack1);
+                                enemyState = EnemyState.falldown;
+                            }
+                        }
+
+
+
                     }
                 }
                 break;
         }
     }
+    //  Vector3 rotationbullet = new Vector3(0, 0, 150);
     Vector2 posTemp;
     public void PlayAnim(int index, AnimationReferenceAsset _anim)
     {
@@ -253,16 +338,15 @@ public class MiniBoss2 : EnemyBase
     }
     public void CreateBullet(Vector2 pos)
     {
-        bullet = ObjectPoolManagerHaveScript.Instance.bulletMiniBoss2Pooler.GetBulletEnemyPooledObject();
-        bullet.AddProperties(damage1, bulletspeed1);
-        bullet.SetTimeExist(bulletimeexist);
-        bullet.BeginDisplay(Vector2.zero, this);
-        listMyBullet.Add(bullet);
-        bullet.transform.position = pos;
-        bullet.gameObject.SetActive(true);
+        bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletMiniBoss2Pooler.GetBulletEnemyPooledObject();
+        bulletEnemy.AddProperties(damage1, bulletspeed1);
+        bulletEnemy.SetTimeExist(bulletimeexist);
+        bulletEnemy.BeginDisplay(Vector2.zero, this);
+        listMyBullet.Add(bulletEnemy);
+        bulletEnemy.transform.position = pos;
+        bulletEnemy.gameObject.SetActive(true);
 
     }
-    BulletEnemy bullet;
 
     public override void Dead()
     {
@@ -279,7 +363,11 @@ public class MiniBoss2 : EnemyBase
             GameController.instance.autoTarget.Remove(gunCenter);
         }
         boxAttack1.gameObject.SetActive(false);
-        effectLaze.SetActive(false);
+        boxAttack2.gameObject.SetActive(false);
+        boxAttack3.gameObject.SetActive(false);
+        effectLaze[0].SetActive(false);
+        effectLaze[1].SetActive(false);
+        effectLaze[2].SetActive(false);
     }
     public override void OnDisable()
     {

@@ -44,7 +44,7 @@ public class EnemyBase : AutoTarget
     public bool canmove;
 
     public float radius;
-    public Collider2D boxAttack1, boxAttack2;
+    public Collider2D boxAttack1, boxAttack2, boxAttack3;
     [HideInInspector]
     public Collider2D takeDamageBox;
     [HideInInspector]
@@ -585,7 +585,7 @@ public class EnemyBase : AutoTarget
     public int indexHealthFill;
     [HideInInspector]
     public float currenthealthfill;
-    public virtual void TakeDamage(float damage, bool crit = false,bool iamGunboss = false)
+    public virtual void TakeDamage(float damage, bool crit = false, bool iamGunboss = false)
     {
         if (iamGunboss)
         {
@@ -672,7 +672,7 @@ public class EnemyBase : AutoTarget
         numberText.Display("" + (int)damage * 10, crit);
         numberText.gameObject.SetActive(true);
 
-       // Debug.LogError("zooooo wtf text ");
+        // Debug.LogError("zooooo wtf text ");
     }
     void SpawnHitEffect()
     {
@@ -684,7 +684,7 @@ public class EnemyBase : AutoTarget
         hiteffect.transform.position = posHitTemp;
         hiteffect.SetActive(true);
 
-      //  Debug.LogError("zooooo wtf effect");
+        //  Debug.LogError("zooooo wtf effect");
     }
 
 
@@ -709,7 +709,7 @@ public class EnemyBase : AutoTarget
                 else
                 {
                     TakeDamage(PlayerController.instance.damageBullet);
-                  //  Debug.Log("Take Dâmgwe");
+                    //  Debug.Log("Take Dâmgwe");
                 }
 
                 collision.gameObject.SetActive(false);

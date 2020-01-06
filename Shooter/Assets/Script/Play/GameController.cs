@@ -196,6 +196,7 @@ public class GameController : MonoBehaviour
         movePosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
         if (joystick.GetJoystickState())
         {
+            PlayerController.instance.isBouderJoystickMove = joystick.GetDistance() >= 0.9f;
             OnMove(movePosition);
         }
         else
@@ -249,9 +250,9 @@ public class GameController : MonoBehaviour
 
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
-        //   PlayerController.instance.FlipX = h > 0 ? false : true;
         if (angle <= 135f && angle >= -135.5f)
         {
+
             PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
 
             if (!PlayerController.instance.dustrun.activeSelf && PlayerController.instance.rid.velocity.x == 0)
@@ -276,7 +277,7 @@ public class GameController : MonoBehaviour
 
         if (joystickShot.GetJoystickState())
             return;
-        if (!PlayerController.instance.haveTarget)
+        if (!PlayerController.instance.haveTarget && PlayerController.instance.isBouderJoystickMove)
             PlayerController.instance.FlipX = h < 0;
     }
     private void JoystickShooting(UltimateJoystick joystick)
@@ -289,12 +290,12 @@ public class GameController : MonoBehaviour
         if (joystick.GetJoystickState())
         {
             TryShot();
-            PlayerController.instance.isBouderJoystick = joystick.GetDistance() >= 0.9f;
+            PlayerController.instance.isBouderJoystickShoot = joystick.GetDistance() >= 0.9f;
 
 
             if (autoTarget.Count == 0)
             {
-                if (PlayerController.instance.isBouderJoystick)
+                if (PlayerController.instance.isBouderJoystickShoot)
                 {
                     PlayerController.instance.FlipX = shootPosition.x < 0;
                     PlayerController.instance.SelectNonTarget(shootPosition);
@@ -547,23 +548,23 @@ public class GameController : MonoBehaviour
                 randomCertain = Random.Range(0, 100);
                 if (randomCertain < vatphamnhanduoc[i].Normal)
                 {
-                    Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
+                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
                 }
                 else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
                 {
-                    Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
+                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
                 {
-                    Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
+                 //   Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
-                    Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
+                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
-                    Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
+                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
                 }
             }
         }

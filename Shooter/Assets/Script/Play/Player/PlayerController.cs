@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, Run, Sit, Jump, WaitStand, Die,Win
+        Idle, Run, Sit, Jump, WaitStand, Die, Win
     }
     public PlayerState playerState = PlayerState.Idle;
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float speedmove;
     [HideInInspector]
-    public bool isBouderJoystick, isWaitStand, isGround, isfalldow, candoublejump;
+    public bool isBouderJoystickShoot,isBouderJoystickMove, isWaitStand, isGround, isfalldow, candoublejump;
     public bool isMeleeAttack;
 
     //public IEnumerator Move()
@@ -90,8 +90,12 @@ public class PlayerController : MonoBehaviour
         rid.velocity = Vector2.zero;
         speedmove = 0;
         //   skeletonAnimation.ClearState();
-        skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
-        playerState = PlayerState.Idle;
+
+        if (playerState != PlayerState.Sit)
+        {
+            playerState = PlayerState.Idle;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
+        }
         stunEffect.SetActive(true);
     }
     public void TakeDamage(float damage)
@@ -377,7 +381,7 @@ public class PlayerController : MonoBehaviour
         //    animArrow.SetBool("animarrow", false);
         //}
 
-      //  Debug.Log(rid.velocity + ":" + speedmove);
+        //  Debug.Log(rid.velocity + ":" + speedmove);
         isGround = Physics2D.OverlapCircle(foot.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
