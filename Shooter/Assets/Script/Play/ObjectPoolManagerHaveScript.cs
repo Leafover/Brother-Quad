@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPoolManagerHaveScript : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler;
+    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler,bulletMachinegunBoss2Pooler,grenadeenemyBoss2Pooler,rocketBoss2Pooler,bulletenergyBoss2Pooler;
     public NumberDamageTextController numberDamgageTextPrefab;
-    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, bulletN3Prefab, grenadeN3Prefab, rocketEnemyVN2Prefab, bulletEN4Prefab, bulletMiniBoss2Prefab, superBulletMiniBoss2Prefab;
+    public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, bulletN3Prefab, grenadeN3Prefab, rocketEnemyVN2Prefab, bulletEN4Prefab, bulletMiniBoss2Prefab, superBulletMiniBoss2Prefab, bulletMachinegunBoss2Prefab, grenadeenemyBoss2Prefab, rocketBoss2Prefab, bulletenergyBoss2Prefab;
     public EnemyBase enemy1Prefab, enemy5Prefab, enemyN1Prefab, enemyN2Prefab;
     [HideInInspector]
     public static ObjectPoolManagerHaveScript Instance { get; private set; }
@@ -234,6 +234,42 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
             go.transform.parent = this.gameObject.transform;
             superBulletMiniBoss2Pooler.InitializeBulletEnemy(6);
             AllPool.Add(superBulletMiniBoss2Pooler);
+        }
+        if (bulletMachinegunBoss2Pooler == null)
+        {
+            go = new GameObject("bulletMachinegunBoss2Pooler");
+            bulletMachinegunBoss2Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            bulletMachinegunBoss2Pooler.bulletEnemyPooledObject = bulletMachinegunBoss2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletMachinegunBoss2Pooler.InitializeBulletEnemy(6);
+            AllPool.Add(bulletMachinegunBoss2Pooler);
+        }
+        if (rocketBoss2Pooler == null)
+        {
+            go = new GameObject("rocketBoss2Pooler");
+            rocketBoss2Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            rocketBoss2Pooler.bulletEnemyPooledObject = rocketBoss2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            rocketBoss2Pooler.InitializeBulletEnemy(6);
+            AllPool.Add(rocketBoss2Pooler);
+        }
+        if (grenadeenemyBoss2Pooler == null)
+        {
+            go = new GameObject("grenadeenemyBoss2Pooler");
+            grenadeenemyBoss2Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            grenadeenemyBoss2Pooler.bulletEnemyPooledObject = grenadeenemyBoss2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            grenadeenemyBoss2Pooler.InitializeBulletEnemy(3);
+            AllPool.Add(grenadeenemyBoss2Pooler);
+        }
+        if (bulletenergyBoss2Pooler == null)
+        {
+            go = new GameObject("bulletenergyBoss2Pooler");
+            bulletenergyBoss2Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            bulletenergyBoss2Pooler.bulletEnemyPooledObject = bulletenergyBoss2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletenergyBoss2Pooler.InitializeBulletEnemy(6);
+            AllPool.Add(bulletenergyBoss2Pooler);
         }
     }
     GameObject go;

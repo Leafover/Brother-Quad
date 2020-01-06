@@ -10,6 +10,7 @@ public class EnemyN2Controller : EnemyBase
     float speedMove;
     public Transform frameSprite;
     Vector2 scale;
+    public GameObject effectfiredie;
 
     IEnumerator delayPlayShotBegin()
     {
@@ -24,7 +25,7 @@ public class EnemyN2Controller : EnemyBase
         {
             StartCoroutine(delayPlayShotBegin());
             firstgoinscene = true;
-          //  Debug.LogError("-----------zoooo day-------");
+            //  Debug.LogError("-----------zoooo day-------");
         }
     }
     public void SetPosFrameSprite()
@@ -33,8 +34,6 @@ public class EnemyN2Controller : EnemyBase
         scale.y = 1;
         frameSprite.transform.position = boxAttack1.transform.position = FlipX ? rightFace.position : leftFace.position;
         frameSprite.localScale = scale;
-
-
     }
     public override void Active()
     {
@@ -44,7 +43,6 @@ public class EnemyN2Controller : EnemyBase
 
     public override void Start()
     {
-
         base.Start();
         Init();
     }
@@ -65,8 +63,9 @@ public class EnemyN2Controller : EnemyBase
     {
         timePreviousAttack = 1f;
         frameSprite.gameObject.SetActive(false);
+        effectfiredie.SetActive(true);
         randomDie = Random.Range(0, 2);
-        if(randomDie == 0)
+        if (randomDie == 0)
         {
             speedMove = -speed;
             FlipX = false;
@@ -103,9 +102,9 @@ public class EnemyN2Controller : EnemyBase
                 waitdie = true;
                 rid.velocity = Vector2.zero;
                 speedMove = 0;
-              //  Debug.LogError("die thoi" + currentAnim.name);
+                //  Debug.LogError("die thoi" + currentAnim.name);
             }
-                
+
             return;
         }
 
@@ -177,9 +176,7 @@ public class EnemyN2Controller : EnemyBase
                     }
                 }
                 break;
-
         }
-
     }
     protected override void OnComplete(TrackEntry trackEntry)
     {
@@ -193,7 +190,7 @@ public class EnemyN2Controller : EnemyBase
     public override void OnDisable()
     {
         base.OnDisable();
-
+        effectfiredie.SetActive(false);
         if (EnemyManager.instance == null)
             return;
 
@@ -208,10 +205,8 @@ public class EnemyN2Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-
         SoundController.instance.PlaySound(soundGame.soundEN2die);
         au.Stop();
         RunToDie();
-      //  Debug.LogError("------------- dead");
     }
 }

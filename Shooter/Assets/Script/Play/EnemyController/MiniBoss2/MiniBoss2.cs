@@ -10,7 +10,7 @@ public class MiniBoss2 : EnemyBase
     public bool haveGun1, haveGun2;
     public AnimationReferenceAsset die1Anim;
     public List<AnimationReferenceAsset> shotguns, dieguns;
-    Bone[] boneGun = new Bone[8];
+    Bone[] boneGun = new Bone[9];
     [SpineBone]
     public string[] strboneGun;
     public List<GunMiniBoss2> gunList;
@@ -29,20 +29,10 @@ public class MiniBoss2 : EnemyBase
     {
         healthTemp = currentHealth - gunCenter.currentHealth;
 
-        //if (gunList.Count > 0)
-        //{
         for (int i = 0; i < gunList.Count; i++)
         {
             gunList[i].currentHealth = healthTemp / (gunList.Count);
         }
-        //}
-        //else
-        //{
-        //    GameController.instance.autoTarget.Add(gunCenter);
-        //    //  GameController.instance.NotSoFastWin();
-        //    gunCenter.currentHealth = currentHealth;
-        //    gunCenter.gameObject.SetActive(true);
-        //}
     }
     public void CalculateAgainHealthAllGun()
     {
@@ -76,10 +66,15 @@ public class MiniBoss2 : EnemyBase
         for (int i = 0; i < strboneGun.Length; i++)
         {
             boneGun[i] = skeletonAnimation.Skeleton.FindBone(strboneGun[i]);
-            gunList[i].transform.position = boneGun[i].GetWorldPosition(skeletonAnimation.transform);
-            gunList[i].index = i;
-            gunList[i].incam = true;
+
+            if (i < strboneGun.Length - 1)
+            {
+                gunList[i].transform.position = boneGun[i].GetWorldPosition(skeletonAnimation.transform);
+                gunList[i].index = i;
+                gunList[i].incam = true;
+            }
         }
+        gunCenter.transform.position = boneGun[8].GetWorldPosition(skeletonAnimation.transform);
         PlayAnim(0, aec.idle, false);
         gunCenter.incam = true;
         gunCenter.currentHealth = currentHealth / 100 * 60;
@@ -285,21 +280,8 @@ public class MiniBoss2 : EnemyBase
                             {
                                 for (int i = 0; i < effectLaze.Count; i++)
                                 {
-                                    //Debug.LogError("Shooooot energy");
                                     bulletEnemy = ObjectPoolManagerHaveScript.Instance.superBulletMiniBoss2Pooler.GetBulletEnemyPooledObject();
                                     bulletEnemy.AddProperties(damage1, bulletspeed1);
-                                    //switch(i)
-                                    //{
-                                    //    case 0:
-                                    //        bulletEnemy.transform.eulerAngles = effectLaze[0].transform.eulerAngles;
-                                    //        break;
-                                    //    case 1:
-                                    //        bulletEnemy.transform.eulerAngles = effectLaze[1].transform.eulerAngles;
-                                    //        break;
-                                    //    case 2:
-                                    //        bulletEnemy.transform.eulerAngles = effectLaze[2].transform.eulerAngles;
-                                    //        break;
-                                    //}
                                     bulletEnemy.transform.eulerAngles = effectLaze[i].transform.eulerAngles;
                                     listMyBullet.Add(bulletEnemy);
                                     bulletEnemy.transform.position = gunCenter.transform.position;

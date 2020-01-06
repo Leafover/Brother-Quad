@@ -138,6 +138,7 @@ public class Enemy3Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            combo++;
             if (!incam)
                 return;
             //bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
@@ -158,7 +159,7 @@ public class Enemy3Controller : EnemyBase
             bulletEnemy.transform.rotation = rotation;
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.gameObject.SetActive(true);
-            combo++;
+ 
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)

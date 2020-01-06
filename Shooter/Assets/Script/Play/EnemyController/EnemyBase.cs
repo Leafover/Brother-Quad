@@ -476,9 +476,9 @@ public class EnemyBase : AutoTarget
                 GameController.instance.uiPanel.healthBarBoss.healthFill[i].fillAmount = 1;
             }
             if (isMiniBoss)
-                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Mini Boss " + "Mission " + (DataParam.indexMap + 1));
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Mini Boss " + "Mission " + (DataParam.indexStage + 1));
             if (isBoss)
-                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Boss " + "Mission " + (DataParam.indexMap + 1));
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin("Boss " + "Mission " + (DataParam.indexStage + 1));
 
             GameController.instance.isDestroyBoss = true;
         }

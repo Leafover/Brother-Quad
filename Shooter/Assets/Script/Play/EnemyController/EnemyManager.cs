@@ -24,6 +24,7 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyN4Controller> enemyn4s;
     public List<EnemyVN2Controller> enemyvn2s;
     public List<MiniBoss2> miniboss2s;
+    public List<Boss2Controller> boss2s;
     public void Awake()
     {
         instance = this;
@@ -200,8 +201,20 @@ public class EnemyManager : MonoBehaviour
             miniboss2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
-    public void OnUpdate(float deltaTime)
+    void CallBoss2Action(float deltaTime)
     {
+        if (boss2s.Count == 0)
+            return;
+        for (int i = 0; i < boss2s.Count; i++)
+        {
+            boss2s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+
+    public void OnUpdateByStage1(float deltaTime)
+    {
+        if (DataParam.indexStage != 0)
+            return;
         CallE0Action(deltaTime);
         CallE1Action(deltaTime);
         CallE2Action(deltaTime);
@@ -213,7 +226,11 @@ public class EnemyManager : MonoBehaviour
         CallEV2Action(deltaTime);
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
-
+    }
+    public void OnUpdateByStage2(float deltaTime)
+    {
+        if (DataParam.indexStage != 1)
+            return;
         CallBoss1Action(deltaTime);
         CallEN0Action(deltaTime);
         CallN1Action(deltaTime);
@@ -222,5 +239,12 @@ public class EnemyManager : MonoBehaviour
         CallN4Action(deltaTime);
         CallVN2Action(deltaTime);
         CallMiniBoss2Action(deltaTime);
+        CallBoss2Action(deltaTime);
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        OnUpdateByStage1(deltaTime);
+        OnUpdateByStage2(deltaTime);
     }
 }
