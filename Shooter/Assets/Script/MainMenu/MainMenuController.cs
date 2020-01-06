@@ -75,11 +75,13 @@ public class MainMenuController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            DataUtils.SaveEquipment("H1", "Uncommon", 30);
+            //DataUtils.SaveEquipment("H1", "Uncommon", 30);
+            GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.LogError(DataUtils.GetAllItem());
+            //Debug.LogError(DataUtils.GetAllItem());
+            GameIAPManager.Instance.BuyProduct(DataUtils.P_DONATE);
         }
     }
 }

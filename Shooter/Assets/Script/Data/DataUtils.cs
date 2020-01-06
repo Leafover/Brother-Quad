@@ -9,10 +9,26 @@ public class DataUtils
     enum eType { Shoes, Bag, Gloves, Helmet, Armor, Weapon }
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_EQIUP = GAME_KEY + "KEY_EQIUP";
+    const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
+
+    public const string P_DONATE = "com.ohze.brothersquad.donate";
+    public const string P_STARTER_PACK = "com.ohze.brothersquad.starterpack";
 
 
 
     public static Dictionary<string, ItemData> dicEquipment = new Dictionary<string, ItemData>();
+
+    #region Remove Ads
+    public static void RemoveAds()
+    {
+        PlayerPrefs.SetInt(KEY_REMOVE_ADS, 1);
+    }
+    public static bool HasRemoveAds() {
+        return !PlayerPrefs.HasKey(KEY_REMOVE_ADS) || (PlayerPrefs.GetInt(KEY_REMOVE_ADS, 0) == 1 ? true : false);
+    }
+    #endregion
+
+
 
     #region Equipment Data
     public static void SaveEquipment(string id, string level, int pices) {

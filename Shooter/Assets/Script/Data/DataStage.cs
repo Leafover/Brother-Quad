@@ -15,6 +15,7 @@ public class DataStage
 public class MapLevel
 {
     public string levelID { get; set; }
+    public bool hasComplete { get; set; }
     public LVMission[] mission { get; set; }
     public LVReward rewards { get; set; }
 }
