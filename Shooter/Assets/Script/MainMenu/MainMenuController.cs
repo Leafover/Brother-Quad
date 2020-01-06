@@ -24,7 +24,6 @@ public class MainMenuController : MonoBehaviour
     }
     private void ActiveStage(GameObject _g)
     {
-        Debug.LogError("___: " + _g.name);
         txtStageName.text = _g.name;
     }
     private void OnEnable()
@@ -48,7 +47,6 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Ready To Play");
             gPanelUIButton.SetActive(false);
             gPanelStage.SetActive(true);
             stageSelected = 0;
