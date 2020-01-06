@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    public GameObject gPanelUIButton, gPanelStage;
+    public GameObject gPanelUIButton, gPanelStage, gPanelPopup;
     public Text txtStageName;
     public Button[] buttonStages;
     private int stageSelected = 0;
@@ -30,12 +30,18 @@ public class MainMenuController : MonoBehaviour
     {
         gPanelUIButton.SetActive(true);
         gPanelStage.SetActive(false);
+        gPanelPopup.SetActive(false);
     }
     private void OnDisable()
     {
         stageSelected = 0;
     }
 
+    public void ShowStarterPack()
+    {
+        //gPanelUIButton.SetActive(false);
+        gPanelPopup.SetActive(true);
+    }
     public void ChooseStage(int stage)
     {
         stageSelected = stage;

@@ -1,22 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopupStarterPack : MonoBehaviour
 {
+    public Text txtWPName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtPrice;
+
+    
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+        GameIAPManager.Instance.acBuyComplete -= HandleBuyComplete;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameIAPManager.Instance.acBuyComplete += HandleBuyComplete;
+        txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
+        InitWeaponInfo();
     }
 
+
+    private void InitWeaponInfo()
+    {
+        var _wp = DataController.instance.allWeapon[1].weaponList[0];
+        txtWPName.text = _wp.NAME;
+        txtAtk.text = _wp.Dmg.ToString();
+        txtBulletSpeed.text = _wp.BulletSpeed.ToString();
+        txtReload.text = _wp.ReloadSpeed.ToString();
+        txtRange.text = _wp.AtkRange.ToString();
+        txtMagazine.text = _wp.Magazine.ToString();
+    }
+    void HandleBuyComplete()
+    {
+        Debug.LogError("Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
+        DataUtils.RemoveAds();
+        gameObject.transform.parent.gameObject.SetActive(false);
+    }
+    public void BuyPack()
+    {
+        GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
+    }
+    
     public void ClosePopup()
     {
-        gameObject.SetActive(false);
-    }
-    public void PurchaseStaterPack()
-    {
-        Debug.LogError("Process Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
-        DataUtils.RemoveAds();
+        gameObject.transform.parent.gameObject.SetActive(false);
     }
 }

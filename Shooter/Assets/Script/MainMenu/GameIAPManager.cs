@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Purchasing;
 
 public class GameIAPManager : MonoBehaviour, IStoreListener
@@ -9,6 +10,8 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
 
     private static IStoreController m_StoreController;
     private static IExtensionProvider m_StoreExtensionProvider;
+
+    public Action acBuyComplete;
 
     private void Awake()
     {
@@ -25,12 +28,17 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
 
+    public static string GetPriceByID(string _id)
+    {
+        Product product = m_StoreController.products.WithID(_id);
+        return product.metadata.localizedPriceString;
+    }
     public void BuyProduct(string productID)
     {
         if (IsInitialized())
         {
             Product product = m_StoreController.products.WithID(productID);
-            
+
             if (product != null && product.availableToPurchase)
             {
                 Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
@@ -113,7 +121,10 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        Debug.LogError(e.purchasedProduct.definition.id);
+        if(acBuyComplete != null)
+        {
+            acBuyComplete();
+        }
         switch (e.purchasedProduct.definition.id)
         {
             case DataUtils.P_DONATE:
@@ -121,8 +132,6 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
                 DataUtils.RemoveAds();
                 break;
             case DataUtils.P_STARTER_PACK:
-                Debug.LogError("Process Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
-                DataUtils.RemoveAds();
                 break;
         }
         return PurchaseProcessingResult.Complete;
