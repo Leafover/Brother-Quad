@@ -70,8 +70,7 @@ public class Boss2Controller : EnemyBase
         }
         else if (indexGun == 6)
         {
-            PlayAnim(indexGun, aec.die);
-            ExploOffBoss();
+            Dead();
         }
 
     }
@@ -196,13 +195,13 @@ public class Boss2Controller : EnemyBase
         {
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletenergyBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2);
-            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 2, bulletspeed2 / 2);
+            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 4, bulletspeed2 / 3);
             bulletEnemy.rid.gravityScale = 1;
             bulletEnemy.gameObject.layer = 17;
             bulletEnemy.Init(4);
             bulletEnemy.transform.position = centerEnergy.transform.position;
             bulletEnemy.gameObject.SetActive(true);
-            timeEnergy = maxtimeDelayAttack2;
+            timeEnergy = maxtimeDelayAttack2/2;
         }
 
     }
@@ -273,6 +272,7 @@ public class Boss2Controller : EnemyBase
             //bulletEnemy.transform.position = machineGun.transform.position;
             //bulletEnemy.gameObject.SetActive(true);
 
+            SoundController.instance.PlaySound(soundGame.soundmachinegunBoss2);
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletMachinegunBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
             bulletEnemy.SetTimeExist(bulletimeexist);
@@ -292,7 +292,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.transform.position = boneGun[0].GetWorldPosition(skeletonAnimation.transform);
             //  bulletEnemy.transform.rotation = gunRotate[0].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
-
+            SoundController.instance.PlaySound(soundGame.soundrocketBoss2);
             //  skeletonAnimation.AnimationState.SetAnimation(2, shotguns[1], false);
             StartCoroutine(delayShot(2, maxtimeDelayAttack2 / 2));
             //Debug.LogError("------ shot 1");
@@ -309,6 +309,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.gameObject.SetActive(true);
 
             //skeletonAnimation.AnimationState.SetAnimation(3, shotguns[2], false);
+            SoundController.instance.PlaySound(soundGame.soundrocketBoss2);
             StartCoroutine(delayShot(3, maxtimeDelayAttack2 / 2));
             // Debug.LogError("------ shot 2");
         }
@@ -324,6 +325,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.gameObject.SetActive(true);
 
             //skeletonAnimation.AnimationState.SetAnimation(4, shotguns[3], false);
+            SoundController.instance.PlaySound(soundGame.soundrocketBoss2);
             StartCoroutine(delayShot(4, maxtimeDelayAttack2 / 2));
             // Debug.LogError("------ shot 3");
         }
@@ -337,7 +339,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.transform.position = boneGun[3].GetWorldPosition(skeletonAnimation.transform);
             //   bulletEnemy.transform.rotation = gunRotate[3].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
-
+            SoundController.instance.PlaySound(soundGame.soundrocketBoss2);
             if (enemyState == EnemyState.falldown)
                 return;
             enemyState = EnemyState.idle;
@@ -358,6 +360,7 @@ public class Boss2Controller : EnemyBase
             grenade.SetDir(bulletspeed2 / 2.5f, true);
             grenade.transform.position = boneGun[4].GetWorldPosition(skeletonAnimation.transform);
             grenade.gameObject.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundenemygrenadeBoss2);
         }
     }
     IEnumerator delayShot(int index, float time)
@@ -393,5 +396,11 @@ public class Boss2Controller : EnemyBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+        ExploOffBoss();
     }
 }

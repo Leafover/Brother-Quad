@@ -6,7 +6,7 @@ public enum soundGame
     sounde6fire, soundmissilewarning, soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundwin, soundlose, soundroixuongnuoc, soundreload,
     soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin, sounddapchao, soundCritHit, soundGrenadeKill, soundWham,
     soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax,soundletgo, soundvictory1, soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die,
-    soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2
+    soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2, soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2
 }
 
 public class SoundController : MonoBehaviour
@@ -19,6 +19,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin, sounddapchao, soundCritHit, soundGrenadeKill, soundWham;
     public AudioClip soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo,soundvictory1;
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die,soundDisplayMiniBoss2,soundMiniBoss2Attack1,soundMiniBoss2Attack2;
+    public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2;
     public AudioSource au;
     void Awake()
     {
@@ -309,6 +310,15 @@ public class SoundController : MonoBehaviour
                     break;
                 case soundGame.soundMiniBoss2Attack2:
                     au.PlayOneShot(instance.soundMiniBoss2Attack2);
+                    break;
+                case soundGame.soundenemygrenadeBoss2:
+                    au.PlayOneShot(instance.soundenemygrenadeBoss2);
+                    break;
+                case soundGame.soundmachinegunBoss2:
+                    au.PlayOneShot(instance.soundmachinegunBoss2);
+                    break;
+                case soundGame.soundrocketBoss2:
+                    au.PlayOneShot(instance.soundrocketBoss2);
                     break;
             }
         }

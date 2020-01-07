@@ -530,7 +530,8 @@ public class EnemyBase : AutoTarget
         {
             lineBlood.Hide();
         }
-        rid.velocity = Vector2.zero;
+        if (rid != null)
+            rid.velocity = Vector2.zero;
 
         if (takeDamageBox != null)
             takeDamageBox.enabled = false;
@@ -611,8 +612,13 @@ public class EnemyBase : AutoTarget
         }
         if (isShield)
         {
+            hitPosTemp = 0.05f;
+            posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
+            posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
 
-            SpawnHitEffect();
+            hiteffect = ObjectPoolerManager.Instance.hitshieldEffectPooler.GetPooledObject();
+            hiteffect.transform.position = posHitTemp;
+            hiteffect.SetActive(true);
             SpawnNumberMissionText();
 
             return;
@@ -663,6 +669,7 @@ public class EnemyBase : AutoTarget
         numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
         numberText.transform.position = transform.position;
         numberText.Display("Miss", false);
+        numberText.tmp.color = Color.gray;
         numberText.gameObject.SetActive(true);
     }
     void SpawnNumberDamageText(int damage, bool crit)
