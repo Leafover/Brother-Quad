@@ -17,6 +17,8 @@ public class AdsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
             MyAnalytics.LogEventLogin();
+            MyAnalytics.LogEventOpenByDay();
+            MyAnalytics.LogEventTimeOpen();
         }
     }
     // Start is called before the first frame update
