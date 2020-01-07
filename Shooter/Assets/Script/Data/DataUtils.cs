@@ -12,6 +12,7 @@ public class DataUtils
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
+    const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
 
     public const string P_DONATE = "com.ohze.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohze.brothersquad.starterpack";
@@ -30,11 +31,9 @@ public class DataUtils
     #endregion
 
     #region Sound and Music
-    public static void ChangeSound()
+    public static void ChangeSound(bool _b)
     {
-        bool _b = !IsSoundOn();
-        int curStatus = _b ? 1 : 0;
-        PlayerPrefs.SetInt(KEY_SOUND, curStatus);
+        PlayerPrefs.SetInt(KEY_SOUND, _b ? 1 : 0);
         PlayerPrefs.Save();
     }
     public static bool IsSoundOn()
@@ -42,11 +41,9 @@ public class DataUtils
         return (PlayerPrefs.GetInt(KEY_SOUND, 0) == 1 ? true : false);
     }
 
-    public static void ChangeMusic()
+    public static void ChangeMusic(bool _b)
     {
-        bool _b = !IsMusicOn();
-        int curStatus = _b ? 1 : 0;
-        PlayerPrefs.SetInt(KEY_MUSIC, curStatus);
+        PlayerPrefs.SetInt(KEY_MUSIC, _b ? 1 : 0);
         PlayerPrefs.Save();
     }
     public static bool IsMusicOn()
@@ -119,6 +116,9 @@ public class DataUtils
 
 
     #region Stage Data
+    public static void SaveLevel(int stage, int level)
+    {
 
+    }
     #endregion
 }

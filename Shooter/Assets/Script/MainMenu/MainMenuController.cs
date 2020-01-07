@@ -10,7 +10,8 @@ public class MainMenuController : MonoBehaviour
     public PopupManager popManager;
     public Text txtStageName;
     public Button[] buttonStages;
-    private int stageSelected = 0;
+    [HideInInspector]
+    public int stageSelected = 0;
 
     private void Awake()
     {
@@ -18,15 +19,20 @@ public class MainMenuController : MonoBehaviour
     }
     private void Start()
     {
+
         InitButtonStage();
+    }
+    public void ShowSetting()
+    {
+        PopupSetting.Instance.ShowPanelSetting();
     }
     private void InitButtonStage()
     {
-        for (int i = 0; i < buttonStages.Length; i++) {
+        for (int i = 0; i < buttonStages.Length; i++)
+        {
             GameObject gSelect = buttonStages[i].gameObject;
             buttonStages[i].onClick.AddListener(() => ActiveStage(gSelect));
         }
-
     }
     private void ActiveStage(GameObject _g)
     {
@@ -45,7 +51,6 @@ public class MainMenuController : MonoBehaviour
 
     public void ShowStarterPack()
     {
-        //gPanelUIButton.SetActive(false);
         popManager.pType = PopupManager.POPUP_TYPE.STARTER_PACK;
         gPanelPopup.SetActive(true);
     }
@@ -53,8 +58,9 @@ public class MainMenuController : MonoBehaviour
     {
         stageSelected = stage;
     }
-    public void GoReady() {
-        if(stageSelected == 0)
+    public void GoReady()
+    {
+        if (stageSelected == 0)
         {
             Debug.LogError("Please Select Stage To Play");
         }
@@ -82,7 +88,8 @@ public class MainMenuController : MonoBehaviour
         gPanelPopup.SetActive(true);
         Debug.LogError("ShowShop");
     }
-    public void ShowHeroTab() {
+    public void ShowHeroTab()
+    {
         popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
         gPanelPopup.SetActive(true);
         Debug.LogError("Show Hero Infomation");
@@ -99,6 +106,13 @@ public class MainMenuController : MonoBehaviour
     public void AddMoreDiamond()
     {
         Debug.LogError("AddMoreDiamond");
+    }
+
+    public void ShowMapNotify(string mess)
+    {
+        popManager.mess_ = mess;
+        popManager.pType = PopupManager.POPUP_TYPE.MAP_NOTI;
+        gPanelPopup.SetActive(true);
     }
     private void Update()
     {

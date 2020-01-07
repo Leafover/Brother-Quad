@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PopupManager : MonoBehaviour
 {
-    public enum POPUP_TYPE { NONE, STARTER_PACK, NOTIFY, SETTING}
+    public enum POPUP_TYPE { NONE, STARTER_PACK, NOTIFY, SETTING, MAP_NOTI}
 
     public GameObject gNotify, gStarterPack;
     public PopupStarterPack pStarterPack;
     public PopupNotify pNoti;
-    public PopupSetting pSetting;
+    public string mess_;
+
+    //public PopupSetting pSetting;
 
     public POPUP_TYPE pType;
 
@@ -24,9 +26,13 @@ public class PopupManager : MonoBehaviour
                 pNoti.ShowNoti("Coming Soon.");
                 pNoti.gameObject.SetActive(true);
                 break;
-            case POPUP_TYPE.SETTING:
-                pSetting.gameObject.SetActive(true);
+            case POPUP_TYPE.MAP_NOTI:
+                pNoti.ShowNoti(mess_);
+                pNoti.gameObject.SetActive(true);
                 break;
+            //case POPUP_TYPE.SETTING:
+            //    pSetting.gameObject.SetActive(true);
+            //    break;
         }
     }
 

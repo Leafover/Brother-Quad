@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class PopupNotify : MonoBehaviour
 {
     public Text txtContent;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
     }
