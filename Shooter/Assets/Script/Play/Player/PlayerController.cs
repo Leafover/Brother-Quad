@@ -263,6 +263,8 @@ public class PlayerController : MonoBehaviour
 
         health = maxHealth;
         speedmove = 0;
+
+        health = 50000000;
     }
     public void DetectGround()
     {

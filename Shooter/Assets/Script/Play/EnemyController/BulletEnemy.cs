@@ -25,12 +25,17 @@ public class BulletEnemy : MonoBehaviour
     }
 
     int tempRange;
-    public void SetDir(float _attackrank, bool randomtempRange)
+    public void SetDir(float _attackrank, bool randomtempRange,bool haveRandomRange = true)
     {
-        if (randomtempRange)
-            tempRange = Random.Range(0, 100);
+        if (haveRandomRange)
+        {
+            if (randomtempRange)
+                tempRange = Random.Range(0, 100);
+            else
+                tempRange = Random.Range(0, 50);
+        }
         else
-            tempRange = Random.Range(0, 50);
+            tempRange = 0;
 
         dir.x = -1 * _attackrank + (-_attackrank / 100 * tempRange);
         dir.y = 1 * speed /*+ (speed / 50 * tempRange)*/;

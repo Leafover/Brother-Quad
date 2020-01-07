@@ -14,6 +14,14 @@ public class Boss2Controller : EnemyBase
     public GunBoss2 enemyGrenade, machineGun, centerEnergy;
     float healthTemp;
     int countindexShot;
+
+   public List<GunBoss2> checkGun = new List<GunBoss2>();
+    private void OnValidate()
+    {
+        if (checkGun.Count == gunList.Count)
+            return;
+        checkGun.AddRange(gunList);
+    }
     public override void Start()
     {
         base.Start();
@@ -21,7 +29,7 @@ public class Boss2Controller : EnemyBase
     }
     public void CalculateHealthAllGun()
     {
-        healthTemp = currentHealth - centerEnergy.currentHealth - machineGun.currentHealth - enemyGrenade.currentHealth;
+        healthTemp = currentHealth - centerEnergy.currentHealth - machineGun.currentHealth/* - enemyGrenade.currentHealth*/;
 
         for (int i = 0; i < gunList.Count; i++)
         {
@@ -30,10 +38,10 @@ public class Boss2Controller : EnemyBase
     }
     public void CalculateAgainHealthAllGunWhenDie(int indexGun)
     {
-        if (indexGun < 4)
+        if (indexGun < 5 && indexGun > 0)
         {
-            PlayAnim(indexGun, dieguns[indexGun]);
-            if (indexGun == 3)
+            PlayAnim(indexGun, dieguns[indexGun - 1]);
+            if (indexGun == 4)
             {
                 GameController.instance.autoTarget.Add(machineGun);
                 machineGun.gameObject.SetActive(true);
@@ -51,17 +59,14 @@ public class Boss2Controller : EnemyBase
         }
         else if (indexGun == 5)
         {
+            PlayAnim(enemyGrenade.index, aec.standup);
             PlayAnim(indexGun, aec.falldown);
-            if (!GameController.instance.autoTarget.Contains(centerEnergy))
-            {
-                if (enemyGrenade.currentHealth <= 0)
-                {
-                    GameController.instance.autoTarget.Add(centerEnergy);
-                    centerEnergy.currentHealth = currentHealth;
-                    centerEnergy.gameObject.SetActive(true);
-                    enemyState = EnemyState.falldown;
-                }
-            }
+
+            GameController.instance.autoTarget.Add(centerEnergy);
+            centerEnergy.currentHealth = currentHealth;
+            centerEnergy.gameObject.SetActive(true);
+            enemyState = EnemyState.falldown;
+
         }
         else if (indexGun == 6)
         {
@@ -90,7 +95,7 @@ public class Boss2Controller : EnemyBase
         randomCombo = Random.Range(3, 6);
         maxCountGrenade = Random.Range(2, 5);
         timeGrenade = maxtimeDelayAttack2 * 3;
-
+        timePreviousAttack = maxtimeDelayAttack1;
         if (!EnemyManager.instance.boss2s.Contains(this))
         {
             EnemyManager.instance.boss2s.Add(this);
@@ -104,11 +109,11 @@ public class Boss2Controller : EnemyBase
             if (i < strboneGun.Length - 3)
             {
                 gunList[i].transform.position = boneGun[i].GetWorldPosition(skeletonAnimation.transform);
-                gunList[i].index = i;
+                gunList[i].index = i + 1;
                 gunList[i].incam = true;
             }
         }
-        enemyGrenade.index = 4;
+        enemyGrenade.index = 0;
         machineGun.index = 5;
         centerEnergy.index = 6;
         enemyGrenade.transform.position = boneGun[4].GetWorldPosition(skeletonAnimation.transform);
@@ -120,7 +125,7 @@ public class Boss2Controller : EnemyBase
 
         centerEnergy.currentHealth = currentHealth / 100 * 40;
         machineGun.currentHealth = currentHealth / 100 * 20;
-        enemyGrenade.currentHealth = currentHealth / 100 * 20;
+        // enemyGrenade.currentHealth = currentHealth / 100 * 20;
 
         CalculateHealthAllGun();
     }
@@ -150,13 +155,16 @@ public class Boss2Controller : EnemyBase
                 {
                     skeletonAnimation.AnimationState.SetAnimation(machineGun.index, aec.attack1, false);
                     timePreviousAttack = maxtimeDelayAttack1;
+                    timeAttack = maxtimedelayChangePos;
                     combo++;
+                  //  Debug.Log(combo + ":" + randomCombo);
                     if (combo == randomCombo)
                     {
                         if (gunList.Count > 0)
                         {
                             enemyState = EnemyState.attack;
-                            skeletonAnimation.AnimationState.SetAnimation(gunList[0].index, shotguns[gunList[0].index], false);
+                            // skeletonAnimation.AnimationState.SetAnimation(gunList[0].index, shotguns[gunList[0].index - 1], false);
+                            StartCoroutine(delayShot(gunList[0].index, maxtimeDelayAttack2));
                         }
                         else
                         {
@@ -168,7 +176,9 @@ public class Boss2Controller : EnemyBase
                 }
                 break;
             case EnemyState.attack: // trạng thái bắn rocket
-
+                timeAttack -= deltaTime;
+                if (timeAttack <= 0)
+                    enemyState = EnemyState.idle;
                 break;
             case EnemyState.falldown:// nổ hết sạch súng
                 AttackCenterEnergy(deltaTime);
@@ -177,17 +187,21 @@ public class Boss2Controller : EnemyBase
 
         GrenadeAttack(deltaTime);
     }
+    float timeAttack;
     int isGrenade = 0;
     void AttackCenterEnergy(float deltaTime)
     {
         timeEnergy -= deltaTime;
         if (timeEnergy <= 0)
         {
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletenergyBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2);
-            bulletEnemy.dir1 = new Vector2(bulletspeed2 / 3, bulletspeed2 / 2);
+            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 2, bulletspeed2 / 2);
             bulletEnemy.rid.gravityScale = 1;
             bulletEnemy.gameObject.layer = 17;
             bulletEnemy.Init(4);
+            bulletEnemy.transform.position = centerEnergy.transform.position;
+            bulletEnemy.gameObject.SetActive(true);
             timeEnergy = maxtimeDelayAttack2;
         }
 
@@ -212,7 +226,7 @@ public class Boss2Controller : EnemyBase
             if (timeGrenade <= 0)
             {
                 skeletonAnimation.AnimationState.SetAnimation(enemyGrenade.index, aec.attack2, false);
-                timeGrenade = maxtimeDelayAttack2;
+                timeGrenade = maxtimeDelayAttack2 * 2;
             }
         }
     }
@@ -250,14 +264,23 @@ public class Boss2Controller : EnemyBase
         {
             if (!incam)
                 return;
+            //bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletMachinegunBoss2Pooler.GetBulletEnemyPooledObject();
+            //bulletEnemy.AddProperties(damage1, bulletspeed1);
+            //dirBullet = PlayerController.instance.GetTransformPlayer().position - machineGun.transform.position;
+            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            //bulletEnemy.transform.rotation = rotation;
+            //bulletEnemy.transform.position = machineGun.transform.position;
+            //bulletEnemy.gameObject.SetActive(true);
+
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletMachinegunBoss2Pooler.GetBulletEnemyPooledObject();
-            bulletEnemy.AddProperties(damage1, bulletspeed1);
-            dirBullet = PlayerController.instance.GetTransformPlayer().position - machineGun.transform.position;
-            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
+            bulletEnemy.SetTimeExist(bulletimeexist);
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
             bulletEnemy.transform.position = machineGun.transform.position;
             bulletEnemy.gameObject.SetActive(true);
+
         }
         else if (trackEntry.Animation.Name.Equals(shotguns[0].name))
         {
@@ -265,11 +288,14 @@ public class Boss2Controller : EnemyBase
                 return;
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2 / 2);
-            bulletEnemy.SetDir(bulletspeed2 / 3, true);
+            bulletEnemy.SetDir(bulletspeed2 / 1.5f, true, false);
             bulletEnemy.transform.position = boneGun[0].GetWorldPosition(skeletonAnimation.transform);
             //  bulletEnemy.transform.rotation = gunRotate[0].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
-            skeletonAnimation.AnimationState.SetAnimation(gunList[1].index, shotguns[gunList[1].index], false);
+
+            //  skeletonAnimation.AnimationState.SetAnimation(2, shotguns[1], false);
+            StartCoroutine(delayShot(2, maxtimeDelayAttack2 / 2));
+            //Debug.LogError("------ shot 1");
         }
         else if (trackEntry.Animation.Name.Equals(shotguns[1].name))
         {
@@ -277,11 +303,14 @@ public class Boss2Controller : EnemyBase
                 return;
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2 / 2);
-            bulletEnemy.SetDir(bulletspeed2 / 3, true);
+            bulletEnemy.SetDir(bulletspeed2 / 2, true, false);
             bulletEnemy.transform.position = boneGun[1].GetWorldPosition(skeletonAnimation.transform);
             //     bulletEnemy.transform.rotation = gunRotate[1].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
-            skeletonAnimation.AnimationState.SetAnimation(gunList[2].index, shotguns[gunList[2].index], false);
+
+            //skeletonAnimation.AnimationState.SetAnimation(3, shotguns[2], false);
+            StartCoroutine(delayShot(3, maxtimeDelayAttack2 / 2));
+            // Debug.LogError("------ shot 2");
         }
         else if (trackEntry.Animation.Name.Equals(shotguns[2].name))
         {
@@ -289,11 +318,14 @@ public class Boss2Controller : EnemyBase
                 return;
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2 / 2);
-            bulletEnemy.SetDir(bulletspeed2 / 3, true);
+            bulletEnemy.SetDir(bulletspeed2 / 2.5f, true, false);
             bulletEnemy.transform.position = boneGun[2].GetWorldPosition(skeletonAnimation.transform);
             //    bulletEnemy.transform.rotation = gunRotate[2].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
-            skeletonAnimation.AnimationState.SetAnimation(gunList[3].index, shotguns[gunList[3].index], false);
+
+            //skeletonAnimation.AnimationState.SetAnimation(4, shotguns[3], false);
+            StartCoroutine(delayShot(4, maxtimeDelayAttack2 / 2));
+            // Debug.LogError("------ shot 3");
         }
         else if (trackEntry.Animation.Name.Equals(shotguns[3].name))
         {
@@ -301,11 +333,16 @@ public class Boss2Controller : EnemyBase
                 return;
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2 / 2);
-            bulletEnemy.SetDir(bulletspeed2 / 3, true);
+            bulletEnemy.SetDir(bulletspeed2 / 3, true, false);
             bulletEnemy.transform.position = boneGun[3].GetWorldPosition(skeletonAnimation.transform);
             //   bulletEnemy.transform.rotation = gunRotate[3].transform.rotation;
             bulletEnemy.gameObject.SetActive(true);
+
+            if (enemyState == EnemyState.falldown)
+                return;
             enemyState = EnemyState.idle;
+
+            //Debug.LogError("------ shot 4");
         }
         else if (trackEntry.Animation.Name.Equals(aec.jump.name))
         {
@@ -318,11 +355,18 @@ public class Boss2Controller : EnemyBase
                 return;
             grenade = ObjectPoolManagerHaveScript.Instance.grenadeenemyBoss2Pooler.GetBulletEnemyPooledObject();
             grenade.AddProperties(damage2, bulletspeed2 / 2);
-            grenade.SetDir(bulletspeed2 / 3, true);
-            grenade.transform.position = enemyGrenade.transform.position;
+            grenade.SetDir(bulletspeed2 / 2.5f, true);
+            grenade.transform.position = boneGun[4].GetWorldPosition(skeletonAnimation.transform);
             grenade.gameObject.SetActive(true);
-
-
+        }
+    }
+    IEnumerator delayShot(int index, float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (checkGun[index - 1].currentHealth > 0)
+        {
+            skeletonAnimation.AnimationState.SetAnimation(index, shotguns[index - 1], false);
+            Debug.Log(index + ":" + checkGun[index - 1].currentHealth);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
