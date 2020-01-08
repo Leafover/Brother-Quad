@@ -9,9 +9,10 @@ public class MapLevelControll : MonoBehaviour
     public int mapIndex;
     public Image[] imgStars;
     private Button btn;
-    private string KEY = "key_";
+    //[HideInInspector]
+    public bool canPlay;
 
-    private Image imgMap;
+    public Image imgMap;
     private void Awake()
     {
         btn = GetComponent<Button>();
@@ -19,8 +20,29 @@ public class MapLevelControll : MonoBehaviour
     private void OnEnable()
     {
         imgMap = GetComponent<Image>();
-        KEY = "stage_" + stageIndex + "_map_" + mapIndex;
-        if (MapHasUnlock())
+        SwitchColor();
+        btn.onClick.AddListener(() => {
+            if (MapHasUnlock())
+            {
+                StageManager.Instance.SwitchColor();
+                imgMap.color = StageManager.Instance.clSelected;
+            }
+            else
+            {
+                MainMenuController.Instance.ShowMapNotify("Map " + (mapIndex + 1) + " not yet unlock.");
+            }
+            var miss_ = DataController.instance.allMission[stageIndex].missionData[mapIndex];
+            GetMapInfo(miss_, stageIndex, mapIndex);
+        });
+        CheckMapStars();
+    }
+    public void SwitchColor()
+    {
+        if (!DataUtils.StageHasInit() && mapIndex == 0)
+        {
+            imgMap.color = StageManager.Instance.clUnlock;
+        }
+        else if (MapHasUnlock())
         {
             imgMap.color = StageManager.Instance.clUnlock;
         }
@@ -28,34 +50,47 @@ public class MapLevelControll : MonoBehaviour
         {
             imgMap.color = StageManager.Instance.clNotYetUnlock;
         }
-
-
-        btn.onClick.AddListener(() => {
-
-            if (MapHasUnlock())
-            {
-                imgMap.color = StageManager.Instance.clSelected;
-            }
-            else
-            {
-                MainMenuController.Instance.ShowMapNotify("Map " + mapIndex + " not yet unlock.");
-            }
-            var miss_ = DataController.instance.allMission[stageIndex].missionData[mapIndex];
-            GetMapInfo(miss_, stageIndex, mapIndex);
-        });
     }
-    
+    private void CheckMapStars()
+    {
+        if (DataUtils.StageHasInit())
+        {
+            for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).mission.Count; i++)
+            {
+                LVMission vMission = DataUtils.GetMapByIndex(stageIndex, mapIndex).mission[i];
+                if (vMission.isPass)
+                {
+                    imgStars[i].sprite = StageManager.Instance.imgStar;
+                }
+                else
+                {
+                    imgStars[i].sprite = StageManager.Instance.imgStarNotYetUnlock;
+                }
+            }
+        }
+    }
     private void GetMapInfo(Mission miss_, int stageSelect, int mapSelect)
     {
-        
+        for (int i = 0; i < StageManager.Instance.imgItemReward.Length; i++) {
+            StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
+        }
         StageManager.Instance.FillMapInfo(miss_, stageSelect, mapSelect);
+        if (DataUtils.StageHasInit())
+        {
+            for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
+            {
+                Debug.LogError(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+            }
+        }
     }
+
     void Start()
     {
-        
+
     }
     private bool MapHasUnlock()
     {
-        return mapIndex == 0 ? true : false;
+        return canPlay;
     }
 }

@@ -12,7 +12,7 @@ public class DataUtils
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
-    const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
+    public const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
 
     public const string P_DONATE = "com.ohze.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohze.brothersquad.starterpack";
@@ -116,9 +116,90 @@ public class DataUtils
 
 
     #region Stage Data
-    public static void SaveLevel(int stage, int level)
+    public static bool StageHasInit()
     {
+        return PlayerPrefs.HasKey(KEY_GAME_STAGE);
+    }
 
+    public static void SaveStage(string stageData)
+    {
+        PlayerPrefs.SetString(KEY_GAME_STAGE, stageData);
+    }
+    private static string GetStageTextData()
+    {
+        return PlayerPrefs.GetString(KEY_GAME_STAGE);
+    }
+
+    public static List<DataStage> lstAllStage = new List<DataStage>();
+    public static void FillAllStage()
+    {
+        string sData = GetStageTextData();
+        JsonData jData = JsonMapper.ToObject(sData);
+        
+        for (int i = 0; i < jData.Count; i++)
+        {
+            DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
+            if(!lstAllStage.Contains(jStage))
+                lstAllStage.Add(jStage);
+        }
+    }
+    public static void FillStageDataToDic()
+    {
+        string sData = GetStageTextData();
+        JsonData jData = JsonMapper.ToObject(sData);
+        for (int i = 0; i < jData.Count; i++)
+        {
+            DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
+            foreach (MapLevel mLevel in jStage.levels)
+            {
+                if (!dicStage.ContainsKey(mLevel.levelID))
+                    dicStage.Add(mLevel.levelID, mLevel);
+            }
+        }
+    }
+    public static Dictionary<string, MapLevel> dicStage = new Dictionary<string, MapLevel>();
+    public static MapLevel GetMapByIndex(int stage, int level)
+    {
+        string key = stage + "_" + level;
+        return dicStage[key];
+    }
+
+    public static void SaveLevel(int stage, int mapIndex)
+    {
+        string key = stage + "_" + mapIndex;
+
+        for (int i = 0; i < lstAllStage.Count; i++)
+        {
+            for (int j = 0; j < lstAllStage[i].levels.Count; j++)
+            {
+                if (lstAllStage[i].levels[j].levelID.Equals(key))
+                {
+                    lstAllStage[i].levels[j].hasComplete = true;
+                }
+            }
+        }
+
+        string jSave = JsonMapper.ToJson(lstAllStage);
+        SaveStage(jSave);
+    }
+
+    public static void SaveStars(int stage, int mapIndex, bool miss1, bool miss2) {
+        string key = stage + "_" + mapIndex;
+        for (int i = 0; i < lstAllStage.Count; i++)
+        {
+            for (int j = 0; j < lstAllStage[i].levels.Count; j++)
+            {
+                if (lstAllStage[i].levels[j].levelID.Equals(key))
+                {
+                    lstAllStage[i].levels[j].mission[0].isPass = true;
+                    lstAllStage[i].levels[j].mission[1].isPass = miss1;
+                    lstAllStage[i].levels[j].mission[2].isPass = miss2;
+                }
+            }
+        }
+
+        string jSave = JsonMapper.ToJson(lstAllStage);
+        SaveStage(jSave);
     }
     #endregion
 }

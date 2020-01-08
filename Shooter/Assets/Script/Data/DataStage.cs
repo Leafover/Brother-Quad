@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum STAGE_MODE { NORMAL, HARD }
+
 [SerializeField]
 public class DataStage
 {
     public string stageName { get; set; }
-    public MapLevel[] levels { get; set; }
+    public List<MapLevel> levels { get; set; }
     public STAGE_MODE stageMode { get; set; }
 }
 
@@ -16,13 +17,13 @@ public class MapLevel
 {
     public string levelID { get; set; }
     public bool hasComplete { get; set; }
-    public LVMission[] mission { get; set; }
-    public LVReward rewards { get; set; }
+    public List<LVMission> mission { get; set; }
+    public List<LVReward> rewards { get; set; }
 }
 [SerializeField]
 public class LVMission
 {
-    public int id { get; set; }
+    public string id { get; set; }
     public string missionName { get; set; }
     public bool isPass { get; set; }
 }

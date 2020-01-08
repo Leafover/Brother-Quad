@@ -16,6 +16,11 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (DataUtils.StageHasInit())
+        {
+            DataUtils.FillAllStage();
+            DataUtils.FillStageDataToDic();
+        }
     }
     private void Start()
     {
