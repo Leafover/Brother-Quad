@@ -128,10 +128,10 @@ public class EnemyN1Controller : EnemyBase
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);

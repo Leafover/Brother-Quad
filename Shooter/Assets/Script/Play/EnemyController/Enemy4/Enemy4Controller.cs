@@ -13,10 +13,10 @@ public class Enemy4Controller : EnemyBase
         base.Start();
         Init();
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
     public override void Init()
     {
         base.Init();

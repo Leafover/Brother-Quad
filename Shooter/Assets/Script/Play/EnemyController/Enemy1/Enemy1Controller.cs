@@ -147,10 +147,10 @@ public class Enemy1Controller : EnemyBase
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);

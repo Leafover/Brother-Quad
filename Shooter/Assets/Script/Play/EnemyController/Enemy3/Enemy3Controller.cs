@@ -41,10 +41,10 @@ public class Enemy3Controller : EnemyBase
         base.Active();
         enemyState = EnemyState.attack;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);

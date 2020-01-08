@@ -416,6 +416,8 @@ public class Boss2Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
+        if (GameController.instance.autoTarget.Contains(centerEnergy))
+            GameController.instance.autoTarget.Remove(centerEnergy);
         ExploOffBoss();
     }
 }
