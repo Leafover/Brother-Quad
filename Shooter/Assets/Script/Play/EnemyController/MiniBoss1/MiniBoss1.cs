@@ -57,18 +57,25 @@ public class MiniBoss1 : EnemyBase
                 CheckDirFollowPlayer(CameraController.instance.posMove[currentPos].position.x);
                 if (transform.position.x == CameraController.instance.posMove[currentPos].position.x && transform.position.y == CameraController.instance.posMove[currentPos].position.y)
                 {
+                    if(GameController.instance.uiPanel.CheckWarning())
+                    {
+                        GameController.instance.uiPanel.warning.SetActive(false);
+                        GameController.instance.autoTarget.Add(this);
+                        takeDamageBox.enabled = true;
+                    }
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     enemyState = EnemyState.attack;
                     currentPos = Random.Range(0, CameraController.instance.posMove.Count);
                 }
                 break;
             case EnemyState.attack:
-                Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                if (!GameController.instance.uiPanel.CheckWarning())
+                    Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 break;
         }
     }
-  //  GameObject g;
-  //  BulletEnemy bulletScript;
+    //  GameObject g;
+    //  BulletEnemy bulletScript;
 
     int randomSlot;
 
@@ -92,7 +99,7 @@ public class MiniBoss1 : EnemyBase
         bulletEnemy.BeginDisplay(Vector2.zero, this);
 
         SoundController.instance.PlaySound(soundGame.soundminibossfire);
-   //     SoundController.instance.PlaySound(soundGame.soundmissilewarning);
+        //     SoundController.instance.PlaySound(soundGame.soundmissilewarning);
         switch (randomSlot)
         {
             case 0:

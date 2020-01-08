@@ -466,9 +466,12 @@ public class EnemyBase : AutoTarget
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
         PlayAnim(0, aec.idle, true);
-
+        Debug.LogError("zooooo day");
         if (isBoss || isMiniBoss)
         {
+            if (takeDamageBox != null)
+                takeDamageBox.enabled = false;
+            GameController.instance.uiPanel.warning.SetActive(true);
             GameController.instance.uiPanel.healthBarBoss.healthbossText.text = "X" + numberCountLayerHelthBarBoss;
             //      GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
             for (int i = 0; i < numberCountLayerHelthBarBoss; i++)

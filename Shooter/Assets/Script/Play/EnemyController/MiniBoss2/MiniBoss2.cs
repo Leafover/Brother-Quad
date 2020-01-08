@@ -88,8 +88,8 @@ public class MiniBoss2 : EnemyBase
         base.Active();
         SoundController.instance.PlaySound(soundGame.soundDisplayMiniBoss2);
         // for (int i = 0; i < gunList.Count; i++)
-        gunList[0].gameObject.SetActive(true);
-        GameController.instance.autoTarget.Add(gunList[0]);
+        //gunList[0].gameObject.SetActive(true);
+       // GameController.instance.autoTarget.Add(gunList[0]);
     }
     float timechangePos;
     public override void OnUpdate(float deltaTime)
@@ -197,6 +197,13 @@ public class MiniBoss2 : EnemyBase
                 //    CheckDirFollowPlayer(CameraController.instance.posMove[currentPos].position.x);
                 if (transform.position.x == CameraController.instance.posMove[currentPos].position.x && transform.position.y == CameraController.instance.posMove[currentPos].position.y)
                 {
+                    if (GameController.instance.uiPanel.CheckWarning())
+                    {
+                        GameController.instance.uiPanel.warning.SetActive(false);
+                        gunList[0].gameObject.SetActive(true);
+                        GameController.instance.autoTarget.Add(gunList[0]);
+
+                    }
                     //  CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     currentPos = Random.Range(0, CameraController.instance.posMove.Count);
                     timechangePos = maxtimedelayChangePos;

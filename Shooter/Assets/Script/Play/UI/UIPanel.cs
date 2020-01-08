@@ -16,7 +16,13 @@ public class UIPanel : MonoBehaviour
     public TextMeshProUGUI comboText, comboNumberText;
 
     public Slider slideMiniMap;
-    public GameObject haveBossInMiniMap;
+    public GameObject haveBossInMiniMap,warning;
+
+    public bool CheckWarning()
+    {
+        return true ? warning.activeSelf : !warning.activeSelf;
+    }
+
     public void CalculateMiniMap()
     {
         if (slideMiniMap.value == 1)

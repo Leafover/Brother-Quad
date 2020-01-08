@@ -36,7 +36,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
         if (enemyNotJoinAutoTarget /*|| myEnemyBase.jumpOut == true*/)
             return;
 
-        if (!GameController.instance.autoTarget.Contains(myEnemyBase) && myEnemyBase.takeDamageBox != null)
+        if (!GameController.instance.autoTarget.Contains(myEnemyBase) && myEnemyBase.takeDamageBox != null && (!myEnemyBase.isBoss || !myEnemyBase.isMiniBoss))
             GameController.instance.autoTarget.Add(myEnemyBase);
 
         if (CameraController.instance.CheckPoint())

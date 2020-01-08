@@ -320,6 +320,8 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 //{
                     //Debug.LogError("11111: " + CameraController.instance.currentCamBoidaries + ":" + GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
                     GameController.instance.currentMap.BeginAutoSpawn(GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
+
+
                     //Debug.LogError("zoooooo day");
                 //}
             }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
+    public bool cannotDestroy;
     public float health;
     public enum TYPE
     {
@@ -15,9 +16,13 @@ public class Barrier : MonoBehaviour
     GameObject explo, hiteffect;
     float hitPosTemp;
     Vector2 posHitTemp;
+    private void Awake()
+    {
+        if(cannotDestroy)
+            Physics2D.IgnoreLayerCollision(gameObject.layer, 8);
+    }
     void TakeDamage(float _damage)
     {
-        health -= _damage;
 
         hitPosTemp = 0.2f;
         posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
@@ -27,6 +32,9 @@ public class Barrier : MonoBehaviour
         hiteffect.transform.position = posHitTemp;
         hiteffect.SetActive(true);
 
+        if (cannotDestroy)
+            return;
+        health -= _damage;
         if (health <= 0)
         {
             switch(types)

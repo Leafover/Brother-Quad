@@ -79,6 +79,13 @@ public class Boss1Controller : EnemyBase
                 rid.velocity = moveVelocity;
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize * 1.1f)
                 {
+                    if (GameController.instance.uiPanel.CheckWarning())
+                    {
+                        GameController.instance.uiPanel.warning.SetActive(false);
+                        GameController.instance.autoTarget.Add(this);
+                        takeDamageBox.enabled = true;
+                        Debug.Log("attack boss");
+                    }
                     PlayAnim(1, aec.idle, true);
                     enemyState = EnemyState.attack;
                     rid.velocity = Vector2.zero;

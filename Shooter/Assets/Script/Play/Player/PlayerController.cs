@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float speedmove;
     [HideInInspector]
-    public bool isBouderJoystickShoot,isBouderJoystickMove, isWaitStand, isGround, isfalldow, candoublejump;
+    public bool isBouderJoystickShoot, isBouderJoystickMove, isWaitStand, isGround, isfalldow, candoublejump;
     public bool isMeleeAttack;
 
     //public IEnumerator Move()
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         speedmove = 0;
 
-      //  health = 50000000;
+        //  health = 50000000;
     }
     public void DetectGround()
     {
@@ -485,16 +485,26 @@ public class PlayerController : MonoBehaviour
     Vector2 posTemp;
     void LockPlayer()
     {
-        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 1.5f)
-        {
-            posTemp = transform.position;
-            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1.5f;
-            transform.position = posTemp;
-        }
         if (transform.position.x <= CameraController.instance.bouders[3].transform.position.x + 1.5f)
         {
             posTemp = transform.position;
             posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1.5f;
+            transform.position = posTemp;
+        }
+        if (GameController.instance.isDestroyBoss && DataParam.indexStage == 1)
+        {
+            if (transform.position.x >= GameController.instance.currentMap.autoSpawnEnemys[GameController.instance.currentMap.autoSpawnEnemys.Length - 1].transform.position.x + 2)
+            {
+                posTemp = transform.position;
+                posTemp.x = GameController.instance.currentMap.autoSpawnEnemys[GameController.instance.currentMap.autoSpawnEnemys.Length - 1].transform.position.x + 2;
+                transform.position = posTemp;
+            }
+            return;
+        }
+        if (transform.position.x >= CameraController.instance.bouders[2].transform.position.x - 1.5f)
+        {
+            posTemp = transform.position;
+            posTemp.x = CameraController.instance.bouders[2].transform.position.x - 1.5f;
             transform.position = posTemp;
         }
         //if (transform.position.y >= CameraController.instance.bouders[0].transform.position.y - 1)

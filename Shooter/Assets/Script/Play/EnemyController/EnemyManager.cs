@@ -226,12 +226,12 @@ public class EnemyManager : MonoBehaviour
         CallEV2Action(deltaTime);
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
+        CallBoss1Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {
         if (DataParam.indexStage != 1)
             return;
-        CallBoss1Action(deltaTime);
         CallEN0Action(deltaTime);
         CallN1Action(deltaTime);
         CallN2Action(deltaTime);

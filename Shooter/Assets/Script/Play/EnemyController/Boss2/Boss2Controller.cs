@@ -15,7 +15,7 @@ public class Boss2Controller : EnemyBase
     float healthTemp;
     int countindexShot;
 
-   public List<GunBoss2> checkGun = new List<GunBoss2>();
+    public List<GunBoss2> checkGun = new List<GunBoss2>();
     private void OnValidate()
     {
         if (checkGun.Count == gunList.Count)
@@ -133,7 +133,7 @@ public class Boss2Controller : EnemyBase
         base.Active();
         //   SoundController.instance.PlaySound(soundGame.soundDisplayMiniBoss2);
         gunList[0].gameObject.SetActive(true);
-        GameController.instance.autoTarget.Add(gunList[0]);
+        //  GameController.instance.autoTarget.Add(gunList[0]);
     }
 
     public override void OnUpdate(float deltaTime)
@@ -146,6 +146,19 @@ public class Boss2Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
+        if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize + 3)
+        {
+            if (GameController.instance.uiPanel.CheckWarning())
+            {
+                GameController.instance.uiPanel.warning.SetActive(false);
+                gunList[0].gameObject.SetActive(true);
+                GameController.instance.autoTarget.Add(gunList[0]);
+
+            }
+        }
+        if (GameController.instance.uiPanel.CheckWarning())
+            return;
+
         switch (enemyState)
         {
             case EnemyState.idle: //trạng thái bắn súng máy
@@ -156,7 +169,7 @@ public class Boss2Controller : EnemyBase
                     timePreviousAttack = maxtimeDelayAttack1;
                     timeAttack = maxtimedelayChangePos;
                     combo++;
-                  //  Debug.Log(combo + ":" + randomCombo);
+                    //  Debug.Log(combo + ":" + randomCombo);
                     if (combo == randomCombo)
                     {
                         if (gunList.Count > 0)
@@ -195,13 +208,13 @@ public class Boss2Controller : EnemyBase
         {
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletenergyBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2);
-            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 4, bulletspeed2 / 3);
+            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 3, bulletspeed2 / 2.5f);
             bulletEnemy.rid.gravityScale = 1;
             bulletEnemy.gameObject.layer = 17;
             bulletEnemy.Init(4);
-            bulletEnemy.transform.position = centerEnergy.transform.position;
+            bulletEnemy.transform.position = centerEnergy.transform.position;          
             bulletEnemy.gameObject.SetActive(true);
-            timeEnergy = maxtimeDelayAttack2/2;
+            timeEnergy = maxtimeDelayAttack2;
         }
 
     }
@@ -255,6 +268,7 @@ public class Boss2Controller : EnemyBase
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
+    Vector3 rotationBullet = new Vector3(0,0,111);
     // public GameObject[] gunRotate;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
@@ -279,6 +293,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.BeginDisplay(Vector2.zero, this);
             listMyBullet.Add(bulletEnemy);
             bulletEnemy.transform.position = machineGun.transform.position;
+            bulletEnemy.transform.eulerAngles = rotationBullet;
             bulletEnemy.gameObject.SetActive(true);
 
         }
