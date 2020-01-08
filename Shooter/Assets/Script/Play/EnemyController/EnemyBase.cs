@@ -353,12 +353,12 @@ public class EnemyBase : AutoTarget
         if (transform.position.x < posX)
         {
             FlipX = true;
-            dir = (int)speed;
+            dir = /*!isSlow ? */(int)speed /*: (int)(speed / 2)*/;
         }
         else
         {
             FlipX = false;
-            dir = -(int)speed;
+            dir = /*!isSlow ?*/ -(int)speed /*: -(int)(speed / 2)*/;
         }
 
         return dir;
@@ -466,7 +466,7 @@ public class EnemyBase : AutoTarget
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
         PlayAnim(0, aec.idle, true);
-        Debug.LogError("zooooo day");
+      //  Debug.LogError("zooooo day");
         if (isBoss || isMiniBoss)
         {
             if (takeDamageBox != null)
@@ -527,7 +527,7 @@ public class EnemyBase : AutoTarget
     {
         if (enemyState == EnemyState.die)
             return;
-
+      //  isSlow = false;
         // DisableAllBullet();
         if (lineBlood != null)
         {
@@ -762,6 +762,18 @@ public class EnemyBase : AutoTarget
 
         }
     }
+    //bool isSlow = false; 
+
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("slowdamage"))
+    //        isSlow = true;
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("slowdamage"))
+    //        isSlow = false;
+    //}
 
 }
 

@@ -10,7 +10,8 @@ public class Barrier : MonoBehaviour
     {
         smoke,
         wood,
-        explo
+        explo,
+        explopoision
     }
     public TYPE types;
     GameObject explo, hiteffect;
@@ -52,6 +53,15 @@ public class Barrier : MonoBehaviour
                     explo = ObjectPoolerManager.Instance.explowoodPooler.GetPooledObject();
                     SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
                     break;
+                case TYPE.explopoision:
+                    explo = ObjectPoolerManager.Instance.explopoisionPooler.GetPooledObject();
+                    SoundController.instance.PlaySound(soundGame.soundexploboxcantexplo);
+                    poisionArena = ObjectPoolerManager.Instance.poisionArenaPooler.GetPooledObject();
+                    posTemp.x = transform.position.x;
+                    posTemp.y = transform.position.y - 0.5f;
+                    poisionArena.transform.position = posTemp;
+                    poisionArena.SetActive(true);
+                    break;
             }
             explo.transform.position = transform.position;
             explo.SetActive(true);
@@ -59,6 +69,8 @@ public class Barrier : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    Vector2 posTemp;
+    GameObject poisionArena;
     public void OnTriggerEnter2D(Collider2D collision)
     {
         switch(collision.gameObject.layer)

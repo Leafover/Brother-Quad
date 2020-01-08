@@ -13,7 +13,7 @@ public class DisableObject : MonoBehaviour
     public enum TypeExplo
     {
         normal,
-        exploE2
+        exploE2,
 
     }
     public TypeExplo typeExplo;
@@ -36,6 +36,7 @@ public class DisableObject : MonoBehaviour
             g.transform.position = gameObject.transform.position;
             g.SetActive(true);
         }
+
         if (isExploOffboss)
         {
             if (GameController.instance.enemyLockCam.Count == 0)

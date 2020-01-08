@@ -9,6 +9,8 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private Skin[] skins;
     public AudioSource au;
     public Animator animArrow;
     public int level = 1;
@@ -208,6 +210,13 @@ public class PlayerController : MonoBehaviour
         }
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
+
+        if (currentGun < skins.Length - 1)
+            currentGun++;
+        else currentGun = 1;
+        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+      //  Debug.Log("set skin" + currentGun);
+
     }
     //public void TryRocket()
     //{
@@ -254,7 +263,14 @@ public class PlayerController : MonoBehaviour
         waitBeAttack = new WaitForSeconds(0.075f);
 
         AddProperties();
+
+        currentGun = 1;
+        skins = skeletonAnimation.Skeleton.Data.Skins.Items;
+        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+
+     //   Debug.Log(skins.Length);
     }
+    int currentGun;
     public void AddProperties()
     {
         damgeGrenade = (float)DataController.instance.playerData[level - 1].DmgGrenade;
@@ -367,10 +383,10 @@ public class PlayerController : MonoBehaviour
     Vector2 movePos;
     public float radius;
     float timeStand = 6;
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(foot.transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, radius);
+    //}
     public void OnUpdate(float deltaTime)
     {
 
@@ -893,15 +909,40 @@ public class PlayerController : MonoBehaviour
     {
         switch (collision.gameObject.layer)
         {
-            //case 18:
-            //    if (GameController.instance.waitForWin)
-            //        GameController.instance.DoneMission(true);
-            //    break;
             case 26:
                 TakeDamage(damgeGrenade / 3);
                 break;
         }
     }
+    //float timeTakeDamagePoision;
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    switch (collision.gameObject.layer)
+    //    {
+    //        case 28:
+    //            if (collision.CompareTag("slowdamage"))
+    //            {
+    //                timeTakeDamagePoision -= Time.deltaTime;
+    //                if (timeTakeDamagePoision <= 0)
+    //                {
+    //                    TakeDamage(health / 100 * 2);
+    //                    timeTakeDamagePoision = 1;
+    //                }
+    //            }
+    //            isSlow = true;
+    //            break;
+    //    }
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    switch (collision.gameObject.layer)
+    //    {
+    //        case 28:
+    //            isSlow = false;
+    //            Debug.LogError("thoat ra");
+    //            break;
+    //    }
+    //}
     public void AddHealth(float _health)
     {
 

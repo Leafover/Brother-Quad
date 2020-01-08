@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class ArenaSlowEnemy4 : MonoBehaviour
 {
-    //public float radius;
-    //public LayerMask lm;
-    //public void ShootRayCast()
-    //{
-    //        PlayerController.instance.isSlow = Physics2D.OverlapCircle(transform.position, radius, lm);
-    //}
-    //private void Update()
-    //{
-    //    ShootRayCast();
-    //}
+    float timedamage;
+    public bool damage;
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (PlayerController.instance == null)
@@ -27,6 +19,15 @@ public class ArenaSlowEnemy4 : MonoBehaviour
             return;
         if (collision.gameObject.layer == 13)
             PlayerController.instance.isSlow = true;
+        if (damage)
+        {
+            timedamage -= Time.deltaTime;
+            if (timedamage <= 0)
+            {
+                timedamage = 1;
+                PlayerController.instance.TakeDamage(PlayerController.instance.health / 100 * 2);
+            }
+        }
     }
 
     private void OnDisable()
@@ -35,8 +36,5 @@ public class ArenaSlowEnemy4 : MonoBehaviour
             return;
         PlayerController.instance.isSlow = false;
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(transform.position, radius);
-    //}
+
 }
