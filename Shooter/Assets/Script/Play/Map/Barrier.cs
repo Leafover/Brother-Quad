@@ -17,11 +17,7 @@ public class Barrier : MonoBehaviour
     GameObject explo, hiteffect;
     float hitPosTemp;
     Vector2 posHitTemp;
-    private void Awake()
-    {
-        if(cannotDestroy)
-            Physics2D.IgnoreLayerCollision(gameObject.layer, 8);
-    }
+
     void TakeDamage(float _damage)
     {
 
