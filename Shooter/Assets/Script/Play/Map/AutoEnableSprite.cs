@@ -36,7 +36,7 @@ public class AutoEnableSprite : MonoBehaviour
         {
             for (int i = 0; i < particles.Length; i++)
             {
-                if (Math.Abs(particles[i].transform.position.x - Camera.main.transform.position.x) > Camera.main.orthographicSize)
+                if (Math.Abs(particles[i].transform.position.x - Camera.main.transform.position.x) > Camera.main.orthographicSize + 3)
                     particles[i].gameObject.SetActive(false);
                 else
                     particles[i].gameObject.SetActive(true);

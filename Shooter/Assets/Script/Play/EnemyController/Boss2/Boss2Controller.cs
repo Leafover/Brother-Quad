@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Boss2Controller : EnemyBase
 {
+    public List<GameObject> effectsmoke = new List<GameObject>();
     public List<AnimationReferenceAsset> shotguns, dieguns;
     Bone[] boneGun = new Bone[7];
     [SpineBone]
@@ -214,6 +215,7 @@ public class Boss2Controller : EnemyBase
             bulletEnemy.Init(4);
             bulletEnemy.transform.position = centerEnergy.transform.position;          
             bulletEnemy.gameObject.SetActive(true);
+            listMyBullet.Add(bulletEnemy);
             timeEnergy = maxtimeDelayAttack2;
         }
 
@@ -253,6 +255,11 @@ public class Boss2Controller : EnemyBase
         GameController.instance.SpawnCoin(15, transform.position);
 
         gameObject.SetActive(false);
+
+        for(int i = 0; i < effectsmoke.Count; i ++)
+        {
+            effectsmoke[i].SetActive(false);
+        }
     }
     public override void OnDisable()
     {
