@@ -108,7 +108,7 @@ public class GameController : MonoBehaviour
         }
         //  ThemManh();
     }
-
+    public bool activewarningleft, activewarningright;
     private void Start()
     {
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
@@ -568,5 +568,14 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CheckHaveArrowLeft()
+    {
+ 
+    }
+    public void CheckHaveArrowRight()
+    {
+
     }
 }

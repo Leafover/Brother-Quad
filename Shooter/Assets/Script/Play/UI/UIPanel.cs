@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
 
@@ -16,7 +16,9 @@ public class UIPanel : MonoBehaviour
     public TextMeshProUGUI comboText, comboNumberText;
 
     public Slider slideMiniMap;
-    public GameObject haveBossInMiniMap,warning;
+    public GameObject haveBossInMiniMap, warning;
+
+
 
     public bool CheckWarning()
     {
@@ -72,25 +74,25 @@ public class UIPanel : MonoBehaviour
             {
                 missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
                 missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-              //  Debug.LogError("TH1");
+                //  Debug.LogError("TH1");
             }
             else if (MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
             {
                 missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
                 missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-              //  Debug.LogError("TH2");
+                //  Debug.LogError("TH2");
             }
             else if (!MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
             {
                 missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
                 missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-              //  Debug.LogError("TH3");
+                //  Debug.LogError("TH3");
             }
             else if (!MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
             {
                 missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
                 missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-             //   Debug.LogError("TH4");
+                //   Debug.LogError("TH4");
             }
 
             winPanel.SetActive(true);
