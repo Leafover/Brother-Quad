@@ -588,13 +588,20 @@ public class GameController : MonoBehaviour
         if (activeWarningEnemyLeft || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
             return;
 
-        for (int i = 0; i < enemyLockCam.Count; i++)
+        try
         {
-            if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x < Camera.main.transform.position.x)
+            for (int i = 0; i < enemyLockCam.Count; i++)
             {
-                activeWarningEnemyLeft = true;
-                break;
+                if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x < Camera.main.transform.position.x)
+                {
+                    activeWarningEnemyLeft = true;
+                    break;
+                }
+
             }
+        }
+        catch
+        {
 
         }
     }
@@ -604,14 +611,22 @@ public class GameController : MonoBehaviour
 
         if (activeWarningEnemyRight || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
             return;
-
-        for (int i = 0; i < enemyLockCam.Count; i++)
+        try
         {
-            if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x > Camera.main.transform.position.x)
+            for (int i = 0; i < enemyLockCam.Count; i++)
             {
-                activeWarningEnemyRight = true;
-                break;
+                if (enemyLockCam[i] != null)
+                {
+                    if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x > Camera.main.transform.position.x)
+                    {
+                        activeWarningEnemyRight = true;
+                        break;
+                    }
+                }
             }
+        }
+        catch
+        {
 
         }
     }
