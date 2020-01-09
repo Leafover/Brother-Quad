@@ -12,12 +12,13 @@ public class StageManager : MonoBehaviour
     public Sprite imgStar, imgStarNotYetUnlock;
     public Text txtLevel, txtMission1, txtMission2, txtMission3;
     private Mission missSelected;
-    private int _stageSelect, _mapSelect;
+    private int _stageSelect = -1, _mapSelect = -1;
     public Transform trAllRewards;
     public Image[] imgItemReward;
     public Image[] imgMission;
 
     public GameObject[] gStages;
+    public int stageSelected;
 
     private void Awake()
     {
@@ -72,6 +73,12 @@ public class StageManager : MonoBehaviour
                         dataStage.levels.Add(mapLevel);
                     }
                     #endregion
+
+
+                    levelControll.SwitchColor();
+                    levelControll.CheckMapStars();
+
+                    levelControll.gameObject.SetActive(true);
                 }
 
                 if (!lstStages.Contains(dataStage))
@@ -80,14 +87,14 @@ public class StageManager : MonoBehaviour
             string jSave = JsonMapper.ToJson(lstStages);
             DataUtils.SaveStage(jSave);
             DataUtils.FillAllStage();
-            DataUtils.FillStageDataToDic();
         }
         else///Check if StageData has init
         {
             for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
             {
                 MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
-                if (DataUtils.dicStage[levelControll.stageIndex + "_" + levelControll.mapIndex].hasComplete)
+                MapLevel mapLevel = DataUtils.GetMapByIndex(levelControll.stageIndex, levelControll.mapIndex);
+                if (mapLevel.hasComplete)
                 {
                     if (j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount)
                     {
@@ -99,16 +106,17 @@ public class StageManager : MonoBehaviour
                 {
                     gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(0).GetComponent<MapLevelControll>().canPlay = true;
                 }
-                levelControll.SwitchColor();
+                levelControll.gameObject.SetActive(true);
             }
         }
     }
 
     public void SwitchColor()
     {
-        for (int j = 0; j < gStages[_stageSelect].transform.childCount; j++)
+        Debug.LogError(_stageSelect + " vs " + MainMenuController.Instance.stageSelected);
+        for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
         {
-            MapLevelControll levelControll = gStages[_stageSelect].transform.GetChild(j).GetComponent<MapLevelControll>();
+            MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
             if(levelControll.imgMap.color == clSelected)
             {
                 levelControll.imgMap.color = clUnlock;
@@ -157,34 +165,42 @@ public class StageManager : MonoBehaviour
     public void StartLevel()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.indexStage = _stageSelect;
-        DataParam.indexMap = _mapSelect;
-        
-        #region Start Level
-        MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+        if (_stageSelect < 0 || _mapSelect < 0)
+        {
+            MainMenuController.Instance.ShowMapNotify("Please select map to play.");
+        }
+        else
+        {
+            DataParam.indexStage = _stageSelect;
+            DataParam.indexMap = _mapSelect;
 
-        _listMission = new ListMission();
-        _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-        _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+            #region Start Level
+            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
 
-        MissionController.Instance.listMissions.Add(_listMission);
+            _listMission = new ListMission();
+            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
+            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
 
-        _listMission = new ListMission();
-        _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-        _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+            MissionController.Instance.listMissions.Add(_listMission);
 
-        MissionController.Instance.listMissions.Add(_listMission);
+            _listMission = new ListMission();
+            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
+            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
 
-        DataParam.nextSceneAfterLoad = 2;
-        Application.LoadLevel(1);
-        #endregion
+            MissionController.Instance.listMissions.Add(_listMission);
+
+            DataParam.nextSceneAfterLoad = 2;
+            Application.LoadLevel(1);
+            #endregion
+        }
     }
+    #region Fill Map Info
     private void ResetInfo()
     {
         trAllRewards.gameObject.SetActive(false);
         missSelected = null;
-        _stageSelect = 0;
-        _mapSelect = 0;
+        _stageSelect = -1;
+        _mapSelect = -1;
         txtLevel.text = "";
         txtMission1.text = "";
         txtMission2.text = "";
@@ -205,10 +221,10 @@ public class StageManager : MonoBehaviour
         txtMission1.text = mission.mission1name;
         txtMission2.text = mission.mission2name;
         txtMission3.text = mission.mission3name;
-
-        for(int i = 0; i < DataUtils.dicStage[stageSelect + "_"+mapSelect].mission.Count; i++)
+        MapLevel mapLevel = DataUtils.GetMapByIndex(stageSelect, mapSelect);
+        for (int i = 0; i < mapLevel.mission.Count; i++)
         {
-            if(DataUtils.dicStage[stageSelect + "_" + mapSelect].mission[i].isPass)
+            if(mapLevel.mission[i].isPass)
             {
                 imgMission[i].sprite = imgStar;
             }
@@ -218,4 +234,5 @@ public class StageManager : MonoBehaviour
             }
         }
     }
+    #endregion
 }

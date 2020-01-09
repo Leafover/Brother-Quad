@@ -43,14 +43,15 @@ public class PopupSetting : MonoBehaviour
     }
     public void ExitBattle()
     {
-        Debug.LogError(SceneManager.GetActiveScene().buildIndex);
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             gPanelSetting.SetActive(false);
         }
         else
         {
-            SceneManager.LoadSceneAsync(0);
+            gPanelSetting.SetActive(false);
+            DataParam.nextSceneAfterLoad = 0;
+            SceneManager.LoadSceneAsync(1);
         }
     }
     public void MoreGame()

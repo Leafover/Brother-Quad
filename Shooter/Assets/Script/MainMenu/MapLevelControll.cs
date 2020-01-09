@@ -16,13 +16,13 @@ public class MapLevelControll : MonoBehaviour
     private void Awake()
     {
         btn = GetComponent<Button>();
+        imgMap = GetComponent<Image>();
     }
     private void OnEnable()
     {
-        imgMap = GetComponent<Image>();
         SwitchColor();
         btn.onClick.AddListener(() => {
-            if (MapHasUnlock())
+            if (MapHasUnlock() || imgMap.color == StageManager.Instance.clUnlock || imgMap.color == StageManager.Instance.clSelected)
             {
                 StageManager.Instance.SwitchColor();
                 imgMap.color = StageManager.Instance.clSelected;
@@ -51,7 +51,7 @@ public class MapLevelControll : MonoBehaviour
             imgMap.color = StageManager.Instance.clNotYetUnlock;
         }
     }
-    private void CheckMapStars()
+    public void CheckMapStars()
     {
         if (DataUtils.StageHasInit())
         {
@@ -66,6 +66,7 @@ public class MapLevelControll : MonoBehaviour
                 {
                     imgStars[i].sprite = StageManager.Instance.imgStarNotYetUnlock;
                 }
+                
             }
         }
     }

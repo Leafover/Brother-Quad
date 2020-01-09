@@ -19,7 +19,7 @@ public class MainMenuController : MonoBehaviour
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
-            DataUtils.FillStageDataToDic();
+            //DataUtils.FillStageDataToDic();
         }
     }
     private void Start()
@@ -62,19 +62,21 @@ public class MainMenuController : MonoBehaviour
     public void ChooseStage(int stage)
     {
         stageSelected = stage;
+        gPanelUIButton.SetActive(false);
+        gPanelStage.SetActive(true);
     }
     public void GoReady()
     {
-        if (stageSelected == 0)
-        {
-            Debug.LogError("Please Select Stage To Play");
-        }
-        else
-        {
-            gPanelUIButton.SetActive(false);
-            gPanelStage.SetActive(true);
-            stageSelected = 0;
-        }
+        //if (stageSelected == 0)
+        //{
+        //    Debug.LogError("Please Select Stage To Play");
+        //}
+        //else
+        //{
+        //    gPanelUIButton.SetActive(false);
+        //    gPanelStage.SetActive(true);
+        //    stageSelected = 0;
+        //}
     }
     public void BackToMain(GameObject g)
     {

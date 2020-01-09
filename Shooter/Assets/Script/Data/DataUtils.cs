@@ -143,25 +143,18 @@ public class DataUtils
                 lstAllStage.Add(jStage);
         }
     }
-    public static void FillStageDataToDic()
-    {
-        string sData = GetStageTextData();
-        JsonData jData = JsonMapper.ToObject(sData);
-        for (int i = 0; i < jData.Count; i++)
-        {
-            DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
-            foreach (MapLevel mLevel in jStage.levels)
-            {
-                if (!dicStage.ContainsKey(mLevel.levelID))
-                    dicStage.Add(mLevel.levelID, mLevel);
-            }
-        }
-    }
-    public static Dictionary<string, MapLevel> dicStage = new Dictionary<string, MapLevel>();
     public static MapLevel GetMapByIndex(int stage, int level)
     {
+        MapLevel mLevel = new MapLevel();
         string key = stage + "_" + level;
-        return dicStage[key];
+        foreach(MapLevel _m in lstAllStage[stage].levels)
+        {
+            if (_m.levelID.Equals(key))
+            {
+                mLevel = _m;
+            }
+        }
+        return mLevel;
     }
 
     public static void SaveLevel(int stage, int mapIndex)
