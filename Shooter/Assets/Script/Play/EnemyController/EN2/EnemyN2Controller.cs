@@ -63,6 +63,7 @@ public class EnemyN2Controller : EnemyBase
     {
         timePreviousAttack = 1f;
         frameSprite.gameObject.SetActive(false);
+        effectfiredie.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         effectfiredie.SetActive(true);
         randomDie = Random.Range(0, 2);
         if (randomDie == 0)

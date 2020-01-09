@@ -16,18 +16,18 @@ public class GunBoss2 : AutoTarget
         if (myEnemyBase.gunList.Contains(this))
             myEnemyBase.gunList.Remove(this);
 
-        myEnemyBase.CalculateAgainHealthAllGunWhenDie(index);
+        myEnemyBase.DeadGun(index);
         gameObject.SetActive(false);
 
         explo = ObjectPoolerManager.Instance.exploGunBoss2Pooler.GetPooledObject();
         explo.transform.position = transform.position;
         explo.SetActive(true);
 
-        explo = ObjectPoolerManager.Instance.effectSmokeBoss2Pooler.GetPooledObject();
-        explo.transform.position = transform.position;
-        explo.SetActive(true);
+        //explo = ObjectPoolerManager.Instance.effectSmokeBoss2Pooler.GetPooledObject();
+        //explo.transform.position = transform.position;
+        //explo.SetActive(true);
 
-        myEnemyBase.effectsmoke.Add(explo);
+        //myEnemyBase.effectsmoke.Add(explo);
     }
     void OnValidate()
     {

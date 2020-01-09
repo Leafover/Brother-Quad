@@ -37,7 +37,7 @@ public class Boss2Controller : EnemyBase
             gunList[i].currentHealth = healthTemp / (gunList.Count);
         }
     }
-    public void CalculateAgainHealthAllGunWhenDie(int indexGun)
+    public void DeadGun(int indexGun)
     {
         if (indexGun < 5 && indexGun > 0)
         {
@@ -62,12 +62,7 @@ public class Boss2Controller : EnemyBase
         {
             PlayAnim(enemyGrenade.index, aec.standup);
             PlayAnim(indexGun, aec.falldown);
-
-            GameController.instance.autoTarget.Add(centerEnergy);
-            centerEnergy.currentHealth = currentHealth;
-            centerEnergy.gameObject.SetActive(true);
-            enemyState = EnemyState.falldown;
-
+            enemyState = EnemyState.run;
         }
         else if (indexGun == 6)
         {
@@ -196,6 +191,8 @@ public class Boss2Controller : EnemyBase
             case EnemyState.falldown:// nổ hết sạch súng
                 AttackCenterEnergy(deltaTime);
                 break;
+            case EnemyState.run:
+                break;
         }
 
         GrenadeAttack(deltaTime);
@@ -207,13 +204,14 @@ public class Boss2Controller : EnemyBase
         timeEnergy -= deltaTime;
         if (timeEnergy <= 0)
         {
+            skeletonAnimation.AnimationState.SetAnimation(centerEnergy.index, aec.attack3, false);
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletenergyBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2);
             bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 3, bulletspeed2 / 2.5f);
             bulletEnemy.rid.gravityScale = 1;
             bulletEnemy.gameObject.layer = 17;
             bulletEnemy.Init(4);
-            bulletEnemy.transform.position = centerEnergy.transform.position;          
+            bulletEnemy.transform.position = centerEnergy.transform.position;
             bulletEnemy.gameObject.SetActive(true);
             listMyBullet.Add(bulletEnemy);
             timeEnergy = maxtimeDelayAttack2;
@@ -222,7 +220,7 @@ public class Boss2Controller : EnemyBase
     }
     void GrenadeAttack(float deltaTime)
     {
-        if (enemyState == EnemyState.falldown)
+        if (enemyState == EnemyState.falldown || enemyState == EnemyState.run)
             return;
         if (isGrenade == 0)
         {
@@ -245,21 +243,54 @@ public class Boss2Controller : EnemyBase
         }
     }
     float timeGrenade, timeEnergy;
-    public void ExploOffBoss()
+    public IEnumerator ExploOffBoss()
     {
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneGun[0].GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        for (int i = 1; i < boneGun.Length; i++)
+        {
+            yield return new WaitForSeconds(0.3f);
+            exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+            exploDie.transform.position = boneGun[i].GetWorldPosition(skeletonAnimation.transform);
+            exploDie.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneGun[4].GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+
+        yield return new WaitForSeconds(0.3f);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneGun[5].GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+
+        yield return new WaitForSeconds(0.3f);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneGun[6].GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
-        exploDie = ObjectPoolerManager.Instance.boss1ExploPooler.GetPooledObject();
+        exploDie = ObjectPoolerManager.Instance.exploBoss2DiePooler.GetPooledObject();
         exploDie.transform.position = transform.position;
         exploDie.SetActive(true);
         CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
         GameController.instance.SpawnCoin(15, transform.position);
 
-        gameObject.SetActive(false);
-
-        for(int i = 0; i < effectsmoke.Count; i ++)
+        for (int i = 0; i < effectsmoke.Count; i++)
         {
             effectsmoke[i].SetActive(false);
         }
+        gameObject.SetActive(false);
     }
     public override void OnDisable()
     {
@@ -275,7 +306,7 @@ public class Boss2Controller : EnemyBase
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
-    Vector3 rotationBullet = new Vector3(0,0,111);
+    Vector3 rotationBullet = new Vector3(0, 0, 111);
     // public GameObject[] gunRotate;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
@@ -391,7 +422,7 @@ public class Boss2Controller : EnemyBase
         if (checkGun[index - 1].currentHealth > 0)
         {
             skeletonAnimation.AnimationState.SetAnimation(index, shotguns[index - 1], false);
-            Debug.Log(index + ":" + checkGun[index - 1].currentHealth);
+          //  Debug.Log(index + ":" + checkGun[index - 1].currentHealth);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -412,6 +443,13 @@ public class Boss2Controller : EnemyBase
             isGrenade = 0;
             timeGrenade = maxtimeDelayAttack2 * 3;
         }
+        else if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            GameController.instance.autoTarget.Add(centerEnergy);
+            centerEnergy.currentHealth = currentHealth;
+            centerEnergy.gameObject.SetActive(true);
+            enemyState = EnemyState.falldown;
+        }
     }
     int countGrenade, maxCountGrenade;
     BulletEnemy grenade;
@@ -425,6 +463,6 @@ public class Boss2Controller : EnemyBase
         base.Dead();
         if (GameController.instance.autoTarget.Contains(centerEnergy))
             GameController.instance.autoTarget.Remove(centerEnergy);
-        ExploOffBoss();
+        StartCoroutine(ExploOffBoss());
     }
 }

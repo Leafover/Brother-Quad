@@ -55,8 +55,6 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
 
-
-
     private void Awake()
     {
         if (instance == null)
@@ -98,9 +96,7 @@ public class GameController : MonoBehaviour
             MissionController.Instance.listMissions[i].currentValue = 0;
             MissionController.Instance.listMissions[i].isDone = false;
         }
-
         vatphamnhanduoc.Clear();
-
         for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
         {
             if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
@@ -108,25 +104,18 @@ public class GameController : MonoBehaviour
         }
         //  ThemManh();
     }
-    public bool activewarningleft, activewarningright;
+    bool activeWarningEnemyLeft, activeWarningEnemyRight;
     private void Start()
     {
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
-
         CameraController.instance.Init();
-
         PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
         Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
-
         timeCountPlay = new WaitForSecondsRealtime(1);
-         delaywinwait = new WaitForSeconds(2f);
-
-
+        delaywinwait = new WaitForSeconds(2f);
         StartCoroutine(CountTimePlay());
-
         countCombo = 0;
         AddProperties();
 
@@ -189,7 +178,11 @@ public class GameController : MonoBehaviour
     public void RemoveTarget(EnemyBase enemy)
     {
         if (autoTarget.Contains(enemy))
+        {
             autoTarget.Remove(enemy);
+            CheckHaveArrowLeft();
+            CheckHaveArrowRight();
+        }
     }
     private void JoystickMovement(UltimateJoystick joystick)
     {
@@ -399,7 +392,7 @@ public class GameController : MonoBehaviour
         if (MissionController.Instance.listMissions[1].isDone)
             countStar++;
 
-     //   Debug.LogError("zooooooooooooo win");
+        //   Debug.LogError("zooooooooooooo win");
     }
 
 
@@ -483,6 +476,18 @@ public class GameController : MonoBehaviour
 
         }
 
+        if (activeWarningEnemyLeft && !uiPanel.leftwarning.activeSelf)
+        {
+            timecheckleft -= deltaTime;
+            if (timecheckleft <= 0)
+                uiPanel.leftwarning.SetActive(true);
+        }
+        if (activeWarningEnemyRight && !uiPanel.rightwarning.activeSelf)
+        {
+            timecheckright -= deltaTime;
+            if (timecheckright <= 0)
+                uiPanel.rightwarning.SetActive(true);
+        }
         // CalculateTimeToWin(Time.deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
@@ -500,9 +505,6 @@ public class GameController : MonoBehaviour
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
         OnUpdatePlayer(deltaTime);
-
-
-
     }
     public void TryShot()
     {
@@ -548,34 +550,69 @@ public class GameController : MonoBehaviour
                 randomCertain = Random.Range(0, 100);
                 if (randomCertain < vatphamnhanduoc[i].Normal)
                 {
-                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
+                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
                 }
                 else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
                 {
-                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
+                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
                 {
-                 //   Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
+                    //   Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
-                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
+                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
-                  //  Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
+                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
                 }
             }
         }
     }
-
+    public void ResetActiveLeft()
+    {
+        activeWarningEnemyLeft = false;
+        timecheckleft = 2;
+        uiPanel.leftwarning.SetActive(false);
+    }
+    public void ResetActiveRight()
+    {
+        activeWarningEnemyRight = false;
+        timecheckright = 2;
+        uiPanel.rightwarning.SetActive(false);
+    }
     public void CheckHaveArrowLeft()
     {
- 
+        if (activeWarningEnemyLeft || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
+            return;
+
+        for (int i = 0; i < enemyLockCam.Count; i++)
+        {
+            if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x < Camera.main.transform.position.x)
+            {
+                activeWarningEnemyLeft = true;
+                break;
+            }
+
+        }
     }
+    float timecheckright, timecheckleft;
     public void CheckHaveArrowRight()
     {
 
+        if (activeWarningEnemyRight || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
+            return;
+
+        for (int i = 0; i < enemyLockCam.Count; i++)
+        {
+            if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x > Camera.main.transform.position.x)
+            {
+                activeWarningEnemyRight = true;
+                break;
+            }
+
+        }
     }
 }

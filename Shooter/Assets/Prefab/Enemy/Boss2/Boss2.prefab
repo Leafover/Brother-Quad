@@ -76,8 +76,8 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -120,12 +120,12 @@ MonoBehaviour:
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 0
+  immutableTriangles: 1
   pmaVertexColors: 1
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
-  singleSubmesh: 0
-  fixDrawOrder: 0
+  singleSubmesh: 1
+  fixDrawOrder: 1
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   aec:
     attack1: {fileID: 11400000, guid: e9f06672c259b214a99699726ec7d694, type: 2}
     attack2: {fileID: 11400000, guid: 6f71571296b4d4043b3e09837d150bbd, type: 2}
-    attack3: {fileID: 0}
+    attack3: {fileID: 11400000, guid: e841372ff55d6384aae9e7bab52ff526, type: 2}
     idle: {fileID: 0}
     run: {fileID: 0}
     aimTargetAnim: {fileID: 0}
@@ -272,6 +272,7 @@ MonoBehaviour:
   isShield: 0
   indexHealthFill: 0
   currenthealthfill: 0
+  effectsmoke: []
   shotguns:
   - {fileID: 11400000, guid: e46328478bf957b4fb6e2fcf73bfa74e, type: 2}
   - {fileID: 11400000, guid: dcc3110d16020de418f88fafb0cb3ccc, type: 2}

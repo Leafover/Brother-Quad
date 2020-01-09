@@ -37,7 +37,13 @@ public class GoInAndGoOutCamera : MonoBehaviour
             return;
 
         if (!GameController.instance.autoTarget.Contains(myEnemyBase) && myEnemyBase.takeDamageBox != null && (!myEnemyBase.isBoss || !myEnemyBase.isMiniBoss))
+        {          
             GameController.instance.autoTarget.Add(myEnemyBase);
+            if (myEnemyBase.transform.position.x > Camera.main.transform.position.x)
+                GameController.instance.ResetActiveRight();
+            else if (myEnemyBase.transform.position.x < Camera.main.transform.position.x)
+                GameController.instance.ResetActiveLeft();
+        }
 
         if (CameraController.instance.CheckPoint())
         {

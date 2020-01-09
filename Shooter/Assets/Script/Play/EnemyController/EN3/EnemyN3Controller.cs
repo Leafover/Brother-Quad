@@ -24,7 +24,7 @@ public class EnemyN3Controller : EnemyBase
         timedelayChangePos = maxtimedelayChangePos;
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
-        speedMove = speed;
+        speedMove = speed / 2;
         //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemyn3s.Contains(this))
         {
