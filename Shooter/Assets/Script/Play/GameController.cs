@@ -592,7 +592,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < enemyLockCam.Count; i++)
             {
-                if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x < Camera.main.transform.position.x)
+                if (enemyLockCam[i].enemyState != EnemyBase.EnemyState.die && enemyLockCam[i].isActive && !enemyLockCam[i].enemyAutoSpawn && !enemyLockCam[i].incam && enemyLockCam[i].transform.position.x < Camera.main.transform.position.x)
                 {
                     activeWarningEnemyLeft = true;
                     break;
@@ -617,7 +617,7 @@ public class GameController : MonoBehaviour
             {
                 if (enemyLockCam[i] != null)
                 {
-                    if (!enemyLockCam[i].incam && enemyLockCam[i].transform.position.x > Camera.main.transform.position.x)
+                    if (enemyLockCam[i].enemyState != EnemyBase.EnemyState.die && enemyLockCam[i].isActive && !enemyLockCam[i].enemyAutoSpawn && !enemyLockCam[i].incam && enemyLockCam[i].transform.position.x > Camera.main.transform.position.x)
                     {
                         activeWarningEnemyRight = true;
                         break;
