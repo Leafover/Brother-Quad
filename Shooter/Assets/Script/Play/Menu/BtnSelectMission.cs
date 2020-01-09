@@ -12,6 +12,9 @@ public class BtnSelectMission : MonoBehaviour
         DataParam.indexStage = myStage;
         DataParam.indexMap = int.Parse(gameObject.name.Replace("Level ", "")) - 1;
 
+        Debug.LogError("Level: " + DataParam.indexMap + ", Stage: " + DataParam.indexStage);
+        MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+
         _listMission = new ListMission();
         _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
         _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
