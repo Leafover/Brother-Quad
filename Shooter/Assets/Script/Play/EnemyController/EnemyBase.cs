@@ -729,7 +729,7 @@ public class EnemyBase : AutoTarget
                     return;
 
                 takecrithit = Random.Range(0, 100);
-                if (takecrithit <= 10)
+                if (takecrithit <= 3)
                 {
                     TakeDamage(PlayerController.instance.damageBullet * 2, true);
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)

@@ -57,9 +57,14 @@ public class UIPanel : MonoBehaviour
 
         GameController.instance.StopAll();
         if (DataParam.indexMap < GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
+        {
             DataParam.indexMap++;
-
-        DataParam.nextSceneAfterLoad = 2;
+            DataParam.nextSceneAfterLoad = 2;
+        }
+        else
+        {
+            DataParam.nextSceneAfterLoad = 0;
+        }
         Application.LoadLevel(1);
     }
     public void DisplayFinish(int _countstar)

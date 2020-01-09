@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     public ShakeType shakeType;
     public SpriteRenderer nextPointCheck;
     public static CameraController instance;
-    public List<Transform> posMove;
+    public List<Transform> posMove,posBossMove;
     public List<GameObject> bouders;
     public float speed;
     public ProCamera2DNumericBoundaries NumericBoundaries;

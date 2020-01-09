@@ -25,7 +25,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
             if (timedamage <= 0)
             {
                 timedamage = 1;
-                PlayerController.instance.TakeDamage(PlayerController.instance.health / 100 * 2);
+                PlayerController.instance.TakeDamage(PlayerController.instance.health / 100 * 5);
             }
         }
     }

@@ -58,7 +58,7 @@ public class MiniBoss2 : EnemyBase
     public override void Init()
     {
         base.Init();
-        currentPos = Random.Range(0, CameraController.instance.posMove.Count);
+        currentPos = Random.Range(0, CameraController.instance.posBossMove.Count);
         if (!EnemyManager.instance.miniboss2s.Contains(this))
         {
             EnemyManager.instance.miniboss2s.Add(this);
@@ -185,7 +185,7 @@ public class MiniBoss2 : EnemyBase
                             }
                         }
                         transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed / 2);
-                        if (transform.position.x == posTemp.x /*&& transform.position.y == posTemp.y*/)
+                        if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                         {
                             enemyState = EnemyState.falldown;
                         }
@@ -193,9 +193,9 @@ public class MiniBoss2 : EnemyBase
                 }
                 break;
             case EnemyState.run:
-                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posMove[currentPos].position, deltaTime * speed / 2);
+                transform.position = Vector2.MoveTowards(transform.position, CameraController.instance.posBossMove[currentPos].position, deltaTime * speed / 2);
                 //    CheckDirFollowPlayer(CameraController.instance.posMove[currentPos].position.x);
-                if (transform.position.x == CameraController.instance.posMove[currentPos].position.x && transform.position.y == CameraController.instance.posMove[currentPos].position.y)
+                if (transform.position.x == CameraController.instance.posBossMove[currentPos].position.x && transform.position.y == CameraController.instance.posBossMove[currentPos].position.y)
                 {
                     if (GameController.instance.uiPanel.CheckWarning())
                     {
@@ -205,7 +205,7 @@ public class MiniBoss2 : EnemyBase
 
                     }
                     //  CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                    currentPos = Random.Range(0, CameraController.instance.posMove.Count);
+                    currentPos = Random.Range(0, CameraController.instance.posBossMove.Count);
                     timechangePos = maxtimedelayChangePos;
                     if (gunList.Count == 0)
                     {

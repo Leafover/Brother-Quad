@@ -84,7 +84,7 @@ public class Boss1Controller : EnemyBase
                         GameController.instance.uiPanel.warning.SetActive(false);
                         GameController.instance.autoTarget.Add(this);
                         takeDamageBox.enabled = true;
-                        Debug.Log("attack boss");
+                       // Debug.Log("attack boss");
                     }
                     PlayAnim(1, aec.idle, true);
                     enemyState = EnemyState.attack;
