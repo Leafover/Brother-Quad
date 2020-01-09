@@ -19,6 +19,7 @@ public class StageManager : MonoBehaviour
 
     public GameObject[] gStages;
     public int stageSelected;
+    public MapLevelControll levelControll;
 
     private void Awake()
     {
@@ -113,7 +114,6 @@ public class StageManager : MonoBehaviour
 
     public void SwitchColor()
     {
-        Debug.LogError(_stageSelect + " vs " + MainMenuController.Instance.stageSelected);
         for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
         {
             MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
@@ -169,6 +169,11 @@ public class StageManager : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Please select map to play.");
         }
+        ///USING ONLY FOR TEST
+        else if (!levelControll.canPlay)
+        {
+            MainMenuController.Instance.ShowMapNotify("Map " + (_mapSelect + 1) + " not yet unlock.");
+        }
         else
         {
             DataParam.indexStage = _stageSelect;
@@ -205,7 +210,7 @@ public class StageManager : MonoBehaviour
         txtMission1.text = "";
         txtMission2.text = "";
         txtMission3.text = "";
-
+        levelControll = null;
         for(int i = 0; i < imgMission.Length; i++)
         {
             imgMission[i].sprite = imgStarNotYetUnlock;
@@ -231,6 +236,7 @@ public class StageManager : MonoBehaviour
             else
             {
                 imgMission[i].sprite = imgStarNotYetUnlock;
+                imgMission[i].gameObject.transform.parent.SetAsLastSibling();
             }
         }
     }

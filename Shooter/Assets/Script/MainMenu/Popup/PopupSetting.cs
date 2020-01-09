@@ -56,11 +56,11 @@ public class PopupSetting : MonoBehaviour
     }
     public void MoreGame()
     {
-        Application.OpenURL("https://play.google.com/store/apps/developer?id=Ohze+Games+Studio");
+        Application.OpenURL(DataUtils.LINK_MORE_GAME);
     }
     public void RateUs()
     {
-        Application.OpenURL("market://details?id=" + Application.identifier);
+        Application.OpenURL(DataUtils.LINK_RATE_US);
     }
     public void ChangeSound()
     {

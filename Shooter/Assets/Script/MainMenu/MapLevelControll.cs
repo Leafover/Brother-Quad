@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MapLevelControll : MonoBehaviour
 {
+    public MapLevelControll mapLevelControll;
     public int stageIndex;
     public int mapIndex;
     public Image[] imgStars;
@@ -17,20 +18,28 @@ public class MapLevelControll : MonoBehaviour
     {
         btn = GetComponent<Button>();
         imgMap = GetComponent<Image>();
+        if (!DataUtils.StageHasInit() && mapIndex == 0)
+        {
+            imgMap.color = StageManager.Instance.clUnlock;
+            canPlay = true;
+        }
     }
     private void OnEnable()
     {
         SwitchColor();
         btn.onClick.AddListener(() => {
+            StageManager.Instance.levelControll = mapLevelControll;
+
+
             if (MapHasUnlock() || imgMap.color == StageManager.Instance.clUnlock || imgMap.color == StageManager.Instance.clSelected)
             {
                 StageManager.Instance.SwitchColor();
                 imgMap.color = StageManager.Instance.clSelected;
             }
-            else
-            {
-                MainMenuController.Instance.ShowMapNotify("Map " + (mapIndex + 1) + " not yet unlock.");
-            }
+            //else
+            //{
+            //    MainMenuController.Instance.ShowMapNotify("Map " + (mapIndex + 1) + " not yet unlock.");
+            //}
             var miss_ = DataController.instance.allMission[stageIndex].missionData[mapIndex];
             GetMapInfo(miss_, stageIndex, mapIndex);
         });
@@ -65,8 +74,8 @@ public class MapLevelControll : MonoBehaviour
                 else
                 {
                     imgStars[i].sprite = StageManager.Instance.imgStarNotYetUnlock;
+                    imgStars[i].gameObject.transform.SetAsLastSibling();
                 }
-                
             }
         }
     }
