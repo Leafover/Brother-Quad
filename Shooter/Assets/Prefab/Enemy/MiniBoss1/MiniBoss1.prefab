@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834599515665506660}
   m_LocalRotation: {x: 0, y: 0, z: -0.7309966, w: 0.6823811}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.48, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9155775343689810961}
@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4478900511170163277}
   m_LocalRotation: {x: 0, y: 0, z: -0.78747314, w: 0.61634904}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.6, y: -1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 294528866738107404}
@@ -380,7 +380,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9155775343689810961}
-  - component: {fileID: 3893678443485636852}
   m_Layer: 0
   m_Name: DAUSUNG 2
   m_TagString: Untagged
@@ -403,27 +402,6 @@ Transform:
   m_Father: {fileID: 3713895184815561122}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3893678443485636852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7612916726546808306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b238dfcde8209044b97d23f62bcaadf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boneName: DAUSUNG 2
-  parentReference: {fileID: 0}
-  mode: 1
-  position: 1
-  rotation: 1
-  scale: 1
-  zPosition: 1
-  overrideAlpha: 1
-  hierarchy: {fileID: 5496594356901443754}
 --- !u!1 &7656062263031787858
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 7656062264761855544}
+  frameOn: 0
 --- !u!33 &2131363411161494792
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -553,7 +532,7 @@ MonoBehaviour:
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: idle
-  loop: 0
+  loop: 1
   timeScale: 1
 --- !u!114 &5496594356901443754
 MonoBehaviour:
@@ -617,7 +596,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01257515, y: 0.5352056}
+  m_Offset: {x: -0.01256752, y: -0.27229357}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -628,7 +607,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.2668953, y: 1.2290101}
+  m_Size: {x: 0.7570305, y: 0.45541286}
   m_EdgeRadius: 0
 --- !u!50 &7656062264761855545
 Rigidbody2D:
@@ -663,30 +642,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae183d549d10a9f42999a92c0156cbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 0
+  index: 10
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
   haveHealhItem: 0
   percentHealthForPlayer: 10
   enemyAutoSpawn: 0
-  index: 10
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
   listMyBullet: []
   lineBlood: {fileID: 0}
   isBoss: 0
   isMiniBoss: 1
+  moveFollowPath: 0
   canoutcam: 0
-  incam: 0
   isMachine: 0
   enemyState: 1
   canmove: 0
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
+  boxAttack3: {fileID: 0}
   takeDamageBox: {fileID: 7656062264761855542}
   damage1: 0
   damage2: 0
@@ -715,12 +705,17 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 142de63fb9d2d1041839af241bed7d44, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
+  lmground:
+    serializedVersion: 2
+    m_Bits: 0
   rid: {fileID: 7656062264761855545}
-  currentHealth: 0
   distanceActive: 6
   isActive: 0
   combo: 0
@@ -731,10 +726,13 @@ MonoBehaviour:
   strboneBarrelGun2: DAUSUNG 3
   targetPos: {fileID: 0}
   tempXBegin: 0
+  numberCountLayerHelthBarBoss: 0
   exploDie: {fileID: 0}
   healthItem: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
+  indexHealthFill: 0
+  currenthealthfill: 0
   gunRotation: {fileID: 8234671969350060606}
   gunRotation1: {fileID: 3280974880246269102}
   gunRotation2: {fileID: 5372168872521623284}
@@ -762,7 +760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226940026169179225}
   m_LocalRotation: {x: -0, y: -0, z: -0.71636295, w: 0.6977279}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.37, y: 1.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 8649901557492789648}
