@@ -5,7 +5,7 @@ using UnityEngine;
 public class GunBoss2 : AutoTarget
 {
     public Boss2Controller myEnemyBase;
-
+    GameObject explo;
     public void Dead()
     {
         if (GameController.instance.autoTarget.Contains(this))
@@ -18,7 +18,9 @@ public class GunBoss2 : AutoTarget
 
         myEnemyBase.CalculateAgainHealthAllGunWhenDie(index);
         gameObject.SetActive(false);
-
+        explo = ObjectPoolerManager.Instance.exploGunBoss2Pooler.GetPooledObject();
+        explo.transform.position = transform.position;
+        explo.SetActive(true);
     }
     void OnValidate()
     {

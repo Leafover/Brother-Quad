@@ -507,7 +507,7 @@ public class PlayerController : MonoBehaviour
             posTemp.x = CameraController.instance.bouders[3].transform.position.x + 1.5f;
             transform.position = posTemp;
         }
-        if (GameController.instance.isDestroyBoss && DataParam.indexStage == 1)
+        if (GameController.instance.isDestroyBoss && DataParam.indexStage == 1 && DataParam.indexMap == 7)
         {
             if (transform.position.x >= GameController.instance.currentMap.autoSpawnEnemys[GameController.instance.currentMap.autoSpawnEnemys.Length - 1].transform.position.x + 2)
             {

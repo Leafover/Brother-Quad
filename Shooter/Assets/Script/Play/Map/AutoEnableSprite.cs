@@ -21,18 +21,13 @@ public class AutoEnableSprite : MonoBehaviour
             return;
         listSprite = GetComponentsInChildren<SpriteRenderer>();
         particles = GetComponentsInChildren<EnvirontmentEffect>();
-        for (int i = 0; i < particles.Length; i++)
-        {
 
-            particles[i].gameObject.SetActive(false);
-        }
         listViewPos = new ViewPos[listSprite.Length];
         for (int i = 0; i < listSprite.Length; i++)
         {
             CaculatorViewPos(i);
         }
     }
-
     // Update is called once per frame
     void Update()
     {
