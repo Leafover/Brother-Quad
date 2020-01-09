@@ -388,11 +388,16 @@ public class GameController : MonoBehaviour
         if (countStar == 0)
             countStar = 1;
         if (MissionController.Instance.listMissions[0].isDone)
-            countStar++;
-        if (MissionController.Instance.listMissions[1].isDone)
+        {
             countStar++;
 
-        //   Debug.LogError("zooooooooooooo win");
+        }
+        if (MissionController.Instance.listMissions[1].isDone)
+        {
+            countStar++;
+        }
+        DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
+        MissionController.Instance.CheckMission();
     }
 
 

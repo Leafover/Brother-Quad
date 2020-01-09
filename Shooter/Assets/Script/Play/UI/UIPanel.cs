@@ -45,8 +45,9 @@ public class UIPanel : MonoBehaviour
 
     public void BtnBack()
     {
-        DataParam.nextSceneAfterLoad = 0;
-        Application.LoadLevel(1);
+        PopupSetting.Instance.ShowPanelSetting();
+        //DataParam.nextSceneAfterLoad = 0;
+        //Application.LoadLevel(1);
     }
     public void FillGrenade(float _current, float _max)
     {

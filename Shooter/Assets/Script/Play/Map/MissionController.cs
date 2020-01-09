@@ -83,4 +83,8 @@ public class MissionController : MonoBehaviour
             }
         }
     }
+    public void CheckMission()
+    {
+        DataUtils.SaveStars(DataParam.indexStage, DataParam.indexMap, listMissions[0].isDone, listMissions[1].isDone);
+    }
 }
