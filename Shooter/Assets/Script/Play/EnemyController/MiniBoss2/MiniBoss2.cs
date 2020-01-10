@@ -265,7 +265,7 @@ public class MiniBoss2 : EnemyBase
                             effectLaze[0].SetActive(true);
                             SoundController.instance.PlaySound(soundGame.soundMiniBoss2Attack2);
                             posTemp.x = PlayerController.instance.GetTranformXPlayer();
-                            posTemp.y = transform.position.y;
+                            posTemp.y = Camera.main.transform.position.y;
                             enemyState = EnemyState.attack;
                         }
                         else

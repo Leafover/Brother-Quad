@@ -121,6 +121,8 @@ public class GameController : MonoBehaviour
 
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
+
+        DisplaySetting();
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()
@@ -398,14 +400,20 @@ public class GameController : MonoBehaviour
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         MissionController.Instance.CheckMission();
+
+        StartCoroutine(delayDisplayFinish());
     }
 
 
-
+    public void DisplaySetting()
+    {
+        auBG.mute = DataUtils.IsMusicOn();
+    }
     public void DIE()
     {
         win = false;
         gameState = GameState.gameover;
+        StartCoroutine(delayDisplayFinish());
     }
     void OnUpdateItemDrop(float deltaTime)
     {
@@ -460,10 +468,6 @@ public class GameController : MonoBehaviour
 
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
-            if (gameState == GameState.gameover)
-            {
-                StartCoroutine(delayDisplayFinish());
-            }
             return;
         }
         var deltaTime = Time.deltaTime;

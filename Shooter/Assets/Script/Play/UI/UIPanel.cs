@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning,btnRevive;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
 
@@ -39,6 +39,7 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnReset()
     {
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         DataParam.nextSceneAfterLoad = 2;
         Application.LoadLevel(1);
     }
@@ -46,6 +47,7 @@ public class UIPanel : MonoBehaviour
     public void BtnBack()
     {
         PopupSetting.Instance.ShowPanelSetting();
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         //DataParam.nextSceneAfterLoad = 0;
         //Application.LoadLevel(1);
     }
@@ -55,17 +57,18 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnNext()
     {
-
         GameController.instance.StopAll();
         if (DataParam.indexMap < GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
         {
             DataParam.indexMap++;
+            MissionController.Instance.AddMission();
             DataParam.nextSceneAfterLoad = 2;
         }
         else
         {
             DataParam.nextSceneAfterLoad = 0;
         }
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         Application.LoadLevel(1);
     }
     public void DisplayFinish(int _countstar)
@@ -123,14 +126,20 @@ public class UIPanel : MonoBehaviour
         {
             if (defeatPanel.activeSelf)
                 return;
+            if (GameController.instance.reviveCount == 0)
+                btnRevive.SetActive(true);
+            else
+                btnRevive.SetActive(false);
             defeatPanel.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundlose);
         }
 
     }
-    public void Revive()
+    public void BtnRevive()
     {
-        // MissionController.Instance.DoMission(6, 1);
-        GameController.instance.reviveCount++;
+        PlayerController.instance.Revive();
+        defeatPanel.SetActive(false);
+        GameController.instance.gameState = GameController.GameState.play;
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
 }
