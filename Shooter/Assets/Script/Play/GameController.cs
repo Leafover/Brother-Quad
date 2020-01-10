@@ -238,7 +238,7 @@ public class GameController : MonoBehaviour
 
     float getSpeed()
     {
-        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * 65));
+        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * PlayerController.instance.slowRate));
         return speedMovetemp;
     }
     Vector3 dustLeft = new Vector3(-180, -90, 0), dustRight = new Vector3(-180, 90, 0);
@@ -482,9 +482,9 @@ public class GameController : MonoBehaviour
         {
             TryJump();
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-
+            BtnGrenade();
         }
 
         if (activeWarningEnemyLeft && !uiPanel.leftwarning.activeSelf)

@@ -757,9 +757,9 @@ public class EnemyBase : AutoTarget
                     return;
 
                 takecrithit = Random.Range(0, 100);
-                if (takecrithit <= 3)
+                if (takecrithit <= PlayerController.instance.critRate)
                 {
-                    TakeDamage(PlayerController.instance.damageBullet * 2, true);
+                    TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);

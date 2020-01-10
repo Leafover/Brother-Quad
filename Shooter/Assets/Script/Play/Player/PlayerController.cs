@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Animator animArrow;
     public int level = 1;
     public bool isGrenade;
-    public float damageBullet = 1, damgeGrenade = 3;
+    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage,bulletSpeed,attackRange, slowRate;
     [HideInInspector]
     public bool reload, stun;
     public Collider2D meleeAtackBox;
@@ -231,8 +231,21 @@ public class PlayerController : MonoBehaviour
     public void SetGun(int index)
     {
         currentGun = index;
-        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
-      //  Debug.LogError(currentGun);
+        skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
+        CalculateForGun();
+        //  Debug.LogError(currentGun);
+    }
+    public void CalculateForGun()
+    {
+        damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].Dmg;
+        maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeed;
+        maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].Magazine;
+        critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRate;
+        critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmg;
+        bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeed;
+        attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRange;
+        numberBullet = maxNumberBullet;
+        GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
     }
     //public void TryRocket()
     //{
@@ -278,15 +291,17 @@ public class PlayerController : MonoBehaviour
 
         waitBeAttack = new WaitForSeconds(0.075f);
 
-        AddProperties();
 
-        currentGun = 1;
+
+        currentGun = 0;
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
-        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+        skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
 
+
+        AddProperties();
         //   Debug.Log(skins.Length);
     }
-    int currentGun;
+    public int currentGun;
     public void AddProperties()
     {
         damgeGrenade = (float)DataController.instance.playerData[level - 1].DmgGrenade;
@@ -295,6 +310,8 @@ public class PlayerController : MonoBehaviour
 
         health = maxHealth;
         speedmove = 0;
+
+        CalculateForGun();
 
         //  health = 50000000;
     }
@@ -487,10 +504,20 @@ public class PlayerController : MonoBehaviour
         {
             if (numberBullet == 0)
             {
+                if (currentGun != 0)
+                {
+                    currentGun = 0;
+                    CalculateForGun();
+                    skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
+                    Debug.LogError("reset gun");
+                    return;
+                }
+
+                Debug.LogError("reload active");
+                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
-                timeReload = 1;
-                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
+                timeReload = maxTimeReload;
             }
             return;
         }
@@ -819,7 +846,7 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
 
     }
-    float timeReload;
+    float timeReload, maxTimeReload;
 
     public void ChangeKnife()
     {

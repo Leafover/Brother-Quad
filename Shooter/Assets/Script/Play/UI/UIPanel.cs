@@ -40,7 +40,7 @@ public class UIPanel : MonoBehaviour
     public void BtnBackToWorld()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.nextSceneAfterLoad = 2;
+        DataParam.nextSceneAfterLoad = 0;
         MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
         Application.LoadLevel(1);
     }

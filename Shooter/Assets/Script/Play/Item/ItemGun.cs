@@ -17,7 +17,7 @@ public class ItemGun : ItemBase
     public override void Hit()
     {
         base.Hit();
-        PlayerController.instance.SetGun(index + 2);
+        PlayerController.instance.SetGun(index);
     }
     public override void CalculateDisable(float deltaTime)
     {
