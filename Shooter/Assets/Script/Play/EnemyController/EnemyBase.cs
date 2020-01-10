@@ -15,7 +15,7 @@ public class EnemyBase : AutoTarget
 
     [HideInInspector]
     public BulletEnemy bulletEnemy;
-    public bool haveHealhItem;
+  //  public bool haveHealhItem;
     public float percentHealthForPlayer = 10;
     bool haveCoin;
     [HideInInspector]
@@ -40,6 +40,11 @@ public class EnemyBase : AutoTarget
         falldown,
         die
     }
+    public enum TypeItemDrop
+    {
+        coin, health, gun, none
+    }
+    public TypeItemDrop typeItemDrop = TypeItemDrop.coin;
     public EnemyState enemyState = EnemyState.idle;
     public bool canmove;
 
@@ -310,7 +315,10 @@ public class EnemyBase : AutoTarget
         exp = (float)DataController.instance.allDataEnemy[index].enemyData[levelBase - 1].exp;
 
         if (isBoss || isMiniBoss)
+        {
+            typeItemDrop = TypeItemDrop.none;
             CalculateBenginHealthBoss();
+        }
 
     }
     [HideInInspector]
@@ -379,17 +387,51 @@ public class EnemyBase : AutoTarget
 
     }
     [HideInInspector]
-    public GameObject exploDie, healthItem;
+    public GameObject exploDie;
+    ItemBase itemDrop;
     int randomCoin;
+
+
+
     public void AfterDead()
     {
-        if (haveHealhItem)
+
+        switch (typeItemDrop)
         {
-            healthItem = ObjectPoolerManager.Instance.healthItemPooler.GetPooledObject();
-            healthItem.transform.position = gameObject.transform.position;
-            healthItem.GetComponent<ItemBase>().AddNumberTemp(percentHealthForPlayer);
-            healthItem.SetActive(true);
+            case TypeItemDrop.coin:
+                if (haveCoin && GameController.instance.totalDropCoin > 0)
+                {
+                    randomCoin = Random.Range(3, 5);
+                    if (GameController.instance.totalDropCoin - randomCoin < 0)
+                    {
+                        randomCoin = GameController.instance.totalDropCoin;
+                    }
+                    GameController.instance.totalDropCoin -= randomCoin;
+                    GameController.instance.SpawnCoin(randomCoin, transform.position);
+                }
+                break;
+            case TypeItemDrop.health:
+                itemDrop = ObjectPoolManagerHaveScript.Instance.itemHealthPooler.GetItemPooledObject();
+                itemDrop.transform.position = gameObject.transform.position;
+                itemDrop.AddNumberTemp(percentHealthForPlayer);
+                itemDrop.gameObject.SetActive(true);
+                break;
+            case TypeItemDrop.gun:
+                itemDrop = ObjectPoolManagerHaveScript.Instance.gunItemPooler.GetItemPooledObject();
+                itemDrop.transform.position = gameObject.transform.position;
+                itemDrop.index = Random.Range(1, GameController.instance.gunSprite.Count);
+                itemDrop.gameObject.SetActive(true);
+                break;
         }
+
+        //if (haveHealhItem)
+        //{
+
+        //}
+        //if (!haveHealhItem)
+        //{
+
+        //}
         if (!isBoss && !isMiniBoss)
         {
             if (isMachine)
@@ -407,20 +449,6 @@ public class EnemyBase : AutoTarget
                 exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
                 exploDie.transform.position = gameObject.transform.position;
                 exploDie.SetActive(true);
-            }
-
-            if (!haveHealhItem)
-            {
-                if (haveCoin && GameController.instance.totalDropCoin > 0)
-                {
-                    randomCoin = Random.Range(3, 5);
-                    if (GameController.instance.totalDropCoin - randomCoin < 0)
-                    {
-                        randomCoin = GameController.instance.totalDropCoin;
-                    }
-                    GameController.instance.totalDropCoin -= randomCoin;
-                    GameController.instance.SpawnCoin(randomCoin, transform.position);
-                }
             }
         }
         else if (isMiniBoss)
@@ -466,7 +494,7 @@ public class EnemyBase : AutoTarget
         isActive = true;
         skeletonAnimation.gameObject.SetActive(true);
         PlayAnim(0, aec.idle, true);
-      //  Debug.LogError("zooooo day");
+        //  Debug.LogError("zooooo day");
         if (isBoss || isMiniBoss)
         {
             if (takeDamageBox != null)
@@ -480,7 +508,7 @@ public class EnemyBase : AutoTarget
             }
             if (isMiniBoss)
             {
-                switch(DataParam.indexStage)
+                switch (DataParam.indexStage)
                 {
                     case 0:
                         GameController.instance.uiPanel.healthBarBoss.DisplayBegin("ASSAULT COPTER");
@@ -501,7 +529,7 @@ public class EnemyBase : AutoTarget
                     case 1:
                         GameController.instance.uiPanel.healthBarBoss.DisplayBegin("ALIEN BASE");
                         break;
-                }           
+                }
             }
             GameController.instance.isDestroyBoss = true;
         }
@@ -547,7 +575,7 @@ public class EnemyBase : AutoTarget
     {
         if (enemyState == EnemyState.die)
             return;
-      //  isSlow = false;
+        //  isSlow = false;
         // DisableAllBullet();
         if (lineBlood != null)
         {

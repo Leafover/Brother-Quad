@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     public ProCamera2DNumericBoundaries NumericBoundaries;
     public ProCamera2DShake prcShake;
 
-    public int currentCamBoidaries;
+    public int currentCamBoidaries,currentCheckPoint;
 
     public List<GameObject> effectstage;
 

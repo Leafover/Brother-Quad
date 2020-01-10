@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ItemBase : MonoBehaviour
 {
+    public int index;
+    public SpriteRenderer render;
+
     public float numberTemp;
     public Rigidbody2D rid;
     public Collider2D collider;

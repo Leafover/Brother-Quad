@@ -172,6 +172,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 if (CameraController.instance.setBoudariesLeft)
                 {
                     CameraController.instance.setBoudariesLeft = false;
+                    CameraController.instance.currentCheckPoint = CameraController.instance.currentCamBoidaries;
                     GameController.instance.currentMap.BeginAutoSpawn(GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
                    // Debug.Log("zooooooooooooo day coi");
                 }

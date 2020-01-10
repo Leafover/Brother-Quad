@@ -37,10 +37,11 @@ public class UIPanel : MonoBehaviour
         if (GameController.instance.currentMap.haveBoss || GameController.instance.currentMap.haveMiniBoss)
             haveBossInMiniMap.SetActive(true);
     }
-    public void BtnReset()
+    public void BtnBackToWorld()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
         DataParam.nextSceneAfterLoad = 2;
+        MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
         Application.LoadLevel(1);
     }
 

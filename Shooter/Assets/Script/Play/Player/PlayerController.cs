@@ -221,12 +221,17 @@ public class PlayerController : MonoBehaviour
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
 
-        if (currentGun < skins.Length - 1)
-            currentGun++;
-        else currentGun = 1;
-        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+        //if (currentGun < skins.Length - 1)
+        //    currentGun++;
+        //else currentGun = 1;
+        //skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
         //  Debug.Log("set skin" + currentGun);
 
+    }
+    public void SetGun(int index)
+    {
+        currentGun = index;
+        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
     }
     //public void TryRocket()
     //{
@@ -1019,7 +1024,7 @@ public class PlayerController : MonoBehaviour
             posCamRevive.z = Camera.main.transform.position.z;
             Camera.main.transform.position = posCamRevive;
             skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-            //  GameController.instance.reviveCount = 1;
+            GameController.instance.reviveCount = 1;
         }
     }
 

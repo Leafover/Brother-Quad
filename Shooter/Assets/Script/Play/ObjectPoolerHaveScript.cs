@@ -15,6 +15,11 @@ public class ObjectPoolerHaveScript : MonoBehaviour
     public EnemyBase enemyPooledObject;
     public List<EnemyBase> PooledEnemy;
 
+
+    public ItemBase itemPooledObject;
+    public List<ItemBase> PooledItem;
+
+
     public int PoolLength;
 
     void Awake()
@@ -149,6 +154,49 @@ public class ObjectPoolerHaveScript : MonoBehaviour
 
         go.gameObject.SetActive(false);
         PooledEnemy.Add(go);
+        if (Parent != null)
+            go.transform.parent = this.Parent;
+        else
+            go.transform.parent = transform;
+    }
+    #endregion
+
+
+    #region Item
+    public void InitializeItem(int length)
+    {
+        PooledItem = new List<ItemBase>();
+        for (int i = 0; i < length; i++)
+        {
+            CreateItemObjectInPool();
+        }
+    }
+    public ItemBase GetItemPooledObject()
+    {
+        for (int i = 0; i < PooledItem.Count; i++)
+        {
+            if (!PooledItem[i].gameObject.activeInHierarchy)
+            {
+                return PooledItem[i];
+            }
+        }
+        int indexToReturn = PooledItem.Count;
+        CreateItemObjectInPool();
+        return PooledItem[indexToReturn];
+    }
+
+    private void CreateItemObjectInPool()
+    {
+        ItemBase go;
+        if (itemPooledObject == null)
+            go = new ItemBase();
+        else
+        {
+            go = Instantiate(itemPooledObject) as ItemBase;
+        }
+
+        go.gameObject.SetActive(false);
+        PooledItem.Add(go);
         if (Parent != null)
             go.transform.parent = this.Parent;
         else

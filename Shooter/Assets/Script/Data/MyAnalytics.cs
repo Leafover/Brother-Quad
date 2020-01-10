@@ -42,6 +42,7 @@ public class MyAnalytics
                 new Parameter("level_stage", stage)
                 };
         FirebaseAnalytics.LogEvent(EVENT_LOSE_LEVEL, _pamLevelLose);
+        LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
     {
