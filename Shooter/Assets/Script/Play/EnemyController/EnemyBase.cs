@@ -419,7 +419,7 @@ public class EnemyBase : AutoTarget
             case TypeItemDrop.gun:
                 itemDrop = ObjectPoolManagerHaveScript.Instance.gunItemPooler.GetItemPooledObject();
                 itemDrop.transform.position = gameObject.transform.position;
-                itemDrop.index = Random.Range(0, GameController.instance.gunSprite.Count);
+                itemDrop.index = (int)percentHealthForPlayer/*Random.Range(0, GameController.instance.gunSprite.Count)*/;
                 itemDrop.gameObject.SetActive(true);
                 break;
         }
