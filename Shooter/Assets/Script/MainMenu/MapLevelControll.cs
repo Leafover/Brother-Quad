@@ -89,16 +89,24 @@ public class MapLevelControll : MonoBehaviour
         {
             for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
             {
-                //Debug.LogError(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
                 if(MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType) != null)
                 {
+                    _sCutName = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Split('-');
                     StageManager.Instance.imgItemReward[i].sprite = MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                    if (_sCutName[_sCutName.Length - 1].Contains("W"))
+                    {
+                        StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);
+                    }
+                    else
+                    {
+                        StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
+                    }
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                 }
             }
         }
     }
-
+    string[] _sCutName = new string[1];
     void Start()
     {
 
