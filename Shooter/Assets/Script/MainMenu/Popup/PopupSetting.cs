@@ -29,6 +29,10 @@ public class PopupSetting : MonoBehaviour
         tgSound.isOn = DataUtils.IsSoundOn();
         tgMusic.isOn = DataUtils.IsMusicOn();
     }
+    private void Update()
+    {
+        Time.timeScale = gPanelSetting.activeSelf ? 0 : 1;
+    }
     public void Back(GameObject g_)
     {
         g_.SetActive(false);
