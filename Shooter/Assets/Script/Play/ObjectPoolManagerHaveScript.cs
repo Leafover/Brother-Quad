@@ -5,10 +5,11 @@ using UnityEngine;
 public class ObjectPoolManagerHaveScript : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler,bulletMachinegunBoss2Pooler,grenadeenemyBoss2Pooler,rocketBoss2Pooler,bulletenergyBoss2Pooler;
+    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, bullet4EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,bulletN3Pooler,grenadeN3Pooler,rocketEnemyVN2Pooler,bulletEN4Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler,bulletMachinegunBoss2Pooler,grenadeenemyBoss2Pooler,rocketBoss2Pooler,bulletenergyBoss2Pooler,gunItemPooler, itemHealthPooler,itemCoinPooler;
     public NumberDamageTextController numberDamgageTextPrefab;
     public BulletEnemy bulletEnemy3BasePrefab, bulletEnemy4BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, bulletN3Prefab, grenadeN3Prefab, rocketEnemyVN2Prefab, bulletEN4Prefab, bulletMiniBoss2Prefab, superBulletMiniBoss2Prefab, bulletMachinegunBoss2Prefab, grenadeenemyBoss2Prefab, rocketBoss2Prefab, bulletenergyBoss2Prefab;
     public EnemyBase enemy1Prefab, enemy5Prefab, enemyN1Prefab, enemyN2Prefab;
+    public ItemBase gunItemPrefab, itemHealthPrefab, itemCoinPrefab;
     [HideInInspector]
     public static ObjectPoolManagerHaveScript Instance { get; private set; }
     public List<ObjectPoolerHaveScript> AllPool = new List<ObjectPoolerHaveScript>();
@@ -270,6 +271,33 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
             go.transform.parent = this.gameObject.transform;
             bulletenergyBoss2Pooler.InitializeBulletEnemy(6);
             AllPool.Add(bulletenergyBoss2Pooler);
+        }
+        if (gunItemPooler == null)
+        {
+            go = new GameObject("gunItemPooler");
+            gunItemPooler = go.AddComponent<ObjectPoolerHaveScript>();
+            gunItemPooler.itemPooledObject = gunItemPrefab;
+            go.transform.parent = this.gameObject.transform;
+            gunItemPooler.InitializeItem(6);
+            AllPool.Add(gunItemPooler);
+        }
+        if (itemHealthPooler == null)
+        {
+            go = new GameObject("itemHealthPooler");
+            itemHealthPooler = go.AddComponent<ObjectPoolerHaveScript>();
+            itemHealthPooler.itemPooledObject = itemHealthPrefab;
+            go.transform.parent = this.gameObject.transform;
+            itemHealthPooler.InitializeItem(6);
+            AllPool.Add(itemHealthPooler);
+        }
+        if (itemCoinPooler == null)
+        {
+            go = new GameObject("itemCoinPooler");
+            itemCoinPooler = go.AddComponent<ObjectPoolerHaveScript>();
+            itemCoinPooler.itemPooledObject = itemCoinPrefab;
+            go.transform.parent = this.gameObject.transform;
+            itemCoinPooler.InitializeItem(6);
+            AllPool.Add(itemCoinPooler);
         }
     }
     GameObject go;

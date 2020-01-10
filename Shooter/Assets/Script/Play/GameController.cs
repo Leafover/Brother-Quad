@@ -24,6 +24,8 @@ public class AllMap
 
 public class GameController : MonoBehaviour
 {
+    public List<Sprite> gunSprite;
+
     public AudioSource auBG;
     public List<AudioClip> bgClip;
     public List<TileVatPhamList> vatphamnhanduoc = new List<TileVatPhamList>();
@@ -67,14 +69,14 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.play;
     }
-    GameObject coinItem;
+    ItemBase coinItem;
     public void SpawnCoin(int total, Vector2 pos)
     {
         for (int i = 0; i < total; i++)
         {
-            coinItem = ObjectPoolerManager.Instance.coinItemPooler.GetPooledObject();
+            coinItem = ObjectPoolManagerHaveScript.Instance.itemCoinPooler.GetItemPooledObject();
             coinItem.transform.position = pos;
-            coinItem.SetActive(true);
+            coinItem.gameObject.SetActive(true);
         }
     }
     void AddProperties()
@@ -121,6 +123,8 @@ public class GameController : MonoBehaviour
 
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
+
+        DisplaySetting();
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()
@@ -398,14 +402,20 @@ public class GameController : MonoBehaviour
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         MissionController.Instance.CheckMission();
+        MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
+        StartCoroutine(delayDisplayFinish());
     }
 
 
-
+    public void DisplaySetting()
+    {
+        auBG.mute = DataUtils.IsMusicOn();
+    }
     public void DIE()
     {
         win = false;
         gameState = GameState.gameover;
+        StartCoroutine(delayDisplayFinish());
     }
     void OnUpdateItemDrop(float deltaTime)
     {
@@ -460,10 +470,6 @@ public class GameController : MonoBehaviour
 
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
-            if (gameState == GameState.gameover)
-            {
-                StartCoroutine(delayDisplayFinish());
-            }
             return;
         }
         var deltaTime = Time.deltaTime;

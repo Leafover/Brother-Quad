@@ -104,6 +104,9 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState == PlayerState.Die)
             return;
+        if (isReviving)
+            return;
+
         health -= damage;
         if (health <= maxHealth - (maxHealth / 100 * 90))
         {
@@ -122,6 +125,13 @@ public class PlayerController : MonoBehaviour
             rid.velocity = Vector2.zero;
             speedmove = 0;
             stunEffect.SetActive(false);
+            meleeAtackBox.gameObject.SetActive(false);
+            isWaitStand = false;
+            isfalldow = false;
+            isSlow = false;
+            isMeleeAttack = false;
+            isGrenade = false;
+            isGround = false;
         }
     }
     public void CalculateTimeStun(float deltaTime)
@@ -211,12 +221,18 @@ public class PlayerController : MonoBehaviour
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
 
-        if (currentGun < skins.Length - 1)
-            currentGun++;
-        else currentGun = 1;
-        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
-      //  Debug.Log("set skin" + currentGun);
+        //if (currentGun < skins.Length - 1)
+        //    currentGun++;
+        //else currentGun = 1;
+        //skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+        //  Debug.Log("set skin" + currentGun);
 
+    }
+    public void SetGun(int index)
+    {
+        currentGun = index;
+        skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+      //  Debug.LogError(currentGun);
     }
     //public void TryRocket()
     //{
@@ -268,7 +284,7 @@ public class PlayerController : MonoBehaviour
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
         skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
 
-     //   Debug.Log(skins.Length);
+        //   Debug.Log(skins.Length);
     }
     int currentGun;
     public void AddProperties()
@@ -288,7 +304,7 @@ public class PlayerController : MonoBehaviour
             speedmove = 0;
         isfalldow = false;
         candoublejump = false;
-
+        DeTectPosRevive();
         if (rid.gravityScale == .2f)
             rid.gravityScale = 1;
     }
@@ -383,10 +399,11 @@ public class PlayerController : MonoBehaviour
     Vector2 movePos;
     public float radius;
     float timeStand = 6;
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, radius);
-    //}
+    public GameObject poitRayGround;
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
+    }
     public void OnUpdate(float deltaTime)
     {
 
@@ -400,7 +417,7 @@ public class PlayerController : MonoBehaviour
         //}
 
         //  Debug.Log(rid.velocity + ":" + speedmove);
-        isGround = Physics2D.OverlapCircle(foot.transform.position, radius, lm);
+        isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
         rid.velocity = movePos;
@@ -418,7 +435,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             DetectGround();
-
         }
         SetAnim();
 
@@ -651,6 +667,7 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, apc.jumpAnim, true);
             currentAnim = apc.jumpAnim;
             SetBox(sizeBox, offsetBox);
+
         }
 
     }
@@ -670,6 +687,7 @@ public class PlayerController : MonoBehaviour
             currentAnim = apc.sitAnim;
             speedmove = 0;
             SetBox(sizeBoxSit, offsetBoxSit);
+
         }
     }
 
@@ -687,6 +705,7 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
             currentAnim = apc.runForwardAnim;
             SetBox(sizeBox, offsetBox);
+
         }
         else
         {
@@ -695,6 +714,7 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);
+
         }
 
     }
@@ -770,6 +790,7 @@ public class PlayerController : MonoBehaviour
             currentAnim = apc.idleAnim;
             speedmove = 0;
             SetBox(sizeBox, offsetBox);
+
         }
     }
     public void MeleeAttack()
@@ -961,4 +982,70 @@ public class PlayerController : MonoBehaviour
             health = maxHealth;
     }
 
+
+    public void DeTectPosRevive()
+    {
+        posPlayerRevive.x = GetTranformXPlayer();
+        posPlayerRevive.y = GetTransformPlayer().position.y + 1;
+    }
+    Vector3 posCamRevive;
+    Vector3 posPlayerRevive;
+    bool isReviving;
+    public void Revive()
+    {
+        if (GameController.instance.reviveCount == 0)
+        {
+            var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
+
+            if (checkplatform.collider != null)
+            {
+
+            }
+            else
+            {
+                if (currentStand.transform.position.x < transform.position.x)
+                {
+                    posPlayerRevive.x -= 1f;
+                }
+                else if (currentStand.transform.position.x > transform.position.x)
+                {
+                    posPlayerRevive.x += 1f;
+                }
+            }
+            rid.velocity = Vector2.zero;
+            rid.gravityScale = 1;
+            playerState = PlayerState.Idle;
+            AnimIdle();
+            instance.health = maxHealth / 100 * 30;
+            isReviving = true;
+            transform.position = posPlayerRevive;
+            StartCoroutine(BeRivive());
+            posCamRevive.y = Camera.main.transform.position.y;
+            posCamRevive.x = GetTranformXPlayer() + 3;
+            posCamRevive.z = Camera.main.transform.position.z;
+            Camera.main.transform.position = posCamRevive;
+            skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+            GameController.instance.reviveCount = 1;
+        }
+    }
+
+    IEnumerator BeRivive()
+    {
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+        yield return waitBeAttack;
+
+        skeletonAnimation.skeleton.SetColor(Color.white);
+
+        yield return new WaitForSeconds(1);
+        isReviving = false;
+    }
 }

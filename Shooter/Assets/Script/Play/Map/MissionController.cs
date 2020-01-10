@@ -11,16 +11,29 @@ public class MissionController : MonoBehaviour
 {
     public static MissionController Instance;
     public List<ListMission> listMissions = new List<ListMission>();
+    ListMission _listMission;
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
     }
-    public void AddMission(ListMission _listMission)
+    public void AddMission()
     {
         listMissions.Clear();
+
+        _listMission = new ListMission();
+        _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
+        _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+
+        listMissions.Add(_listMission);
+
+        _listMission = new ListMission();
+        _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
+        _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+
         listMissions.Add(_listMission);
     }
+
     public void DoMission(int checkmission, int temp)
     {
         if (listMissions[0].typeMission == checkmission)
@@ -38,7 +51,7 @@ public class MissionController : MonoBehaviour
                 }
                 else if (listMissions[0].typeMission == 6)
                 {
-                    if (listMissions[0].currentValue <= listMissions[0].valueMission)
+                    if (listMissions[0].currentValue < listMissions[0].valueMission)
                     {
                         listMissions[0].isDone = true;
                     }
@@ -67,7 +80,7 @@ public class MissionController : MonoBehaviour
                 }
                 else if (listMissions[1].typeMission == 6)
                 {
-                    if (listMissions[1].currentValue <= listMissions[1].valueMission)
+                    if (listMissions[1].currentValue < listMissions[1].valueMission)
                     {
                         listMissions[1].isDone = true;
                     }

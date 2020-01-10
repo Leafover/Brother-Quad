@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
   myEnemyBase: {fileID: 7723718083668303065}
+  frameOn: 0
 --- !u!33 &2158066051792627299
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -430,30 +431,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0aa924ce1c25ea4c8f258feaa06563a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  incam: 0
+  currentHealth: 300
+  index: 11
+  numberText: {fileID: 0}
+  posHitTemp: {x: 0, y: 0}
+  hiteffect: {fileID: 0}
+  hitPosTemp: 0
+  takecrithit: 0
+  foot: {fileID: 0}
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
   haveHealhItem: 0
   percentHealthForPlayer: 10
   enemyAutoSpawn: 0
-  index: 11
   levelBase: 1
   activeFar: 0
   jumpOut: 0
+  frameOn: 0
   leftFace: {fileID: 0}
   rightFace: {fileID: 0}
   listMyBullet: []
   lineBlood: {fileID: 0}
   isBoss: 1
   isMiniBoss: 0
+  moveFollowPath: 0
   canoutcam: 0
-  incam: 0
   isMachine: 0
+  typeItemDrop: 3
   enemyState: 0
   canmove: 0
   radius: 0
   boxAttack1: {fileID: 7723718084331656438}
   boxAttack2: {fileID: 0}
+  boxAttack3: {fileID: 0}
   takeDamageBox: {fileID: 7723718083668303061}
   damage1: 0
   damage2: 0
@@ -482,12 +495,17 @@ MonoBehaviour:
     die: {fileID: 11400000, guid: 5edc27374e31a4141956d6b42450f42a, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 11400000, guid: 2ca27d425843b3f44b8934367c26e095, type: 2}
+    jump: {fileID: 0}
+    falldown: {fileID: 0}
+    standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
     m_Bits: 0
+  lmground:
+    serializedVersion: 2
+    m_Bits: 0
   rid: {fileID: 7723718083668303066}
-  currentHealth: 300
   distanceActive: 6
   isActive: 0
   combo: 0
@@ -498,10 +516,12 @@ MonoBehaviour:
   strboneBarrelGun2: R_Hand_1 ( FX No nho, Khoi nho )
   targetPos: {fileID: 0}
   tempXBegin: 0
+  numberCountLayerHelthBarBoss: 0
   exploDie: {fileID: 0}
-  healthItem: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
+  indexHealthFill: 0
+  currenthealthfill: 0
   strBoneExplo:
   - Hip ( FX )
   - L_Front_Leg_5 ( FX NO nho, khoi nho)
@@ -953,12 +973,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9210024189413046575, guid: a118f34a4efa44b41a4663f2ca214664,
+    - target: {fileID: 9210024189413046567, guid: a118f34a4efa44b41a4663f2ca214664,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9210024189413046575, guid: a118f34a4efa44b41a4663f2ca214664,
+    - target: {fileID: 9210024189413046567, guid: a118f34a4efa44b41a4663f2ca214664,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1
@@ -973,12 +993,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9210024189413046567, guid: a118f34a4efa44b41a4663f2ca214664,
+    - target: {fileID: 9210024189413046575, guid: a118f34a4efa44b41a4663f2ca214664,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9210024189413046567, guid: a118f34a4efa44b41a4663f2ca214664,
+    - target: {fileID: 9210024189413046575, guid: a118f34a4efa44b41a4663f2ca214664,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1

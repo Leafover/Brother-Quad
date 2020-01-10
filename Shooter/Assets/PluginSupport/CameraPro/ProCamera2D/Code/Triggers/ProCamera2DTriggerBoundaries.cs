@@ -154,7 +154,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         {
             base.EnteredTrigger();
 
-            //  Debug.LogError("------- cham -------");
+            // Debug.LogError("------- cham -------");
 
 
 
@@ -167,6 +167,15 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 NumericBoundaries.CurrentBoundariesTrigger == null)
             {
                 NumericBoundaries.CurrentBoundariesTrigger = this;
+
+
+                if (CameraController.instance.setBoudariesLeft)
+                {
+                    CameraController.instance.setBoudariesLeft = false;
+                    CameraController.instance.currentCheckPoint = CameraController.instance.currentCamBoidaries;
+                    GameController.instance.currentMap.BeginAutoSpawn(GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
+                   // Debug.Log("zooooooooooooo day coi");
+                }
 
                 StartCoroutine(Transition());
             }
@@ -310,21 +319,11 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             _boundsAnim.Transition();
 
 
-            //Debug.LogError("cham lan dau");
-
-            if (CameraController.instance.setBoudariesLeft)
-            {
-                CameraController.instance.setBoudariesLeft = false;
-
-                //if (/*GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy*/ CameraController.instance.currentCamBoidaries < GameController.instance.currentMap.autoSpawnEnemys.Length)
-                //{
-                    //Debug.LogError("11111: " + CameraController.instance.currentCamBoidaries + ":" + GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
-                    GameController.instance.currentMap.BeginAutoSpawn(GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
-
-
-                    //Debug.LogError("zoooooo day");
-                //}
-            }
+            //if (CameraController.instance.setBoudariesLeft)
+            //{
+            //    CameraController.instance.setBoudariesLeft = false;
+            //        GameController.instance.currentMap.BeginAutoSpawn(GameController.instance.currentMap.autoSpawnEnemys[CameraController.instance.currentCamBoidaries].autoSpawnEnemy);
+            //}
         }
 
         IEnumerator MoveCameraToTarget()

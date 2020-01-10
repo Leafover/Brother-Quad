@@ -69,9 +69,11 @@ public class PopupSetting : MonoBehaviour
     public void ChangeSound()
     {
         DataUtils.ChangeSound(tgSound.isOn);
+        SoundController.instance.DisplaySetting();
     }
     public void ChangeMusic()
     {
         DataUtils.ChangeMusic(tgMusic.isOn);
+        SoundController.instance.DisplaySetting();
     }
 }

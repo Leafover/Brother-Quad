@@ -34,7 +34,7 @@ public class MyAnalytics
     }
 
     #region Call In GamePlay
-    public static void LogEventLoseLevel(int level, int checkPointIndex, int stage)
+    public static void LogEventLoseLevel(int level, int checkPointIndex, int stage)//5
     {
         Parameter[] _pamLevelLose = {
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
@@ -42,8 +42,9 @@ public class MyAnalytics
                 new Parameter("level_stage", stage)
                 };
         FirebaseAnalytics.LogEvent(EVENT_LOSE_LEVEL, _pamLevelLose);
+        LogEventGameOver(level, stage);
     }
-    public static void LogEventLevelComplete(int level, int stage)
+    public static void LogEventLevelComplete(int level, int stage)//6
     {
         Parameter[] _pamLevelComplete = {
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
@@ -51,7 +52,7 @@ public class MyAnalytics
                 };
         FirebaseAnalytics.LogEvent("level_complete", _pamLevelComplete);
     }
-    public static void LogEventGameOver(int level, int stage)
+    public static void LogEventGameOver(int level, int stage)//3
     {
         Parameter[] _pamLevelEnd = {
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
