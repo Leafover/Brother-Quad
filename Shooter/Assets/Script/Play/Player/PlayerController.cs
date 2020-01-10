@@ -232,6 +232,7 @@ public class PlayerController : MonoBehaviour
     {
         currentGun = index;
         skeletonAnimation.Skeleton.SetSkin(skins[currentGun]);
+      //  Debug.LogError(currentGun);
     }
     //public void TryRocket()
     //{

@@ -10,13 +10,14 @@ public class ItemGun : ItemBase
     {
         if (GameController.instance == null)
             return;
-        render.sprite = GameController.instance.gunSprite[index];   
+        render.sprite = GameController.instance.gunSprite[index];
+      //  Debug.Log("indexxxxxx" + index);
     }
 
     public override void Hit()
     {
         base.Hit();
-        PlayerController.instance.SetGun(index);
+        PlayerController.instance.SetGun(index + 2);
     }
     public override void CalculateDisable(float deltaTime)
     {
