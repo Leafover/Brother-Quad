@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Animator animArrow;
     public int level = 1;
     public bool isGrenade;
-    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage,bulletSpeed,attackRange, slowRate;
+    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate;
     [HideInInspector]
     public bool reload, stun;
     public Collider2D meleeAtackBox;
@@ -244,7 +244,9 @@ public class PlayerController : MonoBehaviour
         critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmg;
         bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeed;
         attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRange;
+        timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].Atksec;
         numberBullet = maxNumberBullet;
+        timeReload = 0;
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
     }
     //public void TryRocket()
@@ -521,19 +523,15 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-
-
-        if (timeReload > 0)
+        timeReload -= deltaTime;
+        if (timeReload <= 0)
         {
-            timeReload -= deltaTime;
-            if (timeReload <= 0)
-            {
-                skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
-                AddNumberBullet(-maxNumberBullet);
-                reload = false;
-                SoundController.instance.PlaySound(soundGame.soundreload);
-            }
+            skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+            AddNumberBullet(-maxNumberBullet);
+            reload = false;
+            SoundController.instance.PlaySound(soundGame.soundreload);
         }
+
     }
     public Transform leftface, rightface;
     void AddNumberBullet(int _sub)

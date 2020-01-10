@@ -1099,6 +1099,11 @@ MonoBehaviour:
   isGrenade: 0
   damageBullet: 3
   damgeGrenade: 30
+  critRate: 0
+  critDamage: 0
+  bulletSpeed: 0
+  attackRange: 0
+  slowRate: 0
   reload: 0
   stun: 0
   meleeAtackBox: {fileID: 484035387773953508}
@@ -1168,6 +1173,7 @@ MonoBehaviour:
   lmgroundcandown:
     serializedVersion: 2
     m_Bits: 2097152
+  currentGun: 0
   target: {x: 0, y: 0}
   radius: 0.15
   poitRayGround: {fileID: 4799845763882779833}
@@ -1434,16 +1440,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8566759334118433422}
     m_Modifications:
-    - target: {fileID: 5714976090652637945, guid: 290b225869d91f046b263de3ddb27e95,
-        type: 3}
-      propertyPath: m_Name
-      value: healtheffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 5714976090652637945, guid: 290b225869d91f046b263de3ddb27e95,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1527595363655573672, guid: 290b225869d91f046b263de3ddb27e95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1497,6 +1493,16 @@ PrefabInstance:
     - target: {fileID: 1527595363655573672, guid: 290b225869d91f046b263de3ddb27e95,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714976090652637945, guid: 290b225869d91f046b263de3ddb27e95,
+        type: 3}
+      propertyPath: m_Name
+      value: healtheffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714976090652637945, guid: 290b225869d91f046b263de3ddb27e95,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074528509894831860, guid: 290b225869d91f046b263de3ddb27e95,
@@ -1565,16 +1571,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9077856134680710417}
     m_Modifications:
-    - target: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
-        type: 3}
-      propertyPath: m_Name
-      value: BUI SAU
-      objectReference: {fileID: 0}
-    - target: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8828540774164647804, guid: faacd2e100c2cdf4eb3bf1846a6be524,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1634,6 +1630,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5478258
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
+        type: 3}
+      propertyPath: m_Name
+      value: BUI SAU
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828540774164647801, guid: faacd2e100c2cdf4eb3bf1846a6be524,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8828540774164647807, guid: faacd2e100c2cdf4eb3bf1846a6be524,
         type: 3}

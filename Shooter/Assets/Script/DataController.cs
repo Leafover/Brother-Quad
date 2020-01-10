@@ -100,7 +100,7 @@ public class AllArmor
 public class WeaponList
 {
     public string ID, NAME, Level;
-    public double Dmg, BulletSpeed, ReloadSpeed, Magazine, AtkRange, CritRate, CritDmg, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public double Dmg, BulletSpeed, ReloadSpeed, Magazine, AtkRange, CritRate, CritDmg, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia, Atksec;
 }
 [System.Serializable]
 public class AllWeapon
