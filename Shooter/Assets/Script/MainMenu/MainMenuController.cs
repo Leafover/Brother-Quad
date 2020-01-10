@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
+    public ItemSpriteData allSpriteData;
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup;
     public PopupManager popManager;
     public Text txtStageName;
@@ -27,8 +28,16 @@ public class MainMenuController : MonoBehaviour
 
         InitButtonStage();
     }
+    public void SoundClickButton()
+    {
+        if (SoundController.instance != null)
+        {
+            SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        }
+    }
     public void ShowSetting()
     {
+        SoundClickButton();
         PopupSetting.Instance.ShowPanelSetting();
     }
     private void InitButtonStage()
@@ -56,14 +65,23 @@ public class MainMenuController : MonoBehaviour
 
     public void ShowStarterPack()
     {
+        SoundClickButton();
         popManager.pType = PopupManager.POPUP_TYPE.STARTER_PACK;
         gPanelPopup.SetActive(true);
     }
     public void ChooseStage(int stage)
     {
-        stageSelected = stage;
-        gPanelUIButton.SetActive(false);
-        gPanelStage.SetActive(true);
+        SoundClickButton();
+        if (stage > DataUtils.TOTAL_STAGE)
+        {
+            ShowMapNotify("Stage " + stage + " Comming Soon");
+        }
+        else
+        {
+            stageSelected = stage;
+            gPanelUIButton.SetActive(false);
+            gPanelStage.SetActive(true);
+        }
     }
     public void GoReady()
     {
@@ -85,18 +103,22 @@ public class MainMenuController : MonoBehaviour
     }
     public void ShowEquipment()
     {
+        SoundClickButton();
+
         popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
         gPanelPopup.SetActive(true);
         Debug.LogError("ShowEquipment");
     }
     public void ShowShop()
     {
+        SoundClickButton();
         popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
         gPanelPopup.SetActive(true);
         Debug.LogError("ShowShop");
     }
     public void ShowHeroTab()
     {
+        SoundClickButton();
         popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
         gPanelPopup.SetActive(true);
         Debug.LogError("Show Hero Infomation");
@@ -104,14 +126,17 @@ public class MainMenuController : MonoBehaviour
 
     public void BuyRemoveAds()
     {
+        SoundClickButton();
         GameIAPManager.Instance.BuyProduct(DataUtils.P_DONATE);
     }
     public void AddMoreCoin()
     {
+        SoundClickButton();
         Debug.LogError("AddMoreCoin");
     }
     public void AddMoreDiamond()
     {
+        SoundClickButton();
         Debug.LogError("AddMoreDiamond");
     }
 
@@ -133,5 +158,20 @@ public class MainMenuController : MonoBehaviour
             //Debug.LogError(DataUtils.GetAllItem());
             GameIAPManager.Instance.BuyProduct(DataUtils.P_DONATE);
         }
+    }
+
+    public Sprite GetSpriteByName(string name)
+    {
+        Sprite _spr = null;
+        string[] strSP = name.Split('-');
+        
+        for(int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+        {
+            if(allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
+            {
+                _spr = allSpriteData.spriteDatas[i].sprItem;
+            }
+        }
+        return _spr;
     }
 }

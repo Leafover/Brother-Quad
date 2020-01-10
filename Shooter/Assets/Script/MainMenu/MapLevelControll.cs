@@ -30,7 +30,7 @@ public class MapLevelControll : MonoBehaviour
         btn.onClick.AddListener(() => {
             StageManager.Instance.levelControll = mapLevelControll;
 
-
+            MainMenuController.Instance.SoundClickButton();
             if (MapHasUnlock() || imgMap.color == StageManager.Instance.clUnlock || imgMap.color == StageManager.Instance.clSelected)
             {
                 StageManager.Instance.SwitchColor();
@@ -89,8 +89,12 @@ public class MapLevelControll : MonoBehaviour
         {
             for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
             {
-                Debug.LogError(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
-                StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+                //Debug.LogError(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                if(MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType) != null)
+                {
+                    StageManager.Instance.imgItemReward[i].sprite = MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+                }
             }
         }
     }

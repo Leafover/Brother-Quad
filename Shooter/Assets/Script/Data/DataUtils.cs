@@ -7,6 +7,7 @@ public class DataUtils
 {
     enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     enum eType { Shoes, Bag, Gloves, Helmet, Armor, Weapon }
+    public const int TOTAL_STAGE = 2;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_EQIUP = GAME_KEY + "KEY_EQIUP";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";

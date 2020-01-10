@@ -97,7 +97,7 @@ public class StageManager : MonoBehaviour
                 MapLevel mapLevel = DataUtils.GetMapByIndex(levelControll.stageIndex, levelControll.mapIndex);
                 if (mapLevel.hasComplete)
                 {
-                    if (j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount)
+                    if (j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1)
                     {
                         gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j + 1).GetComponent<MapLevelControll>().canPlay = true;
                         levelControll.canPlay = true;
