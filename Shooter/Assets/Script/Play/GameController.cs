@@ -277,6 +277,7 @@ public class GameController : MonoBehaviour
         if (!PlayerController.instance.haveTarget && PlayerController.instance.isBouderJoystickMove)
             PlayerController.instance.FlipX = h < 0;
     }
+    bool isShoot;
     private void JoystickShooting(UltimateJoystick joystick)
     {
         if (PlayerController.instance == null)
@@ -286,6 +287,7 @@ public class GameController : MonoBehaviour
 
         if (joystick.GetJoystickState())
         {
+            isShoot = true;
             TryShot();
             PlayerController.instance.isBouderJoystickShoot = joystick.GetDistance() >= 0.9f;
 
@@ -305,6 +307,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            if(isShoot)
+            {
+                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
+                isShoot = false;
+            }
+
             if (autoTarget.Count == 0)
             {
                 PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);

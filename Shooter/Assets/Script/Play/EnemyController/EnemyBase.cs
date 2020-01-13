@@ -172,8 +172,8 @@ public class EnemyBase : AutoTarget
         {
             timePreviousAttack = Time.time;
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
-            //if (currentAnim != anim)
-            //    currentAnim = anim;
+            if (currentAnim != anim)
+                currentAnim = anim;
 
         }
     }

@@ -18,6 +18,9 @@ public class Bullet : MonoBehaviour
     {
         existtime -= Time.deltaTime;
         if (existtime <= 0)
+        {
+            rid.velocity = Vector2.zero;
             gameObject.SetActive(false);
+        }
     }
 }

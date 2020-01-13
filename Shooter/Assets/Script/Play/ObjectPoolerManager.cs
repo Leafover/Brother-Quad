@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class ObjectPoolerManager : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPooler bulletPooler, grenadePooler, effectGrenadePooler, slowArenaGrenadeEnemy4Pooler, effectExploBulletEnemyV1Pooler, effectExploBoomEnemyV3Pooler, enemyMachineExploPooler, enemyExploPooler, boss1ExploPooler, explofuel1Pooler, explofuel2Pooler, explowoodPooler, explobulletenemy2Pooler, hitMachinePooler, /*healthItemPooler, coinItemPooler,*/exploMiniBoss1Pooler,explogrenadeN3Pooler,effectbosswhendiePooler,hitshieldEffectPooler,explopoisionPooler,poisionArenaPooler,exploGunBoss2Pooler,effectSmokeBoss2Pooler,exploBoss2DiePooler,exploBeforeBoss2DiePooler;
-    public GameObject bulletPrefab, grenadePrefab, effectGrenadePrefab, slowArenaGrenadeEnemy4Prefab, effectExploBulletEnemyV1Prefab, effectExploBoomEnemyV3Prefab, enemyMachineExploPrefab, enemyExploPrefab, boss1ExploPrefab, explofuel1Prefab, explofuel2Prefab, explowoodPrefab, explobulletenemy2Prefab, hitMachinePrefab, /*healthItemPrefab, coinItemPrefab,*/ exploMiniBoss1Prefab, explogrenadeN3Prefab, effectbosswhendiePrefab, hitshieldEffectPrefab, explopoisionPrefab, poisionArenaPrefab, exploGunBoss2Prefab, effectSmokeBoss2Prefab, exploBoss2DiePrefab, exploBeforeBoss2DiePrefab;
+    public ObjectPooler bulletW1Pooler, bulletW2Pooler, bulletW3Pooler, bulletW4Pooler, bulletW5Pooler, bulletW6Pooler, grenadePooler, effectGrenadePooler, slowArenaGrenadeEnemy4Pooler, effectExploBulletEnemyV1Pooler, effectExploBoomEnemyV3Pooler, enemyMachineExploPooler, enemyExploPooler, boss1ExploPooler, explofuel1Pooler, explofuel2Pooler, explowoodPooler, explobulletenemy2Pooler, hitMachinePooler, /*healthItemPooler, coinItemPooler,*/exploMiniBoss1Pooler,explogrenadeN3Pooler,effectbosswhendiePooler,hitshieldEffectPooler,explopoisionPooler,poisionArenaPooler,exploGunBoss2Pooler,effectSmokeBoss2Pooler,exploBoss2DiePooler,exploBeforeBoss2DiePooler;
+    public GameObject bulletW1Prefab, bulletW2Prefab, bulletW3Prefab, bulletW4Prefab, bulletW5Prefab, bulletW6Prefab, grenadePrefab, effectGrenadePrefab, slowArenaGrenadeEnemy4Prefab, effectExploBulletEnemyV1Prefab, effectExploBoomEnemyV3Prefab, enemyMachineExploPrefab, enemyExploPrefab, boss1ExploPrefab, explofuel1Prefab, explofuel2Prefab, explowoodPrefab, explobulletenemy2Prefab, hitMachinePrefab, /*healthItemPrefab, coinItemPrefab,*/ exploMiniBoss1Prefab, explogrenadeN3Prefab, effectbosswhendiePrefab, hitshieldEffectPrefab, explopoisionPrefab, poisionArenaPrefab, exploGunBoss2Prefab, effectSmokeBoss2Prefab, exploBoss2DiePrefab, exploBeforeBoss2DiePrefab;
     [HideInInspector]
     public static ObjectPoolerManager Instance { get; private set; }
     public List<ObjectPooler> AllPool = new List<ObjectPooler>();
@@ -35,14 +35,59 @@ public class ObjectPoolerManager : MonoBehaviour
     }
     public void Start()
     {
-        if (bulletPooler == null)
+        if (bulletW1Pooler == null)
         {
             go = new GameObject("bulletPooler");
-            bulletPooler = go.AddComponent<ObjectPooler>();
-            bulletPooler.PooledObject = bulletPrefab;
+            bulletW1Pooler = go.AddComponent<ObjectPooler>();
+            bulletW1Pooler.PooledObject = bulletW1Prefab;
             go.transform.parent = this.gameObject.transform;
-            bulletPooler.Initialize(10);
-            AllPool.Add(bulletPooler);
+            bulletW1Pooler.Initialize(10);
+            AllPool.Add(bulletW1Pooler);
+        }
+        if (bulletW2Pooler == null)
+        {
+            go = new GameObject("bulletW2Pooler");
+            bulletW2Pooler = go.AddComponent<ObjectPooler>();
+            bulletW2Pooler.PooledObject = bulletW2Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletW2Pooler.Initialize(10);
+            AllPool.Add(bulletW2Pooler);
+        }
+        if (bulletW3Pooler == null)
+        {
+            go = new GameObject("bulletW3Pooler");
+            bulletW3Pooler = go.AddComponent<ObjectPooler>();
+            bulletW3Pooler.PooledObject = bulletW3Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletW3Pooler.Initialize(10);
+            AllPool.Add(bulletW3Pooler);
+        }
+        if (bulletW4Pooler == null)
+        {
+            go = new GameObject("bulletW4Pooler");
+            bulletW4Pooler = go.AddComponent<ObjectPooler>();
+            bulletW4Pooler.PooledObject = bulletW4Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletW4Pooler.Initialize(10);
+            AllPool.Add(bulletW4Pooler);
+        }
+        if (bulletW5Pooler == null)
+        {
+            go = new GameObject("bulletW5Pooler");
+            bulletW5Pooler = go.AddComponent<ObjectPooler>();
+            bulletW5Pooler.PooledObject = bulletW5Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletW5Pooler.Initialize(10);
+            AllPool.Add(bulletW5Pooler);
+        }
+        if (bulletW6Pooler == null)
+        {
+            go = new GameObject("bulletW6Pooler");
+            bulletW6Pooler = go.AddComponent<ObjectPooler>();
+            bulletW6Pooler.PooledObject = bulletW6Prefab;
+            go.transform.parent = this.gameObject.transform;
+            bulletW6Pooler.Initialize(10);
+            AllPool.Add(bulletW6Pooler);
         }
         if (grenadePooler == null)
         {

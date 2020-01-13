@@ -18,6 +18,7 @@ public class ItemGun : ItemBase
     {
         base.Hit();
         PlayerController.instance.SetGun(index);
+        SoundController.instance.PlaySound(soundGame.soundChangeGun);
     }
     public override void CalculateDisable(float deltaTime)
     {

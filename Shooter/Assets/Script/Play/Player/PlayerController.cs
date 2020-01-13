@@ -110,7 +110,11 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         if (health <= maxHealth - (maxHealth / 100 * 90))
         {
-            au.mute = false;
+            if (au.mute)
+            {
+                au.mute = false;
+                GameController.instance.uiPanel.lowHealth.SetActive(true);
+            }
         }
         ShowLineBlood();
         StartCoroutine(BeAttackFill());
@@ -233,7 +237,7 @@ public class PlayerController : MonoBehaviour
         currentGun = index;
         skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
         CalculateForGun();
-        //  Debug.LogError(currentGun);
+      //  Debug.LogError(currentGun);
     }
     public void CalculateForGun()
     {
@@ -247,6 +251,9 @@ public class PlayerController : MonoBehaviour
         timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].Atksec;
         numberBullet = maxNumberBullet;
         timeReload = 0;
+        isShoot = false;
+        timePreviousAttack = 0;
+        countbullet = 0;
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
     }
     //public void TryRocket()
@@ -295,12 +302,14 @@ public class PlayerController : MonoBehaviour
 
 
 
-        currentGun = 0;
+        // currentGun = 0;
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
-        skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
+        // skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
 
 
         AddProperties();
+
+        SetGun(0);
         //   Debug.Log(skins.Length);
     }
     public int currentGun;
@@ -313,7 +322,7 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         speedmove = 0;
 
-        CalculateForGun();
+        //     CalculateForGun();
 
         //  health = 50000000;
     }
@@ -425,17 +434,6 @@ public class PlayerController : MonoBehaviour
     }
     public void OnUpdate(float deltaTime)
     {
-
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    animArrow.SetBool("animarrow", true);
-        //}
-        //else if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    animArrow.SetBool("animarrow", false);
-        //}
-
-        //  Debug.Log(rid.velocity + ":" + speedmove);
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
@@ -460,8 +458,38 @@ public class PlayerController : MonoBehaviour
 
         LockPlayer();
         targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
-        if (timePreviousAttack > 0)
+
+        if (isShoot)
+        {
             timePreviousAttack -= deltaTime;
+            if (timePreviousAttack <= 0)
+            {
+                switch (currentGun)
+                {
+                    case 1:
+                        countbullet--;
+                        CreateBullet();
+                        if (countbullet == 0)
+                        {
+                            timePreviousAttack = timedelayAttackGun * 3;
+                            isShoot = false;
+                            AddNumberBullet(1);
+                        }
+                        else
+                        {
+                            timePreviousAttack = timedelayAttackGun / 3;
+                        }
+                        break;
+                    default:
+                        isShoot = false;
+                        break;
+                }
+            }
+        }
+        else
+        {
+            timePreviousAttack -= deltaTime;
+        }
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
         if (timePreviousMeleeAttack > 0)
@@ -508,9 +536,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (currentGun != 0)
                 {
-                    currentGun = 0;
-                    CalculateForGun();
-                    skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
+                    SetGun(0);
                     Debug.LogError("reset gun");
                     return;
                 }
@@ -598,24 +624,78 @@ public class PlayerController : MonoBehaviour
     }
     GameObject bullet, grenade;
     Vector2 dirBullet;
-    float angle;
-    Quaternion rotation;
+    float angle, angle2, angle3;
+    Quaternion rotation, rotation2, rotation3;
+
+    public void CreateBulletShotGun()
+    {
+        dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+        angle2 = angle + 10;
+        angle3 = angle - 10;
+        for (int i = 0; i < 3; i++)
+        {
+            bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
+            if (i == 1)
+            {
+                rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
+                bullet.transform.rotation = rotation2;
+            }
+            else if (i == 2)
+            {
+                rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
+                bullet.transform.rotation = rotation3;
+            }
+            else if (i == 0)
+            {
+                rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                bullet.transform.rotation = rotation;
+            }
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bullet.SetActive(true);
+        }
+    }
+    public void CreateBullet()
+    {
+        switch (currentGun)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundshootW1);
+                bullet = ObjectPoolerManager.Instance.bulletW1Pooler.GetPooledObject();
+                break;
+            case 1:
+                bullet = ObjectPoolerManager.Instance.bulletW2Pooler.GetPooledObject();
+                break;
+            case 3:
+                SoundController.instance.PlaySound(soundGame.soundshootW4);
+                bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
+                break;
+            case 4:
+                SoundController.instance.PlaySound(soundGame.soundshootW5);
+                bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
+                break;
+            case 5:
+                SoundController.instance.PlaySound(soundGame.soundshootW6);
+                bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
+                break;
+
+        }
+
+        dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        bullet.transform.rotation = rotation;
+        bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        bullet.SetActive(true);
+
+    }
+
     void HandleEvent(TrackEntry trackEntry, Spine.Event e)
     {
         if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
         {
-            bullet = ObjectPoolerManager.Instance.bulletPooler.GetPooledObject();
-            dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bullet.transform.rotation = rotation;
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
-
-            AddNumberBullet(1);
-            SoundController.instance.PlaySound(soundGame.shootnormal);
-
-
+            //  CreateBullet();
+            //  Debug.Log(currentGun);
         }
         else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
         {
@@ -764,37 +844,12 @@ public class PlayerController : MonoBehaviour
 
     public void AnimWin()
     {
-        //   skeletonAnimation.ClearState();
-        //randomWin = UnityEngine.Random.Range(0, 2);
-        //Debug.Log(randomWin);
-        //if (randomWin == 0)
-        //{
-        //    if (currentAnim == apc.winAnim)
-        //        return;
-        //    // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
-        //    skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
-        //    currentAnim = apc.winAnim;
-        //}
-        //else
-        //{
-        //    if (currentAnim == apc.winAnim2)
-        //        return;
-        //    // skeletonAnimation.AnimationState.SetAnimation(0, apc.idleAnim, true);
-        //    skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim2, true);
-        //    currentAnim = apc.winAnim2;
-        //}
         skeletonAnimation.ClearState();
         if (currentAnim == apc.winAnim)
             return;
-        //   skeletonAnimation.AnimationState.SetEmptyAnimation(2, 0);
-        //targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-        //target = targetTemp;
-        //targetPos.position = targetTemp;
-
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
         speedmove = 0;
-        //Debug.LogError(currentAnim.name);
     }
     public void AnimIdle()
     {
@@ -831,6 +886,7 @@ public class PlayerController : MonoBehaviour
         meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         meleeAtackBox.gameObject.SetActive(true);
     }
+    bool isShoot;
     public void ShootDown()
     {
         if (reload || isGrenade || meleeAtackBox.gameObject.activeSelf)
@@ -838,12 +894,37 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (timePreviousAttack > 0)
+        if (isShoot || timePreviousAttack > 0)
             return;
-        timePreviousAttack = timedelayAttackGun;
+
+
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
+        isShoot = true;
+        switch (currentGun)
+        {
+            case 1:
+                countbullet = 3;
+                timePreviousAttack = 0;
+                SoundController.instance.PlaySound(soundGame.soundshootW2);
+                break;
+            case 2:
+                CreateBulletShotGun();
+                timePreviousAttack = timedelayAttackGun;
+                AddNumberBullet(1);
+                SoundController.instance.PlaySound(soundGame.soundshootW3);
+                break;
+            default:
+                CreateBullet();
+                timePreviousAttack = timedelayAttackGun;
+                AddNumberBullet(1);
+              //  Debug.LogError("shooooooot" + timePreviousAttack);
+                break;
+        }
+
 
     }
+
+    int countbullet;
     float timeReload, maxTimeReload;
 
     public void ChangeKnife()
@@ -1000,7 +1081,11 @@ public class PlayerController : MonoBehaviour
             effecthealth.SetActive(true);
         if (health > maxHealth - (maxHealth / 100 * 90))
         {
-            au.mute = true;
+            if (!au.mute)
+            {
+                au.mute = true;
+                GameController.instance.uiPanel.lowHealth.SetActive(false);
+            }
         }
         ShowLineBlood();
         if (health >= maxHealth)
@@ -1037,6 +1122,7 @@ public class PlayerController : MonoBehaviour
                     posPlayerRevive.x += 1f;
                 }
             }
+
             rid.velocity = Vector2.zero;
             rid.gravityScale = 1;
             playerState = PlayerState.Idle;
