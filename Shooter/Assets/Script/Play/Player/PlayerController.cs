@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         health -= damage;
-        if (health <= maxHealth - (maxHealth / 100 * 90))
+        if (health <= maxHealth - (maxHealth / 100 * 95))
         {
             if (au.mute)
             {
@@ -1079,7 +1079,7 @@ public class PlayerController : MonoBehaviour
         health += _health;
         if (!effecthealth.activeSelf)
             effecthealth.SetActive(true);
-        if (health > maxHealth - (maxHealth / 100 * 90))
+        if (health > maxHealth - (maxHealth / 100 * 95))
         {
             if (!au.mute)
             {
@@ -1127,7 +1127,8 @@ public class PlayerController : MonoBehaviour
             rid.gravityScale = 1;
             playerState = PlayerState.Idle;
             AnimIdle();
-            instance.health = maxHealth / 100 * 30;
+            AddHealth(maxHealth / 100 * 30);
+            
             isReviving = true;
             transform.position = posPlayerRevive;
             StartCoroutine(BeRivive());
