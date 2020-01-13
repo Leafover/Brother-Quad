@@ -8,6 +8,7 @@ public enum STAGE_MODE { NORMAL, HARD }
 public class DataStage
 {
     public string stageName { get; set; }
+    public int levelUnlock = -1;
     public List<MapLevel> levels { get; set; }
     public STAGE_MODE stageMode { get; set; }
 }

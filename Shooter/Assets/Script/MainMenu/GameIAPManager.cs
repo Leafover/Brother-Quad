@@ -132,6 +132,8 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
                 DataUtils.RemoveAds();
                 break;
             case DataUtils.P_STARTER_PACK:
+                Debug.LogError("P_STARTER_PACK");
+                DataUtils.UpdateCoinAndGame(7500, 0);
                 break;
         }
         return PurchaseProcessingResult.Complete;

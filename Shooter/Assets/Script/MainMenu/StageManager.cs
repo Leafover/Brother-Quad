@@ -27,11 +27,9 @@ public class StageManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        gStages[MainMenuController.Instance.stageSelected - 1].SetActive(true);
-
         FetchStageData();
+        gStages[MainMenuController.Instance.stageSelected - 1].SetActive(true);
     }
-
     private void FetchStageData()
     {
         ///Check if StageData not yet init
