@@ -15,6 +15,8 @@ public class DataUtils
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
     public const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
     public const string KEY_PLAYER_DATA = GAME_KEY + "KEY_PLAYER_DATA";
+    public const string KEY_HEROES_INDEX = GAME_KEY + "KEY_HEROES_INDEX";
+    public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
@@ -201,12 +203,26 @@ public class DataUtils
     #endregion
 
     #region Player Data Info
+    public static List<PlayerDataInfo> lstAllHeroes = new List<PlayerDataInfo>();
     public static PlayerDataInfo playerInfo;
 
+
+    public static int HeroIndex()
+    {
+        return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
+    }
+    public static void SetHeroIndex(int index)
+    {
+        PlayerPrefs.SetInt(KEY_HEROES_INDEX, index);
+        PlayerPrefs.Save();
+    }
     public static void SavePlayerData()
     {
-        string jSave = JsonMapper.ToJson(playerInfo);
-        PlayerPrefs.SetString(KEY_PLAYER_DATA, jSave);
+        //string jSave = JsonMapper.ToJson(/*playerInfo*/lstAllHeroes[HeroIndex()]);
+        //PlayerPrefs.SetString(KEY_PLAYER_DATA, jSave);
+
+        string jSave = JsonMapper.ToJson(lstAllHeroes);
+        PlayerPrefs.SetString(KEY_ALL_PLAYER_DATA, jSave);
         PlayerPrefs.Save();
     }
     public static bool PlayerInfoHasInit()
@@ -215,33 +231,58 @@ public class DataUtils
     }
     public static void FillPlayerDataInfo()
     {
-        if (!PlayerPrefs.HasKey(KEY_PLAYER_DATA) || string.IsNullOrEmpty(GetPlayerData()))
-        {
+        if (!PlayerPrefs.HasKey(KEY_ALL_PLAYER_DATA) || string.IsNullOrEmpty(GetAllPlayerData())) {
             playerInfo = new PlayerDataInfo();
             playerInfo.level = 1;
             playerInfo.hp = (int)DataController.instance.playerData[0].hp;
             playerInfo.exp = 0;
+            playerInfo.id = "P1";
             playerInfo.curStars = 1;
             playerInfo.name = "REMITANO";
             playerInfo.coins = 0;
             playerInfo.gems = 0;
-            SavePlayerData();
+            lstAllHeroes.Add(playerInfo);
         }
         else
         {
-            PlayerDataInfo pInfo = JsonMapper.ToObject<PlayerDataInfo>(GetPlayerData());
-            playerInfo = pInfo;
+            string sData = GetAllPlayerData();
+            JsonData jData = JsonMapper.ToObject(sData);
+            for (int i = 0; i < jData.Count; i++)
+            {
+                PlayerDataInfo jStage = JsonMapper.ToObject<PlayerDataInfo>(jData[i].ToJson());
+                if (!lstAllHeroes.Contains(jStage))
+                    lstAllHeroes.Add(jStage);
+            }
         }
 
-        if(MainMenuController.Instance != null)
+        playerInfo = lstAllHeroes[HeroIndex()];
+        //if (!PlayerPrefs.HasKey(KEY_PLAYER_DATA) || string.IsNullOrEmpty(GetPlayerData()))
+        //{
+        //    playerInfo = new PlayerDataInfo();
+        //    playerInfo.level = 1;
+        //    playerInfo.hp = (int)DataController.instance.playerData[0].hp;
+        //    playerInfo.exp = 0;
+        //    playerInfo.curStars = 1;
+        //    playerInfo.name = "REMITANO";
+        //    playerInfo.coins = 0;
+        //    playerInfo.gems = 0;
+        //    SavePlayerData();
+        //}
+        //else
+        //{
+        //    PlayerDataInfo pInfo = JsonMapper.ToObject<PlayerDataInfo>(GetPlayerData());
+        //    playerInfo = pInfo;
+        //}
+
+        if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
     }
-    public void UpdateCoinAndGem(int newCoin, int newGem)
+    public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
-        playerInfo.coins = newCoin;
-        playerInfo.gems = newGem;
+        /*playerInfo*/lstAllHeroes[HeroIndex()].coins = newCoin;
+        /*playerInfo*/lstAllHeroes[HeroIndex()].gems = newGem;
         SavePlayerData();
         if (MainMenuController.Instance != null)
         {
@@ -250,17 +291,27 @@ public class DataUtils
     }
     public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
-        playerInfo.coins += coinAdded;
-        playerInfo.gems += gemAdded;
+        /*playerInfo*/lstAllHeroes[HeroIndex()].coins += coinAdded;
+        /*playerInfo*/lstAllHeroes[HeroIndex()].gems += gemAdded;
         SavePlayerData();
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
     }
+    private static string GetAllPlayerData()
+    {
+        return PlayerPrefs.GetString(KEY_ALL_PLAYER_DATA);
+    }
     private static string GetPlayerData()
     {
         return PlayerPrefs.GetString(KEY_PLAYER_DATA, "");
     }
     #endregion
+
+
+    public static string DisplayRichText(double dFrom, double dTo)
+    {
+        return "<color=white>" + dFrom + "</color>" + "==> <color=green>" + dTo + "</color>";
+    }
 }
