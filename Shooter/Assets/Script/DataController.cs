@@ -166,6 +166,14 @@ public class DataController : MonoBehaviour
     {
         instance = this;
     }
+    private void OnEnable()
+    {
+        DataUtils.FillPlayerDataInfo();
+        if (DataUtils.StageHasInit())
+        {
+            DataUtils.FillAllStage();
+        }
+    }
     public bool loaddatabegin;
     private void OnValidate()
     {
