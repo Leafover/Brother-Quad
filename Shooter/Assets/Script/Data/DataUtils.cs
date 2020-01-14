@@ -14,6 +14,7 @@ public class DataUtils
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
     public const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
+    public const string KEY_PLAYER_DATA = GAME_KEY + "KEY_PLAYER_DATA";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
@@ -116,8 +117,7 @@ public class DataUtils
         return "Helmet";
     }
     #endregion
-
-
+    
     #region Stage Data
     public static bool StageHasInit()
     {
@@ -138,7 +138,6 @@ public class DataUtils
     {
         string sData = GetStageTextData();
         JsonData jData = JsonMapper.ToObject(sData);
-        
         for (int i = 0; i < jData.Count; i++)
         {
             DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
@@ -146,6 +145,7 @@ public class DataUtils
                 lstAllStage.Add(jStage);
         }
     }
+
     public static MapLevel GetMapByIndex(int stage, int level)
     {
         MapLevel mLevel = new MapLevel();
@@ -171,6 +171,7 @@ public class DataUtils
                 if (lstAllStage[i].levels[j].levelID.Equals(key))
                 {
                     lstAllStage[i].levels[j].hasComplete = true;
+                    lstAllStage[i].levelUnlock = j;
                 }
             }
         }
@@ -196,6 +197,70 @@ public class DataUtils
 
         string jSave = JsonMapper.ToJson(lstAllStage);
         SaveStage(jSave);
+    }
+    #endregion
+
+    #region Player Data Info
+    public static PlayerDataInfo playerInfo;
+
+    public static void SavePlayerData()
+    {
+        string jSave = JsonMapper.ToJson(playerInfo);
+        PlayerPrefs.SetString(KEY_PLAYER_DATA, jSave);
+        PlayerPrefs.Save();
+    }
+    public static bool PlayerInfoHasInit()
+    {
+        return PlayerPrefs.HasKey(KEY_PLAYER_DATA) || string.IsNullOrEmpty(GetPlayerData());
+    }
+    public static void FillPlayerDataInfo()
+    {
+        if (!PlayerPrefs.HasKey(KEY_PLAYER_DATA) || string.IsNullOrEmpty(GetPlayerData()))
+        {
+            playerInfo = new PlayerDataInfo();
+            playerInfo.level = 1;
+            playerInfo.hp = (int)DataController.instance.playerData[0].hp;
+            playerInfo.exp = 0;
+            playerInfo.curStars = 1;
+            playerInfo.name = "REMITANO";
+            playerInfo.coins = 0;
+            playerInfo.gems = 0;
+            SavePlayerData();
+        }
+        else
+        {
+            PlayerDataInfo pInfo = JsonMapper.ToObject<PlayerDataInfo>(GetPlayerData());
+            playerInfo = pInfo;
+        }
+
+        if(MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
+    }
+    public void UpdateCoinAndGem(int newCoin, int newGem)
+    {
+        playerInfo.coins = newCoin;
+        playerInfo.gems = newGem;
+        SavePlayerData();
+        if (MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
+    }
+    public static void AddCoinAndGame(int coinAdded, int gemAdded)
+    {
+        playerInfo.coins += coinAdded;
+        playerInfo.gems += gemAdded;
+        SavePlayerData();
+        if (MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
+    }
+    private static string GetPlayerData()
+    {
+        return PlayerPrefs.GetString(KEY_PLAYER_DATA, "");
     }
     #endregion
 }
