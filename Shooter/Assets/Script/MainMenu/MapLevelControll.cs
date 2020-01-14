@@ -47,8 +47,6 @@ public class MapLevelControll : MonoBehaviour
     }
     private void CheckMapUnlock()
     {
-        //var miss_ = DataController.instance.allMission[stageIndex].missionData[mapIndex];
-        //GetMapInfo(miss_, stageIndex, mapIndex);
         int _mIndex = 0;
         if(DataUtils.lstAllStage.Count == 0 && mapIndex == 0)
         {

@@ -52,7 +52,6 @@ public class MainMenuController : MonoBehaviour
     private void OnEnable()
     {
         HideAllPanel();
-        //UpdateCoinAndGem();
     }
 
     public void UpdateCoinAndGem()
@@ -96,16 +95,6 @@ public class MainMenuController : MonoBehaviour
     }
     public void GoReady()
     {
-        //if (stageSelected == 0)
-        //{
-        //    Debug.LogError("Please Select Stage To Play");
-        //}
-        //else
-        //{
-        //    gPanelUIButton.SetActive(false);
-        //    gPanelStage.SetActive(true);
-        //    stageSelected = 0;
-        //}
     }
     public void BackToMain(GameObject g)
     {

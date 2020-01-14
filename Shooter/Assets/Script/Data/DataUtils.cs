@@ -117,8 +117,7 @@ public class DataUtils
         return "Helmet";
     }
     #endregion
-
-
+    
     #region Stage Data
     public static bool StageHasInit()
     {
@@ -201,7 +200,6 @@ public class DataUtils
     }
     #endregion
 
-
     #region Player Data Info
     public static PlayerDataInfo playerInfo;
 
@@ -240,7 +238,17 @@ public class DataUtils
             MainMenuController.Instance.UpdateCoinAndGem();
         }
     }
-    public static void UpdateCoinAndGame(int coinAdded, int gemAdded)
+    public void UpdateCoinAndGem(int newCoin, int newGem)
+    {
+        playerInfo.coins = newCoin;
+        playerInfo.gems = newGem;
+        SavePlayerData();
+        if (MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
+    }
+    public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
         playerInfo.coins += coinAdded;
         playerInfo.gems += gemAdded;
