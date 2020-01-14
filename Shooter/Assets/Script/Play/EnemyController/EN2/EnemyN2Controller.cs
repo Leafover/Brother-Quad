@@ -184,6 +184,8 @@ public class EnemyN2Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+            if (enemyState == EnemyState.die)
+                return;
             PlayAnim(1, aec.attack2, true);
             frameSprite.gameObject.SetActive(true);
         }

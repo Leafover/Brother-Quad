@@ -58,6 +58,7 @@ public class MiniBoss2 : EnemyBase
     public override void Init()
     {
         base.Init();
+        checkstage = 0;
         currentPos = Random.Range(0, CameraController.instance.posBossMove.Count);
         if (!EnemyManager.instance.miniboss2s.Contains(this))
         {
@@ -75,7 +76,7 @@ public class MiniBoss2 : EnemyBase
             }
         }
         gunCenter.transform.position = boneGun[8].GetWorldPosition(skeletonAnimation.transform);
-        PlayAnim(0, aec.idle, false);
+
         gunCenter.incam = true;
         gunCenter.currentHealth = currentHealth / 100 * 60;
         //   gunCenter.gameObject.SetActive(false);
@@ -92,6 +93,7 @@ public class MiniBoss2 : EnemyBase
        // GameController.instance.autoTarget.Add(gunList[0]);
     }
     float timechangePos;
+    int checkstage;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -101,9 +103,22 @@ public class MiniBoss2 : EnemyBase
         }
         if (enemyState == EnemyState.die)
             return;
+
+        if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize)
+        {
+            if (GameController.instance.uiPanel.CheckWarning())
+            {
+                GameController.instance.uiPanel.warning.SetActive(false);
+                PlayAnim(0, aec.run, false);
+            }
+        }
+        if (GameController.instance.uiPanel.CheckWarning())
+            return;
+
         switch (enemyState)
         {
             case EnemyState.idle:
+
                 break;
             case EnemyState.falldown:
                 if (timechangePos > 0)
@@ -122,6 +137,7 @@ public class MiniBoss2 : EnemyBase
                             boxAttack1.gameObject.SetActive(false);
                             boxAttack2.gameObject.SetActive(false);
                             boxAttack3.gameObject.SetActive(false);
+                            PlayAnim(0, aec.run2, true);
                         }
                     }
                     if (randomCombo == 1)
@@ -197,13 +213,13 @@ public class MiniBoss2 : EnemyBase
                 //    CheckDirFollowPlayer(CameraController.instance.posMove[currentPos].position.x);
                 if (transform.position.x == CameraController.instance.posBossMove[currentPos].position.x && transform.position.y == CameraController.instance.posBossMove[currentPos].position.y)
                 {
-                    if (GameController.instance.uiPanel.CheckWarning())
-                    {
-                        GameController.instance.uiPanel.warning.SetActive(false);
-                        gunList[0].gameObject.SetActive(true);
-                        GameController.instance.autoTarget.Add(gunList[0]);
+                    //if (GameController.instance.uiPanel.CheckWarning())
+                    //{
+                    //    GameController.instance.uiPanel.warning.SetActive(false);
+                    //    gunList[0].gameObject.SetActive(true);
+                    //    GameController.instance.autoTarget.Add(gunList[0]);
 
-                    }
+                    //}
                     //  CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     currentPos = Random.Range(0, CameraController.instance.posBossMove.Count);
                     timechangePos = maxtimedelayChangePos;
@@ -267,6 +283,7 @@ public class MiniBoss2 : EnemyBase
                             posTemp.x = PlayerController.instance.GetTranformXPlayer();
                             posTemp.y = Camera.main.transform.position.y;
                             enemyState = EnemyState.attack;
+                            PlayAnim(0, aec.attack1, true);
                         }
                         else
                         {
@@ -282,6 +299,7 @@ public class MiniBoss2 : EnemyBase
                                 posTemp.x = PlayerController.instance.GetTranformXPlayer();
                                 posTemp.y = Camera.main.transform.position.y;
                                 enemyState = EnemyState.attack;
+                                PlayAnim(0, aec.attack1, true);
                             }
                             else
                             {
@@ -319,10 +337,12 @@ public class MiniBoss2 : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-        if (trackEntry.Animation.Name.Equals(aec.idle.name))
+        if (trackEntry.Animation.Name.Equals(aec.run.name))
         {
             enemyState = EnemyState.run;
-            PlayAnim(0, aec.run, true);
+            PlayAnim(0, aec.run2, true);
+            gunList[0].gameObject.SetActive(true);
+            GameController.instance.autoTarget.Add(gunList[0]);
         }
     }
     public void CreateBullet(Vector2 pos)
@@ -357,6 +377,8 @@ public class MiniBoss2 : EnemyBase
         effectLaze[0].SetActive(false);
         effectLaze[1].SetActive(false);
         effectLaze[2].SetActive(false);
+
+        StartCoroutine(ExploOffBoss());
     }
     public override void OnDisable()
     {
@@ -371,6 +393,30 @@ public class MiniBoss2 : EnemyBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+    public IEnumerator ExploOffBoss()
+    {
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneGun[0].GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        for (int i = 1; i < boneGun.Length; i++)
+        {
+            yield return new WaitForSeconds(0.3f);
+            exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+            exploDie.transform.position = boneGun[i].GetWorldPosition(skeletonAnimation.transform);
+            exploDie.SetActive(true);
+        }
+        yield return new WaitForSeconds(0.5f);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        exploDie = ObjectPoolerManager.Instance.exploBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = transform.position;
+        exploDie.SetActive(true);
+        CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+        GameController.instance.SpawnCoin(8, transform.position);
+
+        gameObject.SetActive(false);
     }
 
 }

@@ -81,16 +81,12 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            GameController.instance.waitForWin = true;
             if (GameController.instance.isDestroyBoss)
             {
                 return;
             }
+         //   GameController.instance.waitForWin = true;
             GameController.instance.DelayWinFunc();
-            //GameController.instance.win = true;
-            //setBoudariesLeft = true;
-            //nextPointCheck.gameObject.SetActive(true);
-            //nextPointCheck.enabled = false;
         }
     }
     private void LateUpdate()
@@ -112,7 +108,7 @@ public class CameraController : MonoBehaviour
     float lockCamPos;
     public void OnUpdate(float deltaTime)
     {
-        if (GameController.instance.waitForWin)
+        if (GameController.instance.win)
             return;
 
         if (!setBoudariesLeft)

@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour
             isMeleeAttack = false;
             isGrenade = false;
             isGround = false;
+            health = 0;
         }
     }
     public void CalculateTimeStun(float deltaTime)

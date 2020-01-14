@@ -307,7 +307,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if(isShoot)
+            if (isShoot)
             {
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 isShoot = false;
@@ -372,8 +372,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(CountTimePlay());
     }
     public bool isDestroyBoss;
-    [HideInInspector]
-    public bool waitForWin;
+    //[HideInInspector]
+    //public bool waitForWin;
     public int reviveCount = 0;
     int randonvictorysound;
     public void WinSound()
@@ -555,8 +555,7 @@ public class GameController : MonoBehaviour
     IEnumerator delayWin()
     {
         yield return delaywinwait;
-        if (win)
-            WinGame();
+        WinGame();
     }
 
     int randomCertain;
