@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning,btnRevive;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning,btnRevive,lowHealth;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
 
@@ -40,7 +40,7 @@ public class UIPanel : MonoBehaviour
     public void BtnBackToWorld()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.nextSceneAfterLoad = 2;
+        DataParam.nextSceneAfterLoad = 0;
         MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
         Application.LoadLevel(1);
     }

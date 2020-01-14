@@ -15,7 +15,7 @@ public class EnemyBase : AutoTarget
 
     [HideInInspector]
     public BulletEnemy bulletEnemy;
-  //  public bool haveHealhItem;
+    //  public bool haveHealhItem;
     public float percentHealthForPlayer = 10;
     bool haveCoin;
     [HideInInspector]
@@ -172,8 +172,8 @@ public class EnemyBase : AutoTarget
         {
             timePreviousAttack = Time.time;
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
-            //if (currentAnim != anim)
-            //    currentAnim = anim;
+            if (currentAnim != anim)
+                currentAnim = anim;
 
         }
     }
@@ -424,44 +424,23 @@ public class EnemyBase : AutoTarget
                 break;
         }
 
-        //if (haveHealhItem)
-        //{
-
-        //}
-        //if (!haveHealhItem)
-        //{
-
-        //}
-        if (!isBoss && !isMiniBoss)
-        {
-            if (isMachine)
-            {
-                SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
-                exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
-                exploDie.transform.position = gameObject.transform.position;
-                exploDie.SetActive(true);
-            }
-            else
-            {
-                SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
-                exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
-                exploDie.transform.position = gameObject.transform.position;
-                exploDie.SetActive(true);
-            }
-        }
-        else if (isMiniBoss)
+        if (isMachine)
         {
             SoundController.instance.PlaySound(soundGame.soundexploenemy);
-            exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
-            posExplo.x = gameObject.transform.position.x;
-            posExplo.y = gameObject.transform.position.y;
-            exploDie.transform.position = posExplo;
+
+            exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
+            exploDie.transform.position = gameObject.transform.position;
             exploDie.SetActive(true);
-            CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
-            GameController.instance.SpawnCoin(8, transform.position);
         }
+        else
+        {
+            SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
+            exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
+            exploDie.transform.position = gameObject.transform.position;
+            exploDie.SetActive(true);
+        }
+
     }
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
@@ -471,10 +450,11 @@ public class EnemyBase : AutoTarget
         {
             if (trackEntry.Animation.Name.Equals(aec.die.name))
             {
-                if (!isBoss)
+                if (!isBoss && !isMiniBoss)
+                {
                     gameObject.SetActive(false);
-
-                AfterDead();
+                    AfterDead();
+                }
             }
         }
 
@@ -588,7 +568,7 @@ public class EnemyBase : AutoTarget
             takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
         skeletonAnimation.ClearState();
-        if (!isBoss)
+        if (!isBoss && !isMiniBoss)
         {
             if (!frameOn)
                 if (aec.die != null)
@@ -606,6 +586,7 @@ public class EnemyBase : AutoTarget
         else
         {
             PlayAnim(0, aec.die, true);
+            GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
         }
 
         enemyState = EnemyState.die;
@@ -613,9 +594,6 @@ public class EnemyBase : AutoTarget
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         DisableAllBullet();
         GameController.instance.AddCombo();
-        if (isBoss || isMiniBoss)
-            GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
-
     }
     void DisableAllBullet()
     {
@@ -757,9 +735,9 @@ public class EnemyBase : AutoTarget
                     return;
 
                 takecrithit = Random.Range(0, 100);
-                if (takecrithit <= 3)
+                if (takecrithit <= PlayerController.instance.critRate)
                 {
-                    TakeDamage(PlayerController.instance.damageBullet * 2, true);
+                    TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
                     if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                         SoundController.instance.PlaySound(soundGame.soundCritHit);
                     GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);

@@ -13,13 +13,13 @@ public class CameraController : MonoBehaviour
     public ShakeType shakeType;
     public SpriteRenderer nextPointCheck;
     public static CameraController instance;
-    public List<Transform> posMove,posBossMove;
+    public List<Transform> posMove, posBossMove;
     public List<GameObject> bouders;
     public float speed;
     public ProCamera2DNumericBoundaries NumericBoundaries;
     public ProCamera2DShake prcShake;
 
-    public int currentCamBoidaries,currentCheckPoint;
+    public int currentCamBoidaries, currentCheckPoint;
 
     public List<GameObject> effectstage;
 
@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
     public void Init()
     {
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
-      //  NumericBoundaries.TopBoundary = 4;
+        //  NumericBoundaries.TopBoundary = 4;
     }
     Vector2 _cameraSize;
     float velocity;
@@ -68,22 +68,25 @@ public class CameraController : MonoBehaviour
         {
             currentCamBoidaries++;
             nextPointCheck.gameObject.SetActive(true);
-            currentRightBoudary = Camera.main.transform.position.x;
+            lockCamPos = Camera.main.transform.position.x;
             nextPointCheck.enabled = true;
             SoundController.instance.PlaySound(soundGame.soundletgo);
+
+            GameController.instance.ResetActiveLeft();
+            GameController.instance.ResetActiveRight();
+
+            GameController.instance.currentMap.ResetAutoSpawn();
+
+            setBoudariesLeft = true;
         }
         else
         {
-            GameController.instance.waitForWin = true;
             if (GameController.instance.isDestroyBoss)
             {
                 return;
             }
+         //   GameController.instance.waitForWin = true;
             GameController.instance.DelayWinFunc();
-            //GameController.instance.win = true;
-            //setBoudariesLeft = true;
-            //nextPointCheck.gameObject.SetActive(true);
-            //nextPointCheck.enabled = false;
         }
     }
     private void LateUpdate()
@@ -102,32 +105,26 @@ public class CameraController : MonoBehaviour
         var leftBoundary = transform.position.x - Size().x;
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
-    float currentRightBoudary;
+    float lockCamPos;
     public void OnUpdate(float deltaTime)
     {
-        if (GameController.instance.waitForWin)
+        if (GameController.instance.win)
             return;
 
         if (!setBoudariesLeft)
         {
-            if (nextPointCheck.gameObject.activeSelf)
+            if (GameController.instance.enemyLockCam.Count == 0)
             {
-                if (Camera.main.transform.position.x - currentRightBoudary >= 1f)
-                {
-                    nextPointCheck.gameObject.SetActive(false);
-                    setBoudariesLeft = true;
-                    GameController.instance.currentMap.ResetAutoSpawn();
-                }
+                NextPoint();
             }
-            else
+            GameController.instance.currentMap.SpawnEnemy(deltaTime);
+        }
+        else
+        {
+            if(Camera.main.transform.position.x - lockCamPos > 1)
             {
-                if (GameController.instance.enemyLockCam.Count == 0)
-                {
-                    NextPoint();
-                }
+                nextPointCheck.gameObject.SetActive(false);
             }
-            GameController.instance.currentMap.SpawnEnemy(deltaTime);              
-
         }
     }
 

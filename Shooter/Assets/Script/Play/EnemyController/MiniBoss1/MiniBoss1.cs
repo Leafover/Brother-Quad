@@ -154,4 +154,22 @@ public class MiniBoss1 : EnemyBase
             }
         }
     }
+    public override void Dead()
+    {
+        base.Dead();
+        StartCoroutine(delayExplo());
+    }
+    IEnumerator delayExplo()
+    {
+        yield return new WaitForSeconds(1);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
+        posExplo.x = gameObject.transform.position.x;
+        posExplo.y = gameObject.transform.position.y;
+        exploDie.transform.position = posExplo;
+        exploDie.SetActive(true);
+        CameraController.instance.Shake(CameraController.ShakeType.ExplosionBossShake);
+        GameController.instance.SpawnCoin(8, transform.position);
+        gameObject.SetActive(false);
+    }
 }

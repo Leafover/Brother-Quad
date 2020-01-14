@@ -238,7 +238,7 @@ public class GameController : MonoBehaviour
 
     float getSpeed()
     {
-        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * 65));
+        float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * PlayerController.instance.slowRate));
         return speedMovetemp;
     }
     Vector3 dustLeft = new Vector3(-180, -90, 0), dustRight = new Vector3(-180, 90, 0);
@@ -277,6 +277,7 @@ public class GameController : MonoBehaviour
         if (!PlayerController.instance.haveTarget && PlayerController.instance.isBouderJoystickMove)
             PlayerController.instance.FlipX = h < 0;
     }
+    bool isShoot;
     private void JoystickShooting(UltimateJoystick joystick)
     {
         if (PlayerController.instance == null)
@@ -286,6 +287,7 @@ public class GameController : MonoBehaviour
 
         if (joystick.GetJoystickState())
         {
+            isShoot = true;
             TryShot();
             PlayerController.instance.isBouderJoystickShoot = joystick.GetDistance() >= 0.9f;
 
@@ -305,6 +307,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            if (isShoot)
+            {
+                SoundController.instance.PlaySound(soundGame.soundbulletdrop);
+                isShoot = false;
+            }
+
             if (autoTarget.Count == 0)
             {
                 PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
@@ -364,8 +372,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(CountTimePlay());
     }
     public bool isDestroyBoss;
-    [HideInInspector]
-    public bool waitForWin;
+    //[HideInInspector]
+    //public bool waitForWin;
     public int reviveCount = 0;
     int randonvictorysound;
     public void WinSound()
@@ -482,9 +490,9 @@ public class GameController : MonoBehaviour
         {
             TryJump();
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-
+            BtnGrenade();
         }
 
         if (activeWarningEnemyLeft && !uiPanel.leftwarning.activeSelf)
@@ -547,8 +555,7 @@ public class GameController : MonoBehaviour
     IEnumerator delayWin()
     {
         yield return delaywinwait;
-        if (win)
-            WinGame();
+        WinGame();
     }
 
     int randomCertain;
