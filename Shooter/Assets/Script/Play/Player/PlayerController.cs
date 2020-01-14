@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         health -= damage;
-        if (health <= maxHealth - (maxHealth / 100 * 95))
+        if (health <= maxHealth / 100 * 5)
         {
             if (au.mute)
             {
@@ -433,6 +433,7 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
     }
+    float timereviving = 1;
     public void OnUpdate(float deltaTime)
     {
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
@@ -456,6 +457,15 @@ public class PlayerController : MonoBehaviour
         }
         SetAnim();
 
+        if(isReviving)
+        {
+            timereviving -= deltaTime;
+            if(timereviving <= 0)
+            {
+                timereviving = 1;
+                isReviving = false;
+            }
+        }
 
         LockPlayer();
         targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
@@ -538,11 +548,11 @@ public class PlayerController : MonoBehaviour
                 if (currentGun != 0)
                 {
                     SetGun(0);
-                    Debug.LogError("reset gun");
+                  //  Debug.LogError("reset gun");
                     return;
                 }
 
-                Debug.LogError("reload active");
+               // Debug.LogError("reload active");
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
@@ -1080,13 +1090,10 @@ public class PlayerController : MonoBehaviour
         health += _health;
         if (!effecthealth.activeSelf)
             effecthealth.SetActive(true);
-        if (health > maxHealth - (maxHealth / 100 * 95))
+        if (health > maxHealth / 100 * 5)
         {
-            if (!au.mute)
-            {
                 au.mute = true;
                 GameController.instance.uiPanel.lowHealth.SetActive(false);
-            }
         }
         ShowLineBlood();
         if (health >= maxHealth)
@@ -1106,59 +1113,44 @@ public class PlayerController : MonoBehaviour
     {
         if (GameController.instance.reviveCount == 0)
         {
-            var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
-
-            if (checkplatform.collider != null)
-            {
-
-            }
-            else
-            {
-                if (currentStand.transform.position.x < transform.position.x)
-                {
-                    posPlayerRevive.x -= 1f;
-                }
-                else if (currentStand.transform.position.x > transform.position.x)
-                {
-                    posPlayerRevive.x += 1f;
-                }
-            }
-
-            rid.velocity = Vector2.zero;
-            rid.gravityScale = 1;
-            playerState = PlayerState.Idle;
-            AnimIdle();
-            AddHealth(maxHealth / 100 * 30);
-            
-            isReviving = true;
-            transform.position = posPlayerRevive;
-            StartCoroutine(BeRivive());
-            posCamRevive.y = Camera.main.transform.position.y;
-            posCamRevive.x = GetTranformXPlayer() + 3;
-            posCamRevive.z = Camera.main.transform.position.z;
-            Camera.main.transform.position = posCamRevive;
-            skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
-            GameController.instance.reviveCount = 1;
+            ResetPosRevive(true);
         }
     }
-
-    IEnumerator BeRivive()
+   public void ResetPosRevive(bool afterdie)
     {
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-        yield return waitBeAttack;
+        var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-        yield return waitBeAttack;
+        if (checkplatform.collider != null)
+        {
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-        yield return waitBeAttack;
+        }
+        else
+        {
+            if (currentStand.transform.position.x < transform.position.x)
+            {
+                posPlayerRevive.x -= 1f;
+            }
+            else if (currentStand.transform.position.x > transform.position.x)
+            {
+                posPlayerRevive.x += 1f;
+            }
+        }
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-        yield return waitBeAttack;
+        rid.velocity = Vector2.zero;
+        rid.gravityScale = 1;
+        playerState = PlayerState.Idle;
+        AnimIdle();
+        isReviving = true;
+        transform.position = posPlayerRevive;
 
-        skeletonAnimation.skeleton.SetColor(Color.white);
-
-        yield return new WaitForSeconds(1);
-        isReviving = false;
+        if (!afterdie)
+            return;
+        posCamRevive.y = Camera.main.transform.position.y;
+        posCamRevive.x = GetTranformXPlayer() + 3;
+        posCamRevive.z = Camera.main.transform.position.z;
+        Camera.main.transform.position = posCamRevive;
+        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        GameController.instance.reviveCount = 1;
+        AddHealth(maxHealth / 100 * 30);
     }
 }

@@ -104,7 +104,7 @@ public class MiniBoss2 : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize)
+        if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Camera.main.orthographicSize + 1.5f)
         {
             if (GameController.instance.uiPanel.CheckWarning())
             {
