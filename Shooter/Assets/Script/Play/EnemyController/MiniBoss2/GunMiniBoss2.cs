@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunMiniBoss2 : AutoTarget
 {
     public MiniBoss2 myEnemyBase;
+    GameObject explo;
     public void Dead()
     {
         myEnemyBase.PlayAnim(index + 1, myEnemyBase.dieguns[index]);
@@ -21,7 +22,10 @@ public class GunMiniBoss2 : AutoTarget
 
         myEnemyBase.gunList.Remove(this);
 
-        //  myEnemyBase.CalculateHealthAllGun();
+        explo = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        explo.transform.position = transform.position;
+        explo.SetActive(true);
+
         myEnemyBase.CalculateAgainHealthAllGun();
         gameObject.SetActive(false);
 

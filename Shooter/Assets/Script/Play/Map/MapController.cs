@@ -6,6 +6,7 @@ using PathCreation;
 
 public class MapController : MonoBehaviour
 {
+    public ScrollBackground myBg;
     public float distanceMap;
     public bool haveMiniBoss,haveBoss;
     public bool moreTypeE = true;
@@ -111,6 +112,6 @@ public class MapController : MonoBehaviour
         procam2DTriggerBoudaries = GetComponentsInChildren<ProCamera2DTriggerBoundaries>();
         pathCreator = GetComponentsInChildren<PathCreator>();
         autoSpawnEnemys = GetComponentsInChildren<AutoSpawnEnemy>();
-        distanceMap = Mathf.Abs(endMap.transform.position.x - pointBeginPlayer.transform.position.x);      
+        distanceMap = Mathf.Abs(endMap.transform.position.x - pointBeginPlayer.transform.position.x);
     }
 }

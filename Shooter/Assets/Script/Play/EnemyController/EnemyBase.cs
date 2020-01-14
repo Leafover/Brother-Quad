@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : AutoTarget
 {
-
+    public GameObject haveItem;
     public GameObject foot;
     //  [HideInInspector]
     public bool isGround = true;
@@ -223,6 +223,15 @@ public class EnemyBase : AutoTarget
     }
     public virtual void Init()
     {
+
+        if (DataParam.indexMode == 1)
+        {
+            levelBase += 3;
+            if (levelBase > 10)
+                levelBase = 10;
+        }
+        if (haveItem != null)
+            haveItem.SetActive(false);
         isGround = true;
         isShield = false;
         tempXBegin = transform.position.x;
@@ -259,11 +268,6 @@ public class EnemyBase : AutoTarget
                 boneBarrelGun2 = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun2);
             }
         }
-        //if (aec.aimTargetAnim != null)
-        //{
-        //    skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
-        //    PlayAnim(0, aec.idle, true);
-        //}
 
         if (!isBoss)
         {
@@ -325,7 +329,6 @@ public class EnemyBase : AutoTarget
     public int numberCountLayerHelthBarBoss = 0;
     public void CalculateBenginHealthBoss()
     {
-
         healthTotalTempBoss = health;
 
         if (isBoss)
@@ -472,6 +475,18 @@ public class EnemyBase : AutoTarget
     public virtual void Active()
     {
         isActive = true;
+
+        if (haveItem != null)
+        {
+            if (typeItemDrop == TypeItemDrop.health || typeItemDrop == TypeItemDrop.gun)
+            {
+                haveItem.SetActive(true);
+            }
+            else
+            {
+                haveItem.SetActive(false);
+            }
+        }
         skeletonAnimation.gameObject.SetActive(true);
         PlayAnim(0, aec.idle, true);
         //  Debug.LogError("zooooo day");
@@ -555,8 +570,8 @@ public class EnemyBase : AutoTarget
     {
         if (enemyState == EnemyState.die)
             return;
-        //  isSlow = false;
-        // DisableAllBullet();
+        if (haveItem != null && haveItem.activeSelf)
+            haveItem.SetActive(false);
         if (lineBlood != null)
         {
             lineBlood.Hide();

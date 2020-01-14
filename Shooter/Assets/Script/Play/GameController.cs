@@ -109,18 +109,19 @@ public class GameController : MonoBehaviour
     bool activeWarningEnemyLeft, activeWarningEnemyRight;
     private void Start()
     {
+        DataParam.totalCoin = 0;
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
         CameraController.instance.Init();
         PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
-        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 6, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);
         StartCoroutine(CountTimePlay());
         countCombo = 0;
         AddProperties();
-
+      //  currentMap.myBg.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,currentMap.myBg.transform.position.z);
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
 
@@ -409,8 +410,12 @@ public class GameController : MonoBehaviour
             countStar++;
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
+        DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+
         MissionController.Instance.CheckMission();
         MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
+
+
         StartCoroutine(delayDisplayFinish());
     }
 
