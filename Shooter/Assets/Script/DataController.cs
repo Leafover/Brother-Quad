@@ -126,7 +126,7 @@ public class EnemyData
 public class PlayerData
 {
     public string level, ID;
-    public double hp, DmgGrenade, MoveSpeed;
+    public double hp, DmgGrenade, MoveSpeed, SoManhYeuCau, Giamua1manh, total;
 }
 #region datamission
 [System.Serializable]
