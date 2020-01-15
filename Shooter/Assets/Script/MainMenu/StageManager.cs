@@ -16,6 +16,8 @@ public class StageManager : MonoBehaviour
     public Transform trAllRewards;
     public Image[] imgItemReward;
     public Image[] imgMission;
+    public Sprite imgMapUnlock, imgMapNotYetUnlock;
+
 
     public GameObject[] gStages;
     public int stageSelected;
