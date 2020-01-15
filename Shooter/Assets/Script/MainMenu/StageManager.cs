@@ -16,7 +16,7 @@ public class StageManager : MonoBehaviour
     public Transform trAllRewards;
     public Image[] imgItemReward;
     public Image[] imgMission;
-    public Sprite imgMapUnlock, imgMapNotYetUnlock;
+    public Sprite imgMapUnlock, imgMapNotYetUnlock, imgMapSelected;
 
 
     public GameObject[] gStages;
@@ -112,14 +112,20 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void SwitchColor()
+    public void SwitchColor(int _mapIndex)
     {
         for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
         {
             MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
-            if(levelControll.imgMap.color == clSelected)
-            {
-                levelControll.imgMap.color = clUnlock;
+            if (levelControll.canPlay) {
+                if(levelControll.mapIndex != _mapIndex)
+                {
+                    levelControll.imgMap.sprite = imgMapUnlock;
+                }
+                //if (levelControll.imgMap.color == clSelected)
+                //{
+                //    levelControll.imgMap.color = clUnlock;
+                //}
             }
         }
     }
