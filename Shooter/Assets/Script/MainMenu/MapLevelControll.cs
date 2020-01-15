@@ -21,6 +21,7 @@ public class MapLevelControll : MonoBehaviour
         if (!DataUtils.StageHasInit() && mapIndex == 0)
         {
             imgMap.color = StageManager.Instance.clUnlock;
+            imgMap.sprite = StageManager.Instance.imgMapUnlock;
             canPlay = true;
         }
     }
@@ -75,14 +76,17 @@ public class MapLevelControll : MonoBehaviour
         if (!DataUtils.StageHasInit() && mapIndex == 0)
         {
             imgMap.color = StageManager.Instance.clUnlock;
+            imgMap.sprite = StageManager.Instance.imgMapUnlock;
         }
         else if (MapHasUnlock())
         {
             imgMap.color = StageManager.Instance.clUnlock;
+            imgMap.sprite = StageManager.Instance.imgMapUnlock;
         }
         else
         {
             imgMap.color = StageManager.Instance.clNotYetUnlock;
+            imgMap.sprite = StageManager.Instance.imgMapNotYetUnlock;
         }
     }
     public void CheckMapStars()

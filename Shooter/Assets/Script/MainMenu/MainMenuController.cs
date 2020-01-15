@@ -58,8 +58,8 @@ public class MainMenuController : MonoBehaviour
     {
         if (DataUtils.PlayerInfoHasInit() && DataUtils.playerInfo!= null)
         {
-            txtCoins.text = DataUtils.playerInfo.coins.ToString();
-            txtGems.text = DataUtils.playerInfo.gems.ToString();
+            txtGems.text = DataUtils.playerInfo.gems.ToString("#,0");
+            txtCoins.text = DataUtils.playerInfo.coins.ToString("#,0");
         }
         else
         {
@@ -119,9 +119,11 @@ public class MainMenuController : MonoBehaviour
     public void ShowHeroTab()
     {
         SoundClickButton();
-        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
-        gPanelPopup.SetActive(true);
-        Debug.LogError("Show Hero Infomation");
+        //popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
+        //gPanelPopup.SetActive(true);
+        //Debug.LogError("Show Hero Infomation");
+        gPanelUIButton.SetActive(false);
+        gPanelHeroes.SetActive(true);
     }
 
     public void BuyRemoveAds()
