@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
     public int countCombo;
     public int totalDropCoin;
 
-    public int countStar;
+    public int countStar = 0;
     public bool win;
 
     public UIPanel uiPanel;
@@ -81,7 +81,10 @@ public class GameController : MonoBehaviour
     }
     void AddProperties()
     {
-        totalDropCoin = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin;
+        if (DataParam.indexMode == 0)
+            totalDropCoin = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin;
+        else
+            totalDropCoin = (int)(DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin * 1.5f);
         if (currentMap.haveMiniBoss)
         {
             totalDropCoin -= 8;
@@ -121,7 +124,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(CountTimePlay());
         countCombo = 0;
         AddProperties();
-      //  currentMap.myBg.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,currentMap.myBg.transform.position.z);
+        //  currentMap.myBg.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,currentMap.myBg.transform.position.z);
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
 
@@ -399,15 +402,28 @@ public class GameController : MonoBehaviour
         MissionController.Instance.DoMission(6, reviveCount);
         //   Debug.Log(MissionController.Instance.listMissions[1].currentValue + ":" + MissionController.Instance.listMissions[1].valueMission);
         if (countStar == 0)
+        {
             countStar = 1;
+            if (DataParam.indexMode == 0)
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
+            else
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
+        }
         if (MissionController.Instance.listMissions[0].isDone)
         {
             countStar++;
-
+            if (DataParam.indexMode == 0)
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
+            else
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
         }
         if (MissionController.Instance.listMissions[1].isDone)
         {
             countStar++;
+            if (DataParam.indexMode == 0)
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
+            else
+                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);

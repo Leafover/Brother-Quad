@@ -9,7 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public GameObject shield;
     private Skin[] skins;
     public AudioSource au;
     public Animator animArrow;
@@ -433,7 +433,7 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
     }
-    float timereviving = 1;
+    float timereviving = 2;
     public void OnUpdate(float deltaTime)
     {
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
@@ -462,7 +462,8 @@ public class PlayerController : MonoBehaviour
             timereviving -= deltaTime;
             if(timereviving <= 0)
             {
-                timereviving = 1;
+                shield.SetActive(false);
+                timereviving = 2;
                 isReviving = false;
             }
         }
@@ -1141,7 +1142,9 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Idle;
         AnimIdle();
         isReviving = true;
+        timereviving = 2;
         transform.position = posPlayerRevive;
+        shield.SetActive(true);
 
         if (!afterdie)
             return;

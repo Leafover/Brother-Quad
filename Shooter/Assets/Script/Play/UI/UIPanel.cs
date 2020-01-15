@@ -130,7 +130,10 @@ public class UIPanel : MonoBehaviour
             if (GameController.instance.reviveCount == 0)
                 btnRevive.SetActive(true);
             else
+            {
                 btnRevive.SetActive(false);
+                DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+            }
             defeatPanel.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundlose);
         }

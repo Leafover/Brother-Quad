@@ -6,6 +6,6 @@ public class MenuController : MonoBehaviour
 {
     private void Awake()
     {
-        //Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
     }
 }

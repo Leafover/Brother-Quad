@@ -30,16 +30,16 @@ public class SoundController : MonoBehaviour
         }
         else
             DestroyImmediate(gameObject);
-        Debug.Log("Init");
+      //  Debug.Log("Init");
     }
     public void DisplaySetting()
     {
-        au.mute = DataUtils.IsSoundOn();
+        au.mute = !DataUtils.IsSoundOn();
         if (auBG != null)
-            auBG.mute = DataUtils.IsMusicOn();
+            auBG.mute = !DataUtils.IsMusicOn();
         if(GameController.instance != null)
         {
-            GameController.instance.auBG.mute = DataUtils.IsMusicOn();
+            GameController.instance.auBG.mute = !DataUtils.IsMusicOn();
         }
     }
     public void PlaySound(soundGame currentSound)

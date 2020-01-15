@@ -276,8 +276,8 @@ public class EnemyBase : AutoTarget
             else
                 distanceActive = Camera.main.orthographicSize * 2f + 2f;
 
-            randomHaveCoin = Random.Range(0, 2);
-            haveCoin = randomHaveCoin == 1 ? true : false;
+            randomHaveCoin = Random.Range(0, 100);
+            haveCoin = randomHaveCoin <= 70 ? true : false;
         }
         else
         {
@@ -327,6 +327,11 @@ public class EnemyBase : AutoTarget
     }
     [HideInInspector]
     public int numberCountLayerHelthBarBoss = 0;
+
+    Color colorPink = new Color(1f, 0.3882353f, 3882353f);
+    Color colorOrange = new Color(1f, 0.5137255f, 0.2196079f);
+    Color colorPurlple = new Color(0.682353f, 0.372549f, 1f);
+    Color colorRed = new Color(0.8705883f, 0.172549f, 0.2039216f);
     public void CalculateBenginHealthBoss()
     {
         healthTotalTempBoss = health;
@@ -334,11 +339,20 @@ public class EnemyBase : AutoTarget
         if (isBoss)
         {
             numberCountLayerHelthBarBoss = 10;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[0].color = GameController.instance.uiPanel.healthBarBoss.healthFill[3].color = GameController.instance.uiPanel.healthBarBoss.healthFill[6].color = colorPink;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[1].color = GameController.instance.uiPanel.healthBarBoss.healthFill[4].color = GameController.instance.uiPanel.healthBarBoss.healthFill[7].color = colorOrange;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[2].color = GameController.instance.uiPanel.healthBarBoss.healthFill[5].color = GameController.instance.uiPanel.healthBarBoss.healthFill[8].color = colorPurlple;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[9].color = colorRed;
         }
         else if (isMiniBoss)
         {
             numberCountLayerHelthBarBoss = 5;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[0].color = GameController.instance.uiPanel.healthBarBoss.healthFill[3].color = colorPink;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[1].color = colorOrange;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[2].color = colorPurlple;
+            GameController.instance.uiPanel.healthBarBoss.healthFill[4].color = colorRed;
         }
+        GameController.instance.uiPanel.healthBarBoss.healthbossText.color = GameController.instance.uiPanel.healthBarBoss.healthFill[0].color;
         float addhealth = healthTotalTempBoss / numberCountLayerHelthBarBoss;
         for (int i = 0; i < numberCountLayerHelthBarBoss; i++)
         {
@@ -389,6 +403,21 @@ public class EnemyBase : AutoTarget
     {
 
     }
+    protected virtual void OnComplete(TrackEntry trackEntry)
+    {
+        if (trackEntry == null)
+            return;
+        if (aec.die != null)
+        {
+            if (trackEntry.Animation.Name.Equals(aec.die.name))
+            {
+                if (!isBoss && !isMiniBoss)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+    }
     [HideInInspector]
     public GameObject exploDie;
     ItemBase itemDrop;
@@ -396,9 +425,8 @@ public class EnemyBase : AutoTarget
 
 
 
-    public void AfterDead()
+    public void ItemDropFormDead()
     {
-
         switch (typeItemDrop)
         {
             case TypeItemDrop.coin:
@@ -430,7 +458,6 @@ public class EnemyBase : AutoTarget
         if (isMachine)
         {
             SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
             exploDie = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
             exploDie.transform.position = gameObject.transform.position;
             exploDie.SetActive(true);
@@ -438,31 +465,14 @@ public class EnemyBase : AutoTarget
         else
         {
             SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
             exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
             exploDie.transform.position = gameObject.transform.position;
             exploDie.SetActive(true);
         }
 
     }
-    protected virtual void OnComplete(TrackEntry trackEntry)
-    {
-        if (trackEntry == null)
-            return;
-        if (aec.die != null)
-        {
-            if (trackEntry.Animation.Name.Equals(aec.die.name))
-            {
-                if (!isBoss && !isMiniBoss)
-                {
-                    gameObject.SetActive(false);
-                    AfterDead();
-                }
-            }
-        }
 
 
-    }
     [HideInInspector]
     public Vector2 posExplo;
 
@@ -582,15 +592,18 @@ public class EnemyBase : AutoTarget
         if (takeDamageBox != null)
             takeDamageBox.enabled = false;
         GameController.instance.targetDetectSprite.SetActive(false);
+
         skeletonAnimation.ClearState();
         if (!isBoss && !isMiniBoss)
         {
+            ItemDropFormDead();
             if (!frameOn)
                 if (aec.die != null)
+                {
                     PlayAnim(0, aec.die, false);
+                }
                 else
                 {
-                    AfterDead();
                     gameObject.SetActive(false);
                 }
             else
@@ -651,6 +664,7 @@ public class EnemyBase : AutoTarget
                     currenthealthfill += healthFill[indexHealthFill];
                     GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                 }
+
             }
             return;
         }

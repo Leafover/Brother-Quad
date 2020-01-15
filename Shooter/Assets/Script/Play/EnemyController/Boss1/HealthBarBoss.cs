@@ -9,6 +9,7 @@ public class HealthBarBoss : MonoBehaviour
     public void DisplayHealthFill(float _health,float maxHealth,int current)
     {
         healthFill[current].fillAmount = _health / maxHealth;
+        healthbossText.color = healthFill[current].color;
     }
     public void DisplayBegin(string _name)
     {

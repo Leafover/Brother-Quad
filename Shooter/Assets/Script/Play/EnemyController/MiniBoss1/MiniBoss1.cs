@@ -161,7 +161,24 @@ public class MiniBoss1 : EnemyBase
     }
     IEnumerator delayExplo()
     {
-        yield return new WaitForSeconds(1);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        exploDie.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+        exploDie.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
         exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
         posExplo.x = gameObject.transform.position.x;
