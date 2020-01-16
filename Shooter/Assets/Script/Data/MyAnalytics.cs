@@ -33,6 +33,10 @@ public class MyAnalytics
         FirebaseAnalytics.LogEvent(EVENT_LEVEL_PLAY, _pamLevelPlay);
     }
 
+    public static void LogMoreGame()
+    {
+        FirebaseAnalytics.LogEvent("more_game_click");
+    }
     #region Call In GamePlay
     public static void LogEventLoseLevel(int level, int checkPointIndex, int stage)//5
     {

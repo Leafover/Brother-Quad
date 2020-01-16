@@ -86,6 +86,10 @@ public class MainMenuController : MonoBehaviour
         {
             ShowMapNotify("Stage " + stage + " Coming Soon");
         }
+        else if (stage - 1 > DataUtils.GetStageIndex())
+        {
+            ShowMapNotify("Please complete Stage " + (stage - 1) + " first");
+        }
         else
         {
             stageSelected = stage;

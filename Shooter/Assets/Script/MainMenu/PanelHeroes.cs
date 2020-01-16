@@ -14,11 +14,16 @@ public class PanelHeroes : MonoBehaviour
     public Text txtPriceUpdate;
     public Text txtPiceSelected;
     public TextMeshProUGUI txtHealth, txtDamage, txtAttSpeed, txtCritDamage, txtCritRate, txtDefRate;
+    public ParticleSystem pEvolve;
 
 
     private PlayerData pData;
     private double priceUpdate;
     private WeaponList weaponData, weaponDataNext;
+    private void Awake()
+    {
+        pEvolve.Stop();
+    }
     private void OnEnable()
     {
         FillHeroData();
@@ -72,6 +77,7 @@ public class PanelHeroes : MonoBehaviour
         {
             DataUtils.playerInfo.level += 1;
             DataUtils.AddCoinAndGame((int)-priceUpdate, 0);
+            pEvolve.Play();
             FillHeroData();
             DataUtils.SavePlayerData();
         }

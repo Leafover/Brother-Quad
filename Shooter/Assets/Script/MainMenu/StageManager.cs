@@ -42,6 +42,14 @@ public class StageManager : MonoBehaviour
             {
                 DataStage dataStage = new DataStage();
                 dataStage.stageName = gStages[i].name;
+                if (i == 0)
+                {
+                    dataStage.stageHasUnlock = true;
+                }
+                else
+                {
+                    dataStage.stageHasUnlock = false;
+                }
                 for (int j = 0; j < gStages[i].transform.childCount; j++)
                 {
                     MapLevelControll levelControll = gStages[i].transform.GetChild(j).GetComponent<MapLevelControll>();
@@ -122,10 +130,6 @@ public class StageManager : MonoBehaviour
                 {
                     levelControll.imgMap.sprite = imgMapUnlock;
                 }
-                //if (levelControll.imgMap.color == clSelected)
-                //{
-                //    levelControll.imgMap.color = clUnlock;
-                //}
             }
         }
     }
