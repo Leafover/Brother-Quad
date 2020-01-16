@@ -20,7 +20,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1;
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die, soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2;
     public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun;
-    public AudioSource au, auBG;
+    public AudioSource au;
     void Awake()
     {
         if (instance == null)
@@ -32,12 +32,15 @@ public class SoundController : MonoBehaviour
             DestroyImmediate(gameObject);
         //  Debug.Log("Init");
     }
+
     public System.Action activeSoundEnemy;
     public void DisplaySetting()
     {
         au.mute = !DataUtils.IsSoundOn();
-        if (auBG != null)
-            auBG.mute = !DataUtils.IsMusicOn();
+        if (MenuController.instance != null)
+        {
+            MenuController.instance.auBG.mute = !DataUtils.IsMusicOn();
+        }
         if (GameController.instance != null)
         {
             GameController.instance.auBG.mute = !DataUtils.IsMusicOn();

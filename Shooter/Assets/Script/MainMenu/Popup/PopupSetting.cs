@@ -11,7 +11,7 @@ public class PopupSetting : MonoBehaviour
     public GameObject gPanelSetting;
     public Toggle tgSound, tgMusic;
 
-
+    public AudioSource auBG;
     private void Awake()
     {
         if (Instance == null)
@@ -24,10 +24,13 @@ public class PopupSetting : MonoBehaviour
     {
         CheckSoundAndMusic();
     }
+
     public void CheckSoundAndMusic()
     {
-        tgSound.isOn = DataUtils.IsSoundOn();
-        tgMusic.isOn = DataUtils.IsMusicOn();
+       // if (tgSound != null)
+            tgSound.isOn = DataUtils.IsSoundOn();
+        //if (tgMusic != null)
+            tgMusic.isOn = DataUtils.IsMusicOn();
     }
     private void Update()
     {
@@ -40,6 +43,7 @@ public class PopupSetting : MonoBehaviour
     public void ShowPanelSetting()
     {
         gPanelSetting.SetActive(true);
+
     }
     public void HideSetting()
     {
@@ -69,12 +73,20 @@ public class PopupSetting : MonoBehaviour
     }
     public void ChangeSound()
     {
-        DataUtils.ChangeSound(tgSound.isOn);
-        SoundController.instance.DisplaySetting();
+        if (gPanelSetting.activeSelf)
+        {
+            DataUtils.ChangeSound(tgSound.isOn);
+            if (SoundController.instance != null)
+                SoundController.instance.DisplaySetting();
+        }
     }
     public void ChangeMusic()
     {
-        DataUtils.ChangeMusic(tgMusic.isOn);
-        SoundController.instance.DisplaySetting();
+        if (gPanelSetting.activeSelf)
+        {
+            DataUtils.ChangeMusic(tgMusic.isOn);
+            if (SoundController.instance != null)
+                SoundController.instance.DisplaySetting();
+        }
     }
 }
