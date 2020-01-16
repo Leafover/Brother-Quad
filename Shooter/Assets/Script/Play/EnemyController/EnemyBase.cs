@@ -199,6 +199,8 @@ public class EnemyBase : AutoTarget
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
+        if (au != null)
+            SoundController.instance.activeSoundEnemy -= ActiveSound;
         acOnUpdate -= OnUpdate;
         if (GameController.instance != null)
         {
@@ -221,9 +223,18 @@ public class EnemyBase : AutoTarget
 
         //  Debug.Log("init =====");
     }
+    void ActiveSound()
+    {
+        au.mute = !DataUtils.IsSoundOn();
+    }
     public virtual void Init()
     {
 
+        if (au != null)
+        {
+            au.mute = !DataUtils.IsSoundOn();
+            SoundController.instance.activeSoundEnemy += ActiveSound;
+        }
         if (DataParam.indexMode == 1)
         {
             levelBase += 3;

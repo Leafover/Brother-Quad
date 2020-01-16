@@ -127,7 +127,6 @@ public class GameController : MonoBehaviour
         //  currentMap.myBg.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,currentMap.myBg.transform.position.z);
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
-
         DisplaySetting();
     }
     public float timeCountCombo, maxtimeCountCombo;
@@ -438,7 +437,7 @@ public class GameController : MonoBehaviour
 
     public void DisplaySetting()
     {
-        auBG.mute = DataUtils.IsMusicOn();
+        auBG.mute = !DataUtils.IsMusicOn();
     }
     public void DIE()
     {

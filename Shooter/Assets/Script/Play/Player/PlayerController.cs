@@ -102,17 +102,17 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        if (playerState == PlayerState.Die)
+        if (playerState == PlayerState.Die || GameController.instance.gameState == GameController.GameState.gameover)
             return;
         if (isReviving)
             return;
 
         health -= damage;
-        if (health <= maxHealth / 100 * 5)
+        if (health <= maxHealth / 100 * 10)
         {
-            if (au.mute)
+            if (!GameController.instance.uiPanel.lowHealth.activeSelf)
             {
-                au.mute = false;
+                au.Play();
                 GameController.instance.uiPanel.lowHealth.SetActive(true);
             }
         }
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
             AnimDie();
             playerState = PlayerState.Die;
             SoundController.instance.PlaySound(soundGame.playerDie);
-            au.mute = true;
+            au.Stop();
             rid.velocity = Vector2.zero;
             speedmove = 0;
             stunEffect.SetActive(false);
@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
         currentGun = index;
         skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
         CalculateForGun();
-      //  Debug.LogError(currentGun);
+        //  Debug.LogError(currentGun);
     }
     public void CalculateForGun()
     {
@@ -300,18 +300,14 @@ public class PlayerController : MonoBehaviour
         timePreviousMeleeAttack = 0;
 
         waitBeAttack = new WaitForSeconds(0.075f);
-
-
-
         // currentGun = 0;
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
         // skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
-
-
         AddProperties();
-
         SetGun(0);
         //   Debug.Log(skins.Length);
+
+        au.mute = !DataUtils.IsSoundOn();
     }
     public int currentGun;
     public void AddProperties()
@@ -457,10 +453,10 @@ public class PlayerController : MonoBehaviour
         }
         SetAnim();
 
-        if(isReviving)
+        if (isReviving)
         {
             timereviving -= deltaTime;
-            if(timereviving <= 0)
+            if (timereviving <= 0)
             {
                 shield.SetActive(false);
                 timereviving = 2;
@@ -549,11 +545,11 @@ public class PlayerController : MonoBehaviour
                 if (currentGun != 0)
                 {
                     SetGun(0);
-                  //  Debug.LogError("reset gun");
+                    //  Debug.LogError("reset gun");
                     return;
                 }
 
-               // Debug.LogError("reload active");
+                // Debug.LogError("reload active");
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
@@ -861,7 +857,6 @@ public class PlayerController : MonoBehaviour
             return;
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
-        speedmove = 0;
     }
     public void AnimIdle()
     {
@@ -929,7 +924,7 @@ public class PlayerController : MonoBehaviour
                 CreateBullet();
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
-              //  Debug.LogError("shooooooot" + timePreviousAttack);
+                //  Debug.LogError("shooooooot" + timePreviousAttack);
                 break;
         }
 
@@ -1091,10 +1086,10 @@ public class PlayerController : MonoBehaviour
         health += _health;
         if (!effecthealth.activeSelf)
             effecthealth.SetActive(true);
-        if (health > maxHealth / 100 * 5)
+        if (health > maxHealth / 100 * 10)
         {
-                au.mute = true;
-                GameController.instance.uiPanel.lowHealth.SetActive(false);
+            au.Stop();
+            GameController.instance.uiPanel.lowHealth.SetActive(false);
         }
         ShowLineBlood();
         if (health >= maxHealth)
@@ -1117,7 +1112,7 @@ public class PlayerController : MonoBehaviour
             ResetPosRevive(true);
         }
     }
-   public void ResetPosRevive(bool afterdie)
+    public void ResetPosRevive(bool afterdie)
     {
         var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
 

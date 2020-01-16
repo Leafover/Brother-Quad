@@ -32,6 +32,7 @@ public class SoundController : MonoBehaviour
             DestroyImmediate(gameObject);
       //  Debug.Log("Init");
     }
+   public System.Action activeSoundEnemy;
     public void DisplaySetting()
     {
         au.mute = !DataUtils.IsSoundOn();
@@ -41,6 +42,14 @@ public class SoundController : MonoBehaviour
         {
             GameController.instance.auBG.mute = !DataUtils.IsMusicOn();
         }
+        if (PlayerController.instance != null)
+        {
+            if (PlayerController.instance.au != null)
+            {
+                PlayerController.instance.au.mute = !DataUtils.IsSoundOn();
+            }
+        }
+        activeSoundEnemy();
     }
     public void PlaySound(soundGame currentSound)
     {
