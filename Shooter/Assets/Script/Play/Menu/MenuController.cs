@@ -16,3 +16,4 @@ public class MenuController : MonoBehaviour
         SoundController.instance.DisplaySetting();
     }
 }
+ 

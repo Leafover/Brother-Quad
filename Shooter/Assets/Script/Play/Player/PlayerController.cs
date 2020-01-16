@@ -572,6 +572,15 @@ public class PlayerController : MonoBehaviour
     {
         numberBullet -= _sub;
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
+
+        if(numberBullet <= 5)
+        {
+            GameController.instance.uiPanel.bulletText.color = Color.red;
+        }
+        else
+        {
+            GameController.instance.uiPanel.bulletText.color = Color.white;
+        }
     }
     Vector2 posTemp;
     void LockPlayer()
@@ -1084,7 +1093,6 @@ public class PlayerController : MonoBehaviour
     //}
     public void AddHealth(float _health)
     {
-
         if (playerState == PlayerState.Die)
             return;
 
