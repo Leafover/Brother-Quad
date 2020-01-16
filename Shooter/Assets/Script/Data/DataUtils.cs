@@ -14,6 +14,7 @@ public class DataUtils
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
     public const string KEY_GAME_STAGE = GAME_KEY + "KEY_GAME_STAGE";
+    public const string KEY_GAME_STAGE_INDEX = GAME_KEY + "KEY_GAME_STAGE_INDEX";
     public const string KEY_PLAYER_DATA = GAME_KEY + "KEY_PLAYER_DATA";
     public const string KEY_HEROES_INDEX = GAME_KEY + "KEY_HEROES_INDEX";
     public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
@@ -121,6 +122,15 @@ public class DataUtils
     #endregion
     
     #region Stage Data
+    public static int GetStageIndex()
+    {
+        return PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX, 0);
+    }
+    private static void StageIncrease()
+    {
+        int curStage = GetStageIndex() + 1;
+        PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX, curStage);
+    }
     public static bool StageHasInit()
     {
         return PlayerPrefs.HasKey(KEY_GAME_STAGE);
@@ -152,30 +162,37 @@ public class DataUtils
     {
         MapLevel mLevel = new MapLevel();
         string key = stage + "_" + level;
-        foreach(MapLevel _m in lstAllStage[stage].levels)
-        {
-            if (_m.levelID.Equals(key))
-            {
-                mLevel = _m;
-            }
-        }
+        mLevel = lstAllStage[stage].levels[level];
+        //foreach(MapLevel _m in lstAllStage[stage].levels)
+        //{
+        //    if (_m.levelID.Equals(key))
+        //    {
+        //        mLevel = _m;
+        //    }
+        //}
         return mLevel;
     }
 
     public static void SaveLevel(int stage, int mapIndex)
     {
         string key = stage + "_" + mapIndex;
-
-        for (int i = 0; i < lstAllStage.Count; i++)
+        
+        //for (int i = 0; i < lstAllStage.Count; i++)
         {
-            for (int j = 0; j < lstAllStage[i].levels.Count; j++)
+            //for (int j = 0; j < lstAllStage[/*i*/stage].levels.Count; j++)
             {
-                if (lstAllStage[i].levels[j].levelID.Equals(key))
+                //if (lstAllStage[/*i*/stage].levels[/*j*/mapIndex].levelID.Equals(key))
                 {
-                    lstAllStage[i].levels[j].hasComplete = true;
-                    lstAllStage[i].levelUnlock = j;
+                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].hasComplete = true;
+                    lstAllStage[/*i*/stage].levelUnlock = /*j*/mapIndex;
                 }
             }
+        }
+
+        if (mapIndex == 7)
+        {
+            lstAllStage[(stage + 1 > lstAllStage.Count ? stage : stage + 1)].stageHasUnlock = true;
+            StageIncrease();
         }
 
         string jSave = JsonMapper.ToJson(lstAllStage);
@@ -184,15 +201,15 @@ public class DataUtils
 
     public static void SaveStars(int stage, int mapIndex, bool miss1, bool miss2) {
         string key = stage + "_" + mapIndex;
-        for (int i = 0; i < lstAllStage.Count; i++)
+        //for (int i = 0; i < lstAllStage.Count; i++)
         {
-            for (int j = 0; j < lstAllStage[i].levels.Count; j++)
+            //for (int j = 0; j < lstAllStage[i].levels.Count; j++)
             {
-                if (lstAllStage[i].levels[j].levelID.Equals(key))
+                //if (lstAllStage[i].levels[j].levelID.Equals(key))
                 {
-                    lstAllStage[i].levels[j].mission[0].isPass = true;
-                    lstAllStage[i].levels[j].mission[1].isPass = miss1;
-                    lstAllStage[i].levels[j].mission[2].isPass = miss2;
+                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[0].isPass = true;
+                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[1].isPass = miss1;
+                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[2].isPass = miss2;
                 }
             }
         }

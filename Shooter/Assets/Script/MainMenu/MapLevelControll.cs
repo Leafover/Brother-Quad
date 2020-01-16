@@ -77,6 +77,10 @@ public class MapLevelControll : MonoBehaviour
             {
                 _mIndex = 0;
             }
+            else if (DataUtils.lstAllStage[MainMenuController.Instance.stageSelected - 1].levelUnlock == StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount-1)
+            {
+                _mIndex = StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1;
+            }
             else
             {
                 _mIndex = DataUtils.lstAllStage[MainMenuController.Instance.stageSelected - 1].levelUnlock + 1;
