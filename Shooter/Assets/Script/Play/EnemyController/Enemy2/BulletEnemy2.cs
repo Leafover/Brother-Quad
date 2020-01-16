@@ -59,8 +59,10 @@ public class BulletEnemy2 : BulletEnemy
     {
         yield return wait;
         rid.velocity = (dir * speed);
-        rid.gravityScale = 1f;
+        rid.gravityScale = 2f;
         skelatonAnim.AnimationState.SetAnimation(0, animfly, true);
+        //yield return wait;
+        //rid.gravityScale = 1.5f;
     }
     public override void OnDisable()
     {

@@ -22,6 +22,7 @@ public class AllMap
 }
 
 
+
 public class GameController : MonoBehaviour
 {
     public List<Sprite> gunSprite;

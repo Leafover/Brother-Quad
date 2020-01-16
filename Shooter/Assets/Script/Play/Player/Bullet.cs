@@ -10,12 +10,14 @@ public class Bullet : MonoBehaviour
     {
         if (PlayerController.instance == null)
             return;
+
         existtime = PlayerController.instance.attackRange / 10;
         speed = PlayerController.instance.bulletSpeed / 100;
         rid.AddForce(transform.right * speed);
     }
     private void Update()
     {
+
         existtime -= Time.deltaTime;
         if (existtime <= 0)
         {
@@ -23,4 +25,5 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
 }

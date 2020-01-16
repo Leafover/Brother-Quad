@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         timePreviousGrenade = timedelayGrenade;
 
         //    Debug.Log(timePreviousGrenade);
-        if (isGround)
+        if (playerState != PlayerState.Jump)
         {
             skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
             isGrenade = true;
@@ -637,31 +637,36 @@ public class PlayerController : MonoBehaviour
 
     public void CreateBulletShotGun()
     {
+        bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        angle2 = angle + 10;
-        angle3 = angle - 10;
-        for (int i = 0; i < 3; i++)
-        {
-            bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
-            if (i == 1)
-            {
-                rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
-                bullet.transform.rotation = rotation2;
-            }
-            else if (i == 2)
-            {
-                rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
-                bullet.transform.rotation = rotation3;
-            }
-            else if (i == 0)
-            {
-                rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                bullet.transform.rotation = rotation;
-            }
-            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bullet.SetActive(true);
-        }
+        //angle2 = angle + 10;
+        //angle3 = angle - 10;
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
+        //    if (i == 1)
+        //    {
+        //        rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
+        //        bullet.transform.rotation = rotation2;
+        //    }
+        //    else if (i == 2)
+        //    {
+        //        rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
+        //        bullet.transform.rotation = rotation3;
+        //    }
+        //    else if (i == 0)
+        //    {
+        //        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //        bullet.transform.rotation = rotation;
+        //    }
+        //    bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        //    bullet.SetActive(true);
+        //}
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        bullet.transform.rotation = rotation;
+        bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        bullet.SetActive(true);
     }
     public void CreateBullet()
     {
@@ -1137,6 +1142,15 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Idle;
         AnimIdle();
         isReviving = true;
+
+        meleeAtackBox.gameObject.SetActive(false);
+        isWaitStand = false;
+        isfalldow = false;
+        isSlow = false;
+        isMeleeAttack = false;
+        isGrenade = false;
+        isGround = false;
+
         timereviving = 2;
         transform.position = posPlayerRevive;
         shield.SetActive(true);

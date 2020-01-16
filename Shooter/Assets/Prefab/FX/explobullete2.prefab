@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2653044177258325238}
+  - {fileID: 1964410816310411173}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.3
   bulletEnemy: {fileID: 0}
+  isExploOffboss: 0
   typeExplo: 0
 --- !u!1001 &4356279426670905056
 PrefabInstance:
@@ -119,11 +120,31 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2825551593113532741, guid: 615942deeeb1f44469494963e03ee64a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825551593113532741, guid: 615942deeeb1f44469494963e03ee64a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825551593113532741, guid: 615942deeeb1f44469494963e03ee64a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825551593113532743, guid: 615942deeeb1f44469494963e03ee64a,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 615942deeeb1f44469494963e03ee64a, type: 3}
---- !u!4 &2653044177258325238 stripped
+--- !u!4 &1964410816310411173 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1775857040248889878, guid: 615942deeeb1f44469494963e03ee64a,
+  m_CorrespondingSourceObject: {fileID: 2825551593113532741, guid: 615942deeeb1f44469494963e03ee64a,
     type: 3}
   m_PrefabInstance: {fileID: 4356279426670905056}
   m_PrefabAsset: {fileID: 0}

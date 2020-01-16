@@ -787,8 +787,8 @@ public class EnemyBase : AutoTarget
                     TakeDamage(PlayerController.instance.damageBullet);
                     //  Debug.Log("Take Dâmgwe");
                 }
-
-                collision.gameObject.SetActive(false);
+                if (!collision.CompareTag("shotgun"))
+                    collision.gameObject.SetActive(false);
                 break;
             case 14:
                 if (!incam || enemyState == EnemyState.die)

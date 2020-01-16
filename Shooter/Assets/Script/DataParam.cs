@@ -14,6 +14,8 @@ public class DataParam : MonoBehaviour
     "Kill as many enemies as possible to unlock achievements and daily quests",
     "Shotguns may have low attack range but can deal massive damage",
     "Upgrading your character also grants you skill points that can be used in the skill tree",};
+
+
     public static void AddCoin(float _coin)
     {
         totalCoin += _coin;

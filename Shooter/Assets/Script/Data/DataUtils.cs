@@ -177,7 +177,7 @@ public class DataUtils
                 }
             }
         }
-
+        Debug.LogError("==== Player ====");
         string jSave = JsonMapper.ToJson(lstAllStage);
         SaveStage(jSave);
     }

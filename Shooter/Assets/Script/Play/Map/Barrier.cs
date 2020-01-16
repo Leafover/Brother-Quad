@@ -73,7 +73,8 @@ public class Barrier : MonoBehaviour
         {
             case 11:
                 TakeDamage(PlayerController.instance.damageBullet);
-                collision.gameObject.SetActive(false);
+                if (!collision.CompareTag("shotgun"))
+                    collision.gameObject.SetActive(false);
                 break;
             case 14:
                 TakeDamage(PlayerController.instance.damgeGrenade);
