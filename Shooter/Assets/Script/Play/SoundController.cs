@@ -19,7 +19,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin, sounddapchao, soundCritHit, soundGrenadeKill, soundWham;
     public AudioClip soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1;
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die, soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2;
-    public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2,soundChangeGun;
+    public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun;
     public AudioSource au, auBG;
     void Awake()
     {
@@ -30,15 +30,15 @@ public class SoundController : MonoBehaviour
         }
         else
             DestroyImmediate(gameObject);
-      //  Debug.Log("Init");
+        //  Debug.Log("Init");
     }
-   public System.Action activeSoundEnemy;
+    public System.Action activeSoundEnemy;
     public void DisplaySetting()
     {
         au.mute = !DataUtils.IsSoundOn();
         if (auBG != null)
             auBG.mute = !DataUtils.IsMusicOn();
-        if(GameController.instance != null)
+        if (GameController.instance != null)
         {
             GameController.instance.auBG.mute = !DataUtils.IsMusicOn();
         }
@@ -49,7 +49,8 @@ public class SoundController : MonoBehaviour
                 PlayerController.instance.au.mute = !DataUtils.IsSoundOn();
             }
         }
-        activeSoundEnemy();
+        if (activeSoundEnemy != null)
+            activeSoundEnemy();
     }
     public void PlaySound(soundGame currentSound)
     {
