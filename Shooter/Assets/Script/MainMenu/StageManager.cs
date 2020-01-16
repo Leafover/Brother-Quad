@@ -122,10 +122,6 @@ public class StageManager : MonoBehaviour
                 {
                     levelControll.imgMap.sprite = imgMapUnlock;
                 }
-                //if (levelControll.imgMap.color == clSelected)
-                //{
-                //    levelControll.imgMap.color = clUnlock;
-                //}
             }
         }
     }

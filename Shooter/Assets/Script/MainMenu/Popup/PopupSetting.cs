@@ -60,6 +60,7 @@ public class PopupSetting : MonoBehaviour
     }
     public void MoreGame()
     {
+        MyAnalytics.LogMoreGame();
         Application.OpenURL(DataUtils.LINK_MORE_GAME);
     }
     public void RateUs()

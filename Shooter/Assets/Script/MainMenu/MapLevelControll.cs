@@ -14,6 +14,11 @@ public class MapLevelControll : MonoBehaviour
     public bool canPlay;
 
     public Image imgMap;
+    public float yAdd = 0.5f;
+    public float speed = 5.0f;
+    public bool beginPingpong;
+    private Vector3 vDes, vCur;
+
     private void Awake()
     {
         btn = GetComponent<Button>();
@@ -25,8 +30,19 @@ public class MapLevelControll : MonoBehaviour
             canPlay = true;
         }
     }
+    private void Update()
+    {
+        if (beginPingpong)
+        {
+            //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(speed*Time.time, yAdd), transform.localPosition.z);
+        }
+    }
     private void OnEnable()
     {
+        //vCur = transform.localPosition;
+        //vDes = new Vector3(vCur.x, vCur.y + yAdd, vCur.z);
+
+
         SwitchColor();
         btn.onClick.AddListener(() => {
             MainMenuController.Instance.SoundClickButton();
@@ -46,7 +62,9 @@ public class MapLevelControll : MonoBehaviour
         }
         var miss_ = DataController.instance.allMission[_stage].missionData[_mapIndex];
         GetMapInfo(miss_, _stage, _mapIndex);
+        beginPingpong = true;
     }
+
     private void CheckMapUnlock()
     {
         int _mIndex = 0;
