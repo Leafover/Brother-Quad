@@ -129,6 +129,11 @@ public class StageManager : MonoBehaviour
                 if(levelControll.mapIndex != _mapIndex)
                 {
                     levelControll.imgMap.sprite = imgMapUnlock;
+                    levelControll.transform.localScale = levelControll.vCurScale;
+                }
+                else
+                {
+                    levelControll.transform.localScale = levelControll.vDesScale;
                 }
             }
         }
@@ -205,7 +210,8 @@ public class StageManager : MonoBehaviour
             MissionController.Instance.listMissions.Add(_listMission);
 
             DataParam.nextSceneAfterLoad = 2;
-            Application.LoadLevel(1);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            //Application.LoadLevel(1);
             #endregion
         }
     }

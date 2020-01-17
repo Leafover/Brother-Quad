@@ -71,7 +71,6 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
         var catalog = ProductCatalog.LoadDefaultCatalog();
         foreach (var product in catalog.allValidProducts)
         {
-            //Debug.LogError("IAP::: " + product.id + " vs" + product.googlePrice + " vs " + product.type);
             if (product.allStoreIDs.Count > 0)
             {
                 var ids = new IDs();
