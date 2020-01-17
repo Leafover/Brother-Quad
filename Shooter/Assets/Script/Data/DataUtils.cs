@@ -342,6 +342,6 @@ public class DataUtils
 
     public static string DisplayRichText(double dFrom, double dTo)
     {
-        return "<color=white>" + dFrom + "</color>" + "==> <color=green>" + dTo + "</color>";
+        return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
     }
 }

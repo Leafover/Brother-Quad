@@ -8,12 +8,14 @@ public class PanelHeroes : MonoBehaviour
 {
     public Sprite sprStar, sprStarUnlock;
     public Image[] imgAllStars;
+    public Image imgArrow;
     public TextMeshProUGUI txtLevel;
     public Text txtCurPice;
     public Text txtCurHealth, txtCurDamage;
     public Text txtPriceUpdate;
     public Text txtPiceSelected;
     public TextMeshProUGUI txtHealth, txtDamage, txtAttSpeed, txtCritDamage, txtCritRate, txtDefRate;
+    public TextMeshProUGUI txtHealthUP, txtDamageUP, txtAttSpeedUP, txtCritDamageUP, txtCritRateUP;
     public ParticleSystem pEvolve;
 
 
@@ -51,7 +53,8 @@ public class PanelHeroes : MonoBehaviour
                         txtCurHealth.text = pData.hp.ToString();
                         if (i + 1 < DataController.instance.playerData.Count)
                         {
-                            txtHealth.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
+                            txtHealth.text = pData.hp.ToString(); // DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
+                            txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
                         }
                     }
                 }
@@ -60,10 +63,17 @@ public class PanelHeroes : MonoBehaviour
         weaponData = DataController.instance.allWeapon[0].weaponList[0];
         weaponDataNext = DataController.instance.allWeapon[0].weaponList[1];
 
-        txtDamage.text = DataUtils.DisplayRichText(weaponData.Dmg, weaponDataNext.Dmg);
-        txtAttSpeed.text = DataUtils.DisplayRichText(weaponData.BulletSpeed, weaponDataNext.BulletSpeed);
-        txtCritDamage.text = DataUtils.DisplayRichText(weaponData.CritDmg, weaponDataNext.CritDmg);
-        txtCritRate.text = DataUtils.DisplayRichText(weaponData.CritRate, weaponDataNext.CritRate);
+        txtDamage.text = weaponData.Dmg.ToString();
+        txtDamageUP.text = DataUtils.DisplayRichText(weaponData.Dmg, weaponDataNext.Dmg);
+
+        txtAttSpeed.text = weaponData.BulletSpeed.ToString();
+        txtAttSpeedUP.text = DataUtils.DisplayRichText(weaponData.BulletSpeed, weaponDataNext.BulletSpeed);
+
+        txtCritDamage.text = weaponData.CritDmg.ToString();
+        txtCritDamageUP.text = DataUtils.DisplayRichText(weaponData.CritDmg, weaponDataNext.CritDmg);
+
+        txtCritRate.text = weaponData.CritRate.ToString();
+        txtCritRateUP.text = DataUtils.DisplayRichText(weaponData.CritRate, weaponDataNext.CritRate);
 
         txtCurDamage.text = weaponData.Dmg.ToString();
 
@@ -83,7 +93,7 @@ public class PanelHeroes : MonoBehaviour
         }
         else
         {
-            MainMenuController.Instance.ShowMapNotify("Not enough coins to evolve.");
+            MainMenuController.Instance.ShowMapNotify("Not enough coins to level up.");
         }
     }
 }

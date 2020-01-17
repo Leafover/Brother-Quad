@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Coffee.UIExtensions;
 
 public class MapLevelControll : MonoBehaviour
 {
     public MapLevelControll mapLevelControll;
     public int stageIndex;
     public int mapIndex;
+    public UIShiny uiShiny;
     public Image[] imgStars;
     private Button btn;
     //[HideInInspector]
