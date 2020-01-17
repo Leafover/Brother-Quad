@@ -134,10 +134,12 @@ public class StageManager : MonoBehaviour
                 {
                     levelControll.imgMap.sprite = imgMapUnlock;
                     levelControll.transform.localScale = levelControll.vCurScale;
+                    levelControll.uiShiny.enabled = false;
                 }
                 else
                 {
                     levelControll.transform.localScale = levelControll.vDesScale;
+                    levelControll.uiShiny.enabled = true;
                 }
             }
         }

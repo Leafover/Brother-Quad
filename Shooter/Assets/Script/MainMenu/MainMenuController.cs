@@ -51,6 +51,7 @@ public class MainMenuController : MonoBehaviour
     }
     private void OnEnable()
     {
+        UpdateCoinAndGem();
         HideAllPanel();
     }
 
