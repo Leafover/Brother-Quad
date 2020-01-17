@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource au;
     public Animator animArrow;
     public int level = 1;
-    public bool isGrenade;
+    //public bool isGrenade;
     public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate;
     [HideInInspector]
     public bool reload, stun;
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
             isfalldow = false;
             isSlow = false;
             isMeleeAttack = false;
-            isGrenade = false;
+            //isGrenade = false;
             isGround = false;
             health = 0;
         }
@@ -203,8 +203,8 @@ public class PlayerController : MonoBehaviour
     public void TryGrenade()
     {
 
-        if (meleeAtackBox.gameObject.activeSelf)
-            return;
+        //if (meleeAtackBox.gameObject.activeSelf)
+        //    return;
 
         if (timePreviousGrenade > 0)
             return;
@@ -214,7 +214,10 @@ public class PlayerController : MonoBehaviour
         if (playerState != PlayerState.Jump)
         {
             skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
-            isGrenade = true;
+            GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+            grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+            grenade.SetActive(true);
+            // isGrenade = true;
         }
         else
         {
@@ -288,7 +291,7 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.Initialize(true);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
         boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);
-        skeletonAnimation.AnimationState.Event += HandleEvent;
+   //     skeletonAnimation.AnimationState.Event += HandleEvent;
         skeletonAnimation.AnimationState.Complete += OnComplete;
 
 
@@ -500,10 +503,10 @@ public class PlayerController : MonoBehaviour
         }
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
-        if (timePreviousMeleeAttack > 0)
+        if (timePreviousMeleeAttack >= 0)
         {
             timePreviousMeleeAttack -= deltaTime;
-            if (timePreviousMeleeAttack <= 0 && meleeAtackBox.gameObject.activeSelf)
+            if (timePreviousMeleeAttack <= 0 /*&& meleeAtackBox.gameObject.activeSelf*/)
                 meleeAtackBox.gameObject.SetActive(false);
         }
         if (playerState == PlayerState.Idle)
@@ -712,34 +715,33 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void HandleEvent(TrackEntry trackEntry, Spine.Event e)
-    {
-        if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
-        {
-            //  CreateBullet();
-            //  Debug.Log(currentGun);
-        }
-        else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
-        {
-            grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
-            grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
-            grenade.SetActive(true);
-            isGrenade = false;
-        }
-
-    }
+    //void HandleEvent(TrackEntry trackEntry, Spine.Event e)
+    //{
+    //    if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
+    //    {
+    //        //  CreateBullet();
+    //        //  Debug.Log(currentGun);
+    //    }
+    //    else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
+    //    {
+    //        grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
+    //        grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
+    //        grenade.SetActive(true);
+    //        isGrenade = false;
+    //    }
+    //}
     private void OnComplete(TrackEntry trackEntry)
     {
         if (trackEntry.Animation.Name.Equals(apc.waitstandAnim.name))
         {
             isWaitStand = false;
         }
-        else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
-        {
-            meleeAtackBox.gameObject.SetActive(false);
-            //skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
-            //skeletonAnimation.AnimationState.SetEmptyAnimation(0, 0);
-        }
+        //else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
+        //{
+        //    meleeAtackBox.gameObject.SetActive(false);
+        //    //skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+        //    //skeletonAnimation.AnimationState.SetEmptyAnimation(0, 0);
+        //}
     }
     public Vector2 GetOriginGun()
     {
@@ -896,12 +898,12 @@ public class PlayerController : MonoBehaviour
     }
     public void MeleeAttack()
     {
-        if (isGrenade || meleeAtackBox.gameObject.activeSelf)
+        if (/*isGrenade ||*/ /*meleeAtackBox.gameObject.activeSelf ||*/ timePreviousMeleeAttack > 0)
         {
+            Debug.LogError("======wtf=====");
             return;
         }
-        if (timePreviousMeleeAttack > 0)
-            return;
+
         timePreviousMeleeAttack = timedelayMeleeAttack;
         skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
         meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
@@ -910,14 +912,10 @@ public class PlayerController : MonoBehaviour
     bool isShoot;
     public void ShootDown()
     {
-        if (reload || isGrenade || meleeAtackBox.gameObject.activeSelf)
+        if (reload /*|| isGrenade*/ || meleeAtackBox.gameObject.activeSelf || isShoot || timePreviousAttack > 0)
         {
             return;
         }
-
-        if (isShoot || timePreviousAttack > 0)
-            return;
-
 
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
         isShoot = true;
@@ -1156,7 +1154,7 @@ public class PlayerController : MonoBehaviour
         isfalldow = false;
         isSlow = false;
         isMeleeAttack = false;
-        isGrenade = false;
+      //  isGrenade = false;
         isGround = false;
 
         timereviving = 2;
