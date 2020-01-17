@@ -16,7 +16,7 @@ public class DestroyAll : MonoBehaviour
                 //PlayerController.instance.rid.velocity = Vector2.zero;
                 //PlayerController.instance.speedmove = 0;
                 SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
-                PlayerController.instance.TakeDamage(PlayerController.instance.maxHealth / 100 * 10);
+                PlayerController.instance.TakeDamage(PlayerController.instance.maxHealth / 100 * 10,false);
                 if (PlayerController.instance.health > 0)
                     PlayerController.instance.ResetPosRevive(false);
                 //if (PlayerController.instance.currentStand != null)

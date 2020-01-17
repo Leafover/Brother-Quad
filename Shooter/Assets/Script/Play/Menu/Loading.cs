@@ -6,7 +6,7 @@ public class Loading : MonoBehaviour
 {
     bool isloading;
     public Image fillImage;
-    public Text hintText;
+    public Text hintText,versionText;
     void Start()
     {
         isloading = true;
@@ -14,6 +14,7 @@ public class Loading : MonoBehaviour
         ObjectPoolerManager.Instance.ClearAllPool();
         ObjectPoolManagerHaveScript.Instance.ClearAllPool();
         hintText.text = DataParam.hints[Random.Range(0, DataParam.hints.Length)];
+        versionText.text = "Version: " + Application.version;
     }
     IEnumerator DelayChangeScene()
     {

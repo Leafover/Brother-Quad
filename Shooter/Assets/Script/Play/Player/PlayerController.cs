@@ -100,11 +100,11 @@ public class PlayerController : MonoBehaviour
         }
         stunEffect.SetActive(true);
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage,bool isNotDestroyAll = true)
     {
         if (playerState == PlayerState.Die || GameController.instance.gameState == GameController.GameState.gameover)
             return;
-        if (isReviving)
+        if (isReviving && isNotDestroyAll)
             return;
 
         health -= damage;
@@ -900,7 +900,7 @@ public class PlayerController : MonoBehaviour
     {
         if (/*isGrenade ||*/ /*meleeAtackBox.gameObject.activeSelf ||*/ timePreviousMeleeAttack > 0)
         {
-            Debug.LogError("======wtf=====");
+       //     Debug.LogError("======wtf=====");
             return;
         }
 
@@ -1147,6 +1147,7 @@ public class PlayerController : MonoBehaviour
         rid.gravityScale = 1;
         playerState = PlayerState.Idle;
         AnimIdle();
+
         isReviving = true;
 
         meleeAtackBox.gameObject.SetActive(false);
