@@ -53,7 +53,7 @@ public class PanelHeroes : MonoBehaviour
                         txtCurHealth.text = pData.hp.ToString();
                         if (i + 1 < DataController.instance.playerData.Count)
                         {
-                            txtHealth.text = pData.hp.ToString(); // DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
+                            txtHealth.text = pData.hp.ToString();
                             txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
                         }
                     }

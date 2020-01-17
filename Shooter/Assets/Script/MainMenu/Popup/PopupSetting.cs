@@ -9,6 +9,7 @@ public class PopupSetting : MonoBehaviour
     public static PopupSetting Instance;
 
     public GameObject gPanelSetting;
+    public GameObject gExitBatle;
     public Toggle tgSound, tgMusic;
 
     public AudioSource auBG;
@@ -35,6 +36,8 @@ public class PopupSetting : MonoBehaviour
     private void Update()
     {
         Time.timeScale = gPanelSetting.activeSelf ? 0 : 1;
+
+        gExitBatle.SetActive(Application.loadedLevelName.Equals("menu") ? false : true);
     }
     public void Back(GameObject g_)
     {
