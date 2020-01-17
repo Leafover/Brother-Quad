@@ -58,8 +58,8 @@ public class PopupSetting : MonoBehaviour
         else
         {
             gPanelSetting.SetActive(false);
-            DataParam.nextSceneAfterLoad = 0;
-            SceneManager.LoadSceneAsync(1);
+            DataParam.nextSceneAfterLoad = 1;
+            SceneManager.LoadSceneAsync(0);
         }
     }
     public void MoreGame()

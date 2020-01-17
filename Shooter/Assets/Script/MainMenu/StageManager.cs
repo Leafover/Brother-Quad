@@ -210,7 +210,7 @@ public class StageManager : MonoBehaviour
             MissionController.Instance.listMissions.Add(_listMission);
 
             DataParam.nextSceneAfterLoad = 2;
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
             //Application.LoadLevel(1);
             #endregion
         }

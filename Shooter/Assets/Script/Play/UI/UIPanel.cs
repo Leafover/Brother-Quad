@@ -40,9 +40,9 @@ public class UIPanel : MonoBehaviour
     public void BtnBackToWorld()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.nextSceneAfterLoad = 0;
+        DataParam.nextSceneAfterLoad = 1;
         MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
-        Application.LoadLevel(1);
+        Application.LoadLevel(0);
     }
 
     public void BtnBack()
@@ -67,10 +67,10 @@ public class UIPanel : MonoBehaviour
         }
         else
         {
-            DataParam.nextSceneAfterLoad = 0;
+            DataParam.nextSceneAfterLoad = 1;
         }
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        Application.LoadLevel(1);
+        Application.LoadLevel(0);
     }
     public void DisplayFinish(int _countstar)
     {

@@ -199,7 +199,7 @@ public class EnemyBase : AutoTarget
             skeletonAnimation.AnimationState.Event -= Event;
             skeletonAnimation.AnimationState.Complete -= Complete;
         }
-        if (au != null)
+        if (au != null && SoundController.instance != null)
             SoundController.instance.activeSoundEnemy -= ActiveSound;
         acOnUpdate -= OnUpdate;
         if (GameController.instance != null)
