@@ -44,11 +44,20 @@ public class UIPanel : MonoBehaviour
         MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
-
+    int randomAds;
     public void BtnBack()
     {
         PopupSetting.Instance.ShowPanelSetting();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
+#if UNITY_EDITOR
+
+#else
+                randomAds = Random.Range(0, 100);
+        if (randomAds < 30)
+        {
+            AdsManager.Instance.ShowInterstitial((b) => { });
+        }
+#endif
         //DataParam.nextSceneAfterLoad = 0;
         //Application.LoadLevel(1);
     }
@@ -141,9 +150,18 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnRevive()
     {
+#if UNITY_EDITOR
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        Reward();
+#else
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        AdsManager.Instance.ShowRewardedVideo((b) => { Reward(); });
+#endif
+    }
+    void Reward()
+    {
         PlayerController.instance.Revive();
         defeatPanel.SetActive(false);
         GameController.instance.gameState = GameController.GameState.play;
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
 }

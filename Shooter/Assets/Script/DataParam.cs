@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 public class DataParam : MonoBehaviour
 {
+    public static bool first = true;
     public static int indexMap, nextSceneAfterLoad = 1, indexStage, indexMode, levelBase;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",

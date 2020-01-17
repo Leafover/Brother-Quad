@@ -428,13 +428,40 @@ public class PlayerController : MonoBehaviour
     public float radius;
     float timeStand = 6;
     public GameObject poitRayGround;
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
+    //}
     float timereviving = 2;
     public void OnUpdate(float deltaTime)
     {
+
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SetGun(0);
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SetGun(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetGun(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SetGun(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetGun(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SetGun(5);
+        }
+
+
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
@@ -714,7 +741,7 @@ public class PlayerController : MonoBehaviour
         bullet.SetActive(true);
 
     }
-
+    Vector2 posBulletTemp;
     //void HandleEvent(TrackEntry trackEntry, Spine.Event e)
     //{
     //    if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))

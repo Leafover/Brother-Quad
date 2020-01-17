@@ -11,9 +11,19 @@ public class MenuController : MonoBehaviour
         instance = this;
         Debug.unityLogger.logEnabled = false;
     }
+    int randomAds;
     private void Start()
     {
         SoundController.instance.DisplaySetting();
+
+        if(!DataParam.first)
+        {
+            randomAds = Random.Range(0, 100);
+            if(randomAds < 20)
+            {
+                AdsManager.Instance.ShowInterstitial((b) => {});
+            }
+        }
 
         DataUtils.FillPlayerDataInfo();
         if (DataUtils.StageHasInit())
@@ -21,6 +31,6 @@ public class MenuController : MonoBehaviour
             DataUtils.FillAllStage();
             Debug.LogError("zooooooooooo2");
         }
-
+        DataParam.first = false;
     }
 }

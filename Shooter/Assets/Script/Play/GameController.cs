@@ -425,11 +425,11 @@ public class GameController : MonoBehaviour
             else
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
         }
-        //DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
-        //DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+        DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
+        DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
 
-        //MissionController.Instance.CheckMission();
-        //MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
+        MissionController.Instance.CheckMission();
+        MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
 
 
         StartCoroutine(delayDisplayFinish());
