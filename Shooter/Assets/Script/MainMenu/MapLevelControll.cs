@@ -14,13 +14,13 @@ public class MapLevelControll : MonoBehaviour
     public bool canPlay;
 
     public Image imgMap;
-    public float yAdd = 0.5f;
-    public float speed = 5.0f;
-    public bool beginPingpong;
-    private Vector3 vDes, vCur;
+    //[HideInInspector]
+    public Vector3 vDesScale, vCurScale;
 
     private void Awake()
     {
+        vCurScale = new Vector3(1, 1, 1);
+        vDesScale = vCurScale * 1.3f;
         btn = GetComponent<Button>();
         imgMap = GetComponent<Image>();
         if (!DataUtils.StageHasInit() && mapIndex == 0)
@@ -32,17 +32,9 @@ public class MapLevelControll : MonoBehaviour
     }
     private void Update()
     {
-        if (beginPingpong)
-        {
-            //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.PingPong(speed*Time.time, yAdd), transform.localPosition.z);
-        }
     }
     private void OnEnable()
     {
-        //vCur = transform.localPosition;
-        //vDes = new Vector3(vCur.x, vCur.y + yAdd, vCur.z);
-
-
         SwitchColor();
         btn.onClick.AddListener(() => {
             MainMenuController.Instance.SoundClickButton();
@@ -59,12 +51,11 @@ public class MapLevelControll : MonoBehaviour
             StageManager.Instance.SwitchColor(_mapIndex);
             imgMap.color = StageManager.Instance.clSelected;
             imgMap.sprite = StageManager.Instance.imgMapSelected;
+            transform.localScale = vDesScale;
         }
         var miss_ = DataController.instance.allMission[_stage].missionData[_mapIndex];
         GetMapInfo(miss_, _stage, _mapIndex);
-        beginPingpong = true;
     }
-
     private void CheckMapUnlock()
     {
         int _mIndex = 0;
@@ -101,6 +92,7 @@ public class MapLevelControll : MonoBehaviour
         {
             imgMap.color = StageManager.Instance.clUnlock;
             imgMap.sprite = StageManager.Instance.imgMapUnlock;
+            transform.localScale = vCurScale;
         }
         else if (MapHasUnlock())
         {
