@@ -9,11 +9,18 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-      //  Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
     }
     private void Start()
     {
         SoundController.instance.DisplaySetting();
+
+        DataUtils.FillPlayerDataInfo();
+        if (DataUtils.StageHasInit())
+        {
+            DataUtils.FillAllStage();
+            Debug.LogError("zooooooooooo2");
+        }
+
     }
 }
- 

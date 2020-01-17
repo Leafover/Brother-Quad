@@ -165,22 +165,14 @@ public class DataController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+       // gameObject.SetActive(false);
     }
-    private void OnEnable()
-    {
-        DataUtils.FillPlayerDataInfo();
-        if (DataUtils.StageHasInit())
-        {
-            DataUtils.FillAllStage();
-        }
-    }
+
     public bool loaddatabegin;
     private void OnValidate()
     {
-
         if (!loaddatabegin)
         {
-
             weaponList.Clear();
             armorList.Clear();
             helmetList.Clear();

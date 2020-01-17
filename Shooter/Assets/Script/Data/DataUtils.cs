@@ -302,6 +302,8 @@ public class DataUtils
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
+
+        Debug.LogError("zooooooooooo1");
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
