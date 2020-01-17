@@ -55,6 +55,10 @@ public class StageManager : MonoBehaviour
                     MapLevelControll levelControll = gStages[i].transform.GetChild(j).GetComponent<MapLevelControll>();
                     MapLevel mapLevel = new MapLevel();
                     mapLevel.levelID = levelControll.stageIndex + "_" + levelControll.mapIndex;
+                    if(i==0 && j == 0)
+                    {
+                        levelControll.canPlay = true;
+                    }
 
                     #region Add Mission to MapLevel
                     Mission mission_ = DataController.instance.allMission[i].missionData[j];

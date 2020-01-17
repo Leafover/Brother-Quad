@@ -51,7 +51,6 @@ public class MapLevelControll : MonoBehaviour
             StageManager.Instance.SwitchColor(_mapIndex);
             imgMap.color = StageManager.Instance.clSelected;
             imgMap.sprite = StageManager.Instance.imgMapSelected;
-            transform.localScale = vDesScale;
         }
         var miss_ = DataController.instance.allMission[_stage].missionData[_mapIndex];
         GetMapInfo(miss_, _stage, _mapIndex);
