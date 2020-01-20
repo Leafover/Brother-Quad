@@ -226,11 +226,11 @@ public class PlayerController : MonoBehaviour
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
 
-        //if (currentGun < GameController.instance.gunSprite.Count - 1)
-        //    currentGun++;
-        //else currentGun = 1;
+        if (currentGun < GameController.instance.gunSprite.Count - 1)
+            currentGun++;
+        else currentGun = 1;
 
-        //SetGun(currentGun);
+        SetGun(currentGun);
         //Debug.Log(currentGun);
     }
     public void SetGun(int index)
@@ -765,12 +765,12 @@ public class PlayerController : MonoBehaviour
         posBulletTemp.x = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x;
         if (posIndexBullet == 0)
         {
-            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y + 0.08f;
+            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y + 0.07f;
             posIndexBullet = 1;
         }
         else
         {
-            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y - 0.08f;
+            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y - 0.07f;
             posIndexBullet = 0;
         }
         bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posBulletTemp;
