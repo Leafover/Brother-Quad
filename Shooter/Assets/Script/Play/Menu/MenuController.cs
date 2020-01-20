@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Debug.unityLogger.logEnabled = false;
+       // Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()
@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
-            Debug.LogError("zooooooooooo2");
+         //   Debug.LogError("zooooooooooo2");
         }
         DataParam.first = false;
     }

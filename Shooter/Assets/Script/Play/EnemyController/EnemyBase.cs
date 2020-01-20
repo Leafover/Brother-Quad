@@ -339,7 +339,7 @@ public class EnemyBase : AutoTarget
     [HideInInspector]
     public int numberCountLayerHelthBarBoss = 0;
 
-    Color colorPink = new Color(1f, 0.3882353f, 3882353f);
+    Color colorPink = new Color(1f, 0.2122642f, 0.2572885f);
     Color colorOrange = new Color(1f, 0.5137255f, 0.2196079f);
     Color colorPurlple = new Color(0.682353f, 0.372549f, 1f);
     Color colorRed = new Color(0.8705883f, 0.172549f, 0.2039216f);
