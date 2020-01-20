@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-       // Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()
