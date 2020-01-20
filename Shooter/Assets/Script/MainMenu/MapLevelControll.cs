@@ -142,12 +142,14 @@ public class MapLevelControll : MonoBehaviour
                     if (_sCutName[_sCutName.Length - 1].Contains("W"))
                     {
                         StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);
+                        ///WILL REMOVE
+                        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
                     }
                     else
                     {
                         StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
+                        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                     }
-                    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                 }
             }
         }
