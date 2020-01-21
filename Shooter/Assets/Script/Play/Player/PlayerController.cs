@@ -503,7 +503,7 @@ public class PlayerController : MonoBehaviour
                 {
                     case 1:
                         countbullet--;
-                        CreateBullet();
+                        CreateBullet(false);
                         if (countbullet == 0)
                         {
                             timePreviousAttack = timedelayAttackGun * 3;
@@ -732,7 +732,7 @@ public class PlayerController : MonoBehaviour
 
     //}
 
-    public void CreateBullet()
+    public void CreateBullet(bool lech)
     {
         switch (currentGun)
         {
@@ -762,18 +762,26 @@ public class PlayerController : MonoBehaviour
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
-        posBulletTemp.x = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x;
-        if (posIndexBullet == 0)
+
+        if (lech)
         {
-            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y + 0.07f;
-            posIndexBullet = 1;
+            posBulletTemp.x = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x;
+            if (posIndexBullet == 0)
+            {
+                posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y + 0.07f;
+                posIndexBullet = 1;
+            }
+            else
+            {
+                posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y - 0.07f;
+                posIndexBullet = 0;
+            }
+            bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posBulletTemp;
         }
         else
         {
-            posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y - 0.07f;
-            posIndexBullet = 0;
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         }
-        bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posBulletTemp;
         bullet.SetActive(true);
 
     }
@@ -996,7 +1004,7 @@ public class PlayerController : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundshootW3);
                 break;
             default:
-                CreateBullet();
+                CreateBullet(true);
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
                 //  Debug.LogError("shooooooot" + timePreviousAttack);
