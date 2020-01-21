@@ -207,7 +207,7 @@ public class Boss2Controller : EnemyBase
             skeletonAnimation.AnimationState.SetAnimation(centerEnergy.index, aec.attack3, false);
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletenergyBoss2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed2);
-            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / 3, bulletspeed2 / 2.5f);
+            bulletEnemy.dir1 = new Vector2(-bulletspeed2 / Random.Range(2f,3f), bulletspeed2 / Random.Range(2.5f,3.5f));
             bulletEnemy.rid.gravityScale = 1;
             bulletEnemy.gameObject.layer = 17;
             bulletEnemy.Init(4);
