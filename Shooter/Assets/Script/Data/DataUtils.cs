@@ -21,8 +21,8 @@ public class DataUtils
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
-    public const string P_DONATE = "com.ohze.brothersquad.donate";
-    public const string P_STARTER_PACK = "com.ohze.brothersquad.starterpack";
+    public const string P_DONATE = "com.ohzegame.ramboshooter.brothersquad.donate";
+    public const string P_STARTER_PACK = "com.ohzegame.ramboshooter.brothersquad.starterpack";
 
     public static Dictionary<string, ItemData> dicEquipment = new Dictionary<string, ItemData>();
 
