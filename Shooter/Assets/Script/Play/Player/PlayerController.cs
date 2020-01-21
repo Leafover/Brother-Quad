@@ -226,11 +226,11 @@ public class PlayerController : MonoBehaviour
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
 
-        if (currentGun < GameController.instance.gunSprite.Count - 1)
-            currentGun++;
-        else currentGun = 1;
+        //if (currentGun < GameController.instance.gunSprite.Count - 1)
+        //    currentGun++;
+        //else currentGun = 1;
 
-        SetGun(currentGun);
+        //SetGun(currentGun);
         //Debug.Log(currentGun);
     }
     public void SetGun(int index)
@@ -506,13 +506,13 @@ public class PlayerController : MonoBehaviour
                         CreateBullet(false);
                         if (countbullet == 0)
                         {
-                            timePreviousAttack = timedelayAttackGun * 3;
+                            timePreviousAttack = timedelayAttackGun * 2;
                             isShoot = false;
                             AddNumberBullet(1);
                         }
                         else
                         {
-                            timePreviousAttack = timedelayAttackGun / 3;
+                            timePreviousAttack = timedelayAttackGun / 4;
                         }
                         break;
                     default:
