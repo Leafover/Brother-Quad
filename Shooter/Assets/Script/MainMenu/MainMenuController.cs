@@ -83,15 +83,15 @@ public class MainMenuController : MonoBehaviour
     public void ChooseStage(int stage)
     {
         SoundClickButton();
-        //if (stage > DataUtils.TOTAL_STAGE)
-        //{
-        //    ShowMapNotify("Stage " + stage + " Coming Soon");
-        //}
-        //else if (stage - 1 > DataUtils.GetStageIndex())
-        //{
-        //    ShowMapNotify("Please complete Stage " + (stage - 1) + " first");
-        //}
-        //else
+        if (stage > DataUtils.TOTAL_STAGE)
+        {
+            ShowMapNotify("Stage " + stage + " Coming Soon");
+        }
+        else if (stage - 1 > DataUtils.GetStageIndex())
+        {
+            ShowMapNotify("Please complete Stage " + (stage - 1) + " first");
+        }
+        else
         {
             stageSelected = stage;
             gPanelUIButton.SetActive(false);
@@ -193,5 +193,11 @@ public class MainMenuController : MonoBehaviour
             }
         }
         return _spr;
+    }
+
+
+    public void BtnLike()
+    {
+        Application.OpenURL("https://www.facebook.com/rambo.contra.brothersquad/");
     }
 }
