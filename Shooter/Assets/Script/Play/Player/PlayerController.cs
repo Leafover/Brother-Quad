@@ -9,6 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public GameObject shield;
     private Skin[] skins;
     public AudioSource au;
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
     Vector2 offsetBoxSit, sizeBoxSit;
     public Transform targetPos;
     public static PlayerController instance;
-    public bool isSlow;
+    public bool isSlow, isLowJump;
 
     public enum PlayerState
     {
@@ -133,6 +134,7 @@ public class PlayerController : MonoBehaviour
             isWaitStand = false;
             isfalldow = false;
             isSlow = false;
+            isLowJump = false;
             isMeleeAttack = false;
             //isGrenade = false;
             isGround = false;
@@ -190,7 +192,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (!candoublejump)
+            if (!candoublejump || isLowJump)
                 return;
             candoublejump = false;
             StartCoroutine(DoubleJump());
@@ -333,12 +335,11 @@ public class PlayerController : MonoBehaviour
         if (rid.gravityScale == .2f)
             rid.gravityScale = 1;
     }
-
+    Vector2 jumpVelo;
     private IEnumerator DoubleJump()
     {
         if (GameController.instance.gameState != GameController.GameState.gameover)
         {
-
             float timeUp = timeJump * 0.5f;
             playerState = PlayerState.Jump;
             //  SoundController.instance.PlaySound(soundGame.soundbtnclick);
@@ -349,7 +350,10 @@ public class PlayerController : MonoBehaviour
                 if (playerState == PlayerState.Jump)
                 {
                     force = forceJump * (timeUp - t);
-                    rid.velocity = new Vector2(rid.velocity.x, force / 2);
+                    jumpVelo = rid.velocity;
+                    jumpVelo.x = rid.velocity.x;
+                    jumpVelo.y = force / 2;
+                    rid.velocity = /*new Vector2(rid.velocity.x, force / 2)*/jumpVelo;
                     yield return null;
                 }
             }
@@ -377,11 +381,18 @@ public class PlayerController : MonoBehaviour
                 if (playerState == PlayerState.Jump)
                 {
                     force = forceJump * (timeUp - t);
-                    rid.velocity = new Vector2(rid.velocity.x, force);
+                    jumpVelo = rid.velocity;
+                    jumpVelo.x = rid.velocity.x;
+                    if (!isLowJump)
+                        jumpVelo.y = force;
+                    else
+                        jumpVelo.y = force / 3;
+                    rid.velocity = /*new Vector2(rid.velocity.x, force)*/jumpVelo;
                     yield return null;
                 }
             }
-            candoublejump = true;
+            if (!isLowJump)
+                candoublejump = true;
         }
     }
 
@@ -1225,6 +1236,7 @@ public class PlayerController : MonoBehaviour
         isWaitStand = false;
         isfalldow = false;
         isSlow = false;
+        isLowJump = false;
         isMeleeAttack = false;
         //  isGrenade = false;
         isGround = false;

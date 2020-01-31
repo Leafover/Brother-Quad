@@ -11,7 +11,11 @@ public class ArenaSlowEnemy4 : MonoBehaviour
         if (PlayerController.instance == null)
             return;
         if (collision.gameObject.layer == 13)
+        {
             PlayerController.instance.isSlow = false;
+            if (damage)
+                PlayerController.instance.isLowJump = false;
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -23,6 +27,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
 
             if (damage)
             {
+                PlayerController.instance.isLowJump = true;
                 PlayerController.instance.slowRate = 65;
                 timedamage -= Time.deltaTime;
                 if (timedamage <= 0)
@@ -43,6 +48,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
         if (PlayerController.instance == null)
             return;
         PlayerController.instance.isSlow = false;
+        PlayerController.instance.isLowJump = false;
     }
 
 }
