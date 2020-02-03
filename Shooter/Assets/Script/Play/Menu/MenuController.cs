@@ -16,14 +16,14 @@ public class MenuController : MonoBehaviour
     {
         SoundController.instance.DisplaySetting();
         //  AdsManager.Instance.ShowInterstitial((b) => { });
-        if (!DataParam.first)
-        {
-            randomAds = Random.Range(0, 100);
-            if (randomAds < 20)
-            {
-                AdsManager.Instance.ShowInterstitial((b) => { });
-            }
-        }
+        //if (!DataParam.first)
+        //{
+        //    randomAds = Random.Range(0, 100);
+        //    if (randomAds < 20)
+        //    {
+        //        AdsManager.Instance.ShowInterstitial((b) => { });
+        //    }
+        //}
 
         DataUtils.FillPlayerDataInfo();
         if (DataUtils.StageHasInit())

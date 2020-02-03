@@ -29,7 +29,7 @@ public class AdsManager : MonoBehaviour
     private void InitAds()
     {
         string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-        Advertisement.Initialize(gameId, true);
+       Advertisement.Initialize(gameId, false);
     }
 
     private bool IsIntersLoaded()
@@ -96,7 +96,7 @@ public class AdsManager : MonoBehaviour
                 break;
         }
     }
-    
+
 
     private void OnEnable()
     {
