@@ -431,7 +431,6 @@ public class GameController : MonoBehaviour
         MissionController.Instance.CheckMission();
         MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
 
-
         StartCoroutine(delayDisplayFinish());
     }
 
