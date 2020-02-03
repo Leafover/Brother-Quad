@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Advertisements;
 
-public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
+public class AdsManager : MonoBehaviour
 {
     public static AdsManager Instance;
     public string iosAppKey = "1486551";
@@ -12,7 +12,6 @@ public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
 
     private Action<bool> acInterClosed, acRewarded;
     private string interKey = "video", rewardKey = "rewardedVideo";
-    //private bool _intersLoaded = false, _videoLoaded = false;
 
     private void Awake()
     {
@@ -34,7 +33,6 @@ public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
     private void InitAds()
     {
         string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-        //Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, true);
     }
 
@@ -69,18 +67,6 @@ public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
     {
         if (acInterClosed != null)
             acInterClosed(true);
-
-        //switch (result)
-        //{
-        //    case ShowResult.Finished:
-        //        if (acInterClosed != null)
-        //            acInterClosed(true);
-        //        break;
-        //    case ShowResult.Failed:
-        //        break;
-        //    case ShowResult.Skipped:
-        //        break;
-        //}
     }
 
 
@@ -125,116 +111,101 @@ public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
  
     }
 
-    #region Video
-    void RewardedVideoAdOpenedEvent()
-    {
-    }
-    void RewardedVideoAdClosedEvent()
-    {
-    }
-    //void RewardedVideoAdRewardedEvent(IronSourcePlacement placement)
+    //#region Video
+    //void RewardedVideoAdOpenedEvent()
     //{
-    //    if (acRewarded != null)
+    //}
+    //void RewardedVideoAdClosedEvent()
+    //{
+    //}
+    //#endregion
+    //#region Interstitial
+    //private void IronSourceEvents_onInterstitialAdOpenedEvent()
+    //{
+    //}
+    //private void IronSourceEvents_onInterstitialAdReadyEvent()
+    //{
+    //    Debug.LogError("TAGG-InterstitialAdReady");
+    //}
+
+    ////private void IronSourceEvents_onInterstitialAdLoadFailedEvent(IronSourceError obj)
+    ////{
+    ////    Debug.LogError("TAGG-InterstitialAdLoadFail");
+    ////}
+    //void InterstitialAdClickedEvent()
+    //{
+    //}
+    //void InterstitialAdClosedEvent()
+    //{
+    //    Debug.LogError("TAGG-InterstitialAdClosedEvent");
+    //    if (acInterClosed != null)
     //    {
-    //        acRewarded(true);
+    //        acInterClosed(true);
     //    }
     //}
-    //void RewardedVideoAdShowFailedEvent(IronSourceError error)
+    //void InterstitialAdReadyEvent()
     //{
     //}
-    #endregion
-    #region Interstitial
-    private void IronSourceEvents_onInterstitialAdOpenedEvent()
-    {
-    }
-    private void IronSourceEvents_onInterstitialAdReadyEvent()
-    {
-        Debug.LogError("TAGG-InterstitialAdReady");
-    }
 
-    //private void IronSourceEvents_onInterstitialAdLoadFailedEvent(IronSourceError obj)
+    //public void OnUnityAdsReady(string placementId)
     //{
-    //    Debug.LogError("TAGG-InterstitialAdLoadFail");
     //}
-    void InterstitialAdClickedEvent()
-    {
-    }
-    void InterstitialAdClosedEvent()
-    {
-        Debug.LogError("TAGG-InterstitialAdClosedEvent");
-        if (acInterClosed != null)
-        {
-            acInterClosed(true);
-        }
-    }
-    void InterstitialAdReadyEvent()
-    {
-    }
 
-    public void OnUnityAdsReady(string placementId)
-    {
-        //if(placementId == interKey)
-        //{
-        //}else if(placementId == rewardKey)
-        //{
-        //}
-    }
+    //public void OnUnityAdsDidError(string message)
+    //{
+    //    Debug.LogError("UnityAds-Error: " + message);
+    //}
 
-    public void OnUnityAdsDidError(string message)
-    {
-        Debug.LogError("UnityAds-Error: " + message);
-    }
+    //public void OnUnityAdsDidStart(string placementId)
+    //{
+    //    if (placementId == interKey)
+    //    {
 
-    public void OnUnityAdsDidStart(string placementId)
-    {
-        if (placementId == interKey)
-        {
+    //    }
+    //    else if (placementId == rewardKey)
+    //    {
 
-        }
-        else if (placementId == rewardKey)
-        {
+    //    }
+    //}
 
-        }
-    }
+    //public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
+    //{
 
-    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
-    {
-
-        if (showResult == ShowResult.Finished)
-        {
-            // Reward the user for watching the ad to completion.
-            if (placementId == rewardKey)
-            {
-                if (acRewarded != null)
-                {
-                    acRewarded(true);
-                }
-            }
-        }
-        else if (showResult == ShowResult.Skipped)
-        {
-            // Do not reward the user for skipping the ad.
-        }
-        else if (showResult == ShowResult.Failed)
-        {
-            Debug.LogWarning("The ad did not finish due to an error.");
-        }
+    //    if (showResult == ShowResult.Finished)
+    //    {
+    //        // Reward the user for watching the ad to completion.
+    //        if (placementId == rewardKey)
+    //        {
+    //            if (acRewarded != null)
+    //            {
+    //                acRewarded(true);
+    //            }
+    //        }
+    //    }
+    //    else if (showResult == ShowResult.Skipped)
+    //    {
+    //        // Do not reward the user for skipping the ad.
+    //    }
+    //    else if (showResult == ShowResult.Failed)
+    //    {
+    //        Debug.LogWarning("The ad did not finish due to an error.");
+    //    }
 
 
-        if (placementId == interKey)
-        {
-            if (acInterClosed != null)
-            {
-                acInterClosed(true);
-            }
-        }
-        //else if (placementId == rewardKey)
-        //{
-        //    if (acRewarded != null)
-        //    {
-        //        acRewarded(true);
-        //    }
-        //}
-    }
-    #endregion
+    //    if (placementId == interKey)
+    //    {
+    //        if (acInterClosed != null)
+    //        {
+    //            acInterClosed(true);
+    //        }
+    //    }
+    //    //else if (placementId == rewardKey)
+    //    //{
+    //    //    if (acRewarded != null)
+    //    //    {
+    //    //        acRewarded(true);
+    //    //    }
+    //    //}
+    //}
+    //#endregion
 }
