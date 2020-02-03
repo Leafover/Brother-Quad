@@ -4,15 +4,15 @@ using UnityEngine;
 using System;
 using UnityEngine.Advertisements;
 
-public class AdsManager : MonoBehaviour
+public class AdsManager : MonoBehaviour /*, IUnityAdsListener*/
 {
     public static AdsManager Instance;
-    public string iosAppKey = "3454729";
-    public string androidAppKey = "3454728";
+    public string iosAppKey = "1486551";
+    public string androidAppKey = "1486550";
 
     private Action<bool> acInterClosed, acRewarded;
     private string interKey = "video", rewardKey = "rewardedVideo";
-    private bool _intersLoaded = false, _videoLoaded = false;
+    //private bool _intersLoaded = false, _videoLoaded = false;
 
     private void Awake()
     {
@@ -34,36 +34,29 @@ public class AdsManager : MonoBehaviour
     private void InitAds()
     {
         string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-     //   Advertisement.AddListener(this);
+        //Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, true);
-
-        //string appKey = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-        //IronSource.Agent.init(appKey);
-        //IronSource.Agent.setAdaptersDebug(true);
-        //IronSource.Agent.validateIntegration();
-
-        //IronSource.Agent.loadInterstitial();
     }
 
     private bool IsIntersLoaded()
     {
-        return _intersLoaded;
+        return Advertisement.IsReady(interKey);
     }
 
     private bool IsRewardLoaded()
     {
-        return _videoLoaded;
+        return Advertisement.IsReady(rewardKey);
     }
     public void ShowInterstitial(Action<bool> _ac) {
         if (!DataUtils.HasRemoveAds())
         {
-
+            Debug.LogError("Show Interstitial");
             if (IsIntersLoaded())
             {
-                Debug.LogError("Show Interstitial");
                 acInterClosed = _ac;
                 //Call Show Interstitial
-                Advertisement.Show(interKey);
+                var options = new ShowOptions { resultCallback = HandleInters };
+                Advertisement.Show(interKey, options);
             }
             else
             {
@@ -72,20 +65,55 @@ public class AdsManager : MonoBehaviour
             }
         }
     }
+    void HandleInters(ShowResult result)
+    {
+        if (acInterClosed != null)
+            acInterClosed(true);
+
+        //switch (result)
+        //{
+        //    case ShowResult.Finished:
+        //        if (acInterClosed != null)
+        //            acInterClosed(true);
+        //        break;
+        //    case ShowResult.Failed:
+        //        break;
+        //    case ShowResult.Skipped:
+        //        break;
+        //}
+    }
+
+
     public void ShowRewardedVideo(Action<bool> _ac)
     {
         if (IsRewardLoaded())
         {
             acRewarded = _ac;
             //Call Show RewardedVideo
-            Advertisement.Show(rewardKey);
+            var options = new ShowOptions { resultCallback = HandleRewarded };
+            Advertisement.Show(rewardKey, options);
         }
         else
         {
             acRewarded(false);
         }
     }
-
+    void HandleRewarded(ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Finished:
+                if (acRewarded != null)
+                {
+                    acRewarded(true);
+                }
+                break;
+            case ShowResult.Failed:
+                break;
+            case ShowResult.Skipped:
+                break;
+        }
+    }
     
 
     private void OnEnable()
@@ -145,20 +173,16 @@ public class AdsManager : MonoBehaviour
 
     public void OnUnityAdsReady(string placementId)
     {
-        if(placementId == interKey)
-        {
-            _intersLoaded = true;
-        }else if(placementId == rewardKey)
-        {
-            _videoLoaded = true;
-        }
+        //if(placementId == interKey)
+        //{
+        //}else if(placementId == rewardKey)
+        //{
+        //}
     }
 
     public void OnUnityAdsDidError(string message)
     {
         Debug.LogError("UnityAds-Error: " + message);
-        _intersLoaded = false;
-        _videoLoaded = false;
     }
 
     public void OnUnityAdsDidStart(string placementId)
