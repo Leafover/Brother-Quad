@@ -4,11 +4,11 @@ using UnityEngine;
 using System;
 using UnityEngine.Advertisements;
 
-public class AdsManager : MonoBehaviour, IUnityAdsListener
+public class AdsManager : MonoBehaviour
 {
     public static AdsManager Instance;
-    public string iosAppKey = "1486551";
-    public string androidAppKey = "1486550";
+    public string iosAppKey = "3454729";
+    public string androidAppKey = "3454728";
 
     private Action<bool> acInterClosed, acRewarded;
     private string interKey = "video", rewardKey = "rewardedVideo";
@@ -34,7 +34,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     private void InitAds()
     {
         string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-        Advertisement.AddListener(this);
+     //   Advertisement.AddListener(this);
         Advertisement.Initialize(gameId, true);
 
         //string appKey = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
@@ -57,9 +57,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     public void ShowInterstitial(Action<bool> _ac) {
         if (!DataUtils.HasRemoveAds())
         {
-            Debug.LogError("Show Interstitial");
+
             if (IsIntersLoaded())
             {
+                Debug.LogError("Show Interstitial");
                 acInterClosed = _ac;
                 //Call Show Interstitial
                 Advertisement.Show(interKey);
