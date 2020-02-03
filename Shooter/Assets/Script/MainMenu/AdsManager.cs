@@ -7,8 +7,8 @@ using UnityEngine.Advertisements;
 public class AdsManager : MonoBehaviour
 {
     public static AdsManager Instance;
-    public string iosAppKey = "1486551";
-    public string androidAppKey = "1486550";
+    public string iosAppKey = "3454729";
+    public string androidAppKey = "3454728";
 
     private Action<bool> acInterClosed, acRewarded;
     private string interKey = "video", rewardKey = "rewardedVideo";
@@ -22,12 +22,8 @@ public class AdsManager : MonoBehaviour
             MyAnalytics.LogEventLogin();
             MyAnalytics.LogEventOpenByDay();
             MyAnalytics.LogEventTimeOpen();
+            InitAds();
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitAds();
     }
 
     private void InitAds()
