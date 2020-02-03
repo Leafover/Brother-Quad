@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Advertisements;
 
-public class AdsManager : MonoBehaviour
+public class AdsManager : MonoBehaviour, IUnityAdsListener
 {
     public static AdsManager Instance;
-    public string iosAppKey = "ae837cdd";
-    public string androidAppKey = "ae82d045";
+    public string iosAppKey = "1486551";
+    public string androidAppKey = "1486550";
+
     private Action<bool> acInterClosed, acRewarded;
+    private string interKey = "video", rewardKey = "rewardedVideo";
+    private bool _intersLoaded = false, _videoLoaded = false;
 
     private void Awake()
     {
@@ -29,23 +33,36 @@ public class AdsManager : MonoBehaviour
 
     private void InitAds()
     {
-        string appKey = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
-        IronSource.Agent.init(appKey);
-        IronSource.Agent.setAdaptersDebug(true);
-        IronSource.Agent.validateIntegration();
+        string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
+        Advertisement.AddListener(this);
+        Advertisement.Initialize(gameId, true);
 
-        IronSource.Agent.loadInterstitial();
+        //string appKey = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
+        //IronSource.Agent.init(appKey);
+        //IronSource.Agent.setAdaptersDebug(true);
+        //IronSource.Agent.validateIntegration();
+
+        //IronSource.Agent.loadInterstitial();
     }
 
+    private bool IsIntersLoaded()
+    {
+        return _intersLoaded;
+    }
 
+    private bool IsRewardLoaded()
+    {
+        return _videoLoaded;
+    }
     public void ShowInterstitial(Action<bool> _ac) {
         if (!DataUtils.HasRemoveAds())
         {
             Debug.LogError("Show Interstitial");
-            if (IronSource.Agent.isInterstitialReady())
+            if (IsIntersLoaded())
             {
                 acInterClosed = _ac;
-                IronSource.Agent.showInterstitial();
+                //Call Show Interstitial
+                Advertisement.Show(interKey);
             }
             else
             {
@@ -56,10 +73,11 @@ public class AdsManager : MonoBehaviour
     }
     public void ShowRewardedVideo(Action<bool> _ac)
     {
-        if (IronSource.Agent.isRewardedVideoAvailable())
+        if (IsRewardLoaded())
         {
             acRewarded = _ac;
-            IronSource.Agent.showRewardedVideo();
+            //Call Show RewardedVideo
+            Advertisement.Show(rewardKey);
         }
         else
         {
@@ -67,45 +85,15 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    void OnApplicationPause(bool isPaused)
-    {
-        IronSource.Agent.onApplicationPause(isPaused);
-    }
+    
 
     private void OnEnable()
     {
-        #region Interstitial
-        IronSourceEvents.onInterstitialAdReadyEvent += InterstitialAdReadyEvent;
-        IronSourceEvents.onInterstitialAdClickedEvent += InterstitialAdClickedEvent;
-        IronSourceEvents.onInterstitialAdClosedEvent += InterstitialAdClosedEvent;
-        IronSourceEvents.onInterstitialAdLoadFailedEvent += IronSourceEvents_onInterstitialAdLoadFailedEvent;
-        IronSourceEvents.onInterstitialAdReadyEvent += IronSourceEvents_onInterstitialAdReadyEvent;
-        IronSourceEvents.onInterstitialAdOpenedEvent += IronSourceEvents_onInterstitialAdOpenedEvent;
-        #endregion
-        #region Video
-        IronSourceEvents.onRewardedVideoAdOpenedEvent += RewardedVideoAdOpenedEvent;
-        IronSourceEvents.onRewardedVideoAdClosedEvent += RewardedVideoAdClosedEvent;
-        IronSourceEvents.onRewardedVideoAdRewardedEvent += RewardedVideoAdRewardedEvent;
-        IronSourceEvents.onRewardedVideoAdShowFailedEvent += RewardedVideoAdShowFailedEvent;
-        #endregion
     }
 
     private void OnDisable()
     {
-        #region Interstitial
-        IronSourceEvents.onInterstitialAdReadyEvent -= InterstitialAdReadyEvent;
-        IronSourceEvents.onInterstitialAdClickedEvent -= InterstitialAdClickedEvent;
-        IronSourceEvents.onInterstitialAdClosedEvent -= InterstitialAdClosedEvent;
-        IronSourceEvents.onInterstitialAdLoadFailedEvent -= IronSourceEvents_onInterstitialAdLoadFailedEvent;
-        IronSourceEvents.onInterstitialAdReadyEvent -= IronSourceEvents_onInterstitialAdReadyEvent;
-        IronSourceEvents.onInterstitialAdOpenedEvent -= IronSourceEvents_onInterstitialAdOpenedEvent;
-        #endregion
-        #region Video
-        IronSourceEvents.onRewardedVideoAdOpenedEvent -= RewardedVideoAdOpenedEvent;
-        IronSourceEvents.onRewardedVideoAdClosedEvent -= RewardedVideoAdClosedEvent;
-        IronSourceEvents.onRewardedVideoAdRewardedEvent -= RewardedVideoAdRewardedEvent;
-        IronSourceEvents.onRewardedVideoAdShowFailedEvent -= RewardedVideoAdShowFailedEvent;
-        #endregion
+ 
     }
 
     #region Video
@@ -115,16 +103,16 @@ public class AdsManager : MonoBehaviour
     void RewardedVideoAdClosedEvent()
     {
     }
-    void RewardedVideoAdRewardedEvent(IronSourcePlacement placement)
-    {
-        if (acRewarded != null)
-        {
-            acRewarded(true);
-        }
-    }
-    void RewardedVideoAdShowFailedEvent(IronSourceError error)
-    {
-    }
+    //void RewardedVideoAdRewardedEvent(IronSourcePlacement placement)
+    //{
+    //    if (acRewarded != null)
+    //    {
+    //        acRewarded(true);
+    //    }
+    //}
+    //void RewardedVideoAdShowFailedEvent(IronSourceError error)
+    //{
+    //}
     #endregion
     #region Interstitial
     private void IronSourceEvents_onInterstitialAdOpenedEvent()
@@ -135,10 +123,10 @@ public class AdsManager : MonoBehaviour
         Debug.LogError("TAGG-InterstitialAdReady");
     }
 
-    private void IronSourceEvents_onInterstitialAdLoadFailedEvent(IronSourceError obj)
-    {
-        Debug.LogError("TAGG-InterstitialAdLoadFail");
-    }
+    //private void IronSourceEvents_onInterstitialAdLoadFailedEvent(IronSourceError obj)
+    //{
+    //    Debug.LogError("TAGG-InterstitialAdLoadFail");
+    //}
     void InterstitialAdClickedEvent()
     {
     }
@@ -149,10 +137,79 @@ public class AdsManager : MonoBehaviour
         {
             acInterClosed(true);
         }
-        IronSource.Agent.loadInterstitial();
     }
     void InterstitialAdReadyEvent()
     {
+    }
+
+    public void OnUnityAdsReady(string placementId)
+    {
+        if(placementId == interKey)
+        {
+            _intersLoaded = true;
+        }else if(placementId == rewardKey)
+        {
+            _videoLoaded = true;
+        }
+    }
+
+    public void OnUnityAdsDidError(string message)
+    {
+        Debug.LogError("UnityAds-Error: " + message);
+        _intersLoaded = false;
+        _videoLoaded = false;
+    }
+
+    public void OnUnityAdsDidStart(string placementId)
+    {
+        if (placementId == interKey)
+        {
+
+        }
+        else if (placementId == rewardKey)
+        {
+
+        }
+    }
+
+    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
+    {
+
+        if (showResult == ShowResult.Finished)
+        {
+            // Reward the user for watching the ad to completion.
+            if (placementId == rewardKey)
+            {
+                if (acRewarded != null)
+                {
+                    acRewarded(true);
+                }
+            }
+        }
+        else if (showResult == ShowResult.Skipped)
+        {
+            // Do not reward the user for skipping the ad.
+        }
+        else if (showResult == ShowResult.Failed)
+        {
+            Debug.LogWarning("The ad did not finish due to an error.");
+        }
+
+
+        if (placementId == interKey)
+        {
+            if (acInterClosed != null)
+            {
+                acInterClosed(true);
+            }
+        }
+        //else if (placementId == rewardKey)
+        //{
+        //    if (acRewarded != null)
+        //    {
+        //        acRewarded(true);
+        //    }
+        //}
     }
     #endregion
 }
