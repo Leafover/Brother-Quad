@@ -113,6 +113,14 @@ public class GunBoss2 : AutoTarget
                         SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(1, 1);
+                    DataController.instance.DoAchievement(3, 1);
+
+                    //PlayerController.instance.countKillByGrenade++;
+                    //if (PlayerController.instance.countKillByGrenade >= 3)
+                    //{
+                    //    DataController.instance.DoAchievement(4, 1);
+                    //    PlayerController.instance.countKillByGrenade = 0;
+                    //}
                 }
                 break;
             case 26:

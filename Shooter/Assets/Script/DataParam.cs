@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 public class DataParam : MonoBehaviour
 {
+    public const string ALLACHIEVEMENT = "allachievement";
     public static bool first = true;
     public static int indexMap, nextSceneAfterLoad = 1, indexStage, indexMode, levelBase;
     public static float totalCoin;

@@ -25,6 +25,7 @@ public class AllMap
 
 public class GameController : MonoBehaviour
 {
+
     public List<Sprite> gunSprite;
 
     public AudioSource auBG;
@@ -430,7 +431,16 @@ public class GameController : MonoBehaviour
 
         MissionController.Instance.CheckMission();
         MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
-
+        DataController.instance.DoAchievement(6, 1);
+        if (reviveCount == 0)
+            DataController.instance.DoAchievement(7, 1);
+        if (DataParam.indexMap == 7)
+        {
+            if (DataParam.indexStage == 0)
+                DataController.instance.DoAchievement(8, 1);
+            if (DataParam.indexStage == 1)
+                DataController.instance.DoAchievement(9, 1);
+        }
         StartCoroutine(delayDisplayFinish());
     }
 

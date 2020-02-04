@@ -4,13 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+#region AllAchievement
+[System.Serializable]
+public class Achievement
+{
+    public string Name, Soluong, LoaiThuong, SoLuongreward, Exp, NoiDung;
+    public List<int> maxNumber = new List<int>(), typeReward = new List<int>(), maxNumberReward = new List<int>(), expReward = new List<int>();
+    public bool displayContentHasChange;
+}
+public class SaveAchievement
+{
+    public int currentNumber = 0;
+    public bool isPass = false, isDone = false;
+    public int currentLevel = 1;
+}
+#endregion
+
 #region AllTileVatPham
 [System.Serializable]
 public class TileVatPhamList
 {
     public string ID;
-    public int Level,Stage;
-    public double Normal, Uncommon, Rare,Epic,Legendary, TotalNumber;
+    public int Level, Stage;
+    public double Normal, Uncommon, Rare, Epic, Legendary, TotalNumber;
 }
 [System.Serializable]
 public class AllTileVatPham
@@ -144,6 +160,8 @@ public class AllMission
 #endregion
 public class DataController : MonoBehaviour
 {
+    public List<Achievement> allAchievement = new List<Achievement>();
+    public static List<SaveAchievement> saveAllAchievement = new List<SaveAchievement>();
     public List<AllTileVatPham> allTileVatPham = new List<AllTileVatPham>();
     public List<AllShoes> allShoes = new List<AllShoes>();
     public List<AllBag> allBag = new List<AllBag>();
@@ -160,27 +178,26 @@ public class DataController : MonoBehaviour
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
-    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves,nameDataBag,nameDataShoes, nameDataTiLeVatPham;
+    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData;
 
     private void Awake()
     {
         instance = this;
-       // gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
-
+    static bool loadData = false;
+    private void Start()
+    {
+        if (loadData)
+            return;
+        LoadData();
+        loadData = true;
+    }
     public bool loaddatabegin;
     private void OnValidate()
     {
         if (!loaddatabegin)
         {
-            weaponList.Clear();
-            armorList.Clear();
-            helmetList.Clear();
-            glovesList.Clear();
-            bagList.Clear();
-            shoesList.Clear();
-            tilevatphamList.Clear();
-
             for (int i = 0; i < nameDataText.Length; i++)
             {
                 LoadDataEnemy(nameDataText[i], i);
@@ -191,6 +208,17 @@ public class DataController : MonoBehaviour
             {
                 LoadDataMission(nameDataMissionText[i], i);
             }
+
+            LoadAchievement(nameAchievementData);
+
+            #region List need clear
+            weaponList.Clear();
+            armorList.Clear();
+            helmetList.Clear();
+            glovesList.Clear();
+            bagList.Clear();
+            shoesList.Clear();
+            tilevatphamList.Clear();
             LoadWeapon(nameDataWeapon);
             LoadArmor(nameDataArmor);
             LoadHelmet(nameDataHelmet);
@@ -198,6 +226,8 @@ public class DataController : MonoBehaviour
             LoadBag(nameDataBag);
             LoadShoes(nameDataShoes);
             LoadTiLeVatPham(nameDataTiLeVatPham);
+            #endregion
+
             loaddatabegin = true;
         }
     }
@@ -227,6 +257,59 @@ public class DataController : MonoBehaviour
         {
             PlayerData _playerDate = JsonMapper.ToObject<PlayerData>(jData[i].ToJson());
             playerData.Add(_playerDate);
+        }
+    }
+    public void LoadAchievement(string path)
+    {
+        if (allAchievement.Count == 13)
+            return;
+        _ta = Resources.Load<TextAsset>("JsonData/" + path);
+        jData = JsonMapper.ToObject(_ta.text);
+        for (int i = 0; i < jData.Count; i++)
+        {
+            Achievement _achievementDate = JsonMapper.ToObject<Achievement>(jData[i].ToJson());
+            allAchievement.Add(_achievementDate);
+        }
+        string[] maxNumberStr;
+        for (int i = 0; i < allAchievement.Count; i++)
+        {
+            maxNumberStr = allAchievement[i].Soluong.Split(',');
+            for (int j = 0; j < maxNumberStr.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(maxNumberStr[j]))
+                {
+                    allAchievement[i].maxNumber.Add(int.Parse(maxNumberStr[j]));
+                }
+            }
+
+
+            maxNumberStr = allAchievement[i].LoaiThuong.Split(',');
+            for (int j = 0; j < maxNumberStr.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(maxNumberStr[j]))
+                {
+                    allAchievement[i].typeReward.Add(int.Parse(maxNumberStr[j]));
+                }
+            }
+
+            maxNumberStr = allAchievement[i].SoLuongreward.Split(',');
+            for (int j = 0; j < maxNumberStr.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(maxNumberStr[j]))
+                {
+                    allAchievement[i].maxNumberReward.Add(int.Parse(maxNumberStr[j]));
+                }
+            }
+
+            maxNumberStr = allAchievement[i].Exp.Split(',');
+            for (int j = 0; j < maxNumberStr.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(maxNumberStr[j]))
+                {
+                    allAchievement[i].expReward.Add(int.Parse(maxNumberStr[j]));
+                }
+            }
+
         }
     }
     public void LoadDataMission(string path, int index)
@@ -590,6 +673,70 @@ public class DataController : MonoBehaviour
             if (allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Count == 9)
                 return;
             allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Add(tilevatphamList[i]);
+        }
+    }
+
+    public void SaveData()
+    {
+        SaveAchievement();
+    }
+    public void LoadData()
+    {
+        LoadAchievement();
+    }
+
+
+    void SaveAchievement()
+    {
+        PlayerPrefs.SetString(DataParam.ALLACHIEVEMENT, JsonMapper.ToJson(saveAllAchievement));
+    }
+    string strAllAchievement;
+    void LoadAchievement()
+    {
+
+        for (int i = 0; i < allAchievement.Count; i++)
+        {
+            SaveAchievement _saveAchievment = new SaveAchievement();
+            saveAllAchievement.Add(_saveAchievment);
+        }
+
+        strAllAchievement = PlayerPrefs.GetString(DataParam.ALLACHIEVEMENT);
+
+        if (string.IsNullOrEmpty(strAllAchievement))
+            return;
+        JsonData jsonData = JsonMapper.ToObject(strAllAchievement);
+        for (int i = 0; i < jsonData.Count; i++)
+        {
+            if (jsonData[i] != null)
+            {
+                saveAllAchievement[i].currentLevel = int.Parse(jsonData[i]["currentLevel"].ToString());
+                saveAllAchievement[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
+                saveAllAchievement[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
+                saveAllAchievement[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
+            }
+        }
+
+        //Debug.LogError("Count:" + saveAllAchievement.Count);
+
+        //for (int i = 0; i < saveAllAchievement.Count; i++)
+        //{
+        //    Debug.LogError("Current Number Of:" + i + ":" + saveAllAchievement[i].currentNumber);
+        //}
+
+
+    }
+
+
+    public void DoAchievement(int index, int _numberAdd)
+    {
+        if (saveAllAchievement[index].isDone || saveAllAchievement[index].isPass)
+            return;
+
+        saveAllAchievement[index].currentNumber += _numberAdd;
+        if (saveAllAchievement[index].currentNumber >= allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel])
+        {
+            saveAllAchievement[index].isPass = true;
+            saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel];
         }
     }
 }

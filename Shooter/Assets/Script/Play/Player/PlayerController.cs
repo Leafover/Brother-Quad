@@ -9,7 +9,7 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public int countKillByGrenade;
     public GameObject shield;
     private Skin[] skins;
     public AudioSource au;
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
         if (timePreviousGrenade > 0)
             return;
         timePreviousGrenade = timedelayGrenade;
-
+        countKillByGrenade = 0;
         //    Debug.Log(timePreviousGrenade);
         if (playerState != PlayerState.Jump)
         {
@@ -257,7 +257,10 @@ public class PlayerController : MonoBehaviour
         isShoot = false;
         timePreviousAttack = 0;
         countbullet = 0;
+        reload = false;
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
+
+        Debug.LogError(currentGun + ":"+numberBullet);
     }
     //public void TryRocket()
     //{

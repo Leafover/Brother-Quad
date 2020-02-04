@@ -318,4 +318,27 @@ public class ObjectPoolerManager : MonoBehaviour
         }
     }
     GameObject go;
+
+
+    //private void OnApplicationQuit()
+    //{
+    //  //  DataController.instance.SaveData();
+    //    Debug.LogError("quit");
+    //}
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+        {
+            DataController.instance.SaveData();
+            Debug.LogError("focus play");
+        }
+    }
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            DataController.instance.SaveData();
+            Debug.LogError("pause play");
+        }
+    }
 }

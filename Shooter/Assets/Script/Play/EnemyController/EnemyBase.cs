@@ -626,6 +626,8 @@ public class EnemyBase : AutoTarget
         {
             PlayAnim(0, aec.die, true);
             GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
+            if(isBoss)
+                DataController.instance.DoAchievement(10, 1);
         }
 
         enemyState = EnemyState.die;
@@ -633,6 +635,19 @@ public class EnemyBase : AutoTarget
         PlayerController.instance.SelectNonTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
         DisableAllBullet();
         GameController.instance.AddCombo();
+
+        DataController.instance.DoAchievement(0, 1);
+
+        switch (PlayerController.instance.currentGun)
+        {
+            case 3:
+                DataController.instance.DoAchievement(1, 1);
+                break;
+            case 1:
+                DataController.instance.DoAchievement(2, 1);
+                break;
+        }
+
     }
     void DisableAllBullet()
     {
@@ -767,7 +782,6 @@ public class EnemyBase : AutoTarget
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
         switch (collision.gameObject.layer)
         {
             case 11:
@@ -802,6 +816,16 @@ public class EnemyBase : AutoTarget
                         SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(1, 1);
+                    DataController.instance.DoAchievement(3, 1);
+
+                    PlayerController.instance.countKillByGrenade++;
+                    if(PlayerController.instance.countKillByGrenade >= 3)
+                    {
+                        DataController.instance.DoAchievement(4, 1);
+                        PlayerController.instance.countKillByGrenade = 0;
+                        Debug.LogError("tieu diet 3");
+                    }
+
                 }
                 break;
             case 26:
