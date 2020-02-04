@@ -20,7 +20,7 @@ public class Boss1Controller : EnemyBase
         if (waitBeAttack == null)
             waitBeAttack = new WaitForSeconds(0.1f);
 
-        for(int i = 0; i < strBoneExplo.Length; i ++)
+        for (int i = 0; i < strBoneExplo.Length; i++)
         {
             boneExplo[i] = skeletonAnimation.Skeleton.FindBone(strBoneExplo[i]);
         }
@@ -84,7 +84,7 @@ public class Boss1Controller : EnemyBase
                         GameController.instance.uiPanel.warning.SetActive(false);
                         GameController.instance.autoTarget.Add(this);
                         takeDamageBox.enabled = true;
-                       // Debug.Log("attack boss");
+                        // Debug.Log("attack boss");
                     }
                     PlayAnim(1, aec.idle, true);
                     enemyState = EnemyState.attack;
@@ -250,7 +250,7 @@ public class Boss1Controller : EnemyBase
             else
             {
                 bulletEnemy.AddProperties(damage1, bulletspeed1);
-                bulletEnemy.dir1 = FlipX ? new Vector2(bulletspeed1 / 3, bulletspeed1 / 2) : new Vector2(-bulletspeed1 / 3, bulletspeed1 / 2);
+                bulletEnemy.dir1 = FlipX ? new Vector2(bulletspeed1 / Random.Range(2f, 3.5f), bulletspeed1 / Random.Range(1.5f, 2.5f)) : new Vector2(-bulletspeed1 / Random.Range(2f, 3.5f), bulletspeed1 / Random.Range(1.5f, 2.5f));
                 bulletEnemy.rid.gravityScale = 1;
                 bulletEnemy.gameObject.layer = 17;
                 bulletEnemy.Init(4);
@@ -411,7 +411,7 @@ public class Boss1Controller : EnemyBase
         }
     }
     public int activeType3 = 0;
-    public override void TakeDamage(float damage, bool crit = false,bool iamgunboss = true)
+    public override void TakeDamage(float damage, bool crit = false, bool iamgunboss = true)
     {
         base.TakeDamage(damage);
         if (currentHealth <= health / 2)
@@ -453,7 +453,7 @@ public class Boss1Controller : EnemyBase
         effectsss.Add(effectexploandsmokewhendie);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
         effectexploandsmokewhendie.SetActive(true);
-      //  Debug.LogError("---------- zo day coi :D");
+        //  Debug.LogError("---------- zo day coi :D");
     }
     List<GameObject> effectsss = new List<GameObject>();
     public void ExploOffBoss()
@@ -472,7 +472,7 @@ public class Boss1Controller : EnemyBase
     {
         for (int i = 0; i < strBoneExplo.Length; i++)
         {
-          //  Debug.LogError("---------- zo day coi :D");
+            //  Debug.LogError("---------- zo day coi :D");
             yield return new WaitForSeconds(0.3f);
             EffectWhendie(i);
         }
