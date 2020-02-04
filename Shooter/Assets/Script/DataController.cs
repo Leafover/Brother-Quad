@@ -733,10 +733,10 @@ public class DataController : MonoBehaviour
             return;
 
         saveAllAchievement[index].currentNumber += _numberAdd;
-        if (saveAllAchievement[index].currentNumber >= allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel])
+        if (saveAllAchievement[index].currentNumber >= allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel - 1])
         {
             saveAllAchievement[index].isPass = true;
-            saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel];
+            saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel - 1];
         }
     }
 }

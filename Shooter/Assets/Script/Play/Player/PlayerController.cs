@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
         reload = false;
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
 
-        Debug.LogError(currentGun + ":"+numberBullet);
+        //Debug.LogError(currentGun + ":"+numberBullet);
     }
     //public void TryRocket()
     //{
