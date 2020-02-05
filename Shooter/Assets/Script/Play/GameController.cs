@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
     }
     void AddProperties()
     {
-        if (DataParam.indexMode == 0)
+        if (DataUtils.modeSelected == 0)
             totalDropCoin = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin;
         else
             totalDropCoin = (int)(DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin * 1.5f);
@@ -408,7 +408,7 @@ public class GameController : MonoBehaviour
         if (countStar == 0)
         {
             countStar = 1;
-            if (DataParam.indexMode == 0)
+            if (DataUtils.modeSelected == 0)
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
             else
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
@@ -416,7 +416,7 @@ public class GameController : MonoBehaviour
         if (MissionController.Instance.listMissions[0].isDone)
         {
             countStar++;
-            if (DataParam.indexMode == 0)
+            if (DataUtils.modeSelected == 0)
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
             else
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
@@ -424,7 +424,7 @@ public class GameController : MonoBehaviour
         if (MissionController.Instance.listMissions[1].isDone)
         {
             countStar++;
-            if (DataParam.indexMode == 0)
+            if (DataUtils.modeSelected == 0)
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
             else
             {
@@ -449,7 +449,7 @@ public class GameController : MonoBehaviour
             if (DataParam.indexStage == 1)
                 DataController.instance.DoAchievement(9, 1);
         }
-        if (DataParam.indexMode == 1)
+        if (DataUtils.modeSelected == 1)
         {
             DataController.instance.DoDailyQuest(4, 1);
             if (reviveCount == 0)

@@ -9,7 +9,7 @@ public class DataParam : MonoBehaviour
     public const string ALLDAILYQUEST = "alldailyquest";
 
     public static bool first = true,isVIP = false,doneAllDailyQuest = false;
-    public static int indexMap, nextSceneAfterLoad = 1, indexStage, indexMode, levelBase;
+    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",
     "Daily free gifts contain many useful items",

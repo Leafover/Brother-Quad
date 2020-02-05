@@ -233,7 +233,7 @@ public class EnemyBase : AutoTarget
             au.mute = !DataUtils.IsSoundOn();
             SoundController.instance.activeSoundEnemy += ActiveSound;
         }
-        if (DataParam.indexMode == 1)
+        if (DataUtils.modeSelected == 1)
         {
             levelBase += 3;
             if (levelBase > 10)
