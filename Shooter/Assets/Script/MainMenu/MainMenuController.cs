@@ -96,6 +96,7 @@ public class MainMenuController : MonoBehaviour
             stageSelected = stage;
             gPanelUIButton.SetActive(false);
             gPanelStage.SetActive(true);
+            StageManager.Instance.ChooseNormalMode();
         }
     }
     public void GoReady()
