@@ -14,6 +14,7 @@ public class StageManager : MonoBehaviour
     private Mission missSelected;
     private int _stageSelect = -1, _mapSelect = -1;
     public Transform trAllRewards;
+    public Image imgHard, imgNormal;
     public Image[] imgItemReward;
     public Image[] imgMission;
     public Sprite imgMapUnlock, imgMapNotYetUnlock, imgMapSelected;
@@ -22,6 +23,8 @@ public class StageManager : MonoBehaviour
     public GameObject[] gStages;
     public int stageSelected;
     public MapLevelControll levelControll;
+
+    //private int modeSelected = 0;
 
     private void Awake()
     {
@@ -32,11 +35,17 @@ public class StageManager : MonoBehaviour
         FetchStageData();
         gStages[MainMenuController.Instance.stageSelected - 1].SetActive(true);
     }
+
+    private void Start()
+    {
+        //ChooseNormalMode();
+    }
     private void FetchStageData()
     {
         ///Check if StageData not yet init
         if (!DataUtils.StageHasInit())
         {
+            #region Stage Data not yet init
             List<DataStage> lstStages = new List<DataStage>();
             for (int i = 0; i < gStages.Length; i++)
             {
@@ -100,6 +109,7 @@ public class StageManager : MonoBehaviour
             string jSave = JsonMapper.ToJson(lstStages);
             DataUtils.SaveStage(jSave);
             DataUtils.FillAllStage();
+            #endregion
         }
         else///Check if StageData has init
         {
@@ -113,6 +123,11 @@ public class StageManager : MonoBehaviour
                     {
                         gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j + 1).GetComponent<MapLevelControll>().canPlay = true;
                         levelControll.canPlay = true;
+                    }
+
+                    if (levelControll.mapIndex == 7 && !DataUtils.StageHardHasInit())
+                    {
+                        DataUtils.UnlockHardMode();
                     }
                 }
                 else
@@ -265,4 +280,50 @@ public class StageManager : MonoBehaviour
         }
     }
     #endregion
+
+
+    public void ChooseNormalMode()
+    {
+        DataUtils.modeSelected = 0;
+        imgHard.color = clNotYetUnlock;
+        imgNormal.color = clSelected;
+        RefreshMap();
+    }
+    public void ChooseHardMode()
+    {
+        if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
+        {
+            DataUtils.modeSelected = 1;
+            imgNormal.color = clNotYetUnlock;
+            imgHard.color = clSelected;
+            RefreshMap();
+        }
+        else
+        {
+            MainMenuController.Instance.ShowMapNotify("Please complete Normal Mode first.");
+        }
+    }
+
+    private void RefreshMap()
+    {
+        for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
+        {
+            MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
+            MapLevel mapLevel = DataUtils.GetMapByIndex(levelControll.stageIndex, levelControll.mapIndex);
+            if (mapLevel.hasComplete || j == 0)
+            {
+                if (j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1 || j == 0)
+                {
+                    gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j + 1).GetComponent<MapLevelControll>().canPlay = true;
+                    levelControll.canPlay = true;
+                }
+            }
+            else
+            {
+                levelControll.canPlay = false;
+                gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>().canPlay = false;
+            }
+            levelControll.RefreshMap();
+        }
+    }
 }

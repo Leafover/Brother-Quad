@@ -41,6 +41,13 @@ public class PopupSetting : MonoBehaviour
     }
     public void Back(GameObject g_)
     {
+        //DataUtils.SaveLevel(0, 0);
+        //DataUtils.SaveLevel(0, 1);
+        //DataUtils.SaveLevel(0, 2);
+        //DataUtils.SaveLevel(0, 3);
+        //DataUtils.SaveLevel(0, 4);
+        //DataUtils.SaveLevel(0, 5);
+        //DataUtils.SaveLevel(0, 6);
         g_.SetActive(false);
     }
     public void ShowPanelSetting()

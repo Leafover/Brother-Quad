@@ -19,6 +19,10 @@ public class DataUtils
     public const string KEY_HEROES_INDEX = GAME_KEY + "KEY_HEROES_INDEX";
     public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
 
+
+    public const string KEY_GAME_STAGE_HARD = GAME_KEY + "KEY_GAME_STAGE_HARD";
+    public const string KEY_GAME_STAGE_INDEX_HARD = GAME_KEY + "KEY_GAME_STAGE_INDEX_HARD";
+
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
     public const string P_DONATE = "com.ohzegame.ramboshooter.brothersquad.donate";
@@ -126,7 +130,114 @@ public class DataUtils
     }
     #endregion
 
-    #region Stage Data
+    #region Stage Data 
+    public static List<DataStage> lstAllStage = new List<DataStage>();
+    public static List<DataStage> lstAllStageHard = new List<DataStage>();
+    public static List<DataStage> lstAllStageNormal = new List<DataStage>();
+    public static int modeSelected = 0;
+    #region Mode Hard
+
+    private static string GetStageHardTextData()
+    {
+        return PlayerPrefs.GetString(KEY_GAME_STAGE_HARD);
+    }
+    public static void FillAllStageHard()
+    {
+        string sData = GetStageHardTextData();
+        JsonData jData = JsonMapper.ToObject(sData);
+        lstAllStageHard = new List<DataStage>();
+        for (int i = 0; i < jData.Count; i++)
+        {
+            DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
+            if (!lstAllStageHard.Contains(jStage))
+                lstAllStageHard.Add(jStage);
+        }
+    }
+    public static void SaveStageHard(string stageData)
+    {
+        PlayerPrefs.SetString(KEY_GAME_STAGE_HARD, stageData);
+    }
+    public static bool StageHardHasInit()
+    {
+        return PlayerPrefs.HasKey(KEY_GAME_STAGE_HARD);
+    }
+    public static int GetStageHardIndex()
+    {
+        return PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX_HARD, 0);
+    }
+    private static void AddMissionToMap(MapLevel mLevel, string missName)
+    {
+        LVMission lvMiss = new LVMission();
+        lvMiss.id = mLevel.levelID;
+        lvMiss.isPass = false;
+        lvMiss.missionName = missName;
+        if (mLevel.mission == null) mLevel.mission = new List<LVMission>();
+        mLevel.mission.Add(lvMiss);
+    }
+    public static void UnlockHardMode()
+    {
+        #region UnlockHardMode
+        List<DataStage> lstStagesHard = new List<DataStage>();
+        for (int i = 0; i < lstAllStageNormal.Count; i++)
+        {
+            DataStage dataStageHard = new DataStage();
+            dataStageHard.stageName = lstAllStageNormal[i].stageName;
+            if (i == 0)
+            {
+                dataStageHard.stageHasUnlock = true;
+            }
+            else
+            {
+                dataStageHard.stageHasUnlock = false;
+            }
+            for (int j = 0; j < lstAllStageNormal[i].levels.Count; j++)
+            {
+                MapLevel mapLevelHard = new MapLevel();
+                mapLevelHard.levelID = lstAllStageNormal[i].levels[j].levelID;
+                mapLevelHard.hasComplete = false;
+                mapLevelHard.mission = new List<LVMission>();
+
+                AddMissionToMap(mapLevelHard, lstAllStageNormal[i].levels[j].mission[0].missionName);
+                AddMissionToMap(mapLevelHard, lstAllStageNormal[i].levels[j].mission[1].missionName);
+                AddMissionToMap(mapLevelHard, lstAllStageNormal[i].levels[j].mission[2].missionName);
+
+                #region Add Rewards to MapLevel
+                if (mapLevelHard.rewards == null)
+                {
+                    mapLevelHard.rewards = new List<LVReward>();
+                }
+                mapLevelHard.rewards.AddRange(lstAllStageNormal[i].levels[j].rewards);
+                #endregion
+
+                if (dataStageHard.levels == null)
+                {
+                    dataStageHard.levels = new List<MapLevel>();
+                    dataStageHard.levels.Add(mapLevelHard);
+                }
+                if (!dataStageHard.levels.Contains(mapLevelHard))
+                {
+                    dataStageHard.levels.Add(mapLevelHard);
+                }
+            }
+            dataStageHard.stageMode = STAGE_MODE.HARD;
+
+            if (!lstStagesHard.Contains(dataStageHard))
+            {
+                lstStagesHard.Add(dataStageHard);
+            }
+        }
+        string jHardSave = JsonMapper.ToJson(lstStagesHard);
+        SaveStageHard(jHardSave);
+        #endregion
+    }
+    private static void StageHardIncrease()
+    {
+        int curStage = GetStageIndex() + 1;
+        PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX_HARD, curStage);
+    }
+    #endregion
+
+
     public static int GetStageIndex()
     {
         return PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX, 0);
@@ -150,78 +261,112 @@ public class DataUtils
         return PlayerPrefs.GetString(KEY_GAME_STAGE);
     }
 
-    public static List<DataStage> lstAllStage = new List<DataStage>();
+
     public static void FillAllStage()
     {
         string sData = GetStageTextData();
         JsonData jData = JsonMapper.ToObject(sData);
+        lstAllStageNormal = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
         {
             DataStage jStage = JsonMapper.ToObject<DataStage>(jData[i].ToJson());
-            if (!lstAllStage.Contains(jStage))
-                lstAllStage.Add(jStage);
+            if (!lstAllStageNormal.Contains(jStage))
+            {
+                lstAllStageNormal.Add(jStage);
+            }
         }
+        if(StageHardHasInit())
+            FillAllStageHard();
+
+
+
+
+        /*lstAllStage.Clear();
+        if (modeSelected == 0)
+        {
+            lstAllStage.AddRange(lstAllStageNormal);
+        }
+        else if (modeSelected == 1)
+        {
+            lstAllStage.AddRange(lstAllStageHard);
+        }*/
     }
 
     public static MapLevel GetMapByIndex(int stage, int level)
     {
         MapLevel mLevel = new MapLevel();
-        string key = stage + "_" + level;
-        mLevel = lstAllStage[stage].levels[level];
-        //foreach(MapLevel _m in lstAllStage[stage].levels)
-        //{
-        //    if (_m.levelID.Equals(key))
-        //    {
-        //        mLevel = _m;
-        //    }
-        //}
+        if(modeSelected == 0)
+        {
+            mLevel = lstAllStageNormal[stage].levels[level];
+        }
+        else if(modeSelected == 1)
+        {
+            mLevel = lstAllStageHard[stage].levels[level];
+        }
+
         return mLevel;
     }
 
     public static void SaveLevel(int stage, int mapIndex)
     {
-        string key = stage + "_" + mapIndex;
-
-        //for (int i = 0; i < lstAllStage.Count; i++)
+        if (modeSelected == 0)
         {
-            //for (int j = 0; j < lstAllStage[/*i*/stage].levels.Count; j++)
+            lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
+            lstAllStageNormal[stage].levelUnlock = mapIndex;
+
+            if (mapIndex == 7)
             {
-                //if (lstAllStage[/*i*/stage].levels[/*j*/mapIndex].levelID.Equals(key))
-                {
-                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].hasComplete = true;
-                    lstAllStage[/*i*/stage].levelUnlock = /*j*/mapIndex;
-                }
+                lstAllStageNormal[(stage + 1 > lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
+                
+                UnlockHardMode();
+
+                StageIncrease();
             }
-        }
 
-        if (mapIndex == 7)
+            string jSave = JsonMapper.ToJson(lstAllStageNormal);
+            SaveStage(jSave);
+        }
+        else if (modeSelected == 1)
         {
-            lstAllStage[(stage + 1 > lstAllStage.Count ? stage : stage + 1)].stageHasUnlock = true;
-            StageIncrease();
-        }
 
-        string jSave = JsonMapper.ToJson(lstAllStage);
-        SaveStage(jSave);
+            lstAllStageHard[stage].levels[mapIndex].hasComplete = true;
+            lstAllStageHard[stage].levelUnlock = mapIndex;
+
+            if (mapIndex == 7)
+            {
+                lstAllStageHard[(stage + 1 > lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
+
+                StageHardIncrease();
+            }
+
+            string jSave = JsonMapper.ToJson(lstAllStageHard);
+            SaveStageHard(jSave);
+        }
     }
+
+
 
     public static void SaveStars(int stage, int mapIndex, bool miss1, bool miss2)
     {
-        string key = stage + "_" + mapIndex;
-        //for (int i = 0; i < lstAllStage.Count; i++)
+        if(modeSelected == 0)
         {
-            //for (int j = 0; j < lstAllStage[i].levels.Count; j++)
-            {
-                //if (lstAllStage[i].levels[j].levelID.Equals(key))
-                {
-                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[0].isPass = true;
-                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[1].isPass = miss1;
-                    lstAllStage[/*i*/stage].levels[/*j*/mapIndex].mission[2].isPass = miss2;
-                }
-            }
-        }
+            string key = stage + "_" + mapIndex;
+            lstAllStageNormal[stage].levels[mapIndex].mission[0].isPass = true;
+            lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass = miss1;
+            lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass = miss2;
 
-        string jSave = JsonMapper.ToJson(lstAllStage);
-        SaveStage(jSave);
+            string jSave = JsonMapper.ToJson(lstAllStageNormal);
+            SaveStage(jSave);
+        }
+        else if(modeSelected == 1)
+        {
+            lstAllStageHard[stage].levels[mapIndex].mission[0].isPass = true;
+            lstAllStageHard[stage].levels[mapIndex].mission[1].isPass = miss1;
+            lstAllStageHard[stage].levels[mapIndex].mission[2].isPass = miss2;
+
+            string jSaveHard = JsonMapper.ToJson(lstAllStageHard);
+            SaveStageHard(jSaveHard);
+        }
     }
     #endregion
 
@@ -303,7 +448,7 @@ public class DataUtils
             MainMenuController.Instance.UpdateCoinAndGem();
         }
 
-       // Debug.LogError("zooooooooooo1");
+        // Debug.LogError("zooooooooooo1");
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {

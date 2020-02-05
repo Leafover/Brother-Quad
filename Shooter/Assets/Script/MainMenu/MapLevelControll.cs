@@ -42,8 +42,25 @@ public class MapLevelControll : MonoBehaviour
             MainMenuController.Instance.SoundClickButton();
             OnMapSelected(stageIndex, mapIndex);
         });
+        RefreshMap();
+    }
+
+    public void RefreshMap()
+    {
+        SwitchColor();
         CheckMapStars();
         CheckMapUnlock();
+
+        if (canPlay && imgMap.sprite == StageManager.Instance.imgMapSelected)
+        {
+            transform.localScale = vDesScale;
+            uiShiny.enabled = true;
+        }
+        else
+        {
+            transform.localScale = vCurScale;
+            uiShiny.enabled = false;
+        }
     }
     private void OnMapSelected(int _stage, int _mapIndex)
     {
@@ -60,25 +77,49 @@ public class MapLevelControll : MonoBehaviour
     private void CheckMapUnlock()
     {
         int _mIndex = 0;
-        if(DataUtils.lstAllStage.Count == 0 && mapIndex == 0)
+        if(DataUtils.modeSelected == 0)
         {
-        }
-        else
-        {
-            if(DataUtils.lstAllStage[MainMenuController.Instance.stageSelected - 1].levelUnlock < 0)
+            if (DataUtils.lstAllStageNormal.Count == 0 && mapIndex == 0)
             {
-                _mIndex = 0;
-            }
-            else if (DataUtils.lstAllStage[MainMenuController.Instance.stageSelected - 1].levelUnlock == StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount-1)
-            {
-                _mIndex = StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1;
             }
             else
             {
-                _mIndex = DataUtils.lstAllStage[MainMenuController.Instance.stageSelected - 1].levelUnlock + 1;
+                if (DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1].levelUnlock < 0)
+                {
+                    _mIndex = 0;
+                }
+                else if (DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1].levelUnlock == StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1)
+                {
+                    _mIndex = StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1;
+                }
+                else
+                {
+                    _mIndex = DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1].levelUnlock + 1;
+                }
             }
         }
-        if(mapIndex == _mIndex)
+        else if(DataUtils.modeSelected == 1)
+        {
+            if (DataUtils.lstAllStageHard.Count == 0 && mapIndex == 0)
+            {
+            }
+            else
+            {
+                if (DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1].levelUnlock < 0)
+                {
+                    _mIndex = 0;
+                }
+                else if (DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1].levelUnlock == StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1)
+                {
+                    _mIndex = StageManager.Instance.gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount - 1;
+                }
+                else
+                {
+                    _mIndex = DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1].levelUnlock + 1;
+                }
+            }
+        }
+        if (mapIndex == _mIndex)
         {
             OnMapSelected(stageIndex, _mIndex);
             imgMap.color = StageManager.Instance.clSelected;
@@ -155,10 +196,7 @@ public class MapLevelControll : MonoBehaviour
         }
     }
     string[] _sCutName = new string[1];
-    void Start()
-    {
 
-    }
     private bool MapHasUnlock()
     {
         return canPlay;
