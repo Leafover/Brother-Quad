@@ -114,14 +114,7 @@ public class GunBoss2 : AutoTarget
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(1, 1);
                     DataController.instance.DoAchievement(3, 1);
-                    DataController.instance.DoDailyQuest(1, 1);
 
-                    //PlayerController.instance.countKillByGrenade++;
-                    //if (PlayerController.instance.countKillByGrenade >= 3)
-                    //{
-                    //    DataController.instance.DoAchievement(4, 1);
-                    //    PlayerController.instance.countKillByGrenade = 0;
-                    //}
                 }
                 break;
             case 26:

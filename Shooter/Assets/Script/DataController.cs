@@ -409,7 +409,7 @@ public class DataController : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey(DataParam.OLDDATETIME))
         {
-            PlayerPrefs.SetString(DataParam.OLDDATETIME, System.DateTime.Today.ToString());
+            PlayerPrefs.SetString(DataParam.OLDDATETIME, System.DateTime.Now.ToString());
             AddNewQuest();
            // Debug.LogError("load data lần đầu tiên");
         }
@@ -418,7 +418,7 @@ public class DataController : MonoBehaviour
 
 
 
-        if (System.DateTime.Today == DataParam.oldDateTime)
+        if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 1440)
         {
             strAllDailyQuest = PlayerPrefs.GetString(DataParam.ALLDAILYQUEST);
 
@@ -445,7 +445,7 @@ public class DataController : MonoBehaviour
             return;
         }
 
-        DataParam.oldDateTime = System.DateTime.Today;
+        DataParam.oldDateTime = System.DateTime.Now;
         PlayerPrefs.SetString(DataParam.OLDDATETIME, DataParam.oldDateTime.ToString());
         AddNewQuest();
        // Debug.LogError("load data mới sau 1 ngày");
@@ -854,17 +854,7 @@ public class DataController : MonoBehaviour
             saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel - 1];
         }
     }
-    public void DoDailyQuest(int index,int _numberAdd)
-    {
-        if (allSaveDailyQuest[index].isDone || allSaveDailyQuest[index].isPass || index != allSaveDailyQuest[index].indexQuest)
-            return;
-        allSaveDailyQuest[index].currentNumber += _numberAdd;
-        if(allSaveDailyQuest[index].currentNumber >= allDailyQuest[allSaveDailyQuest[index].indexQuest].Soluong)
-        {
-            allSaveDailyQuest[index].isPass = true;
-            allSaveDailyQuest[index].currentNumber = allDailyQuest[allSaveDailyQuest[index].indexQuest].Soluong;
-        }
-    }
+
     public void CheckDoneAllDailyQuest()
     {
         DataParam.doneAllDailyQuest = true;

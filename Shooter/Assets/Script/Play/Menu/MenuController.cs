@@ -6,6 +6,9 @@ public class MenuController : MonoBehaviour
 {
     public static MenuController instance;
     public AudioSource auBG;
+
+    public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
+
     private void Awake()
     {
         instance = this;
@@ -23,5 +26,12 @@ public class MenuController : MonoBehaviour
          //   Debug.LogError("zooooooooooo2");
         }
         DataParam.first = false;
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            achievementAndDailyQuestPanel.DisPlayMe(0);
+        }
     }
 }

@@ -169,10 +169,7 @@ public class GameController : MonoBehaviour
         {
             uiPanel.comboText.text = "UNBELIEVABLE";
         }
-        if (countCombo == 15)
-        {
-            DataController.instance.DoDailyQuest(8, 1);
-        }
+
         if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[0].valueMission)
             MissionController.Instance.DoMission(2, countCombo);
         if (MissionController.Instance.listMissions[1].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[1].valueMission)
@@ -429,10 +426,8 @@ public class GameController : MonoBehaviour
             else
             {
                 DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
-                DataController.instance.DoDailyQuest(7, 1);
             }
 
-            DataController.instance.DoDailyQuest(2, 1);
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
@@ -449,14 +444,7 @@ public class GameController : MonoBehaviour
             if (DataParam.indexStage == 1)
                 DataController.instance.DoAchievement(9, 1);
         }
-        if (DataUtils.modeSelected == 1)
-        {
-            DataController.instance.DoDailyQuest(4, 1);
-            if (reviveCount == 0)
-            {
-                DataController.instance.DoDailyQuest(9, 1);
-            }
-        }
+
         StartCoroutine(delayDisplayFinish());
     }
 
