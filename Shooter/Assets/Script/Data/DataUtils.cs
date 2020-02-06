@@ -5,6 +5,10 @@ using LitJson;
 
 public class DataUtils
 {
+    const string APP_ID = "ca-app-pub-7110840808157311~4064500140";
+    const string INTERS_ID = "ca-app-pub-7110840808157311/1933639753";
+    const string REWARDED_ID = "ca-app-pub-7110840808157311/1742068068";
+
     enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     enum eType { Shoes, Bag, Gloves, Helmet, Armor, Weapon }
     public const int TOTAL_STAGE = 2;
@@ -134,7 +138,7 @@ public class DataUtils
     public static List<DataStage> lstAllStage = new List<DataStage>();
     public static List<DataStage> lstAllStageHard = new List<DataStage>();
     public static List<DataStage> lstAllStageNormal = new List<DataStage>();
-    public static int modeSelected = 0;
+    public static int modeSelected = 0;///
     #region Mode Hard
 
     private static string GetStageHardTextData()
