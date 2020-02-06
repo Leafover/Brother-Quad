@@ -348,7 +348,7 @@ public class DataController : MonoBehaviour
     void AddNewQuest()
     {
         allSaveDailyQuest.Clear();
-        if (DataParam.isVIP)
+        if (!DataParam.isVIP)
         {
             List<int> indexsNormal = new List<int>();
             for (int i = 0; i < allDailyQuest.Count - 5; i++)
@@ -418,7 +418,7 @@ public class DataController : MonoBehaviour
 
 
 
-        if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 1440)
+        if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 86400)
         {
             strAllDailyQuest = PlayerPrefs.GetString(DataParam.ALLDAILYQUEST);
 
