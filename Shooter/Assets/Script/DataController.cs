@@ -372,7 +372,6 @@ public class DataController : MonoBehaviour
             }
         }
 
-
         for (int i = 0; i < saveIndexQuest.Count; i++)
         {
             allSaveDailyQuest[saveIndexQuest[i]].isActive = true;
@@ -380,12 +379,9 @@ public class DataController : MonoBehaviour
     }
     public void LoadDailyQuest()
     {
-
         saveIndexQuest.Clear();
         allSaveDailyQuest.Clear();
         allSaveDailyQuest.AddRange(allDailyQuest);
-
-
         if (!PlayerPrefs.HasKey(DataParam.OLDDATETIME))
         {
             PlayerPrefs.SetString(DataParam.OLDDATETIME, System.DateTime.Now.ToString());
@@ -395,7 +391,6 @@ public class DataController : MonoBehaviour
         DataParam.oldDateTime = System.Convert.ToDateTime(PlayerPrefs.GetString(DataParam.OLDDATETIME));
         if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 86400)
         {
-
             strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
 
             string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
@@ -430,13 +425,11 @@ public class DataController : MonoBehaviour
             }
             return;
         }
-
         DataParam.oldDateTime = System.DateTime.Now;
         PlayerPrefs.SetString(DataParam.OLDDATETIME, DataParam.oldDateTime.ToString());
         AddNewQuest();
         // Debug.LogError("load data mới sau 1 ngày");
     }
-
     public void LoadDataMission(string path, int index)
     {
 
@@ -832,7 +825,6 @@ public class DataController : MonoBehaviour
                 saveAllAchievement[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
                 saveAllAchievement[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
                 saveAllAchievement[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
-
             }
         }
     }
@@ -858,7 +850,6 @@ public class DataController : MonoBehaviour
             allSaveDailyQuest[index].currentNumber = allSaveDailyQuest[index].Soluong;
         }
     }
-
     public void CheckDoneAllDailyQuest()
     {
         if (!saveIndexQuest.Contains(10))
@@ -866,7 +857,6 @@ public class DataController : MonoBehaviour
             Debug.Log("111111111");
             return;
         }
-
         DataParam.doneAllDailyQuest = true;
         for (int i = 0; i < allSaveDailyQuest.Count - 1; i++)
         {
@@ -877,7 +867,6 @@ public class DataController : MonoBehaviour
                 break;
             }
         }
-
         if (DataParam.doneAllDailyQuest)
         {
             for (int i = 0; i < saveIndexQuest.Count; i++)
