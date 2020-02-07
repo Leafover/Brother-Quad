@@ -627,7 +627,7 @@ public class EnemyBase : AutoTarget
             if(isBoss)
                 DataController.instance.DoAchievement(10, 1);
 
-
+            DataController.instance.DoDailyQuest(3, 1);
         }
 
         enemyState = EnemyState.die;
@@ -637,7 +637,7 @@ public class EnemyBase : AutoTarget
         GameController.instance.AddCombo();
 
         DataController.instance.DoAchievement(0, 1);
-
+        DataController.instance.DoDailyQuest(0, 1);
         switch (PlayerController.instance.currentGun)
         {
             case 3:
@@ -817,7 +817,7 @@ public class EnemyBase : AutoTarget
                     GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
                     MissionController.Instance.DoMission(1, 1);
                     DataController.instance.DoAchievement(3, 1);
-
+                    DataController.instance.DoDailyQuest(1, 1);
                     PlayerController.instance.countKillByGrenade++;
                     if(PlayerController.instance.countKillByGrenade >= 3)
                     {

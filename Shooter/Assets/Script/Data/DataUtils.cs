@@ -416,6 +416,8 @@ public class DataUtils
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
+
+        DataController.instance.DoDailyQuest(6, coinAdded);
     }
     private static string GetAllPlayerData()
     {

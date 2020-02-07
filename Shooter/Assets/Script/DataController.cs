@@ -856,13 +856,27 @@ public class DataController : MonoBehaviour
 
     public void CheckDoneAllDailyQuest()
     {
+        if (!saveIndexQuest.Contains(10))
+            return;
+
         DataParam.doneAllDailyQuest = true;
         for (int i = 0; i < allSaveDailyQuest.Count; i++)
         {
-            if (!allSaveDailyQuest[i].isPass && i != 10)
+            if (!allSaveDailyQuest[i].isPass && allSaveDailyQuest[i].isActive && i != 10)
             {
                 DataParam.doneAllDailyQuest = false;
                 break;
+            }
+        }
+
+        if(DataParam.doneAllDailyQuest)
+        {
+            for(int i = 0; i < saveIndexQuest.Count; i ++)
+            {
+                if(saveIndexQuest[i] == 10)
+                {
+                    MenuController.instance.achievementAndDailyQuestPanel.dailyquestBouders[i].DisplayMe();
+                }
             }
         }
     }

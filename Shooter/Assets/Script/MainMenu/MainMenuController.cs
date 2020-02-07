@@ -200,6 +200,10 @@ public class MainMenuController : MonoBehaviour
     {
         Application.OpenURL("https://www.facebook.com/rambo.contra.brothersquad/");
     }
+    public void BtnOpenAchievementAndDailyQuest()
+    {
+        MenuController.instance.achievementAndDailyQuestPanel.DisPlayMe(0);
+    }
     public void WatchAds()
     {
         ShowMapNotify("Watch Video Ads to get coin and crytal.");
