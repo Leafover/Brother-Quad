@@ -49,15 +49,15 @@ public class UIPanel : MonoBehaviour
     {
         PopupSetting.Instance.ShowPanelSetting();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
-#else
-                randomAds = Random.Range(0, 100);
-        if (randomAds < 30)
-        {
-            AdsManager.Instance.ShowInterstitial((b) => { });
-        }
-#endif
+//#else
+//        randomAds = Random.Range(0, 100);
+//        if (randomAds < 30)
+//        {
+//            AdsManager.Instance.ShowInterstitial((b) => { });
+//        }
+//#endif
         //DataParam.nextSceneAfterLoad = 0;
         //Application.LoadLevel(1);
     }
