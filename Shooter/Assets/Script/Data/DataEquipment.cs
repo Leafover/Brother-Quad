@@ -12,8 +12,8 @@ public class DataEquipment
 public class ItemData
 {
     public string id;
-    public string type;
-    public string level;
+    public DataUtils.eType type;
+    public DataUtils.eLevel level;
     public int pices;
     public bool isUnlock;
 }

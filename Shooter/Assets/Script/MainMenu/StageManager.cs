@@ -17,7 +17,7 @@ public class StageManager : MonoBehaviour
     public Image imgHard, imgNormal;
     public Image[] imgItemReward;
     public Image[] imgMission;
-    public Sprite imgMapUnlock, imgMapNotYetUnlock, imgMapSelected;
+    public Sprite imgMapUnlock, imgMapNotYetUnlock, imgMapSelected, imgModeSelected, imgModeUnSelect;
 
 
     public GameObject[] gStages;
@@ -288,8 +288,8 @@ public class StageManager : MonoBehaviour
     public void ChooseNormalMode()
     {
         DataUtils.modeSelected = 0;
-        imgHard.color = clNotYetUnlock;
-        imgNormal.color = clSelected;
+        imgHard.sprite = imgModeUnSelect;
+        imgNormal.sprite = imgModeSelected;
         RefreshMap();
     }
     public void ChooseHardMode()
@@ -297,8 +297,8 @@ public class StageManager : MonoBehaviour
         if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
         {
             DataUtils.modeSelected = 1;
-            imgNormal.color = clNotYetUnlock;
-            imgHard.color = clSelected;
+            imgNormal.sprite = imgModeUnSelect;
+            imgHard.sprite = imgModeSelected;
             RefreshMap();
         }
         else

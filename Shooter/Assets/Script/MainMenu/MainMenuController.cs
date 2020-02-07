@@ -22,7 +22,6 @@ public class MainMenuController : MonoBehaviour
     }
     private void Start()
     {
-
         InitButtonStage();
     }
     public void SoundClickButton()
@@ -200,5 +199,9 @@ public class MainMenuController : MonoBehaviour
     public void BtnLike()
     {
         Application.OpenURL("https://www.facebook.com/rambo.contra.brothersquad/");
+    }
+    public void WatchAds()
+    {
+        ShowMapNotify("Watch Video Ads to get coin and crytal.");
     }
 }
