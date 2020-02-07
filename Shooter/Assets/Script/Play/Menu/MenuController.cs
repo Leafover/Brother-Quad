@@ -28,6 +28,7 @@ public class MenuController : MonoBehaviour
 
         if(!DataParam.first)
         {
+            //   AdsManager.Instance.ShowInterstitial((b) => { });
 #if UNITY_EDITOR
 
 #else
@@ -38,6 +39,8 @@ public class MenuController : MonoBehaviour
         }
 #endif
         }
+
+
 
         DataParam.first = false;
     }
