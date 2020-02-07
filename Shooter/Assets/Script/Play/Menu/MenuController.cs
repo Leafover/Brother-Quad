@@ -12,7 +12,7 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-       // Debug.unityLogger.logEnabled = false;
+        // Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()
@@ -23,15 +23,19 @@ public class MenuController : MonoBehaviour
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
-         //   Debug.LogError("zooooooooooo2");
+            //   Debug.LogError("zooooooooooo2");
         }
         DataParam.first = false;
     }
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.O))
+        //if (Input.GetKeyDown(KeyCode.O))
         //{
-        //    achievementAndDailyQuestPanel.DisPlayMe(0);
+        //    for (int i = 0; i < DataController.allSaveDailyQuest.Count; i++)
+        //    {
+        //        if (i != 10)
+        //            DataController.instance.DoDailyQuest(i, 10000);
+        //    }
         //}
         //else if(Input.GetKeyDown(KeyCode.H))
         //{

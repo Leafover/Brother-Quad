@@ -330,7 +330,7 @@ public class ObjectPoolerManager : MonoBehaviour
         if (!focus)
         {
             DataController.instance.SaveData();
-            Debug.LogError("focus play");
+           // Debug.LogError("focus play");
         }
     }
     private void OnApplicationPause(bool pause)
@@ -338,7 +338,7 @@ public class ObjectPoolerManager : MonoBehaviour
         if (pause)
         {
             DataController.instance.SaveData();
-            Debug.LogError("pause play");
+           // Debug.LogError("pause play");
         }
     }
 }

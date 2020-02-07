@@ -399,9 +399,9 @@ public class DataController : MonoBehaviour
             strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
 
             string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
-            for(int i = 0; i < slitSaveIndexQuest.Length; i ++)
+            for (int i = 0; i < slitSaveIndexQuest.Length; i++)
             {
-                if(!string.IsNullOrEmpty(slitSaveIndexQuest[i]))
+                if (!string.IsNullOrEmpty(slitSaveIndexQuest[i]))
                 {
                     saveIndexQuest.Add(int.Parse(slitSaveIndexQuest[i]));
                 }
@@ -422,6 +422,11 @@ public class DataController : MonoBehaviour
                     allSaveDailyQuest[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
                     allSaveDailyQuest[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
                     allSaveDailyQuest[i].isActive = bool.Parse(jsonData[i]["isActive"].ToString());
+
+
+                    //allSaveDailyQuest[i].currentNumber = 0;
+                    //allSaveDailyQuest[i].isPass = false;
+                    //allSaveDailyQuest[i].isDone = false;
                 }
             }
             return;
@@ -797,7 +802,7 @@ public class DataController : MonoBehaviour
     {
         PlayerPrefs.SetString(DataParam.ALLDAILYQUEST, JsonMapper.ToJson(allSaveDailyQuest));
         strSaveIndexQuest = null;
-        for (int i = 0; i < saveIndexQuest.Count; i ++)
+        for (int i = 0; i < saveIndexQuest.Count; i++)
         {
             strSaveIndexQuest += saveIndexQuest[i] + "@";
         }
@@ -807,7 +812,7 @@ public class DataController : MonoBehaviour
     {
         PlayerPrefs.SetString(DataParam.ALLACHIEVEMENT, JsonMapper.ToJson(saveAllAchievement));
     }
-    string strAllAchievement, strAllDailyQuest,strSaveIndexQuest;
+    string strAllAchievement, strAllDailyQuest, strSaveIndexQuest;
     void LoadAchievement()
     {
         for (int i = 0; i < allAchievement.Count; i++)
@@ -828,6 +833,7 @@ public class DataController : MonoBehaviour
                 saveAllAchievement[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
                 saveAllAchievement[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
                 saveAllAchievement[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
+
             }
         }
     }
@@ -857,25 +863,31 @@ public class DataController : MonoBehaviour
     public void CheckDoneAllDailyQuest()
     {
         if (!saveIndexQuest.Contains(10))
+        {
+            Debug.Log("111111111");
             return;
+        }
 
         DataParam.doneAllDailyQuest = true;
-        for (int i = 0; i < allSaveDailyQuest.Count; i++)
+        for (int i = 0; i < allSaveDailyQuest.Count - 1; i++)
         {
-            if (!allSaveDailyQuest[i].isPass && allSaveDailyQuest[i].isActive && i != 10)
+            if (!allSaveDailyQuest[i].isDone && allSaveDailyQuest[i].isActive)
             {
                 DataParam.doneAllDailyQuest = false;
+                Debug.Log("false");
                 break;
             }
         }
 
-        if(DataParam.doneAllDailyQuest)
+        if (DataParam.doneAllDailyQuest)
         {
-            for(int i = 0; i < saveIndexQuest.Count; i ++)
+            for (int i = 0; i < saveIndexQuest.Count; i++)
             {
-                if(saveIndexQuest[i] == 10)
+                if (saveIndexQuest[i] == 10)
                 {
+                    DoDailyQuest(10, 1);
                     MenuController.instance.achievementAndDailyQuestPanel.dailyquestBouders[i].DisplayMe();
+                    Debug.LogError("zoooooooooooo");
                 }
             }
         }
