@@ -5,9 +5,10 @@ using LitJson;
 
 public class DataUtils
 {
-    const string APP_ID = "ca-app-pub-8566745611252640~5288886245";
-    const string INTERS_ID = "ca-app-pub-8566745611252640/6358070116";
-    const string REWARDED_ID = "ca-app-pub-8566745611252640/6166498422";
+    public const string APP_ID = isTest? "ca-app-pub-3940256099942544~3347511713" : "ca-app-pub-8566745611252640~5288886245";
+    public const string INTERS_ID = isTest ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-8566745611252640/6358070116";
+    public const string REWARDED_ID = isTest ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-8566745611252640/6166498422";
+    public const bool isTest = true;
 
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
@@ -66,6 +67,33 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
+    public static List<ItemData> lstAllEquipment = new List<ItemData>();
+    public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices)
+    {
+        ItemData iData = new ItemData();
+        iData.id = _id;
+        iData.type = _itemType;
+        iData.level = _itemLevel;
+        iData.pices = _pices;
+
+        if (lstAllEquipment.Contains(iData))
+        {
+            for(int i = 0; i < lstAllEquipment.Count; i++)
+            {
+                ItemData _data = lstAllEquipment[i];
+                if(_data.id.Equals(iData.id) && _data.type == iData.type && _data.level == iData.level)
+                {
+                    lstAllEquipment[i] = iData;
+                }
+            }
+        }
+        else
+        {
+            lstAllEquipment.Add(iData);
+        }
+    }
+
+
     public static bool IsHaveEquipment()
     {
         return PlayerPrefs.HasKey(KEY_EQUIPMENT_DATA);

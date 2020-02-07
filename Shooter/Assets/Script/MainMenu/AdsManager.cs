@@ -37,7 +37,7 @@ public class AdsManager : MonoBehaviour
     {
         // string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
         //Advertisement.Initialize(gameId, false);
-        MobileAds.Initialize("ca-app-pub-3940256099942544~3347511713");
+        MobileAds.Initialize(DataUtils.APP_ID);
         InitInterstitial();
         InitRewarded();
         UnityAds.SetGDPRConsentMetaData(true);
@@ -118,18 +118,18 @@ public class AdsManager : MonoBehaviour
     #region Init Admob
     AdRequest CreateRequest()
     {
-        AdRequest request = new AdRequest.Builder().AddTestDevice("412B8FAC556EF8DD7055892930534254").Build();
+        AdRequest request = new AdRequest.Builder().Build();
         return request;
     }
     void InitInterstitial()
     {
-        interstitial = new InterstitialAd("ca-app-pub-3940256099942544/1033173712");
+        interstitial = new InterstitialAd(DataUtils.INTERS_ID);
         interstitial.OnAdClosed += HandleOnAdClosed;
         interstitial.LoadAd(CreateRequest());
     }
     void InitRewarded()
     {
-        this.rewardedAd = new RewardedAd("ca-app-pub-3940256099942544/5224354917");
+        this.rewardedAd = new RewardedAd(DataUtils.REWARDED_ID);
         // Called when the user should be rewarded for interacting with the ad.
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         this.rewardedAd.OnAdLoaded += RewardedAd_OnAdLoaded;
