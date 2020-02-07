@@ -423,7 +423,6 @@ public class DataController : MonoBehaviour
                     allSaveDailyQuest[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
                     allSaveDailyQuest[i].isActive = bool.Parse(jsonData[i]["isActive"].ToString());
 
-
                     //allSaveDailyQuest[i].currentNumber = 0;
                     //allSaveDailyQuest[i].isPass = false;
                     //allSaveDailyQuest[i].isDone = false;
