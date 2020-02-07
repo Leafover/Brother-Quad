@@ -5,15 +5,14 @@ using LitJson;
 
 public class DataUtils
 {
-    const string APP_ID = "ca-app-pub-7110840808157311~4064500140";
-    const string INTERS_ID = "ca-app-pub-7110840808157311/1933639753";
-    const string REWARDED_ID = "ca-app-pub-7110840808157311/1742068068";
+    const string APP_ID = "ca-app-pub-8566745611252640~5288886245";
+    const string INTERS_ID = "ca-app-pub-8566745611252640/6358070116";
+    const string REWARDED_ID = "ca-app-pub-8566745611252640/6166498422";
 
-    enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
-    enum eType { Shoes, Bag, Gloves, Helmet, Armor, Weapon }
+    public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
+    public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
     public const int TOTAL_STAGE = 2;
     const string GAME_KEY = "Alien_Shooter_";
-    const string KEY_EQIUP = GAME_KEY + "KEY_EQIUP";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
     const string KEY_MUSIC = GAME_KEY + "KEY_MUSIC";
@@ -22,17 +21,15 @@ public class DataUtils
     public const string KEY_PLAYER_DATA = GAME_KEY + "KEY_PLAYER_DATA";
     public const string KEY_HEROES_INDEX = GAME_KEY + "KEY_HEROES_INDEX";
     public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
-
-
     public const string KEY_GAME_STAGE_HARD = GAME_KEY + "KEY_GAME_STAGE_HARD";
     public const string KEY_GAME_STAGE_INDEX_HARD = GAME_KEY + "KEY_GAME_STAGE_INDEX_HARD";
+
+    public const string KEY_EQUIPMENT_DATA = GAME_KEY + "KEY_EQUIPMENT_DATA";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
     public const string P_DONATE = "com.ohzegame.ramboshooter.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohzegame.ramboshooter.brothersquad.starterpack";
-
-    public static Dictionary<string, ItemData> dicEquipment = new Dictionary<string, ItemData>();
 
     #region Remove Ads
     public static void RemoveAds()
@@ -69,69 +66,11 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
-    public static void SaveEquipment(string id, string level, int pices)
+    public static bool IsHaveEquipment()
     {
-        ItemData iData = new ItemData();
-        iData.id = id;
-        iData.level = level;
-        iData.type = GetItemType(id, level);
-        iData.pices = pices;
-
-        List<ItemData> lst = new List<ItemData>();
-
-        if (!PlayerPrefs.HasKey(KEY_EQIUP))
-        {
-            if (!lst.Contains(iData))
-                lst.Add(iData);
-            string sSave = JsonMapper.ToJson(lst);
-            PlayerPrefs.SetString(KEY_EQIUP, sSave);
-        }
-        else
-        {
-            JsonData jData = JsonMapper.ToObject(GetAllItem().ToString());
-            ItemData iDataSaver = new ItemData();
-            for (int i = 0; i < jData.Count; i++)
-            {
-                ItemData item = JsonMapper.ToObject<ItemData>(jData[i].ToJson());
-                if (item.id.Equals(iData.id) && item.level.Equals(iData.level))
-                {
-                    item.pices = pices;
-                }
-                else
-                {
-                    item.id = iData.id;
-                    item.level = iData.level;
-                    item.type = iData.type;
-                    item.pices = iData.pices;
-                    iDataSaver = item;
-                }
-            }
-        }
-    }
-    public static void LoadAllEquipment()
-    {
-        JsonData jData = JsonMapper.ToObject(GetAllItem().ToString());
-        for (int i = 0; i < jData.Count; i++)
-        {
-            ItemData item = JsonMapper.ToObject<ItemData>(jData[i].ToJson());
-            string sKey = item.id + "_" + item.level;
-            dicEquipment.Add(sKey, item);
-        }
+        return PlayerPrefs.HasKey(KEY_EQUIPMENT_DATA);
     }
 
-    public static List<ItemData> AllEquipment()
-    {
-        List<ItemData> lst = new List<ItemData>();
-        return lst;
-    }
-    public static string GetAllItem()
-    {
-        return PlayerPrefs.GetString(KEY_EQIUP, null);
-    }
-    private static string GetItemType(string id, string level)
-    {
-        return "Helmet";
-    }
     #endregion
 
     #region Stage Data 
