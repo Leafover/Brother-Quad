@@ -9,12 +9,8 @@ public class DailyQuest
 {
     public string MissionContent, Type;
     public int RewardsType, SoLuongRewards, EXP, Soluong;
-}
-[System.Serializable]
-public class SaveDailyQuest
-{
-    public int currentNumber = 0, indexQuest;
-    public bool isDone = false, isPass = false;
+    public int currentNumber = 0;
+    public bool isDone = false, isPass = false, isActive = false;
 }
 #endregion
 
@@ -175,7 +171,7 @@ public class AllMission
 public class DataController : MonoBehaviour
 {
     public List<DailyQuest> allDailyQuest = new List<DailyQuest>();
-    public static List<SaveDailyQuest> allSaveDailyQuest = new List<SaveDailyQuest>();
+    public static List<DailyQuest> allSaveDailyQuest = new List<DailyQuest>();
     public List<Achievement> allAchievement = new List<Achievement>();
     public static List<SaveAchievement> saveAllAchievement = new List<SaveAchievement>();
     public List<AllTileVatPham> allTileVatPham = new List<AllTileVatPham>();
@@ -344,102 +340,88 @@ public class DataController : MonoBehaviour
             allDailyQuest.Add(_dailyQuestData);
         }
     }
-
+    public static List<int> saveIndexQuest = new List<int>();
     void AddNewQuest()
     {
-        allSaveDailyQuest.Clear();
-        if (!DataParam.isVIP)
+        int randomIndex;
+        if (DataParam.isVIP)
         {
-            List<int> indexsNormal = new List<int>();
-            for (int i = 0; i < allDailyQuest.Count - 5; i++)
+            while (saveIndexQuest.Count < 3)
             {
-                indexsNormal.Add(i);
+                randomIndex = Random.Range(0, allSaveDailyQuest.Count - 5);
+                if (!saveIndexQuest.Contains(randomIndex))
+                    saveIndexQuest.Add(randomIndex);
             }
-            while (allSaveDailyQuest.Count < 3)
-            {
-                int indexRandom = Random.Range(0, indexsNormal.Count);
 
-                SaveDailyQuest _saveDailyQuest = new SaveDailyQuest();
-                _saveDailyQuest.indexQuest = indexsNormal[indexRandom];
 
-                indexsNormal.RemoveAt(indexRandom);
-
-                allSaveDailyQuest.Add(_saveDailyQuest);
-            }
         }
         else
         {
-            List<int> indexsNormal = new List<int>();
-            for (int i = 0; i < allDailyQuest.Count - 5; i++)
+            while (saveIndexQuest.Count < 3)
             {
-                indexsNormal.Add(i);
-            }
-            while (allSaveDailyQuest.Count < 3)
-            {
-                int indexRandom = Random.Range(0, indexsNormal.Count);
-
-                SaveDailyQuest _saveDailyQuest = new SaveDailyQuest();
-                _saveDailyQuest.indexQuest = indexsNormal[indexRandom];
-
-                indexsNormal.RemoveAt(indexRandom);
-
-                allSaveDailyQuest.Add(_saveDailyQuest);
+                randomIndex = Random.Range(0, allSaveDailyQuest.Count - 5);
+                if (!saveIndexQuest.Contains(randomIndex))
+                    saveIndexQuest.Add(randomIndex);
             }
 
-
-            List<int> indexsVIP = new List<int>();
-            for (int i = allDailyQuest.Count - 5; i < allDailyQuest.Count; i++)
+            while (saveIndexQuest.Count < 5)
             {
-                indexsVIP.Add(i);
+                randomIndex = Random.Range(allSaveDailyQuest.Count - 5, allSaveDailyQuest.Count);
+                if (!saveIndexQuest.Contains(randomIndex))
+                    saveIndexQuest.Add(randomIndex);
             }
-            while (allSaveDailyQuest.Count < 5)
-            {
-                int indexRandom = Random.Range(0, indexsVIP.Count);
+        }
 
-                SaveDailyQuest _saveDailyQuest = new SaveDailyQuest();
-                _saveDailyQuest.indexQuest = indexsVIP[indexRandom];
 
-                indexsVIP.RemoveAt(indexRandom);
-
-                allSaveDailyQuest.Add(_saveDailyQuest);
-            }
+        for (int i = 0; i < saveIndexQuest.Count; i++)
+        {
+            allSaveDailyQuest[saveIndexQuest[i]].isActive = true;
         }
     }
     public void LoadDailyQuest()
     {
+
+        saveIndexQuest.Clear();
+        allSaveDailyQuest.Clear();
+        allSaveDailyQuest.AddRange(allDailyQuest);
+
+
         if (!PlayerPrefs.HasKey(DataParam.OLDDATETIME))
         {
             PlayerPrefs.SetString(DataParam.OLDDATETIME, System.DateTime.Now.ToString());
             AddNewQuest();
-           // Debug.LogError("load data lần đầu tiên");
+            // Debug.LogError("load data lần đầu tiên");
         }
-
         DataParam.oldDateTime = System.Convert.ToDateTime(PlayerPrefs.GetString(DataParam.OLDDATETIME));
-
-
-
         if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 86400)
         {
+
+            strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
+
+            string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
+            for(int i = 0; i < slitSaveIndexQuest.Length; i ++)
+            {
+                if(!string.IsNullOrEmpty(slitSaveIndexQuest[i]))
+                {
+                    saveIndexQuest.Add(int.Parse(slitSaveIndexQuest[i]));
+                }
+            }
+
             strAllDailyQuest = PlayerPrefs.GetString(DataParam.ALLDAILYQUEST);
 
             if (string.IsNullOrEmpty(strAllDailyQuest))
                 return;
 
-          //  Debug.LogError("load data đã lưu vào");
+            //  Debug.LogError("load data đã lưu vào");
             JsonData jsonData = JsonMapper.ToObject(strAllDailyQuest);
             for (int i = 0; i < jsonData.Count; i++)
             {
                 if (jsonData[i] != null)
                 {
-
-                    SaveDailyQuest _saveDailyQuest = new SaveDailyQuest();
-
-                    _saveDailyQuest.currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
-                    _saveDailyQuest.indexQuest = int.Parse(jsonData[i]["indexQuest"].ToString());
-                    _saveDailyQuest.isPass = bool.Parse(jsonData[i]["isPass"].ToString());
-                    _saveDailyQuest.isDone = bool.Parse(jsonData[i]["isDone"].ToString());
-
-                    allSaveDailyQuest.Add(_saveDailyQuest);
+                    allSaveDailyQuest[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
+                    allSaveDailyQuest[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
+                    allSaveDailyQuest[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
+                    allSaveDailyQuest[i].isActive = bool.Parse(jsonData[i]["isActive"].ToString());
                 }
             }
             return;
@@ -448,7 +430,7 @@ public class DataController : MonoBehaviour
         DataParam.oldDateTime = System.DateTime.Now;
         PlayerPrefs.SetString(DataParam.OLDDATETIME, DataParam.oldDateTime.ToString());
         AddNewQuest();
-       // Debug.LogError("load data mới sau 1 ngày");
+        // Debug.LogError("load data mới sau 1 ngày");
     }
 
     public void LoadDataMission(string path, int index)
@@ -814,12 +796,18 @@ public class DataController : MonoBehaviour
     void SaveDailyQuest()
     {
         PlayerPrefs.SetString(DataParam.ALLDAILYQUEST, JsonMapper.ToJson(allSaveDailyQuest));
+        strSaveIndexQuest = null;
+        for (int i = 0; i < saveIndexQuest.Count; i ++)
+        {
+            strSaveIndexQuest += saveIndexQuest[i] + "@";
+        }
+        PlayerPrefs.SetString(DataParam.SAVEINDEXQUEST, strSaveIndexQuest);
     }
     void SaveAchievement()
     {
         PlayerPrefs.SetString(DataParam.ALLACHIEVEMENT, JsonMapper.ToJson(saveAllAchievement));
     }
-    string strAllAchievement,strAllDailyQuest;
+    string strAllAchievement, strAllDailyQuest,strSaveIndexQuest;
     void LoadAchievement()
     {
         for (int i = 0; i < allAchievement.Count; i++)
@@ -854,13 +842,24 @@ public class DataController : MonoBehaviour
             saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel - 1];
         }
     }
+    public void DoDailyQuest(int index, int _numberAdd)
+    {
+        if (allSaveDailyQuest[index].isDone || allSaveDailyQuest[index].isPass || !allSaveDailyQuest[index].isActive)
+            return;
+        allSaveDailyQuest[index].currentNumber += _numberAdd;
+        if (allSaveDailyQuest[index].currentNumber >= allSaveDailyQuest[index].Soluong)
+        {
+            allSaveDailyQuest[index].isPass = true;
+            allSaveDailyQuest[index].currentNumber = allSaveDailyQuest[index].Soluong;
+        }
+    }
 
     public void CheckDoneAllDailyQuest()
     {
         DataParam.doneAllDailyQuest = true;
-        for(int i = 0; i < allSaveDailyQuest.Count; i ++)
+        for (int i = 0; i < allSaveDailyQuest.Count; i++)
         {
-            if(!allSaveDailyQuest[i].isPass && allSaveDailyQuest[i].indexQuest != 10)
+            if (!allSaveDailyQuest[i].isPass && i != 10)
             {
                 DataParam.doneAllDailyQuest = false;
                 break;

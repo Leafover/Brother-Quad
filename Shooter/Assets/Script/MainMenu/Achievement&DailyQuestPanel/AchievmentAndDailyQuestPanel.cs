@@ -43,8 +43,8 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
             case 0:
 
                 timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
-
-                for (int i = 0; i < DataController.allSaveDailyQuest.Count; i++)
+                Debug.Log("============="+DataController.saveIndexQuest.Count);
+                for (int i = 0; i < DataController.saveIndexQuest.Count; i++)
                 {
                     dailyquestBouders[i].DisplayMe();
                 }

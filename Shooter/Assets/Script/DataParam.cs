@@ -7,6 +7,7 @@ public class DataParam : MonoBehaviour
     public const string ALLACHIEVEMENT = "allachievement";
     public const string OLDDATETIME = "olddatetime";
     public const string ALLDAILYQUEST = "alldailyquest";
+    public const string SAVEINDEXQUEST = "saveindexquest";
 
     public static bool first = true,isVIP = false,doneAllDailyQuest = false;
     public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase;

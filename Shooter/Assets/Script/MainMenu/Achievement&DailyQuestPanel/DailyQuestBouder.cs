@@ -14,27 +14,27 @@ public class DailyQuestBouder : MonoBehaviour
         if (index != -1)
             return;
         index = int.Parse(gameObject.name) - 1;
-        desText.text = "" + DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].MissionContent;
+        desText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].MissionContent;
     }
 
     public void DisplayMe()
     {
 
         DisplayStart();
-        if (!DataController.allSaveDailyQuest[index].isDone)
+        if (!DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isDone)
         {
-            if (DataController.allSaveDailyQuest[index].isPass)
+            if (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass)
             {
                 btnClaim.SetActive(true);
                 doneObj.SetActive(false);
             }
             else
             {
-                processImg.fillAmount = (float)DataController.allSaveDailyQuest[index].currentNumber / DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].Soluong;
-                processText.text = DataController.allSaveDailyQuest[index].currentNumber + "/" + DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].Soluong;
-                rewardText.text = "" + DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].SoLuongRewards;
-                expText.text = "" + DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].EXP;
-                rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].RewardsType - 1];
+                processImg.fillAmount = (float)DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber / DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+                processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+                rewardText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards;
+                expText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].EXP;
+                rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType - 1];
 
                 btnClaim.SetActive(false);
                 doneObj.SetActive(false);
@@ -51,17 +51,17 @@ public class DailyQuestBouder : MonoBehaviour
 
     public void Claim()
     {
-        switch (DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].RewardsType)
+        switch (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType)
         {
             case 1:
-                DataUtils.AddCoinAndGame(0, DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].SoLuongRewards);
+                DataUtils.AddCoinAndGame(0, DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards);
                 break;
             case 2:
-                DataUtils.AddCoinAndGame(DataController.instance.allDailyQuest[DataController.allSaveDailyQuest[index].indexQuest].SoLuongRewards, 0);
+                DataUtils.AddCoinAndGame(DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards, 0);
                 break;
         }
-        DataController.allSaveDailyQuest[index].isPass = false;
-        DataController.saveAllAchievement[index].isDone = true;
+        DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass = false;
+        DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isDone = true;
         DisplayMe();
     }
 }
