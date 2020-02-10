@@ -63,19 +63,19 @@ public class PanelHeroes : MonoBehaviour
         weaponData = DataController.instance.allWeapon[0].weaponList[0];
         weaponDataNext = DataController.instance.allWeapon[0].weaponList[1];
 
-        txtDamage.text = weaponData.Dmg.ToString();
-        txtDamageUP.text = DataUtils.DisplayRichText(weaponData.Dmg, weaponDataNext.Dmg);
+        //txtDamage.text = weaponData.Dmg.ToString();
+        //txtDamageUP.text = DataUtils.DisplayRichText(weaponData.Dmg, weaponDataNext.Dmg);
 
-        txtAttSpeed.text = weaponData.BulletSpeed.ToString();
-        txtAttSpeedUP.text = DataUtils.DisplayRichText(weaponData.BulletSpeed, weaponDataNext.BulletSpeed);
+        //txtAttSpeed.text = weaponData.BulletSpeed.ToString();
+        //txtAttSpeedUP.text = DataUtils.DisplayRichText(weaponData.BulletSpeed, weaponDataNext.BulletSpeed);
 
-        txtCritDamage.text = weaponData.CritDmg.ToString();
-        txtCritDamageUP.text = DataUtils.DisplayRichText(weaponData.CritDmg, weaponDataNext.CritDmg);
+        //txtCritDamage.text = weaponData.CritDmg.ToString();
+        //txtCritDamageUP.text = DataUtils.DisplayRichText(weaponData.CritDmg, weaponDataNext.CritDmg);
 
-        txtCritRate.text = weaponData.CritRate.ToString();
-        txtCritRateUP.text = DataUtils.DisplayRichText(weaponData.CritRate, weaponDataNext.CritRate);
+        //txtCritRate.text = weaponData.CritRate.ToString();
+        //txtCritRateUP.text = DataUtils.DisplayRichText(weaponData.CritRate, weaponDataNext.CritRate);
 
-        txtCurDamage.text = weaponData.Dmg.ToString();
+        //txtCurDamage.text = weaponData.Dmg.ToString();
 
         priceUpdate = 165 * pData.SoManhYeuCau * pData.Giamua1manh;
         txtPriceUpdate.text = priceUpdate.ToString();

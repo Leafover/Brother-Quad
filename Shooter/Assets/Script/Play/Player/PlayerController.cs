@@ -244,14 +244,14 @@ public class PlayerController : MonoBehaviour
     }
     public void CalculateForGun()
     {
-        damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].Dmg;
-        maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeed;
-        maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].Magazine;
-        critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRate;
-        critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmg;
-        bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeed;
-        attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRange;
-        timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].Atksec;
+        damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
+        maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0];
+        maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
+        critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0];
+        critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0];
+        bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
+        attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
+        timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
         numberBullet = maxNumberBullet;
         timeReload = 0;
         isShoot = false;

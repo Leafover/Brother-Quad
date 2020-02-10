@@ -50,8 +50,9 @@ public class AllTileVatPham
 [System.Serializable]
 public class ShoesList
 {
-    public string ID, NAME, Level;
-    public double TangSpeeDichuyen, TangDoCaoNhay, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public string ID, NAME, Level, TangSpeeDichuyen, TangDoCaoNhay, GiaNangCap;
+    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> TangSpeeDichuyenValue = new List<float>(), TangDoCaoNhayValue = new List<float>(), GiaNangCapValue = new List<float>();
 }
 [System.Serializable]
 public class AllShoes
@@ -65,8 +66,9 @@ public class AllShoes
 [System.Serializable]
 public class BagList
 {
-    public string ID, NAME, Level;
-    public double Bonussoluongmauanduoc, HealthRegeneration, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public string ID, NAME, Level, Bonussoluongmauanduoc, HealthRegeneration, GiaNangCap;
+    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> BonussoluongmauanduocValue = new List<float>(), HealthRegenerationValue = new List<float>(), GiaNangCapValue = new List<float>();
 }
 [System.Serializable]
 public class AllBag
@@ -80,8 +82,9 @@ public class AllBag
 [System.Serializable]
 public class GlovesList
 {
-    public string ID, NAME, Level;
-    public double Giamtimereload, tangcritrate, Tangcritdmg, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public string ID, NAME, Level, Giamtimereload, tangcritrate, Tangcritdmg, GiaNangCap;
+    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> GiamtimereloadValue = new List<float>(), tangcritrateValue = new List<float>(), TangcritdmgValue = new List<float>(), GiaNangCapValue = new List<float>();
 }
 [System.Serializable]
 public class AllGloves
@@ -90,13 +93,13 @@ public class AllGloves
 }
 #endregion
 
-
 #region AllHelmet
 [System.Serializable]
 public class HelmetList
 {
-    public string ID, NAME, Level;
-    public double Def, BonusExp, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public string ID, NAME, Level, Def, BonusExp, Gia;
+    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo;
+    public List<float> DefValue = new List<float>(), BonusExpValue = new List<float>(), GiaValue = new List<float>();
 }
 [System.Serializable]
 public class AllHelmet
@@ -110,8 +113,9 @@ public class AllHelmet
 [System.Serializable]
 public class ArmorList
 {
-    public string ID, NAME, Level;
-    public double Def, SpeedTru, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
+    public string ID, NAME, Level, Def, SpeedTru, SoManhYeuCau, GiaNangCap;
+    public double GiaMua1Manh, GiaKhiRaDo;
+    public List<float> DefValue = new List<float>(), SpeedTruValue = new List<float>(), SoManhYeuCauValue = new List<float>(), GiaNangCapValue = new List<float>();
 }
 [System.Serializable]
 public class AllArmor
@@ -125,8 +129,9 @@ public class AllArmor
 [System.Serializable]
 public class WeaponList
 {
-    public string ID, NAME, Level;
-    public double Dmg, BulletSpeed, ReloadSpeed, Magazine, AtkRange, CritRate, CritDmg, SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia, Atksec;
+    public string ID, NAME, Level, Dmg, BulletSpeed, ReloadSpeed, Magazine, AtkRange, CritRate, CritDmg, SoManhYeuCau, Atksec, GiaNangCap;
+    public double GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> DmgValue = new List<float>(), AtksecValue = new List<float>(), BulletSpeedValue = new List<float>(), ReloadSpeedValue = new List<float>(), MagazineValue = new List<float>(), AtkRangeValue = new List<float>(), CritRateValue = new List<float>(), CritDmgValue = new List<float>(), SoManhYeuCauValue = new List<float>(), GiaNangCapValue = new List<float>();
 }
 [System.Serializable]
 public class AllWeapon
@@ -447,6 +452,7 @@ public class DataController : MonoBehaviour
         }
     }
     List<WeaponList> weaponList = new List<WeaponList>();
+
     public void LoadWeapon(string path)
     {
         if (weaponList.Count == 30)
@@ -457,10 +463,44 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             WeaponList _weaponList = JsonMapper.ToObject<WeaponList>(jData[i].ToJson());
+
+            string[] AtkRange = _weaponList.AtkRange.Split('@');
+            string[] Dmg = _weaponList.Dmg.Split('@');
+            string[] BulletSpeed = _weaponList.BulletSpeed.Split('@');
+            string[] ReloadSpeed = _weaponList.ReloadSpeed.Split('@');
+            string[] Magazine = _weaponList.Magazine.Split('@');
+            string[] Atksec = _weaponList.Atksec.Split('@');
+            string[] CritRate = _weaponList.CritRate.Split('@');
+            string[] CritDmg = _weaponList.CritDmg.Split('@');
+            string[] SoManhYeuCau = _weaponList.SoManhYeuCau.Split('@');
+            string[] GiaNangCap = _weaponList.GiaNangCap.Split('@');
+
+
+            for (int j = 0; j < AtkRange.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(AtkRange[j]))
+                    _weaponList.AtkRangeValue.Add(float.Parse(AtkRange[j]));
+                if (!string.IsNullOrEmpty(Dmg[j]))
+                    _weaponList.DmgValue.Add(float.Parse(Dmg[j]));
+                if (!string.IsNullOrEmpty(BulletSpeed[j]))
+                    _weaponList.BulletSpeedValue.Add(float.Parse(BulletSpeed[j]));
+                if (!string.IsNullOrEmpty(ReloadSpeed[j]))
+                    _weaponList.ReloadSpeedValue.Add(float.Parse(ReloadSpeed[j]));
+                if (!string.IsNullOrEmpty(Magazine[j]))
+                    _weaponList.MagazineValue.Add(float.Parse(Magazine[j]));
+                if (!string.IsNullOrEmpty(Atksec[j]))
+                    _weaponList.AtksecValue.Add(float.Parse(Atksec[j]));
+                if (!string.IsNullOrEmpty(CritRate[j]))
+                    _weaponList.CritRateValue.Add(float.Parse(CritRate[j]));
+                if (!string.IsNullOrEmpty(CritDmg[j]))
+                    _weaponList.CritDmgValue.Add(float.Parse(CritDmg[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _weaponList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
+                if (!string.IsNullOrEmpty(GiaNangCap[j]))
+                    _weaponList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+            }
             weaponList.Add(_weaponList);
         }
-
-
         for (int i = 0; i < weaponList.Count; i++)
         {
             switch (weaponList[i].ID)
@@ -509,6 +549,24 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             ArmorList _armorList = JsonMapper.ToObject<ArmorList>(jData[i].ToJson());
+
+            string[] Def = _armorList.Def.Split('@');
+            string[] SpeedTru = _armorList.SpeedTru.Split('@');
+            string[] SoManhYeuCau = _armorList.SoManhYeuCau.Split('@');
+            string[] GiaNangCap = _armorList.GiaNangCap.Split('@');
+
+            for (int j = 0; j < Def.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(Def[j]))
+                    _armorList.DefValue.Add(float.Parse(Def[j]));
+                if (!string.IsNullOrEmpty(SpeedTru[j]))
+                    _armorList.SpeedTruValue.Add(float.Parse(SpeedTru[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _armorList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
+                if (!string.IsNullOrEmpty(GiaNangCap[j]))
+                    _armorList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+            }
+
             armorList.Add(_armorList);
         }
 
@@ -561,6 +619,21 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             HelmetList _helmetList = JsonMapper.ToObject<HelmetList>(jData[i].ToJson());
+
+            string[] Def = _helmetList.Def.Split('@');
+            string[] BonusExp = _helmetList.BonusExp.Split('@');
+            string[] Gia = _helmetList.Gia.Split('@');
+
+            for (int j = 0; j < Def.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(Def[j]))
+                    _helmetList.DefValue.Add(float.Parse(Def[j]));
+                if (!string.IsNullOrEmpty(BonusExp[j]))
+                    _helmetList.BonusExpValue.Add(float.Parse(BonusExp[j]));
+                if (!string.IsNullOrEmpty(Gia[j]))
+                    _helmetList.GiaValue.Add(float.Parse(Gia[j]));
+            }
+
             helmetList.Add(_helmetList);
         }
 
@@ -613,6 +686,26 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             GlovesList _glovesList = JsonMapper.ToObject<GlovesList>(jData[i].ToJson());
+
+            string[] Giamtimereload = _glovesList.Giamtimereload.Split('@');
+            string[] tangcritrate = _glovesList.tangcritrate.Split('@');
+            string[] Tangcritdmg = _glovesList.Tangcritdmg.Split('@');
+            string[] GiaNangCap = _glovesList.GiaNangCap.Split('@');
+
+
+            for (int j = 0; j < Giamtimereload.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(Giamtimereload[j]))
+                    _glovesList.GiamtimereloadValue.Add(float.Parse(Giamtimereload[j]));
+                if (!string.IsNullOrEmpty(tangcritrate[j]))
+                    _glovesList.tangcritrateValue.Add(float.Parse(tangcritrate[j]));
+                if (!string.IsNullOrEmpty(Tangcritdmg[j]))
+                    _glovesList.TangcritdmgValue.Add(float.Parse(Tangcritdmg[j]));
+                if (!string.IsNullOrEmpty(GiaNangCap[j]))
+                    _glovesList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+            }
+
+
             glovesList.Add(_glovesList);
         }
 
@@ -665,6 +758,25 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             BagList _bagList = JsonMapper.ToObject<BagList>(jData[i].ToJson());
+
+
+
+            string[] Bonussoluongmauanduoc = _bagList.Bonussoluongmauanduoc.Split('@');
+            string[] HealthRegeneration = _bagList.HealthRegeneration.Split('@');
+            string[] GiaNangCap = _bagList.GiaNangCap.Split('@');
+
+
+            for (int j = 0; j < Bonussoluongmauanduoc.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(Bonussoluongmauanduoc[j]))
+                    _bagList.BonussoluongmauanduocValue.Add(float.Parse(Bonussoluongmauanduoc[j]));
+                if (!string.IsNullOrEmpty(HealthRegeneration[j]))
+                    _bagList.HealthRegenerationValue.Add(float.Parse(HealthRegeneration[j]));
+                if (!string.IsNullOrEmpty(GiaNangCap[j]))
+                    _bagList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+            }
+
+
             bagList.Add(_bagList);
         }
 
@@ -717,6 +829,23 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             ShoesList _shoesList = JsonMapper.ToObject<ShoesList>(jData[i].ToJson());
+
+            string[] TangSpeeDichuyen = _shoesList.TangSpeeDichuyen.Split('@');
+            string[] TangDoCaoNhay = _shoesList.TangDoCaoNhay.Split('@');
+            string[] GiaNangCap = _shoesList.GiaNangCap.Split('@');
+
+
+            for (int j = 0; j < TangSpeeDichuyen.Length; j++)
+            {
+                if (!string.IsNullOrEmpty(TangSpeeDichuyen[j]))
+                    _shoesList.TangSpeeDichuyenValue.Add(float.Parse(TangSpeeDichuyen[j]));
+                if (!string.IsNullOrEmpty(TangDoCaoNhay[j]))
+                    _shoesList.TangDoCaoNhayValue.Add(float.Parse(TangDoCaoNhay[j]));
+                if (!string.IsNullOrEmpty(GiaNangCap[j]))
+                    _shoesList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+            }
+
+
             shoesList.Add(_shoesList);
         }
 

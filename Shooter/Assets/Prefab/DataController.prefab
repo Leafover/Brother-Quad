@@ -50,66 +50,110 @@ MonoBehaviour:
     SoLuongRewards: 2
     EXP: 15
     Soluong: 100
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Kill 10 Enemies by grenade
     Type: Normal
     RewardsType: 2
     SoLuongRewards: 350
     EXP: 20
     Soluong: 10
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Complete Any Level With 3 Stars
     Type: Normal
     RewardsType: 1
     SoLuongRewards: 3
     EXP: 25
     Soluong: 1
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Defeat Any Boss Or Mini Boss
     Type: Normal
     RewardsType: 2
     SoLuongRewards: 250
     EXP: 20
     Soluong: 1
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Complete 3 Level Of Hard Mode
     Type: Normal
     RewardsType: 1
     SoLuongRewards: 2
     EXP: 35
     Soluong: 3
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Using 3 HP Pack
     Type: Normal
     RewardsType: 2
     SoLuongRewards: 500
     EXP: 15
     Soluong: 3
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Get 5000 Coin In Today
     Type: Prime
     RewardsType: 1
     SoLuongRewards: 7
     EXP: 30
     Soluong: 5000
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: 'Complete 3 Level With 3 Stars Of Hard Mode '
     Type: Prime
     RewardsType: 1
     SoLuongRewards: 7
     EXP: 50
     Soluong: 3
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Reach x15 Combo Kills 3 Times
     Type: Prime
     RewardsType: 1
     SoLuongRewards: 5
     EXP: 35
     Soluong: 3
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Complete Any Level of Hard Mode without using revive
     Type: Prime
     RewardsType: 1
     SoLuongRewards: 3
     EXP: 20
     Soluong: 1
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   - MissionContent: Complete All Daily Quest
     Type: Prime
     RewardsType: 1
     SoLuongRewards: 5
     EXP: 35
     Soluong: 1
+    currentNumber: 0
+    isDone: 0
+    isPass: 0
+    isActive: 0
   allAchievement:
   - Name: The Terminator I
     Soluong: 100,500,2500,10000
@@ -670,1873 +714,6763 @@ MonoBehaviour:
     - ID: S1
       NAME: Fashion Shoes
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 6.25@6.28@6.32@6.35@6.41
+      TangDoCaoNhay: 3.00@3.03@3.07@3.10@3.08
+      GiaNangCap: 0@32@33@34@35
       SoManhYeuCau: 5
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 33
       Gia: 10
+      TangSpeeDichuyenValue:
+      - 6.25
+      - 6.28
+      - 6.32
+      - 6.35
+      - 6.41
+      TangDoCaoNhayValue:
+      - 3
+      - 3.03
+      - 3.07
+      - 3.1
+      - 3.08
+      GiaNangCapValue:
+      - 0
+      - 32
+      - 33
+      - 34
+      - 35
     - ID: S1
       NAME: Fashion Shoes
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 6.50@6.53@6.56@6.59@6.65
+      TangDoCaoNhay: 3.12@3.15@3.18@3.21@3.19
+      GiaNangCap: 0@64@65@66@67
       SoManhYeuCau: 10
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 66
       Gia: 20
+      TangSpeeDichuyenValue:
+      - 6.5
+      - 6.53
+      - 6.56
+      - 6.59
+      - 6.65
+      TangDoCaoNhayValue:
+      - 3.12
+      - 3.15
+      - 3.18
+      - 3.21
+      - 3.19
+      GiaNangCapValue:
+      - 0
+      - 64
+      - 65
+      - 66
+      - 67
     - ID: S1
       NAME: Fashion Shoes
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 6.75@6.83@6.90@6.98@7.13
+      TangDoCaoNhay: 3.24@3.32@3.39@3.47@3.42
+      GiaNangCap: 0@116@118@120@123
       SoManhYeuCau: 18
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 99
       Gia: 36
+      TangSpeeDichuyenValue:
+      - 6.75
+      - 6.83
+      - 6.9
+      - 6.98
+      - 7.13
+      TangDoCaoNhayValue:
+      - 3.24
+      - 3.32
+      - 3.39
+      - 3.47
+      - 3.42
+      GiaNangCapValue:
+      - 0
+      - 116
+      - 118
+      - 120
+      - 123
     - ID: S1
       NAME: Fashion Shoes
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.00@7.08@7.16@7.23@7.39
+      TangDoCaoNhay: 3.36@3.44@3.52@3.59@3.55
+      GiaNangCap: 0@160@162@164@168
       SoManhYeuCau: 25
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 132
       Gia: 50
+      TangSpeeDichuyenValue:
+      - 7
+      - 7.08
+      - 7.16
+      - 7.23
+      - 7.39
+      TangDoCaoNhayValue:
+      - 3.36
+      - 3.44
+      - 3.52
+      - 3.59
+      - 3.55
+      GiaNangCapValue:
+      - 0
+      - 160
+      - 162
+      - 164
+      - 168
     - ID: S1
       NAME: Fashion Shoes
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.50@7.58@7.67@7.75@7.92
+      TangDoCaoNhay: 3.60@3.68@3.77@3.85@3.80
+      GiaNangCap: 0@244@247@250@256
       SoManhYeuCau: 38
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 76
+      TangSpeeDichuyenValue:
+      - 7.5
+      - 7.58
+      - 7.67
+      - 7.75
+      - 7.92
+      TangDoCaoNhayValue:
+      - 3.6
+      - 3.68
+      - 3.77
+      - 3.85
+      - 3.8
+      GiaNangCapValue:
+      - 0
+      - 244
+      - 247
+      - 250
+      - 256
   - shoesList:
     - ID: S2
       NAME: Police Boots
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 6.63@6.66@6.69@6.73@6.80
+      TangDoCaoNhay: 3.18@3.21@3.25@3.28@3.26
+      GiaNangCap: 0@80@81@82@83
       SoManhYeuCau: 5
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 83
       Gia: 25
+      TangSpeeDichuyenValue:
+      - 6.63
+      - 6.66
+      - 6.69
+      - 6.73
+      - 6.8
+      TangDoCaoNhayValue:
+      - 3.18
+      - 3.21
+      - 3.25
+      - 3.28
+      - 3.26
+      GiaNangCapValue:
+      - 0
+      - 80
+      - 81
+      - 82
+      - 83
     - ID: S2
       NAME: Police Boots
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 6.89@6.92@6.95@6.99@7.05
+      TangDoCaoNhay: 3.31@3.34@3.37@3.40@3.38
+      GiaNangCap: 0@128@129@130@132
       SoManhYeuCau: 8
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 40
+      TangSpeeDichuyenValue:
+      - 6.89
+      - 6.92
+      - 6.95
+      - 6.99
+      - 7.05
+      TangDoCaoNhayValue:
+      - 3.31
+      - 3.34
+      - 3.37
+      - 3.4
+      - 3.38
+      GiaNangCapValue:
+      - 0
+      - 128
+      - 129
+      - 130
+      - 132
     - ID: S2
       NAME: Police Boots
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.16@7.23@7.31@7.39@7.55
+      TangDoCaoNhay: 3.43@3.51@3.59@3.67@3.63
+      GiaNangCap: 0@160@162@164@168
       SoManhYeuCau: 10
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 50
+      TangSpeeDichuyenValue:
+      - 7.16
+      - 7.23
+      - 7.31
+      - 7.39
+      - 7.55
+      TangDoCaoNhayValue:
+      - 3.43
+      - 3.51
+      - 3.59
+      - 3.67
+      - 3.63
+      GiaNangCapValue:
+      - 0
+      - 160
+      - 162
+      - 164
+      - 168
     - ID: S2
       NAME: Police Boots
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.42@7.50@7.58@7.67@7.83
+      TangDoCaoNhay: 3.56@3.64@3.73@3.81@3.76
+      GiaNangCap: 0@224@227@230@235
       SoManhYeuCau: 14
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 330
       Gia: 70
+      TangSpeeDichuyenValue:
+      - 7.42
+      - 7.5
+      - 7.58
+      - 7.67
+      - 7.83
+      TangDoCaoNhayValue:
+      - 3.56
+      - 3.64
+      - 3.73
+      - 3.81
+      - 3.76
+      GiaNangCapValue:
+      - 0
+      - 224
+      - 227
+      - 230
+      - 235
     - ID: S2
       NAME: Police Boots
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.95@8.04@8.13@8.22@8.39
+      TangDoCaoNhay: 3.82@3.90@3.99@4.08@4.03
+      GiaNangCap: 0@400@405@410@419
       SoManhYeuCau: 25
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 413
       Gia: 125
+      TangSpeeDichuyenValue:
+      - 7.95
+      - 8.04
+      - 8.13
+      - 8.22
+      - 8.39
+      TangDoCaoNhayValue:
+      - 3.82
+      - 3.9
+      - 3.99
+      - 4.08
+      - 4.03
+      GiaNangCapValue:
+      - 0
+      - 400
+      - 405
+      - 410
+      - 419
   - shoesList:
     - ID: S3
       NAME: Military Boots
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.02@7.06@7.10@7.13@7.21
+      TangDoCaoNhay: 3.37@3.41@3.44@3.48@3.46
+      GiaNangCap: 0@112@113@114@116
       SoManhYeuCau: 5
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 116
       Gia: 35
+      TangSpeeDichuyenValue:
+      - 7.02
+      - 7.06
+      - 7.1
+      - 7.13
+      - 7.21
+      TangDoCaoNhayValue:
+      - 3.37
+      - 3.41
+      - 3.44
+      - 3.48
+      - 3.46
+      GiaNangCapValue:
+      - 0
+      - 112
+      - 113
+      - 114
+      - 116
     - ID: S3
       NAME: Military Boots
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.30@7.34@7.37@7.40@7.47
+      TangDoCaoNhay: 3.51@3.54@3.57@3.61@3.59
+      GiaNangCap: 0@157@158@159@161
       SoManhYeuCau: 7
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 231
       Gia: 49
+      TangSpeeDichuyenValue:
+      - 7.3
+      - 7.34
+      - 7.37
+      - 7.4
+      - 7.47
+      TangDoCaoNhayValue:
+      - 3.51
+      - 3.54
+      - 3.57
+      - 3.61
+      - 3.59
+      GiaNangCapValue:
+      - 0
+      - 157
+      - 158
+      - 159
+      - 161
     - ID: S3
       NAME: Military Boots
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.58@7.67@7.75@7.84@8.01
+      TangDoCaoNhay: 3.64@3.72@3.81@3.89@3.84
+      GiaNangCap: 0@269@272@275@281
       SoManhYeuCau: 12
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 347
       Gia: 84
+      TangSpeeDichuyenValue:
+      - 7.58
+      - 7.67
+      - 7.75
+      - 7.84
+      - 8.01
+      TangDoCaoNhayValue:
+      - 3.64
+      - 3.72
+      - 3.81
+      - 3.89
+      - 3.84
+      GiaNangCapValue:
+      - 0
+      - 269
+      - 272
+      - 275
+      - 281
     - ID: S3
       NAME: Military Boots
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.87@7.95@8.04@8.13@8.30
+      TangDoCaoNhay: 3.78@3.86@3.95@4.04@3.99
+      GiaNangCap: 0@336@340@344@352
       SoManhYeuCau: 15
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 462
       Gia: 105
+      TangSpeeDichuyenValue:
+      - 7.87
+      - 7.95
+      - 8.04
+      - 8.13
+      - 8.3
+      TangDoCaoNhayValue:
+      - 3.78
+      - 3.86
+      - 3.95
+      - 4.04
+      - 3.99
+      GiaNangCapValue:
+      - 0
+      - 336
+      - 340
+      - 344
+      - 352
     - ID: S3
       NAME: Military Boots
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.43@8.52@8.61@8.71@8.90
+      TangDoCaoNhay: 4.04@4.14@4.23@4.33@4.27
+      GiaNangCap: 0@605@612@619@633
       SoManhYeuCau: 27
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 578
       Gia: 189
+      TangSpeeDichuyenValue:
+      - 8.43
+      - 8.52
+      - 8.61
+      - 8.71
+      - 8.9
+      TangDoCaoNhayValue:
+      - 4.04
+      - 4.14
+      - 4.23
+      - 4.33
+      - 4.27
+      GiaNangCapValue:
+      - 0
+      - 605
+      - 612
+      - 619
+      - 633
   - shoesList:
     - ID: S4
       NAME: Tatical Military Boots
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.44@7.48@7.52@7.56@7.64
+      TangDoCaoNhay: 3.57@3.61@3.65@3.69@3.67
+      GiaNangCap: 0@144@145@146@148
       SoManhYeuCau: 5
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 149
       Gia: 45
+      TangSpeeDichuyenValue:
+      - 7.44
+      - 7.48
+      - 7.52
+      - 7.56
+      - 7.64
+      TangDoCaoNhayValue:
+      - 3.57
+      - 3.61
+      - 3.65
+      - 3.69
+      - 3.67
+      GiaNangCapValue:
+      - 0
+      - 144
+      - 145
+      - 146
+      - 148
     - ID: S4
       NAME: Tatical Military Boots
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.74@7.78@7.81@7.85@7.92
+      TangDoCaoNhay: 3.72@3.75@3.79@3.82@3.80
+      GiaNangCap: 0@202@203@204@206
       SoManhYeuCau: 7
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 297
       Gia: 63
+      TangSpeeDichuyenValue:
+      - 7.74
+      - 7.78
+      - 7.81
+      - 7.85
+      - 7.92
+      TangDoCaoNhayValue:
+      - 3.72
+      - 3.75
+      - 3.79
+      - 3.82
+      - 3.8
+      GiaNangCapValue:
+      - 0
+      - 202
+      - 203
+      - 204
+      - 206
     - ID: S4
       NAME: Tatical Military Boots
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.04@8.13@8.22@8.31@8.49
+      TangDoCaoNhay: 3.86@3.95@4.04@4.13@4.07
+      GiaNangCap: 0@346@350@354@362
       SoManhYeuCau: 12
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 446
       Gia: 108
+      TangSpeeDichuyenValue:
+      - 8.04
+      - 8.13
+      - 8.22
+      - 8.31
+      - 8.49
+      TangDoCaoNhayValue:
+      - 3.86
+      - 3.95
+      - 4.04
+      - 4.13
+      - 4.07
+      GiaNangCapValue:
+      - 0
+      - 346
+      - 350
+      - 354
+      - 362
     - ID: S4
       NAME: Tatical Military Boots
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.34@8.43@8.52@8.62@8.80
+      TangDoCaoNhay: 4.00@4.09@4.19@4.28@4.22
+      GiaNangCap: 0@432@437@442@452
       SoManhYeuCau: 15
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 594
       Gia: 135
+      TangSpeeDichuyenValue:
+      - 8.34
+      - 8.43
+      - 8.52
+      - 8.62
+      - 8.8
+      TangDoCaoNhayValue:
+      - 4
+      - 4.09
+      - 4.19
+      - 4.28
+      - 4.22
+      GiaNangCapValue:
+      - 0
+      - 432
+      - 437
+      - 442
+      - 452
     - ID: S4
       NAME: Tatical Military Boots
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.93@9.03@9.13@9.23@9.43
+      TangDoCaoNhay: 4.29@4.39@4.49@4.59@4.53
+      GiaNangCap: 0@807@816@825@843
       SoManhYeuCau: 28
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 743
       Gia: 252
+      TangSpeeDichuyenValue:
+      - 8.93
+      - 9.03
+      - 9.13
+      - 9.23
+      - 9.43
+      TangDoCaoNhayValue:
+      - 4.29
+      - 4.39
+      - 4.49
+      - 4.59
+      - 4.53
+      GiaNangCapValue:
+      - 0
+      - 807
+      - 816
+      - 825
+      - 843
   - shoesList:
     - ID: S5
       NAME: Full Coverage Boots
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 7.89@7.93@7.97@8.01@8.10
+      TangDoCaoNhay: 3.79@3.83@3.87@3.91@3.89
+      GiaNangCap: 0@192@193@194@196
       SoManhYeuCau: 5
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 198
       Gia: 60
+      TangSpeeDichuyenValue:
+      - 7.89
+      - 7.93
+      - 7.97
+      - 8.01
+      - 8.1
+      TangDoCaoNhayValue:
+      - 3.79
+      - 3.83
+      - 3.87
+      - 3.91
+      - 3.89
+      GiaNangCapValue:
+      - 0
+      - 192
+      - 193
+      - 194
+      - 196
     - ID: S5
       NAME: Full Coverage Boots
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.21@8.24@8.28@8.32@8.40
+      TangDoCaoNhay: 3.94@3.98@4.01@4.05@4.03
+      GiaNangCap: 0@308@310@312@315
       SoManhYeuCau: 8
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 396
       Gia: 96
+      TangSpeeDichuyenValue:
+      - 8.21
+      - 8.24
+      - 8.28
+      - 8.32
+      - 8.4
+      TangDoCaoNhayValue:
+      - 3.94
+      - 3.98
+      - 4.01
+      - 4.05
+      - 4.03
+      GiaNangCapValue:
+      - 0
+      - 308
+      - 310
+      - 312
+      - 315
     - ID: S5
       NAME: Full Coverage Boots
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.52@8.62@8.71@8.81@9.00
+      TangDoCaoNhay: 4.09@4.19@4.28@4.37@4.32
+      GiaNangCap: 0@500@506@512@524
       SoManhYeuCau: 13
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 594
       Gia: 156
+      TangSpeeDichuyenValue:
+      - 8.52
+      - 8.62
+      - 8.71
+      - 8.81
+      - 9
+      TangDoCaoNhayValue:
+      - 4.09
+      - 4.19
+      - 4.28
+      - 4.37
+      - 4.32
+      GiaNangCapValue:
+      - 0
+      - 500
+      - 506
+      - 512
+      - 524
     - ID: S5
       NAME: Full Coverage Boots
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.84@8.94@9.03@9.13@9.33
+      TangDoCaoNhay: 4.24@4.34@4.44@4.54@4.48
+      GiaNangCap: 0@576@583@590@603
       SoManhYeuCau: 15
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 792
       Gia: 180
+      TangSpeeDichuyenValue:
+      - 8.84
+      - 8.94
+      - 9.03
+      - 9.13
+      - 9.33
+      TangDoCaoNhayValue:
+      - 4.24
+      - 4.34
+      - 4.44
+      - 4.54
+      - 4.48
+      GiaNangCapValue:
+      - 0
+      - 576
+      - 583
+      - 590
+      - 603
     - ID: S5
       NAME: Full Coverage Boots
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 9.47@9.57@9.68@9.78@9.99
+      TangDoCaoNhay: 4.54@4.65@4.76@4.86@4.80
+      GiaNangCap: 0@1076@1088@1100@1124
       SoManhYeuCau: 28
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 336
+      TangSpeeDichuyenValue:
+      - 9.47
+      - 9.57
+      - 9.68
+      - 9.78
+      - 9.99
+      TangDoCaoNhayValue:
+      - 4.54
+      - 4.65
+      - 4.76
+      - 4.86
+      - 4.8
+      GiaNangCapValue:
+      - 0
+      - 1076
+      - 1088
+      - 1100
+      - 1124
   - shoesList:
     - ID: S6
       NAME: Advanced Coverage Boots
       Level: Normal
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.36@8.41@8.45@8.49@8.58
+      TangDoCaoNhay: 4.01@4.06@4.10@4.15@4.12
+      GiaNangCap: 0@240@242@244@247
       SoManhYeuCau: 5
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 75
+      TangSpeeDichuyenValue:
+      - 8.36
+      - 8.41
+      - 8.45
+      - 8.49
+      - 8.58
+      TangDoCaoNhayValue:
+      - 4.01
+      - 4.06
+      - 4.1
+      - 4.15
+      - 4.12
+      GiaNangCapValue:
+      - 0
+      - 240
+      - 242
+      - 244
+      - 247
     - ID: S6
       NAME: Advanced Coverage Boots
       Level: Uncommon
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 8.70@8.74@8.78@8.82@8.90
+      TangDoCaoNhay: 4.18@4.22@4.26@4.30@4.27
+      GiaNangCap: 0@384@386@388@392
       SoManhYeuCau: 8
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 495
       Gia: 120
+      TangSpeeDichuyenValue:
+      - 8.7
+      - 8.74
+      - 8.78
+      - 8.82
+      - 8.9
+      TangDoCaoNhayValue:
+      - 4.18
+      - 4.22
+      - 4.26
+      - 4.3
+      - 4.27
+      GiaNangCapValue:
+      - 0
+      - 384
+      - 386
+      - 388
+      - 392
     - ID: S6
       NAME: Advanced Coverage Boots
       Level: Rare
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 9.03@9.13@9.23@9.33@9.53
+      TangDoCaoNhay: 4.34@4.44@4.54@4.64@4.58
+      GiaNangCap: 0@624@631@638@652
       SoManhYeuCau: 13
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 743
       Gia: 195
+      TangSpeeDichuyenValue:
+      - 9.03
+      - 9.13
+      - 9.23
+      - 9.33
+      - 9.53
+      TangDoCaoNhayValue:
+      - 4.34
+      - 4.44
+      - 4.54
+      - 4.64
+      - 4.58
+      GiaNangCapValue:
+      - 0
+      - 624
+      - 631
+      - 638
+      - 652
     - ID: S6
       NAME: Advanced Coverage Boots
       Level: Epic
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 9.37@9.47@9.58@9.68@9.89
+      TangDoCaoNhay: 4.50@4.60@4.70@4.81@4.75
+      GiaNangCap: 0@720@728@736@752
       SoManhYeuCau: 15
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 225
+      TangSpeeDichuyenValue:
+      - 9.37
+      - 9.47
+      - 9.58
+      - 9.68
+      - 9.89
+      TangDoCaoNhayValue:
+      - 4.5
+      - 4.6
+      - 4.7
+      - 4.81
+      - 4.75
+      GiaNangCapValue:
+      - 0
+      - 720
+      - 728
+      - 736
+      - 752
     - ID: S6
       NAME: Advanced Coverage Boots
       Level: Legendary
-      TangSpeeDichuyen: 0
-      TangDoCaoNhay: 0
+      TangSpeeDichuyen: 10.04@10.15@10.26@10.37@10.59
+      TangDoCaoNhay: 4.82@4.93@5.04@5.15@5.09
+      GiaNangCap: 0@1344@1359@1374@1404
       SoManhYeuCau: 28
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 1238
       Gia: 420
+      TangSpeeDichuyenValue:
+      - 10.04
+      - 10.15
+      - 10.26
+      - 10.37
+      - 10.59
+      TangDoCaoNhayValue:
+      - 4.82
+      - 4.93
+      - 5.04
+      - 5.15
+      - 5.09
+      GiaNangCapValue:
+      - 0
+      - 1344
+      - 1359
+      - 1374
+      - 1404
   allBag:
   - bagList:
     - ID: B1
       NAME: Fashion Bag
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 5.08@5.16@5.24@5.40
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@96@98@100@104
       SoManhYeuCau: 15
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 33
       Gia: 30
+      BonussoluongmauanduocValue:
+      - 5.08
+      - 5.16
+      - 5.24
+      - 5.4
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 96
+      - 98
+      - 100
     - ID: B1
       NAME: Fashion Bag
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 5.57@5.64@5.71@5.85
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@144@146@148@152
       SoManhYeuCau: 15
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 99
       Gia: 45
+      BonussoluongmauanduocValue:
+      - 5.57
+      - 5.64
+      - 5.71
+      - 5.85
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 144
+      - 146
+      - 148
     - ID: B1
       NAME: Fashion Bag
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 6.15@6.30@6.45@6.75
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@240@246@252@264
       SoManhYeuCau: 25
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 149
       Gia: 75
+      BonussoluongmauanduocValue:
+      - 6.15
+      - 6.3
+      - 6.45
+      - 6.75
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 240
+      - 246
+      - 252
     - ID: B1
       NAME: Fashion Bag
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 6.66@6.83@6.99@7.31
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@288@296@304@319
       SoManhYeuCau: 30
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 198
       Gia: 90
+      BonussoluongmauanduocValue:
+      - 6.66
+      - 6.83
+      - 6.99
+      - 7.31
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 288
+      - 296
+      - 304
     - ID: B1
       NAME: Fashion Bag
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 7.69@7.88@8.06@8.44
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@432@443@454@476
       SoManhYeuCau: 45
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 135
+      BonussoluongmauanduocValue:
+      - 7.69
+      - 7.88
+      - 8.06
+      - 8.44
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 432
+      - 443
+      - 454
   - bagList:
     - ID: B2
       NAME: Police Backpack
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 5.84@5.93@6.03@6.21
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@160@163@166@172
       SoManhYeuCau: 10
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 83
       Gia: 50
+      BonussoluongmauanduocValue:
+      - 5.84
+      - 5.93
+      - 6.03
+      - 6.21
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 160
+      - 163
+      - 166
     - ID: B2
       NAME: Police Backpack
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 6.41@6.49@6.57@6.73
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@400@406@412@423
       SoManhYeuCau: 25
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 125
+      BonussoluongmauanduocValue:
+      - 6.41
+      - 6.49
+      - 6.57
+      - 6.73
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 400
+      - 406
+      - 412
     - ID: B2
       NAME: Police Backpack
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 7.07@7.25@7.42@7.76
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@240@246@252@264
       SoManhYeuCau: 15
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 75
+      BonussoluongmauanduocValue:
+      - 7.07
+      - 7.25
+      - 7.42
+      - 7.76
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 240
+      - 246
+      - 252
     - ID: B2
       NAME: Police Backpack
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 7.66@7.85@8.04@8.41
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@720@738@756@792
       SoManhYeuCau: 45
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 330
       Gia: 225
+      BonussoluongmauanduocValue:
+      - 7.66
+      - 7.85
+      - 8.04
+      - 8.41
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 720
+      - 738
+      - 756
     - ID: B2
       NAME: Police Backpack
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 8.84@9.06@9.27@9.70
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@960@984@1008@1055
       SoManhYeuCau: 60
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 413
       Gia: 300
+      BonussoluongmauanduocValue:
+      - 8.84
+      - 9.06
+      - 9.27
+      - 9.7
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 960
+      - 984
+      - 1008
   - bagList:
     - ID: B3
       NAME: Military Backpack
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 6.72@6.82@6.93@7.14
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@256@261@266@275
       SoManhYeuCau: 10
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 132
       Gia: 80
+      BonussoluongmauanduocValue:
+      - 6.72
+      - 6.82
+      - 6.93
+      - 7.14
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 256
+      - 261
+      - 266
     - ID: B3
       NAME: Military Backpack
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 7.37@7.46@7.55@7.74
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@640@649@658@675
       SoManhYeuCau: 25
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 264
       Gia: 200
+      BonussoluongmauanduocValue:
+      - 7.37
+      - 7.46
+      - 7.55
+      - 7.74
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 640
+      - 649
+      - 658
     - ID: B3
       NAME: Military Backpack
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 8.13@8.33@8.53@8.93
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@435.2@446@457@479
       SoManhYeuCau: 17
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 396
       Gia: 136
+      BonussoluongmauanduocValue:
+      - 8.13
+      - 8.33
+      - 8.53
+      - 8.93
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 435.2
+      - 446
+      - 457
     - ID: B3
       NAME: Military Backpack
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 8.81@9.03@9.24@9.67
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@1152@1181@1210@1267
       SoManhYeuCau: 45
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 528
       Gia: 360
+      BonussoluongmauanduocValue:
+      - 8.81
+      - 9.03
+      - 9.24
+      - 9.67
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1152
+      - 1181
+      - 1210
     - ID: B3
       NAME: Military Backpack
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 10.17@10.41@10.66@11.16
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@1536@1574@1612@1687
       SoManhYeuCau: 60
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 660
       Gia: 480
+      BonussoluongmauanduocValue:
+      - 10.17
+      - 10.41
+      - 10.66
+      - 11.16
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1536
+      - 1574
+      - 1612
   - bagList:
     - ID: B4
       NAME: Tatical Military Backpack
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 7.73@7.85@7.97@8.21
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@320@326@332@343
       SoManhYeuCau: 10
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 100
+      BonussoluongmauanduocValue:
+      - 7.73
+      - 7.85
+      - 7.97
+      - 8.21
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 320
+      - 326
+      - 332
     - ID: B4
       NAME: Tatical Military Backpack
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 8.47@8.58@8.68@8.90
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@800@811@822@843
       SoManhYeuCau: 25
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 330
       Gia: 250
+      BonussoluongmauanduocValue:
+      - 8.47
+      - 8.58
+      - 8.68
+      - 8.9
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 800
+      - 811
+      - 822
     - ID: B4
       NAME: Tatical Military Backpack
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 9.35@9.58@9.81@10.27
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@544@558@572@599
       SoManhYeuCau: 17
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 495
       Gia: 170
+      BonussoluongmauanduocValue:
+      - 9.35
+      - 9.58
+      - 9.81
+      - 10.27
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 544
+      - 558
+      - 572
     - ID: B4
       NAME: Tatical Military Backpack
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 10.13@10.38@10.63@11.12
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@1440@1476@1512@1583
       SoManhYeuCau: 45
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 660
       Gia: 450
+      BonussoluongmauanduocValue:
+      - 10.13
+      - 10.38
+      - 10.63
+      - 11.12
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1440
+      - 1476
+      - 1512
     - ID: B4
       NAME: Tatical Military Backpack
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 11.69@11.98@12.26@12.83
+      HealthRegeneration: 0.00@0.00@0.00@0.00@0.00
+      GiaNangCap: 0@1920@1967@2014@2108
       SoManhYeuCau: 60
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 825
       Gia: 600
+      BonussoluongmauanduocValue:
+      - 11.69
+      - 11.98
+      - 12.26
+      - 12.83
+      HealthRegenerationValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1920
+      - 1967
+      - 2014
   - bagList:
     - ID: B5
       NAME: Full Coverage Backpack
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 8.88@9.02@9.16@9.44
+      HealthRegeneration: 2.22@2.36@2.50@2.64@3.96
+      GiaNangCap: 0@384@391@398@411
       SoManhYeuCau: 10
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 198
       Gia: 120
+      BonussoluongmauanduocValue:
+      - 8.88
+      - 9.02
+      - 9.16
+      - 9.44
+      HealthRegenerationValue:
+      - 2.22
+      - 2.36
+      - 2.5
+      - 2.64
+      GiaNangCapValue:
+      - 0
+      - 384
+      - 391
+      - 398
     - ID: B5
       NAME: Full Coverage Backpack
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 9.74@9.86@9.99@10.23
+      HealthRegeneration: 3.11@3.23@3.35@3.48@4.84
+      GiaNangCap: 0@960@973@986@1011
       SoManhYeuCau: 25
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 396
       Gia: 300
+      BonussoluongmauanduocValue:
+      - 9.74
+      - 9.86
+      - 9.99
+      - 10.23
+      HealthRegenerationValue:
+      - 3.11
+      - 3.23
+      - 3.35
+      - 3.48
+      GiaNangCapValue:
+      - 0
+      - 960
+      - 973
+      - 986
     - ID: B5
       NAME: Full Coverage Backpack
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 10.76@11.02@11.28@11.81
+      HealthRegeneration: 4.00@4.26@4.52@4.78@6.59
+      GiaNangCap: 0@691.2@709@726@760
       SoManhYeuCau: 18
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 594
       Gia: 216
+      BonussoluongmauanduocValue:
+      - 10.76
+      - 11.02
+      - 11.28
+      - 11.81
+      HealthRegenerationValue:
+      - 4
+      - 4.26
+      - 4.52
+      - 4.78
+      GiaNangCapValue:
+      - 0
+      - 691.2
+      - 709
+      - 726
     - ID: B5
       NAME: Full Coverage Backpack
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 11.65@11.94@12.22@12.79
+      HealthRegeneration: 4.88@5.17@5.45@5.74@8.06
+      GiaNangCap: 0@1728@1771@1814@1899
       SoManhYeuCau: 45
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 792
       Gia: 540
+      BonussoluongmauanduocValue:
+      - 11.65
+      - 11.94
+      - 12.22
+      - 12.79
+      HealthRegenerationValue:
+      - 4.88
+      - 5.17
+      - 5.45
+      - 5.74
+      GiaNangCapValue:
+      - 0
+      - 1728
+      - 1771
+      - 1814
     - ID: B5
       NAME: Full Coverage Backpack
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 13.45@13.77@14.10@14.76
+      HealthRegeneration: 6.66@6.99@7.32@7.64@10.99
+      GiaNangCap: 0@2304@2361@2418@2531
       SoManhYeuCau: 60
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 720
+      BonussoluongmauanduocValue:
+      - 13.45
+      - 13.77
+      - 14.1
+      - 14.76
+      HealthRegenerationValue:
+      - 6.66
+      - 6.99
+      - 7.32
+      - 7.64
+      GiaNangCapValue:
+      - 0
+      - 2304
+      - 2361
+      - 2418
   - bagList:
     - ID: B6
       NAME: Advanced Coverage Backpack
       Level: Normal
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 10.22@10.38@10.54@10.86
+      HealthRegeneration: 3.33@3.49@3.65@3.81@5.93
+      GiaNangCap: 0@480@488@496@512
       SoManhYeuCau: 10
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 150
+      BonussoluongmauanduocValue:
+      - 10.22
+      - 10.38
+      - 10.54
+      - 10.86
+      HealthRegenerationValue:
+      - 3.33
+      - 3.49
+      - 3.65
+      - 3.81
+      GiaNangCapValue:
+      - 0
+      - 480
+      - 488
+      - 496
     - ID: B6
       NAME: Advanced Coverage Backpack
       Level: Uncommon
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 11.20@11.34@11.48@11.77
+      HealthRegeneration: 4.66@4.80@4.94@5.08@7.25
+      GiaNangCap: 0@1200@1216@1232@1263
       SoManhYeuCau: 25
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 495
       Gia: 375
+      BonussoluongmauanduocValue:
+      - 11.2
+      - 11.34
+      - 11.48
+      - 11.77
+      HealthRegenerationValue:
+      - 4.66
+      - 4.8
+      - 4.94
+      - 5.08
+      GiaNangCapValue:
+      - 0
+      - 1200
+      - 1216
+      - 1232
     - ID: B6
       NAME: Advanced Coverage Backpack
       Level: Rare
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 12.37@12.67@12.97@13.58
+      HealthRegeneration: 5.99@6.30@6.60@6.90@9.89
+      GiaNangCap: 0@864@886@908@951
       SoManhYeuCau: 18
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 743
       Gia: 270
+      BonussoluongmauanduocValue:
+      - 12.37
+      - 12.67
+      - 12.97
+      - 13.58
+      HealthRegenerationValue:
+      - 5.99
+      - 6.3
+      - 6.6
+      - 6.9
+      GiaNangCapValue:
+      - 0
+      - 864
+      - 886
+      - 908
     - ID: B6
       NAME: Advanced Coverage Backpack
       Level: Epic
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 13.40@13.73@14.05@14.71
+      HealthRegeneration: 7.33@7.65@7.98@8.31@12.09
+      GiaNangCap: 0@2160@2213@2266@2372
       SoManhYeuCau: 45
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 675
+      BonussoluongmauanduocValue:
+      - 13.4
+      - 13.73
+      - 14.05
+      - 14.71
+      HealthRegenerationValue:
+      - 7.33
+      - 7.65
+      - 7.98
+      - 8.31
+      GiaNangCapValue:
+      - 0
+      - 2160
+      - 2213
+      - 2266
     - ID: B6
       NAME: Advanced Coverage Backpack
       Level: Legendary
-      Bonussoluongmauanduoc: 0
-      HealthRegeneration: 0
+      Bonussoluongmauanduoc: 15.46@15.84@16.22@16.97
+      HealthRegeneration: 9.99@10.37@10.74@11.12@16.48
+      GiaNangCap: 0@2880@2951@3022@3163
       SoManhYeuCau: 60
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 1238
       Gia: 900
+      BonussoluongmauanduocValue:
+      - 15.46
+      - 15.84
+      - 16.22
+      - 16.97
+      HealthRegenerationValue:
+      - 9.99
+      - 10.37
+      - 10.74
+      - 11.12
+      GiaNangCapValue:
+      - 0
+      - 2880
+      - 2951
+      - 3022
   allGloves:
   - glovesList:
     - ID: G1
       NAME: Fashion Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 3.00@3.16@3.31@3.47@3.78
+      tangcritrate: 3.00@3.00@3.00@3.00@3.00
+      Tangcritdmg: 3.00@3.16@3.31@3.47@3.24
+      GiaNangCap: 0@64@67@70@65
       SoManhYeuCau: 10
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 33
       Gia: 20
+      GiamtimereloadValue:
+      - 3
+      - 3.16
+      - 3.31
+      - 3.47
+      - 3.78
+      tangcritrateValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      TangcritdmgValue:
+      - 3
+      - 3.16
+      - 3.31
+      - 3.47
+      - 3.24
+      GiaNangCapValue:
+      - 0
+      - 64
+      - 67
+      - 70
+      - 65
     - ID: G1
       NAME: Fashion Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 3.60@3.74@3.89@4.03@4.32
+      tangcritrate: 3.30@3.30@3.30@3.30@3.30
+      Tangcritdmg: 3.30@3.44@3.59@3.73@3.51
+      GiaNangCap: 0@96@100@104@98
       SoManhYeuCau: 15
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 66
       Gia: 30
+      GiamtimereloadValue:
+      - 3.6
+      - 3.74
+      - 3.89
+      - 4.03
+      - 4.32
+      tangcritrateValue:
+      - 3.3
+      - 3.3
+      - 3.3
+      - 3.3
+      - 3.3
+      TangcritdmgValue:
+      - 3.3
+      - 3.44
+      - 3.59
+      - 3.73
+      - 3.51
+      GiaNangCapValue:
+      - 0
+      - 96
+      - 100
+      - 104
+      - 98
     - ID: G1
       NAME: Fashion Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 4.20@4.44@4.68@4.92@5.40
+      tangcritrate: 3.60@3.60@3.60@3.60@3.60
+      Tangcritdmg: 3.60@3.84@4.08@4.32@4.05
+      GiaNangCap: 0@116@123@130@122
       SoManhYeuCau: 18
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 99
       Gia: 36
+      GiamtimereloadValue:
+      - 4.2
+      - 4.44
+      - 4.68
+      - 4.92
+      - 5.4
+      tangcritrateValue:
+      - 3.6
+      - 3.6
+      - 3.6
+      - 3.6
+      - 3.6
+      TangcritdmgValue:
+      - 3.6
+      - 3.84
+      - 4.08
+      - 4.32
+      - 4.05
+      GiaNangCapValue:
+      - 0
+      - 116
+      - 123
+      - 130
+      - 122
     - ID: G1
       NAME: Fashion Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 4.80@5.07@5.35@5.62@6.17
+      tangcritrate: 3.90@3.90@3.90@3.90@3.90
+      Tangcritdmg: 3.90@4.17@4.45@4.72@4.39
+      GiaNangCap: 0@160@171@182@169
       SoManhYeuCau: 25
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 132
       Gia: 50
+      GiamtimereloadValue:
+      - 4.8
+      - 5.07
+      - 5.35
+      - 5.62
+      - 6.17
+      tangcritrateValue:
+      - 3.9
+      - 3.9
+      - 3.9
+      - 3.9
+      - 3.9
+      TangcritdmgValue:
+      - 3.9
+      - 4.17
+      - 4.45
+      - 4.72
+      - 4.39
+      GiaNangCapValue:
+      - 0
+      - 160
+      - 171
+      - 182
+      - 169
     - ID: G1
       NAME: Fashion Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 6.00@6.34@6.69@7.03@7.71
+      tangcritrate: 4.50@4.50@4.50@4.50@4.50
+      Tangcritdmg: 4.50@4.84@5.19@5.53@5.06
+      GiaNangCap: 0@244@261@278@255
       SoManhYeuCau: 38
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 76
+      GiamtimereloadValue:
+      - 6
+      - 6.34
+      - 6.69
+      - 7.03
+      - 7.71
+      tangcritrateValue:
+      - 4.5
+      - 4.5
+      - 4.5
+      - 4.5
+      - 4.5
+      TangcritdmgValue:
+      - 4.5
+      - 4.84
+      - 5.19
+      - 5.53
+      - 5.06
+      GiaNangCapValue:
+      - 0
+      - 244
+      - 261
+      - 278
+      - 255
   - glovesList:
     - ID: G2
       NAME: Police Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 3.90@4.10@4.31@4.51@4.91
+      tangcritrate: 3.45@3.45@3.45@3.45@3.45
+      Tangcritdmg: 3.45@3.65@3.86@4.06@3.73
+      GiaNangCap: 0@80@84@88@81
       SoManhYeuCau: 5
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 83
       Gia: 25
+      GiamtimereloadValue:
+      - 3.9
+      - 4.1
+      - 4.31
+      - 4.51
+      - 4.91
+      tangcritrateValue:
+      - 3.45
+      - 3.45
+      - 3.45
+      - 3.45
+      - 3.45
+      TangcritdmgValue:
+      - 3.45
+      - 3.65
+      - 3.86
+      - 4.06
+      - 3.73
+      GiaNangCapValue:
+      - 0
+      - 80
+      - 84
+      - 88
+      - 81
     - ID: G2
       NAME: Police Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 4.68@4.87@5.05@5.24@5.62
+      tangcritrate: 3.80@3.80@3.80@3.80@3.80
+      Tangcritdmg: 3.80@3.98@4.17@4.36@4.04
+      GiaNangCap: 0@128@134@140@130
       SoManhYeuCau: 8
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 165
       Gia: 40
+      GiamtimereloadValue:
+      - 4.68
+      - 4.87
+      - 5.05
+      - 5.24
+      - 5.62
+      tangcritrateValue:
+      - 3.8
+      - 3.8
+      - 3.8
+      - 3.8
+      - 3.8
+      TangcritdmgValue:
+      - 3.8
+      - 3.98
+      - 4.17
+      - 4.36
+      - 4.04
+      GiaNangCapValue:
+      - 0
+      - 128
+      - 134
+      - 140
+      - 130
     - ID: G2
       NAME: Police Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 5.46@5.77@6.08@6.40@7.02
+      tangcritrate: 4.14@4.14@4.14@4.14@4.14
+      Tangcritdmg: 4.14@4.45@4.76@5.08@4.66
+      GiaNangCap: 0@160@171@182@167
       SoManhYeuCau: 10
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 50
+      GiamtimereloadValue:
+      - 5.46
+      - 5.77
+      - 6.08
+      - 6.4
+      - 7.02
+      tangcritrateValue:
+      - 4.14
+      - 4.14
+      - 4.14
+      - 4.14
+      - 4.14
+      TangcritdmgValue:
+      - 4.14
+      - 4.45
+      - 4.76
+      - 5.08
+      - 4.66
+      GiaNangCapValue:
+      - 0
+      - 160
+      - 171
+      - 182
+      - 167
     - ID: G2
       NAME: Police Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 6.24@6.60@6.95@7.31@8.02
+      tangcritrate: 4.49@4.49@4.49@4.49@4.49
+      Tangcritdmg: 4.49@4.84@5.20@5.55@5.05
+      GiaNangCap: 0@224@240@256@233
       SoManhYeuCau: 14
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 330
       Gia: 70
+      GiamtimereloadValue:
+      - 6.24
+      - 6.6
+      - 6.95
+      - 7.31
+      - 8.02
+      tangcritrateValue:
+      - 4.49
+      - 4.49
+      - 4.49
+      - 4.49
+      - 4.49
+      TangcritdmgValue:
+      - 4.49
+      - 4.84
+      - 5.2
+      - 5.55
+      - 5.05
+      GiaNangCapValue:
+      - 0
+      - 224
+      - 240
+      - 256
+      - 233
     - ID: G2
       NAME: Police Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 7.80@8.25@8.69@9.14@10.03
+      tangcritrate: 5.18@5.18@5.18@5.18@5.18
+      Tangcritdmg: 5.18@5.62@6.07@6.51@5.82
+      GiaNangCap: 0@400@432@464@415
       SoManhYeuCau: 25
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 413
       Gia: 125
+      GiamtimereloadValue:
+      - 7.8
+      - 8.25
+      - 8.69
+      - 9.14
+      - 10.03
+      tangcritrateValue:
+      - 5.18
+      - 5.18
+      - 5.18
+      - 5.18
+      - 5.18
+      TangcritdmgValue:
+      - 5.18
+      - 5.62
+      - 6.07
+      - 6.51
+      - 5.82
+      GiaNangCapValue:
+      - 0
+      - 400
+      - 432
+      - 464
+      - 415
   - glovesList:
     - ID: G3
       NAME: Military Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 5.07@5.33@5.60@5.86@6.39
+      tangcritrate: 3.97@3.97@3.97@3.97@3.97
+      Tangcritdmg: 3.97@4.23@4.49@4.76@4.28
+      GiaNangCap: 0@112@119@126@113
       SoManhYeuCau: 5
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 116
       Gia: 35
+      GiamtimereloadValue:
+      - 5.07
+      - 5.33
+      - 5.6
+      - 5.86
+      - 6.39
+      tangcritrateValue:
+      - 3.97
+      - 3.97
+      - 3.97
+      - 3.97
+      - 3.97
+      TangcritdmgValue:
+      - 3.97
+      - 4.23
+      - 4.49
+      - 4.76
+      - 4.28
+      GiaNangCapValue:
+      - 0
+      - 112
+      - 119
+      - 126
+      - 113
     - ID: G3
       NAME: Military Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 6.08@6.33@6.57@6.81@7.30
+      tangcritrate: 4.36@4.36@4.36@4.36@4.36
+      Tangcritdmg: 4.36@4.61@4.85@5.09@4.64
+      GiaNangCap: 0@157@165@173@158
       SoManhYeuCau: 7
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 231
       Gia: 49
+      GiamtimereloadValue:
+      - 6.08
+      - 6.33
+      - 6.57
+      - 6.81
+      - 7.3
+      tangcritrateValue:
+      - 4.36
+      - 4.36
+      - 4.36
+      - 4.36
+      - 4.36
+      TangcritdmgValue:
+      - 4.36
+      - 4.61
+      - 4.85
+      - 5.09
+      - 4.64
+      GiaNangCapValue:
+      - 0
+      - 157
+      - 165
+      - 173
+      - 158
     - ID: G3
       NAME: Military Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 7.10@7.50@7.91@8.31@9.13
+      tangcritrate: 4.76@4.76@4.76@4.76@4.76
+      Tangcritdmg: 4.76@5.17@5.57@5.98@5.36
+      GiaNangCap: 0@269@290@311@279
       SoManhYeuCau: 12
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 347
       Gia: 84
+      GiamtimereloadValue:
+      - 7.1
+      - 7.5
+      - 7.91
+      - 8.31
+      - 9.13
+      tangcritrateValue:
+      - 4.76
+      - 4.76
+      - 4.76
+      - 4.76
+      - 4.76
+      TangcritdmgValue:
+      - 4.76
+      - 5.17
+      - 5.57
+      - 5.98
+      - 5.36
+      GiaNangCapValue:
+      - 0
+      - 269
+      - 290
+      - 311
+      - 279
     - ID: G3
       NAME: Military Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 8.11@8.58@9.04@9.50@10.43
+      tangcritrate: 5.16@5.16@5.16@5.16@5.16
+      Tangcritdmg: 5.16@5.62@6.08@6.55@5.80
+      GiaNangCap: 0@336@364@392@347
       SoManhYeuCau: 15
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 462
       Gia: 105
+      GiamtimereloadValue:
+      - 8.11
+      - 8.58
+      - 9.04
+      - 9.5
+      - 10.43
+      tangcritrateValue:
+      - 5.16
+      - 5.16
+      - 5.16
+      - 5.16
+      - 5.16
+      TangcritdmgValue:
+      - 5.16
+      - 5.62
+      - 6.08
+      - 6.55
+      - 5.8
+      GiaNangCapValue:
+      - 0
+      - 336
+      - 364
+      - 392
+      - 347
     - ID: G3
       NAME: Military Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 10.14@10.72@11.30@11.88@13.04
+      tangcritrate: 5.95@5.95@5.95@5.95@5.95
+      Tangcritdmg: 5.95@6.53@7.11@7.69@6.70
+      GiaNangCap: 0@605@659@713@621
       SoManhYeuCau: 27
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 578
       Gia: 189
+      GiamtimereloadValue:
+      - 10.14
+      - 10.72
+      - 11.3
+      - 11.88
+      - 13.04
+      tangcritrateValue:
+      - 5.95
+      - 5.95
+      - 5.95
+      - 5.95
+      - 5.95
+      TangcritdmgValue:
+      - 5.95
+      - 6.53
+      - 7.11
+      - 7.69
+      - 6.7
+      GiaNangCapValue:
+      - 0
+      - 605
+      - 659
+      - 713
+      - 621
   - glovesList:
     - ID: G4
       NAME: Tatical Military Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 6.59@6.93@7.28@7.62@8.30
+      tangcritrate: 4.56@4.56@4.56@4.56@4.56
+      Tangcritdmg: 4.56@4.91@5.25@5.59@4.93
+      GiaNangCap: 0@144@154@164@145
       SoManhYeuCau: 5
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 149
       Gia: 45
+      GiamtimereloadValue:
+      - 6.59
+      - 6.93
+      - 7.28
+      - 7.62
+      - 8.3
+      tangcritrateValue:
+      - 4.56
+      - 4.56
+      - 4.56
+      - 4.56
+      - 4.56
+      TangcritdmgValue:
+      - 4.56
+      - 4.91
+      - 5.25
+      - 5.59
+      - 4.93
+      GiaNangCapValue:
+      - 0
+      - 144
+      - 154
+      - 164
+      - 145
     - ID: G4
       NAME: Tatical Military Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 7.91@8.23@8.54@8.86@9.49
+      tangcritrate: 5.02@5.02@5.02@5.02@5.02
+      Tangcritdmg: 5.02@5.34@5.65@5.97@5.34
+      GiaNangCap: 0@202@214@226@202
       SoManhYeuCau: 7
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 297
       Gia: 63
+      GiamtimereloadValue:
+      - 7.91
+      - 8.23
+      - 8.54
+      - 8.86
+      - 9.49
+      tangcritrateValue:
+      - 5.02
+      - 5.02
+      - 5.02
+      - 5.02
+      - 5.02
+      TangcritdmgValue:
+      - 5.02
+      - 5.34
+      - 5.65
+      - 5.97
+      - 5.34
+      GiaNangCapValue:
+      - 0
+      - 202
+      - 214
+      - 226
+      - 202
     - ID: G4
       NAME: Tatical Military Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 9.23@9.75@10.28@10.81@11.86
+      tangcritrate: 5.48@5.48@5.48@5.48@5.48
+      Tangcritdmg: 5.48@6.00@6.53@7.06@6.16
+      GiaNangCap: 0@346@376@406@354
       SoManhYeuCau: 12
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 446
       Gia: 108
+      GiamtimereloadValue:
+      - 9.23
+      - 9.75
+      - 10.28
+      - 10.81
+      - 11.86
+      tangcritrateValue:
+      - 5.48
+      - 5.48
+      - 5.48
+      - 5.48
+      - 5.48
+      TangcritdmgValue:
+      - 5.48
+      - 6
+      - 6.53
+      - 7.06
+      - 6.16
+      GiaNangCapValue:
+      - 0
+      - 346
+      - 376
+      - 406
+      - 354
     - ID: G4
       NAME: Tatical Military Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 10.55@11.15@11.75@12.35@13.56
+      tangcritrate: 5.93@5.93@5.93@5.93@5.93
+      Tangcritdmg: 5.93@6.53@7.14@7.74@6.67
+      GiaNangCap: 0@432@472@512@441
       SoManhYeuCau: 15
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 594
       Gia: 135
+      GiamtimereloadValue:
+      - 10.55
+      - 11.15
+      - 11.75
+      - 12.35
+      - 13.56
+      tangcritrateValue:
+      - 5.93
+      - 5.93
+      - 5.93
+      - 5.93
+      - 5.93
+      TangcritdmgValue:
+      - 5.93
+      - 6.53
+      - 7.14
+      - 7.74
+      - 6.67
+      GiaNangCapValue:
+      - 0
+      - 432
+      - 472
+      - 512
+      - 441
     - ID: G4
       NAME: Tatical Military Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 13.18@13.94@14.69@15.44@16.95
+      tangcritrate: 6.84@6.84@6.84@6.84@6.84
+      Tangcritdmg: 6.84@7.60@8.35@9.10@7.70
+      GiaNangCap: 0@807@887@967@818
       SoManhYeuCau: 28
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 743
       Gia: 252
+      GiamtimereloadValue:
+      - 13.18
+      - 13.94
+      - 14.69
+      - 15.44
+      - 16.95
+      tangcritrateValue:
+      - 6.84
+      - 6.84
+      - 6.84
+      - 6.84
+      - 6.84
+      TangcritdmgValue:
+      - 6.84
+      - 7.6
+      - 8.35
+      - 9.1
+      - 7.7
+      GiaNangCapValue:
+      - 0
+      - 807
+      - 887
+      - 967
+      - 818
   - glovesList:
     - ID: G5
       NAME: Full Coverage Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 8.57@9.01@9.46@9.90@10.80
+      tangcritrate: 5.25@5.25@5.25@5.25@5.25
+      Tangcritdmg: 5.25@5.69@6.14@6.58@5.67
+      GiaNangCap: 0@192@207@222@191
       SoManhYeuCau: 5
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 198
       Gia: 60
+      GiamtimereloadValue:
+      - 8.57
+      - 9.01
+      - 9.46
+      - 9.9
+      - 10.8
+      tangcritrateValue:
+      - 5.25
+      - 5.25
+      - 5.25
+      - 5.25
+      - 5.25
+      TangcritdmgValue:
+      - 5.25
+      - 5.69
+      - 6.14
+      - 6.58
+      - 5.67
+      GiaNangCapValue:
+      - 0
+      - 192
+      - 207
+      - 222
+      - 191
     - ID: G5
       NAME: Full Coverage Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 10.28@10.69@11.10@11.52@12.34
+      tangcritrate: 5.77@5.77@5.77@5.77@5.77
+      Tangcritdmg: 5.77@6.18@6.59@7.01@6.14
+      GiaNangCap: 0@308@328@348@305
       SoManhYeuCau: 8
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 396
       Gia: 96
+      GiamtimereloadValue:
+      - 10.28
+      - 10.69
+      - 11.1
+      - 11.52
+      - 12.34
+      tangcritrateValue:
+      - 5.77
+      - 5.77
+      - 5.77
+      - 5.77
+      - 5.77
+      TangcritdmgValue:
+      - 5.77
+      - 6.18
+      - 6.59
+      - 7.01
+      - 6.14
+      GiaNangCapValue:
+      - 0
+      - 308
+      - 328
+      - 348
+      - 305
     - ID: G5
       NAME: Full Coverage Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 12.00@12.68@13.37@14.05@15.42
+      tangcritrate: 6.30@6.30@6.30@6.30@6.30
+      Tangcritdmg: 6.30@6.98@7.67@8.35@7.08
+      GiaNangCap: 0@500@549@598@507
       SoManhYeuCau: 13
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 594
       Gia: 156
+      GiamtimereloadValue:
+      - 12
+      - 12.68
+      - 13.37
+      - 14.05
+      - 15.42
+      tangcritrateValue:
+      - 6.3
+      - 6.3
+      - 6.3
+      - 6.3
+      - 6.3
+      TangcritdmgValue:
+      - 6.3
+      - 6.98
+      - 7.67
+      - 8.35
+      - 7.08
+      GiaNangCapValue:
+      - 0
+      - 500
+      - 549
+      - 598
+      - 507
     - ID: G5
       NAME: Full Coverage Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 13.71@14.49@15.28@16.06@17.63
+      tangcritrate: 6.82@6.82@6.82@6.82@6.82
+      Tangcritdmg: 6.82@7.60@8.39@9.17@7.67
+      GiaNangCap: 0@576@635@694@581
       SoManhYeuCau: 15
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 792
       Gia: 180
+      GiamtimereloadValue:
+      - 13.71
+      - 14.49
+      - 15.28
+      - 16.06
+      - 17.63
+      tangcritrateValue:
+      - 6.82
+      - 6.82
+      - 6.82
+      - 6.82
+      - 6.82
+      TangcritdmgValue:
+      - 6.82
+      - 7.6
+      - 8.39
+      - 9.17
+      - 7.67
+      GiaNangCapValue:
+      - 0
+      - 576
+      - 635
+      - 694
+      - 581
     - ID: G5
       NAME: Full Coverage Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 17.14@18.12@19.10@20.07@22.03
+      tangcritrate: 7.87@7.87@7.87@7.87@7.87
+      Tangcritdmg: 7.87@8.85@9.83@10.81@8.85
+      GiaNangCap: 0@1076@1195@1314@1076
       SoManhYeuCau: 28
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 336
+      GiamtimereloadValue:
+      - 17.14
+      - 18.12
+      - 19.1
+      - 20.07
+      - 22.03
+      tangcritrateValue:
+      - 7.87
+      - 7.87
+      - 7.87
+      - 7.87
+      - 7.87
+      TangcritdmgValue:
+      - 7.87
+      - 8.85
+      - 9.83
+      - 10.81
+      - 8.85
+      GiaNangCapValue:
+      - 0
+      - 1076
+      - 1195
+      - 1314
+      - 1076
   - glovesList:
     - ID: G6
       NAME: Advanced Coverage Gloves
       Level: Normal
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 11.14@11.72@12.30@12.88@14.03
+      tangcritrate: 6.03@6.03@6.03@6.03@6.03
+      Tangcritdmg: 6.03@6.61@7.19@7.77@6.52
+      GiaNangCap: 0@240@261@282@236
       SoManhYeuCau: 5
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 248
       Gia: 75
+      GiamtimereloadValue:
+      - 11.14
+      - 11.72
+      - 12.3
+      - 12.88
+      - 14.03
+      tangcritrateValue:
+      - 6.03
+      - 6.03
+      - 6.03
+      - 6.03
+      - 6.03
+      TangcritdmgValue:
+      - 6.03
+      - 6.61
+      - 7.19
+      - 7.77
+      - 6.52
+      GiaNangCapValue:
+      - 0
+      - 240
+      - 261
+      - 282
+      - 236
     - ID: G6
       NAME: Advanced Coverage Gloves
       Level: Uncommon
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 13.37@13.90@14.44@14.97@16.04
+      tangcritrate: 6.64@6.64@6.64@6.64@6.64
+      Tangcritdmg: 6.64@7.17@7.71@8.24@7.06
+      GiaNangCap: 0@384@413@442@379
       SoManhYeuCau: 8
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 495
       Gia: 120
+      GiamtimereloadValue:
+      - 13.37
+      - 13.9
+      - 14.44
+      - 14.97
+      - 16.04
+      tangcritrateValue:
+      - 6.64
+      - 6.64
+      - 6.64
+      - 6.64
+      - 6.64
+      TangcritdmgValue:
+      - 6.64
+      - 7.17
+      - 7.71
+      - 8.24
+      - 7.06
+      GiaNangCapValue:
+      - 0
+      - 384
+      - 413
+      - 442
+      - 379
     - ID: G6
       NAME: Advanced Coverage Gloves
       Level: Rare
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 15.59@16.49@17.38@18.27@20.05
+      tangcritrate: 7.24@7.24@7.24@7.24@7.24
+      Tangcritdmg: 7.24@8.13@9.02@9.91@8.15
+      GiaNangCap: 0@624@692@760@624
       SoManhYeuCau: 13
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 743
       Gia: 195
+      GiamtimereloadValue:
+      - 15.59
+      - 16.49
+      - 17.38
+      - 18.27
+      - 20.05
+      tangcritrateValue:
+      - 7.24
+      - 7.24
+      - 7.24
+      - 7.24
+      - 7.24
+      TangcritdmgValue:
+      - 7.24
+      - 8.13
+      - 9.02
+      - 9.91
+      - 8.15
+      GiaNangCapValue:
+      - 0
+      - 624
+      - 692
+      - 760
+      - 624
     - ID: G6
       NAME: Advanced Coverage Gloves
       Level: Epic
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 17.82@18.84@19.86@20.88@22.91
+      tangcritrate: 7.84@7.84@7.84@7.84@7.84
+      Tangcritdmg: 7.84@8.86@9.88@10.90@8.82
+      GiaNangCap: 0@720@803@886@717
       SoManhYeuCau: 15
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 990
       Gia: 225
+      GiamtimereloadValue:
+      - 17.82
+      - 18.84
+      - 19.86
+      - 20.88
+      - 22.91
+      tangcritrateValue:
+      - 7.84
+      - 7.84
+      - 7.84
+      - 7.84
+      - 7.84
+      TangcritdmgValue:
+      - 7.84
+      - 8.86
+      - 9.88
+      - 10.9
+      - 8.82
+      GiaNangCapValue:
+      - 0
+      - 720
+      - 803
+      - 886
+      - 717
     - ID: G6
       NAME: Advanced Coverage Gloves
       Level: Legendary
-      Giamtimereload: 0
-      tangcritrate: 0
-      Tangcritdmg: 0
+      Giamtimereload: 22.28@23.55@24.82@26.10@28.64
+      tangcritrate: 9.05@9.05@9.05@9.05@9.05
+      Tangcritdmg: 9.05@10.32@11.60@12.87@10.18
+      GiaNangCap: 0@1344@1510@1676@1326
       SoManhYeuCau: 28
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
+      GiaKhiRaDo: 1238
       Gia: 420
+      GiamtimereloadValue:
+      - 22.28
+      - 23.55
+      - 24.82
+      - 26.1
+      - 28.64
+      tangcritrateValue:
+      - 9.05
+      - 9.05
+      - 9.05
+      - 9.05
+      - 9.05
+      TangcritdmgValue:
+      - 9.05
+      - 10.32
+      - 11.6
+      - 12.87
+      - 10.18
+      GiaNangCapValue:
+      - 0
+      - 1344
+      - 1510
+      - 1676
+      - 1326
   allHelmet:
   - helmetList:
     - ID: H1
       NAME: Civilian Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 1.00@1.02@1.03@1.05@1.08
+      BonusExp: 3@3@3@3@3
+      Gia: 0@64@66@68@71
       SoManhYeuCau: 10
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
-      Gia: 20
+      GiaKhiRaDo: 33
+      DefValue:
+      - 1
+      - 1.02
+      - 1.03
+      - 1.05
+      - 1.08
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 64
+      - 66
+      - 68
+      - 71
     - ID: H1
       NAME: Civilian Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 1.20@1.21@1.22@1.24@1.26
+      BonusExp: 3@3@3@3@3
+      Gia: 0@128@130@132@135
       SoManhYeuCau: 20
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
-      Gia: 40
+      GiaKhiRaDo: 66
+      DefValue:
+      - 1.2
+      - 1.21
+      - 1.22
+      - 1.24
+      - 1.26
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 128
+      - 130
+      - 132
+      - 135
     - ID: H1
       NAME: Civilian Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 1.40@1.41@1.42@1.42@1.44
+      BonusExp: 3@3@3@3@3
+      Gia: 0@224@226@228@231
       SoManhYeuCau: 35
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
-      Gia: 70
+      GiaKhiRaDo: 99
+      DefValue:
+      - 1.4
+      - 1.41
+      - 1.42
+      - 1.42
+      - 1.44
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 224
+      - 226
+      - 228
+      - 231
     - ID: H1
       NAME: Civilian Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 1.60@1.64@1.68@1.72@1.80
+      BonusExp: 3@3@3@3@3
+      Gia: 0@320@328@336@352
       SoManhYeuCau: 50
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
-      Gia: 100
+      GiaKhiRaDo: 132
+      DefValue:
+      - 1.6
+      - 1.64
+      - 1.68
+      - 1.72
+      - 1.8
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 320
+      - 328
+      - 336
+      - 352
     - ID: H1
       NAME: Civilian Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 2.00@2.05@2.10@2.15@2.25
+      BonusExp: 3@3@3@3@3
+      Gia: 0@480@492@504@528
       SoManhYeuCau: 75
       GiaMua1Manh: 2
-      GiaKhiRaDo: 0
-      Gia: 150
+      GiaKhiRaDo: 165
+      DefValue:
+      - 2
+      - 2.05
+      - 2.1
+      - 2.15
+      - 2.25
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 480
+      - 492
+      - 504
+      - 528
   - helmetList:
     - ID: H2
       NAME: Police Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 1.30@1.32@1.34@1.36@1.40
+      BonusExp: 3@3@3@3@3
+      Gia: 0@240@244@248@256
       SoManhYeuCau: 15
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 75
+      GiaKhiRaDo: 83
+      DefValue:
+      - 1.3
+      - 1.32
+      - 1.34
+      - 1.36
+      - 1.4
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 240
+      - 244
+      - 248
+      - 256
     - ID: H2
       NAME: Police Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 1.56@1.58@1.59@1.61@1.64
+      BonusExp: 3@3@3@3@3
+      Gia: 0@320@324@328@335
       SoManhYeuCau: 20
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 100
+      GiaKhiRaDo: 165
+      DefValue:
+      - 1.56
+      - 1.58
+      - 1.59
+      - 1.61
+      - 1.64
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 320
+      - 324
+      - 328
+      - 335
     - ID: H2
       NAME: Police Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 1.82@1.83@1.84@1.85@1.87
+      BonusExp: 3@3@3@3@3
+      Gia: 0@560@564@568@575
       SoManhYeuCau: 35
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 175
+      GiaKhiRaDo: 248
+      DefValue:
+      - 1.82
+      - 1.83
+      - 1.84
+      - 1.85
+      - 1.87
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 560
+      - 564
+      - 568
+      - 575
     - ID: H2
       NAME: Police Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 2.08@2.13@2.18@2.24@2.34
+      BonusExp: 3@3@3@3@3
+      Gia: 0@640@656@672@704
       SoManhYeuCau: 40
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 200
+      GiaKhiRaDo: 330
+      DefValue:
+      - 2.08
+      - 2.13
+      - 2.18
+      - 2.24
+      - 2.34
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 640
+      - 656
+      - 672
+      - 704
     - ID: H2
       NAME: Police Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 2.60@2.67@2.73@2.80@2.93
+      BonusExp: 3@3@3@3@3
+      Gia: 0@1200@1230@1260@1319
       SoManhYeuCau: 75
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 375
+      GiaKhiRaDo: 413
+      DefValue:
+      - 2.6
+      - 2.67
+      - 2.73
+      - 2.8
+      - 2.93
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 1200
+      - 1230
+      - 1260
+      - 1319
   - helmetList:
     - ID: H3
       NAME: Light Military Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 1.69@1.72@1.74@1.77@1.83
+      BonusExp: 3@3@3@3@3
+      Gia: 0@336@342@348@359
       SoManhYeuCau: 15
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
-      Gia: 105
+      GiaKhiRaDo: 116
+      DefValue:
+      - 1.69
+      - 1.72
+      - 1.74
+      - 1.77
+      - 1.83
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 336
+      - 342
+      - 348
+      - 359
     - ID: H3
       NAME: Light Military Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 2.03@2.05@2.07@2.09@2.13
+      BonusExp: 3@3@3@3@3
+      Gia: 0@448@453@458@467
       SoManhYeuCau: 20
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
-      Gia: 140
+      GiaKhiRaDo: 231
+      DefValue:
+      - 2.03
+      - 2.05
+      - 2.07
+      - 2.09
+      - 2.13
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 448
+      - 453
+      - 458
+      - 467
     - ID: H3
       NAME: Light Military Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 2.37@2.38@2.39@2.41@2.43
+      BonusExp: 3@3@3@3@3
+      Gia: 0@784@789@794@803
       SoManhYeuCau: 35
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
-      Gia: 245
+      GiaKhiRaDo: 347
+      DefValue:
+      - 2.37
+      - 2.38
+      - 2.39
+      - 2.41
+      - 2.43
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 784
+      - 789
+      - 794
+      - 803
     - ID: H3
       NAME: Light Military Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 2.70@2.77@2.84@2.91@3.04
+      BonusExp: 3@3@3@3@3
+      Gia: 0@1008@1033@1058@1108
       SoManhYeuCau: 45
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
-      Gia: 315
+      GiaKhiRaDo: 462
+      DefValue:
+      - 2.7
+      - 2.77
+      - 2.84
+      - 2.91
+      - 3.04
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 1008
+      - 1033
+      - 1058
+      - 1108
     - ID: H3
       NAME: Light Military Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 3.38@3.46@3.55@3.63@3.80
+      BonusExp: 3@3@3@3@3
+      Gia: 0@1792@1836@1880@1968
       SoManhYeuCau: 80
       GiaMua1Manh: 7
-      GiaKhiRaDo: 0
-      Gia: 560
+      GiaKhiRaDo: 578
+      DefValue:
+      - 3.38
+      - 3.46
+      - 3.55
+      - 3.63
+      - 3.8
+      BonusExpValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      GiaValue:
+      - 0
+      - 1792
+      - 1836
+      - 1880
+      - 1968
   - helmetList:
     - ID: H4
       NAME: Tatical Military Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 2.20@2.23@2.27@2.30@2.37
+      BonusExp: 5@5@5@5@5
+      Gia: 0@432@439@446@460
       SoManhYeuCau: 15
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
-      Gia: 135
+      GiaKhiRaDo: 149
+      DefValue:
+      - 2.2
+      - 2.23
+      - 2.27
+      - 2.3
+      - 2.37
+      BonusExpValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      GiaValue:
+      - 0
+      - 432
+      - 439
+      - 446
+      - 460
     - ID: H4
       NAME: Tatical Military Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 2.64@2.66@2.69@2.72@2.77
+      BonusExp: 6@6@6@6@6
+      Gia: 0@576@582@588@600
       SoManhYeuCau: 20
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
-      Gia: 180
+      GiaKhiRaDo: 297
+      DefValue:
+      - 2.64
+      - 2.66
+      - 2.69
+      - 2.72
+      - 2.77
+      BonusExpValue:
+      - 6
+      - 6
+      - 6
+      - 6
+      - 6
+      GiaValue:
+      - 0
+      - 576
+      - 582
+      - 588
+      - 600
     - ID: H4
       NAME: Tatical Military Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 3.08@3.09@3.11@3.13@3.16
+      BonusExp: 7@7@7@7@7
+      Gia: 0@1008@1014@1020@1032
       SoManhYeuCau: 35
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
-      Gia: 315
+      GiaKhiRaDo: 446
+      DefValue:
+      - 3.08
+      - 3.09
+      - 3.11
+      - 3.13
+      - 3.16
+      BonusExpValue:
+      - 7
+      - 7
+      - 7
+      - 7
+      - 7
+      GiaValue:
+      - 0
+      - 1008
+      - 1014
+      - 1020
+      - 1032
     - ID: H4
       NAME: Tatical Military Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 3.52@3.60@3.69@3.78@3.95
+      BonusExp: 8@8@8@8@8
+      Gia: 0@1296@1328@1360@1424
       SoManhYeuCau: 45
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
-      Gia: 405
+      GiaKhiRaDo: 594
+      DefValue:
+      - 3.52
+      - 3.6
+      - 3.69
+      - 3.78
+      - 3.95
+      BonusExpValue:
+      - 8
+      - 8
+      - 8
+      - 8
+      - 8
+      GiaValue:
+      - 0
+      - 1296
+      - 1328
+      - 1360
+      - 1424
     - ID: H4
       NAME: Tatical Military Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 4.39@4.50@4.61@4.72@4.94
+      BonusExp: 10@10@10@10@10
+      Gia: 0@2304@2361@2418@2531
       SoManhYeuCau: 80
       GiaMua1Manh: 9
-      GiaKhiRaDo: 0
-      Gia: 720
+      GiaKhiRaDo: 743
+      DefValue:
+      - 4.39
+      - 4.5
+      - 4.61
+      - 4.72
+      - 4.94
+      BonusExpValue:
+      - 10
+      - 10
+      - 10
+      - 10
+      - 10
+      GiaValue:
+      - 0
+      - 2304
+      - 2361
+      - 2418
+      - 2531
   - helmetList:
     - ID: H5
       NAME: Full Coverage Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 2.86@2.90@2.95@2.99@3.08
+      BonusExp: 6.5@6.5@6.5@6.5@6.5
+      Gia: 0@576@586@596@615
       SoManhYeuCau: 15
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 180
+      GiaKhiRaDo: 198
+      DefValue:
+      - 2.86
+      - 2.9
+      - 2.95
+      - 2.99
+      - 3.08
+      BonusExpValue:
+      - 6.5
+      - 6.5
+      - 6.5
+      - 6.5
+      - 6.5
+      GiaValue:
+      - 0
+      - 576
+      - 586
+      - 596
+      - 615
     - ID: H5
       NAME: Full Coverage Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 3.43@3.46@3.50@3.53@3.60
+      BonusExp: 7.8@7.8@7.8@7.8@7.8
+      Gia: 0@768@776@784@800
       SoManhYeuCau: 20
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 240
+      GiaKhiRaDo: 396
+      DefValue:
+      - 3.43
+      - 3.46
+      - 3.5
+      - 3.53
+      - 3.6
+      BonusExpValue:
+      - 7.8
+      - 7.8
+      - 7.8
+      - 7.8
+      - 7.8
+      GiaValue:
+      - 0
+      - 768
+      - 776
+      - 784
+      - 800
     - ID: H5
       NAME: Full Coverage Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 4.00@4.02@4.04@4.07@4.11
+      BonusExp: 9.1@9.1@9.1@9.1@9.1
+      Gia: 0@1344@1352@1360@1376
       SoManhYeuCau: 35
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 420
+      GiaKhiRaDo: 594
+      DefValue:
+      - 4
+      - 4.02
+      - 4.04
+      - 4.07
+      - 4.11
+      BonusExpValue:
+      - 9.1
+      - 9.1
+      - 9.1
+      - 9.1
+      - 9.1
+      GiaValue:
+      - 0
+      - 1344
+      - 1352
+      - 1360
+      - 1376
     - ID: H5
       NAME: Full Coverage Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 4.57@4.68@4.80@4.91@5.14
+      BonusExp: 10.4@10.4@10.4@10.4@10.4
+      Gia: 0@1728@1771@1814@1899
       SoManhYeuCau: 45
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 540
+      GiaKhiRaDo: 792
+      DefValue:
+      - 4.57
+      - 4.68
+      - 4.8
+      - 4.91
+      - 5.14
+      BonusExpValue:
+      - 10.4
+      - 10.4
+      - 10.4
+      - 10.4
+      - 10.4
+      GiaValue:
+      - 0
+      - 1728
+      - 1771
+      - 1814
+      - 1899
     - ID: H5
       NAME: Full Coverage Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 5.71@5.86@6.00@6.14@6.43
+      BonusExp: 13@13@13@13@13
+      Gia: 0@3072@3147@3222@3372
       SoManhYeuCau: 80
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 960
+      GiaKhiRaDo: 990
+      DefValue:
+      - 5.71
+      - 5.86
+      - 6
+      - 6.14
+      - 6.43
+      BonusExpValue:
+      - 13
+      - 13
+      - 13
+      - 13
+      - 13
+      GiaValue:
+      - 0
+      - 3072
+      - 3147
+      - 3222
+      - 3372
   - helmetList:
     - ID: H6
       NAME: Advanced Coverage Helmet
       Level: Normal
-      Def: 0
-      BonusExp: 0
+      Def: 3.71@3.77@3.83@3.89@4.01
+      BonusExp: 8.45@8.45@8.45@8.45@8.45
+      Gia: 0@720@732@744@767
       SoManhYeuCau: 15
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 225
+      GiaKhiRaDo: 248
+      DefValue:
+      - 3.71
+      - 3.77
+      - 3.83
+      - 3.89
+      - 4.01
+      BonusExpValue:
+      - 8.45
+      - 8.45
+      - 8.45
+      - 8.45
+      - 8.45
+      GiaValue:
+      - 0
+      - 720
+      - 732
+      - 744
+      - 767
     - ID: H6
       NAME: Advanced Coverage Helmet
       Level: Uncommon
-      Def: 0
-      BonusExp: 0
+      Def: 4.46@4.50@4.54@4.59@4.68
+      BonusExp: 10.14@10.14@10.14@10.14@10.14
+      Gia: 0@960@970@980@1000
       SoManhYeuCau: 20
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 300
+      GiaKhiRaDo: 495
+      DefValue:
+      - 4.46
+      - 4.5
+      - 4.54
+      - 4.59
+      - 4.68
+      BonusExpValue:
+      - 10.14
+      - 10.14
+      - 10.14
+      - 10.14
+      - 10.14
+      GiaValue:
+      - 0
+      - 960
+      - 970
+      - 980
+      - 1000
     - ID: H6
       NAME: Advanced Coverage Helmet
       Level: Rare
-      Def: 0
-      BonusExp: 0
+      Def: 5.20@5.23@5.26@5.29@5.35
+      BonusExp: 11.83@11.83@11.83@11.83@11.83
+      Gia: 0@1680@1690@1700@1720
       SoManhYeuCau: 35
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 525
+      GiaKhiRaDo: 743
+      DefValue:
+      - 5.2
+      - 5.23
+      - 5.26
+      - 5.29
+      - 5.35
+      BonusExpValue:
+      - 11.83
+      - 11.83
+      - 11.83
+      - 11.83
+      - 11.83
+      GiaValue:
+      - 0
+      - 1680
+      - 1690
+      - 1700
+      - 1720
     - ID: H6
       NAME: Advanced Coverage Helmet
       Level: Epic
-      Def: 0
-      BonusExp: 0
+      Def: 5.94@6.09@6.24@6.39@6.68
+      BonusExp: 13.52@13.52@13.52@13.52@13.52
+      Gia: 0@2160@2213@2266@2372
       SoManhYeuCau: 45
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 675
+      GiaKhiRaDo: 990
+      DefValue:
+      - 5.94
+      - 6.09
+      - 6.24
+      - 6.39
+      - 6.68
+      BonusExpValue:
+      - 13.52
+      - 13.52
+      - 13.52
+      - 13.52
+      - 13.52
+      GiaValue:
+      - 0
+      - 2160
+      - 2213
+      - 2266
+      - 2372
     - ID: H6
       NAME: Advanced Coverage Helmet
       Level: Legendary
-      Def: 0
-      BonusExp: 0
+      Def: 7.43@7.61@7.80@7.98@8.35
+      BonusExp: 16.9@16.9@16.9@16.9@16.9
+      Gia: 0@3840@3934@4028@4216
       SoManhYeuCau: 80
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 1200
+      GiaKhiRaDo: 1238
+      DefValue:
+      - 7.43
+      - 7.61
+      - 7.8
+      - 7.98
+      - 8.35
+      BonusExpValue:
+      - 16.9
+      - 16.9
+      - 16.9
+      - 16.9
+      - 16.9
+      GiaValue:
+      - 0
+      - 3840
+      - 3934
+      - 4028
+      - 4216
   allArmor:
   - armorList:
     - ID: A1
       NAME: Civilian Body Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 15
+      Def: 3.00@3.02@3.04@3.06@3.11
+      SpeedTru: 10@10@10@10@10
+      SoManhYeuCau: 15@0@0@0@0
+      GiaNangCap: 0@144@146@148@151
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
-      Gia: 45
+      GiaKhiRaDo: 50
+      DefValue:
+      - 3
+      - 3.02
+      - 3.04
+      - 3.06
+      - 3.11
+      SpeedTruValue:
+      - 10
+      - 10
+      - 10
+      - 10
+      - 10
+      SoManhYeuCauValue:
+      - 15
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 144
+      - 146
+      - 148
+      - 151
     - ID: A1
       NAME: Civilian Body Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 3.45@3.46@3.47@3.49@3.51
+      SpeedTru: 9.5@9.5@9.5@9.5@9.5
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@240@241@242@244
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
-      Gia: 75
+      GiaKhiRaDo: 99
+      DefValue:
+      - 3.45
+      - 3.46
+      - 3.47
+      - 3.49
+      - 3.51
+      SpeedTruValue:
+      - 9.5
+      - 9.5
+      - 9.5
+      - 9.5
+      - 9.5
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 240
+      - 241
+      - 242
+      - 244
     - ID: A1
       NAME: Civilian Body Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 3.90@3.90@3.91@3.91@3.92
+      SpeedTru: 9@9@9@9@9
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@384@385@386@387
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
-      Gia: 120
+      GiaKhiRaDo: 149
+      DefValue:
+      - 3.9
+      - 3.9
+      - 3.91
+      - 3.91
+      - 3.92
+      SpeedTruValue:
+      - 9
+      - 9
+      - 9
+      - 9
+      - 9
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 384
+      - 385
+      - 386
+      - 387
     - ID: A1
       NAME: Civilian Body Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 55
+      Def: 4.35@4.43@4.50@4.58@4.73
+      SpeedTru: 8.5@8.5@8.5@8.5@8.5
+      SoManhYeuCau: 55@0@0@0@0
+      GiaNangCap: 0@528@537@546@564
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
-      Gia: 165
+      GiaKhiRaDo: 198
+      DefValue:
+      - 4.35
+      - 4.43
+      - 4.5
+      - 4.58
+      - 4.73
+      SpeedTruValue:
+      - 8.5
+      - 8.5
+      - 8.5
+      - 8.5
+      - 8.5
+      SoManhYeuCauValue:
+      - 55
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 528
+      - 537
+      - 546
+      - 564
     - ID: A1
       NAME: Civilian Body Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 80
+      Def: 5.25@5.34@5.43@5.52@5.70
+      SpeedTru: 8@8@8@8@8
+      SoManhYeuCau: 80@0@0@0@0
+      GiaNangCap: 0@768@782@796@823
       GiaMua1Manh: 3
-      GiaKhiRaDo: 0
-      Gia: 240
+      GiaKhiRaDo: 248
+      DefValue:
+      - 5.25
+      - 5.34
+      - 5.43
+      - 5.52
+      - 5.7
+      SpeedTruValue:
+      - 8
+      - 8
+      - 8
+      - 8
+      - 8
+      SoManhYeuCauValue:
+      - 80
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 768
+      - 782
+      - 796
+      - 823
   - armorList:
     - ID: A2
       NAME: Police Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 20
+      Def: 3.68@3.70@3.73@3.75@3.80
+      SpeedTru: 9.09@9.09@9.09@9.09@9.09
+      SoManhYeuCau: 20@0@0@0@0
+      GiaNangCap: 0@320@323@326@331
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 100
+      GiaKhiRaDo: 83
+      DefValue:
+      - 3.68
+      - 3.7
+      - 3.73
+      - 3.75
+      - 3.8
+      SpeedTruValue:
+      - 9.09
+      - 9.09
+      - 9.09
+      - 9.09
+      - 9.09
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 320
+      - 323
+      - 326
+      - 331
     - ID: A2
       NAME: Police Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 4.23@4.24@4.26@4.27@4.30
+      SpeedTru: 8.64@8.64@8.64@8.64@8.64
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@400@402@404@407
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 125
+      GiaKhiRaDo: 165
+      DefValue:
+      - 4.23
+      - 4.24
+      - 4.26
+      - 4.27
+      - 4.3
+      SpeedTruValue:
+      - 8.64
+      - 8.64
+      - 8.64
+      - 8.64
+      - 8.64
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 400
+      - 402
+      - 404
+      - 407
     - ID: A2
       NAME: Police Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 4.78@4.78@4.78@4.79@4.80
+      SpeedTru: 8.18@8.18@8.18@8.18@8.18
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@640@641@642@643
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 200
+      GiaKhiRaDo: 248
+      DefValue:
+      - 4.78
+      - 4.78
+      - 4.78
+      - 4.79
+      - 4.8
+      SpeedTruValue:
+      - 8.18
+      - 8.18
+      - 8.18
+      - 8.18
+      - 8.18
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 640
+      - 641
+      - 642
+      - 643
     - ID: A2
       NAME: Police Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 45
+      Def: 5.33@5.42@5.51@5.60@5.79
+      SpeedTru: 7.73@7.73@7.73@7.73@7.73
+      SoManhYeuCau: 45@0@0@0@0
+      GiaNangCap: 0@720@733@746@771
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 225
+      GiaKhiRaDo: 330
+      DefValue:
+      - 5.33
+      - 5.42
+      - 5.51
+      - 5.6
+      - 5.79
+      SpeedTruValue:
+      - 7.73
+      - 7.73
+      - 7.73
+      - 7.73
+      - 7.73
+      SoManhYeuCauValue:
+      - 45
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 720
+      - 733
+      - 746
+      - 771
     - ID: A2
       NAME: Police Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 80
+      Def: 6.43@6.54@6.65@6.76@6.99
+      SpeedTru: 7.27@7.27@7.27@7.27@7.27
+      SoManhYeuCau: 80@0@0@0@0
+      GiaNangCap: 0@1280@1302@1324@1368
       GiaMua1Manh: 5
-      GiaKhiRaDo: 0
-      Gia: 400
+      GiaKhiRaDo: 413
+      DefValue:
+      - 6.43
+      - 6.54
+      - 6.65
+      - 6.76
+      - 6.99
+      SpeedTruValue:
+      - 7.27
+      - 7.27
+      - 7.27
+      - 7.27
+      - 7.27
+      SoManhYeuCauValue:
+      - 80
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1280
+      - 1302
+      - 1324
+      - 1368
   - armorList:
     - ID: A3
       NAME: Light Military Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 20
+      Def: 4.50@4.53@4.56@4.60@4.66
+      SpeedTru: 8.26@8.26@8.26@8.26@8.26
+      SoManhYeuCau: 20@0@0@0@0
+      GiaNangCap: 0@512@516@520@528
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
-      Gia: 160
+      GiaKhiRaDo: 132
+      DefValue:
+      - 4.5
+      - 4.53
+      - 4.56
+      - 4.6
+      - 4.66
+      SpeedTruValue:
+      - 8.26
+      - 8.26
+      - 8.26
+      - 8.26
+      - 8.26
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 512
+      - 516
+      - 520
+      - 528
     - ID: A3
       NAME: Light Military Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 5.18@5.20@5.21@5.23@5.27
+      SpeedTru: 7.85@7.85@7.85@7.85@7.85
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@640@643@646@651
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
-      Gia: 200
+      GiaKhiRaDo: 264
+      DefValue:
+      - 5.18
+      - 5.2
+      - 5.21
+      - 5.23
+      - 5.27
+      SpeedTruValue:
+      - 7.85
+      - 7.85
+      - 7.85
+      - 7.85
+      - 7.85
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 640
+      - 643
+      - 646
+      - 651
     - ID: A3
       NAME: Light Military Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 5.85@5.86@5.86@5.87@5.87
+      SpeedTru: 7.44@7.44@7.44@7.44@7.44
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@1024@1025@1026@1028
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
-      Gia: 320
+      GiaKhiRaDo: 396
+      DefValue:
+      - 5.85
+      - 5.86
+      - 5.86
+      - 5.87
+      - 5.87
+      SpeedTruValue:
+      - 7.44
+      - 7.44
+      - 7.44
+      - 7.44
+      - 7.44
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1024
+      - 1025
+      - 1026
+      - 1028
     - ID: A3
       NAME: Light Military Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 50
+      Def: 6.53@6.64@6.75@6.87@7.09
+      SpeedTru: 7.02@7.02@7.02@7.02@7.02
+      SoManhYeuCau: 50@0@0@0@0
+      GiaNangCap: 0@1280@1302@1324@1368
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
-      Gia: 400
+      GiaKhiRaDo: 528
+      DefValue:
+      - 6.53
+      - 6.64
+      - 6.75
+      - 6.87
+      - 7.09
+      SpeedTruValue:
+      - 7.02
+      - 7.02
+      - 7.02
+      - 7.02
+      - 7.02
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1280
+      - 1302
+      - 1324
+      - 1368
     - ID: A3
       NAME: Light Military Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 85
+      Def: 7.88@8.01@8.15@8.29@8.56
+      SpeedTru: 6.61@6.61@6.61@6.61@6.61
+      SoManhYeuCau: 85@0@0@0@0
+      GiaNangCap: 0@2176@2213@2250@2324
       GiaMua1Manh: 8
-      GiaKhiRaDo: 0
-      Gia: 680
+      GiaKhiRaDo: 660
+      DefValue:
+      - 7.88
+      - 8.01
+      - 8.15
+      - 8.29
+      - 8.56
+      SpeedTruValue:
+      - 6.61
+      - 6.61
+      - 6.61
+      - 6.61
+      - 6.61
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2176
+      - 2213
+      - 2250
+      - 2324
   - armorList:
     - ID: A4
       NAME: Tatical Military Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 20
+      Def: 5.51@5.55@5.59@5.63@5.71
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 20@0@0@0@0
+      GiaNangCap: 0@640@645@650@659
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
-      Gia: 200
+      GiaKhiRaDo: 165
+      DefValue:
+      - 5.51
+      - 5.55
+      - 5.59
+      - 5.63
+      - 5.71
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 640
+      - 645
+      - 650
+      - 659
     - ID: A4
       NAME: Tatical Military Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 6.34@6.36@6.39@6.41@6.45
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@800@803@806@812
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
-      Gia: 250
+      GiaKhiRaDo: 330
+      DefValue:
+      - 6.34
+      - 6.36
+      - 6.39
+      - 6.41
+      - 6.45
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 800
+      - 803
+      - 806
+      - 812
     - ID: A4
       NAME: Tatical Military Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 7.17@7.17@7.18@7.19@7.20
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@1280@1281@1282@1284
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
-      Gia: 400
+      GiaKhiRaDo: 495
+      DefValue:
+      - 7.17
+      - 7.17
+      - 7.18
+      - 7.19
+      - 7.2
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1280
+      - 1281
+      - 1282
+      - 1284
     - ID: A4
       NAME: Tatical Military Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 50
+      Def: 8.00@8.13@8.27@8.41@8.69
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 50@0@0@0@0
+      GiaNangCap: 0@1600@1628@1656@1711
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
-      Gia: 500
+      GiaKhiRaDo: 660
+      DefValue:
+      - 8
+      - 8.13
+      - 8.27
+      - 8.41
+      - 8.69
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1600
+      - 1628
+      - 1656
+      - 1711
     - ID: A4
       NAME: Tatical Military Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 85
+      Def: 9.65@9.82@9.98@10.15@10.48
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 85@0@0@0@0
+      GiaNangCap: 0@2720@2767@2814@2907
       GiaMua1Manh: 10
-      GiaKhiRaDo: 0
-      Gia: 850
+      GiaKhiRaDo: 825
+      DefValue:
+      - 9.65
+      - 9.82
+      - 9.98
+      - 10.15
+      - 10.48
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2720
+      - 2767
+      - 2814
+      - 2907
   - armorList:
     - ID: A5
       NAME: Full Coverage Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 20
+      Def: 6.76@6.80@6.85@6.90@6.99
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 20@0@0@0@0
+      GiaNangCap: 0@768@774@780@791
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 240
+      GiaKhiRaDo: 198
+      DefValue:
+      - 6.76
+      - 6.8
+      - 6.85
+      - 6.9
+      - 6.99
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 768
+      - 774
+      - 780
+      - 791
     - ID: A5
       NAME: Full Coverage Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 7.77@7.80@7.82@7.85@7.90
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@960@964@968@975
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 300
+      GiaKhiRaDo: 396
+      DefValue:
+      - 7.77
+      - 7.8
+      - 7.82
+      - 7.85
+      - 7.9
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 960
+      - 964
+      - 968
+      - 975
     - ID: A5
       NAME: Full Coverage Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 8.78@8.79@8.80@8.80@8.82
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@1536@1538@1540@1543
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 480
+      GiaKhiRaDo: 594
+      DefValue:
+      - 8.78
+      - 8.79
+      - 8.8
+      - 8.8
+      - 8.82
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1536
+      - 1538
+      - 1540
+      - 1543
     - ID: A5
       NAME: Full Coverage Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 50
+      Def: 9.80@9.96@10.13@10.30@10.64
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 50@0@0@0@0
+      GiaNangCap: 0@1920@1953@1986@2052
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 600
+      GiaKhiRaDo: 792
+      DefValue:
+      - 9.8
+      - 9.96
+      - 10.13
+      - 10.3
+      - 10.64
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1920
+      - 1953
+      - 1986
+      - 2052
     - ID: A5
       NAME: Full Coverage Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 85
+      Def: 11.82@12.03@12.23@12.43@12.84
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 85@0@0@0@0
+      GiaNangCap: 0@3264@3320@3376@3487
       GiaMua1Manh: 12
-      GiaKhiRaDo: 0
-      Gia: 1020
+      GiaKhiRaDo: 990
+      DefValue:
+      - 11.82
+      - 12.03
+      - 12.23
+      - 12.43
+      - 12.84
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 3264
+      - 3320
+      - 3376
+      - 3487
   - armorList:
     - ID: A6
       NAME: Advanced Coverage Vest
       Level: Normal
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 20
+      Def: 8.28@8.33@8.39@8.45@8.57
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 20@0@0@0@0
+      GiaNangCap: 0@960@967@974@988
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 300
+      GiaKhiRaDo: 248
+      DefValue:
+      - 8.28
+      - 8.33
+      - 8.39
+      - 8.45
+      - 8.57
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 960
+      - 967
+      - 974
+      - 988
     - ID: A6
       NAME: Advanced Coverage Vest
       Level: Uncommon
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 25
+      Def: 9.52@9.55@9.58@9.62@9.68
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 25@0@0@0@0
+      GiaNangCap: 0@1200@1205@1210@1219
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 375
+      GiaKhiRaDo: 495
+      DefValue:
+      - 9.52
+      - 9.55
+      - 9.58
+      - 9.62
+      - 9.68
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1200
+      - 1205
+      - 1210
+      - 1219
     - ID: A6
       NAME: Advanced Coverage Vest
       Level: Rare
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 40
+      Def: 10.76@10.77@10.77@10.78@10.80
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 40@0@0@0@0
+      GiaNangCap: 0@1920@1922@1924@1927
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 600
+      GiaKhiRaDo: 743
+      DefValue:
+      - 10.76
+      - 10.77
+      - 10.77
+      - 10.78
+      - 10.8
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1920
+      - 1922
+      - 1924
+      - 1927
     - ID: A6
       NAME: Advanced Coverage Vest
       Level: Epic
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 50
+      Def: 12.00@12.21@12.41@12.62@13.03
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 50@0@0@0@0
+      GiaNangCap: 0@2400@2441@2482@2564
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 750
+      GiaKhiRaDo: 990
+      DefValue:
+      - 12
+      - 12.21
+      - 12.41
+      - 12.62
+      - 13.03
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2400
+      - 2441
+      - 2482
+      - 2564
     - ID: A6
       NAME: Advanced Coverage Vest
       Level: Legendary
-      Def: 0
-      SpeedTru: 0
-      SoManhYeuCau: 85
+      Def: 14.48@14.73@14.98@15.23@15.73
+      SpeedTru: 0@0@0@0@0
+      SoManhYeuCau: 85@0@0@0@0
+      GiaNangCap: 0@4080@4150@4220@4359
       GiaMua1Manh: 15
-      GiaKhiRaDo: 0
-      Gia: 1275
+      GiaKhiRaDo: 1238
+      DefValue:
+      - 14.48
+      - 14.73
+      - 14.98
+      - 15.23
+      - 15.73
+      SpeedTruValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 4080
+      - 4150
+      - 4220
+      - 4359
   allWeapon:
   - weaponList:
     - ID: W1
       NAME: Mac 10
       Level: Normal
-      Dmg: 3
-      BulletSpeed: 7
-      ReloadSpeed: 1.75
-      Magazine: 40
-      AtkRange: 5
-      CritRate: 0
-      CritDmg: 20
-      SoManhYeuCau: 0
+      Dmg: 3.00@3.15@3.30@3.45@3.75
+      BulletSpeed: 7.00@7.15@7.30@7.45@7.70
+      ReloadSpeed: 1.75@1.75@1.75@1.75@1.75
+      Magazine: 40@40@40@40@40
+      AtkRange: 5.00@5.00@5.00@5.00@5.15
+      CritRate: 2@2@2@2@2
+      CritDmg: 20@20@20@20@20
+      SoManhYeuCau: 0@0@0@0@0
+      Atksec: 0.2@0.2@0.2@0.2@0.2
+      GiaNangCap: 0@150@158@166@181
       GiaMua1Manh: 0
       GiaKhiRaDo: 0
       Gia: 0
-      Atksec: 0.2
+      DmgValue:
+      - 3
+      - 3.15
+      - 3.3
+      - 3.45
+      - 3.75
+      AtksecValue:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      BulletSpeedValue:
+      - 7
+      - 7.15
+      - 7.3
+      - 7.45
+      - 7.7
+      ReloadSpeedValue:
+      - 1.75
+      - 1.75
+      - 1.75
+      - 1.75
+      - 1.75
+      MagazineValue:
+      - 40
+      - 40
+      - 40
+      - 40
+      - 40
+      AtkRangeValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5.15
+      CritRateValue:
+      - 2
+      - 2
+      - 2
+      - 2
+      - 2
+      CritDmgValue:
+      - 20
+      - 20
+      - 20
+      - 20
+      - 20
+      SoManhYeuCauValue:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 150
+      - 158
+      - 166
+      - 181
     - ID: W1
       NAME: Mac 10
       Level: Uncommon
-      Dmg: 3.3
-      BulletSpeed: 7.7
-      ReloadSpeed: 1.71
-      Magazine: 50
-      AtkRange: 5.25
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 3.30@3.47@3.63@3.80@4.13
+      BulletSpeed: 7.70@7.87@8.03@8.20@8.47
+      ReloadSpeed: 1.71@1.71@1.71@1.71@1.71
+      Magazine: 50@50@50@50@50
+      AtkRange: 5.25@5.42@5.58@5.75@5.41
+      CritRate: 2@2@2@2@2
+      CritDmg: 22@22@22@22@22
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 0.2@0.2@0.2@0.2@0.2
+      GiaNangCap: 0@165@173@181@197
       GiaMua1Manh: 2
       GiaKhiRaDo: 66
       Gia: 50
-      Atksec: 0.2
+      DmgValue:
+      - 3.3
+      - 3.47
+      - 3.63
+      - 3.8
+      - 4.13
+      AtksecValue:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      BulletSpeedValue:
+      - 7.7
+      - 7.87
+      - 8.03
+      - 8.2
+      - 8.47
+      ReloadSpeedValue:
+      - 1.71
+      - 1.71
+      - 1.71
+      - 1.71
+      - 1.71
+      MagazineValue:
+      - 50
+      - 50
+      - 50
+      - 50
+      - 50
+      AtkRangeValue:
+      - 5.25
+      - 5.42
+      - 5.58
+      - 5.75
+      - 5.41
+      CritRateValue:
+      - 2
+      - 2
+      - 2
+      - 2
+      - 2
+      CritDmgValue:
+      - 22
+      - 22
+      - 22
+      - 22
+      - 22
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 165
+      - 173
+      - 181
+      - 197
     - ID: W1
       NAME: Mac 10
       Level: Rare
-      Dmg: 6
-      BulletSpeed: 8.4
-      ReloadSpeed: 1.68
-      Magazine: 60
-      AtkRange: 5.5
-      CritRate: 0
-      CritDmg: 8.51
-      SoManhYeuCau: 40
+      Dmg: 6.00@6.30@6.60@6.90@7.50
+      BulletSpeed: 8.40@8.70@9.00@9.30@9.24
+      ReloadSpeed: 1.68@1.68@1.68@1.68@1.68
+      Magazine: 60@60@60@60@60
+      AtkRange: 5.50@5.80@6.10@6.40@5.67
+      CritRate: 5@5@5@5@5
+      CritDmg: 24@24@24@24@24
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 0.2@0.2@0.2@0.2@0.2
+      GiaNangCap: 0@264@277@290@316
       GiaMua1Manh: 2
       GiaKhiRaDo: 99
       Gia: 80
-      Atksec: 0.2
+      DmgValue:
+      - 6
+      - 6.3
+      - 6.6
+      - 6.9
+      - 7.5
+      AtksecValue:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      BulletSpeedValue:
+      - 8.4
+      - 8.7
+      - 9
+      - 9.3
+      - 9.24
+      ReloadSpeedValue:
+      - 1.68
+      - 1.68
+      - 1.68
+      - 1.68
+      - 1.68
+      MagazineValue:
+      - 60
+      - 60
+      - 60
+      - 60
+      - 60
+      AtkRangeValue:
+      - 5.5
+      - 5.8
+      - 6.1
+      - 6.4
+      - 5.67
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 24
+      - 24
+      - 24
+      - 24
+      - 24
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 264
+      - 277
+      - 290
+      - 316
     - ID: W1
       NAME: Mac 10
       Level: Epic
-      Dmg: 6.6
-      BulletSpeed: 9.45
-      ReloadSpeed: 1.65
-      Magazine: 70
-      AtkRange: 5.75
-      CritRate: 0
-      CritDmg: 4.62
-      SoManhYeuCau: 55
+      Dmg: 6.60@6.93@7.26@7.59@8.25
+      BulletSpeed: 9.45@9.78@10.11@10.44@10.40
+      ReloadSpeed: 1.65@1.65@1.65@1.65@1.65
+      Magazine: 70@70@70@70@70
+      AtkRange: 5.75@6.08@6.41@6.74@5.92
+      CritRate: 8.75@8.75@8.75@8.75@8.75
+      CritDmg: 26@26@26@26@26
+      SoManhYeuCau: 55@0@0@0@0
+      Atksec: 0.2@0.2@0.2@0.2@0.2
+      GiaNangCap: 0@363@381@399@434
       GiaMua1Manh: 2
       GiaKhiRaDo: 132
       Gia: 110
-      Atksec: 0.2
+      DmgValue:
+      - 6.6
+      - 6.93
+      - 7.26
+      - 7.59
+      - 8.25
+      AtksecValue:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      BulletSpeedValue:
+      - 9.45
+      - 9.78
+      - 10.11
+      - 10.44
+      - 10.4
+      ReloadSpeedValue:
+      - 1.65
+      - 1.65
+      - 1.65
+      - 1.65
+      - 1.65
+      MagazineValue:
+      - 70
+      - 70
+      - 70
+      - 70
+      - 70
+      AtkRangeValue:
+      - 5.75
+      - 6.08
+      - 6.41
+      - 6.74
+      - 5.92
+      CritRateValue:
+      - 8.75
+      - 8.75
+      - 8.75
+      - 8.75
+      - 8.75
+      CritDmgValue:
+      - 26
+      - 26
+      - 26
+      - 26
+      - 26
+      SoManhYeuCauValue:
+      - 55
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 363
+      - 381
+      - 399
+      - 434
     - ID: W1
       NAME: Mac 10
       Level: Legendary
-      Dmg: 12
-      BulletSpeed: 10.5
-      ReloadSpeed: 1.61
-      Magazine: 90
-      AtkRange: 6.25
-      CritRate: 0
-      CritDmg: 17.02
-      SoManhYeuCau: 80
+      Dmg: 12.00@12.60@13.20@13.80@15.00
+      BulletSpeed: 10.50@11.10@11.70@12.30@11.55
+      ReloadSpeed: 1.61@1.61@1.61@1.61@1.61
+      Magazine: 90@90@90@90@90
+      AtkRange: 6.25@6.85@7.45@8.05@6.44
+      CritRate: 12.5@12.5@12.5@12.5@12.5
+      CritDmg: 28@28@28@28@28
+      SoManhYeuCau: 80@0@0@0@0
+      Atksec: 0.2@0.2@0.2@0.2@0.2
+      GiaNangCap: 0@528@554@580@631
       GiaMua1Manh: 2
       GiaKhiRaDo: 165
       Gia: 160
-      Atksec: 0.2
+      DmgValue:
+      - 12
+      - 12.6
+      - 13.2
+      - 13.8
+      - 15
+      AtksecValue:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      BulletSpeedValue:
+      - 10.5
+      - 11.1
+      - 11.7
+      - 12.3
+      - 11.55
+      ReloadSpeedValue:
+      - 1.61
+      - 1.61
+      - 1.61
+      - 1.61
+      - 1.61
+      MagazineValue:
+      - 90
+      - 90
+      - 90
+      - 90
+      - 90
+      AtkRangeValue:
+      - 6.25
+      - 6.85
+      - 7.45
+      - 8.05
+      - 6.44
+      CritRateValue:
+      - 12.5
+      - 12.5
+      - 12.5
+      - 12.5
+      - 12.5
+      CritDmgValue:
+      - 28
+      - 28
+      - 28
+      - 28
+      - 28
+      SoManhYeuCauValue:
+      - 80
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 528
+      - 554
+      - 580
+      - 631
   - weaponList:
     - ID: W2
       NAME: Kriss Vector
       Level: Normal
-      Dmg: 3
-      BulletSpeed: 8.05
-      ReloadSpeed: 1.55
-      Magazine: 48
-      AtkRange: 5.78
-      CritRate: 0
-      CritDmg: 20
-      SoManhYeuCau: 20
+      Dmg: 3.00@3.15@3.30@3.45@3.75
+      BulletSpeed: 8.05@8.20@8.35@8.50@8.86
+      ReloadSpeed: 1.55@1.55@1.55@1.55@1.55
+      Magazine: 48@48@48@48@48
+      AtkRange: 5.78@5.93@6.08@6.23@5.95
+      CritRate: 3@3@3@3@3
+      CritDmg: 30@30@30@30@30
+      SoManhYeuCau: 20@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@198@208@218@237
       GiaMua1Manh: 3
       GiaKhiRaDo: 50
       Gia: 60
-      Atksec: 0.25
+      DmgValue:
+      - 3
+      - 3.15
+      - 3.3
+      - 3.45
+      - 3.75
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 8.05
+      - 8.2
+      - 8.35
+      - 8.5
+      - 8.86
+      ReloadSpeedValue:
+      - 1.55
+      - 1.55
+      - 1.55
+      - 1.55
+      - 1.55
+      MagazineValue:
+      - 48
+      - 48
+      - 48
+      - 48
+      - 48
+      AtkRangeValue:
+      - 5.78
+      - 5.93
+      - 6.08
+      - 6.23
+      - 5.95
+      CritRateValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      CritDmgValue:
+      - 30
+      - 30
+      - 30
+      - 30
+      - 30
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 198
+      - 208
+      - 218
+      - 237
     - ID: W2
       NAME: Kriss Vector
       Level: Uncommon
-      Dmg: 3.3
-      BulletSpeed: 8.86
-      ReloadSpeed: 1.5
-      Magazine: 68
-      AtkRange: 6.06
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 3.30@3.47@3.63@3.80@4.13
+      BulletSpeed: 8.86@9.02@9.19@9.35@9.74
+      ReloadSpeed: 1.5@1.5@1.5@1.5@1.5
+      Magazine: 68@68@68@68@68
+      AtkRange: 6.06@6.23@6.39@6.56@6.25
+      CritRate: 3@3@3@3@3
+      CritDmg: 32@32@32@32@32
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@248@260@272@296
       GiaMua1Manh: 3
       GiaKhiRaDo: 99
       Gia: 75
-      Atksec: 0.25
+      DmgValue:
+      - 3.3
+      - 3.47
+      - 3.63
+      - 3.8
+      - 4.13
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 8.86
+      - 9.02
+      - 9.19
+      - 9.35
+      - 9.74
+      ReloadSpeedValue:
+      - 1.5
+      - 1.5
+      - 1.5
+      - 1.5
+      - 1.5
+      MagazineValue:
+      - 68
+      - 68
+      - 68
+      - 68
+      - 68
+      AtkRangeValue:
+      - 6.06
+      - 6.23
+      - 6.39
+      - 6.56
+      - 6.25
+      CritRateValue:
+      - 3
+      - 3
+      - 3
+      - 3
+      - 3
+      CritDmgValue:
+      - 32
+      - 32
+      - 32
+      - 32
+      - 32
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 248
+      - 260
+      - 272
+      - 296
     - ID: W2
       NAME: Kriss Vector
       Level: Rare
-      Dmg: 6
-      BulletSpeed: 9.66
-      ReloadSpeed: 1.48
-      Magazine: 87
-      AtkRange: 6.35
-      CritRate: 0
-      CritDmg: 8.51
-      SoManhYeuCau: 40
+      Dmg: 6.00@6.30@6.60@6.90@7.50
+      BulletSpeed: 9.66@9.96@10.26@10.56@10.63
+      ReloadSpeed: 1.48@1.48@1.48@1.48@1.48
+      Magazine: 87@87@87@87@87
+      AtkRange: 6.35@6.65@6.95@7.25@6.54
+      CritRate: 6.8@6.8@6.8@6.8@6.8
+      CritDmg: 34@34@34@34@34
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@396@415@434@472
       GiaMua1Manh: 3
       GiaKhiRaDo: 149
       Gia: 120
-      Atksec: 0.25
+      DmgValue:
+      - 6
+      - 6.3
+      - 6.6
+      - 6.9
+      - 7.5
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 9.66
+      - 9.96
+      - 10.26
+      - 10.56
+      - 10.63
+      ReloadSpeedValue:
+      - 1.48
+      - 1.48
+      - 1.48
+      - 1.48
+      - 1.48
+      MagazineValue:
+      - 87
+      - 87
+      - 87
+      - 87
+      - 87
+      AtkRangeValue:
+      - 6.35
+      - 6.65
+      - 6.95
+      - 7.25
+      - 6.54
+      CritRateValue:
+      - 6.8
+      - 6.8
+      - 6.8
+      - 6.8
+      - 6.8
+      CritDmgValue:
+      - 34
+      - 34
+      - 34
+      - 34
+      - 34
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 396
+      - 415
+      - 434
+      - 472
     - ID: W2
       NAME: Kriss Vector
       Level: Epic
-      Dmg: 6.6
-      BulletSpeed: 10.87
-      ReloadSpeed: 1.45
-      Magazine: 106
-      AtkRange: 6.64
-      CritRate: 0
-      CritDmg: 4.62
-      SoManhYeuCau: 45
+      Dmg: 6.60@6.93@7.26@7.59@8.25
+      BulletSpeed: 10.87@11.20@11.53@11.86@11.95
+      ReloadSpeed: 1.45@1.45@1.45@1.45@1.45
+      Magazine: 106@106@106@106@106
+      AtkRange: 6.64@6.97@7.30@7.63@6.84
+      CritRate: 12@12@12@12@12
+      CritDmg: 36@34@34@34@34
+      SoManhYeuCau: 45@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@446@468@490@533
       GiaMua1Manh: 3
       GiaKhiRaDo: 198
       Gia: 135
-      Atksec: 0.25
+      DmgValue:
+      - 6.6
+      - 6.93
+      - 7.26
+      - 7.59
+      - 8.25
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 10.87
+      - 11.2
+      - 11.53
+      - 11.86
+      - 11.95
+      ReloadSpeedValue:
+      - 1.45
+      - 1.45
+      - 1.45
+      - 1.45
+      - 1.45
+      MagazineValue:
+      - 106
+      - 106
+      - 106
+      - 106
+      - 106
+      AtkRangeValue:
+      - 6.64
+      - 6.97
+      - 7.3
+      - 7.63
+      - 6.84
+      CritRateValue:
+      - 12
+      - 12
+      - 12
+      - 12
+      - 12
+      CritDmgValue:
+      - 36
+      - 34
+      - 34
+      - 34
+      - 34
+      SoManhYeuCauValue:
+      - 45
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 446
+      - 468
+      - 490
+      - 533
     - ID: W2
       NAME: Kriss Vector
       Level: Legendary
-      Dmg: 12
-      BulletSpeed: 12.08
-      ReloadSpeed: 1.4
-      Magazine: 144
-      AtkRange: 7.22
-      CritRate: 0
-      CritDmg: 17.02
-      SoManhYeuCau: 80
+      Dmg: 12.00@12.60@13.20@13.80@15.00
+      BulletSpeed: 12.08@12.68@13.28@13.88@13.28
+      ReloadSpeed: 1.4@1.4@1.4@1.4@1.4
+      Magazine: 144@144@144@144@144
+      AtkRange: 7.22@7.82@8.42@9.02@7.44
+      CritRate: 17@17@17@17@17
+      CritDmg: 38@38@38@38@38
+      SoManhYeuCau: 80@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@792@830@868@944
       GiaMua1Manh: 3
       GiaKhiRaDo: 248
       Gia: 240
-      Atksec: 0.25
+      DmgValue:
+      - 12
+      - 12.6
+      - 13.2
+      - 13.8
+      - 15
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 12.08
+      - 12.68
+      - 13.28
+      - 13.88
+      - 13.28
+      ReloadSpeedValue:
+      - 1.4
+      - 1.4
+      - 1.4
+      - 1.4
+      - 1.4
+      MagazineValue:
+      - 144
+      - 144
+      - 144
+      - 144
+      - 144
+      AtkRangeValue:
+      - 7.22
+      - 7.82
+      - 8.42
+      - 9.02
+      - 7.44
+      CritRateValue:
+      - 17
+      - 17
+      - 17
+      - 17
+      - 17
+      CritDmgValue:
+      - 38
+      - 38
+      - 38
+      - 38
+      - 38
+      SoManhYeuCauValue:
+      - 80
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 792
+      - 830
+      - 868
+      - 944
   - weaponList:
     - ID: W3
       NAME: Shotgun
       Level: Normal
-      Dmg: 20.18
-      BulletSpeed: 5.83
-      ReloadSpeed: 2.05
-      Magazine: 20
-      AtkRange: 2.86
-      CritRate: 0
-      CritDmg: 0
-      SoManhYeuCau: 20
+      Dmg: 20.18@21.19@22.20@23.21@25.23
+      BulletSpeed: 5.83@6.84@7.85@8.86@6.42
+      ReloadSpeed: 2.05@2.05@2.05@2.05@2.05
+      Magazine: 20@20@20@20@20
+      AtkRange: 2.86@3.87@4.88@5.88@2.94
+      CritRate: 5@5@5@5@5
+      CritDmg: 40@40@40@40@40
+      SoManhYeuCau: 20@0@0@0@0
+      Atksec: 1@1@1@1@1
+      GiaNangCap: 0@330@346@362@394
       GiaMua1Manh: 5
       GiaKhiRaDo: 83
       Gia: 100
-      Atksec: 1
+      DmgValue:
+      - 20.18
+      - 21.19
+      - 22.2
+      - 23.21
+      - 25.23
+      AtksecValue:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      BulletSpeedValue:
+      - 5.83
+      - 6.84
+      - 7.85
+      - 8.86
+      - 6.42
+      ReloadSpeedValue:
+      - 2.05
+      - 2.05
+      - 2.05
+      - 2.05
+      - 2.05
+      MagazineValue:
+      - 20
+      - 20
+      - 20
+      - 20
+      - 20
+      AtkRangeValue:
+      - 2.86
+      - 3.87
+      - 4.88
+      - 5.88
+      - 2.94
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 40
+      - 40
+      - 40
+      - 40
+      - 40
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 330
+      - 346
+      - 362
+      - 394
     - ID: W3
       NAME: Shotgun
       Level: Uncommon
-      Dmg: 22.2
-      BulletSpeed: 6.42
-      ReloadSpeed: 2.01
-      Magazine: 28
-      AtkRange: 3
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 22.20@23.31@24.42@25.53@27.75
+      BulletSpeed: 6.42@7.53@8.64@9.75@7.06
+      ReloadSpeed: 2.01@2.01@2.01@2.01@2.01
+      Magazine: 28@28@28@28@28
+      AtkRange: 3.00@4.11@5.22@6.33@3.09
+      CritRate: 5@5@5@5@5
+      CritDmg: 42@42@42@42@42
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 1@1@1@1@1
+      GiaNangCap: 0@413@433@453@493
       GiaMua1Manh: 5
       GiaKhiRaDo: 165
       Gia: 125
-      Atksec: 1
+      DmgValue:
+      - 22.2
+      - 23.31
+      - 24.42
+      - 25.53
+      - 27.75
+      AtksecValue:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      BulletSpeedValue:
+      - 6.42
+      - 7.53
+      - 8.64
+      - 9.75
+      - 7.06
+      ReloadSpeedValue:
+      - 2.01
+      - 2.01
+      - 2.01
+      - 2.01
+      - 2.01
+      MagazineValue:
+      - 28
+      - 28
+      - 28
+      - 28
+      - 28
+      AtkRangeValue:
+      - 3
+      - 4.11
+      - 5.22
+      - 6.33
+      - 3.09
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 42
+      - 42
+      - 42
+      - 42
+      - 42
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 413
+      - 433
+      - 453
+      - 493
     - ID: W3
       NAME: Shotgun
       Level: Rare
-      Dmg: 40.36
-      BulletSpeed: 7
-      ReloadSpeed: 1.97
-      Magazine: 34
-      AtkRange: 3.14
-      CritRate: 0
-      CritDmg: 40.89
-      SoManhYeuCau: 40
+      Dmg: 40.36@42.38@44.40@46.42@50.45
+      BulletSpeed: 7.00@9.02@11.04@13.05@7.70
+      ReloadSpeed: 1.97@1.97@1.97@1.97@1.97
+      Magazine: 34@34@34@34@34
+      AtkRange: 3.14@5.16@7.18@9.20@3.24
+      CritRate: 9.5@9.5@9.5@9.5@9.5
+      CritDmg: 44@44@44@44@44
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 1@1@1@1@1
+      GiaNangCap: 0@660@692@724@787
       GiaMua1Manh: 5
       GiaKhiRaDo: 248
       Gia: 200
-      Atksec: 1
+      DmgValue:
+      - 40.36
+      - 42.38
+      - 44.4
+      - 46.42
+      - 50.45
+      AtksecValue:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      BulletSpeedValue:
+      - 7
+      - 9.02
+      - 11.04
+      - 13.05
+      - 7.7
+      ReloadSpeedValue:
+      - 1.97
+      - 1.97
+      - 1.97
+      - 1.97
+      - 1.97
+      MagazineValue:
+      - 34
+      - 34
+      - 34
+      - 34
+      - 34
+      AtkRangeValue:
+      - 3.14
+      - 5.16
+      - 7.18
+      - 9.2
+      - 3.24
+      CritRateValue:
+      - 9.5
+      - 9.5
+      - 9.5
+      - 9.5
+      - 9.5
+      CritDmgValue:
+      - 44
+      - 44
+      - 44
+      - 44
+      - 44
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 660
+      - 692
+      - 724
+      - 787
     - ID: W3
       NAME: Shotgun
       Level: Epic
-      Dmg: 44.4
-      BulletSpeed: 7.88
-      ReloadSpeed: 1.93
-      Magazine: 40
-      AtkRange: 3.29
-      CritRate: 0
-      CritDmg: 22.2
-      SoManhYeuCau: 50
+      Dmg: 44.40@46.62@48.84@51.06@55.50
+      BulletSpeed: 7.88@10.09@12.31@14.53@8.66
+      ReloadSpeed: 1.93@1.93@1.93@1.93@1.93
+      Magazine: 40@40@40@40@40
+      AtkRange: 3.29@5.51@7.73@9.95@3.38
+      CritRate: 16.5@16.5@16.5@16.5@16.5
+      CritDmg: 46@46@46@46@46
+      SoManhYeuCau: 50@0@0@0@0
+      Atksec: 1@1@1@1@1
+      GiaNangCap: 0@825@865@905@984
       GiaMua1Manh: 5
       GiaKhiRaDo: 330
       Gia: 250
-      Atksec: 1
+      DmgValue:
+      - 44.4
+      - 46.62
+      - 48.84
+      - 51.06
+      - 55.5
+      AtksecValue:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      BulletSpeedValue:
+      - 7.88
+      - 10.09
+      - 12.31
+      - 14.53
+      - 8.66
+      ReloadSpeedValue:
+      - 1.93
+      - 1.93
+      - 1.93
+      - 1.93
+      - 1.93
+      MagazineValue:
+      - 40
+      - 40
+      - 40
+      - 40
+      - 40
+      AtkRangeValue:
+      - 3.29
+      - 5.51
+      - 7.73
+      - 9.95
+      - 3.38
+      CritRateValue:
+      - 16.5
+      - 16.5
+      - 16.5
+      - 16.5
+      - 16.5
+      CritDmgValue:
+      - 46
+      - 46
+      - 46
+      - 46
+      - 46
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 825
+      - 865
+      - 905
+      - 984
     - ID: W3
       NAME: Shotgun
       Level: Legendary
-      Dmg: 80.72
-      BulletSpeed: 8.75
-      ReloadSpeed: 1.89
-      Magazine: 60
-      AtkRange: 3.57
-      CritRate: 0
-      CritDmg: 81.77
-      SoManhYeuCau: 85
+      Dmg: 80.72@84.76@88.80@92.83@100.91
+      BulletSpeed: 8.75@12.79@16.82@20.86@9.63
+      ReloadSpeed: 1.89@1.89@1.89@1.89@1.89
+      Magazine: 90@90@90@90@90
+      AtkRange: 3.57@7.61@11.64@15.68@3.68
+      CritRate: 23.5@23.5@23.5@23.5@23.5
+      CritDmg: 48@48@48@48@48
+      SoManhYeuCau: 85@0@0@0@0
+      Atksec: 1@1@1@1@1
+      GiaNangCap: 0@1403@1470@1537@1671
       GiaMua1Manh: 5
       GiaKhiRaDo: 413
       Gia: 425
-      Atksec: 1
+      DmgValue:
+      - 80.72
+      - 84.76
+      - 88.8
+      - 92.83
+      - 100.91
+      AtksecValue:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      BulletSpeedValue:
+      - 8.75
+      - 12.79
+      - 16.82
+      - 20.86
+      - 9.63
+      ReloadSpeedValue:
+      - 1.89
+      - 1.89
+      - 1.89
+      - 1.89
+      - 1.89
+      MagazineValue:
+      - 90
+      - 90
+      - 90
+      - 90
+      - 90
+      AtkRangeValue:
+      - 3.57
+      - 7.61
+      - 11.64
+      - 15.68
+      - 3.68
+      CritRateValue:
+      - 23.5
+      - 23.5
+      - 23.5
+      - 23.5
+      - 23.5
+      CritDmgValue:
+      - 48
+      - 48
+      - 48
+      - 48
+      - 48
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1403
+      - 1470
+      - 1537
+      - 1671
   - weaponList:
     - ID: W4
       NAME: M4a1
       Level: Normal
-      Dmg: 10.3
-      BulletSpeed: 10.65
-      ReloadSpeed: 1.23
-      Magazine: 60
-      AtkRange: 7.33
-      CritRate: 0
-      CritDmg: 20
-      SoManhYeuCau: 20
+      Dmg: 10.30@10.81@11.33@11.84@12.87
+      BulletSpeed: 10.65@11.16@11.68@12.19@11.71
+      ReloadSpeed: 1.23@1.23@1.23@1.23@1.23
+      Magazine: 60@60@60@60@60
+      AtkRange: 7.33@7.84@8.35@8.87@7.54
+      CritRate: 5@5@5@5@5
+      CritDmg: 50@50@50@50@50
+      SoManhYeuCau: 20@0@0@0@0
+      Atksec: 0.22@0.22@0.22@0.22@0.22
+      GiaNangCap: 0@528@554@580@631
       GiaMua1Manh: 8
       GiaKhiRaDo: 132
       Gia: 160
-      Atksec: 0.22
+      DmgValue:
+      - 10.3
+      - 10.81
+      - 11.33
+      - 11.84
+      - 12.87
+      AtksecValue:
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      BulletSpeedValue:
+      - 10.65
+      - 11.16
+      - 11.68
+      - 12.19
+      - 11.71
+      ReloadSpeedValue:
+      - 1.23
+      - 1.23
+      - 1.23
+      - 1.23
+      - 1.23
+      MagazineValue:
+      - 60
+      - 60
+      - 60
+      - 60
+      - 60
+      AtkRangeValue:
+      - 7.33
+      - 7.84
+      - 8.35
+      - 8.87
+      - 7.54
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 50
+      - 50
+      - 50
+      - 50
+      - 50
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 528
+      - 554
+      - 580
+      - 631
     - ID: W4
       NAME: M4a1
       Level: Uncommon
-      Dmg: 11.33
-      BulletSpeed: 11.71
-      ReloadSpeed: 1.2
-      Magazine: 90
-      AtkRange: 7.61
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 11.33@11.89@12.46@13.02@14.16
+      BulletSpeed: 11.71@12.28@12.84@13.41@12.88
+      ReloadSpeed: 1.2@1.2@1.2@1.2@1.2
+      Magazine: 90@90@90@90@90
+      AtkRange: 7.61@8.18@8.75@9.31@7.84
+      CritRate: 5@5@5@5@5
+      CritDmg: 52@52@52@52@52
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 0.22@0.22@0.22@0.22@0.22
+      GiaNangCap: 0@660@692@724@787
       GiaMua1Manh: 8
       GiaKhiRaDo: 264
       Gia: 200
-      Atksec: 0.22
+      DmgValue:
+      - 11.33
+      - 11.89
+      - 12.46
+      - 13.02
+      - 14.16
+      AtksecValue:
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      BulletSpeedValue:
+      - 11.71
+      - 12.28
+      - 12.84
+      - 13.41
+      - 12.88
+      ReloadSpeedValue:
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      - 1.2
+      MagazineValue:
+      - 90
+      - 90
+      - 90
+      - 90
+      - 90
+      AtkRangeValue:
+      - 7.61
+      - 8.18
+      - 8.75
+      - 9.31
+      - 7.84
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 52
+      - 52
+      - 52
+      - 52
+      - 52
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 660
+      - 692
+      - 724
+      - 787
     - ID: W4
       NAME: M4a1
       Level: Rare
-      Dmg: 20.59
-      BulletSpeed: 12.78
-      ReloadSpeed: 1.18
-      Magazine: 120
-      AtkRange: 7.9
-      CritRate: 0
-      CritDmg: 23.74
-      SoManhYeuCau: 40
+      Dmg: 20.59@21.62@22.65@23.68@25.74
+      BulletSpeed: 12.78@13.80@14.83@15.86@14.05
+      ReloadSpeed: 1.18@1.18@1.18@1.18@1.18
+      Magazine: 120@120@120@120@120
+      AtkRange: 7.90@8.93@9.96@10.99@8.14
+      CritRate: 13@13@13@13@13
+      CritDmg: 54@54@54@54@54
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 0.22@0.22@0.22@0.22@0.22
+      GiaNangCap: 0@1056@1107@1158@1259
       GiaMua1Manh: 8
       GiaKhiRaDo: 396
       Gia: 320
-      Atksec: 0.22
+      DmgValue:
+      - 20.59
+      - 21.62
+      - 22.65
+      - 23.68
+      - 25.74
+      AtksecValue:
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      BulletSpeedValue:
+      - 12.78
+      - 13.8
+      - 14.83
+      - 15.86
+      - 14.05
+      ReloadSpeedValue:
+      - 1.18
+      - 1.18
+      - 1.18
+      - 1.18
+      - 1.18
+      MagazineValue:
+      - 120
+      - 120
+      - 120
+      - 120
+      - 120
+      AtkRangeValue:
+      - 7.9
+      - 8.93
+      - 9.96
+      - 10.99
+      - 8.14
+      CritRateValue:
+      - 13
+      - 13
+      - 13
+      - 13
+      - 13
+      CritDmgValue:
+      - 54
+      - 54
+      - 54
+      - 54
+      - 54
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1056
+      - 1107
+      - 1158
+      - 1259
     - ID: W4
       NAME: M4a1
       Level: Epic
-      Dmg: 22.65
-      BulletSpeed: 14.37
-      ReloadSpeed: 1.15
-      Magazine: 150
-      AtkRange: 8.19
-      CritRate: 0
-      CritDmg: 12.89
-      SoManhYeuCau: 50
+      Dmg: 22.65@23.78@24.92@26.05@28.32
+      BulletSpeed: 14.37@15.50@16.64@17.77@15.81
+      ReloadSpeed: 1.15@1.15@1.15@1.15@1.15
+      Magazine: 150@150@150@150@150
+      AtkRange: 8.19@9.32@10.46@11.59@8.44
+      CritRate: 23@23@23@23@23
+      CritDmg: 56@56@56@56@56
+      SoManhYeuCau: 50@0@0@0@0
+      Atksec: 0.22@0.22@0.22@0.22@0.22
+      GiaNangCap: 0@1320@1383@1446@1572
       GiaMua1Manh: 8
       GiaKhiRaDo: 528
       Gia: 400
-      Atksec: 0.22
+      DmgValue:
+      - 22.65
+      - 23.78
+      - 24.92
+      - 26.05
+      - 28.32
+      AtksecValue:
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      BulletSpeedValue:
+      - 14.37
+      - 15.5
+      - 16.64
+      - 17.77
+      - 15.81
+      ReloadSpeedValue:
+      - 1.15
+      - 1.15
+      - 1.15
+      - 1.15
+      - 1.15
+      MagazineValue:
+      - 150
+      - 150
+      - 150
+      - 150
+      - 150
+      AtkRangeValue:
+      - 8.19
+      - 9.32
+      - 10.46
+      - 11.59
+      - 8.44
+      CritRateValue:
+      - 23
+      - 23
+      - 23
+      - 23
+      - 23
+      CritDmgValue:
+      - 56
+      - 56
+      - 56
+      - 56
+      - 56
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1320
+      - 1383
+      - 1446
+      - 1572
     - ID: W4
       NAME: M4a1
       Level: Legendary
-      Dmg: 41.19
-      BulletSpeed: 15.97
-      ReloadSpeed: 1.13
-      Magazine: 180
-      AtkRange: 9.16
-      CritRate: 0
-      CritDmg: 47.48
-      SoManhYeuCau: 85
+      Dmg: 41.19@43.25@45.30@47.36@51.48
+      BulletSpeed: 15.97@18.03@20.09@22.15@17.57
+      ReloadSpeed: 1.13@1.13@1.13@1.13@1.13
+      Magazine: 180@180@180@180@180
+      AtkRange: 9.16@11.22@13.27@15.33@9.43
+      CritRate: 33@33@33@33@33@33
+      CritDmg: 58@58@58@58@58
+      SoManhYeuCau: 85@0@0@0@0
+      Atksec: 0.22@0.22@0.22@0.22@0.22
+      GiaNangCap: 0@2244@2351@2458@2672
       GiaMua1Manh: 8
       GiaKhiRaDo: 660
       Gia: 680
-      Atksec: 0.22
+      DmgValue:
+      - 41.19
+      - 43.25
+      - 45.3
+      - 47.36
+      - 51.48
+      AtksecValue:
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      - 0.22
+      BulletSpeedValue:
+      - 15.97
+      - 18.03
+      - 20.09
+      - 22.15
+      - 17.57
+      ReloadSpeedValue:
+      - 1.13
+      - 1.13
+      - 1.13
+      - 1.13
+      - 1.13
+      MagazineValue:
+      - 180
+      - 180
+      - 180
+      - 180
+      - 180
+      AtkRangeValue:
+      - 9.16
+      - 11.22
+      - 13.27
+      - 15.33
+      - 9.43
+      CritRateValue:
+      - 33
+      - 33
+      - 33
+      - 33
+      - 33
+      CritDmgValue:
+      - 58
+      - 58
+      - 58
+      - 58
+      - 58
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2244
+      - 2351
+      - 2458
+      - 2672
   - weaponList:
     - ID: W5
       NAME: M416
       Level: Normal
-      Dmg: 15.44
-      BulletSpeed: 12.24
-      ReloadSpeed: 1.17
-      Magazine: 60
-      AtkRange: 8.1
-      CritRate: 0
-      CritDmg: 20
-      SoManhYeuCau: 20
+      Dmg: 15.44@16.22@16.99@17.76@19.31
+      BulletSpeed: 12.24@13.02@13.79@14.56@13.47
+      ReloadSpeed: 1.17@1.17@1.17@1.17@1.17
+      Magazine: 60@60@60@60@60
+      AtkRange: 8.10@8.87@9.64@10.42@8.34
+      CritRate: 5@5@5@5@5
+      CritDmg: 60@60@60@60@60
+      SoManhYeuCau: 20@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@660@692@724@787
       GiaMua1Manh: 10
       GiaKhiRaDo: 165
       Gia: 200
-      Atksec: 0.25
+      DmgValue:
+      - 15.44
+      - 16.22
+      - 16.99
+      - 17.76
+      - 19.31
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 12.24
+      - 13.02
+      - 13.79
+      - 14.56
+      - 13.47
+      ReloadSpeedValue:
+      - 1.17
+      - 1.17
+      - 1.17
+      - 1.17
+      - 1.17
+      MagazineValue:
+      - 60
+      - 60
+      - 60
+      - 60
+      - 60
+      AtkRangeValue:
+      - 8.1
+      - 8.87
+      - 9.64
+      - 10.42
+      - 8.34
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 60
+      - 60
+      - 60
+      - 60
+      - 60
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 660
+      - 692
+      - 724
+      - 787
     - ID: W5
       NAME: M416
       Level: Uncommon
-      Dmg: 16.99
-      BulletSpeed: 13.47
-      ReloadSpeed: 1.14
-      Magazine: 90
-      AtkRange: 8.39
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 16.99@17.84@18.69@19.54@21.24
+      BulletSpeed: 13.47@14.32@15.17@16.02@14.81
+      ReloadSpeed: 1.15@1.15@1.15@1.15@1.15
+      Magazine: 90@90@90@90@90
+      AtkRange: 8.39@9.24@10.09@10.94@8.64
+      CritRate: 5@5@5@5@5
+      CritDmg: 62@62@62@62@62
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@825@865@905@984
       GiaMua1Manh: 10
       GiaKhiRaDo: 330
       Gia: 250
-      Atksec: 0.25
+      DmgValue:
+      - 16.99
+      - 17.84
+      - 18.69
+      - 19.54
+      - 21.24
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 13.47
+      - 14.32
+      - 15.17
+      - 16.02
+      - 14.81
+      ReloadSpeedValue:
+      - 1.15
+      - 1.15
+      - 1.15
+      - 1.15
+      - 1.15
+      MagazineValue:
+      - 90
+      - 90
+      - 90
+      - 90
+      - 90
+      AtkRangeValue:
+      - 8.39
+      - 9.24
+      - 10.09
+      - 10.94
+      - 8.64
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 62
+      - 62
+      - 62
+      - 62
+      - 62
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 825
+      - 865
+      - 905
+      - 984
     - ID: W5
       NAME: M416
       Level: Rare
-      Dmg: 30.89
-      BulletSpeed: 14.69
-      ReloadSpeed: 1.12
-      Magazine: 120
-      AtkRange: 8.68
-      CritRate: 0
-      CritDmg: 35.61
-      SoManhYeuCau: 40
+      Dmg: 30.89@32.43@33.98@35.52@38.61
+      BulletSpeed: 14.69@16.24@17.78@19.33@16.16
+      ReloadSpeed: 1.12@1.12@1.12@1.12@1.12
+      Magazine: 120@120@120@120@120
+      AtkRange: 8.68@10.22@11.77@13.31@8.94
+      CritRate: 18@18@18@18@18
+      CritDmg: 64@64@64@64@64
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@1320@1383@1446@1572
       GiaMua1Manh: 10
       GiaKhiRaDo: 495
       Gia: 400
-      Atksec: 0.25
+      DmgValue:
+      - 30.89
+      - 32.43
+      - 33.98
+      - 35.52
+      - 38.61
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 14.69
+      - 16.24
+      - 17.78
+      - 19.33
+      - 16.16
+      ReloadSpeedValue:
+      - 1.12
+      - 1.12
+      - 1.12
+      - 1.12
+      - 1.12
+      MagazineValue:
+      - 120
+      - 120
+      - 120
+      - 120
+      - 120
+      AtkRangeValue:
+      - 8.68
+      - 10.22
+      - 11.77
+      - 13.31
+      - 8.94
+      CritRateValue:
+      - 18
+      - 18
+      - 18
+      - 18
+      - 18
+      CritDmgValue:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1320
+      - 1383
+      - 1446
+      - 1572
     - ID: W5
       NAME: M416
       Level: Epic
-      Dmg: 33.98
-      BulletSpeed: 16.53
-      ReloadSpeed: 1.1
-      Magazine: 150
-      AtkRange: 8.97
-      CritRate: 0
-      CritDmg: 19.33
-      SoManhYeuCau: 50
+      Dmg: 33.98@35.68@37.38@39.07@42.47
+      BulletSpeed: 16.53@18.23@19.93@21.62@18.18
+      ReloadSpeed: 1.1@1.1@1.1@1.1@1.1
+      Magazine: 150@150@150@150@150
+      AtkRange: 8.97@10.67@12.36@14.06@9.24
+      CritRate: 32@32@32@32@32
+      CritDmg: 66@66@66@66@66
+      SoManhYeuCau: 50@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@1650@1729@1808@1966
       GiaMua1Manh: 10
       GiaKhiRaDo: 660
       Gia: 500
-      Atksec: 0.25
+      DmgValue:
+      - 33.98
+      - 35.68
+      - 37.38
+      - 39.07
+      - 42.47
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 16.53
+      - 18.23
+      - 19.93
+      - 21.62
+      - 18.18
+      ReloadSpeedValue:
+      - 1.1
+      - 1.1
+      - 1.1
+      - 1.1
+      - 1.1
+      MagazineValue:
+      - 150
+      - 150
+      - 150
+      - 150
+      - 150
+      AtkRangeValue:
+      - 8.97
+      - 10.67
+      - 12.36
+      - 14.06
+      - 9.24
+      CritRateValue:
+      - 32
+      - 32
+      - 32
+      - 32
+      - 32
+      CritDmgValue:
+      - 66
+      - 66
+      - 66
+      - 66
+      - 66
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1650
+      - 1729
+      - 1808
+      - 1966
     - ID: W5
       NAME: M416
       Level: Legendary
-      Dmg: 61.78
-      BulletSpeed: 18.36
-      ReloadSpeed: 1.08
-      Magazine: 180
-      AtkRange: 10.13
-      CritRate: 0
-      CritDmg: 71.22
-      SoManhYeuCau: 85
+      Dmg: 61.78@64.87@67.96@71.05@77.22
+      BulletSpeed: 18.36@21.45@24.54@27.63@20.20
+      ReloadSpeed: 1.08@1.08@1.08@1.08@1.08
+      Magazine: 180@180@180@180@180
+      AtkRange: 10.13@13.21@16.30@19.39@10.43
+      CritRate: 45@45@45@45@45
+      CritDmg: 68@68@68@68@68
+      SoManhYeuCau: 85@0@0@0@0
+      Atksec: 0.25@0.25@0.25@0.25@0.25
+      GiaNangCap: 0@2805@2939@3073@3341
       GiaMua1Manh: 10
       GiaKhiRaDo: 825
       Gia: 850
-      Atksec: 0.25
+      DmgValue:
+      - 61.78
+      - 64.87
+      - 67.96
+      - 71.05
+      - 77.22
+      AtksecValue:
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      - 0.25
+      BulletSpeedValue:
+      - 18.36
+      - 21.45
+      - 24.54
+      - 27.63
+      - 20.2
+      ReloadSpeedValue:
+      - 1.08
+      - 1.08
+      - 1.08
+      - 1.08
+      - 1.08
+      MagazineValue:
+      - 180
+      - 180
+      - 180
+      - 180
+      - 180
+      AtkRangeValue:
+      - 10.13
+      - 13.21
+      - 16.3
+      - 19.39
+      - 10.43
+      CritRateValue:
+      - 45
+      - 45
+      - 45
+      - 45
+      - 45
+      CritDmgValue:
+      - 68
+      - 68
+      - 68
+      - 68
+      - 68
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2805
+      - 2939
+      - 3073
+      - 3341
   - weaponList:
     - ID: W6
       NAME: Tar-21
       Level: Normal
-      Dmg: 20.59
-      BulletSpeed: 14.08
-      ReloadSpeed: 0.95
-      Magazine: 90
-      AtkRange: 8.88
-      CritRate: 0
-      CritDmg: 20
-      SoManhYeuCau: 20
+      Dmg: 20.59@21.62@22.65@23.68@25.74
+      BulletSpeed: 14.08@15.11@16.14@17.17@15.49
+      ReloadSpeed: 0.95@0.95@0.95@0.95@0.95
+      Magazine: 90@90@90@90@90
+      AtkRange: 8.88@9.90@10.93@11.96@9.14
+      CritRate: 5@5@5@5@5
+      CritDmg: 70@70@70@70@70
+      SoManhYeuCau: 20@0@0@0@0
+      Atksec: 0.18@0.18@0.18@0.18@0.18
+      GiaNangCap: 0@990@1038@1086@1181
       GiaMua1Manh: 15
       GiaKhiRaDo: 248
       Gia: 300
-      Atksec: 0.18
+      DmgValue:
+      - 20.59
+      - 21.62
+      - 22.65
+      - 23.68
+      - 25.74
+      AtksecValue:
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      BulletSpeedValue:
+      - 14.08
+      - 15.11
+      - 16.14
+      - 17.17
+      - 15.49
+      ReloadSpeedValue:
+      - 0.95
+      - 0.95
+      - 0.95
+      - 0.95
+      - 0.95
+      MagazineValue:
+      - 90
+      - 90
+      - 90
+      - 90
+      - 90
+      AtkRangeValue:
+      - 8.88
+      - 9.9
+      - 10.93
+      - 11.96
+      - 9.14
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 70
+      - 70
+      - 70
+      - 70
+      - 70
+      SoManhYeuCauValue:
+      - 20
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 990
+      - 1038
+      - 1086
+      - 1181
     - ID: W6
       NAME: Tar-21
       Level: Uncommon
-      Dmg: 22.65
-      BulletSpeed: 15.49
-      ReloadSpeed: 0.93
-      Magazine: 100
-      AtkRange: 9.16
-      CritRate: 0
-      CritDmg: 5
-      SoManhYeuCau: 25
+      Dmg: 22.65@23.78@24.92@26.05@28.32
+      BulletSpeed: 15.49@16.62@17.75@18.89@17.04
+      ReloadSpeed: 0.93@0.93@0.93@0.93@0.93
+      Magazine: 100@100@100@100@100
+      AtkRange: 9.16@10.30@11.43@12.56@9.44
+      CritRate: 5@5@5@5@5
+      CritDmg: 72@72@72@72@72
+      SoManhYeuCau: 25@0@0@0@0
+      Atksec: 0.18@0.18@0.18@0.18@0.18
+      GiaNangCap: 0@1238@1297@1356@1474
       GiaMua1Manh: 15
       GiaKhiRaDo: 495
       Gia: 375
-      Atksec: 0.18
+      DmgValue:
+      - 22.65
+      - 23.78
+      - 24.92
+      - 26.05
+      - 28.32
+      AtksecValue:
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      BulletSpeedValue:
+      - 15.49
+      - 16.62
+      - 17.75
+      - 18.89
+      - 17.04
+      ReloadSpeedValue:
+      - 0.93
+      - 0.93
+      - 0.93
+      - 0.93
+      - 0.93
+      MagazineValue:
+      - 100
+      - 100
+      - 100
+      - 100
+      - 100
+      AtkRangeValue:
+      - 9.16
+      - 10.3
+      - 11.43
+      - 12.56
+      - 9.44
+      CritRateValue:
+      - 5
+      - 5
+      - 5
+      - 5
+      - 5
+      CritDmgValue:
+      - 72
+      - 72
+      - 72
+      - 72
+      - 72
+      SoManhYeuCauValue:
+      - 25
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1238
+      - 1297
+      - 1356
+      - 1474
     - ID: W6
       NAME: Tar-21
       Level: Rare
-      Dmg: 41.19
-      BulletSpeed: 16.9
-      ReloadSpeed: 0.92
-      Magazine: 130
-      AtkRange: 9.45
-      CritRate: 0
-      CritDmg: 71.22
-      SoManhYeuCau: 40
+      Dmg: 41.19@43.25@45.30@47.36@51.48
+      BulletSpeed: 16.90@18.95@21.01@23.07@18.58
+      ReloadSpeed: 0.92@0.92@0.92@0.92@0.92
+      Magazine: 130@130@130@130@130
+      AtkRange: 9.45@11.51@13.57@15.63@9.74
+      CritRate: 25@25@25@25@25
+      CritDmg: 74@74@74@74@74
+      SoManhYeuCau: 40@0@0@0@0
+      Atksec: 0.18@0.18@0.18@0.18@0.18
+      GiaNangCap: 0@1980@2075@2170@2359
       GiaMua1Manh: 15
       GiaKhiRaDo: 743
       Gia: 600
-      Atksec: 0.18
+      DmgValue:
+      - 41.19
+      - 43.25
+      - 45.3
+      - 47.36
+      - 51.48
+      AtksecValue:
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      BulletSpeedValue:
+      - 16.9
+      - 18.95
+      - 21.01
+      - 23.07
+      - 18.58
+      ReloadSpeedValue:
+      - 0.92
+      - 0.92
+      - 0.92
+      - 0.92
+      - 0.92
+      MagazineValue:
+      - 130
+      - 130
+      - 130
+      - 130
+      - 130
+      AtkRangeValue:
+      - 9.45
+      - 11.51
+      - 13.57
+      - 15.63
+      - 9.74
+      CritRateValue:
+      - 25
+      - 25
+      - 25
+      - 25
+      - 25
+      CritDmgValue:
+      - 74
+      - 74
+      - 74
+      - 74
+      - 74
+      SoManhYeuCauValue:
+      - 40
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 1980
+      - 2075
+      - 2170
+      - 2359
     - ID: W6
       NAME: Tar-21
       Level: Epic
-      Dmg: 45.3
-      BulletSpeed: 19.01
-      ReloadSpeed: 0.9
-      Magazine: 180
-      AtkRange: 9.74
-      CritRate: 0
-      CritDmg: 38.67
-      SoManhYeuCau: 50
+      Dmg: 45.30@47.57@49.83@52.10@56.63
+      BulletSpeed: 19.01@21.27@23.54@25.80@20.91
+      ReloadSpeed: 0.9@0.9@0.9@0.9@0.9
+      Magazine: 180@180@180@180@180
+      AtkRange: 9.74@12.01@14.27@16.54@10.03
+      CritRate: 43@43@43@43@43
+      CritDmg: 76@76@76@76@76
+      SoManhYeuCau: 50@0@0@0@0
+      Atksec: 0.18@0.18@0.18@0.18@0.18
+      GiaNangCap: 0@2475@2593@2711@2947
       GiaMua1Manh: 15
       GiaKhiRaDo: 990
       Gia: 750
-      Atksec: 0.18
+      DmgValue:
+      - 45.3
+      - 47.57
+      - 49.83
+      - 52.1
+      - 56.63
+      AtksecValue:
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      BulletSpeedValue:
+      - 19.01
+      - 21.27
+      - 23.54
+      - 25.8
+      - 20.91
+      ReloadSpeedValue:
+      - 0.9
+      - 0.9
+      - 0.9
+      - 0.9
+      - 0.9
+      MagazineValue:
+      - 180
+      - 180
+      - 180
+      - 180
+      - 180
+      AtkRangeValue:
+      - 9.74
+      - 12.01
+      - 14.27
+      - 16.54
+      - 10.03
+      CritRateValue:
+      - 43
+      - 43
+      - 43
+      - 43
+      - 43
+      CritDmgValue:
+      - 76
+      - 76
+      - 76
+      - 76
+      - 76
+      SoManhYeuCauValue:
+      - 50
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 2475
+      - 2593
+      - 2711
+      - 2947
     - ID: W6
       NAME: Tar-21
       Level: Legendary
-      Dmg: 82.37
-      BulletSpeed: 21.12
-      ReloadSpeed: 0.88
-      Magazine: 200
-      AtkRange: 11.09
-      CritRate: 0
-      CritDmg: 142.44
-      SoManhYeuCau: 85
+      Dmg: 82.37@86.49@90.61@94.73@102.96
+      BulletSpeed: 21.12@25.24@29.36@33.47@23.23
+      ReloadSpeed: 0.88@0.88@0.88@0.88@0.88
+      Magazine: 200@200@200@200@200
+      AtkRange: 11.09@15.21@19.33@23.45@11.43
+      CritRate: 60@60@60@60@60
+      CritDmg: 78@78@78@78@78
+      SoManhYeuCau: 85@0@0@0@0
+      Atksec: 0.18@0.18@0.18@0.18@0.18
+      GiaNangCap: 0@4208@4409@4610@5011
       GiaMua1Manh: 15
       GiaKhiRaDo: 1238
       Gia: 1275
-      Atksec: 0.18
+      DmgValue:
+      - 82.37
+      - 86.49
+      - 90.61
+      - 94.73
+      - 102.96
+      AtksecValue:
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      - 0.18
+      BulletSpeedValue:
+      - 21.12
+      - 25.24
+      - 29.36
+      - 33.47
+      - 23.23
+      ReloadSpeedValue:
+      - 0.88
+      - 0.88
+      - 0.88
+      - 0.88
+      - 0.88
+      MagazineValue:
+      - 200
+      - 200
+      - 200
+      - 200
+      - 200
+      AtkRangeValue:
+      - 11.09
+      - 15.21
+      - 19.33
+      - 23.45
+      - 11.43
+      CritRateValue:
+      - 60
+      - 60
+      - 60
+      - 60
+      - 60
+      CritDmgValue:
+      - 78
+      - 78
+      - 78
+      - 78
+      - 78
+      SoManhYeuCauValue:
+      - 85
+      - 0
+      - 0
+      - 0
+      - 0
+      GiaNangCapValue:
+      - 0
+      - 4208
+      - 4409
+      - 4610
+      - 5011
   allDataEnemy:
   - enemyData:
     - id: E0

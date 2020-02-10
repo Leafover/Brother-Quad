@@ -29,7 +29,7 @@ public class PopupStarterPack : MonoBehaviour
     {
         var _wp = DataController.instance.allWeapon[1].weaponList[0];
         txtWPName.text = _wp.NAME;
-        txtAtk.text = _wp.Dmg.ToString();
+       // txtAtk.text = _wp.Dmg.ToString();
         txtBulletSpeed.text = _wp.BulletSpeed.ToString();
         txtReload.text = _wp.ReloadSpeed.ToString();
         txtRange.text = _wp.AtkRange.ToString();

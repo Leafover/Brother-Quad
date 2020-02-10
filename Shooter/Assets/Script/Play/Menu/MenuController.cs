@@ -11,6 +11,10 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+
+        //cmd o? popupStarterPack dong` 32
+        // PanelHeroes 66->78
+
         instance = this;
         Debug.unityLogger.logEnabled = false;
     }
