@@ -13,10 +13,6 @@ public class Enemy4Controller : EnemyBase
         base.Start();
         Init();
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    //}
     public override void Init()
     {
         base.Init();
@@ -24,7 +20,6 @@ public class Enemy4Controller : EnemyBase
         randomCombo = Random.Range(1, 3);
         isGrenadeStage = true;
         speedMove = speed;
-        //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.enemy4s.Contains(this))
         {
             EnemyManager.instance.enemy4s.Add(this);
@@ -38,7 +33,6 @@ public class Enemy4Controller : EnemyBase
         {
             EnemyManager.instance.enemy4s.Remove(this);
         }
-        // Debug.LogError("tu nhien bien mat");
     }
 
     IEnumerator delayActive()
@@ -49,10 +43,7 @@ public class Enemy4Controller : EnemyBase
     public override void Active()
     {
         base.Active();
-        //  enemyState = EnemyState.idle;
-
         enemyState = EnemyState.attack;
-        //  StartCoroutine(delayActive());
     }
 
     public override void OnUpdate(float deltaTime)

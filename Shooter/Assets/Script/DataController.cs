@@ -50,9 +50,9 @@ public class AllTileVatPham
 [System.Serializable]
 public class ShoesList
 {
-    public string ID, NAME, Level, TangSpeeDichuyen, TangDoCaoNhay, GiaNangCap;
-    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
-    public List<float> TangSpeeDichuyenValue = new List<float>(), TangDoCaoNhayValue = new List<float>(), GiaNangCapValue = new List<float>();
+    public string ID, NAME, Level, TangSpeeDichuyen, TangDoCaoNhay, GiaNangCap, SoManhYeuCau;
+    public double GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> TangSpeeDichuyenValue = new List<float>(), TangDoCaoNhayValue = new List<float>(), GiaNangCapValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
 public class AllShoes
@@ -66,9 +66,9 @@ public class AllShoes
 [System.Serializable]
 public class BagList
 {
-    public string ID, NAME, Level, Bonussoluongmauanduoc, HealthRegeneration, GiaNangCap;
-    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
-    public List<float> BonussoluongmauanduocValue = new List<float>(), HealthRegenerationValue = new List<float>(), GiaNangCapValue = new List<float>();
+    public string ID, NAME, Level, Bonussoluongmauanduoc, HealthRegeneration, GiaNangCap, SoManhYeuCau;
+    public double GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> BonussoluongmauanduocValue = new List<float>(), HealthRegenerationValue = new List<float>(), GiaNangCapValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
 public class AllBag
@@ -82,9 +82,9 @@ public class AllBag
 [System.Serializable]
 public class GlovesList
 {
-    public string ID, NAME, Level, Giamtimereload, tangcritrate, Tangcritdmg, GiaNangCap;
-    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo, Gia;
-    public List<float> GiamtimereloadValue = new List<float>(), tangcritrateValue = new List<float>(), TangcritdmgValue = new List<float>(), GiaNangCapValue = new List<float>();
+    public string ID, NAME, Level, Giamtimereload, tangcritrate, Tangcritdmg, GiaNangCap, SoManhYeuCau;
+    public double  GiaMua1Manh, GiaKhiRaDo, Gia;
+    public List<float> GiamtimereloadValue = new List<float>(), tangcritrateValue = new List<float>(), TangcritdmgValue = new List<float>(), GiaNangCapValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
 public class AllGloves
@@ -97,9 +97,9 @@ public class AllGloves
 [System.Serializable]
 public class HelmetList
 {
-    public string ID, NAME, Level, Def, BonusExp, Gia;
-    public double SoManhYeuCau, GiaMua1Manh, GiaKhiRaDo;
-    public List<float> DefValue = new List<float>(), BonusExpValue = new List<float>(), GiaValue = new List<float>();
+    public string ID, NAME, Level, Def, BonusExp, Gia, SoManhYeuCau;
+    public double  GiaMua1Manh, GiaKhiRaDo;
+    public List<float> DefValue = new List<float>(), BonusExpValue = new List<float>(), GiaValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
 public class AllHelmet
@@ -618,6 +618,7 @@ public class DataController : MonoBehaviour
             string[] Def = _helmetList.Def.Split('@');
             string[] BonusExp = _helmetList.BonusExp.Split('@');
             string[] Gia = _helmetList.Gia.Split('@');
+            string[] SoManhYeuCau = _helmetList.SoManhYeuCau.Split('@');
 
             for (int j = 0; j < Def.Length; j++)
             {
@@ -627,6 +628,8 @@ public class DataController : MonoBehaviour
                     _helmetList.BonusExpValue.Add(float.Parse(BonusExp[j]));
                 if (!string.IsNullOrEmpty(Gia[j]))
                     _helmetList.GiaValue.Add(float.Parse(Gia[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _helmetList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
             }
 
             helmetList.Add(_helmetList);
@@ -686,7 +689,7 @@ public class DataController : MonoBehaviour
             string[] tangcritrate = _glovesList.tangcritrate.Split('@');
             string[] Tangcritdmg = _glovesList.Tangcritdmg.Split('@');
             string[] GiaNangCap = _glovesList.GiaNangCap.Split('@');
-
+            string[] SoManhYeuCau = _glovesList.SoManhYeuCau.Split('@');
 
             for (int j = 0; j < Giamtimereload.Length; j++)
             {
@@ -698,6 +701,8 @@ public class DataController : MonoBehaviour
                     _glovesList.TangcritdmgValue.Add(float.Parse(Tangcritdmg[j]));
                 if (!string.IsNullOrEmpty(GiaNangCap[j]))
                     _glovesList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _glovesList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
             }
 
 
@@ -759,7 +764,7 @@ public class DataController : MonoBehaviour
             string[] Bonussoluongmauanduoc = _bagList.Bonussoluongmauanduoc.Split('@');
             string[] HealthRegeneration = _bagList.HealthRegeneration.Split('@');
             string[] GiaNangCap = _bagList.GiaNangCap.Split('@');
-
+            string[] SoManhYeuCau = _bagList.SoManhYeuCau.Split('@');
 
             for (int j = 0; j < Bonussoluongmauanduoc.Length; j++)
             {
@@ -769,6 +774,8 @@ public class DataController : MonoBehaviour
                     _bagList.HealthRegenerationValue.Add(float.Parse(HealthRegeneration[j]));
                 if (!string.IsNullOrEmpty(GiaNangCap[j]))
                     _bagList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _bagList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
             }
 
 
@@ -828,7 +835,7 @@ public class DataController : MonoBehaviour
             string[] TangSpeeDichuyen = _shoesList.TangSpeeDichuyen.Split('@');
             string[] TangDoCaoNhay = _shoesList.TangDoCaoNhay.Split('@');
             string[] GiaNangCap = _shoesList.GiaNangCap.Split('@');
-
+            string[] SoManhYeuCau = _shoesList.SoManhYeuCau.Split('@');
 
             for (int j = 0; j < TangSpeeDichuyen.Length; j++)
             {
@@ -838,6 +845,8 @@ public class DataController : MonoBehaviour
                     _shoesList.TangDoCaoNhayValue.Add(float.Parse(TangDoCaoNhay[j]));
                 if (!string.IsNullOrEmpty(GiaNangCap[j]))
                     _shoesList.GiaNangCapValue.Add(float.Parse(GiaNangCap[j]));
+                if (!string.IsNullOrEmpty(SoManhYeuCau[j]))
+                    _shoesList.SoManhYeuCauValue.Add(float.Parse(SoManhYeuCau[j]));
             }
 
 
