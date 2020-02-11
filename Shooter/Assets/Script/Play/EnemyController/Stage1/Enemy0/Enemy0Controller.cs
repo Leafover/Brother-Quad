@@ -13,7 +13,6 @@ public class Enemy0Controller : EnemyBase
     {
         base.Start();
         Init();
-
     }
     public override void Init()
     {

@@ -25,6 +25,17 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyVN2Controller> enemyvn2s;
     public List<MiniBoss2> miniboss2s;
     public List<Boss2Controller> boss2s;
+    public List<EM1Controller> em1s;
+    public List<EM2Controller> em2s;
+    public List<EM3Controller> em3s;
+    public List<EM4Controller> em4s;
+    public List<EM5Controller> em5s;
+    public List<EM6Controller> em6s;
+    public List<EM7Controller> em7s;
+    public List<EM8Controller> em8s;
+    public List<EM9Controller> em9s;
+    public List<EM10Controller> em10s;
+    public List<TS3Controller> ts3s;
     public void Awake()
     {
         instance = this;
@@ -210,7 +221,105 @@ public class EnemyManager : MonoBehaviour
             boss2s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
-
+    void CallEM1Action(float deltaTime)
+    {
+        if (em1s.Count == 0)
+            return;
+        for(int i = 0; i < em1s.Count; i ++)
+        {
+            em1s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM2Action(float deltaTime)
+    {
+        if (em2s.Count == 0)
+            return;
+        for (int i = 0; i < em2s.Count; i++)
+        {
+            em2s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM3Action(float deltaTime)
+    {
+        if (em3s.Count == 0)
+            return;
+        for (int i = 0; i < em3s.Count; i++)
+        {
+            em3s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM4Action(float deltaTime)
+    {
+        if (em4s.Count == 0)
+            return;
+        for (int i = 0; i < em4s.Count; i++)
+        {
+            em4s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM5Action(float deltaTime)
+    {
+        if (em5s.Count == 0)
+            return;
+        for (int i = 0; i < em5s.Count; i++)
+        {
+            em5s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM6Action(float deltaTime)
+    {
+        if (em6s.Count == 0)
+            return;
+        for (int i = 0; i < em6s.Count; i++)
+        {
+            em6s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM7Action(float deltaTime)
+    {
+        if (em7s.Count == 0)
+            return;
+        for (int i = 0; i < em7s.Count; i++)
+        {
+            em7s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM8Action(float deltaTime)
+    {
+        if (em8s.Count == 0)
+            return;
+        for (int i = 0; i < em8s.Count; i++)
+        {
+            em8s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM9Action(float deltaTime)
+    {
+        if (em9s.Count == 0)
+            return;
+        for (int i = 0; i < em9s.Count; i++)
+        {
+            em9s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallEM10Action(float deltaTime)
+    {
+        if (em10s.Count == 0)
+            return;
+        for (int i = 0; i < em10s.Count; i++)
+        {
+            em10s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+    void CallTS3Action(float deltaTime)
+    {
+        if (ts3s.Count == 0)
+            return;
+        for (int i = 0; i < ts3s.Count; i++)
+        {
+            ts3s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
     public void OnUpdateByStage1(float deltaTime)
     {
         if (DataParam.indexStage != 0)
@@ -241,10 +350,28 @@ public class EnemyManager : MonoBehaviour
         CallMiniBoss2Action(deltaTime);
         CallBoss2Action(deltaTime);
     }
+    public void OnUpdateByStage3(float deltaTime)
+    {
+        if (DataParam.indexStage != 2)
+            return;
+        CallEM1Action(deltaTime);
+        CallEM2Action(deltaTime);
+        CallEM3Action(deltaTime);
+        CallEM4Action(deltaTime);
+        CallEM5Action(deltaTime);
+        CallEM6Action(deltaTime);
+        CallEM7Action(deltaTime);
+        CallEM8Action(deltaTime);
+        CallEM9Action(deltaTime);
+        CallEM10Action(deltaTime);
+        CallTS3Action(deltaTime);
+    }
+
 
     public void OnUpdate(float deltaTime)
     {
         OnUpdateByStage1(deltaTime);
         OnUpdateByStage2(deltaTime);
+        OnUpdateByStage3(deltaTime);
     }
 }

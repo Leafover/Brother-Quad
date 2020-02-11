@@ -189,14 +189,10 @@ public class DataController : MonoBehaviour
     public List<AllDataEnemy> allDataEnemy = new List<AllDataEnemy>();
     public List<AllMission> allMission = new List<AllMission>();
     public List<PlayerData> playerData = new List<PlayerData>();
-    //  public List<Mission> missions = new List<Mission>();
-
-
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
     public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData;
-
     private void Awake()
     {
         instance = this;
@@ -452,7 +448,6 @@ public class DataController : MonoBehaviour
         }
     }
     List<WeaponList> weaponList = new List<WeaponList>();
-
     public void LoadWeapon(string path)
     {
         if (weaponList.Count == 30)

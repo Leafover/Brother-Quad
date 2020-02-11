@@ -155,8 +155,10 @@ public class UIPanel : MonoBehaviour
         Reward();
 #else
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        AdsManager.Instance.ShowRewardedVideo((b) => { Reward(); });
+        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(); });
 #endif
+
+
     }
     void Reward()
     {
