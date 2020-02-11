@@ -37,7 +37,7 @@ public class AdsManager : MonoBehaviour
     {
         // string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
         //Advertisement.Initialize(gameId, false);
-        MobileAds.Initialize(DataUtils.APP_ID);
+        MobileAds.Initialize(DataParam.APP_ID);
         InitInterstitial();
         InitRewarded();
         UnityAds.SetGDPRConsentMetaData(true);
@@ -123,13 +123,13 @@ public class AdsManager : MonoBehaviour
     }
     void InitInterstitial()
     {
-        interstitial = new InterstitialAd(DataUtils.INTERS_ID);
+        interstitial = new InterstitialAd(DataParam.INTERS_ID);
         interstitial.OnAdClosed += HandleOnAdClosed;
         interstitial.LoadAd(CreateRequest());
     }
     void InitRewarded()
     {
-        this.rewardedAd = new RewardedAd(DataUtils.REWARDED_ID);
+        this.rewardedAd = new RewardedAd(DataParam.REWARDED_ID);
         // Called when the user should be rewarded for interacting with the ad.
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         this.rewardedAd.OnAdLoaded += RewardedAd_OnAdLoaded;
