@@ -11,7 +11,7 @@ public class BoomEnemy : BulletEnemy
     public override void Hit()
     {
         base.Hit();
-        GameObject effect = ObjectPoolerManager.Instance.effectExploBoomEnemyV3Pooler.GetPooledObject();
+        GameObject effect = ObjectPoolerManager.Instance.effectExploBulletEnemyV1Pooler.GetPooledObject();
         effect.transform.position = gameObject.transform.position;
         effect.SetActive(true);
         SoundController.instance.PlaySound(soundGame.soundv3bombexplo);

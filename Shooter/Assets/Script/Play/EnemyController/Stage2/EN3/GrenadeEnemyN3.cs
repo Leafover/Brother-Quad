@@ -16,7 +16,7 @@ public class GrenadeEnemyN3 : BulletEnemy
     public override void Hit()
     {
         base.Hit();
-        effectExplo = ObjectPoolerManager.Instance.explogrenadeN3Pooler.GetPooledObject();
+        effectExplo = ObjectPoolerManager.Instance.effectExploBulletEnemyV1Pooler.GetPooledObject();
         effectExplo.transform.position = gameObject.transform.position;
         effectExplo.SetActive(true);
         gameObject.SetActive(false);

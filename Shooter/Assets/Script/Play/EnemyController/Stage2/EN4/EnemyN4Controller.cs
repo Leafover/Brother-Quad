@@ -112,7 +112,7 @@ public class EnemyN4Controller : EnemyBase
             if (!incam)
                 return;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEN4Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyV1Pooler.GetBulletEnemyPooledObject();
 
             //if (!parabolBullet)
             //{
@@ -131,17 +131,6 @@ public class EnemyN4Controller : EnemyBase
             bulletEnemy.isGrenade = false;
             bulletEnemy.transform.position = leftFace.transform.position;
             bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
-            //}
-            //else
-            //{
-            //    bulletEnemy.AddProperties(damage1, bulletspeed1/2);
-            //    bulletEnemy.SetDir(bulletspeed1/2, true);
-            //    bulletEnemy.rid.gravityScale = 1;
-            //    bulletEnemy.isGrenade = true;
-            //    bulletEnemy.transform.position = rightFace.transform.position;
-            //    bulletEnemy.transform.eulerAngles = rightFace.transform.eulerAngles;
-            //}
-
             bulletEnemy.gameObject.SetActive(true);
 
             SoundController.instance.PlaySound(soundGame.soundv1attack);
@@ -151,19 +140,7 @@ public class EnemyN4Controller : EnemyBase
             if (!incam)
                 return;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEN4Pooler.GetBulletEnemyPooledObject();
-
-            //if (!parabolBullet)
-            //{
-            //    bulletEnemy.AddProperties(damage1, 0);
-            //    bulletEnemy.SetDir(bulletspeed1, false);
-            //    bulletEnemy.rid.gravityScale = 0;
-            //    bulletEnemy.isGrenade = false;
-            //    bulletEnemy.transform.position = leftFace.transform.position;
-            //    bulletEnemy.transform.eulerAngles = leftFace.transform.eulerAngles;
-            //}
-            //else
-            //{
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyV1Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1 / 2);
 
             if (FlipX)

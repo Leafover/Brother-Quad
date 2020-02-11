@@ -71,29 +71,7 @@ public class EnemyVN2Controller : EnemyBase
                 break;
         }
     }
-    //   GameObject g;
-    //protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
-    //{
-    //    base.OnEvent(trackEntry, e);
-    //    if (trackEntry.Animation.Name.Equals(aec.attack1.name))
-    //    {
-    //        if (!incam)
-    //            return;
 
-    //        bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyVN2Pooler.GetBulletEnemyPooledObject();
-    //        bulletEnemy.AddProperties(damage1, bulletspeed1);
-    //        bulletEnemy.SetTimeExist(bulletimeexist);
-    //        bulletEnemy.BeginDisplay(Vector2.zero, this);
-    //        listMyBullet.Add(bulletEnemy);
-    //        bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-    //        bulletEnemy.transform.rotation = Quaternion.identity;
-    //        bulletEnemy.transform.rotation = gunRotation.rotation;
-    //        bulletEnemy.gameObject.SetActive(true);
-    //        SoundController.instance.PlaySound(soundGame.soundv2attack);
-    //        Debug.LogError("-----event----");
-    //        // SoundController.instance.PlaySound(soundGame.soundmissilewarning);
-    //    }
-    //}
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
@@ -111,7 +89,7 @@ public class EnemyVN2Controller : EnemyBase
             if (!incam)
                 return;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyVN2Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.SetTimeExist(bulletimeexist);
             bulletEnemy.BeginDisplay(Vector2.zero, this);

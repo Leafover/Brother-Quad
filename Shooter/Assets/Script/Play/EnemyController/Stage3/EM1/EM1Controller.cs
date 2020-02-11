@@ -146,7 +146,7 @@ public class EM1Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet4EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage2, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
