@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EM1Controller : EnemyBase
 {
+    Vector2 move;
     float timedelayChangePos;
     bool isGrenadeStage;
     public override void Start()
@@ -13,13 +14,18 @@ public class EM1Controller : EnemyBase
         base.Start();
         Init();
     }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
     public override void Init()
     {
         base.Init();
         timedelayChangePos = maxtimedelayChangePos;
-        randomCombo = Random.Range(1, 3);
-        isGrenadeStage = true;
-        speedMove = speed;
+        randomCombo = Random.Range(3, 5);
+        isGrenadeStage = false;
+        speedMove = speed / 2;
+        //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.em1s.Contains(this))
         {
             EnemyManager.instance.em1s.Add(this);
@@ -33,11 +39,16 @@ public class EM1Controller : EnemyBase
         {
             EnemyManager.instance.em1s.Remove(this);
         }
+        // Debug.LogError("tu nhien bien mat");
     }
+
     public override void Active()
     {
         base.Active();
+        //  enemyState = EnemyState.idle;
+
         enemyState = EnemyState.attack;
+        //  StartCoroutine(delayActive());
     }
 
     public override void OnUpdate(float deltaTime)
@@ -133,7 +144,7 @@ public class EM1Controller : EnemyBase
                 break;
         }
     }
-    Vector2 move;
+
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
@@ -142,12 +153,12 @@ public class EM1Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
-
             combo++;
             if (!incam)
                 return;
+
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
-            bulletEnemy.AddProperties(damage2, bulletspeed1);
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -155,7 +166,7 @@ public class EM1Controller : EnemyBase
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.gameObject.SetActive(true);
 
-
+            //Debug.LogError("shot");
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
@@ -163,13 +174,14 @@ public class EM1Controller : EnemyBase
             if (!incam)
                 return;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenade4EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenadeN3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
-            bulletEnemy.AddProperties(0, 6);
+            bulletEnemy.AddProperties(damage2, 6);
             if (FlipX)
                 bulletEnemy.SetDir(-6, false);
             else
                 bulletEnemy.SetDir(6, false);
+
             bulletEnemy.gameObject.SetActive(true);
         }
 
@@ -199,7 +211,7 @@ public class EM1Controller : EnemyBase
                 }
 
                 combo = 0;
-                randomCombo = 2;
+                randomCombo = Random.Range(3, 5);
                 isGrenadeStage = false;
             }
 
@@ -230,9 +242,9 @@ public class EM1Controller : EnemyBase
                     else
                         FlipX = true;
                 }
-
+                Debug.LogError("why????");
                 combo = 0;
-                randomCombo = Random.Range(1, 3);
+                randomCombo = Random.Range(3, 5);
                 isGrenadeStage = true;
             }
         }

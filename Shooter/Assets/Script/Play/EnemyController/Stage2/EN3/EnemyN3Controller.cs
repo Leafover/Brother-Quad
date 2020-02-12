@@ -42,11 +42,6 @@ public class EnemyN3Controller : EnemyBase
         // Debug.LogError("tu nhien bien mat");
     }
 
-    IEnumerator delayActive()
-    {
-        yield return new WaitForSeconds(0.1f);
-        enemyState = EnemyState.attack;
-    }
     public override void Active()
     {
         base.Active();

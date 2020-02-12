@@ -436,9 +436,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7909004429654058793}
   - component: {fileID: 1116010053199501208}
-  - component: {fileID: 1642347767563886672}
-  - component: {fileID: 6241226680988652335}
-  - component: {fileID: 1430514838742751265}
+  - component: {fileID: 461751091645538589}
+  - component: {fileID: 5809928648482627354}
+  - component: {fileID: 774777414469628216}
   m_Layer: 0
   m_Name: skeletonANim
   m_TagString: Untagged
@@ -473,9 +473,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
-  myEnemyBase: {fileID: 7909004431032077227}
+  myEnemyBase: {fileID: 8907731643854394103}
   frameOn: 0
---- !u!33 &1642347767563886672
+--- !u!33 &461751091645538589
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -483,7 +483,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7909004429654058805}
   m_Mesh: {fileID: 0}
---- !u!23 &6241226680988652335
+--- !u!23 &5809928648482627354
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,7 +500,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2f32a2ba6600534d9801910c2f12b80, type: 2}
+  - {fileID: 2100000, guid: 7b32531cc9886cb4486623e40e9a0f5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -520,7 +520,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &1430514838742751265
+--- !u!114 &774777414469628216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -532,19 +532,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ec59dc328ae4c814ab8de71fa9ab6185, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 7d95786b6bc77eb42bf5204c6f29ea1c, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 1
+  immutableTriangles: 0
   pmaVertexColors: 1
-  clearStateOnDisable: 1
+  clearStateOnDisable: 0
   tintBlack: 0
-  singleSubmesh: 1
-  fixDrawOrder: 1
+  singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848c9ae76d79a241abbc9e31b97503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEnemy: {fileID: 7909004431032077227}
+  myEnemy: {fileID: 0}
   critHit: 0
   stun: 0
   isflame: 0
@@ -664,9 +664,9 @@ GameObject:
   - component: {fileID: 7909004431032077230}
   - component: {fileID: 7909004431032077225}
   - component: {fileID: 7909004431032077224}
-  - component: {fileID: 7909004431032077227}
+  - component: {fileID: 8907731643854394103}
   m_Layer: 10
-  m_Name: Enemy5
+  m_Name: EM3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7909004431032077227
+--- !u!114 &8907731643854394103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -750,12 +750,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7909004431032077226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c98c05239801a4f8ada5743bdf067c, type: 3}
+  m_Script: {fileID: 11500000, guid: 88dead62af2d61b43955d6c9c8375872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   incam: 0
   currentHealth: 0
-  index: 5
+  index: 22
   numberText: {fileID: 0}
   posHitTemp: {x: 0, y: 0}
   hiteffect: {fileID: 0}
@@ -793,37 +793,37 @@ MonoBehaviour:
   damage1: 0
   damage2: 0
   damage3: 0
-  health: 3
+  health: 0
   bulletspeed1: 0
   bulletspeed2: 0
   bulletspeed3: 0
   attackrank: 0
   bulletimeexist: 0
   exp: 0
-  speed: 1
+  speed: 0
   maxtimeDelayAttack1: 0
   maxtimeDelayAttack2: 0
   maxtimeDelayAttack3: 0
-  maxtimedelayChangePos: 0
+  maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: 7059b80ad651e1749b00200ebe57d2bf, type: 2}
-    attack2: {fileID: 0}
+    attack1: {fileID: 11400000, guid: f63601d4d379e44439aa5a62b1c42359, type: 2}
+    attack2: {fileID: 11400000, guid: 4e8b0d5db170ad248b42a7a81c9c6641, type: 2}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: f46c393a6717ef143b1d00aca841712f, type: 2}
-    run: {fileID: 11400000, guid: 73fe99d9cdb14e648b33db5610fadef6, type: 2}
+    idle: {fileID: 11400000, guid: 953d8a26ed01025458c902f6dda3e662, type: 2}
+    run: {fileID: 11400000, guid: 4ffa8f6968858e540a73b671bf5fa96f, type: 2}
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
-    die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
-    jumpOut: {fileID: 11400000, guid: ca44541a341cd75419a5da410c54d412, type: 2}
+    die: {fileID: 11400000, guid: 91b525949ddde544da9e5ad01280717c, type: 2}
+    jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
-    falldown: {fileID: 11400000, guid: 518fa3a2399199f43b5d48fa846dc3d7, type: 2}
+    falldown: {fileID: 0}
     standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
-    m_Bits: 281026816
+    m_Bits: 12591360
   lmground:
     serializedVersion: 2
     m_Bits: 2097408
@@ -832,9 +832,9 @@ MonoBehaviour:
   isActive: 0
   combo: 0
   randomCombo: 0
-  skeletonAnimation: {fileID: 1430514838742751265}
+  skeletonAnimation: {fileID: 774777414469628216}
   strboneBarrelGun: 
-  strboneBarrelGun1: 
+  strboneBarrelGun1: DAUSUNG
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
@@ -947,11 +947,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848c9ae76d79a241abbc9e31b97503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEnemy: {fileID: 7909004431032077227}
+  myEnemy: {fileID: 8907731643854394103}
   critHit: 0
   stun: 0
   isflame: 0
-  index: 0
+  index: 1
 --- !u!58 &7909004431711324627
 CircleCollider2D:
   m_ObjectHideFlags: 0

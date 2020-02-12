@@ -118,6 +118,8 @@ public class EnemyV1Controller : EnemyBase
                 bulletEnemy.SetDir(-attackrank, true);
             else
                 bulletEnemy.SetDir(attackrank, true);
+            bulletEnemy.rid.gravityScale = 1;
+            bulletEnemy.isGrenade = true;
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.transform.eulerAngles = rotationbullet;
             bulletEnemy.gameObject.SetActive(true);

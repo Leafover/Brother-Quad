@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
-  myEnemyBase: {fileID: 7909004431032077227}
+  myEnemyBase: {fileID: 6694895334915782162}
   frameOn: 0
 --- !u!33 &1642347767563886672
 MeshFilter:
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848c9ae76d79a241abbc9e31b97503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEnemy: {fileID: 7909004431032077227}
+  myEnemy: {fileID: 0}
   critHit: 0
   stun: 0
   isflame: 0
@@ -664,9 +664,9 @@ GameObject:
   - component: {fileID: 7909004431032077230}
   - component: {fileID: 7909004431032077225}
   - component: {fileID: 7909004431032077224}
-  - component: {fileID: 7909004431032077227}
+  - component: {fileID: 6694895334915782162}
   m_Layer: 10
-  m_Name: Enemy5
+  m_Name: EM2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7909004431032077227
+--- !u!114 &6694895334915782162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -750,12 +750,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7909004431032077226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c98c05239801a4f8ada5743bdf067c, type: 3}
+  m_Script: {fileID: 11500000, guid: c895f39f1f4794a44afc289975658dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   incam: 0
   currentHealth: 0
-  index: 5
+  index: 21
   numberText: {fileID: 0}
   posHitTemp: {x: 0, y: 0}
   hiteffect: {fileID: 0}
@@ -763,7 +763,7 @@ MonoBehaviour:
   takecrithit: 0
   haveItem: {fileID: 6406172631349767154}
   foot: {fileID: 1743875683423835812}
-  isGround: 0
+  isGround: 1
   au: {fileID: 0}
   healthFill: []
   bulletEnemy: {fileID: 0}
@@ -793,18 +793,18 @@ MonoBehaviour:
   damage1: 0
   damage2: 0
   damage3: 0
-  health: 3
+  health: 0
   bulletspeed1: 0
   bulletspeed2: 0
   bulletspeed3: 0
   attackrank: 0
   bulletimeexist: 0
   exp: 0
-  speed: 1
+  speed: 0
   maxtimeDelayAttack1: 0
   maxtimeDelayAttack2: 0
   maxtimeDelayAttack3: 0
-  maxtimedelayChangePos: 0
+  maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
     attack1: {fileID: 11400000, guid: 7059b80ad651e1749b00200ebe57d2bf, type: 2}
@@ -815,7 +815,7 @@ MonoBehaviour:
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
     die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
-    jumpOut: {fileID: 11400000, guid: ca44541a341cd75419a5da410c54d412, type: 2}
+    jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
     falldown: {fileID: 11400000, guid: 518fa3a2399199f43b5d48fa846dc3d7, type: 2}
@@ -823,7 +823,7 @@ MonoBehaviour:
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
-    m_Bits: 281026816
+    m_Bits: 12591360
   lmground:
     serializedVersion: 2
     m_Bits: 2097408
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848c9ae76d79a241abbc9e31b97503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEnemy: {fileID: 7909004431032077227}
+  myEnemy: {fileID: 6694895334915782162}
   critHit: 0
   stun: 0
   isflame: 0

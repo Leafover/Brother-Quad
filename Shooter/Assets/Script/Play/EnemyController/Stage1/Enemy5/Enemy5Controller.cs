@@ -21,13 +21,8 @@ public class Enemy5Controller : EnemyBase
             EnemyManager.instance.enemy5s.Add(this);
         }
         enemyState = EnemyState.idle;
-
-        //  radius = Mathf.Abs(leftFace.position.x - transform.position.x);
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    //}
+
     public override void Active()
     {
         base.Active();

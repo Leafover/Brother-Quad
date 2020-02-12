@@ -31,11 +31,6 @@ public class EnemyManager : MonoBehaviour
     public List<EM4Controller> em4s;
     public List<EM5Controller> em5s;
     public List<EM6Controller> em6s;
-    public List<EM7Controller> em7s;
-    public List<EM8Controller> em8s;
-    public List<EM9Controller> em9s;
-    public List<EM10Controller> em10s;
-    public List<TS3Controller> ts3s;
     public void Awake()
     {
         instance = this;
@@ -275,51 +270,7 @@ public class EnemyManager : MonoBehaviour
             em6s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
-    void CallEM7Action(float deltaTime)
-    {
-        if (em7s.Count == 0)
-            return;
-        for (int i = 0; i < em7s.Count; i++)
-        {
-            em7s[i].UpdateActionForEnemyManager(deltaTime);
-        }
-    }
-    void CallEM8Action(float deltaTime)
-    {
-        if (em8s.Count == 0)
-            return;
-        for (int i = 0; i < em8s.Count; i++)
-        {
-            em8s[i].UpdateActionForEnemyManager(deltaTime);
-        }
-    }
-    void CallEM9Action(float deltaTime)
-    {
-        if (em9s.Count == 0)
-            return;
-        for (int i = 0; i < em9s.Count; i++)
-        {
-            em9s[i].UpdateActionForEnemyManager(deltaTime);
-        }
-    }
-    void CallEM10Action(float deltaTime)
-    {
-        if (em10s.Count == 0)
-            return;
-        for (int i = 0; i < em10s.Count; i++)
-        {
-            em10s[i].UpdateActionForEnemyManager(deltaTime);
-        }
-    }
-    void CallTS3Action(float deltaTime)
-    {
-        if (ts3s.Count == 0)
-            return;
-        for (int i = 0; i < ts3s.Count; i++)
-        {
-            ts3s[i].UpdateActionForEnemyManager(deltaTime);
-        }
-    }
+   
     public void OnUpdateByStage1(float deltaTime)
     {
         if (DataParam.indexStage != 0)
@@ -352,7 +303,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void OnUpdateByStage3(float deltaTime)
     {
-        if (DataParam.indexStage != 2)
+        if (DataParam.indexStage != 0)
             return;
         CallEM1Action(deltaTime);
         CallEM2Action(deltaTime);
@@ -360,11 +311,11 @@ public class EnemyManager : MonoBehaviour
         CallEM4Action(deltaTime);
         CallEM5Action(deltaTime);
         CallEM6Action(deltaTime);
-        CallEM7Action(deltaTime);
-        CallEM8Action(deltaTime);
-        CallEM9Action(deltaTime);
-        CallEM10Action(deltaTime);
-        CallTS3Action(deltaTime);
+        CallEV3Action(deltaTime);
+        CallN4Action(deltaTime);
+        CallEN0Action(deltaTime);
+        CallVN2Action(deltaTime);
+        CallN3Action(deltaTime);
     }
 
 

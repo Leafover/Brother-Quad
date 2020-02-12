@@ -35,11 +35,6 @@ public class Enemy4Controller : EnemyBase
         }
     }
 
-    IEnumerator delayActive()
-    {
-        yield return new WaitForSeconds(0.1f);
-        enemyState = EnemyState.attack;
-    }
     public override void Active()
     {
         base.Active();
@@ -250,7 +245,6 @@ public class Enemy4Controller : EnemyBase
         {
             enemyState = EnemyState.attack;
         }
-
     }
     public float speedMove;
 
