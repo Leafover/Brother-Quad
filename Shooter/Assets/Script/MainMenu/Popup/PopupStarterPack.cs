@@ -14,12 +14,12 @@ public class PopupStarterPack : MonoBehaviour
 
     private void OnDisable()
     {
-        GameIAPManager.Instance.acBuyComplete -= HandleBuyComplete;
+        //GameIAPManager.Instance.acBuyComplete -= HandleBuyComplete;
     }
 
     void Start()
     {
-        GameIAPManager.Instance.acBuyComplete += HandleBuyComplete;
+        //GameIAPManager.Instance.acBuyComplete += HandleBuyComplete;
         txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
         InitWeaponInfo();
     }
@@ -35,12 +35,12 @@ public class PopupStarterPack : MonoBehaviour
         txtRange.text = _wp.AtkRange.ToString();
         txtMagazine.text = _wp.Magazine.ToString();
     }
-    void HandleBuyComplete()
-    {
-        Debug.LogError("Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
-        DataUtils.RemoveAds();
-        ClosePopup();
-    }
+    //void HandleBuyComplete()
+    //{
+    //    Debug.LogError("Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
+    //    DataUtils.RemoveAds();
+    //    ClosePopup();
+    //}
     public void BuyPack()
     {
         GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
