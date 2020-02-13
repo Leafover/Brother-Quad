@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
     public static MainMenuController Instance;
     public ItemSpriteData allSpriteData;
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes;
+    public EquipmentManager equipmentManager;
     public PopupManager popManager;
     public Text txtStageName;
     public Button[] buttonStages;
@@ -23,6 +24,8 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         InitButtonStage();
+
+        //equipmentManager.InitAllItems();
     }
     public void SoundClickButton()
     {
@@ -109,10 +112,7 @@ public class MainMenuController : MonoBehaviour
     public void ShowEquipment()
     {
         SoundClickButton();
-
-        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
-        gPanelPopup.SetActive(true);
-        Debug.LogError("ShowEquipment");
+        equipmentManager.gameObject.SetActive(true);
     }
     public void ShowShop()
     {
@@ -178,6 +178,7 @@ public class MainMenuController : MonoBehaviour
         gPanelStage.SetActive(false);
         gPanelPopup.SetActive(false);
         gPanelHeroes.SetActive(false);
+        equipmentManager.gameObject.SetActive(false);
     }
 
     public Sprite GetSpriteByName(string name)

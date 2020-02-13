@@ -95,7 +95,7 @@ public class DataUtils
     }
 
     #region Fill Weapon Data
-    private static Dictionary<string, WeaponList> dicWeapon = new Dictionary<string, WeaponList>();
+    public static Dictionary<string, WeaponList> dicWeapon = new Dictionary<string, WeaponList>();
     private static void FillWeaponData()
     {
         dicWeapon.Clear();
@@ -110,7 +110,7 @@ public class DataUtils
     }
     #endregion
     #region Fill Armor
-    private static Dictionary<string, ArmorList> dicArmor = new Dictionary<string, ArmorList>();
+    public static Dictionary<string, ArmorList> dicArmor = new Dictionary<string, ArmorList>();
     private static void FillArmorData()
     {
         dicArmor.Clear();
@@ -125,7 +125,7 @@ public class DataUtils
     }
     #endregion
     #region Fill Helmet
-    private static Dictionary<string, HelmetList> dicHelmet = new Dictionary<string, HelmetList>();
+    public static Dictionary<string, HelmetList> dicHelmet = new Dictionary<string, HelmetList>();
     private static void FillHelmet()
     {
         dicHelmet.Clear();
@@ -140,7 +140,7 @@ public class DataUtils
     }
     #endregion
     #region Fill Gloves
-    private static Dictionary<string, GlovesList> dicGloves = new Dictionary<string, GlovesList>();
+    public static Dictionary<string, GlovesList> dicGloves = new Dictionary<string, GlovesList>();
     private static void FillGloves()
     {
         dicGloves.Clear();
@@ -155,7 +155,7 @@ public class DataUtils
     }
     #endregion
     #region Fill Bag
-    private static Dictionary<string, BagList> dicBag = new Dictionary<string, BagList>();
+    public static Dictionary<string, BagList> dicBag = new Dictionary<string, BagList>();
     private static void FillBag()
     {
         dicBag.Clear();
@@ -170,7 +170,7 @@ public class DataUtils
     }
     #endregion
     #region Fill Shoes
-    private static Dictionary<string, ShoesList> dicShoes = new Dictionary<string, ShoesList>();
+    public static Dictionary<string, ShoesList> dicShoes = new Dictionary<string, ShoesList>();
     private static void FillShoes()
     {
         dicShoes.Clear();
@@ -187,7 +187,32 @@ public class DataUtils
 
     public static Dictionary<string, ItemData> dicAllEquipment;
     public static List<ItemData> lstAllEquipment = new List<ItemData>();
-
+    public static float GetPiceByStar(ItemData itemData) {
+        float res = 0;
+        string key = itemData.id + "_" + itemData.level;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                res = dicArmor[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "BAG":
+                res = dicBag[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "GLOVES":
+                res = dicGloves[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "HELMET":
+                res = dicHelmet[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "SHOES":
+                res = dicShoes[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "WEAPON":
+                res = dicWeapon[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+        }
+        return res;
+    }
     private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar)
     {
         bool result = false;
@@ -248,6 +273,45 @@ public class DataUtils
         }
         Debug.LogError("END--> " + pices + " vs " + dicAllEquipment[key].pices + " vs " + dicAllEquipment[key].curStar);
     }
+
+    private static string GetItemName(ItemData iData, eType _itemType)
+    {
+        string _name = "";
+        string _damage = "";
+        string _critRate = "";
+        string _range = "";
+        string _magazine = "";
+        string _attSpeed = "";
+
+        string _key = iData.id + "_" + iData.level;
+        switch (_itemType)
+        {
+            case eType.ARMOR:
+                _name = dicArmor[_key].NAME;
+                break;
+            case eType.BAG:
+                _name = dicBag[_key].NAME;
+                break;
+            case eType.GLOVES:
+                _name = dicGloves[_key].NAME;
+                break;
+            case eType.HELMET:
+                _name = dicHelmet[_key].NAME;
+                break;
+            case eType.SHOES:
+                _name = dicShoes[_key].NAME;
+                break;
+            case eType.WEAPON:
+                _name = dicWeapon[_key].NAME;
+                //_damage =""+ dicWeapon[_key].DmgValue[iData.curStar];
+                //_attSpeed = "" + dicWeapon[_key].AtksecValue[iData.curStar];
+                //_critRate = "" + dicWeapon[_key].CritDmgValue[iData.curStar];
+                //_range = "" + dicWeapon[_key].AtkRangeValue[iData.curStar];
+                //_magazine = "" + dicWeapon[_key].MagazineValue[iData.curStar];
+                break;
+        }
+        return _name;
+    }
     public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart)
     {
         ItemData iData = new ItemData();
@@ -256,6 +320,7 @@ public class DataUtils
         iData.level = _itemLevel.ToString();
         iData.isUnlock = fullPart;
         iData.pices = fullPart ? 0 : _pices;
+        iData.itemName = GetItemName(iData, _itemType);
 
         string _key = iData.id + "_" + iData.level.ToString();
         if (dicAllEquipment.ContainsKey(_key))
@@ -263,19 +328,26 @@ public class DataUtils
             if (!iData.isUnlock) {
                 if (!dicAllEquipment[_key].isUnlock)
                 {
+                    Debug.LogError("1");
                     dicAllEquipment[_key].pices += _pices;
                     CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar);
                 }
                 else
+                {
+                    Debug.LogError("2");
                     dicAllEquipment.Add(_key, iData);
+                }
             }
             else
             {
-                dicAllEquipment.Add(_key, iData);
+                Debug.LogError("3");
+                dicAllEquipment[_key].quantity += 1;
+                //dicAllEquipment.Add(_key, iData);
             }
         }
         else
         {
+            Debug.LogError("4");
             dicAllEquipment.Add(_key, iData);
         }
         SaveEquipmentData();
