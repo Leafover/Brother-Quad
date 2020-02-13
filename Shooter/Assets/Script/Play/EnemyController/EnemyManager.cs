@@ -303,7 +303,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void OnUpdateByStage3(float deltaTime)
     {
-        if (DataParam.indexStage != 0)
+        if (DataParam.indexStage != 2)
             return;
 
         CallEM1Action(deltaTime);

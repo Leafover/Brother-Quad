@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class BoomEnemy : BulletEnemy
 {
+    public LayerMask lm;
+    GameObject targetboom;
     public void OnEnable()
     {
         StartEvent();
+        var hit = Physics2D.Raycast(transform.position, -transform.up, 1000, lm);
+        if (hit.collider != null)
+        {
+            targetboom = ObjectPoolerManager.Instance.targetboomPooler.GetPooledObject();
+            targetboom.transform.position = hit.point;
+            targetboom.SetActive(true);
+        }
+    }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        targetboom.SetActive(false);
     }
     public override void Hit()
     {

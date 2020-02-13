@@ -169,14 +169,6 @@ public class Enemy5Controller : EnemyBase
             if (!GameController.instance.autoTarget.Contains(this) && incam)
                 GameController.instance.autoTarget.Add(this);
         }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.idle;
-        }
     }
     public override void OnDisable()
     {

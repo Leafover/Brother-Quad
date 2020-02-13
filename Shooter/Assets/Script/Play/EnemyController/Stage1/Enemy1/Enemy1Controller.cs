@@ -118,12 +118,11 @@ public class Enemy1Controller : EnemyBase
                 if (isGround)
                 {
                     if (aec.standup == null)
-                        enemyState = EnemyState.run;
+                        enemyState = EnemyState.idle;
                     else
                     {
                         PlayAnim(0, aec.standup, false);
                     }
-
                 }
                 break;
         }
@@ -167,14 +166,7 @@ public class Enemy1Controller : EnemyBase
             boxAttack2.gameObject.SetActive(false);
             enemyState = EnemyState.idle;
         }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.idle;
-        }
+
     }
 
     public override void Dead()

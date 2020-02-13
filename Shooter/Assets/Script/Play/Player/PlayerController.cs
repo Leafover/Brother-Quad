@@ -1042,9 +1042,9 @@ public class PlayerController : MonoBehaviour
         var origin = GetOriginGun();
         direction.Normalize();
         var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
-#if UNITY_EDITOR
-        Debug.DrawRay(origin, direction * 1000, Color.red);
-#endif
+//#if UNITY_EDITOR
+//        Debug.DrawRay(origin, direction * 1000, Color.red);
+//#endif
         if (hit.collider != null)
         {
             targetTemp = hit.point;

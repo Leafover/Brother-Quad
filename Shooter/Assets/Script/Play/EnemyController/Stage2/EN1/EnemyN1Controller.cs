@@ -122,7 +122,6 @@ public class EnemyN1Controller : EnemyBase
                     {
                         PlayAnim(0, aec.standup, false);
                     }
-
                 }
                 break;
         }

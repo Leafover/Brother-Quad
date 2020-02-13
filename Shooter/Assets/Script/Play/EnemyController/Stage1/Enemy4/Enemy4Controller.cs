@@ -237,14 +237,6 @@ public class Enemy4Controller : EnemyBase
                 isGrenadeStage = true;
             }
         }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.attack;
-        }
     }
     public float speedMove;
 

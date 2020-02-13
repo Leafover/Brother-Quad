@@ -137,6 +137,7 @@ public class EnemyN3Controller : EnemyBase
                         enemyState = EnemyState.run;
                     else
                     {
+                        previousState = EnemyState.attack;
                         PlayAnim(0, aec.standup, false);
                     }
 
@@ -148,12 +149,16 @@ public class EnemyN3Controller : EnemyBase
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
+    bool isAttacking;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
+            if (isAttacking)
+                return;
             combo++;
+            isAttacking = true;
             if (!incam)
                 return;
 
@@ -193,6 +198,7 @@ public class EnemyN3Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             PlayAnim(0, aec.idle, true);
+
             if (combo == randomCombo)
             {
                 if (canmove)
@@ -220,7 +226,7 @@ public class EnemyN3Controller : EnemyBase
         else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
         {
             PlayAnim(0, aec.idle, true);
-
+            isAttacking = false;
             if (combo == randomCombo)
             {
                 if (canmove)
@@ -248,15 +254,6 @@ public class EnemyN3Controller : EnemyBase
                 isGrenadeStage = true;
             }
         }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.attack;
-        }
-
     }
     public float speedMove;
 

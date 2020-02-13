@@ -316,7 +316,7 @@ MonoBehaviour:
   hitPosTemp: 0
   takecrithit: 0
   haveItem: {fileID: 1352815093829135012}
-  foot: {fileID: 0}
+  foot: {fileID: 738291499844294754}
   isGround: 1
   au: {fileID: 0}
   healthFill: []
@@ -334,7 +334,6 @@ MonoBehaviour:
   isBoss: 0
   isMiniBoss: 0
   moveFollowPath: 0
-  canoutcam: 1
   isMachine: 1
   typeItemDrop: 0
   enemyState: 0
@@ -372,7 +371,7 @@ MonoBehaviour:
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
-    falldown: {fileID: 0}
+    falldown: {fileID: 11400000, guid: 7d46d50f890b095409e899cbb56d2857, type: 2}
     standup: {fileID: 0}
   timePreviousAttack: 0
   lm:
@@ -380,7 +379,7 @@ MonoBehaviour:
     m_Bits: 8192
   lmground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097408
   rid: {fileID: 428184065690147620}
   distanceActive: 6
   isActive: 0
@@ -393,6 +392,7 @@ MonoBehaviour:
   targetPos: {fileID: 0}
   tempXBegin: 0
   numberCountLayerHelthBarBoss: 0
+  previousState: 1
   exploDie: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
@@ -524,7 +524,8 @@ Transform:
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6800003990180618003}
   m_Father: {fileID: 428184065690147618}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -651,6 +652,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &738291499844294754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6800003990180618003}
+  m_Layer: 24
+  m_Name: foot (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6800003990180618003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738291499844294754}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.49, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 428184066484884673}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &895753604264375784
 GameObject:
   m_ObjectHideFlags: 0

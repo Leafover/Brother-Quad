@@ -63,8 +63,7 @@ public class EnemyN2Controller : EnemyBase
     {
         timePreviousAttack = 1f;
         frameSprite.gameObject.SetActive(false);
-        effectfiredie.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        effectfiredie.SetActive(true);
+
         randomDie = Random.Range(0, 2);
         if (randomDie == 0)
         {
@@ -77,6 +76,9 @@ public class EnemyN2Controller : EnemyBase
             FlipX = true;
 
         }
+
+        effectfiredie.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        effectfiredie.SetActive(true);
     }
     Vector2 move;
     bool waitdie;
@@ -127,7 +129,7 @@ public class EnemyN2Controller : EnemyBase
                 BeginShot();
             }
         }
-
+        CheckFallDown();
         switch (enemyState)
         {
             case EnemyState.idle:
@@ -175,6 +177,18 @@ public class EnemyN2Controller : EnemyBase
                         move.y = rid.velocity.y;
                         rid.velocity = move;
                     }
+                }
+                break;
+            case EnemyState.falldown:
+                if (isGround)
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.run;
+                    else
+                    {
+                        PlayAnim(0, aec.standup, false);
+                    }
+
                 }
                 break;
         }

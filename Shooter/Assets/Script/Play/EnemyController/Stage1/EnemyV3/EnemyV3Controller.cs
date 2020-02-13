@@ -47,13 +47,6 @@ public class EnemyV3Controller : EnemyBase
         if (timePreviousAttack <= 0)
         {
             timePreviousAttack = maxtimeDelayAttack1;
-            //g = ObjectPoolerManager.Instance.boomEnemyV3Pooler.GetPooledObject();
-            //var bulletScript = g.GetComponent<BulletEnemy>();
-            //bulletScript.AddProperties(damage1, bulletspeed1);
-            //bulletScript.SetGravity(bulletspeed1);
-            //g.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //g.SetActive(true);
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.boomEnemyV3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.SetGravity(bulletspeed1);
@@ -73,9 +66,4 @@ public class EnemyV3Controller : EnemyBase
         }
     }
 
-    //public override void Dead()
-    //{
-    //    base.Dead();
-    //    SoundController.instance.PlaySound(soundGame.soundv3die);
-    //}
 }

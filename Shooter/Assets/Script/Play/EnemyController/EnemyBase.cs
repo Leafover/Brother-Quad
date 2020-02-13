@@ -97,6 +97,8 @@ public class EnemyBase : AutoTarget
         {
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
+            if (anim == aec.standup)
+                Debug.LogError("zoooo");
         }
     }
 
@@ -146,6 +148,8 @@ public class EnemyBase : AutoTarget
     }
     public void CheckFallDown()
     {
+        if (!incam)
+            return;
         isGround = Physics2D.OverlapCircle(foot.transform.position, 0.115f, lmground);
         if (!isGround && enemyState != EnemyState.falldown)
         {
@@ -412,6 +416,8 @@ public class EnemyBase : AutoTarget
     {
 
     }
+    [HideInInspector]
+    public EnemyState previousState = EnemyState.run;
     protected virtual void OnComplete(TrackEntry trackEntry)
     {
         if (trackEntry == null)
@@ -425,6 +431,15 @@ public class EnemyBase : AutoTarget
                     gameObject.SetActive(false);
                 }
             }
+        }
+        if (enemyState == EnemyState.die)
+            return;
+        if (aec.standup == null)
+            return;
+        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        {
+            enemyState = previousState;
+            Debug.Log("stand up ");
         }
     }
     [HideInInspector]

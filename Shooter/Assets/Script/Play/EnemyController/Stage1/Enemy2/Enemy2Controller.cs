@@ -62,8 +62,7 @@ public class Enemy2Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        //if (canoutcam && !incam)
-        //    return;
+        CheckFallDown();
 
         switch (enemyState)
         {
@@ -91,6 +90,18 @@ public class Enemy2Controller : EnemyBase
                 else
                 {
                     Attack(1, aec.attack2, false, maxtimeDelayAttack2);
+                }
+                break;
+            case EnemyState.falldown:
+                if (isGround)
+                {
+                    if (aec.standup == null)
+                        enemyState = EnemyState.attack;
+                    else
+                    {
+                        previousState = EnemyState.attack;
+                        PlayAnim(0, aec.standup, false);
+                    }
                 }
                 break;
         }
