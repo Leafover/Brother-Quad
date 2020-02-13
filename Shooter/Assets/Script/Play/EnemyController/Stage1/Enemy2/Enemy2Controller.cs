@@ -62,8 +62,8 @@ public class Enemy2Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        if (canoutcam && !incam)
-            return;
+        //if (canoutcam && !incam)
+        //    return;
 
         switch (enemyState)
         {

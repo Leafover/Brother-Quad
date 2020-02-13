@@ -305,19 +305,20 @@ public class EnemyManager : MonoBehaviour
     {
         if (DataParam.indexStage != 0)
             return;
+
         CallEM1Action(deltaTime);
         CallEM2Action(deltaTime);
         CallEM3Action(deltaTime);
         CallEM4Action(deltaTime);
         CallEM5Action(deltaTime);
         CallEM6Action(deltaTime);
+
         CallEV3Action(deltaTime);
         CallN4Action(deltaTime);
         CallEN0Action(deltaTime);
         CallVN2Action(deltaTime);
         CallN3Action(deltaTime);
     }
-
 
     public void OnUpdate(float deltaTime)
     {

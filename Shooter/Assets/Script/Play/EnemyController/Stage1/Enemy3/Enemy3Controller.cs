@@ -73,20 +73,6 @@ public class Enemy3Controller : EnemyBase
                 targetPos.transform.position = GetTarget(false);
                 if (!canmove)
                     return;
-
-                // timedelayChangePos -= deltaTime;
-                //if (timedelayChangePos <= 0)
-                //{
-                //    enemyState = EnemyState.run;
-                //    timedelayChangePos = maxtimedelayChangePos;
-                //    if (transform.position.x < PosBegin.x)
-                //        nextPos.x = PosBegin.x + 0.5f;
-                //    else
-                //        nextPos.x = PosBegin.x + -0.5f;
-
-                //    CheckDirFollowPlayer(nextPos.x);
-                //    skeletonAnimation.ClearState();
-                //}
                 break;
             case EnemyState.run:
 
@@ -96,8 +82,6 @@ public class Enemy3Controller : EnemyBase
                 rid.velocity = move;
 
                 timedelayChangePos -= deltaTime;
-                //nextPos.y = transform.position.y;
-                //transform.position = Vector2.MoveTowards(transform.position, nextPos, deltaTime * speed);
                 targetPos.transform.position = GetTarget(true);
                 PlayAnim(0, aec.run, true);
                 if (timedelayChangePos <= 0)
@@ -108,12 +92,6 @@ public class Enemy3Controller : EnemyBase
                     rid.velocity = Vector2.zero;
                     timedelayChangePos = maxtimedelayChangePos;
                 }
-                //if (transform.position.x == nextPos.x)
-                //{
-                //    PlayAnim(0, aec.idle, true);
-                //    enemyState = EnemyState.attack;
-                //    PlayAnim(1, aec.aimTargetAnim, false);
-                //}
                 break;
             case EnemyState.falldown:
                 if (isGround)
@@ -141,16 +119,6 @@ public class Enemy3Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
-            //bullet = ObjectPoolerManager.Instance.bulletEnemy3Pooler.GetPooledObject();
-            //var _bulletScript = bullet.GetComponent<BulletEnemy>();
-            //_bulletScript.AddProperties(damage1, bulletspeed1);
-            //dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //bullet.transform.rotation = rotation;
-            //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            //bullet.SetActive(true);
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);

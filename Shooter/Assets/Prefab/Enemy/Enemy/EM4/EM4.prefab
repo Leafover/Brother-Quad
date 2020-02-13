@@ -133,13 +133,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622812230726453585}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.33, y: -0.110000014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7142604609229865036}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1996498503338837897
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,13 +414,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6842636012572849382}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -1.33, y: -0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7142604609229865036}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &7142604609229865032
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,9 +432,9 @@ GameObject:
   - component: {fileID: 7142604609229865036}
   - component: {fileID: 7142604609229865037}
   - component: {fileID: 7142604609229865034}
-  - component: {fileID: 7494290121310397849}
+  - component: {fileID: 6881641056517123874}
   m_Layer: 10
-  m_Name: EM1
+  m_Name: EM4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,7 +509,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7494290121310397849
+--- !u!114 &6881641056517123874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -518,12 +518,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7142604609229865032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5965aea1c254b6648a16edec558af3fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 0317c7468783b1c49b978f9bed42f9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   incam: 0
   currentHealth: 0
-  index: 20
+  index: 15
   numberText: {fileID: 0}
   posHitTemp: {x: 0, y: 0}
   hiteffect: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   isMachine: 0
   typeItemDrop: 0
   enemyState: 0
-  canmove: 0
+  canmove: 1
   radius: 0
   boxAttack1: {fileID: 0}
   boxAttack2: {fileID: 0}
@@ -662,7 +662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNotJoinAutoTarget: 0
-  myEnemyBase: {fileID: 7494290121310397849}
+  myEnemyBase: {fileID: 6881641056517123874}
   frameOn: 0
 --- !u!33 &3280121690736316482
 MeshFilter:
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 4514155920615490249}
   - component: {fileID: 5994294600555507465}
   m_Layer: 10
-  m_Name: haveitem
+  m_Name: haveitem (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -31,7 +31,7 @@ public class EnemyBase : AutoTarget
     public LineBlood lineBlood;
     public bool isBoss, isMiniBoss, moveFollowPath;
     public System.Action<float> acOnUpdate;
-    public bool canoutcam, isMachine = false;
+    public bool /*canoutcam,*/ isMachine = false;
     public enum EnemyState
     {
         idle,

@@ -49,8 +49,8 @@ public class EnemyV2Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-        if (canoutcam && !incam)
-            return;
+        //if (canoutcam && !incam)
+        //    return;
 
         switch (enemyState)
         {
@@ -81,13 +81,16 @@ public class EnemyV2Controller : EnemyBase
                 return;
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
+
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.transform.rotation = Quaternion.identity;
+            bulletEnemy.transform.rotation = gunRotation.rotation;
+
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.SetTimeExist(bulletimeexist);
             bulletEnemy.BeginDisplay(Vector2.zero, this);
             listMyBullet.Add(bulletEnemy);
-            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bulletEnemy.transform.rotation = Quaternion.identity;
-            bulletEnemy.transform.rotation = gunRotation.rotation;
+
             bulletEnemy.gameObject.SetActive(true);
             SoundController.instance.PlaySound(soundGame.soundv2attack);
 
