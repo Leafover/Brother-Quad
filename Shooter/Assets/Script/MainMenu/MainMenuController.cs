@@ -161,15 +161,16 @@ public class MainMenuController : MonoBehaviour
             popManager.pNoti.ClosePopup();
             PopupSetting.Instance.HideSetting();
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //DataUtils.SaveEquipment("H1", "Uncommon", 30);
-            GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
-        }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //Debug.LogError(DataUtils.GetAllItem());
-            GameIAPManager.Instance.BuyProduct(DataUtils.P_DONATE);
+            //if (UnityEngine.Random.Range(0, 100) < 50)
+            //{
+            //    DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, false);
+            //}
+            //else
+            //{
+                DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            //}
         }
     }
     private void HideAllPanel()

@@ -24,12 +24,34 @@ public class EquipmentItem : MonoBehaviour
     private void OnEnable()
     {
         btnItem = GetComponent<Button>();
-        
+        if (!string.IsNullOrEmpty(itemKey))
+        {
+            if (itemData != null)
+            {
+                itemKey = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                if (dicAllEquipment.ContainsKey(itemKey))
+                {
+                    itemData = dicAllEquipment[itemKey];
+                    if (itemData.isUnlock)
+                    {
+                        gameObject.name = itemKey;
+                    }
+                }
+                else
+                {
+                    Destroy(gameObject);
+                    //gameObject.SetActive(false);
+                }
+            }
+
+            CheckItemUnlock();
+        }
     }
     // Start is called before the first frame update
     void Start()
     {
-        btnItem.onClick.AddListener(() => {
+        btnItem.onClick.AddListener(() =>
+        {
             EquipmentManager.Instance.ChooseItem(itemData);
         });
         if (!string.IsNullOrEmpty(itemKey))
@@ -43,7 +65,9 @@ public class EquipmentItem : MonoBehaviour
         if (itemData.isUnlock)
         {
             imgQuantity.gameObject.SetActive(itemData.quantity == 0 ? false : true);
-            txtQuantity.text = ""+itemData.quantity;
+            txtQuantity.text = "" + itemData.quantity;
+            imgProgress.gameObject.SetActive(false);
+            imgPart.gameObject.SetActive(false);
         }
         else
         {
@@ -60,10 +84,5 @@ public class EquipmentItem : MonoBehaviour
         txtFillProgress.text = itemData.pices + "/" + (int)_p;
         res = itemData.pices * 1.0f / _p;
         return res;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
