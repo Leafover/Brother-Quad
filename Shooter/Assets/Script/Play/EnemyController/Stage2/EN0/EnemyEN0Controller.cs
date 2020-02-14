@@ -7,14 +7,10 @@ using Spine.Unity;
 
 public class EnemyEN0Controller : EnemyBase
 {
-    public int indexPath;
-    float distanceTravelled;
-    VertexPath myPath;
-
-
-
+   // public int indexPath;
+   // float distanceTravelled;
+  //  VertexPath myPath;
     int activeAttack;
-
     Vector2 posTemp;
 
     public override void Start()
@@ -30,7 +26,7 @@ public class EnemyEN0Controller : EnemyBase
         {
             EnemyManager.instance.enemyen0s.Add(this);
         }
-        myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
+     //   myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
         activeAttack = 0;
         randomCombo = 2;
 
@@ -40,6 +36,10 @@ public class EnemyEN0Controller : EnemyBase
         base.Active();
         PlayAnim(0, aec.run, true);
         SoundController.instance.PlaySound(soundGame.soundEN0Move);
+
+        posTemp.x = Camera.main.transform.position.x;
+        posTemp.y = Camera.main.transform.position.y;
+
     }
     public void DetecPosPlayer()
     {
@@ -57,16 +57,13 @@ public class EnemyEN0Controller : EnemyBase
         if (enemyState == EnemyState.die)
             return;
 
-
-
-
         switch (activeAttack)
         {
             case 0:
-                CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
-                distanceTravelled += speed * deltaTime;
-                transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-
+                //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
+                //distanceTravelled += speed * deltaTime;
+                //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
                 if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= Random.Range(3f, 4f))
                 {
                     activeAttack = 2;
@@ -76,9 +73,12 @@ public class EnemyEN0Controller : EnemyBase
 
                 break;
             case 1:
-                CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
-                distanceTravelled += speed * deltaTime;
-                transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
+                    gameObject.SetActive(false);
+                //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
+                //distanceTravelled += speed * deltaTime;
+                //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 break;
             case 2:
                 transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
@@ -100,12 +100,14 @@ public class EnemyEN0Controller : EnemyBase
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 Attack(1, aec.attack1, false, maxtimeDelayAttack1);
                 break;
+
+           
         }
 
-        if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))
-        {
-            gameObject.SetActive(false);
-        }
+        //if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))
+        //{
+        //    gameObject.SetActive(false);
+        //}
 
     }
 
@@ -154,8 +156,10 @@ public class EnemyEN0Controller : EnemyBase
             if (combo == randomCombo)
             {
                 activeAttack = 1;
+                posTemp.x = CameraController.instance.bouders[3].transform.position.x;
+                posTemp.y = Camera.main.transform.position.y + Random.Range(-5, 5);
             }
-            activeAttack = 1;
+        //    activeAttack = 1;
         }
     }
     void ExPlo()

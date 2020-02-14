@@ -20,9 +20,6 @@ public class AllMap
 {
     public List<MapController> listMap;
 }
-
-
-
 public class GameController : MonoBehaviour
 {
 
@@ -254,7 +251,6 @@ public class GameController : MonoBehaviour
     Vector3 dustLeft = new Vector3(-180, -90, 0), dustRight = new Vector3(-180, 90, 0);
     public void OnMove(Vector2 axis)
     {
-
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
         if (angle <= 135f && angle >= -135.5f)
@@ -268,7 +264,6 @@ public class GameController : MonoBehaviour
                 PlayerController.instance.dustrun.SetActive(true);
                 PlayerController.instance.SetAnim();
             }
-
             PlayerController.instance.dirMove = h > 0 ? false : true;
             if (PlayerController.instance.playerState == PlayerController.PlayerState.Jump)
                 return;
@@ -300,8 +295,6 @@ public class GameController : MonoBehaviour
             isShoot = true;
             TryShot();
             PlayerController.instance.isBouderJoystickShoot = joystick.GetDistance() >= 0.9f;
-
-
             if (autoTarget.Count == 0)
             {
                 if (PlayerController.instance.isBouderJoystickShoot)
@@ -437,7 +430,6 @@ public class GameController : MonoBehaviour
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
-
         MissionController.Instance.CheckMission();
         MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
         DataController.instance.DoAchievement(6, 1);
@@ -460,8 +452,6 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(delayDisplayFinish());
     }
-
-
     public void DisplaySetting()
     {
         auBG.mute = !DataUtils.IsMusicOn();
