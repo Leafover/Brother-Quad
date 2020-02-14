@@ -183,6 +183,10 @@ public class EnemyEN0Controller : EnemyBase
     public override void OnDisable()
     {
         base.OnDisable();
+
+        if (EnemyManager.instance == null)
+            return;
+
         if (EnemyManager.instance.enemyen0s.Contains(this))
         {
             EnemyManager.instance.enemyen0s.Remove(this);
