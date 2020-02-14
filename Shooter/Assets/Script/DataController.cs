@@ -204,6 +204,7 @@ public class DataController : MonoBehaviour
         if (loadData)
             return;
         LoadData();
+        DataUtils.FillEquipmentData();
         loadData = true;
     }
     public bool loaddatabegin;

@@ -64,30 +64,304 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
+
+    public static void FillEquipmentData()
+    {
+        string sData = GetAllEquipment();
+
+        dicAllEquipment = new Dictionary<string, ItemData>();
+        if (sData.Trim().Length > 0)
+        {
+            JsonData jData = JsonMapper.ToObject(sData);
+            string _key = "";
+            for (int i = 0; i < jData.Count; i++)
+            {
+                ItemData itemData = JsonMapper.ToObject<ItemData>(jData[i].ToJson());
+                _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                if (!dicAllEquipment.ContainsKey(_key))
+                {
+                    dicAllEquipment.Add(_key, itemData);
+                }
+            }
+        }
+
+        FillWeaponData();
+        FillArmorData();
+        FillHelmet();
+        FillGloves();
+        FillBag();
+        FillShoes();
+    }
+
+    #region Fill Weapon Data
+    public static Dictionary<string, WeaponList> dicWeapon = new Dictionary<string, WeaponList>();
+    private static void FillWeaponData()
+    {
+        dicWeapon.Clear();
+        for (int i = 0; i < DataController.instance.allWeapon.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allWeapon[i].weaponList.Count; j++)
+            {
+                WeaponList weapon = DataController.instance.allWeapon[i].weaponList[j];
+                dicWeapon.Add(weapon.ID + "_" + weapon.Level, weapon);
+            }
+        }
+    }
+    #endregion
+    #region Fill Armor
+    public static Dictionary<string, ArmorList> dicArmor = new Dictionary<string, ArmorList>();
+    private static void FillArmorData()
+    {
+        dicArmor.Clear();
+        for (int i = 0; i < DataController.instance.allArmor.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allArmor[i].armorList.Count; j++)
+            {
+                ArmorList armor = DataController.instance.allArmor[i].armorList[j];
+                dicArmor.Add(armor.ID + "_" + armor.Level, armor);
+            }
+        }
+    }
+    #endregion
+    #region Fill Helmet
+    public static Dictionary<string, HelmetList> dicHelmet = new Dictionary<string, HelmetList>();
+    private static void FillHelmet()
+    {
+        dicHelmet.Clear();
+        for (int i = 0; i < DataController.instance.allHelmet.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allHelmet[i].helmetList.Count; j++)
+            {
+                HelmetList helmet = DataController.instance.allHelmet[i].helmetList[j];
+                dicHelmet.Add(helmet.ID + "_" + helmet.Level, helmet);
+            }
+        }
+    }
+    #endregion
+    #region Fill Gloves
+    public static Dictionary<string, GlovesList> dicGloves = new Dictionary<string, GlovesList>();
+    private static void FillGloves()
+    {
+        dicGloves.Clear();
+        for (int i = 0; i < DataController.instance.allGloves.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allGloves[i].glovesList.Count; j++)
+            {
+                GlovesList gloves = DataController.instance.allGloves[i].glovesList[j];
+                dicGloves.Add(gloves.ID + "_" + gloves.Level, gloves);
+            }
+        }
+    }
+    #endregion
+    #region Fill Bag
+    public static Dictionary<string, BagList> dicBag = new Dictionary<string, BagList>();
+    private static void FillBag()
+    {
+        dicBag.Clear();
+        for (int i = 0; i < DataController.instance.allArmor.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allBag[i].bagList.Count; j++)
+            {
+                BagList bag = DataController.instance.allBag[i].bagList[j];
+                dicBag.Add(bag.ID + "_" + bag.Level, bag);
+            }
+        }
+    }
+    #endregion
+    #region Fill Shoes
+    public static Dictionary<string, ShoesList> dicShoes = new Dictionary<string, ShoesList>();
+    private static void FillShoes()
+    {
+        dicShoes.Clear();
+        for (int i = 0; i < DataController.instance.allShoes.Count; i++)
+        {
+            for (int j = 0; j < DataController.instance.allShoes[i].shoesList.Count; j++)
+            {
+                ShoesList shoes = DataController.instance.allShoes[i].shoesList[j];
+                dicShoes.Add(shoes.ID + "_" + shoes.Level, shoes);
+            }
+        }
+    }
+    #endregion
+
+    public static Dictionary<string, ItemData> dicAllEquipment;
+    public static ItemData itemNew;
+
     public static List<ItemData> lstAllEquipment = new List<ItemData>();
-    public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices)
+    public static float GetPiceByStar(ItemData itemData) {
+        float res = 0;
+        string key = itemData.id + "_" + itemData.level/* + "_"+ itemData.isUnlock*/;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                res = dicArmor[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "BAG":
+                res = dicBag[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "GLOVES":
+                res = dicGloves[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "HELMET":
+                res = dicHelmet[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "SHOES":
+                res = dicShoes[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "WEAPON":
+                res = dicWeapon[key].SoManhYeuCauValue[itemData.curStar];
+                break;
+        }
+        return res;
+    }
+    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock)
+    {
+        bool result = false;
+        string key = id + "_" + level + "_" + isUnlock;
+        string key_ = id + "_" + level;
+        switch (itemType)
+        {
+            case eType.ARMOR:
+                if((pices >= (int)dicArmor[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicArmor[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+            case eType.BAG:
+                if ((pices >= (int)dicBag[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicBag[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+            case eType.GLOVES:
+                if ((pices >= (int)dicGloves[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicGloves[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+            case eType.HELMET:
+                if ((pices >= (int)dicHelmet[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicHelmet[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+            case eType.SHOES:
+                if ((pices >= (int)dicShoes[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicShoes[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+            case eType.WEAPON:
+                if ((pices >= (int)dicWeapon[key_].SoManhYeuCauValue[curStar]))
+                {
+                    pices -= (int)dicWeapon[key_].SoManhYeuCauValue[curStar];
+                    result = true;
+                }
+                break;
+        }
+
+        if (result)
+        {
+            ItemData itemNew = dicAllEquipment[key];
+            dicAllEquipment.Remove(key);
+            string _newKey = id + "_" + level + "_" + result;
+            if (!dicAllEquipment.ContainsKey(_newKey))
+            {
+                dicAllEquipment.Add(_newKey, itemNew);
+
+                dicAllEquipment[_newKey].curStar += 1;
+                dicAllEquipment[_newKey].pices = pices;
+                dicAllEquipment[_newKey].isUnlock = result;
+
+                //if (EquipmentManager.Instance != null)
+                //{
+                //    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
+                //}
+            }
+            else
+            {
+                dicAllEquipment[_newKey].quantity += 1;
+                dicAllEquipment[_newKey].curStar += 1;
+                dicAllEquipment[_newKey].pices = pices;
+                dicAllEquipment[_newKey].isUnlock = result;
+            }
+        }
+    }
+
+    private static string GetItemName(ItemData iData, eType _itemType)
+    {
+        string _name = "";
+
+        string _key = iData.id + "_" + iData.level;
+        switch (_itemType)
+        {
+            case eType.ARMOR:
+                _name = dicArmor[_key].NAME;
+                break;
+            case eType.BAG:
+                _name = dicBag[_key].NAME;
+                break;
+            case eType.GLOVES:
+                _name = dicGloves[_key].NAME;
+                break;
+            case eType.HELMET:
+                _name = dicHelmet[_key].NAME;
+                break;
+            case eType.SHOES:
+                _name = dicShoes[_key].NAME;
+                break;
+            case eType.WEAPON:
+                _name = dicWeapon[_key].NAME;
+                break;
+        }
+        return _name;
+    }
+    public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart)
     {
         ItemData iData = new ItemData();
         iData.id = _id;
-        iData.type = _itemType;
-        iData.level = _itemLevel;
-        iData.pices = _pices;
+        iData.type = _itemType.ToString();
+        iData.level = _itemLevel.ToString();
+        iData.isUnlock = fullPart;
+        iData.pices = fullPart ? 0 : _pices;
+        iData.itemName = GetItemName(iData, _itemType);
 
-        if (lstAllEquipment.Contains(iData))
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
+        if (dicAllEquipment.ContainsKey(_key))
         {
-            for(int i = 0; i < lstAllEquipment.Count; i++)
-            {
-                ItemData _data = lstAllEquipment[i];
-                if(_data.id.Equals(iData.id) && _data.type == iData.type && _data.level == iData.level)
+            if (!iData.isUnlock) {
+                if (!dicAllEquipment[_key].isUnlock)
                 {
-                    lstAllEquipment[i] = iData;
+                    string _newKey = iData.id + "_" + iData.level.ToString() + "_" + true;
+                    dicAllEquipment[_key].pices += _pices;
+                    CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock);
                 }
+                else
+                {
+                    dicAllEquipment[_key].quantity += 1;
+                }
+            }
+            else
+            {
+                dicAllEquipment[_key].quantity += 1;
             }
         }
         else
         {
-            lstAllEquipment.Add(iData);
+            dicAllEquipment.Add(_key, iData);
+
+
+            if (EquipmentManager.Instance != null)
+            {
+                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
+            }
         }
+        SaveEquipmentData();
     }
 
 
@@ -95,7 +369,17 @@ public class DataUtils
     {
         return PlayerPrefs.HasKey(KEY_EQUIPMENT_DATA);
     }
-
+    public static void SaveEquipmentData()
+    {
+        string jSave = JsonMapper.ToJson(dicAllEquipment);
+        Debug.LogError(jSave);
+        PlayerPrefs.SetString(KEY_EQUIPMENT_DATA, jSave);
+        PlayerPrefs.Save();
+    }
+    public static string GetAllEquipment()
+    {
+        return PlayerPrefs.GetString(KEY_EQUIPMENT_DATA, "");
+    }
     #endregion
 
     #region Stage Data 
