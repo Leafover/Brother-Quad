@@ -20,7 +20,8 @@ public class BoomEnemy : BulletEnemy
     public override void OnDisable()
     {
         base.OnDisable();
-        targetboom.SetActive(false);
+        if (targetboom != null)
+            targetboom.SetActive(false);
     }
     public override void Hit()
     {
