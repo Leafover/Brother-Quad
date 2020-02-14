@@ -595,6 +595,38 @@ public class GameController : MonoBehaviour
         WinGame();
     }
 
+    void AddItem(int i,DataUtils.eLevel eLevel)
+    {
+        string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "");
+        if (vatphamnhanduoc[i].ID.Contains("W"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("A"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("P"))
+        {
+            //  DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("H"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("S"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("G"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, 1, false);
+        }
+        else if (vatphamnhanduoc[i].ID.Contains("B"))
+        {
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, 1, false);
+        }
+    }
     int randomCertain;
     public void ThemManh()
     {
@@ -603,28 +635,35 @@ public class GameController : MonoBehaviour
             for (int j = 0; j < vatphamnhanduoc[i].TotalNumber; j++)
             {
                 randomCertain = Random.Range(0, 100);
+
                 if (randomCertain < vatphamnhanduoc[i].Normal)
                 {
+                    AddItem(i, DataUtils.eLevel.Normal);
                     //  Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
                 }
                 else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
                 {
+                    AddItem(i, DataUtils.eLevel.Uncommon);
                     //  Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
                 {
+                    AddItem(i, DataUtils.eLevel.Rare);
                     //   Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
+                    AddItem(i, DataUtils.eLevel.Epic);
                     //  Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
                 }
                 else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
                 {
+                    AddItem(i, DataUtils.eLevel.Legendary);
                     //  Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
                 }
             }
         }
+
     }
     public void ResetActiveLeft()
     {
