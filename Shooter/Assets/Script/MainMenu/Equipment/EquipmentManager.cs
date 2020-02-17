@@ -6,11 +6,21 @@ using TMPro;
 
 public class EquipmentManager : MonoBehaviour
 {
+    const string ALL_EQUIP = "ALL";
+    
     public static EquipmentManager Instance;
+    #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine;
+    #endregion
+    #region Current Equipment
+    public Image imgCurItemPriview, imgCurDamagePriview;
+    public TextMeshProUGUI txtCurItemName, txtCurDamagePriview, txtCurAttSpeed, txtCurCritRate, txtCurCritDamage, txtCurRange, txtCurMagazine;
+    #endregion
+
     public GameObject gWeaponData;
     public GameObject gItemSelectPriview;
+    public GameObject gCurrentItemEquip;
     public GameObject gSellGroup;
     public Sprite sprSelect, sprUnSelect;
     public Button[] btnTabs;
@@ -51,7 +61,6 @@ public class EquipmentManager : MonoBehaviour
             EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
             item.itemKey = key;
             item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
-
             gItemClone.transform.SetParent(trContain, false);
         }
     }
@@ -79,7 +88,7 @@ public class EquipmentManager : MonoBehaviour
             }
             else btnTabs[i].image.sprite = sprUnSelect;
         }
-
+        #region Swith Equipment by tabs index
         switch (_index)
         {
             case 0:
@@ -107,8 +116,9 @@ public class EquipmentManager : MonoBehaviour
                 ShowItemTypeSelect(ALL_EQUIP);
                 break;
         }
+        #endregion
     }
-    const string ALL_EQUIP = "ALL";
+    
     private void ShowItemTypeSelect(string _type)
     {
         for (int i = 0; i < trContain.childCount; i++)
@@ -128,16 +138,27 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    public void UpdateRotation(ItemData itemData, RectTransform _rect)
+    {
+        if (itemData.type.Equals(DataUtils.eType.WEAPON.ToString()))
+        {
+            _rect.eulerAngles = new Vector3(0, 0, 30);
+        }
+        else
+        {
+            _rect.eulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
     public void ChooseItem(ItemData itemData)
     {
         if(itemData == null) {
             gWeaponData.SetActive(false);
             txtDamagePriview.gameObject.SetActive(false);
             imgDamagePriview.gameObject.SetActive(false);
-
             gItemSelectPriview.SetActive(false);
 
-
+            gCurrentItemEquip.SetActive(false);
             for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
@@ -146,35 +167,13 @@ public class EquipmentManager : MonoBehaviour
         }
         else
         {
-            #region Fill Info for EquipmentItem
-            imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
-            string _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
-            string keyItem = itemData.id + "_" + itemData.level;
-            txtItemName.text = DataUtils.dicAllEquipment[_key].itemName;
-            if (itemData.type.Contains("WEAPON"))
-            {
-                txtDamagePriview.text = "" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
-                txtCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar] + "</color>";
-                txtAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar] + "</color>";
-                txtCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar] + "</color>";
-                txtRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
-                txtMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
+            itemSelected = itemData;
 
-                gWeaponData.SetActive(true);
-                txtDamagePriview.gameObject.SetActive(true);
-                imgDamagePriview.gameObject.SetActive(true);
-            }
-            else
-            {
-                gWeaponData.SetActive(false);
-                txtDamagePriview.gameObject.SetActive(false);
-                imgDamagePriview.gameObject.SetActive(false);
-            }
-            gItemSelectPriview.SetActive(true);
+            #region Fill Info for EquipmentItem
+            FillEquipmentInfo(itemData);
             #endregion
 
             #region Display Selected Image
-            itemSelected = itemData;
             for(int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
@@ -190,6 +189,46 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    private void FillEquipmentInfo(ItemData itemData)
+    {
+        imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
+        string _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+        string keyItem = itemData.id + "_" + itemData.level;
+        txtItemName.text = DataUtils.dicAllEquipment[_key].itemName;
+
+        #region Check Selected Item has Unlock
+        if (itemData.isUnlock)
+        {
+            gCurrentItemEquip.SetActive(true);
+        }
+        else
+        {
+            gCurrentItemEquip.SetActive(false);
+        }
+        #endregion
+
+        if (itemData.type.Contains("WEAPON"))
+        {
+            txtDamagePriview.text = "" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
+            txtCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar] + "</color>";
+            txtAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar] + "</color>";
+            txtCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar] + "</color>";
+            txtRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
+            txtMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
+
+            gWeaponData.SetActive(true);
+            txtDamagePriview.gameObject.SetActive(true);
+            imgDamagePriview.gameObject.SetActive(true);
+        }
+        else
+        {
+            gWeaponData.SetActive(false);
+            txtDamagePriview.gameObject.SetActive(false);
+            imgDamagePriview.gameObject.SetActive(false);
+        }
+        UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
+        gItemSelectPriview.SetActive(true);
+    }
     public void BackToMainMenu()
     {
         gameObject.SetActive(false);

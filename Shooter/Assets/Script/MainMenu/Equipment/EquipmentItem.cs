@@ -41,11 +41,15 @@ public class EquipmentItem : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
+
+                EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             }
 
             CheckItemUnlock();
         }
     }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +61,7 @@ public class EquipmentItem : MonoBehaviour
         {
             itemData = dicAllEquipment[itemKey];
             CheckItemUnlock();
+            EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
         }
     }
     private void CheckItemUnlock()
