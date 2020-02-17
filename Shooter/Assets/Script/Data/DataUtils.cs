@@ -568,7 +568,7 @@ public class DataUtils
 
             if (mapIndex == 7)
             {
-                lstAllStageNormal[(stage + 1 > lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
+                lstAllStageNormal[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
                 
                 UnlockHardMode();
 
@@ -586,7 +586,7 @@ public class DataUtils
 
             if (mapIndex == 7)
             {
-                lstAllStageHard[(stage + 1 > lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
+                lstAllStageHard[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
 
                 StageHardIncrease();
             }

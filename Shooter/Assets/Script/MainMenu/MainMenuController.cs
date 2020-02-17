@@ -111,8 +111,8 @@ public class MainMenuController : MonoBehaviour
     }
     public void ShowEquipment()
     {
-        //SoundClickButton();
-        //equipmentManager.gameObject.SetActive(true);
+        SoundClickButton();
+        equipmentManager.gameObject.SetActive(true);
     }
     public void ShowShop()
     {
