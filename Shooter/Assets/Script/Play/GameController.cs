@@ -441,6 +441,7 @@ public class GameController : MonoBehaviour
             }
             DataController.instance.DoDailyQuest(2, 1);
         }
+        Debug.Log(DataParam.indexStage + ":" + DataParam.indexMap);
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         MissionController.Instance.CheckMission();

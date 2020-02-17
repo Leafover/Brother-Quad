@@ -15,7 +15,7 @@ public class MayBayController : MonoBehaviour
     }
     public void Begin(Vector2 _pos)
     {
-        pos.x = _pos.x - 5;
+        pos.x = _pos.x - 10;
         pos.y = _pos.y;
         transform.position = pos;
         rid.velocity = (transform.right * 5);
