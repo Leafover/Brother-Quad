@@ -42,6 +42,7 @@ public class UIPanel : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
         DataParam.nextSceneAfterLoad = 1;
         MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
+        PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
     int randomAds;
@@ -79,6 +80,7 @@ public class UIPanel : MonoBehaviour
             DataParam.nextSceneAfterLoad = 1;
         }
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
     public void DisplayFinish(int _countstar)

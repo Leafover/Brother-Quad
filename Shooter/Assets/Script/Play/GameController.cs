@@ -22,7 +22,7 @@ public class AllMap
 }
 public class GameController : MonoBehaviour
 {
-    public GameObject letgo;
+    public GameObject letgo,uiDisplay;
     public MayBayController maybay;
 
     public List<Sprite> gunSprite;
@@ -132,6 +132,14 @@ public class GameController : MonoBehaviour
         DisplaySetting();
 
         maybay.Begin(currentMap.pointBeginPlayer.transform.position);
+
+        uiPanel.gameObject.SetActive(false);
+        uiDisplay.gameObject.SetActive(false);
+    }
+    public void ActiveUI()
+    {
+        uiPanel.gameObject.SetActive(true);
+        uiDisplay.gameObject.SetActive(true);
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()

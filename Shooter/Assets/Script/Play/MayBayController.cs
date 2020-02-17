@@ -29,7 +29,7 @@ public class MayBayController : MonoBehaviour
         if (transform.position.x > GameController.instance.currentMap.pointBeginPlayer.transform.position.x && !isSpawnPlayer)
         {
             PlayerController.instance.rid.gravityScale = 0.3f;
-            PlayerController.instance.transform.position = transform.position;
+            PlayerController.instance.transform.position = new Vector2(transform.position.x,transform.position.y - 1.5f);
             isSpawnPlayer = true;
         }
     }

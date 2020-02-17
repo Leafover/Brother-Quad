@@ -299,7 +299,14 @@ public class PlayerController : MonoBehaviour
             GameController.instance.letgo.SetActive(true);
             du.gameObject.SetActive(false);
             skeletonAnimation.gameObject.SetActive(true);
+            skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+            GameController.instance.ActiveUI();
         }
+    }
+    public void EndEvent()
+    {
+        du.AnimationState.Complete -= OnCompleteDu;
+        skeletonAnimation.AnimationState.Complete -= OnComplete;
     }
     private void Start()
     {
@@ -311,7 +318,7 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.Complete += OnComplete;
         du.AnimationState.Complete += OnCompleteDu;
 
-        skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+       // skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         AddNumberBullet(-maxNumberBullet);
 
         timePreviousGrenade = 0;

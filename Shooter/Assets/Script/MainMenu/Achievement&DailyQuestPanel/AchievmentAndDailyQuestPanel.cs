@@ -22,13 +22,20 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
         gameObject.SetActive(true);
     }
     string timetemp = "20:20:02";
-
+    double timeCount;
     private void Update()
     {
         if (!Tabs[0].activeSelf)
             return;
 
-        timeSpanTemp = TimeSpan.FromSeconds(86400 -(System.DateTime.Now - DataParam.oldDateTime).TotalSeconds);
+        timeCount = 86400 - (System.DateTime.Now - DataParam.oldDateTime).TotalSeconds;
+
+        if (timeCount <= 0)
+        {
+            timeText.text = "Refresh in: <color=green>" + "00:00:00" + "</color>";
+            return;
+        }
+        timeSpanTemp = TimeSpan.FromSeconds(timeCount);
         timetemp = timeSpanTemp.ToString("hh':'mm':'ss");
         timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
     }
@@ -38,12 +45,12 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
         if (Tabs[index].activeSelf)
             return;
 
-        switch(index)
+        switch (index)
         {
             case 0:
 
                 timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
-                Debug.Log("============="+DataController.saveIndexQuest.Count);
+                Debug.Log("=============" + DataController.saveIndexQuest.Count);
                 for (int i = 0; i < DataController.saveIndexQuest.Count; i++)
                 {
                     dailyquestBouders[i].DisplayMe();
@@ -59,7 +66,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
 
         Tabs[index].SetActive(true);
         btnChangeTabs[index].image.sprite = btntabSps[0];
-        for(int i = 0; i < Tabs.Length; i++)
+        for (int i = 0; i < Tabs.Length; i++)
         {
             if (i != index)
             {
