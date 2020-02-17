@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     }
     public PlayerState playerState = PlayerState.Idle;
 
-    public SkeletonAnimation skeletonAnimation;
+    public SkeletonAnimation skeletonAnimation, du;
 
     public float speedMoveMax = 3;
     [HideInInspector]
@@ -287,6 +287,20 @@ public class PlayerController : MonoBehaviour
     {
         return transform.position.x;
     }
+    private void OnCompleteDu(TrackEntry trackEntry)
+    {
+        if (trackEntry.Animation.Name.Equals("1"))
+        {
+
+        }
+        if (trackEntry.Animation.Name.Equals("2"))
+        {
+            GameController.instance.gameState = GameController.GameState.play;
+            GameController.instance.letgo.SetActive(true);
+            du.gameObject.SetActive(false);
+            skeletonAnimation.gameObject.SetActive(true);
+        }
+    }
     private void Start()
     {
         lineBlood.Reset();
@@ -295,7 +309,7 @@ public class PlayerController : MonoBehaviour
         boneHandGrenade = skeletonAnimation.Skeleton.FindBone(strboneHandGrenade);
         //     skeletonAnimation.AnimationState.Event += HandleEvent;
         skeletonAnimation.AnimationState.Complete += OnComplete;
-
+        du.AnimationState.Complete += OnCompleteDu;
 
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         AddNumberBullet(-maxNumberBullet);
@@ -313,6 +327,8 @@ public class PlayerController : MonoBehaviour
         //   Debug.Log(skins.Length);
 
         au.mute = !DataUtils.IsSoundOn();
+
+        skeletonAnimation.gameObject.SetActive(false);
     }
     public int currentGun;
     public void AddProperties()
@@ -444,6 +460,20 @@ public class PlayerController : MonoBehaviour
     //    Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
     //}
     float timereviving = 2;
+
+    public void BeginPlayer()
+    {
+        isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
+        if (isGround)
+        {
+            if (du.AnimationName == "1")
+            {
+                du.AnimationState.SetAnimation(0, "2", false);
+                rid.gravityScale = 1;
+            }
+        }
+    }
+
     public void OnUpdate(float deltaTime)
     {
 
@@ -821,12 +851,6 @@ public class PlayerController : MonoBehaviour
         {
             isWaitStand = false;
         }
-        //else if (trackEntry.Animation.Name.Equals(apc.meleeAttackAnim.name))
-        //{
-        //    meleeAtackBox.gameObject.SetActive(false);
-        //    //skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
-        //    //skeletonAnimation.AnimationState.SetEmptyAnimation(0, 0);
-        //}
     }
     public Vector2 GetOriginGun()
     {
@@ -1042,9 +1066,9 @@ public class PlayerController : MonoBehaviour
         var origin = GetOriginGun();
         direction.Normalize();
         var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
-//#if UNITY_EDITOR
-//        Debug.DrawRay(origin, direction * 1000, Color.red);
-//#endif
+        //#if UNITY_EDITOR
+        //        Debug.DrawRay(origin, direction * 1000, Color.red);
+        //#endif
         if (hit.collider != null)
         {
             targetTemp = hit.point;

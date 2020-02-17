@@ -22,6 +22,8 @@ public class AllMap
 }
 public class GameController : MonoBehaviour
 {
+    public GameObject letgo;
+    public MayBayController maybay;
 
     public List<Sprite> gunSprite;
 
@@ -66,7 +68,7 @@ public class GameController : MonoBehaviour
 #else
         Application.targetFrameRate = 60;
 #endif
-        gameState = GameState.play;
+        gameState = GameState.begin;
     }
     ItemBase coinItem;
     public void SpawnCoin(int total, Vector2 pos)
@@ -115,7 +117,8 @@ public class GameController : MonoBehaviour
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
         CameraController.instance.Init();
-        PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
+        //   PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
+      //  PlayerController.instance.skeletonAnimation.gameObject.SetActive(false);
         Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 6, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
@@ -127,6 +130,8 @@ public class GameController : MonoBehaviour
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
         DisplaySetting();
+
+        maybay.Begin(currentMap.pointBeginPlayer.transform.position);
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()
@@ -436,7 +441,7 @@ public class GameController : MonoBehaviour
         if (reviveCount == 0)
         {
             DataController.instance.DoAchievement(7, 1);
-            if(DataUtils.modeSelected == 1)
+            if (DataUtils.modeSelected == 1)
                 DataController.instance.DoDailyQuest(9, 1);
         }
         if (DataParam.indexMap == 7)
@@ -512,9 +517,12 @@ public class GameController : MonoBehaviour
     //}
     private void Update()
     {
-
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
+            if(gameState == GameState.begin)
+            {
+                PlayerController.instance.BeginPlayer();
+            }
             return;
         }
         var deltaTime = Time.deltaTime;
@@ -595,7 +603,7 @@ public class GameController : MonoBehaviour
         WinGame();
     }
 
-    void AddItem(int i,DataUtils.eLevel eLevel)
+    void AddItem(int i, DataUtils.eLevel eLevel)
     {
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "");
         if (vatphamnhanduoc[i].ID.Contains("W"))
