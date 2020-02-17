@@ -216,8 +216,6 @@ public class StageManager : MonoBehaviour
             DataParam.indexMap = _mapSelect;
 
             #region Start Level
-
-
             _listMission = new ListMission();
             _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
             _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
@@ -235,8 +233,7 @@ public class StageManager : MonoBehaviour
             DataController.instance.DoAchievement(5, 1);
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-
-
+            
             MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
         }
