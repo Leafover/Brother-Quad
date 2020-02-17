@@ -40,7 +40,6 @@ public class EquipmentItem : MonoBehaviour
                 else
                 {
                     Destroy(gameObject);
-                    //gameObject.SetActive(false);
                 }
             }
 
