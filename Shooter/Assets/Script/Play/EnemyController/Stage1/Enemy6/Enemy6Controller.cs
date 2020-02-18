@@ -139,21 +139,12 @@ public class Enemy6Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.die.name))
         {
-            //   enemy5 = ObjectPoolerManager.Instance.enemy5Pooler.GetPooledObject();
             enemy5 = ObjectPoolManagerHaveScript.Instance.enemy5Pooler.GetEnemyPooledObject();
             enemy5.transform.position = boneBody.GetWorldPosition(skeletonAnimation.transform); 
             enemy5.jumpOut = true;
             enemy5.takeDamageBox.enabled = false;
             enemy5.Init();
             enemy5.gameObject.SetActive(true);
-
-            //var _enemy5Script = enemy5.GetComponent<Enemy5Controller>();
-            //_enemy5Script.jumpOut = true;
-            //_enemy5Script.takeDamageBox.enabled = false;
-            //_enemy5Script.Init();
-
-
-            //   enemy5.SetActive(true);
         }
         else if(trackEntry.Animation.Name.Equals(aec.attack1.name))
             PlayAnim(0, aec.idle, true);

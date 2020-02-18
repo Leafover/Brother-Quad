@@ -297,7 +297,9 @@ public class EnemyManager : MonoBehaviour
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
         CallBoss1Action(deltaTime);
-      //  CallMNB3Action(deltaTime);
+
+        CallMNB3Action(deltaTime);
+        CallEN0Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {

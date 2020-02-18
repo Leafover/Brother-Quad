@@ -16,7 +16,7 @@ public class MenuController : MonoBehaviour
         // PanelHeroes 66->78
 
         instance = this;
-        //Debug.unityLogger.logEnabled = false;
+      //  Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()

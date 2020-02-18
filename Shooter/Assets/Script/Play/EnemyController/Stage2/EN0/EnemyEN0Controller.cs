@@ -64,10 +64,10 @@ public class EnemyEN0Controller : EnemyBase
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
-                if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= Random.Range(3f, 4f))
+                if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Random.Range(1f, 3f))
                 {
                     activeAttack = 2;
-                    PosBegin = new Vector2(Origin().x + Random.Range(-2,2),Origin().y + Random.Range(1, 3));
+                    PosBegin = new Vector2(Origin().x + Random.Range(-2,2),Origin().y - 2);
                     DetecPosPlayer();
                 }
 
