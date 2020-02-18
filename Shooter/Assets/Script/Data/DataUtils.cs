@@ -9,6 +9,7 @@ public class DataUtils
 
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
+    public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES}
     public const int TOTAL_STAGE = 2;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
@@ -21,13 +22,17 @@ public class DataUtils
     public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
     public const string KEY_GAME_STAGE_HARD = GAME_KEY + "KEY_GAME_STAGE_HARD";
     public const string KEY_GAME_STAGE_INDEX_HARD = GAME_KEY + "KEY_GAME_STAGE_INDEX_HARD";
-
     public const string KEY_EQUIPMENT_DATA = GAME_KEY + "KEY_EQUIPMENT_DATA";
+
+    public const string KEY_EQUIPPED_DATA = GAME_KEY + "KEY_EQUIPPED_DATA";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
     public const string P_DONATE = "com.ohzegame.ramboshooter.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohzegame.ramboshooter.brothersquad.starterpack";
+    public const string P_CHEAP_PACK = "com.brothersquad.pack1";
+    public const string P_BEST_CHOICE = "com.brothersquad.pack2";
+    public const string P_PROFESSIONAL_PACK = "com.brothersquad.pack3";
 
     #region Remove Ads
     public static void RemoveAds()
@@ -91,6 +96,41 @@ public class DataUtils
         FillGloves();
         FillBag();
         FillShoes();
+
+
+        #region Check and Init Equipped Item
+        dicEquippedItem = new Dictionary<string, ItemData>();
+        string sEquipped = GetEquippedItem();
+        if (!IsEquippedInit())
+        {
+            ItemData _item = new ItemData();
+            _item.id = "W1";
+            _item.type = eType.WEAPON.ToString();
+            _item.level = eLevel.Normal.ToString();
+            _item.itemName = "Mac 10";
+            _item.curStar = 0;
+            _item.isUnlock = true;
+            _item.isEquipped = true;
+            EquipItem(_item);
+        }
+        else
+        {
+            if(sEquipped.Trim().Length > 0)
+            {
+                JsonData jEquip = JsonMapper.ToObject(sEquipped);
+                string _keyEquip = "";
+                for(int i = 0;i < jEquip.Count; i++)
+                {
+                    ItemData itemData = JsonMapper.ToObject<ItemData>(jEquip[i].ToJson());
+                    _keyEquip = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                    if (!dicEquippedItem.ContainsKey(_keyEquip))
+                    {
+                        dicEquippedItem.Add(_keyEquip, itemData);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 
     #region Fill Weapon Data
@@ -184,7 +224,7 @@ public class DataUtils
     }
     #endregion
 
-    public static Dictionary<string, ItemData> dicAllEquipment;
+    public static Dictionary<string, ItemData> dicAllEquipment, dicEquippedItem;
     public static ItemData itemNew;
 
     public static List<ItemData> lstAllEquipment = new List<ItemData>();
@@ -379,6 +419,38 @@ public class DataUtils
     public static string GetAllEquipment()
     {
         return PlayerPrefs.GetString(KEY_EQUIPMENT_DATA, "");
+    }
+    #endregion
+
+    #region EQUIPPED DATA
+
+    public static string GetEquippedItem()
+    {
+        return PlayerPrefs.GetString(KEY_EQUIPPED_DATA, "");
+    }
+    public static void EquipItem(ItemData iData)
+    {
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
+        if(dicEquippedItem.ContainsKey(_key))
+        {
+            dicEquippedItem[_key].isEquipped = true;
+        }
+        else
+        {
+            ItemData itemData = new ItemData();
+            itemData.id = iData.id;
+            itemData.type = iData.type;
+            itemData.level = iData.level;
+            itemData.isUnlock = iData.isUnlock;
+            itemData.itemName = iData.itemName;
+            itemData.isEquipped = true;
+            dicEquippedItem.Add(_key, iData);
+        }
+    }
+    
+    public static bool IsEquippedInit()
+    {
+        return PlayerPrefs.HasKey(KEY_EQUIPPED_DATA);
     }
     #endregion
 

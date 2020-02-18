@@ -136,6 +136,16 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
                 DataUtils.RemoveAds();
                 DataUtils.TakeItem("W2", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 10, true);
                 break;
+            case DataUtils.P_CHEAP_PACK:
+                DataUtils.AddCoinAndGame(5000, 25);
+                break;
+            case DataUtils.P_BEST_CHOICE:
+                DataUtils.AddCoinAndGame(10000, 50);
+                break;
+            case DataUtils.P_PROFESSIONAL_PACK:
+                DataUtils.AddCoinAndGame(50000, 100);
+                DataUtils.RemoveAds();
+                break;
         }
         return PurchaseProcessingResult.Complete;
     }

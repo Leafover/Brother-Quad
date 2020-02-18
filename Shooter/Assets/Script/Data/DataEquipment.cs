@@ -14,4 +14,5 @@ public class ItemData
     public int curStar = 0;
     public int quantity = 0;
     public string itemName;
+    public bool isEquipped;
 }
