@@ -9,6 +9,7 @@ public class DataUtils
 
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
+    public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES}
     public const int TOTAL_STAGE = 2;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
@@ -29,6 +30,9 @@ public class DataUtils
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
     public const string P_DONATE = "com.ohzegame.ramboshooter.brothersquad.donate";
     public const string P_STARTER_PACK = "com.ohzegame.ramboshooter.brothersquad.starterpack";
+    public const string P_CHEAP_PACK = "com.brothersquad.pack1";
+    public const string P_BEST_CHOICE = "com.brothersquad.pack2";
+    public const string P_PROFESSIONAL_PACK = "com.brothersquad.pack3";
 
     #region Remove Ads
     public static void RemoveAds()

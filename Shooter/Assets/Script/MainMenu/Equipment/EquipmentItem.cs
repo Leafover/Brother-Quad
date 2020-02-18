@@ -7,6 +7,8 @@ using static DataUtils;
 
 public class EquipmentItem : MonoBehaviour
 {
+    public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
+    public Image imgQuality;
     public Image imgSingleSelect;
     public Image imgItemPriview;
     public Image imgProgress;
@@ -64,8 +66,33 @@ public class EquipmentItem : MonoBehaviour
             EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
         }
     }
+    Sprite sprimgQualityTemp;
     private void CheckItemUnlock()
     {
+        #region Check Item quality
+        switch (itemData.level)
+        {
+            case "Normal":
+                sprimgQualityTemp = sprNormal;
+                break;
+            case "Uncommon":
+                sprimgQualityTemp = sprUncommon;
+                break;
+            case "Rare":
+                sprimgQualityTemp = sprRare;
+                break;
+            case "Epic":
+                sprimgQualityTemp = sprEpic;
+                break;
+            case "Legendary":
+                sprimgQualityTemp = sprLegendary;
+                break;
+            default:
+                sprimgQualityTemp = sprNormal;
+                break;
+        }
+        imgQuality.sprite = sprimgQualityTemp;
+        #endregion
         if (itemData.isUnlock)
         {
             imgQuantity.gameObject.SetActive(itemData.quantity == 0 ? false : true);
