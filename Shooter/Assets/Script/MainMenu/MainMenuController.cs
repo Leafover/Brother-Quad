@@ -215,6 +215,13 @@ public class MainMenuController : MonoBehaviour
     }
     public void WatchAds()
     {
-        ShowMapNotify("Watch Video Ads to get coin and crytal.");
+        AdsManager.Instance.ShowRewardedVideo((b) =>
+        {
+            if (b)
+            {
+                DataUtils.AddCoinAndGame(200, 0);
+            }
+        });
+        //ShowMapNotify("Watch Video Ads to get coin and crytal.");
     }
 }

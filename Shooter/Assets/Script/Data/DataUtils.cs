@@ -112,13 +112,19 @@ public class DataUtils
             _item.isUnlock = true;
             _item.isEquipped = true;
             EquipItem(_item);
+
+            _keyEquip = _item.id + "_" + _item.level + "_" + _item.isUnlock;
+            if (!dicAllEquipment.ContainsKey(_keyEquip))
+            {
+                dicAllEquipment.Add(_keyEquip, _item);
+            }
         }
         else
         {
             if(sEquipped.Trim().Length > 0)
             {
                 JsonData jEquip = JsonMapper.ToObject(sEquipped);
-                string _keyEquip = "";
+                
                 for(int i = 0;i < jEquip.Count; i++)
                 {
                     ItemData itemData = JsonMapper.ToObject<ItemData>(jEquip[i].ToJson());
@@ -127,11 +133,17 @@ public class DataUtils
                     {
                         dicEquippedItem.Add(_keyEquip, itemData);
                     }
+
+                    if (!dicAllEquipment.ContainsKey(_keyEquip))
+                    {
+                        dicAllEquipment.Add(_keyEquip, itemData);
+                    }
                 }
             }
         }
         #endregion
     }
+    private static string _keyEquip = "";
 
     #region Fill Weapon Data
     public static Dictionary<string, WeaponList> dicWeapon = new Dictionary<string, WeaponList>();
