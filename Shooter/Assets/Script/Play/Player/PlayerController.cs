@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState == PlayerState.Die || GameController.instance.gameState == GameController.GameState.gameover)
             return;
-        if (isReviving && isNotDestroyAll)
+        if (isReviving && isNotDestroyAll || GameController.instance.win)
             return;
 
         health -= damage;
