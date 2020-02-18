@@ -298,8 +298,8 @@ public class EnemyManager : MonoBehaviour
         CallMiniBoss1Action(deltaTime);
         CallBoss1Action(deltaTime);
 
-        CallMNB3Action(deltaTime);
-        CallEN0Action(deltaTime);
+        //CallMNB3Action(deltaTime);
+        //CallEN0Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {
