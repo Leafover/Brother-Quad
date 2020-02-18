@@ -196,6 +196,14 @@ public class EquipmentManager : MonoBehaviour
         string keyItem = itemData.id + "_" + itemData.level;
         txtItemName.text = DataUtils.dicAllEquipment[_key].itemName;
 
+        foreach(ItemData _iData in DataUtils.dicEquippedItem.Values)
+        {
+            if (_iData.type.Equals(itemData.type))
+            {
+                Debug.LogError("Value: " + _iData.id + " vs " + _iData.itemName + " vs " + _iData.quantity);
+            }
+        }
+
         #region Check Selected Item has Unlock
         if (itemData.isUnlock)
         {
