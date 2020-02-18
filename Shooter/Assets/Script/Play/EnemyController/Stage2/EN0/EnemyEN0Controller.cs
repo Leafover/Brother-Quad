@@ -67,7 +67,7 @@ public class EnemyEN0Controller : EnemyBase
                 if (Mathf.Abs(transform.position.x - PlayerController.instance.GetTranformXPlayer()) <= Random.Range(3f, 4f))
                 {
                     activeAttack = 2;
-                    PosBegin = Origin();
+                    PosBegin = new Vector2(Origin().x + Random.Range(-2,2),Origin().y + Random.Range(1, 3));
                     DetecPosPlayer();
                 }
 

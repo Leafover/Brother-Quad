@@ -194,6 +194,9 @@ public class EnemyBase : AutoTarget
     //        //  Debug.Log("nem luu dan:" + timeDelayAttack);
     //    }
     //}
+
+
+
     public virtual void OnDisable()
     {
         if (skeletonAnimation != null && skeletonAnimation.AnimationState != null)
@@ -384,7 +387,6 @@ public class EnemyBase : AutoTarget
         indexHealthFill = 0;
         currenthealthfill = healthFill[indexHealthFill];
     }
-
     public int CheckDirFollowPlayer(float posX)
     {
 

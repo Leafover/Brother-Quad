@@ -22,5 +22,35 @@ public class RocketMNB3 : BulletEnemy
         atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
         transform.rotation = Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg);
     }
-
+    public override void Hit()
+    {
+        base.Hit();
+        effectExplo = ObjectPoolerManager.Instance.effectExploBulletEnemyV1Pooler.GetPooledObject();
+        effectExplo.transform.position = gameObject.transform.position;
+        effectExplo.SetActive(true);
+        gameObject.SetActive(false);
+        SoundController.instance.PlaySound(soundGame.exploGrenade);
+    }
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        switch (collision.gameObject.layer)
+        {
+            case 8:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
+                Hit();
+                break;
+            case 21:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
+                Hit();
+                break;
+            case 23:
+                if (transform.position.y <= collision.transform.position.y)
+                    return;
+                Hit();
+                break;
+        }
+    }
 }
