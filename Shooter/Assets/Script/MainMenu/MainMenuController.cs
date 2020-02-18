@@ -10,6 +10,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes;
     public EquipmentManager equipmentManager;
     public PopupManager popManager;
+    public ShopManager shopManager;
     public Text txtStageName;
     public Button[] buttonStages;
     public Text txtGems, txtCoins;
@@ -117,9 +118,10 @@ public class MainMenuController : MonoBehaviour
     public void ShowShop()
     {
         SoundClickButton();
-        popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
-        gPanelPopup.SetActive(true);
-        Debug.LogError("ShowShop");
+        //popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
+        //gPanelPopup.SetActive(true);
+        //Debug.LogError("ShowShop");
+        shopManager.gameObject.SetActive(true);
     }
     public void ShowHeroTab()
     {
@@ -164,12 +166,16 @@ public class MainMenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             //if (UnityEngine.Random.Range(0, 100) < 50)
-            //{
-            //    DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, false);
-            //}
+            {
+                DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, true);
+                DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Uncommon, 3, true);
+                DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Rare, 3, true);
+                DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Epic, 3, true);
+                DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
+            }
             //else
             //{
-                DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            //    DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
             //}
         }
     }
@@ -179,6 +185,7 @@ public class MainMenuController : MonoBehaviour
         gPanelStage.SetActive(false);
         gPanelPopup.SetActive(false);
         gPanelHeroes.SetActive(false);
+        shopManager.gameObject.SetActive(false);
         equipmentManager.gameObject.SetActive(false);
     }
 
