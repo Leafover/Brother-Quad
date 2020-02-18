@@ -5,7 +5,6 @@ using Spine;
 using Spine.Unity;
 public class Boss1Controller : EnemyBase
 {
-
     public Bone[] boneExplo = new Bone[7];
     [SpineBone]
     public string[] strBoneExplo = new string[7];
@@ -195,14 +194,9 @@ public class Boss1Controller : EnemyBase
         {
             case true:
                 GetPosTemp(PlayerController.instance.GetTranformXPlayer() - 2);
-
-                //  Debug.LogError("begin:--------" + posTemp.x);
-                //   Debug.Log("ziiiiiiii");
                 break;
             case false:
                 GetPosTemp(PlayerController.instance.GetTranformXPlayer() + 2);
-                //  Debug.LogError("begin:--------" + posTemp.x);
-                //    Debug.Log("ziiiiiiii 11111");
                 break;
         }
 
@@ -215,13 +209,6 @@ public class Boss1Controller : EnemyBase
     int randomtypebullet;
     void ShootBullet()
     {
-        //bullet = ObjectPoolerManager.Instance.bulletBoss1Pooler.GetPooledObject();
-        //bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //bulletScript = bullet.GetComponent<BulletEnemy>();
-        //bulletScript.AddProperties(damage1, bulletspeed1);
-        //bulletScript.dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
-        //bullet.SetActive(true);
-
         bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletBoss1Pooler.GetBulletEnemyPooledObject();
         bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
 
@@ -267,19 +254,7 @@ public class Boss1Controller : EnemyBase
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            //combo++;
-            //if (!incam)
-            //    return;
-            //boxAttack1.gameObject.SetActive(true);
-
-
             combo++;
-            //if (combo == randomCombo + 1)
-            //{
-            //    maxtimeDelayAttack = 2f;
-            //}
-            //if (combo == (randomCombo + 2) && maxtimeDelayAttack == 2f)
-            //    maxtimeDelayAttack = 1f;
             if (combo == 4)
             {
                 canAttack = false;
@@ -342,26 +317,11 @@ public class Boss1Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            //boxAttack1.gameObject.SetActive(false);
-            //if (combo == randomCombo + 1)
-            //{
-            //    combo = 0;
-            //    PlayAnim(0, aec.idle, true);
-            //    StartCoroutine(ActiveMove());
-
-            //}
-            //else
-            //{
-            //    PlayAnim(0, aec.idle, true);
-            //    PlayAnim(0, aec.attack1, false);
-            //}
             if (combo == 4)
             {
                 PlayAnim(1, aec.idle, true);
                 StartCoroutine(ActiveMove());
                 combo = 0;
-
-                //   maxtimeDelayAttack = 1f;
             }
             else
             {
@@ -472,7 +432,6 @@ public class Boss1Controller : EnemyBase
     {
         for (int i = 0; i < strBoneExplo.Length; i++)
         {
-            //  Debug.LogError("---------- zo day coi :D");
             yield return new WaitForSeconds(0.3f);
             EffectWhendie(i);
         }

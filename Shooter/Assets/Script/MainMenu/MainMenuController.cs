@@ -59,7 +59,7 @@ public class MainMenuController : MonoBehaviour
 
     public void UpdateCoinAndGem()
     {
-        if (DataUtils.PlayerInfoHasInit() && DataUtils.playerInfo!= null)
+        if (DataUtils.PlayerInfoHasInit() && DataUtils.playerInfo != null)
         {
             txtGems.text = DataUtils.playerInfo.gems.ToString("#,0");
             txtCoins.text = DataUtils.playerInfo.coins.ToString("#,0");
@@ -163,14 +163,7 @@ public class MainMenuController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //if (UnityEngine.Random.Range(0, 100) < 50)
-            //{
-            //    DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, false);
-            //}
-            //else
-            //{
-                DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
-            //}
+            DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
         }
     }
     private void HideAllPanel()
@@ -186,10 +179,10 @@ public class MainMenuController : MonoBehaviour
     {
         Sprite _spr = null;
         string[] strSP = name.Split('-');
-        
-        for(int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+
+        for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
         {
-            if(allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
+            if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
             {
                 _spr = allSpriteData.spriteDatas[i].sprItem;
             }

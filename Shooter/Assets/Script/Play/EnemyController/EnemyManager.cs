@@ -31,6 +31,7 @@ public class EnemyManager : MonoBehaviour
     public List<EM4Controller> em4s;
     public List<EM5Controller> em5s;
     public List<EM6Controller> em6s;
+    public List<MiniBoss3Controller> miniboss3s;
     public void Awake()
     {
         instance = this;
@@ -270,7 +271,16 @@ public class EnemyManager : MonoBehaviour
             em6s[i].UpdateActionForEnemyManager(deltaTime);
         }
     }
-   
+    void CallMNB3Action(float deltaTime)
+    {
+        if (miniboss3s.Count == 0)
+            return;
+        for (int i = 0; i < miniboss3s.Count; i++)
+        {
+            miniboss3s[i].UpdateActionForEnemyManager(deltaTime);
+        }
+    }
+
     public void OnUpdateByStage1(float deltaTime)
     {
         if (DataParam.indexStage != 0)
@@ -287,6 +297,7 @@ public class EnemyManager : MonoBehaviour
         CallEV3Action(deltaTime);
         CallMiniBoss1Action(deltaTime);
         CallBoss1Action(deltaTime);
+        CallMNB3Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {
@@ -318,6 +329,7 @@ public class EnemyManager : MonoBehaviour
         CallEN0Action(deltaTime);
         CallVN2Action(deltaTime);
         CallN3Action(deltaTime);
+        CallMNB3Action(deltaTime);
     }
 
     public void OnUpdate(float deltaTime)
