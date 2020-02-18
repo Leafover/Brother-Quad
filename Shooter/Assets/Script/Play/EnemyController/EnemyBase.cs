@@ -688,6 +688,9 @@ public class EnemyBase : AutoTarget
     public float currenthealthfill;
     public virtual void TakeDamage(float damage, bool crit = false, bool iamGunboss = false)
     {
+        if (PlayerController.instance.playerState == PlayerController.PlayerState.Die)
+            return;
+
         if (iamGunboss)
         {
             currentHealth -= damage;

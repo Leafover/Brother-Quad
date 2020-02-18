@@ -108,7 +108,7 @@ public class CameraController : MonoBehaviour
     float lockCamPos;
     public void OnUpdate(float deltaTime)
     {
-        if (GameController.instance.win)
+        if (GameController.instance.win || PlayerController.instance.playerState == PlayerController.PlayerState.Die)
             return;
 
         if (!setBoudariesLeft)
