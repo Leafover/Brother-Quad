@@ -446,6 +446,7 @@ public class DataUtils
         if(dicEquippedItem.ContainsKey(_key))
         {
             dicEquippedItem[_key].isEquipped = true;
+            dicAllEquipment[_key].isEquipped = true;
         }
         else
         {
@@ -458,8 +459,17 @@ public class DataUtils
             itemData.isEquipped = true;
             dicEquippedItem.Add(_key, iData);
         }
+
+        SaveEquipmentData();
+        SaveEquippedData();
     }
-    
+    public static void SaveEquippedData()
+    {
+        string jSave = JsonMapper.ToJson(dicEquippedItem);
+        //Debug.LogError(jSave);
+        PlayerPrefs.SetString(KEY_EQUIPPED_DATA, jSave);
+        PlayerPrefs.Save();
+    }
     public static bool IsEquippedInit()
     {
         return PlayerPrefs.HasKey(KEY_EQUIPPED_DATA);
