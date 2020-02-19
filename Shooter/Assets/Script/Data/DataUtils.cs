@@ -73,7 +73,7 @@ public class DataUtils
     public static void FillEquipmentData()
     {
         string sData = GetAllEquipment();
-
+        Debug.LogError("sData: " + sData);
         dicAllEquipment = new Dictionary<string, ItemData>();
         if (sData.Trim().Length > 0)
         {
@@ -97,10 +97,10 @@ public class DataUtils
         FillBag();
         FillShoes();
 
-
         #region Check and Init Equipped Item
         dicEquippedItem = new Dictionary<string, ItemData>();
         string sEquipped = GetEquippedItem();
+        Debug.LogError("sEquipped: " + sEquipped);
         if (!IsEquippedInit())
         {
             ItemData _item = new ItemData();
@@ -392,22 +392,25 @@ public class DataUtils
                     string _newKey = iData.id + "_" + iData.level.ToString() + "_" + true;
                     dicAllEquipment[_key].pices += _pices;
                     CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock);
+                    Debug.LogError("2");
                 }
                 else
                 {
                     dicAllEquipment[_key].quantity += 1;
+                    Debug.LogError("3");
                 }
             }
             else
             {
                 dicAllEquipment[_key].quantity += 1;
+                Debug.LogError("4");
             }
         }
         else
         {
             dicAllEquipment.Add(_key, iData);
 
-
+            Debug.LogError("1");
             if (EquipmentManager.Instance != null)
             {
                 EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
@@ -424,7 +427,7 @@ public class DataUtils
     public static void SaveEquipmentData()
     {
         string jSave = JsonMapper.ToJson(dicAllEquipment);
-        Debug.LogError(jSave);
+        //Debug.LogError(jSave);
         PlayerPrefs.SetString(KEY_EQUIPMENT_DATA, jSave);
         PlayerPrefs.Save();
     }
@@ -443,12 +446,7 @@ public class DataUtils
     public static void EquipItem(ItemData iData)
     {
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
-        if(dicEquippedItem.ContainsKey(_key))
-        {
-            dicEquippedItem[_key].isEquipped = true;
-            dicAllEquipment[_key].isEquipped = true;
-        }
-        else
+        if (!dicEquippedItem.ContainsKey(_key))
         {
             ItemData itemData = new ItemData();
             itemData.id = iData.id;
