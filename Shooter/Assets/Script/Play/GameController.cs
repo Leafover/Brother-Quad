@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour
         CameraController.instance.Init();
         //   PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
       //  PlayerController.instance.skeletonAnimation.gameObject.SetActive(false);
-        Camera.main.transform.position = new Vector3(PlayerController.instance.transform.position.x + 6, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);

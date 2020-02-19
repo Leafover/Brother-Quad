@@ -301,6 +301,7 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.gameObject.SetActive(true);
             skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
             GameController.instance.ActiveUI();
+            animArrow.gameObject.SetActive(true);
         }
     }
     public void EndEvent()
@@ -310,6 +311,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        animArrow.gameObject.SetActive(false);
         lineBlood.Reset();
         skeletonAnimation.Initialize(true);
         boneBarrelGun = skeletonAnimation.Skeleton.FindBone(strboneBarrelGun);
