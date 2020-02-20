@@ -7,19 +7,20 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
-    
+    public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
+
     public static EquipmentManager Instance;
     #region Equipment Selected
-    public Image imgItemPriview, imgDamagePriview;
+    public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine;
     #endregion
     #region Current Equipment
-    public Image imgCurItemPriview, imgCurDamagePriview;
+    public Image imgCurItemPriview, imgCurDamagePriview, imgItemEquipPriview;
     public TextMeshProUGUI txtCurItemName, txtCurDamagePriview, txtCurAttSpeed, txtCurCritRate, txtCurCritDamage, txtCurRange, txtCurMagazine;
     #endregion
 
-    public GameObject gWeaponData;
-    public GameObject gItemSelectPriview;
+    public GameObject gWeaponData, gCurWeaponData;
+    public GameObject gItemSelectPriview, gCurItemPriview;
     public GameObject gCurrentItemEquip;
     public GameObject gSellGroup;
     public Sprite sprSelect, sprUnSelect;
@@ -49,22 +50,102 @@ public class EquipmentManager : MonoBehaviour
         btnPanel = GetComponent<Button>();
         btnPanel.onClick.AddListener(() => { ChooseItem(null); });
     }
+    private void OnDisable()
+    {
+        ChooseItem(null);
+    }
 
     string key = "";
     public void InitAllItems()
     {
         foreach (ItemData itemData in DataUtils.dicAllEquipment.Values)
         {
-            key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
-            gItemClone = Instantiate(gItems);
-            gItemClone.name = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
-            EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
-            item.itemKey = key;
-            item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
-            gItemClone.transform.SetParent(trContain, false);
+            if (!itemData.isEquipped)
+            {
+                key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                gItemClone = Instantiate(gItems);
+                gItemClone.name = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
+                item.itemKey = key;
+                item.imgItemPriview.sprite =DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
+                gItemClone.transform.SetParent(trContain, false);
+            }
         }
     }
 
+    public void RemoveSelectedItem()
+    {
+
+    }
+    public void EquipItem()
+    {
+        if(itemEquipped != null)
+        {
+            for (int i = 0; i < trContain.childCount; i++)
+            {
+                EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                if (_iEquipData.itemData == itemSelected)
+                {
+                    trContain.GetChild(i).gameObject.SetActive(false);
+                }
+                if (_iEquipData.itemData == itemEquipped)
+                {
+                    trContain.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+            CheckInitNewItem(itemEquipped);
+            DataUtils.dicAllEquipment[_keyItemSelected].isEquipped = true;
+            DataUtils.dicAllEquipment[_keyItemEquipped].isEquipped = false;
+            DataUtils.dicEquippedItem.Remove(_keyItemEquipped);
+            DataUtils.EquipItem(itemSelected);
+        }
+        else
+        {
+            DataUtils.dicAllEquipment[_keyItemSelected].isEquipped = true;
+            DataUtils.EquipItem(DataUtils.dicAllEquipment[_keyItemSelected]);
+            for (int i = 0; i < trContain.childCount; i++)
+            {
+                EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                if (_iEquipData.itemData.isEquipped)
+                {
+                    trContain.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+        }
+
+        ChooseItem(null);
+    }
+    public bool IsItemHasInit(string id)
+    {
+        //bool rs = false;
+        int count = 0;
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            if (trContain.GetChild(i).gameObject.name.Equals(id))
+            {
+                count++;
+            }
+        }
+        return count == 0 ? false : true;
+    }
+    private void CheckInitNewItem(ItemData itemNew)
+    {
+        if (itemNew.isEquipped)
+        {
+            if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock))
+            {
+                key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock;
+                gItemClone = Instantiate(gItems);
+                gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock;
+                EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
+                item.itemKey = key;
+                item.itemData = itemNew;
+                item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
+
+                gItemClone.transform.SetParent(trContain, false);
+            }
+        }
+    }
     public void RefreshInventory(ItemData itemNew)
     {
         key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock;
@@ -73,9 +154,10 @@ public class EquipmentManager : MonoBehaviour
         EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
         item.itemKey = key;
         item.itemData = itemNew;
-        item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemNew.id);
+        item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
         gItemClone.transform.SetParent(trContain, false);
+        Debug.LogError("5");
     }
 
     public void ChooseTab(int _index)
@@ -118,13 +200,14 @@ public class EquipmentManager : MonoBehaviour
         }
         #endregion
     }
-    
+
     private void ShowItemTypeSelect(string _type)
     {
         for (int i = 0; i < trContain.childCount; i++)
         {
             EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-            if (_type.Equals(ALL_EQUIP)){
+            if (_type.Equals(ALL_EQUIP))
+            {
                 trContain.GetChild(i).gameObject.SetActive(true);
             }
             else if (!_iEquipData.itemData.type.Equals(_type))
@@ -152,7 +235,8 @@ public class EquipmentManager : MonoBehaviour
 
     public void ChooseItem(ItemData itemData)
     {
-        if(itemData == null) {
+        if (itemData == null)
+        {
             gWeaponData.SetActive(false);
             txtDamagePriview.gameObject.SetActive(false);
             imgDamagePriview.gameObject.SetActive(false);
@@ -170,18 +254,19 @@ public class EquipmentManager : MonoBehaviour
             itemSelected = itemData;
 
             #region Fill Info for EquipmentItem
-            FillEquipmentInfo(itemData);
+            FillEquipmentInfo(itemSelected);
             #endregion
 
             #region Display Selected Image
-            for(int i = 0; i < trContain.childCount; i++)
+            for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                 if (_iEquipData.itemData == itemData)
                 {
                     _iEquipData.imgSingleSelect.enabled = true;
                 }
-                else {
+                else
+                {
                     _iEquipData.imgSingleSelect.enabled = false;
                 }
             }
@@ -189,56 +274,140 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    ItemData itemEquipped;
+    string _keyItemEquipped, _keyItemSelected;
     private void FillEquipmentInfo(ItemData itemData)
     {
-        imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
-        string _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+        imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
+        _keyItemSelected = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
         string keyItem = itemData.id + "_" + itemData.level;
-        txtItemName.text = DataUtils.dicAllEquipment[_key].itemName;
+        txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
 
-        foreach(ItemData _iData in DataUtils.dicEquippedItem.Values)
+        foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
         {
             if (_iData.type.Equals(itemData.type))
             {
-                Debug.LogError("Value: " + _iData.id + " vs " + _iData.itemName + " vs " + _iData.quantity);
+                itemEquipped = _iData;
+                break;
+            }
+            else
+            {
+                itemEquipped = null;
             }
         }
-
-        #region Check Selected Item has Unlock
-        if (itemData.isUnlock)
-        {
-            gCurrentItemEquip.SetActive(true);
-        }
-        else
+        if(itemEquipped == null)
         {
             gCurrentItemEquip.SetActive(false);
         }
-        #endregion
-
-        if (itemData.type.Contains("WEAPON"))
-        {
-            txtDamagePriview.text = "" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
-            txtCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar] + "</color>";
-            txtAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar] + "</color>";
-            txtCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar] + "</color>";
-            txtRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
-            txtMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
-
-            gWeaponData.SetActive(true);
-            txtDamagePriview.gameObject.SetActive(true);
-            imgDamagePriview.gameObject.SetActive(true);
-        }
         else
         {
-            gWeaponData.SetActive(false);
-            txtDamagePriview.gameObject.SetActive(false);
-            imgDamagePriview.gameObject.SetActive(false);
+            string keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
+            _keyItemEquipped = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock;
+            
+            imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
+            txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
+
+            if (itemEquipped.type.Contains("WEAPON"))
+            {
+                txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar];
+                txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[itemEquipped.curStar] + "</color>";
+                txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[itemEquipped.curStar] + "</color>";
+                txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[itemEquipped.curStar] + "</color>";
+                txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar] + "</color>";
+                txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar] + "</color>";
+
+                gCurWeaponData.SetActive(true);
+                txtCurDamagePriview.gameObject.SetActive(true);
+                imgCurDamagePriview.gameObject.SetActive(true);
+                UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
+            }
+            else
+            {
+                gCurWeaponData.SetActive(false);
+                txtCurDamagePriview.gameObject.SetActive(false);
+                imgCurDamagePriview.gameObject.SetActive(false);
+            }
+            gCurItemPriview.SetActive(true);
+
+
+            #region Check Selected Item has Unlock
+            if (itemData.isUnlock)
+            {
+                gCurrentItemEquip.SetActive(true);
+            }
+            else
+            {
+                gCurrentItemEquip.SetActive(false);
+            }
+            #endregion
+            if (itemData.type.Contains("WEAPON"))
+            {
+                txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
+                txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar] + "</color>";
+                txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar] + "</color>";
+                txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar] + "</color>";
+                txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
+                txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
+
+                gWeaponData.SetActive(true);
+                txtDamagePriview.gameObject.SetActive(true);
+                imgDamagePriview.gameObject.SetActive(true);
+            }
+            else
+            {
+                gWeaponData.SetActive(false);
+                txtDamagePriview.gameObject.SetActive(false);
+                imgDamagePriview.gameObject.SetActive(false);
+            }
+            UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
+            gItemSelectPriview.SetActive(true);
+
+            imgItemEquipPriview.sprite = GetSpriteByType(itemEquipped);
         }
+
         UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
+        imgItemSelectPriview.sprite = GetSpriteByType(itemData);
         gItemSelectPriview.SetActive(true);
+    }
+
+    private string GetColorByItemData(float f1, float f2)
+    {
+        string cl = "white";
+        cl = f1 > f2 ? "green" : (f1 < f2 ? "red" : "white");
+
+        return cl;
     }
     public void BackToMainMenu()
     {
         gameObject.SetActive(false);
+    }
+
+    private Sprite GetSpriteByType(ItemData itemData)
+    {
+        Sprite _spr = null;
+        #region Check Item quality
+        switch (itemData.level)
+        {
+            case "Normal":
+                _spr = sprNormal;
+                break;
+            case "Uncommon":
+                _spr = sprUncommon;
+                break;
+            case "Rare":
+                _spr = sprRare;
+                break;
+            case "Epic":
+                _spr = sprEpic;
+                break;
+            case "Legendary":
+                _spr = sprLegendary;
+                break;
+            default:
+                _spr = sprNormal;
+                break;
+        }
+        #endregion
+        return _spr;
     }
 }

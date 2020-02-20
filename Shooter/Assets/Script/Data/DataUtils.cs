@@ -73,7 +73,7 @@ public class DataUtils
     public static void FillEquipmentData()
     {
         string sData = GetAllEquipment();
-
+        Debug.LogError("sData: " + sData);
         dicAllEquipment = new Dictionary<string, ItemData>();
         if (sData.Trim().Length > 0)
         {
@@ -97,10 +97,10 @@ public class DataUtils
         FillBag();
         FillShoes();
 
-
         #region Check and Init Equipped Item
         dicEquippedItem = new Dictionary<string, ItemData>();
         string sEquipped = GetEquippedItem();
+        Debug.LogError("sEquipped: " + sEquipped);
         if (!IsEquippedInit())
         {
             ItemData _item = new ItemData();
@@ -330,10 +330,10 @@ public class DataUtils
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
 
-                //if (EquipmentManager.Instance != null)
-                //{
-                //    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
-                //}
+                if (EquipmentManager.Instance != null)
+                {
+                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
+                }
             }
             else
             {
@@ -382,6 +382,7 @@ public class DataUtils
         iData.isUnlock = fullPart;
         iData.pices = fullPart ? 0 : _pices;
         iData.itemName = GetItemName(iData, _itemType);
+        iData.isEquipped = false;
 
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
         if (dicAllEquipment.ContainsKey(_key))
@@ -406,8 +407,6 @@ public class DataUtils
         else
         {
             dicAllEquipment.Add(_key, iData);
-
-
             if (EquipmentManager.Instance != null)
             {
                 EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
@@ -424,7 +423,7 @@ public class DataUtils
     public static void SaveEquipmentData()
     {
         string jSave = JsonMapper.ToJson(dicAllEquipment);
-        Debug.LogError(jSave);
+        //Debug.LogError(jSave);
         PlayerPrefs.SetString(KEY_EQUIPMENT_DATA, jSave);
         PlayerPrefs.Save();
     }
@@ -443,11 +442,7 @@ public class DataUtils
     public static void EquipItem(ItemData iData)
     {
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
-        if(dicEquippedItem.ContainsKey(_key))
-        {
-            dicEquippedItem[_key].isEquipped = true;
-        }
-        else
+        if (!dicEquippedItem.ContainsKey(_key))
         {
             ItemData itemData = new ItemData();
             itemData.id = iData.id;
@@ -458,8 +453,17 @@ public class DataUtils
             itemData.isEquipped = true;
             dicEquippedItem.Add(_key, iData);
         }
+
+        SaveEquipmentData();
+        SaveEquippedData();
     }
-    
+    public static void SaveEquippedData()
+    {
+        string jSave = JsonMapper.ToJson(dicEquippedItem);
+        //Debug.LogError(jSave);
+        PlayerPrefs.SetString(KEY_EQUIPPED_DATA, jSave);
+        PlayerPrefs.Save();
+    }
     public static bool IsEquippedInit()
     {
         return PlayerPrefs.HasKey(KEY_EQUIPPED_DATA);
@@ -826,5 +830,20 @@ public class DataUtils
     public static string DisplayRichText(double dFrom, double dTo)
     {
         return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
+    }
+
+    public static Sprite GetSpriteByName(string name, ItemSpriteData allSpriteData)
+    {
+        Sprite _spr = null;
+        string[] strSP = name.Split('-');
+
+        for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+        {
+            if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
+            {
+                _spr = allSpriteData.spriteDatas[i].sprItem;
+            }
+        }
+        return _spr;
     }
 }
