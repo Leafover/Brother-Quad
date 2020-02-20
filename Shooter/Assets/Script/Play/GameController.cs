@@ -22,7 +22,7 @@ public class AllMap
 }
 public class GameController : MonoBehaviour
 {
-    public GameObject letgo,uiDisplay;
+    public GameObject letgo, uiDisplay;
     public MayBayController maybay;
 
     public List<Sprite> gunSprite;
@@ -118,7 +118,7 @@ public class GameController : MonoBehaviour
         currentMap.transform.position = Vector2.zero;
         CameraController.instance.Init();
         //   PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
-      //  PlayerController.instance.skeletonAnimation.gameObject.SetActive(false);
+        //  PlayerController.instance.skeletonAnimation.gameObject.SetActive(false);
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
@@ -400,6 +400,7 @@ public class GameController : MonoBehaviour
         else
             SoundController.instance.PlaySound(soundGame.soundvictory1);
     }
+    int gemAdd;
     public void WinGame()
     {
         gameState = GameState.gameover;
@@ -441,7 +442,7 @@ public class GameController : MonoBehaviour
             }
             DataController.instance.DoDailyQuest(2, 1);
         }
-        Debug.Log(DataParam.indexStage + ":" + DataParam.indexMap);
+        //   Debug.Log(DataParam.indexStage + ":" + DataParam.indexMap);
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         MissionController.Instance.CheckMission();
@@ -462,8 +463,17 @@ public class GameController : MonoBehaviour
         }
         if (DataUtils.modeSelected == 1)
         {
+            gemAdd = Mathf.RoundToInt((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem * 1.5f);
             DataController.instance.DoDailyQuest(4, 1);
         }
+        else
+        {
+            gemAdd = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem;
+        }
+        DataUtils.AddCoinAndGame(0, gemAdd);
+
+        ThemManh();
+
         StartCoroutine(delayDisplayFinish());
     }
     public void DisplaySetting()
@@ -528,7 +538,7 @@ public class GameController : MonoBehaviour
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
         {
-            if(gameState == GameState.begin)
+            if (gameState == GameState.begin)
             {
                 PlayerController.instance.BeginPlayer();
             }
@@ -617,67 +627,81 @@ public class GameController : MonoBehaviour
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "");
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("A"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
-            //  DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, 1, false);
+            //  DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("S"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("G"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("B"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, 1, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
+        DisplayReward(rePlaceID, i,eLevel);
+    }
+    void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
+    {
+        for (int i = 0; i < uiPanel.bouders.Length; i++)
+        {
+            if (!vatphamnhanduoc[i].ID.Contains("P"))
+            {
+                uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
+                uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
+                uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                uiPanel.bouders[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                uiPanel.bouders[i].gameObject.SetActive(false);
+            }
+        }
+        uiPanel.rewardText[2].text = "" + DataParam.totalCoin;
+        uiPanel.rewardText[3].text = "" + gemAdd;
+        uiPanel.rewardImg[2].sprite = uiPanel.rewardSp[0];
+        uiPanel.rewardImg[3].sprite = uiPanel.rewardSp[1];
     }
     int randomCertain;
     public void ThemManh()
     {
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
-            for (int j = 0; j < vatphamnhanduoc[i].TotalNumber; j++)
-            {
-                randomCertain = Random.Range(0, 100);
+            randomCertain = Random.Range(0, 100);
 
-                if (randomCertain < vatphamnhanduoc[i].Normal)
-                {
-                    AddItem(i, DataUtils.eLevel.Normal);
-                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Normal");
-                }
-                else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
-                {
-                    AddItem(i, DataUtils.eLevel.Uncommon);
-                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Uncommon");
-                }
-                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
-                {
-                    AddItem(i, DataUtils.eLevel.Rare);
-                    //   Debug.Log(vatphamnhanduoc[i].ID + ": Rare");
-                }
-                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
-                {
-                    AddItem(i, DataUtils.eLevel.Epic);
-                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Epic");
-                }
-                else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
-                {
-                    AddItem(i, DataUtils.eLevel.Legendary);
-                    //  Debug.Log(vatphamnhanduoc[i].ID + ": Legendary");
-                }
+            if (randomCertain < vatphamnhanduoc[i].Normal)
+            {
+                AddItem(i, DataUtils.eLevel.Normal);
+            }
+            else if (randomCertain >= vatphamnhanduoc[i].Normal && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon))
+            {
+                AddItem(i, DataUtils.eLevel.Uncommon);
+            }
+            else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare))
+            {
+                AddItem(i, DataUtils.eLevel.Rare);
+            }
+            else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare) && randomCertain < (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
+            {
+                AddItem(i, DataUtils.eLevel.Epic);
+            }
+            else if (randomCertain >= (vatphamnhanduoc[i].Normal + vatphamnhanduoc[i].Uncommon + vatphamnhanduoc[i].Rare + vatphamnhanduoc[i].Epic))
+            {
+                AddItem(i, DataUtils.eLevel.Legendary);
             }
         }
 

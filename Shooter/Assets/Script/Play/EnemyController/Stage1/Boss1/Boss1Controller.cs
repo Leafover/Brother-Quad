@@ -211,7 +211,8 @@ public class Boss1Controller : EnemyBase
     {
         bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletBoss1Pooler.GetBulletEnemyPooledObject();
         bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-
+        listMyBullet.Add(bulletEnemy);
+        bulletEnemy.BeginDisplay(Vector2.zero, this);
         if (typeAttack == 0)
         {
             bulletEnemy.AddProperties(damage1, bulletspeed1);
