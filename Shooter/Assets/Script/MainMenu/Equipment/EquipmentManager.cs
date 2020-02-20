@@ -67,7 +67,7 @@ public class EquipmentManager : MonoBehaviour
                 gItemClone.name = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
                 EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
                 item.itemKey = key;
-                item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
+                item.imgItemPriview.sprite =DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
                 gItemClone.transform.SetParent(trContain, false);
             }
         }
@@ -140,7 +140,7 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
                 item.itemKey = key;
                 item.itemData = itemNew;
-                item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemNew.id);
+                item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
                 gItemClone.transform.SetParent(trContain, false);
             }
@@ -154,7 +154,7 @@ public class EquipmentManager : MonoBehaviour
         EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
         item.itemKey = key;
         item.itemData = itemNew;
-        item.imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemNew.id);
+        item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
         gItemClone.transform.SetParent(trContain, false);
         Debug.LogError("5");
@@ -278,7 +278,7 @@ public class EquipmentManager : MonoBehaviour
     string _keyItemEquipped, _keyItemSelected;
     private void FillEquipmentInfo(ItemData itemData)
     {
-        imgItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemData.id);
+        imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
         _keyItemSelected = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
         string keyItem = itemData.id + "_" + itemData.level;
         txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
@@ -304,7 +304,7 @@ public class EquipmentManager : MonoBehaviour
             string keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
             _keyItemEquipped = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock;
             
-            imgCurItemPriview.sprite = MainMenuController.Instance.GetSpriteByName(itemEquipped.id);
+            imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
             txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
             if (itemEquipped.type.Contains("WEAPON"))

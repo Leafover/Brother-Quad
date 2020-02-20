@@ -330,10 +330,10 @@ public class DataUtils
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
 
-                //if (EquipmentManager.Instance != null)
-                //{
-                //    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
-                //}
+                if (EquipmentManager.Instance != null)
+                {
+                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
+                }
             }
             else
             {
@@ -382,6 +382,7 @@ public class DataUtils
         iData.isUnlock = fullPart;
         iData.pices = fullPart ? 0 : _pices;
         iData.itemName = GetItemName(iData, _itemType);
+        iData.isEquipped = false;
 
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
         if (dicAllEquipment.ContainsKey(_key))
@@ -392,25 +393,20 @@ public class DataUtils
                     string _newKey = iData.id + "_" + iData.level.ToString() + "_" + true;
                     dicAllEquipment[_key].pices += _pices;
                     CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock);
-                    Debug.LogError("2");
                 }
                 else
                 {
                     dicAllEquipment[_key].quantity += 1;
-                    Debug.LogError("3");
                 }
             }
             else
             {
                 dicAllEquipment[_key].quantity += 1;
-                Debug.LogError("4");
             }
         }
         else
         {
             dicAllEquipment.Add(_key, iData);
-
-            Debug.LogError("1");
             if (EquipmentManager.Instance != null)
             {
                 EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
@@ -834,5 +830,20 @@ public class DataUtils
     public static string DisplayRichText(double dFrom, double dTo)
     {
         return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
+    }
+
+    public static Sprite GetSpriteByName(string name, ItemSpriteData allSpriteData)
+    {
+        Sprite _spr = null;
+        string[] strSP = name.Split('-');
+
+        for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+        {
+            if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
+            {
+                _spr = allSpriteData.spriteDatas[i].sprItem;
+            }
+        }
+        return _spr;
     }
 }

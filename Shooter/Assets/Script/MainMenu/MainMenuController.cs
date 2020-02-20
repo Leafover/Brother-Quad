@@ -187,20 +187,7 @@ public class MainMenuController : MonoBehaviour
         equipmentManager.gameObject.SetActive(false);
     }
 
-    public Sprite GetSpriteByName(string name)
-    {
-        Sprite _spr = null;
-        string[] strSP = name.Split('-');
 
-        for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
-        {
-            if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
-            {
-                _spr = allSpriteData.spriteDatas[i].sprItem;
-            }
-        }
-        return _spr;
-    }
 
 
     public void BtnLike()

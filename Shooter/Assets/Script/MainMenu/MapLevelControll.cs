@@ -176,10 +176,10 @@ public class MapLevelControll : MonoBehaviour
         {
             for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
             {
-                if(MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType) != null)
+                if(DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType, MainMenuController.Instance.allSpriteData) != null)
                 {
                     _sCutName = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Split('-');
-                    StageManager.Instance.imgItemReward[i].sprite = MainMenuController.Instance.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                    StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType, MainMenuController.Instance.allSpriteData);
                     if (_sCutName[_sCutName.Length - 1].Contains("W"))
                     {
                         StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);

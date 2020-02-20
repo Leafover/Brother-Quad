@@ -69,6 +69,8 @@ public class EquipmentItem : MonoBehaviour
     Sprite sprimgQualityTemp;
     private void CheckItemUnlock()
     {
+        if (itemData.isEquipped) gameObject.SetActive(false);
+
         #region Check Item quality
         switch (itemData.level)
         {
