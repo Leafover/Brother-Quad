@@ -9,6 +9,7 @@ public class EquipmentManager : MonoBehaviour
     const string ALL_EQUIP = "ALL";
     public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
 
+    public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
     #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
@@ -75,7 +76,9 @@ public class EquipmentManager : MonoBehaviour
 
     public void RemoveSelectedItem()
     {
-
+        disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
+        disassembleManager.gameObject.SetActive(true);
+        Debug.LogError(_keyItemSelected + " vs " + DataUtils.dicAllEquipment[_keyItemSelected]);
     }
     public void EquipItem()
     {
@@ -304,14 +307,14 @@ public class EquipmentManager : MonoBehaviour
 
     public void UpdateRotation(ItemData itemData, RectTransform _rect)
     {
-        if (itemData.type.Equals(DataUtils.eType.WEAPON.ToString()))
-        {
-            _rect.eulerAngles = new Vector3(0, 0, 30);
-        }
-        else
-        {
-            _rect.eulerAngles = new Vector3(0, 0, 0);
-        }
+        //if (itemData.type.Equals(DataUtils.eType.WEAPON.ToString()))
+        //{
+        //    _rect.eulerAngles = new Vector3(0, 0, 30);
+        //}
+        //else
+        //{
+        //    _rect.eulerAngles = new Vector3(0, 0, 0);
+        //}
     }
 
     public void ChooseItem(ItemData itemData)
@@ -443,11 +446,11 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             gItemSelectPriview.SetActive(true);
 
-            imgItemEquipPriview.sprite = GetSpriteByType(itemEquipped);
+            imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(itemEquipped);
         }
 
         UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
-        imgItemSelectPriview.sprite = GetSpriteByType(itemData);
+        imgItemSelectPriview.sprite = DataUtils.GetSpriteByType(itemData);
         gItemSelectPriview.SetActive(true);
     }
 
@@ -463,32 +466,5 @@ public class EquipmentManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private Sprite GetSpriteByType(ItemData itemData)
-    {
-        Sprite _spr = null;
-        #region Check Item quality
-        switch (itemData.level)
-        {
-            case "Normal":
-                _spr = sprNormal;
-                break;
-            case "Uncommon":
-                _spr = sprUncommon;
-                break;
-            case "Rare":
-                _spr = sprRare;
-                break;
-            case "Epic":
-                _spr = sprEpic;
-                break;
-            case "Legendary":
-                _spr = sprLegendary;
-                break;
-            default:
-                _spr = sprNormal;
-                break;
-        }
-        #endregion
-        return _spr;
-    }
+    
 }

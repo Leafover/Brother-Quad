@@ -381,25 +381,32 @@ public class DataUtils
     }
     public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart)
     {
-        ItemData iData = new ItemData();
-        iData.id = _id;
-        iData.type = _itemType.ToString();
-        iData.level = _itemLevel.ToString();
-        iData.isUnlock = fullPart;
-        iData.pices = fullPart ? 0 : _pices;
-        iData.itemName = GetItemName(iData, _itemType);
-        iData.isEquipped = false;
+        if (_pices > 0) {
+            ItemData iData = new ItemData();
+            iData.id = _id;
+            iData.type = _itemType.ToString();
+            iData.level = _itemLevel.ToString();
+            iData.isUnlock = fullPart;
+            iData.pices = fullPart ? 0 : _pices;
+            iData.itemName = GetItemName(iData, _itemType);
+            iData.isEquipped = false;
 
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
-        if (dicAllEquipment.ContainsKey(_key))
-        {
-            if (!iData.isUnlock) {
-                if (!dicAllEquipment[_key].isUnlock)
+            string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+            if (dicAllEquipment.ContainsKey(_key))
+            {
+                if (!iData.isUnlock)
                 {
-                    string _newKey = iData.id + "_" + iData.level.ToString() + "_" + /*true*/iData.isUnlock + "_" + iData.isEquipped;
-                    Debug.LogError("NEWKEY: " + _newKey);
-                    dicAllEquipment[_key].pices += _pices;
-                    CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
+                    if (!dicAllEquipment[_key].isUnlock)
+                    {
+                        string _newKey = iData.id + "_" + iData.level.ToString() + "_" + /*true*/iData.isUnlock + "_" + iData.isEquipped;
+                        Debug.LogError("NEWKEY: " + _newKey);
+                        dicAllEquipment[_key].pices += _pices;
+                        CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
+                    }
+                    else
+                    {
+                        dicAllEquipment[_key].quantity += 1;
+                    }
                 }
                 else
                 {
@@ -408,18 +415,14 @@ public class DataUtils
             }
             else
             {
-                dicAllEquipment[_key].quantity += 1;
+                dicAllEquipment.Add(_key, iData);
+                if (EquipmentManager.Instance != null)
+                {
+                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
+                }
             }
+            SaveEquipmentData();
         }
-        else
-        {
-            dicAllEquipment.Add(_key, iData);
-            if (EquipmentManager.Instance != null)
-            {
-                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
-            }
-        }
-        SaveEquipmentData();
     }
 
 
@@ -851,6 +854,34 @@ public class DataUtils
                 _spr = allSpriteData.spriteDatas[i].sprItem;
             }
         }
+        return _spr;
+    }
+    public static Sprite GetSpriteByType(ItemData itemData)
+    {
+        Sprite _spr = null;
+        #region Check Item quality
+        switch (itemData.level)
+        {
+            case "Normal":
+                _spr = MainMenuController.Instance.sprNormal;
+                break;
+            case "Uncommon":
+                _spr = MainMenuController.Instance.sprUncommon;
+                break;
+            case "Rare":
+                _spr = MainMenuController.Instance.sprRare;
+                break;
+            case "Epic":
+                _spr = MainMenuController.Instance.sprEpic;
+                break;
+            case "Legendary":
+                _spr = MainMenuController.Instance.sprLegendary;
+                break;
+            default:
+                _spr = MainMenuController.Instance.sprNormal;
+                break;
+        }
+        #endregion
         return _spr;
     }
 }
