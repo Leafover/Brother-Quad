@@ -884,4 +884,31 @@ public class DataUtils
         #endregion
         return _spr;
     }
+    public static double GetPriceByType(ItemData itemData)
+    {
+        double dbValue = 0;
+        string keyEquipped = itemData.id + "_" + itemData.level;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                dbValue = dicArmor[keyEquipped].GiaKhiRaDo;
+                break;
+            case "BAG":
+                dbValue = dicBag[keyEquipped].GiaKhiRaDo;
+                break;
+            case "GLOVES":
+                dbValue = dicGloves[keyEquipped].GiaKhiRaDo;
+                break;
+            case "HELMET":
+                dbValue = dicHelmet[keyEquipped].GiaKhiRaDo;
+                break;
+            case "SHOES":
+                dbValue = dicShoes[keyEquipped].GiaKhiRaDo;
+                break;
+            case "WEAPON":
+                dbValue = dicWeapon[keyEquipped].GiaKhiRaDo;
+                break;
+        }
+        return dbValue;
+    }
 }

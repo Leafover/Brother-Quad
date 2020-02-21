@@ -20,6 +20,7 @@ public class EquipmentItem : MonoBehaviour
     public Image imgPart;
 
     public string itemKey = "";
+    private bool isSelected;
     //[HideInInspector]
     public ItemData itemData;
     Button btnItem;
@@ -71,7 +72,23 @@ public class EquipmentItem : MonoBehaviour
     {
         btnItem.onClick.AddListener(() =>
         {
-            EquipmentManager.Instance.ChooseItem(itemData);
+            if (!EquipmentManager.Instance.isMultiSell)
+                EquipmentManager.Instance.ChooseItem(itemData);
+            else {
+                isSelected = !isSelected;
+                if (itemData.isUnlock) {
+                    if (isSelected)
+                    {
+                        EquipmentManager.Instance.AddItemToList(this);
+                        imgMultiSelect.enabled = true;
+                    }
+                    else
+                    {
+                        EquipmentManager.Instance.RemoveItemFromList(this);
+                        imgMultiSelect.enabled = false;
+                    }
+                }
+            }
         });
         if (!string.IsNullOrEmpty(itemKey))
         {
