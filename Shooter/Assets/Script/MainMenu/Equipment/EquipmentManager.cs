@@ -76,10 +76,28 @@ public class EquipmentManager : MonoBehaviour
 
     public void RemoveSelectedItem()
     {
-        disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
-        disassembleManager.gameObject.SetActive(true);
         Debug.LogError(_keyItemSelected + " vs " + DataUtils.dicAllEquipment[_keyItemSelected]);
+        disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
+        disassembleManager.keyItem = _keyItemSelected;
+        disassembleManager.gameObject.SetActive(true);
     }
+    public void DoDisassemble(ItemData iSell, string strRemoveKey)
+    {
+        for(int i = 0; i< trContain.childCount; i++)
+        {
+            if (trContain.GetChild(i).gameObject.name.Equals(strRemoveKey))
+            {
+                Destroy(trContain.GetChild(i).gameObject);
+            }
+        }
+        if (DataUtils.dicAllEquipment.ContainsKey(strRemoveKey))
+        {
+            DataUtils.dicAllEquipment.Remove(strRemoveKey);
+        }
+        DataUtils.SaveEquipmentData();
+        ChooseItem(null);
+    }
+
     public void EquipItem()
     {
         if (itemEquipped != null)

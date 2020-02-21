@@ -8,12 +8,15 @@ public class DisassembleManager : MonoBehaviour
     public Text txtReward;
     public Image imgQuality, imgItemPriview;
     public ItemData iDisassemble;
+    public GameObject gDisassemble;
+    public string keyItem;
     string keyEquipped;
     double dbValue;
     private void OnEnable()
     {
         imgItemPriview.sprite = DataUtils.GetSpriteByName(iDisassemble.id, MainMenuController.Instance.allSpriteData);
         keyEquipped = iDisassemble.id + "_" + iDisassemble.level;
+        keyItem = keyEquipped + "_" + iDisassemble.isUnlock + "_" + iDisassemble.isEquipped;
         Debug.LogError("keyEquipped: " + keyEquipped);
         switch (iDisassemble.type)
         {
@@ -42,6 +45,7 @@ public class DisassembleManager : MonoBehaviour
     public void DisassebleItem()
     {
         DataUtils.AddCoinAndGame((int)dbValue, 0);
+        EquipmentManager.Instance.DoDisassemble(iDisassemble, keyItem);
         ClosePopup();
     }
     public void ClosePopup()
