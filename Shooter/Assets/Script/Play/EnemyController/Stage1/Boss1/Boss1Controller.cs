@@ -8,7 +8,6 @@ public class Boss1Controller : EnemyBase
     public Bone[] boneExplo = new Bone[7];
     [SpineBone]
     public string[] strBoneExplo = new string[7];
-
     public GameObject effectwhenDie, effectsmoke, effectexplohand;
     public float speedMove;
     public int typeAttack;
@@ -18,7 +17,6 @@ public class Boss1Controller : EnemyBase
         Init();
         if (waitBeAttack == null)
             waitBeAttack = new WaitForSeconds(0.1f);
-
         for (int i = 0; i < strBoneExplo.Length; i++)
         {
             boneExplo[i] = skeletonAnimation.Skeleton.FindBone(strBoneExplo[i]);
@@ -33,11 +31,8 @@ public class Boss1Controller : EnemyBase
         }
         speedMove = -speed;
         typeAttack = 0;
-
         takeDamageBox.enabled = false;
-
     }
-
     public override void OnDisable()
     {
         base.OnDisable();
@@ -58,7 +53,6 @@ public class Boss1Controller : EnemyBase
         base.Active();
         PlayAnim(1, aec.run, true);
         enemyState = EnemyState.idle;
-
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -96,7 +90,6 @@ public class Boss1Controller : EnemyBase
                 }
                 break;
             case EnemyState.attack:
-
                 switch (typeAttack)
                 {
                     case 0:
@@ -112,8 +105,6 @@ public class Boss1Controller : EnemyBase
                                 randomCombo = Random.Range(0, 3);
                             }
                         }
-
-
                         else
                         {
                             CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
@@ -156,7 +147,6 @@ public class Boss1Controller : EnemyBase
                                 StartCoroutine(ActiveAttack());
                                 randomCombo = Random.Range(0, 3);
                             }
-
                         }
                         else
                         {
@@ -199,7 +189,6 @@ public class Boss1Controller : EnemyBase
                 GetPosTemp(PlayerController.instance.GetTranformXPlayer() + 2);
                 break;
         }
-
     }
     //GameObject bullet;
     //BulletEnemy bulletScript;
@@ -211,7 +200,8 @@ public class Boss1Controller : EnemyBase
     {
         bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletBoss1Pooler.GetBulletEnemyPooledObject();
         bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-
+        listMyBullet.Add(bulletEnemy);
+        bulletEnemy.BeginDisplay(Vector2.zero, this);
         if (typeAttack == 0)
         {
             bulletEnemy.AddProperties(damage1, bulletspeed1);
@@ -345,18 +335,12 @@ public class Boss1Controller : EnemyBase
                 PlayAnim(1, aec.run, true);
                 combo = 0;
                 CheckDirFollowPlayer(PosBegin.x);
-
-
-
             }
             else
             {
                 PlayAnim(1, aec.idle, true);
                 PlayAnim(1, aec.attack2, false);
-
-
             }
-
         }
         if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
@@ -365,9 +349,7 @@ public class Boss1Controller : EnemyBase
                 PlayAnim(1, aec.idle, true);
                 StartCoroutine(ActiveMove());
                 combo = 0;
-                //maxtimeDelayAttack = 1f;
             }
-
         }
     }
     public int activeType3 = 0;
@@ -382,11 +364,8 @@ public class Boss1Controller : EnemyBase
                 StartCoroutine(BeAttackFill());
             }
         }
-
     }
-
     WaitForSeconds waitBeAttack;
-    //   int randomWin;
     IEnumerator BeAttackFill()
     {
         skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 0.5f));
@@ -404,7 +383,6 @@ public class Boss1Controller : EnemyBase
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
         yield return waitBeAttack;
         effectsmoke.SetActive(true);
-
     }
     void EffectWhendie(int index)
     {
@@ -413,7 +391,6 @@ public class Boss1Controller : EnemyBase
         effectsss.Add(effectexploandsmokewhendie);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
         effectexploandsmokewhendie.SetActive(true);
-        //  Debug.LogError("---------- zo day coi :D");
     }
     List<GameObject> effectsss = new List<GameObject>();
     public void ExploOffBoss()

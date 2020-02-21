@@ -5,8 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
+    public ItemSpriteData allSpriteData;
+
+    public GameObject[] bouders;
+    public Image[] rewardImg, bouderLevel;
+    public Text[] rewardText;
+    public Sprite[] rewardSp,levelSp;
+
+
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning,btnRevive,lowHealth;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnRevive, lowHealth;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
 
@@ -50,15 +58,15 @@ public class UIPanel : MonoBehaviour
     {
         PopupSetting.Instance.ShowPanelSetting();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-//#if UNITY_EDITOR
+        //#if UNITY_EDITOR
 
-//#else
-//        randomAds = Random.Range(0, 100);
-//        if (randomAds < 30)
-//        {
-//            AdsManager.Instance.ShowInterstitial((b) => { });
-//        }
-//#endif
+        //#else
+        //        randomAds = Random.Range(0, 100);
+        //        if (randomAds < 30)
+        //        {
+        //            AdsManager.Instance.ShowInterstitial((b) => { });
+        //        }
+        //#endif
         //DataParam.nextSceneAfterLoad = 0;
         //Application.LoadLevel(1);
     }
@@ -132,7 +140,6 @@ public class UIPanel : MonoBehaviour
                     break;
             }
 
-            GameController.instance.ThemManh();
         }
         else
         {

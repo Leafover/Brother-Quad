@@ -28,6 +28,7 @@ public class EnemyEN0Controller : EnemyBase
         }
      //   myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
         activeAttack = 0;
+        combo = 0;
         randomCombo = 2;
 
     }
@@ -64,6 +65,7 @@ public class EnemyEN0Controller : EnemyBase
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                CheckDirFollowPlayer(posTemp.x);
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Random.Range(1f, 3f))
                 {
                     activeAttack = 2;
@@ -74,6 +76,7 @@ public class EnemyEN0Controller : EnemyBase
                 break;
             case 1:
                 transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                CheckDirFollowPlayer(posTemp.x);
                 if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                     gameObject.SetActive(false);
                 //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
@@ -140,6 +143,9 @@ public class EnemyEN0Controller : EnemyBase
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bulletEnemy.transform.rotation = rotation;
+
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
 
             bulletEnemy.gameObject.SetActive(true);
 

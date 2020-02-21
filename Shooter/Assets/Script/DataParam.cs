@@ -10,14 +10,12 @@ public class DataParam : MonoBehaviour
     public static string REWARDED_ID = isTest ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-8566745611252640/6166498422";
     public const bool isTest = false;
 
-
-
     public const string ALLACHIEVEMENT = "allachievement";
     public const string OLDDATETIME = "olddatetime";
     public const string ALLDAILYQUEST = "alldailyquest";
     public const string SAVEINDEXQUEST = "saveindexquest";
 
-    public static bool first = true,isVIP = false,doneAllDailyQuest = false;
+    public static bool first = true, isVIP = false, doneAllDailyQuest = false;
     public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",

@@ -94,18 +94,42 @@ public class MiniBoss3Controller : EnemyBase
                     CheckDirFollowPlayer(posTemp.x);
                     if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                     {
-                        if (previousState == EnemyState.attack)
+                        if (currentHealth > health / 2)
                         {
-                            enemyState = EnemyState.falldown;
-                            typeAttack = 0;
-                            timePreviousAttack = maxtimeDelayAttack1;
+                            if (previousState == EnemyState.attack)
+                            {
+                                enemyState = EnemyState.falldown;
+                                typeAttack = 0;
+                                timePreviousAttack = maxtimeDelayAttack1;
+                                randomCombo = 1;
+                            }
+                            else if (previousState == EnemyState.falldown)
+                            {
+                                enemyState = EnemyState.attack;
+                                typeAttack = 1;
+                                timePreviousAttack = maxtimeDelayAttack2;
+                                randomCombo = 1;
+                            }
                         }
-                        else if (previousState == EnemyState.falldown)
+                        else
                         {
-                            enemyState = EnemyState.attack;
-                            typeAttack = 1;
-                            timePreviousAttack = maxtimeDelayAttack2;
+                            if (previousState == EnemyState.falldown)
+                            {
+                                enemyState = EnemyState.attack;
+                                typeAttack = 0;
+                                timePreviousAttack = maxtimeDelayAttack2;
+                                randomCombo = Random.Range(4, 6);
+                            }
+                            else if (previousState == EnemyState.attack)
+                            {
+                                enemyState = EnemyState.falldown;
+                                typeAttack = 1;
+                                timePreviousAttack = maxtimeDelayAttack1;
+                                randomCombo = Random.Range(3, 6);
+                            }
                         }
+
+
                     }
                 }
                 break;
@@ -166,6 +190,7 @@ public class MiniBoss3Controller : EnemyBase
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketMiniBoss3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.BeginDisplay(new Vector2(xVelo, yVelo), this);
+            listMyBullet.Add(bulletEnemy);
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.gameObject.SetActive(true);
 
@@ -179,18 +204,31 @@ public class MiniBoss3Controller : EnemyBase
 
                 if (countShootRocket == 2)
                 {
-                    if (PlayerController.instance.transform.position.x > transform.position.x)
-                        posTemp.x = Camera.main.transform.position.x - 4;
-                    else
-                        posTemp.x = Camera.main.transform.position.x + 4;
-                    posTemp.y = Camera.main.transform.position.y + 1;
-                    previousState = enemyState;
-                    enemyState = EnemyState.run;
-
-                    countShootRocket = 0;
-                    for (int i = 0; i < target.Count; i++)
+                    if (currentHealth > health / 2)
                     {
-                        target[i].gameObject.SetActive(false);
+                        if (PlayerController.instance.transform.position.x > transform.position.x)
+                            posTemp.x = Camera.main.transform.position.x - Random.Range(1f, 4f);
+                        else
+                            posTemp.x = Camera.main.transform.position.x + Random.Range(1f, 4f);
+                        posTemp.y = Camera.main.transform.position.y + 1;
+                        previousState = enemyState;
+                        enemyState = EnemyState.run;
+
+                        countShootRocket = 0;
+                        for (int i = 0; i < target.Count; i++)
+                        {
+                            target[i].gameObject.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        countShootRocket = 0;
+                        randomCombo = 2;
+                        typeAttack = 1;
+                        for (int i = 0; i < target.Count; i++)
+                        {
+                            target[i].gameObject.SetActive(false);
+                        }
                     }
                 }
             }
@@ -215,6 +253,7 @@ public class MiniBoss3Controller : EnemyBase
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.energyMNB3BasePooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
             dirBullet = (Vector2)PlayerController.instance.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -225,16 +264,52 @@ public class MiniBoss3Controller : EnemyBase
 
             PlayAnim(0, aec.attack1, false);
             timePreviousAttack = maxtimeDelayAttack1;
-            if (enemyState == EnemyState.falldown)
+            combo++;
+
+            if (combo == randomCombo)
             {
-                typeAttack = 1;
-                randomCombo = Random.Range(3, 6);
+                if (currentHealth > health / 2)
+                {
+                    if (enemyState == EnemyState.falldown)
+                    {
+                        typeAttack = 1;
+                        randomCombo = Random.Range(3, 6);
+                    }
+                    else if (enemyState == EnemyState.attack)
+                    {
+                        typeAttack = 0;
+                        randomCombo = Random.Range(4, 6);
+                    }
+                }
+                else
+                {
+                    if (enemyState == EnemyState.falldown)
+                    {
+                        if (PlayerController.instance.transform.position.x > transform.position.x)
+                            posTemp.x = Camera.main.transform.position.x - Random.Range(1,4);
+                        else
+                            posTemp.x = Camera.main.transform.position.x + Random.Range(1, 4);
+                        posTemp.y = Camera.main.transform.position.y + 2.5f;
+                        previousState = enemyState;
+                        enemyState = EnemyState.run;
+                        timePreviousAttack = maxtimeDelayAttack1;
+                    }
+                    else if (enemyState == EnemyState.attack)
+                    {
+                        if (PlayerController.instance.transform.position.x > transform.position.x)
+                            posTemp.x = Camera.main.transform.position.x - Random.Range(1, 4);
+                        else
+                            posTemp.x = Camera.main.transform.position.x + Random.Range(1, 4);
+                        posTemp.y = Camera.main.transform.position.y + 1;
+                        previousState = enemyState;
+                        enemyState = EnemyState.run;
+                    }
+                }
+                combo = 0;
             }
-            else if (enemyState == EnemyState.attack)
-            {
-                typeAttack = 0;
-                randomCombo = Random.Range(4, 6);
-            }
+
+
+
             Debug.Log("shoot energy");
         }
         else
@@ -260,10 +335,11 @@ public class MiniBoss3Controller : EnemyBase
             if (combo == randomCombo)
             {
                 if (PlayerController.instance.transform.position.x > transform.position.x)
-                    posTemp.x = Camera.main.transform.position.x - 4;
+                    posTemp.x = Camera.main.transform.position.x - Random.Range(1f, 4f);
                 else
-                    posTemp.x = Camera.main.transform.position.x + 4;
-                posTemp.y = Camera.main.transform.position.y + 3;
+                    posTemp.x = Camera.main.transform.position.x + Random.Range(1f, 4f);
+                posTemp.y = Camera.main.transform.position.y + 2.5f;
+
                 previousState = enemyState;
                 enemyState = EnemyState.run;
                 combo = 0;
@@ -313,7 +389,7 @@ public class MiniBoss3Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        for(int i = 0; i < EnemyManager.instance.enemyen0s.Count; i ++)
+        for (int i = 0; i < EnemyManager.instance.enemyen0s.Count; i++)
         {
             EnemyManager.instance.enemyen0s[i].TakeDamage(1000);
         }
