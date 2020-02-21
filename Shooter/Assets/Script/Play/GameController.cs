@@ -621,13 +621,13 @@ public class GameController : MonoBehaviour
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
-        DisplayReward(rePlaceID, i,eLevel);
+        DisplayReward(rePlaceID, i, eLevel);
     }
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
     {
-        for (int i = 0; i < uiPanel.bouders.Length; i++)
+        for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
-            if (!vatphamnhanduoc[i].ID.Contains("P"))
+            if (!vatphamnhanduoc[i].ID.Contains("P") && vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
                 uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);

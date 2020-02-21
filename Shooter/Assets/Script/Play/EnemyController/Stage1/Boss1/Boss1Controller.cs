@@ -10,7 +10,6 @@ public class Boss1Controller : EnemyBase
     public string[] strBoneExplo = new string[7];
     public GameObject effectwhenDie, effectsmoke, effectexplohand;
     public float speedMove;
-    public int typeAttack;
     public override void Start()
     {
         base.Start();

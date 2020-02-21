@@ -8,7 +8,6 @@ public class MiniBoss3Controller : EnemyBase
     public float speedMove;
     public Transform gunRotation, gunRotation1, gunRotation2;
     Vector2 posTemp;
-    int typeAttack;
     public override void Start()
     {
         base.Start();
@@ -74,13 +73,11 @@ public class MiniBoss3Controller : EnemyBase
                     takeDamageBox.enabled = true;
 
 
-                    var hit = Physics2D.Raycast(transform.position, -transform.up, 1000, lmground);
+                    var hit = Physics2D.Raycast(transform.position, -transform.up, 10000, lmground);
                     if (hit.collider != null)
                     {
                         posOfGround.y = hit.point.y;
                     }
-
-                    // Debug.LogError("hahaha");
                 }
                 break;
 
@@ -101,7 +98,7 @@ public class MiniBoss3Controller : EnemyBase
                                 enemyState = EnemyState.falldown;
                                 typeAttack = 0;
                                 timePreviousAttack = maxtimeDelayAttack1;
-                                randomCombo = 1;
+                                randomCombo = 2;
                             }
                             else if (previousState == EnemyState.falldown)
                             {
@@ -245,6 +242,7 @@ public class MiniBoss3Controller : EnemyBase
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
+
     void ShootEnergy(float deltaTime)
     {
         timePreviousAttack -= deltaTime;
@@ -286,7 +284,7 @@ public class MiniBoss3Controller : EnemyBase
                     if (enemyState == EnemyState.falldown)
                     {
                         if (PlayerController.instance.transform.position.x > transform.position.x)
-                            posTemp.x = Camera.main.transform.position.x - Random.Range(1,4);
+                            posTemp.x = Camera.main.transform.position.x - Random.Range(1, 4);
                         else
                             posTemp.x = Camera.main.transform.position.x + Random.Range(1, 4);
                         posTemp.y = Camera.main.transform.position.y + 2.5f;
@@ -321,10 +319,8 @@ public class MiniBoss3Controller : EnemyBase
     void SpawnEN0(float deltaTime)
     {
         timePreviousAttack -= deltaTime;
-
         if (timePreviousAttack <= 0)
         {
-
             enemySpawn = ObjectPoolManagerHaveScript.Instance.enemyN0Pooler.GetEnemyPooledObject();
             enemySpawn.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             enemySpawn.Init();

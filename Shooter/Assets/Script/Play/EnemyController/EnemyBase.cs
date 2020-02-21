@@ -869,11 +869,9 @@ public class EnemyBase : AutoTarget
             case 20:
                 gameObject.SetActive(false);
                 break;
-
         }
     }
     //bool isSlow = false; 
-
     //private void OnTriggerStay2D(Collider2D collision)
     //{
     //    if (collision.CompareTag("slowdamage"))
@@ -884,6 +882,25 @@ public class EnemyBase : AutoTarget
     //    if (collision.CompareTag("slowdamage"))
     //        isSlow = false;
     //}
-
+    [HideInInspector]
+    public int typeAttack;
+    public void ChangeStage()
+    {
+        Debug.LogError("zoooooo day" + combo + ":" + currentHealth);
+        if (combo == 1)
+        {
+            if (currentHealth > health / 2)
+            {
+                if (enemyState == EnemyState.falldown)
+                {
+                    typeAttack = 1;
+                    randomCombo = Random.Range(3, 6);
+                    timePreviousAttack = maxtimeDelayAttack1;
+                    combo = 0;
+                    Debug.LogError("hahahahaha.....");
+                }
+            }
+        }
+    }
 }
 
