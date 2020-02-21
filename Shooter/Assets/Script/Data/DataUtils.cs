@@ -82,7 +82,7 @@ public class DataUtils
             for (int i = 0; i < jData.Count; i++)
             {
                 ItemData itemData = JsonMapper.ToObject<ItemData>(jData[i].ToJson());
-                _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
                 if (!dicAllEquipment.ContainsKey(_key))
                 {
                     dicAllEquipment.Add(_key, itemData);
@@ -113,7 +113,7 @@ public class DataUtils
             _item.isEquipped = true;
             EquipItem(_item);
 
-            _keyEquip = _item.id + "_" + _item.level + "_" + _item.isUnlock;
+            _keyEquip = _item.id + "_" + _item.level + "_" + _item.isUnlock + "_" + _item.isEquipped;
             if (!dicAllEquipment.ContainsKey(_keyEquip))
             {
                 dicAllEquipment.Add(_keyEquip, _item);
@@ -128,7 +128,7 @@ public class DataUtils
                 for(int i = 0;i < jEquip.Count; i++)
                 {
                     ItemData itemData = JsonMapper.ToObject<ItemData>(jEquip[i].ToJson());
-                    _keyEquip = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
+                    _keyEquip = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
                     if (!dicEquippedItem.ContainsKey(_keyEquip))
                     {
                         dicEquippedItem.Add(_keyEquip, itemData);
@@ -266,10 +266,10 @@ public class DataUtils
         }
         return res;
     }
-    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock)
+    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
     {
         bool result = false;
-        string key = id + "_" + level + "_" + isUnlock;
+        string key = id + "_" + level + "_" + isUnlock+"_"+ isEquipped;
         string key_ = id + "_" + level;
         switch (itemType)
         {
@@ -319,9 +319,10 @@ public class DataUtils
 
         if (result)
         {
+            Debug.LogError("Has Unlock");
             ItemData itemNew = dicAllEquipment[key];
             dicAllEquipment.Remove(key);
-            string _newKey = id + "_" + level + "_" + result;
+            string _newKey = id + "_" + level + "_" + result + "_" + isEquipped;
             if (!dicAllEquipment.ContainsKey(_newKey))
             {
                 dicAllEquipment.Add(_newKey, itemNew);
@@ -332,15 +333,20 @@ public class DataUtils
 
                 if (EquipmentManager.Instance != null)
                 {
+                    Debug.LogError("HasContains: " + dicAllEquipment.ContainsKey(_newKey) + " vs " + _newKey + " vs " + _newKey);
                     EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
                 }
+                Debug.LogError("Not yet contain key: " + isEquipped);
             }
             else
             {
+                Debug.LogError("Contain key: " + isEquipped + " vs " + _newKey + " vs " + dicAllEquipment.ContainsKey(_newKey));
+
                 dicAllEquipment[_newKey].quantity += 1;
                 dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
+                ItemData iAddNew = dicAllEquipment[_newKey];
             }
         }
     }
@@ -384,15 +390,16 @@ public class DataUtils
         iData.itemName = GetItemName(iData, _itemType);
         iData.isEquipped = false;
 
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
         if (dicAllEquipment.ContainsKey(_key))
         {
             if (!iData.isUnlock) {
                 if (!dicAllEquipment[_key].isUnlock)
                 {
-                    string _newKey = iData.id + "_" + iData.level.ToString() + "_" + true;
+                    string _newKey = iData.id + "_" + iData.level.ToString() + "_" + /*true*/iData.isUnlock + "_" + iData.isEquipped;
+                    Debug.LogError("NEWKEY: " + _newKey);
                     dicAllEquipment[_key].pices += _pices;
-                    CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock);
+                    CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
                 }
                 else
                 {
@@ -441,7 +448,7 @@ public class DataUtils
     }
     public static void EquipItem(ItemData iData)
     {
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock;
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
         if (!dicEquippedItem.ContainsKey(_key))
         {
             ItemData itemData = new ItemData();
