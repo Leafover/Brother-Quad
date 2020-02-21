@@ -48,6 +48,7 @@ public class MenuController : MonoBehaviour
         }
 
         DataParam.first = false;
+        DisplayWarning();
     }
     public void DisplayWarning()
     {

@@ -1018,9 +1018,11 @@ public class DataController : MonoBehaviour
         {
             if (saveAllAchievement[i].isPass && !saveAllAchievement[i].isDone)
             {
+                Debug.LogError(i + ":" + saveAllAchievement[i]);
                 checkAchi = true;
             }
         }
+        Debug.LogError(checkAchi);
         return checkAchi;
     }
 
