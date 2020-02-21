@@ -88,5 +88,6 @@ public class AchievementBouder : MonoBehaviour
             desText.text = desTemp;
         }
         DisplayMe();
+        MenuController.instance.warningAchievment.SetActive(false);
     }
 }

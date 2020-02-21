@@ -18,7 +18,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
     public TimeSpan timeSpanTemp;
     public void DisPlayMe(int index)
     {
-        MenuController.instance.warningEvent.SetActive(false);
+        //MenuController.instance.warningEvent.SetActive(false);
         ChangeTab(index);
         gameObject.SetActive(true);
     }
@@ -49,7 +49,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
         switch (index)
         {
             case 0:
-                MenuController.instance.warningDailyQuest.SetActive(false);
+                //MenuController.instance.warningDailyQuest.SetActive(false);
                 timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
                // Debug.Log("=============" + DataController.saveIndexQuest.Count);
                 for (int i = 0; i < DataController.saveIndexQuest.Count; i++)
@@ -58,7 +58,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
                 }
                 break;
             case 1:
-                MenuController.instance.warningAchievment.SetActive(false);
+                //MenuController.instance.warningAchievment.SetActive(false);
                 for (int i = 0; i < achievementBouders.Length; i++)
                 {
                     achievementBouders[i].DisplayMe();

@@ -72,5 +72,7 @@ public class DailyQuestBouder : MonoBehaviour
         }
 
         DataController.instance.CheckDoneAllDailyQuest();
+
+        MenuController.instance.warningDailyQuest.SetActive(false);
     }
 }
