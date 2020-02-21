@@ -7,10 +7,10 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
-    public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
 
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
+    public Button btnRemove, btnReplace;
     #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine;
@@ -27,6 +27,7 @@ public class EquipmentManager : MonoBehaviour
     public Sprite sprSelect, sprUnSelect;
     public Button[] btnTabs;
     public Transform trContain;
+    public bool isMultiSell;
     public GameObject gItems;
     private GameObject gItemClone;
 
@@ -49,7 +50,10 @@ public class EquipmentManager : MonoBehaviour
     private void OnEnable()
     {
         btnPanel = GetComponent<Button>();
-        btnPanel.onClick.AddListener(() => { ChooseItem(null); });
+        btnPanel.onClick.AddListener(() => {
+            ChooseItem(null);
+            DoCancelDisassemble();
+        });
     }
     private void OnDisable()
     {
@@ -76,10 +80,28 @@ public class EquipmentManager : MonoBehaviour
 
     public void RemoveSelectedItem()
     {
-        disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
-        disassembleManager.gameObject.SetActive(true);
         Debug.LogError(_keyItemSelected + " vs " + DataUtils.dicAllEquipment[_keyItemSelected]);
+        disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
+        disassembleManager.keyItem = _keyItemSelected;
+        disassembleManager.gameObject.SetActive(true);
     }
+    public void DoDisassemble(ItemData iSell, string strRemoveKey)
+    {
+        for(int i = 0; i< trContain.childCount; i++)
+        {
+            if (trContain.GetChild(i).gameObject.name.Equals(strRemoveKey))
+            {
+                Destroy(trContain.GetChild(i).gameObject);
+            }
+        }
+        if (DataUtils.dicAllEquipment.ContainsKey(strRemoveKey))
+        {
+            DataUtils.dicAllEquipment.Remove(strRemoveKey);
+        }
+        DataUtils.SaveEquipmentData();
+        ChooseItem(null);
+    }
+
     public void EquipItem()
     {
         if (itemEquipped != null)
@@ -337,6 +359,16 @@ public class EquipmentManager : MonoBehaviour
         {
             itemSelected = itemData;
 
+            if (!itemSelected.isUnlock)
+            {
+                btnRemove.interactable = false;
+                btnReplace.interactable = false;
+            }
+            else
+            {
+                btnRemove.interactable = true;
+                btnReplace.interactable = true;
+            }
             #region Fill Info for EquipmentItem
             FillEquipmentInfo(itemSelected);
             #endregion
@@ -466,5 +498,53 @@ public class EquipmentManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    
+    public void MultiSelect()
+    {
+        isMultiSell = true;
+        ChooseItem(null);
+        gSellGroup.SetActive(true);
+    }
+    public void DoCancelDisassemble()
+    {
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+            _iEquipData.imgMultiSelect.enabled = false;
+        }
+        lstAllItemSell.Clear();
+        isMultiSell = false;
+        gSellGroup.SetActive(false);
+    }
+    public void DoDisassblem()
+    {
+        if (lstAllItemSell.Count > 0) {
+            double dTotal = 0;
+            foreach (EquipmentItem epi in lstAllItemSell)
+            {
+                Debug.LogError("--------> " + epi.itemKey + " vs " + DataUtils.GetPriceByType(epi.itemData));
+                DataUtils.dicAllEquipment.Remove(epi.itemKey);
+                dTotal += DataUtils.GetPriceByType(epi.itemData);
+            }
+
+            for(int i = 0; i < lstAllItemSell.Count; i++)
+            {
+                Destroy(lstAllItemSell[i].gameObject);
+            }
+
+            DataUtils.SaveEquipmentData();
+            ChooseItem(null);
+            DoCancelDisassemble();
+            DataUtils.AddCoinAndGame((int)dTotal, 0);
+            Debug.LogError("dTotal: " + dTotal);
+        }
+    }
+    public void AddItemToList(EquipmentItem epi)
+    {
+        lstAllItemSell.Add(epi);
+    }
+    public void RemoveItemFromList(EquipmentItem epi)
+    {
+        lstAllItemSell.Remove(epi);
+    }
+    public List<EquipmentItem> lstAllItemSell = new List<EquipmentItem>();
 }
