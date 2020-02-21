@@ -25,32 +25,46 @@ public class EquipmentItem : MonoBehaviour
     Button btnItem;
     private void OnEnable()
     {
+        //Debug.LogError("OnEnable: " + gameObject.name);
         btnItem = GetComponent<Button>();
         if (!string.IsNullOrEmpty(itemKey))
         {
             if (itemData != null)
             {
-                itemKey = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock;
-                if (dicAllEquipment.ContainsKey(itemKey))
-                {
-                    itemData = dicAllEquipment[itemKey];
-                    if (itemData.isUnlock)
-                    {
-                        gameObject.name = itemKey;
-                    }
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                //itemKey = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
+                //if (dicAllEquipment.ContainsKey(itemKey))
+                //{
+                //    itemData = dicAllEquipment[itemKey];
+                //    if (itemData.isUnlock)
+                //    {
+                //        gameObject.name = itemKey;
+                //    }
+                //}
+                //else
+                //{
+                //    Destroy(gameObject);
+                //}
 
-                EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
+                //EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
+
+                Refresh();
             }
 
             CheckItemUnlock();
         }
     }
 
+    public void Refresh()
+    {
+        if (!dicAllEquipment.ContainsKey(itemKey))
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -67,9 +81,11 @@ public class EquipmentItem : MonoBehaviour
         }
     }
     Sprite sprimgQualityTemp;
-    private void CheckItemUnlock()
+    public void CheckItemUnlock()
     {
+        //Debug.LogError("::: " + dicAllEquipment.ContainsKey(itemKey));
         if (itemData.isEquipped) gameObject.SetActive(false);
+        if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
 
         #region Check Item quality
         switch (itemData.level)

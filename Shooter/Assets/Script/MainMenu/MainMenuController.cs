@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
     public ItemSpriteData allSpriteData;
+    public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes;
     public EquipmentManager equipmentManager;
     public PopupManager popManager;
