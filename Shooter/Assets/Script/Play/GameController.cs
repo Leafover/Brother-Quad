@@ -183,14 +183,10 @@ public class GameController : MonoBehaviour
             DataController.instance.DoDailyQuest(8, 1);
         }
         uiPanel.comboNumberText.text = "X" + countCombo;
-
-
         if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[0].valueMission)
             MissionController.Instance.DoMission(2, countCombo);
         if (MissionController.Instance.listMissions[1].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[1].valueMission)
             MissionController.Instance.DoMission(2, countCombo);
-
-        // Debug.Log("-------- show combo");
     }
     public void ResetCombo()
     {
@@ -357,12 +353,6 @@ public class GameController : MonoBehaviour
             return;
         CameraController.instance.OnUpdate(deltaTime);
     }
-    //void OnUpdateCam(float deltaTime)
-    //{
-    //    if (CameraController.instance == null)
-    //        return;
-    //    CameraController.instance.OnUpdate(deltaTime);
-    //}
     IEnumerator delayDisplayFinish()
     {
         yield return new WaitForSeconds(2f);
@@ -388,8 +378,6 @@ public class GameController : MonoBehaviour
         StartCoroutine(CountTimePlay());
     }
     public bool isDestroyBoss;
-    //[HideInInspector]
-    //public bool waitForWin;
     public int reviveCount = 0;
     int randonvictorysound;
     public void WinSound()
@@ -413,7 +401,6 @@ public class GameController : MonoBehaviour
         MissionController.Instance.DoMission(0, timePlay);
         MissionController.Instance.DoMission(3, (int)((PlayerController.instance.health / PlayerController.instance.maxHealth) * 100));
         MissionController.Instance.DoMission(6, reviveCount);
-        //   Debug.Log(MissionController.Instance.listMissions[1].currentValue + ":" + MissionController.Instance.listMissions[1].valueMission);
         if (countStar == 0)
         {
             countStar = 1;
@@ -442,7 +429,6 @@ public class GameController : MonoBehaviour
             }
             DataController.instance.DoDailyQuest(2, 1);
         }
-        //   Debug.Log(DataParam.indexStage + ":" + DataParam.indexMap);
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         MissionController.Instance.CheckMission();
@@ -512,28 +498,13 @@ public class GameController : MonoBehaviour
             listcirtwhambang[i].DisableMe(deltaTime);
         }
     }
-    //float timeToWin;
     public void NotSoFastWin()
     {
         if (win)
         {
             win = false;
-            //  timeToWin = 2;
         }
     }
-    //void CalculateTimeToWin(float deltaTime)
-    //{
-    //    //if (gameState == GameState.play)
-    //    //{
-    //        if (!win)
-    //            return;
-    //        timeToWin -= deltaTime;
-    //        if (timeToWin <= 0)
-    //        {
-    //            WinGame();
-    //        }
-    //    //}
-    //}
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
@@ -571,20 +542,17 @@ public class GameController : MonoBehaviour
             if (timecheckright <= 0)
                 uiPanel.rightwarning.SetActive(true);
         }
-        // CalculateTimeToWin(Time.deltaTime);
         OnUpdateEnemyManager(deltaTime);
         OnUpdateCamera(deltaTime);
         OnUpdateItemDrop(deltaTime);
         OnUpdateCountCombo(deltaTime);
         OnUpdateCritWhambang(deltaTime);
         uiPanel.CalculateMiniMap();
-
         if (PlayerController.instance.stun)
         {
             PlayerController.instance.CalculateTimeStun(deltaTime);
             return;
         }
-
         JoystickMovement(joystickMove);
         JoystickShooting(joystickShot);
         OnUpdatePlayer(deltaTime);
@@ -704,7 +672,6 @@ public class GameController : MonoBehaviour
                 AddItem(i, DataUtils.eLevel.Legendary);
             }
         }
-
     }
     public void ResetActiveLeft()
     {
@@ -722,7 +689,6 @@ public class GameController : MonoBehaviour
     {
         if (activeWarningEnemyLeft || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
             return;
-
         try
         {
             for (int i = 0; i < enemyLockCam.Count; i++)
@@ -732,7 +698,6 @@ public class GameController : MonoBehaviour
                     activeWarningEnemyLeft = true;
                     break;
                 }
-
             }
         }
         catch
@@ -743,7 +708,6 @@ public class GameController : MonoBehaviour
     float timecheckright, timecheckleft;
     public void CheckHaveArrowRight()
     {
-
         if (activeWarningEnemyRight || autoTarget.Count > 0 || enemyLockCam.Count == 0 || CameraController.instance.setBoudariesLeft || enemyLockCam == null)
             return;
         try

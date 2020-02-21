@@ -83,7 +83,7 @@ public class AllBag
 public class GlovesList
 {
     public string ID, NAME, Level, Giamtimereload, tangcritrate, Tangcritdmg, GiaNangCap, SoManhYeuCau;
-    public double  GiaMua1Manh, GiaKhiRaDo, Gia;
+    public double GiaMua1Manh, GiaKhiRaDo, Gia;
     public List<float> GiamtimereloadValue = new List<float>(), tangcritrateValue = new List<float>(), TangcritdmgValue = new List<float>(), GiaNangCapValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
@@ -98,7 +98,7 @@ public class AllGloves
 public class HelmetList
 {
     public string ID, NAME, Level, Def, BonusExp, Gia, SoManhYeuCau;
-    public double  GiaMua1Manh, GiaKhiRaDo;
+    public double GiaMua1Manh, GiaKhiRaDo;
     public List<float> DefValue = new List<float>(), BonusExpValue = new List<float>(), GiaValue = new List<float>(), SoManhYeuCauValue = new List<float>();
 }
 [System.Serializable]
@@ -377,6 +377,20 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < saveIndexQuest.Count; i++)
         {
             allSaveDailyQuest[saveIndexQuest[i]].isActive = true;
+
+            Debug.Log(saveIndexQuest[i]);
+        }
+        if (saveIndexQuest.Contains(10))
+        {
+            if (saveIndexQuest.IndexOf(10) != saveIndexQuest.Count - 1)
+            {
+                int indexTemp = saveIndexQuest.IndexOf(10);
+                int int1 = saveIndexQuest[indexTemp];
+                int int2 = saveIndexQuest[saveIndexQuest.Count - 1];
+
+                saveIndexQuest[saveIndexQuest.Count - 1] = int1;
+                saveIndexQuest[indexTemp] = int2;
+            }
         }
     }
     public void LoadDailyQuest()
@@ -984,11 +998,37 @@ public class DataController : MonoBehaviour
             allSaveDailyQuest[index].currentNumber = allSaveDailyQuest[index].Soluong;
         }
     }
+    bool checkDaily, checkAchi;
+    public bool CheckWarningDailyQuest()
+    {
+        checkDaily = false;
+        for (int i = 0; i < allSaveDailyQuest.Count; i++)
+        {
+            if(allSaveDailyQuest[i].isPass && !allSaveDailyQuest[i].isDone)
+            {
+                checkDaily = true;
+            }
+        }
+        return checkDaily;
+    }
+    public bool CheckWarningAchievement()
+    {
+        checkAchi = false;
+        for (int i = 0; i < saveAllAchievement.Count; i++)
+        {
+            if (saveAllAchievement[i].isPass && !saveAllAchievement[i].isDone)
+            {
+                checkAchi = true;
+            }
+        }
+        return checkAchi;
+    }
+
     public void CheckDoneAllDailyQuest()
     {
         if (!saveIndexQuest.Contains(10))
         {
-            Debug.Log("111111111");
+           // Debug.Log("111111111");
             return;
         }
         DataParam.doneAllDailyQuest = true;
@@ -997,7 +1037,7 @@ public class DataController : MonoBehaviour
             if (!allSaveDailyQuest[i].isDone && allSaveDailyQuest[i].isActive)
             {
                 DataParam.doneAllDailyQuest = false;
-                Debug.Log("false");
+               // Debug.Log("false");
                 break;
             }
         }
@@ -1009,7 +1049,7 @@ public class DataController : MonoBehaviour
                 {
                     DoDailyQuest(10, 1);
                     MenuController.instance.achievementAndDailyQuestPanel.dailyquestBouders[i].DisplayMe();
-                    Debug.LogError("zoooooooooooo");
+                   // Debug.LogError("zoooooooooooo");
                 }
             }
         }

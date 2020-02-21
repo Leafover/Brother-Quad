@@ -9,6 +9,9 @@ public class MenuController : MonoBehaviour
 
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
 
+
+    public GameObject warningEvent, warningDailyQuest, warningAchievment;
+
     private void Awake()
     {
 
@@ -16,7 +19,7 @@ public class MenuController : MonoBehaviour
         // PanelHeroes 66->78
 
         instance = this;
-        Debug.unityLogger.logEnabled = false;
+        //  Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()
@@ -30,7 +33,7 @@ public class MenuController : MonoBehaviour
             //   Debug.LogError("zooooooooooo2");
         }
 
-        if(!DataParam.first)
+        if (!DataParam.first)
         {
             //   AdsManager.Instance.ShowInterstitial((b) => { });
 #if UNITY_EDITOR
@@ -44,20 +47,34 @@ public class MenuController : MonoBehaviour
 #endif
         }
 
-
-
         DataParam.first = false;
+    }
+    public void DisplayWarning()
+    {
+        warningEvent.SetActive(CheckWarningDisplay());
+        warningAchievment.SetActive(DataController.instance.CheckWarningAchievement());
+        warningDailyQuest.SetActive(DataController.instance.CheckWarningDailyQuest());
+    }
+    bool CheckWarningDisplay()
+    {
+        if (DataController.instance.CheckWarningDailyQuest() || DataController.instance.CheckWarningAchievement())
+        {
+            //Debug.Log("true");
+            return true;
+        }
+        else
+        {
+            //Debug.Log("false");
+            return false;
+        }
     }
     //private void Update()
     //{
-    //    //if (Input.GetKeyDown(KeyCode.O))
-    //    //{
-    //    //    for (int i = 0; i < DataController.allSaveDailyQuest.Count; i++)
-    //    //    {
-    //    //        if (i != 10)
-    //    //            DataController.instance.DoDailyQuest(i, 10000);
-    //    //    }
-    //    //}
+    //    if (Input.GetKeyDown(KeyCode.O))
+    //    {
+    //        DataController.instance.DoDailyQuest(1, 1000);
+    //        DataController.instance.DoAchievement(0, 1000);
+    //    }
     //    //else if(Input.GetKeyDown(KeyCode.H))
     //    //{
     //    //    DataUtils.SaveLevel(0, 0);
