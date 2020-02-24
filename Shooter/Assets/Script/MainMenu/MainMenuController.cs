@@ -143,10 +143,12 @@ public class MainMenuController : MonoBehaviour
     {
         SoundClickButton();
         Debug.LogError("AddMoreCoin");
+        ShowShop();
     }
     public void AddMoreDiamond()
     {
         SoundClickButton();
+        ShowShop();
         Debug.LogError("AddMoreDiamond");
     }
 

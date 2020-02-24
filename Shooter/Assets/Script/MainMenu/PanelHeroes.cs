@@ -21,11 +21,16 @@ public class PanelHeroes : MonoBehaviour
 
     private PlayerData pData;
     private double priceUpdate;
-    private WeaponList weaponData, weaponDataNext;
+
+    private string keyEquipped;
+    ItemData itemEquipped = null;
+    private int curWeponStar = 0, nextWeaponStar = 0;
+
     private void Awake()
     {
         pEvolve.Stop();
     }
+
     private void OnEnable()
     {
         FillHeroData();
@@ -40,6 +45,20 @@ public class PanelHeroes : MonoBehaviour
     }
     private void FillDataPlayer()
     {
+        foreach (ItemData _id in DataUtils.dicEquippedItem.Values)
+        {
+            if (_id.type.Equals("WEAPON"))
+            {
+                itemEquipped = _id;
+                break;
+            }
+        }
+        keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
+        curWeponStar = itemEquipped.curStar;
+        nextWeaponStar = itemEquipped.curStar + 1 > 5 ? itemEquipped.curStar : itemEquipped.curStar + 1;
+
+
+
         for (int i = 0; i < DataController.instance.playerData.Count; i++)
         {
             pData = DataController.instance.playerData[i];
@@ -54,42 +73,50 @@ public class PanelHeroes : MonoBehaviour
                         if (i + 1 < DataController.instance.playerData.Count)
                         {
                             txtHealth.text = pData.hp.ToString();
-                            txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[i + 1].hp);
+                            txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[(i + 1 < DataUtils.MAX_LEVEL_HERO ? i + 1 : i)].hp);
                         }
                     }
                 }
             }
         }
-        weaponData = DataController.instance.allWeapon[0].weaponList[0];
-        weaponDataNext = DataController.instance.allWeapon[0].weaponList[1];
 
-        //txtDamage.text = weaponData.Dmg.ToString();
-        //txtDamageUP.text = DataUtils.DisplayRichText(weaponData.Dmg, weaponDataNext.Dmg);
+        txtDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
+        txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]),GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]));
 
-        //txtAttSpeed.text = weaponData.BulletSpeed.ToString();
-        //txtAttSpeedUP.text = DataUtils.DisplayRichText(weaponData.BulletSpeed, weaponDataNext.BulletSpeed);
+        txtAttSpeed.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]).ToString();
+        txtAttSpeedUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[nextWeaponStar]));
 
-        //txtCritDamage.text = weaponData.CritDmg.ToString();
-        //txtCritDamageUP.text = DataUtils.DisplayRichText(weaponData.CritDmg, weaponDataNext.CritDmg);
+        txtCritDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]).ToString();
+        txtCritDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[nextWeaponStar]));
 
-        //txtCritRate.text = weaponData.CritRate.ToString();
-        //txtCritRateUP.text = DataUtils.DisplayRichText(weaponData.CritRate, weaponDataNext.CritRate);
+        txtCritRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]).ToString();
+        txtCritRateUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[nextWeaponStar]));
 
-        //txtCurDamage.text = weaponData.Dmg.ToString();
+        txtCurDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
 
         priceUpdate = 165 * pData.SoManhYeuCau * pData.Giamua1manh;
         txtPriceUpdate.text = priceUpdate.ToString();
     }
 
+    private double GetDoublevalue(double db)
+    {
+        return System.Math.Floor(db * 100) / 100;
+    }
     public void EvolveHero()
     {
         if(DataUtils.playerInfo.coins >= priceUpdate)
         {
-            DataUtils.playerInfo.level += 1;
-            DataUtils.AddCoinAndGame((int)-priceUpdate, 0);
-            pEvolve.Play();
-            FillHeroData();
-            DataUtils.SavePlayerData();
+            if (DataUtils.playerInfo.level < DataUtils.MAX_LEVEL_HERO)
+            {
+                DataUtils.playerInfo.level += 1;
+                DataUtils.AddCoinAndGame((int)-priceUpdate, 0);
+                pEvolve.Play();
+                FillHeroData();
+                DataUtils.SavePlayerData();
+            }
+            else {
+                MainMenuController.Instance.ShowMapNotify("Hero has reached the maximum level");
+            }
         }
         else
         {

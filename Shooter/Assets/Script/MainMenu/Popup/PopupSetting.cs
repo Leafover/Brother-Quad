@@ -23,9 +23,16 @@ public class PopupSetting : MonoBehaviour
     }
     private void OnEnable()
     {
+        if(AdsManager.Instance != null)
+            AdsManager.Instance.ShowBanner();
         CheckSoundAndMusic();
     }
 
+    private void OnDisable()
+    {
+        if (AdsManager.Instance != null)
+            AdsManager.Instance.HideBanner();
+    }
     public void CheckSoundAndMusic()
     {
        // if (tgSound != null)
@@ -48,6 +55,8 @@ public class PopupSetting : MonoBehaviour
         //DataUtils.SaveLevel(0, 4);
         //DataUtils.SaveLevel(0, 5);
         //DataUtils.SaveLevel(0, 6);
+        if (AdsManager.Instance != null)
+            AdsManager.Instance.HideBanner();
         g_.SetActive(false);
     }
     public void ShowPanelSetting()

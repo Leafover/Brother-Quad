@@ -11,6 +11,7 @@ public class DataUtils
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES}
     public const int TOTAL_STAGE = 2;
+    public const int MAX_LEVEL_HERO = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
@@ -725,10 +726,10 @@ public class DataUtils
     public static PlayerDataInfo playerInfo;
 
 
-    public static int HeroIndex()
-    {
-        return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
-    }
+    //public static int HeroIndex()
+    //{
+    //    return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
+    //}
     public static void SetHeroIndex(int index)
     {
         PlayerPrefs.SetInt(KEY_HEROES_INDEX, index);
@@ -736,9 +737,6 @@ public class DataUtils
     }
     public static void SavePlayerData()
     {
-        //string jSave = JsonMapper.ToJson(/*playerInfo*/lstAllHeroes[HeroIndex()]);
-        //PlayerPrefs.SetString(KEY_PLAYER_DATA, jSave);
-
         string jSave = JsonMapper.ToJson(lstAllHeroes);
         PlayerPrefs.SetString(KEY_ALL_PLAYER_DATA, jSave);
         PlayerPrefs.Save();
@@ -760,6 +758,9 @@ public class DataUtils
             playerInfo.name = "REMITANO";
             playerInfo.coins = 0;
             playerInfo.gems = 0;
+            playerInfo.pices = 0;
+            playerInfo.isUnlock = true;
+            playerInfo.isEquipped = true;
             lstAllHeroes.Add(playerInfo);
         }
         else
@@ -774,38 +775,33 @@ public class DataUtils
             }
         }
 
-        playerInfo = lstAllHeroes[HeroIndex()];
-        //if (!PlayerPrefs.HasKey(KEY_PLAYER_DATA) || string.IsNullOrEmpty(GetPlayerData()))
-        //{
-        //    playerInfo = new PlayerDataInfo();
-        //    playerInfo.level = 1;
-        //    playerInfo.hp = (int)DataController.instance.playerData[0].hp;
-        //    playerInfo.exp = 0;
-        //    playerInfo.curStars = 1;
-        //    playerInfo.name = "REMITANO";
-        //    playerInfo.coins = 0;
-        //    playerInfo.gems = 0;
-        //    SavePlayerData();
-        //}
-        //else
-        //{
-        //    PlayerDataInfo pInfo = JsonMapper.ToObject<PlayerDataInfo>(GetPlayerData());
-        //    playerInfo = pInfo;
-        //}
+        playerInfo = GetCurPlayer(); //lstAllHeroes[HeroIndex()];
+
 
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
-
-        // Debug.LogError("zooooooooooo1");
+    }
+    private static PlayerDataInfo GetCurPlayer()
+    {
+        PlayerDataInfo pInfo = null;
+        foreach(PlayerDataInfo pdi in lstAllHeroes)
+        {
+            if(pdi.isUnlock && pdi.isEquipped)
+            {
+                pInfo = pdi;
+                break;
+            }
+        }
+        return pInfo;
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
-        /*playerInfo*/
-        lstAllHeroes[HeroIndex()].coins = newCoin;
-        /*playerInfo*/
-        lstAllHeroes[HeroIndex()].gems = newGem;
+        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().coins = newCoin;
+        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().gems = newGem;
+
+
         SavePlayerData();
         if (MainMenuController.Instance != null)
         {
@@ -814,10 +810,10 @@ public class DataUtils
     }
     public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
-        /*playerInfo*/
-        lstAllHeroes[HeroIndex()].coins += coinAdded;
-        /*playerInfo*/
-        lstAllHeroes[HeroIndex()].gems += gemAdded;
+        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().coins += coinAdded;
+        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().gems += gemAdded;
+
+
         SavePlayerData();
         if (MainMenuController.Instance != null)
         {
@@ -836,7 +832,7 @@ public class DataUtils
     }
     #endregion
 
-
+    #region Other
     public static string DisplayRichText(double dFrom, double dTo)
     {
         return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
@@ -911,4 +907,5 @@ public class DataUtils
         }
         return dbValue;
     }
+    #endregion
 }

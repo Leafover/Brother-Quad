@@ -87,6 +87,7 @@ public class EquipmentManager : MonoBehaviour
     }
     public void DoDisassemble(ItemData iSell, string strRemoveKey)
     {
+        Debug.LogError("strRemoveKey: " + strRemoveKey);
         for(int i = 0; i< trContain.childCount; i++)
         {
             if (trContain.GetChild(i).gameObject.name.Equals(strRemoveKey))
@@ -112,7 +113,7 @@ public class EquipmentManager : MonoBehaviour
             keyCompare2 = DataUtils.dicAllEquipment[_keyItemSelected].id + "_" + DataUtils.dicAllEquipment[_keyItemSelected].level + "_" + DataUtils.dicAllEquipment[_keyItemSelected].isUnlock;
             if (keyCompare1.Equals(keyCompare2))
             {
-                Debug.LogError(keyCompare1 + " v--------s " + keyCompare2);
+                Debug.LogError(keyCompare1 + " v--------s " + keyCompare2 + " vs " + _keyItemEquipped + " vs " + _keyItemSelected);
                 ItemData iCurEquip = DataUtils.dicAllEquipment[_keyItemEquipped];
                 ItemData iCurSelect = DataUtils.dicAllEquipment[_keyItemSelected];
 
@@ -130,7 +131,7 @@ public class EquipmentManager : MonoBehaviour
                     if (trContain.GetChild(i).gameObject.name.Equals(_keyItemSelected))
                     {
                         EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-                        _iEquipData.itemKey = _keyItemEquipped;
+                        _iEquipData.itemKey = _keyItemSelected;
                         trContain.GetChild(i).gameObject.name = _iEquipData.itemKey;
                         _iEquipData.itemData = iCurEquip;
                         _iEquipData.CheckItemUnlock();
