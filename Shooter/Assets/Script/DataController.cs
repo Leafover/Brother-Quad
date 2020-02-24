@@ -159,6 +159,11 @@ public class PlayerData
     public string level, ID;
     public double hp, DmgGrenade, MoveSpeed, SoManhYeuCau, Giamua1manh, total;
 }
+[System.Serializable]
+public class AllPlayerData
+{
+    public List<PlayerData> playerData = new List<PlayerData>();
+}
 #region datamission
 [System.Serializable]
 public class Mission
@@ -188,7 +193,7 @@ public class DataController : MonoBehaviour
     public List<AllWeapon> allWeapon = new List<AllWeapon>();
     public List<AllDataEnemy> allDataEnemy = new List<AllDataEnemy>();
     public List<AllMission> allMission = new List<AllMission>();
-    public List<PlayerData> playerData = new List<PlayerData>();
+    public List<AllPlayerData> playerData = new List<AllPlayerData>();
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
@@ -264,14 +269,23 @@ public class DataController : MonoBehaviour
     }
     public void LoadDataPlayer(string path)
     {
-        if (playerData.Count == 10)
+        if (playerData[0].playerData.Count == 5)
             return;
         _ta = Resources.Load<TextAsset>("JsonData/" + path);
         jData = JsonMapper.ToObject(_ta.text);
         for (int i = 0; i < jData.Count; i++)
         {
             PlayerData _playerDate = JsonMapper.ToObject<PlayerData>(jData[i].ToJson());
-            playerData.Add(_playerDate);
+            switch(_playerDate.ID)
+            {
+                case "P1":
+                    playerData[0].playerData.Add(_playerDate);
+                    break;
+                case "P2":
+                    playerData[1].playerData.Add(_playerDate);
+                    break;
+            }
+
         }
     }
     public void LoadAchievement(string path)

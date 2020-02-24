@@ -340,9 +340,9 @@ public class PlayerController : MonoBehaviour
     public int currentGun;
     public void AddProperties()
     {
-        damgeGrenade = (float)DataController.instance.playerData[level - 1].DmgGrenade;
-        speedMoveMax = (float)DataController.instance.playerData[level - 1].MoveSpeed;
-        maxHealth = (float)DataController.instance.playerData[level - 1].hp;
+        damgeGrenade = (float)DataController.instance.playerData[0].playerData[level - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed;
+        maxHealth = (float)DataController.instance.playerData[0].playerData[level - 1].hp;
 
         health = maxHealth;
         speedmove = 0;

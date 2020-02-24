@@ -57,11 +57,11 @@ public class PanelHeroes : MonoBehaviour
         curWeponStar = itemEquipped.curStar;
         nextWeaponStar = itemEquipped.curStar + 1 > 5 ? itemEquipped.curStar : itemEquipped.curStar + 1;
 
-
+        Debug.LogError(DataController.instance.playerData[0].playerData[0].hp);
 
         for (int i = 0; i < DataController.instance.playerData.Count; i++)
         {
-            pData = DataController.instance.playerData[i];
+           // pData = DataController.instance.playerData[i];
             if (pData.ID == DataUtils.playerInfo.id)
             {
                 int outLv = 1;
@@ -73,7 +73,7 @@ public class PanelHeroes : MonoBehaviour
                         if (i + 1 < DataController.instance.playerData.Count)
                         {
                             txtHealth.text = pData.hp.ToString();
-                            txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[(i + 1 < DataUtils.MAX_LEVEL_HERO ? i + 1 : i)].hp);
+                          //  txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[(i + 1 < DataUtils.MAX_LEVEL_HERO ? i + 1 : i)].hp);
                         }
                     }
                 }
