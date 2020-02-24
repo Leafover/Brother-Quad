@@ -17,7 +17,11 @@ public class PanelHeroes : MonoBehaviour
     public TextMeshProUGUI txtHealth, txtDamage, txtAttSpeed, txtCritDamage, txtCritRate, txtDefRate;
     public TextMeshProUGUI txtHealthUP, txtDamageUP, txtAttSpeedUP, txtCritDamageUP, txtCritRateUP;
     public ParticleSystem pEvolve;
-
+    public Text txtPice;
+    public Image imgProgress;
+    public TextMeshProUGUI txtTotalPower, txtHealthDis, txtDamageDis;
+    public Button[] btnTabs;
+    public Sprite sprSelect, sprDeSelect;
 
     private PlayerData pData;
     private double priceUpdate;
@@ -57,13 +61,15 @@ public class PanelHeroes : MonoBehaviour
         curWeponStar = itemEquipped.curStar;
         nextWeaponStar = itemEquipped.curStar + 1 > 5 ? itemEquipped.curStar : itemEquipped.curStar + 1;
 
-        Debug.LogError(DataController.instance.playerData[0].playerData[0].hp);
+        Debug.LogError(DataController.instance.playerData[0].playerData[DataUtils.lstAllPlayerHeroes[DataUtils.HeroIndex()].level-1].hp);
 
         for (int i = 0; i < DataController.instance.playerData.Count; i++)
         {
-           // pData = DataController.instance.playerData[i];
+            Debug.LogError("------> " + i);
+            pData = DataController.instance.playerData[0].playerData[i];
             if (pData.ID == DataUtils.playerInfo.id)
             {
+                //Debug.LogError(pData.ID + " vs " + pData.level);
                 int outLv = 1;
                 if (int.TryParse(pData.level, out outLv))
                 {
@@ -73,7 +79,7 @@ public class PanelHeroes : MonoBehaviour
                         if (i + 1 < DataController.instance.playerData.Count)
                         {
                             txtHealth.text = pData.hp.ToString();
-                          //  txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[(i + 1 < DataUtils.MAX_LEVEL_HERO ? i + 1 : i)].hp);
+                            txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, DataController.instance.playerData[0].playerData[(i + 1 < DataUtils.MAX_LEVEL_HERO ? i + 1 : i)].hp);
                         }
                     }
                 }
@@ -95,7 +101,15 @@ public class PanelHeroes : MonoBehaviour
         txtCurDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
 
         priceUpdate = 165 * pData.SoManhYeuCau * pData.Giamua1manh;
+        Debug.LogError("priceUpdate: " + priceUpdate);
         txtPriceUpdate.text = priceUpdate.ToString();
+
+
+        txtDamageDis.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
+        txtHealthDis.text = pData.hp.ToString();
+        txtTotalPower.text = pData.MoveSpeed.ToString();
+        txtPice.text = DataUtils.lstAllPlayerHeroes[DataUtils.HeroIndex()].pices + "/" + pData.SoManhYeuCau;
+        imgProgress.fillAmount = DataUtils.lstAllPlayerHeroes[DataUtils.HeroIndex()].pices*1.0f / (float)pData.SoManhYeuCau;
     }
 
     private double GetDoublevalue(double db)
@@ -121,6 +135,18 @@ public class PanelHeroes : MonoBehaviour
         else
         {
             MainMenuController.Instance.ShowMapNotify("Not enough coins to level up.");
+        }
+    }
+
+    public void ChooseTab(int index_)
+    {
+        for (int i = 0; i < btnTabs.Length; i++)
+        {
+            if (i == index_)
+            {
+                btnTabs[i].image.sprite = sprSelect;
+            }
+            else btnTabs[i].image.sprite = sprDeSelect;
         }
     }
 }

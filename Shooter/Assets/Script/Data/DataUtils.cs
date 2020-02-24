@@ -9,7 +9,7 @@ public class DataUtils
 
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
-    public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES}
+    public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES }
     public const int TOTAL_STAGE = 2;
     public const int MAX_LEVEL_HERO = 5;
     const string GAME_KEY = "Alien_Shooter_";
@@ -21,10 +21,15 @@ public class DataUtils
     public const string KEY_PLAYER_DATA = GAME_KEY + "KEY_PLAYER_DATA";
     public const string KEY_HEROES_INDEX = GAME_KEY + "KEY_HEROES_INDEX";
     public const string KEY_ALL_PLAYER_DATA = GAME_KEY + "KEY_ALL_PLAYER_DATA";
+
+    public const string KEY_HEROES_DATA = GAME_KEY + "KEY_HEROES_DATA";
+    public const string KEY_ALL_HERO_DATA = GAME_KEY + "KEY_ALL_HERO_DATA";
+
+
+
     public const string KEY_GAME_STAGE_HARD = GAME_KEY + "KEY_GAME_STAGE_HARD";
     public const string KEY_GAME_STAGE_INDEX_HARD = GAME_KEY + "KEY_GAME_STAGE_INDEX_HARD";
     public const string KEY_EQUIPMENT_DATA = GAME_KEY + "KEY_EQUIPMENT_DATA";
-
     public const string KEY_EQUIPPED_DATA = GAME_KEY + "KEY_EQUIPPED_DATA";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
@@ -122,11 +127,11 @@ public class DataUtils
         }
         else
         {
-            if(sEquipped.Trim().Length > 0)
+            if (sEquipped.Trim().Length > 0)
             {
                 JsonData jEquip = JsonMapper.ToObject(sEquipped);
-                
-                for(int i = 0;i < jEquip.Count; i++)
+
+                for (int i = 0; i < jEquip.Count; i++)
                 {
                     ItemData itemData = JsonMapper.ToObject<ItemData>(jEquip[i].ToJson());
                     _keyEquip = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
@@ -241,7 +246,8 @@ public class DataUtils
     public static ItemData itemNew;
 
     public static List<ItemData> lstAllEquipment = new List<ItemData>();
-    public static float GetPiceByStar(ItemData itemData) {
+    public static float GetPiceByStar(ItemData itemData)
+    {
         float res = 0;
         string key = itemData.id + "_" + itemData.level/* + "_"+ itemData.isUnlock*/;
         switch (itemData.type)
@@ -270,12 +276,12 @@ public class DataUtils
     private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
     {
         bool result = false;
-        string key = id + "_" + level + "_" + isUnlock+"_"+ isEquipped;
+        string key = id + "_" + level + "_" + isUnlock + "_" + isEquipped;
         string key_ = id + "_" + level;
         switch (itemType)
         {
             case eType.ARMOR:
-                if((pices >= (int)dicArmor[key_].SoManhYeuCauValue[curStar]))
+                if ((pices >= (int)dicArmor[key_].SoManhYeuCauValue[curStar]))
                 {
                     pices -= (int)dicArmor[key_].SoManhYeuCauValue[curStar];
                     result = true;
@@ -382,7 +388,8 @@ public class DataUtils
     }
     public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart)
     {
-        if (_pices > 0) {
+        if (_pices > 0)
+        {
             ItemData iData = new ItemData();
             iData.id = _id;
             iData.type = _itemType.ToString();
@@ -626,7 +633,7 @@ public class DataUtils
                 lstAllStageNormal.Add(jStage);
             }
         }
-        if(StageHardHasInit())
+        if (StageHardHasInit())
             FillAllStageHard();
 
 
@@ -646,11 +653,11 @@ public class DataUtils
     public static MapLevel GetMapByIndex(int stage, int level)
     {
         MapLevel mLevel = new MapLevel();
-        if(modeSelected == 0)
+        if (modeSelected == 0)
         {
             mLevel = lstAllStageNormal[stage].levels[level];
         }
-        else if(modeSelected == 1)
+        else if (modeSelected == 1)
         {
             mLevel = lstAllStageHard[stage].levels[level];
         }
@@ -668,7 +675,7 @@ public class DataUtils
             if (mapIndex == 7)
             {
                 lstAllStageNormal[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
-                
+
                 UnlockHardMode();
 
                 StageIncrease();
@@ -699,7 +706,7 @@ public class DataUtils
 
     public static void SaveStars(int stage, int mapIndex, bool miss1, bool miss2)
     {
-        if(modeSelected == 0)
+        if (modeSelected == 0)
         {
             string key = stage + "_" + mapIndex;
             lstAllStageNormal[stage].levels[mapIndex].mission[0].isPass = true;
@@ -709,7 +716,7 @@ public class DataUtils
             string jSave = JsonMapper.ToJson(lstAllStageNormal);
             SaveStage(jSave);
         }
-        else if(modeSelected == 1)
+        else if (modeSelected == 1)
         {
             lstAllStageHard[stage].levels[mapIndex].mission[0].isPass = true;
             lstAllStageHard[stage].levels[mapIndex].mission[1].isPass = miss1;
@@ -722,14 +729,16 @@ public class DataUtils
     #endregion
 
     #region Player Data Info
-    public static List<PlayerDataInfo> lstAllHeroes = new List<PlayerDataInfo>();
+    public static List<PlayerDataInfo> lstAllPlayerHeroes = new List<PlayerDataInfo>();
     public static PlayerDataInfo playerInfo;
 
+    public static List<HeroDataInfo> lstAllHero = new List<HeroDataInfo>();
+    public static HeroDataInfo heroInfo;
 
-    //public static int HeroIndex()
-    //{
-    //    return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
-    //}
+    public static int HeroIndex()
+    {
+        return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
+    }
     public static void SetHeroIndex(int index)
     {
         PlayerPrefs.SetInt(KEY_HEROES_INDEX, index);
@@ -737,7 +746,7 @@ public class DataUtils
     }
     public static void SavePlayerData()
     {
-        string jSave = JsonMapper.ToJson(lstAllHeroes);
+        string jSave = JsonMapper.ToJson(lstAllPlayerHeroes);
         PlayerPrefs.SetString(KEY_ALL_PLAYER_DATA, jSave);
         PlayerPrefs.Save();
     }
@@ -751,7 +760,7 @@ public class DataUtils
         {
             playerInfo = new PlayerDataInfo();
             playerInfo.level = 1;
-           // playerInfo.hp = (int)DataController.instance.playerData[0].hp;
+            playerInfo.hp = (int)DataController.instance.playerData[0].playerData[0].hp;
             playerInfo.exp = 0;
             playerInfo.id = "P1";
             playerInfo.curStars = 1;
@@ -761,7 +770,7 @@ public class DataUtils
             playerInfo.pices = 0;
             playerInfo.isUnlock = true;
             playerInfo.isEquipped = true;
-            lstAllHeroes.Add(playerInfo);
+            lstAllPlayerHeroes.Add(playerInfo);
         }
         else
         {
@@ -769,26 +778,68 @@ public class DataUtils
             JsonData jData = JsonMapper.ToObject(sData);
             for (int i = 0; i < jData.Count; i++)
             {
-                PlayerDataInfo jStage = JsonMapper.ToObject<PlayerDataInfo>(jData[i].ToJson());
-                if (!lstAllHeroes.Contains(jStage))
-                    lstAllHeroes.Add(jStage);
+                PlayerDataInfo jPlayerInfo = JsonMapper.ToObject<PlayerDataInfo>(jData[i].ToJson());
+                if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
+                    lstAllPlayerHeroes.Add(jPlayerInfo);
             }
         }
 
-        playerInfo = GetCurPlayer(); //lstAllHeroes[HeroIndex()];
+        if (!PlayerPrefs.HasKey(KEY_ALL_HERO_DATA) || string.IsNullOrEmpty(GetAllHeroData()))
+        {
+            heroInfo = new HeroDataInfo();
+            heroInfo.id = "P1";
+            heroInfo.name = "REMITANO";
+            heroInfo.level = 1;
+            heroInfo.exp = 0;
+            heroInfo.hp = (int)DataController.instance.playerData[0].playerData[0].hp;
+            heroInfo.curStars = 1;
+            heroInfo.pices = 0;
+            heroInfo.isUnlock = true;
+            heroInfo.isEquipped = true;
+            lstAllHero.Add(heroInfo);
+        }
+        else
+        {
+            string sHeroData = GetAllHeroData();
+            JsonData jHeroData = JsonMapper.ToObject(sHeroData);
+            for(int i = 0; i < jHeroData.Count; i++)
+            {
+                HeroDataInfo hdInfo = JsonMapper.ToObject<HeroDataInfo>(jHeroData[i].ToJson());
+                if (!lstAllHero.Contains(hdInfo))
+                {
+                    lstAllHero.Add(hdInfo);
+                }
+            }
+        }
 
+
+        playerInfo = lstAllPlayerHeroes[HeroIndex()];
+        heroInfo = GetHero();
 
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
     }
+    private static HeroDataInfo GetHero()
+    {
+        HeroDataInfo _hdi = null;
+        foreach(HeroDataInfo info in lstAllHero)
+        {
+            if (info.isEquipped)
+            {
+                _hdi = info;
+            }
+        }
+        return _hdi;
+    }
+
     private static PlayerDataInfo GetCurPlayer()
     {
         PlayerDataInfo pInfo = null;
-        foreach(PlayerDataInfo pdi in lstAllHeroes)
+        foreach (PlayerDataInfo pdi in lstAllPlayerHeroes)
         {
-            if(pdi.isUnlock && pdi.isEquipped)
+            if (pdi.isUnlock && pdi.isEquipped)
             {
                 pInfo = pdi;
                 break;
@@ -798,8 +849,8 @@ public class DataUtils
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
-        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().coins = newCoin;
-        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().gems = newGem;
+        lstAllPlayerHeroes[HeroIndex()].coins = newCoin;
+        lstAllPlayerHeroes[HeroIndex()].gems = newGem;
 
 
         SavePlayerData();
@@ -810,8 +861,8 @@ public class DataUtils
     }
     public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
-        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().coins += coinAdded;
-        /*lstAllHeroes[HeroIndex()]*/GetCurPlayer().gems += gemAdded;
+        lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
+        lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
 
 
         SavePlayerData();
@@ -822,6 +873,19 @@ public class DataUtils
 
         DataController.instance.DoDailyQuest(6, coinAdded);
     }
+
+    public static string GetAllHeroData()
+    {
+        return PlayerPrefs.GetString(KEY_ALL_HERO_DATA);
+    }
+    private static string GetHeroData()
+    {
+        return PlayerPrefs.GetString(KEY_HEROES_DATA, "");
+    }
+
+
+
+
     private static string GetAllPlayerData()
     {
         return PlayerPrefs.GetString(KEY_ALL_PLAYER_DATA);
