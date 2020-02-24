@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rid;
     public BoxCollider2D box;
-    public Collider2D foot;
+    public FootPlayer foot;
     public LayerMask lm, lmMeleeAtack;
 
     [SerializeField]
@@ -158,14 +158,14 @@ public class PlayerController : MonoBehaviour
         if (_collider == null)
         {
             if (colliderStand != null)
-                Physics2D.IgnoreCollision(foot, colliderStand, false);
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
         }
         else
         {
             if (_collider != colliderStand)
             {
                 if (colliderStand != null)
-                    Physics2D.IgnoreCollision(foot, colliderStand, false);
+                    Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
             }
         }
         colliderStand = _collider;
@@ -177,10 +177,8 @@ public class PlayerController : MonoBehaviour
 
             if (colliderStand != null)
             {
-                // Physics2D.IgnoreLayerCollision(foot.gameObject.layer, colliderStand.gameObject.layer, true);
-                Physics2D.IgnoreCollision(foot, colliderStand, true);
-                //  Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
-                //Physics2D.r
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, true);
+             //   foot.myPhysic.friction = 0;
             }
 
             return;
@@ -342,9 +340,9 @@ public class PlayerController : MonoBehaviour
     public int currentGun;
     public void AddProperties()
     {
-        damgeGrenade = (float)DataController.instance.playerData[level - 1].DmgGrenade;
-        speedMoveMax = (float)DataController.instance.playerData[level - 1].MoveSpeed;
-        maxHealth = (float)DataController.instance.playerData[level - 1].hp;
+        damgeGrenade = (float)DataController.instance.playerData[0].playerData[level - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed;
+        maxHealth = (float)DataController.instance.playerData[0].playerData[level - 1].hp;
 
         health = maxHealth;
         speedmove = 0;
@@ -398,7 +396,7 @@ public class PlayerController : MonoBehaviour
             if (rid.gravityScale == .2f)
                 rid.gravityScale = 1;
             if (colliderStand != null)
-                Physics2D.IgnoreCollision(foot, colliderStand, false);
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
             float timeUp = timeJump * 0.5f;
             playerState = PlayerState.Jump;
             AnimJump();
@@ -464,10 +462,10 @@ public class PlayerController : MonoBehaviour
     public float radius;
     float timeStand = 6;
     public GameObject poitRayGround;
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
+    }
     float timereviving = 2;
 
     public void BeginPlayer()
@@ -513,6 +511,7 @@ public class PlayerController : MonoBehaviour
 
 
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
+        movePos = rid.velocity;
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
         rid.velocity = movePos;
@@ -524,7 +523,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                isfalldow = true;
+                if (rid.velocity.y < 0)
+                {
+                    isfalldow = true;
+                }
             }
         }
         else
@@ -940,7 +942,7 @@ public class PlayerController : MonoBehaviour
 
     void AnimRun()
     {
-        if (isfalldow && rid.velocity.y != 0)
+        if (isfalldow && rid.velocity.y < 0)
         {
             AnimFallDow();
             return;

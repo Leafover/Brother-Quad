@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-    public bool cannotDestroy;
+    public bool cannotDestroy, dongrom;
     public float health;
     public enum TYPE
     {
@@ -34,7 +34,7 @@ public class Barrier : MonoBehaviour
         health -= _damage;
         if (health <= 0)
         {
-            switch(types)
+            switch (types)
             {
                 case TYPE.explo:
                     explo = ObjectPoolerManager.Instance.explofuel1Pooler.GetPooledObject();
@@ -69,7 +69,7 @@ public class Barrier : MonoBehaviour
     GameObject poisionArena;
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        switch(collision.gameObject.layer)
+        switch (collision.gameObject.layer)
         {
             case 11:
                 TakeDamage(PlayerController.instance.damageBullet);
@@ -82,9 +82,13 @@ public class Barrier : MonoBehaviour
             case 26:
                 TakeDamage(PlayerController.instance.damgeGrenade);
                 break;
-            //case 27:
-            //    TakeDamage(PlayerController.instance.damageBullet * 1.5f);
-            //    break;
+            case 13:
+                if (dongrom)
+                {
+                    TakeDamage(1000);
+                    Debug.LogError("cham");
+                }
+                break;
         }
     }
 }

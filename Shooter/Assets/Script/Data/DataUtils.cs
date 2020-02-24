@@ -751,7 +751,7 @@ public class DataUtils
         {
             playerInfo = new PlayerDataInfo();
             playerInfo.level = 1;
-            playerInfo.hp = (int)DataController.instance.playerData[0].hp;
+           // playerInfo.hp = (int)DataController.instance.playerData[0].hp;
             playerInfo.exp = 0;
             playerInfo.id = "P1";
             playerInfo.curStars = 1;
