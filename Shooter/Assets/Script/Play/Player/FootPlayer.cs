@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class FootPlayer : MonoBehaviour
 {
+   // public PhysicsMaterial2D myPhysic;
+    public Collider2D collider;
+    private void OnValidate()
+    {
+        collider = GetComponent<Collider2D>();
+      //  myPhysic = collider.sharedMaterial ;
+    }
     public void DetectGround(GameObject collision)
     {
         if (PlayerController.instance.currentStand != collision)
+        {
             PlayerController.instance.currentStand = collision;
+            //if (collision.name == "boxcheo")
+            //{
+            //    myPhysic.friction = 0.5f;
+            //}
+            //else
+            //{
+            //    myPhysic.friction = 0f;
+            //}
+        }
+        //PlayerController.instance.foot.sharedMaterial.friction = my.friction;
+        //Debug.LogError("friction:" + PlayerController.instance.foot.sharedMaterial.friction);
         if (!PlayerController.instance.dustdown.activeSelf)
             PlayerController.instance.dustdown.SetActive(true);
     }

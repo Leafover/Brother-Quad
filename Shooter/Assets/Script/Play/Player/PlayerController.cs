@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rid;
     public BoxCollider2D box;
-    public Collider2D foot;
+    public FootPlayer foot;
     public LayerMask lm, lmMeleeAtack;
 
     [SerializeField]
@@ -158,14 +158,14 @@ public class PlayerController : MonoBehaviour
         if (_collider == null)
         {
             if (colliderStand != null)
-                Physics2D.IgnoreCollision(foot, colliderStand, false);
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
         }
         else
         {
             if (_collider != colliderStand)
             {
                 if (colliderStand != null)
-                    Physics2D.IgnoreCollision(foot, colliderStand, false);
+                    Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
             }
         }
         colliderStand = _collider;
@@ -177,10 +177,8 @@ public class PlayerController : MonoBehaviour
 
             if (colliderStand != null)
             {
-                // Physics2D.IgnoreLayerCollision(foot.gameObject.layer, colliderStand.gameObject.layer, true);
-                Physics2D.IgnoreCollision(foot, colliderStand, true);
-                //  Debug.Log("detect" + ":" + colliderStand.gameObject.layer);
-                //Physics2D.r
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, true);
+             //   foot.myPhysic.friction = 0;
             }
 
             return;
@@ -398,7 +396,7 @@ public class PlayerController : MonoBehaviour
             if (rid.gravityScale == .2f)
                 rid.gravityScale = 1;
             if (colliderStand != null)
-                Physics2D.IgnoreCollision(foot, colliderStand, false);
+                Physics2D.IgnoreCollision(foot.collider, colliderStand, false);
             float timeUp = timeJump * 0.5f;
             playerState = PlayerState.Jump;
             AnimJump();
