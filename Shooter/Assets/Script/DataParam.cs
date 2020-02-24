@@ -8,6 +8,7 @@ public class DataParam : MonoBehaviour
     public static string APP_ID = isTest ? "ca-app-pub-3940256099942544~3347511713" : "ca-app-pub-8566745611252640~5288886245";
     public static string INTERS_ID = isTest ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-8566745611252640/6358070116";
     public static string REWARDED_ID = isTest ? "ca-app-pub-3940256099942544/5224354917" : "ca-app-pub-8566745611252640/6166498422";
+    public static string BANNER_ID = isTest ? "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-8566745611252640/6715057094";
     public const bool isTest = false;
 
     public const string ALLACHIEVEMENT = "allachievement";

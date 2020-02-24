@@ -18,6 +18,7 @@ public class AdsManager : MonoBehaviour
     #region Admob
     private InterstitialAd interstitial;
     private RewardedAd rewardedAd;
+    private BannerView banner;
 
     #endregion
     private void Awake()
@@ -41,6 +42,32 @@ public class AdsManager : MonoBehaviour
         InitInterstitial();
         InitRewarded();
         UnityAds.SetGDPRConsentMetaData(true);
+    }
+
+    private void InitBanner()
+    {
+        banner = new BannerView("ca-app-pub-8566745611252640/6715057094", AdSize.Banner, AdPosition.BottomRight);
+        banner.OnAdLoaded += Banner_OnAdLoaded;
+        banner.LoadAd(CreateRequest());
+    }
+
+    public void ShowBanner()
+    {
+        if(banner != null)
+        {
+            banner.Show();
+        }
+    }
+    public void HideBanner()
+    {
+        if (banner != null)
+        {
+            banner.Hide();
+        }
+    }
+    private void Banner_OnAdLoaded(object sender, EventArgs e)
+    {
+        HideBanner();
     }
 
     private bool IsIntersLoaded()
