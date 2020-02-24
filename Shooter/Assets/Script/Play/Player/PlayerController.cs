@@ -464,10 +464,10 @@ public class PlayerController : MonoBehaviour
     public float radius;
     float timeStand = 6;
     public GameObject poitRayGround;
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
+    }
     float timereviving = 2;
 
     public void BeginPlayer()
@@ -513,6 +513,7 @@ public class PlayerController : MonoBehaviour
 
 
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
+        movePos = rid.velocity;
         movePos.x = speedmove;
         movePos.y = rid.velocity.y;
         rid.velocity = movePos;
@@ -524,7 +525,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                isfalldow = true;
+                if (rid.velocity.y < 0)
+                {
+                    isfalldow = true;
+                }
             }
         }
         else
@@ -940,7 +944,7 @@ public class PlayerController : MonoBehaviour
 
     void AnimRun()
     {
-        if (isfalldow && rid.velocity.y != 0)
+        if (isfalldow && rid.velocity.y < 0)
         {
             AnimFallDow();
             return;
