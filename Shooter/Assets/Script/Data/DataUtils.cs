@@ -79,7 +79,6 @@ public class DataUtils
     public static void FillEquipmentData()
     {
         string sData = GetAllEquipment();
-        Debug.LogError("sData: " + sData);
         dicAllEquipment = new Dictionary<string, ItemData>();
         if (sData.Trim().Length > 0)
         {
@@ -106,7 +105,6 @@ public class DataUtils
         #region Check and Init Equipped Item
         dicEquippedItem = new Dictionary<string, ItemData>();
         string sEquipped = GetEquippedItem();
-        Debug.LogError("sEquipped: " + sEquipped);
         if (!IsEquippedInit())
         {
             ItemData _item = new ItemData();
@@ -326,7 +324,6 @@ public class DataUtils
 
         if (result)
         {
-            Debug.LogError("Has Unlock");
             ItemData itemNew = dicAllEquipment[key];
             dicAllEquipment.Remove(key);
             string _newKey = id + "_" + level + "_" + result + "_" + isEquipped;
@@ -340,15 +337,11 @@ public class DataUtils
 
                 if (EquipmentManager.Instance != null)
                 {
-                    Debug.LogError("HasContains: " + dicAllEquipment.ContainsKey(_newKey) + " vs " + _newKey + " vs " + _newKey);
                     EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
                 }
-                Debug.LogError("Not yet contain key: " + isEquipped);
             }
             else
             {
-                Debug.LogError("Contain key: " + isEquipped + " vs " + _newKey + " vs " + dicAllEquipment.ContainsKey(_newKey));
-
                 dicAllEquipment[_newKey].quantity += 1;
                 dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
@@ -407,7 +400,6 @@ public class DataUtils
                     if (!dicAllEquipment[_key].isUnlock)
                     {
                         string _newKey = iData.id + "_" + iData.level.ToString() + "_" + /*true*/iData.isUnlock + "_" + iData.isEquipped;
-                        Debug.LogError("NEWKEY: " + _newKey);
                         dicAllEquipment[_key].pices += _pices;
                         CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
                     }
@@ -441,7 +433,6 @@ public class DataUtils
     public static void SaveEquipmentData()
     {
         string jSave = JsonMapper.ToJson(dicAllEquipment);
-        //Debug.LogError(jSave);
         PlayerPrefs.SetString(KEY_EQUIPMENT_DATA, jSave);
         PlayerPrefs.Save();
     }
@@ -478,7 +469,6 @@ public class DataUtils
     public static void SaveEquippedData()
     {
         string jSave = JsonMapper.ToJson(dicEquippedItem);
-        //Debug.LogError(jSave);
         PlayerPrefs.SetString(KEY_EQUIPPED_DATA, jSave);
         PlayerPrefs.Save();
     }
@@ -732,7 +722,7 @@ public class DataUtils
     public static List<PlayerDataInfo> lstAllPlayerHeroes = new List<PlayerDataInfo>();
     public static PlayerDataInfo playerInfo;
 
-    public static List<HeroDataInfo> lstAllHero = new List<HeroDataInfo>();
+    public static Dictionary<string, HeroDataInfo> dicAllHero;
     public static HeroDataInfo heroInfo;
 
     public static int HeroIndex()
@@ -759,7 +749,7 @@ public class DataUtils
         if (!PlayerPrefs.HasKey(KEY_ALL_PLAYER_DATA) || string.IsNullOrEmpty(GetAllPlayerData()))
         {
             playerInfo = new PlayerDataInfo();
-            playerInfo.level = 1;
+            playerInfo.level = 0;
             playerInfo.hp = (int)DataController.instance.playerData[0].playerData[0].hp;
             playerInfo.exp = 0;
             playerInfo.id = "P1";
@@ -783,20 +773,24 @@ public class DataUtils
                     lstAllPlayerHeroes.Add(jPlayerInfo);
             }
         }
-
+        dicAllHero = new Dictionary<string, HeroDataInfo>();
         if (!PlayerPrefs.HasKey(KEY_ALL_HERO_DATA) || string.IsNullOrEmpty(GetAllHeroData()))
         {
             heroInfo = new HeroDataInfo();
             heroInfo.id = "P1";
             heroInfo.name = "REMITANO";
-            heroInfo.level = 1;
+            heroInfo.level = 0;
             heroInfo.exp = 0;
-            heroInfo.hp = (int)DataController.instance.playerData[0].playerData[0].hp;
+            heroInfo.hp = GetHeroHPByID("P1");
             heroInfo.curStars = 1;
             heroInfo.pices = 0;
             heroInfo.isUnlock = true;
             heroInfo.isEquipped = true;
-            lstAllHero.Add(heroInfo);
+            if (!dicAllHero.ContainsKey(heroInfo.id))
+            {
+                dicAllHero.Add(heroInfo.id, heroInfo);
+            }
+            ChooseHero(heroInfo);
         }
         else
         {
@@ -804,48 +798,32 @@ public class DataUtils
             JsonData jHeroData = JsonMapper.ToObject(sHeroData);
             for(int i = 0; i < jHeroData.Count; i++)
             {
+
                 HeroDataInfo hdInfo = JsonMapper.ToObject<HeroDataInfo>(jHeroData[i].ToJson());
-                if (!lstAllHero.Contains(hdInfo))
+                if (!dicAllHero.ContainsKey(hdInfo.id))
                 {
-                    lstAllHero.Add(hdInfo);
+                    dicAllHero.Add(hdInfo.id, hdInfo);
                 }
             }
         }
 
 
         playerInfo = lstAllPlayerHeroes[HeroIndex()];
-        heroInfo = GetHero();
+
+        heroInfo = DataHero();
 
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
     }
-    private static HeroDataInfo GetHero()
+    private static HeroDataInfo DataHero()
     {
-        HeroDataInfo _hdi = null;
-        foreach(HeroDataInfo info in lstAllHero)
-        {
-            if (info.isEquipped)
-            {
-                _hdi = info;
-            }
-        }
-        return _hdi;
-    }
+        string sHeroData = PlayerPrefs.GetString(KEY_HEROES_DATA, "");
+        JsonData jHeroData = JsonMapper.ToObject(sHeroData);
 
-    private static PlayerDataInfo GetCurPlayer()
-    {
-        PlayerDataInfo pInfo = null;
-        foreach (PlayerDataInfo pdi in lstAllPlayerHeroes)
-        {
-            if (pdi.isUnlock && pdi.isEquipped)
-            {
-                pInfo = pdi;
-                break;
-            }
-        }
-        return pInfo;
+        HeroDataInfo hdInfo = JsonMapper.ToObject<HeroDataInfo>(jHeroData.ToJson());
+        return hdInfo;
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
@@ -878,11 +856,55 @@ public class DataUtils
     {
         return PlayerPrefs.GetString(KEY_ALL_HERO_DATA);
     }
+    public static void SaveAllHero()
+    {
+        string jSaveAllHero = JsonMapper.ToJson(dicAllHero);
+        PlayerPrefs.SetString(KEY_ALL_HERO_DATA, jSaveAllHero);
+        PlayerPrefs.Save();
+    }
     private static string GetHeroData()
     {
         return PlayerPrefs.GetString(KEY_HEROES_DATA, "");
     }
+    public static void ChooseHero(HeroDataInfo heroData)
+    {
+        PlayerPrefs.SetString(KEY_HEROES_DATA, JsonMapper.ToJson(heroData));
+        PlayerPrefs.Save();
+    }
 
+    public static void TakeHeroPice(string hID, int hPices)
+    {
+        if (!dicAllHero.ContainsKey(hID))
+        {
+            HeroDataInfo heroInfo = new HeroDataInfo();
+            heroInfo.id = hID;
+            heroInfo.pices = hPices;
+            dicAllHero.Add(hID,heroInfo);
+        }
+        else
+        {
+            dicAllHero[hID].pices += hPices;
+            ChooseHero(dicAllHero[hID]);
+        }
+
+        SaveAllHero();
+    }
+    public static int GetHeroHPByID(string id)
+    {
+        double dbResult = 500;
+        for(int i = 0; i < DataController.instance.playerData.Count; i++)
+        {
+            for(int j = 0; j< DataController.instance.playerData[i].playerData.Count; j++)
+            {
+                if (DataController.instance.playerData[i].playerData[j].ID.Equals(id))
+                {
+                    dbResult = DataController.instance.playerData[i].playerData[j].hp;
+                    break;
+                }
+            }
+        }
+        return (int)dbResult;
+    }
 
 
 

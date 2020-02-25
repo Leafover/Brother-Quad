@@ -7,7 +7,7 @@ public class PlayerDataInfo
 {
     public string name = "REMITANO";
     public string id;
-    public int level = 1;
+    public int level = 0;
     public int exp = 0;
     public int hp = 0;
     public int coins = 0;
@@ -23,7 +23,7 @@ public class HeroDataInfo
 {
     public string name = "REMITANO";
     public string id;
-    public int level = 1;
+    public int level = 0;
     public int exp = 0;
     public int hp = 0;
     public int curStars = 1;
