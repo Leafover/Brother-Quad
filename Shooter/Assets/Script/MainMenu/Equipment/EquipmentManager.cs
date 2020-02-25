@@ -168,6 +168,7 @@ public class EquipmentManager : MonoBehaviour
 
                 ItemData iData1 = DataUtils.dicAllEquipment[_keyItemSelected];
                 string _key1 = iData1.id + "_" + iData1.level.ToString() + "_" + iData1.isUnlock + "_" + iData1.isEquipped;
+                Debug.LogError("_Key: " + _key1);
                 DataUtils.dicAllEquipment.Remove(_keyItemSelected);
                 DataUtils.dicAllEquipment.Add(_key1, iData1);
                 for (int i = 0; i < trContain.childCount; i++)

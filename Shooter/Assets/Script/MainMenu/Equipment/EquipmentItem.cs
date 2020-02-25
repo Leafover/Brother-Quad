@@ -72,7 +72,8 @@ public class EquipmentItem : MonoBehaviour
     {
         btnItem.onClick.AddListener(() =>
         {
-            if (EquipmentManager.Instance != null) {
+            if (!MainMenuController.Instance.gPanelHeroes.activeSelf)
+            {
                 if (!EquipmentManager.Instance.isMultiSell)
                     EquipmentManager.Instance.ChooseItem(itemData);
                 else
