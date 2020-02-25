@@ -946,7 +946,7 @@ public class PlayerController : MonoBehaviour
             AnimFallDow();
             return;
         }
-        timeScaleRun = isSlow ? 0.5f : 1f;
+        timeScaleRun = isSlow ? 0.5f : 1.3f;
         skeletonAnimation.state.GetCurrent(0).TimeScale = timeScaleRun;
         if (dirMove == FlipX)
         {

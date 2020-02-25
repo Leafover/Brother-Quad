@@ -169,6 +169,7 @@ public class MainMenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            DataUtils.TakeHeroPice("P1", 2);
         }
 
         if (Input.GetKeyDown(KeyCode.D))

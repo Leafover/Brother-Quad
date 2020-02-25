@@ -592,7 +592,7 @@ public class GameController : MonoBehaviour
 
     void AddItem(int i, DataUtils.eLevel eLevel)
     {
-        string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "");
+        string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
