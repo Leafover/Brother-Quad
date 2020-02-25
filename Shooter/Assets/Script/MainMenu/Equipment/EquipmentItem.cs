@@ -72,20 +72,25 @@ public class EquipmentItem : MonoBehaviour
     {
         btnItem.onClick.AddListener(() =>
         {
-            if (!EquipmentManager.Instance.isMultiSell)
-                EquipmentManager.Instance.ChooseItem(itemData);
-            else {
-                isSelected = !isSelected;
-                if (itemData.isUnlock) {
-                    if (isSelected)
+            if (!MainMenuController.Instance.gPanelHeroes.activeSelf)
+            {
+                if (!EquipmentManager.Instance.isMultiSell)
+                    EquipmentManager.Instance.ChooseItem(itemData);
+                else
+                {
+                    isSelected = !isSelected;
+                    if (itemData.isUnlock)
                     {
-                        EquipmentManager.Instance.AddItemToList(this);
-                        imgMultiSelect.enabled = true;
-                    }
-                    else
-                    {
-                        EquipmentManager.Instance.RemoveItemFromList(this);
-                        imgMultiSelect.enabled = false;
+                        if (isSelected)
+                        {
+                            EquipmentManager.Instance.AddItemToList(this);
+                            imgMultiSelect.enabled = true;
+                        }
+                        else
+                        {
+                            EquipmentManager.Instance.RemoveItemFromList(this);
+                            imgMultiSelect.enabled = false;
+                        }
                     }
                 }
             }
