@@ -450,7 +450,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3c29dd54fa586142b531dbf242fbb46, type: 2}
+  - {fileID: 2100000, guid: 4137cc0da821f7a4f90a9af6fc02cf5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -469,7 +469,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!114 &2846257137587532636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,19 +482,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0b80d84f0530d2e4a92dd72a7b22aba0, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: aa38626d3c3376149b0e9b6defef8542, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 0
+  immutableTriangles: 1
   pmaVertexColors: 1
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
-  singleSubmesh: 0
-  fixDrawOrder: 0
+  singleSubmesh: 1
+  fixDrawOrder: 1
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -531,7 +531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6648909517732511427}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.17, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6648909518573983019}
@@ -712,7 +712,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07247543, y: 0.23144197}
+  m_Offset: {x: -0.07247543, y: 0.49009418}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -723,7 +723,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5043716, y: 1.6195822}
+  m_Size: {x: 1.5043716, y: 1.8006382}
   m_EdgeRadius: 0
 --- !u!50 &6648909518573983017
 Rigidbody2D:
@@ -785,7 +785,6 @@ MonoBehaviour:
   isBoss: 0
   isMiniBoss: 0
   moveFollowPath: 0
-  canoutcam: 1
   isMachine: 1
   typeItemDrop: 0
   enemyState: 2
@@ -812,14 +811,14 @@ MonoBehaviour:
   maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: ae0dcc0e5105e394881bbe2ae15db337, type: 2}
+    attack1: {fileID: 11400000, guid: d14bc338a7637f34887ac6b520f86fe1, type: 2}
     attack2: {fileID: 0}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: b45265c20d9ddcf40bbb6c3988e1d98f, type: 2}
-    run: {fileID: 11400000, guid: 0dde827fb11a95241a6c50d6fb6b36a4, type: 2}
+    idle: {fileID: 11400000, guid: af20c7d5bd6d10048b30ccd5bf4a8d1e, type: 2}
+    run: {fileID: 11400000, guid: 6f12564e9ce91954dbc7cc591189d864, type: 2}
     aimTargetAnim: {fileID: 0}
-    run2: {fileID: 11400000, guid: 0dde827fb11a95241a6c50d6fb6b36a4, type: 2}
-    die: {fileID: 11400000, guid: 3225b2f8e80aa91488cb9c929508e356, type: 2}
+    run2: {fileID: 11400000, guid: 6f12564e9ce91954dbc7cc591189d864, type: 2}
+    die: {fileID: 11400000, guid: 2170c7fa83463a6439927a99e669ba9a, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
@@ -838,17 +837,19 @@ MonoBehaviour:
   combo: 0
   randomCombo: 0
   skeletonAnimation: {fileID: 2846257137587532636}
-  strboneBarrelGun: Gun
+  strboneBarrelGun: Tia Lua Dan
   strboneBarrelGun1: 
   strboneBarrelGun2: 
   targetPos: {fileID: 0}
   tempXBegin: 0
   numberCountLayerHelthBarBoss: 0
+  previousState: 1
   exploDie: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
   indexHealthFill: 0
   currenthealthfill: 0
+  typeAttack: 0
 --- !u!1 &6972482611676610024
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,7 +875,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6972482611676610024}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.54, z: 0}
+  m_LocalPosition: {x: 0, y: 1.82, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 4998373548927497443}

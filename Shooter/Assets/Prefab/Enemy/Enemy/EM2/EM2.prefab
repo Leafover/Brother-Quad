@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4289915488614152805}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.37, z: 0}
+  m_LocalPosition: {x: 0, y: -0.079, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 3147704419427456740}
@@ -500,7 +500,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2f32a2ba6600534d9801910c2f12b80, type: 2}
+  - {fileID: 2100000, guid: 17c2ff265549e824d81f334bd38bd99f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ec59dc328ae4c814ab8de71fa9ab6185, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a95c2a02ff90777428496bae2d79195e, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -780,7 +780,6 @@ MonoBehaviour:
   isBoss: 0
   isMiniBoss: 0
   moveFollowPath: 0
-  canoutcam: 0
   isMachine: 0
   typeItemDrop: 0
   enemyState: 0
@@ -807,19 +806,19 @@ MonoBehaviour:
   maxtimedelayChangePos: 4
   currentAnim: {fileID: 0}
   aec:
-    attack1: {fileID: 11400000, guid: 7059b80ad651e1749b00200ebe57d2bf, type: 2}
+    attack1: {fileID: 11400000, guid: 5172d50f8a199634c83b8d32cf4a7d86, type: 2}
     attack2: {fileID: 0}
     attack3: {fileID: 0}
-    idle: {fileID: 11400000, guid: f46c393a6717ef143b1d00aca841712f, type: 2}
-    run: {fileID: 11400000, guid: 73fe99d9cdb14e648b33db5610fadef6, type: 2}
+    idle: {fileID: 11400000, guid: af977f8beb9774f489f3e42d1e3bf239, type: 2}
+    run: {fileID: 11400000, guid: db759c7aad16abb4ba9992dab10d15ff, type: 2}
     aimTargetAnim: {fileID: 0}
     run2: {fileID: 0}
-    die: {fileID: 11400000, guid: a3088f57b4546ac4e80edb577f660727, type: 2}
+    die: {fileID: 11400000, guid: a6f6b0eb62dcf894ea81c825679c9544, type: 2}
     jumpOut: {fileID: 0}
     lowHPAnim: {fileID: 0}
     jump: {fileID: 0}
-    falldown: {fileID: 11400000, guid: 518fa3a2399199f43b5d48fa846dc3d7, type: 2}
-    standup: {fileID: 0}
+    falldown: {fileID: 11400000, guid: cae686ded96e9e04cacb22ce4e61bf36, type: 2}
+    standup: {fileID: 11400000, guid: 765bf1324c65b6241a847e9e7ce66d65, type: 2}
   timePreviousAttack: 0
   lm:
     serializedVersion: 2
@@ -839,11 +838,13 @@ MonoBehaviour:
   targetPos: {fileID: 0}
   tempXBegin: 0
   numberCountLayerHelthBarBoss: 0
+  previousState: 1
   exploDie: {fileID: 0}
   posExplo: {x: 0, y: 0}
   isShield: 0
   indexHealthFill: 0
   currenthealthfill: 0
+  typeAttack: 0
 --- !u!1 &7909004431652964384
 GameObject:
   m_ObjectHideFlags: 0

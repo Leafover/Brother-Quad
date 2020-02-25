@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EM3Controller : EnemyBase
 {
-    bool isAttacking;
+  //  bool isAttacking;
     bool isGrenadeStage;
     public override void Start()
     {
@@ -43,27 +43,27 @@ public class EM3Controller : EnemyBase
         {
             return;
         }
-      //  CheckFallDown();
+        CheckFallDown();
         if (isGrenadeStage)
         {
             switch (enemyState)
             {
                 case EnemyState.attack:
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
+                    Attack(0, aec.attack1, false, maxtimeDelayAttack1 * 2);
                    
                     break;
-                //case EnemyState.falldown:
-                //    if (isGround)
-                //    {
-                //        if (aec.standup == null)
-                //            enemyState = EnemyState.run;
-                //        else
-                //        {
-                //            PlayAnim(0, aec.standup, false);
-                //        }
-                //    }
-                //    break;
+                case EnemyState.falldown:
+                    if (isGround)
+                    {
+                        if (aec.standup == null)
+                            enemyState = EnemyState.run;
+                        else
+                        {
+                            PlayAnim(0, aec.standup, false);
+                        }
+                    }
+                    break;
             }
         }
         else
@@ -140,20 +140,20 @@ public class EM3Controller : EnemyBase
                         rid.velocity = Vector2.zero;
                         PlayAnim(0, aec.idle, true);
                     }
-                    Attack(0, aec.attack2, false, maxtimeDelayAttack1);
+                    Attack(0, aec.attack2, false, maxtimeDelayAttack1 * 2);
                     break;
-                //case EnemyState.falldown:
-                //    if (isGround)
-                //    {
-                //        if (aec.standup == null)
-                //            enemyState = EnemyState.run;
-                //        else
-                //        {
-                //            PlayAnim(0, aec.standup, false);
-                //        }
+                case EnemyState.falldown:
+                    if (isGround)
+                    {
+                        if (aec.standup == null)
+                            enemyState = EnemyState.run;
+                        else
+                        {
+                            PlayAnim(0, aec.standup, false);
+                        }
 
-                //    }
-                //    break;
+                    }
+                    break;
             }
         }
     }
@@ -178,10 +178,10 @@ public class EM3Controller : EnemyBase
         }
         else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            if (isAttacking)
-                return;
+            //if (isAttacking)
+            //    return;
             combo++;
-            isAttacking = true;
+            //isAttacking = true;
             if (!incam)
                 return;
 
@@ -204,7 +204,7 @@ public class EM3Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            isAttacking = false;
+         //   isAttacking = false;
             PlayAnim(0, aec.idle, true);
             if (combo == randomCombo)
             {

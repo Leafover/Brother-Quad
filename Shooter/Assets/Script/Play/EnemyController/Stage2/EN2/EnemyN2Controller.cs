@@ -105,7 +105,6 @@ public class EnemyN2Controller : EnemyBase
                 waitdie = true;
                 rid.velocity = Vector2.zero;
                 speedMove = 0;
-                //  Debug.LogError("die thoi" + currentAnim.name);
             }
 
             return;

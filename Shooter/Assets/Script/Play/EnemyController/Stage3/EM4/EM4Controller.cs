@@ -6,31 +6,28 @@ using UnityEngine;
 
 public class EM4Controller : EnemyBase
 {
-    Vector2 move;
     float timedelayChangePos;
-    bool isGrenadeStage;
+    Vector2 move;
+    //  Vector2 nextPos;
     public override void Start()
     {
         base.Start();
         Init();
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
-    //}
     public override void Init()
     {
         base.Init();
         timedelayChangePos = maxtimedelayChangePos;
-        randomCombo = 3;
-        isGrenadeStage = true;
-        speedMove = speed / 2;
-        //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.em4s.Contains(this))
         {
             EnemyManager.instance.em4s.Add(this);
 
         }
+        randomCombo = Random.Range(1, 4);
+        speedMove = speed;
+        waitdie = false;
+
+        //  Debug.LogError(leftFace.transform.position + ":" + rightFace.transform.position);
     }
     public override void OnDisable()
     {
@@ -39,34 +36,47 @@ public class EM4Controller : EnemyBase
         {
             EnemyManager.instance.em4s.Remove(this);
         }
-        // Debug.LogError("tu nhien bien mat");
     }
-
     public override void Active()
     {
         base.Active();
-        //  enemyState = EnemyState.idle;
-
         enemyState = EnemyState.attack;
-        //  StartCoroutine(delayActive());
     }
-
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(foot.transform.position, 0.115f);
+    //}
+    bool waitdie;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
-
         if (!isActive)
         {
             return;
         }
         if (enemyState == EnemyState.die)
+        {
+            if (waitdie)
+                return;
+            move = rid.velocity;
+            move.x = speedMove / 5;
+            move.y = rid.velocity.y;
+            rid.velocity = move;
+            timePreviousAttack -= Time.deltaTime;
+            if (timePreviousAttack <= 0)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(0, aec.die, false);
+                waitdie = true;
+                rid.velocity = Vector2.zero;
+                speedMove = 0;
+            }
             return;
+        }
 
         if (tempXBegin > Camera.main.transform.position.x + 7.5f)
         {
             return;
         }
-
 
         CheckFallDown();
 
@@ -74,37 +84,11 @@ public class EM4Controller : EnemyBase
         {
             case EnemyState.attack:
 
+                Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-
-
+                targetPos.transform.position = GetTarget(false);
                 if (!canmove)
-                {
-                    if (isGrenadeStage)
-                    {
-                        Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                        targetPos.transform.position = GetTarget(true);
-                    }
-                    else
-                    {
-                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
-                        targetPos.transform.position = GetTarget(false);
-                    }
                     return;
-                }
-
-                if (isGrenadeStage)
-                {
-
-                    Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                    targetPos.transform.position = GetTarget(true);
-                }
-                else
-                {
-
-                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
-                    targetPos.transform.position = GetTarget(false);
-                }
-
                 break;
             case EnemyState.run:
 
@@ -112,22 +96,18 @@ public class EM4Controller : EnemyBase
                 move.x = speedMove;
                 move.y = rid.velocity.y;
                 rid.velocity = move;
+
                 timedelayChangePos -= deltaTime;
-
-
                 targetPos.transform.position = GetTarget(true);
-
                 PlayAnim(0, aec.run, true);
-
                 if (timedelayChangePos <= 0)
                 {
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
                     PlayAnim(1, aec.aimTargetAnim, false);
-                    timedelayChangePos = maxtimedelayChangePos;
                     rid.velocity = Vector2.zero;
+                    timedelayChangePos = maxtimedelayChangePos;
                 }
-
                 break;
             case EnemyState.falldown:
                 if (isGround)
@@ -138,26 +118,23 @@ public class EM4Controller : EnemyBase
                     {
                         PlayAnim(0, aec.standup, false);
                     }
-
                 }
                 break;
         }
     }
-
     Vector2 dirBullet;
-    float angle;
     Quaternion rotation;
+    float angle;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
-        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             combo++;
             if (!incam)
                 return;
-
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
-            bulletEnemy.AddProperties(damage2, bulletspeed1);
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -165,91 +142,69 @@ public class EM4Controller : EnemyBase
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.gameObject.SetActive(true);
 
-            //Debug.LogError("shot");
         }
-        else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
-        {
-            combo++;
-            if (!incam)
-                return;
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
-
-            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bulletEnemy.transform.rotation = Quaternion.identity;
-
-            if (!FlipX)
-                bulletEnemy.transform.rotation = leftFace.rotation;
-            else
-                bulletEnemy.transform.rotation = rightFace.rotation;
-
-
-            bulletEnemy.AddProperties(damage1, bulletspeed1);
-            bulletEnemy.SetTimeExist(/*bulletimeexist*/0.5f);
-            bulletEnemy.BeginDisplay(Vector2.zero, this);
-            listMyBullet.Add(bulletEnemy);
-
-            bulletEnemy.gameObject.SetActive(true);
-        }
-
     }
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            PlayAnim(0, aec.idle, true);
-            if (combo == randomCombo)
+
+            if (enemyState == EnemyState.die)
+                return;
+            if (aec.standup != null)
             {
-                combo = 0;
-                randomCombo = Random.Range(3, 5);
-                isGrenadeStage = false;
-            }
-
-        }
-
-        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
-        {
-            PlayAnim(0, aec.idle, true);
-
-            if (combo == randomCombo)
-            {
-                if (canmove)
+                if (trackEntry.Animation.Name.Equals(aec.standup.name))
                 {
-                    if (enemyState == EnemyState.falldown)
-                        return;
-
-                    skeletonAnimation.ClearState();
-
-                    enemyState = EnemyState.run;
-
-                    timedelayChangePos = maxtimedelayChangePos;
-
-                    speedMove = -speedMove;
-
-                    if (speedMove < 0)
-                        FlipX = false;
-                    else
-                        FlipX = true;
+                    enemyState = EnemyState.attack;
                 }
-                combo = 0;
-                randomCombo = Random.Range(1, 5);
             }
-        }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
-        {
-            enemyState = EnemyState.attack;
+
+            if (enemyState == EnemyState.falldown)
+                return;
+
+            PlayAnim(0, aec.idle, true);
+            if (!canmove)
+                return;
+            if (combo == randomCombo)
+            {
+                skeletonAnimation.ClearState();
+                timedelayChangePos = maxtimedelayChangePos;
+                randomCombo = Random.Range(1, 4);
+                combo = 0;
+                timedelayChangePos = maxtimedelayChangePos;
+                speedMove = -speedMove;
+
+                if (speedMove <= 0)
+                    FlipX = false;
+                else
+                    FlipX = true;
+                enemyState = EnemyState.run;
+            }
         }
 
     }
-    public float speedMove;
-
+    float speedMove;
     public override void Dead()
     {
         base.Dead();
+        RunToDie();
+    }
+    int randomDie;
+    public void RunToDie()
+    {
+        timePreviousAttack = 3f;
+        randomDie = Random.Range(0, 2);
+        if (randomDie == 0)
+        {
+            speedMove = -speed;
+            FlipX = false;
+        }
+        else
+        {
+            speedMove = speed;
+            FlipX = true;
+
+        }
     }
 }

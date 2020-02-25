@@ -242,7 +242,7 @@ public class EM1Controller : EnemyBase
                     else
                         FlipX = true;
                 }
-                Debug.LogError("why????");
+              //  Debug.LogError("why????");
                 combo = 0;
                 randomCombo = Random.Range(3, 5);
                 isGrenadeStage = true;

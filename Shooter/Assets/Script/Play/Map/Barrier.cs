@@ -73,11 +73,13 @@ public class Barrier : MonoBehaviour
         {
             case 11:
                 TakeDamage(PlayerController.instance.damageBullet);
+                //Debug.LogError("zoooooooo");
                 if (!collision.CompareTag("shotgun"))
                     collision.gameObject.SetActive(false);
                 break;
             case 14:
                 TakeDamage(PlayerController.instance.damgeGrenade);
+               // Debug.LogError("zoooooooo");
                 break;
             case 26:
                 TakeDamage(PlayerController.instance.damgeGrenade);
@@ -86,7 +88,7 @@ public class Barrier : MonoBehaviour
                 if (dongrom)
                 {
                     TakeDamage(1000);
-                    Debug.LogError("cham");
+                   // Debug.LogError("cham");
                 }
                 break;
         }

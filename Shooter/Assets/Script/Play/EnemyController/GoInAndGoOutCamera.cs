@@ -14,15 +14,6 @@ public class GoInAndGoOutCamera : MonoBehaviour
             return;
         myEnemyBase.incam = false;
         GameController.instance.RemoveTarget(myEnemyBase);
-        //if (myEnemyBase.canoutcam)
-        //{
-        //    if (Camera.main == null)
-        //        return;
-
-        //    if (myEnemyBase.transform.position.x < Camera.main.transform.position.x)
-        //        myEnemyBase.gameObject.SetActive(false);
-
-        //}
     }
     public virtual void OnBecameVisible()
     {
@@ -33,7 +24,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
         if (frameOn)
             myEnemyBase.frameOn = true;
 
-        if (enemyNotJoinAutoTarget /*|| myEnemyBase.jumpOut == true*/)
+        if (enemyNotJoinAutoTarget)
             return;
 
         if (!GameController.instance.autoTarget.Contains(myEnemyBase) && myEnemyBase.takeDamageBox != null && (!myEnemyBase.isBoss || !myEnemyBase.isMiniBoss))

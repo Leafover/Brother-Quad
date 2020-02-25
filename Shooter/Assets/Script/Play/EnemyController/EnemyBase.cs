@@ -223,7 +223,6 @@ public class EnemyBase : AutoTarget
     float healthTotalTempBoss;
     public virtual void Start()
     {
-
         skeletonAnimation.Initialize(true);
 
         //  Debug.Log("init =====");
@@ -490,6 +489,8 @@ public class EnemyBase : AutoTarget
         }
         else
         {
+            if (index >= 20 && index <= 24)
+                return;
             SoundController.instance.PlaySound(soundGame.soundexploenemy);
             exploDie = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
             exploDie.transform.position = gameObject.transform.position;
@@ -641,7 +642,7 @@ public class EnemyBase : AutoTarget
         {
             PlayAnim(0, aec.die, true);
             GameController.instance.uiPanel.healthBarBoss.DisableHealthBar();
-            if(isBoss)
+            if (isBoss)
                 DataController.instance.DoAchievement(10, 1);
 
             DataController.instance.DoDailyQuest(3, 1);
@@ -839,7 +840,7 @@ public class EnemyBase : AutoTarget
                     DataController.instance.DoAchievement(3, 1);
                     DataController.instance.DoDailyQuest(1, 1);
                     PlayerController.instance.countKillByGrenade++;
-                    if(PlayerController.instance.countKillByGrenade >= 3)
+                    if (PlayerController.instance.countKillByGrenade >= 3)
                     {
                         DataController.instance.DoAchievement(4, 1);
                         PlayerController.instance.countKillByGrenade = 0;

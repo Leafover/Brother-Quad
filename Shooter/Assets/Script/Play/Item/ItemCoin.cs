@@ -11,27 +11,30 @@ public class ItemCoin : ItemBase
         DataParam.AddCoin(1);
         SoundController.instance.PlaySound(soundGame.soundEatCoin);
     }
+    Vector2 point;
     public override void OnEnable()
     {
+        base.OnEnable();
         if (wait == null)
             wait = new WaitForSeconds(2.5f);
+        isactive = false;
         rid.gravityScale = 1;
-        collider.isTrigger = false;
-        base.OnEnable();
-        rid.velocity = new Vector2(Random.Range(-2.5f, 2.5f), 3);
+        point.x = Random.Range(-2.5f, 2.5f);
+        point.y = 3;
+        rid.velocity = point;
         StartCoroutine(delayMoveToPlayer());
     }
+    bool isactive;
     public override void CalculateDisable(float deltaTime)
     {
         base.CalculateDisable(deltaTime);
-        if (rid.gravityScale == 0)
+        if (isactive)
             transform.position = Vector2.MoveTowards(transform.position, PlayerController.instance.transform.position, deltaTime * 10);
 
     }
     IEnumerator delayMoveToPlayer()
     {
         yield return wait;
-        rid.gravityScale = 0;
-        collider.isTrigger = true;
+        isactive = true;
     }
 }
