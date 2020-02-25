@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
             if (colliderStand != null)
             {
                 Physics2D.IgnoreCollision(foot.collider, colliderStand, true);
-             //   foot.myPhysic.friction = 0;
+                //   foot.myPhysic.friction = 0;
             }
 
             return;
@@ -318,7 +318,7 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.Complete += OnComplete;
         du.AnimationState.Complete += OnCompleteDu;
 
-       // skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
+        // skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         AddNumberBullet(-maxNumberBullet);
 
         timePreviousGrenade = 0;
@@ -929,7 +929,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
             if (currentAnim == apc.sitAnim)
                 return;
             skeletonAnimation.AnimationState.SetAnimation(0, apc.sitAnim, true);
@@ -939,7 +938,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
+    float timeScaleRun;
     void AnimRun()
     {
         if (isfalldow && rid.velocity.y < 0)
@@ -951,7 +950,8 @@ public class PlayerController : MonoBehaviour
         {
             if (currentAnim == apc.runForwardAnim)
                 return;
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
+            timeScaleRun = isSlow ? 0.5f : 1f;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true)/*.TimeScale = timeScaleRun*/;
             currentAnim = apc.runForwardAnim;
             SetBox(sizeBox, offsetBox);
 
@@ -960,7 +960,8 @@ public class PlayerController : MonoBehaviour
         {
             if (currentAnim == apc.runBackAnim)
                 return;
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
+            timeScaleRun = isSlow ? 0.5f : 1f;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true)/*.TimeScale = timeScaleRun*/;
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);
 

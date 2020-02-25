@@ -50,7 +50,54 @@ public class EM5Controller : EnemyBase
         enemyState = EnemyState.attack;
         //  StartCoroutine(delayActive());
     }
+    void ShootNormal(float deltaTime)
+    {
+        timePreviousAttack -= deltaTime;
+        targetPos.transform.position = GetTarget(false);
+        if (timePreviousAttack <= 0)
+        {
+            timePreviousAttack = maxtimeDelayAttack2;
+            skeletonAnimation.AnimationState.SetAnimation(0, aec.attack2, false);
 
+
+            combo++;
+            if (combo == randomCombo)
+            {
+                if (canmove)
+                {
+                    if (enemyState == EnemyState.falldown)
+                        return;
+
+                    skeletonAnimation.ClearState();
+
+                    enemyState = EnemyState.run;
+
+                    timedelayChangePos = maxtimedelayChangePos;
+
+                    speedMove = -speedMove;
+
+                    if (speedMove < 0)
+                        FlipX = false;
+                    else
+                        FlipX = true;
+                }
+                combo = 0;
+                randomCombo = Random.Range(1, 5);
+            }
+
+            if (!incam)
+                return;
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy.AddProperties(damage2, bulletspeed2);
+            dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            bulletEnemy.transform.rotation = rotation;
+            bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
+            bulletEnemy.gameObject.SetActive(true);
+        }
+    }
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -68,41 +115,36 @@ public class EM5Controller : EnemyBase
         }
 
 
-        CheckFallDown();
+      //  CheckFallDown();
 
         switch (enemyState)
         {
             case EnemyState.attack:
 
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-
-
                 if (!canmove)
                 {
                     if (isGrenadeStage)
                     {
                         Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                        targetPos.transform.position = GetTarget(true);
+                       // targetPos.transform.position = GetTarget(true);
                     }
                     else
                     {
-                        Attack(0, aec.attack2, false, maxtimeDelayAttack2);
-                        targetPos.transform.position = GetTarget(false);
+                        ShootNormal(deltaTime);
+
                     }
                     return;
                 }
 
                 if (isGrenadeStage)
                 {
-
                     Attack(0, aec.attack1, false, maxtimeDelayAttack1);
-                    targetPos.transform.position = GetTarget(true);
+                  //  targetPos.transform.position = GetTarget(true);
                 }
                 else
                 {
-
-                    Attack(0, aec.attack2, false, maxtimeDelayAttack2);
-                    targetPos.transform.position = GetTarget(false);
+                    ShootNormal(deltaTime);
                 }
 
                 break;
@@ -113,69 +155,46 @@ public class EM5Controller : EnemyBase
                 move.y = rid.velocity.y;
                 rid.velocity = move;
                 timedelayChangePos -= deltaTime;
-
-
                 targetPos.transform.position = GetTarget(true);
-
                 PlayAnim(0, aec.run, true);
-
                 if (timedelayChangePos <= 0)
                 {
                     PlayAnim(0, aec.idle, true);
                     enemyState = EnemyState.attack;
-                    PlayAnim(1, aec.aimTargetAnim, false);
+                    skeletonAnimation.AnimationState.SetAnimation(2, targetAnim, false);
                     timedelayChangePos = maxtimedelayChangePos;
                     rid.velocity = Vector2.zero;
                 }
-
                 break;
-            case EnemyState.falldown:
-                if (isGround)
-                {
-                    if (aec.standup == null)
-                        enemyState = EnemyState.run;
-                    else
-                    {
-                        PlayAnim(0, aec.standup, false);
-                    }
-
-                }
-                break;
+            //case EnemyState.falldown:
+            //    if (isGround)
+            //    {
+            //        if (aec.standup == null)
+            //            enemyState = EnemyState.run;
+            //        else
+            //        {
+            //            PlayAnim(0, aec.standup, false);
+            //        }
+            //    }
+            //    break;
         }
     }
-
+    public AnimationReferenceAsset targetAnim;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
-        if (trackEntry.Animation.Name.Equals(aec.attack2.name))
-        {
-            combo++;
-            if (!incam)
-                return;
-
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
-            bulletEnemy.AddProperties(damage2, bulletspeed1);
-            dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bulletEnemy.transform.rotation = rotation;
-            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-            bulletEnemy.gameObject.SetActive(true);
-
-            //Debug.LogError("shot");
-        }
-        else if (trackEntry.Animation.Name.Equals(aec.attack1.name))
+         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             combo++;
             if (!incam)
                 return;
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
-
-            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.transform.rotation = Quaternion.identity;
+            bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+
 
             if (!FlipX)
                 bulletEnemy.transform.rotation = leftFace.rotation;
@@ -204,46 +223,34 @@ public class EM5Controller : EnemyBase
                 combo = 0;
                 randomCombo = Random.Range(3, 5);
                 isGrenadeStage = false;
+                enemyState = EnemyState.idle;
+                PlayAnim(0, aec.run2, false);
             }
-
-        }
-
-        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
-        {
-            PlayAnim(0, aec.idle, true);
-
-            if (combo == randomCombo)
+            else
             {
-                if (canmove)
-                {
-                    if (enemyState == EnemyState.falldown)
-                        return;
-
-                    skeletonAnimation.ClearState();
-
-                    enemyState = EnemyState.run;
-
-                    timedelayChangePos = maxtimedelayChangePos;
-
-                    speedMove = -speedMove;
-
-                    if (speedMove < 0)
-                        FlipX = false;
-                    else
-                        FlipX = true;
-                }
-                combo = 0;
-                randomCombo = Random.Range(1, 5);
+                enemyState = EnemyState.idle;
+                PlayAnim(0, aec.attack3, false);
             }
         }
-        if (enemyState == EnemyState.die)
-            return;
-        if (aec.standup == null)
-            return;
-        if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        else if (trackEntry.Animation.Name.Equals(aec.run2.name))
+        {
+            enemyState = EnemyState.attack;
+            skeletonAnimation.AnimationState.SetAnimation(2, targetAnim, false);
+            timePreviousAttack = 0;
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
             enemyState = EnemyState.attack;
         }
+
+        //if (enemyState == EnemyState.die)
+        //    return;
+        //if (aec.standup == null)
+        //    return;
+        //if (trackEntry.Animation.Name.Equals(aec.standup.name))
+        //{
+        //    enemyState = EnemyState.attack;
+        //}
 
     }
     public float speedMove;

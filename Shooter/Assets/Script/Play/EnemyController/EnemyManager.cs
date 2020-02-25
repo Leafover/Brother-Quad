@@ -304,6 +304,7 @@ public class EnemyManager : MonoBehaviour
         CallEM2Action(deltaTime);
         CallEM3Action(deltaTime);
         CallEM4Action(deltaTime);
+        CallEM5Action(deltaTime);
         CallEM6Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)

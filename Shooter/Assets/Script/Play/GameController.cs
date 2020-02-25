@@ -252,7 +252,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    float getSpeed()
+   public float getSpeed()
     {
         float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * PlayerController.instance.slowRate));
         return speedMovetemp;
