@@ -946,11 +946,13 @@ public class PlayerController : MonoBehaviour
             AnimFallDow();
             return;
         }
+        timeScaleRun = isSlow ? 0.5f : 1f;
+        skeletonAnimation.state.GetCurrent(0).TimeScale = timeScaleRun;
         if (dirMove == FlipX)
         {
             if (currentAnim == apc.runForwardAnim)
                 return;
-            timeScaleRun = isSlow ? 0.5f : 1f;
+
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true)/*.TimeScale = timeScaleRun*/;
             currentAnim = apc.runForwardAnim;
             SetBox(sizeBox, offsetBox);
@@ -960,7 +962,6 @@ public class PlayerController : MonoBehaviour
         {
             if (currentAnim == apc.runBackAnim)
                 return;
-            timeScaleRun = isSlow ? 0.5f : 1f;
             skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true)/*.TimeScale = timeScaleRun*/;
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);

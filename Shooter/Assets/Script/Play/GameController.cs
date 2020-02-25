@@ -252,7 +252,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-   public float getSpeed()
+    public float getSpeed()
     {
         float speedMovetemp = !PlayerController.instance.isSlow ? PlayerController.instance.speedMoveMax : (PlayerController.instance.speedMoveMax - (PlayerController.instance.speedMoveMax / 100 * PlayerController.instance.slowRate));
         return speedMovetemp;
@@ -603,7 +603,9 @@ public class GameController : MonoBehaviour
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
-            //  DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+           // Debug.Log("ID:" + rePlaceID);
+            DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
         }
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {
@@ -627,11 +629,20 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
-            if (!vatphamnhanduoc[i].ID.Contains("P") && vatphamnhanduoc[i].TotalNumber > 0)
+            if (/*!vatphamnhanduoc[i].ID.Contains("P") &&*/ vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
-                uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
-                uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                if (!vatphamnhanduoc[i].ID.Contains("P"))
+                {
+                    uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
+                    uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                }
+                else
+                {
+                    uiPanel.rewardImg[i].sprite = uiPanel.nvSprite;
+                    uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[0];
+                }
+
                 uiPanel.bouders[i].gameObject.SetActive(true);
             }
             else

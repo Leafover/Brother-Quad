@@ -880,13 +880,15 @@ public class DataUtils
             heroInfo.id = hID;
             heroInfo.pices = hPices;
             dicAllHero.Add(hID,heroInfo);
+           // Debug.LogError(hID + ":" + hPices);
         }
         else
         {
             dicAllHero[hID].pices += hPices;
             ChooseHero(dicAllHero[hID]);
+          //  Debug.LogError(hID + ":" + hPices);
         }
-
+       // Debug.LogError(hID + ":" + hPices);
         SaveAllHero();
     }
     public static int GetHeroHPByID(string id)

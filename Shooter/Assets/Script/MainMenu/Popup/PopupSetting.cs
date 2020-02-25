@@ -23,15 +23,13 @@ public class PopupSetting : MonoBehaviour
     }
     private void OnEnable()
     {
-        if(AdsManager.Instance != null)
-            AdsManager.Instance.ShowBanner();
+
         CheckSoundAndMusic();
     }
 
     private void OnDisable()
     {
-        if (AdsManager.Instance != null)
-            AdsManager.Instance.HideBanner();
+
     }
     public void CheckSoundAndMusic()
     {
@@ -62,11 +60,15 @@ public class PopupSetting : MonoBehaviour
     public void ShowPanelSetting()
     {
         gPanelSetting.SetActive(true);
+        if (AdsManager.Instance != null)
+            AdsManager.Instance.ShowBanner();
 
     }
     public void HideSetting()
     {
         gPanelSetting.SetActive(false);
+        if (AdsManager.Instance != null)
+            AdsManager.Instance.HideBanner();
     }
     public void ExitBattle()
     {

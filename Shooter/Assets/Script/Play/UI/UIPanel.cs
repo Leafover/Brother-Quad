@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public ItemSpriteData allSpriteData;
-
+    public Sprite nvSprite;
     public GameObject[] bouders;
     public Image[] rewardImg, bouderLevel;
     public Text[] rewardText;

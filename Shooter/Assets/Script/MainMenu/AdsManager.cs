@@ -41,6 +41,7 @@ public class AdsManager : MonoBehaviour
         MobileAds.Initialize(DataParam.APP_ID);
         InitInterstitial();
         InitRewarded();
+        InitBanner();
         UnityAds.SetGDPRConsentMetaData(true);
     }
 
