@@ -52,6 +52,7 @@ public class MiniBoss3Controller : EnemyBase
         {
             enemyfearruns[i].gameObject.SetActive(true);
         }
+        leftFace.gameObject.SetActive(true);
         anim.Play("animMiniBoss3");
     }
     Vector2 moveVelocity;
@@ -72,6 +73,7 @@ public class MiniBoss3Controller : EnemyBase
             rid.velocity = Vector2.zero;
             takeDamageBox.enabled = true;
             anim.enabled = false;
+            timePreviousAttack = maxtimeDelayAttack1 / 2;
         }
     }
     public Animator anim;
@@ -79,6 +81,7 @@ public class MiniBoss3Controller : EnemyBase
     {
         enemyBiHut.gameObject.SetActive(false);
         enemyfearruns.Remove(enemyBiHut);
+        leftFace.gameObject.SetActive(false);
     }
     public override void OnUpdate(float deltaTime)
     {
@@ -134,6 +137,8 @@ public class MiniBoss3Controller : EnemyBase
                                 timePreviousAttack = maxtimeDelayAttack2;
                                 randomCombo = 1;
                                 PlayAnim(0, aec.jumpOut, true);
+                                rightFace.gameObject.SetActive(true);
+
                             }
                         }
                         else
@@ -152,6 +157,7 @@ public class MiniBoss3Controller : EnemyBase
                                 timePreviousAttack = maxtimeDelayAttack1;
                                 randomCombo = Random.Range(3, 6);
                                 PlayAnim(0, aec.jumpOut, true);
+                                rightFace.gameObject.SetActive(true);
                             }
                         }
 
@@ -244,6 +250,7 @@ public class MiniBoss3Controller : EnemyBase
                         randomCombo = 2;
                         typeAttack = 1;
                         PlayAnim(0, aec.jumpOut, true);
+                        rightFace.gameObject.SetActive(true);
                         for (int i = 0; i < target.Count; i++)
                         {
                             target[i].gameObject.SetActive(false);
@@ -283,6 +290,7 @@ public class MiniBoss3Controller : EnemyBase
                         typeAttack = 1;
                         PlayAnim(0, aec.jumpOut, true);
                         randomCombo = Random.Range(3, 6);
+                        rightFace.gameObject.SetActive(true);
                     }
                     else if (enemyState == EnemyState.attack)
                     {
@@ -330,7 +338,7 @@ public class MiniBoss3Controller : EnemyBase
         if (timePreviousAttack <= 0)
         {
             enemySpawn = ObjectPoolManagerHaveScript.Instance.enemyN0Pooler.GetEnemyPooledObject();
-            enemySpawn.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            enemySpawn.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/rightFace.position;
             enemySpawn.Init();
             enemySpawn.gameObject.SetActive(true);
 
@@ -348,6 +356,7 @@ public class MiniBoss3Controller : EnemyBase
                 enemyState = EnemyState.run;
                 combo = 0;
                 timePreviousAttack = maxtimeDelayAttack1;
+                rightFace.gameObject.SetActive(false);
             }
             else
                 timePreviousAttack = maxtimeDelayAttack1 / 3;
@@ -418,6 +427,7 @@ public class MiniBoss3Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
+        rightFace.gameObject.SetActive(false);
         for (int i = 0; i < EnemyManager.instance.enemyen0s.Count; i++)
         {
             EnemyManager.instance.enemyen0s[i].TakeDamage(1000);
