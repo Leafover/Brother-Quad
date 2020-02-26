@@ -176,21 +176,23 @@ public class MapLevelControll : MonoBehaviour
         {
             for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
             {
-                if(DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType, MainMenuController.Instance.allSpriteData) != null)
+                //Debug.LogError("_sCutName: " + DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
+                //string _str = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Replace("M-", "");
+                if (DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData) != null)
                 {
-                    _sCutName = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Split('-');
-                    StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType, MainMenuController.Instance.allSpriteData);
-                    if (_sCutName[_sCutName.Length - 1].Contains("W"))
-                    {
-                        StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);
-                        ///WILL REMOVE
-                        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
+                    //_sCutName = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Split('-');
+                    StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData);
+                    //if (_sCutName[_sCutName.Length - 1].Contains("W"))
+                    //{
+                    //    StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);
+                    //    ///WILL REMOVE
+                    //    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
+                    //}
+                    //else
+                    //{
+                    //    StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
                         StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
-                    }
+                    //}
                 }
             }
         }
