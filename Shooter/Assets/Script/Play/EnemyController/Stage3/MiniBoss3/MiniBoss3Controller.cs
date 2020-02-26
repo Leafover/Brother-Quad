@@ -53,7 +53,7 @@ public class MiniBoss3Controller : EnemyBase
             enemyfearruns[i].gameObject.SetActive(true);
         }
         leftFace.gameObject.SetActive(true);
-        anim.Play("animMiniBoss3");
+        anim.Play("hut");
     }
     Vector2 moveVelocity;
     Vector2 posOfGround;
@@ -137,7 +137,6 @@ public class MiniBoss3Controller : EnemyBase
                                 timePreviousAttack = maxtimeDelayAttack2;
                                 randomCombo = 1;
                                 PlayAnim(0, aec.jumpOut, true);
-                                rightFace.gameObject.SetActive(true);
 
                             }
                         }
@@ -250,7 +249,7 @@ public class MiniBoss3Controller : EnemyBase
                         randomCombo = 2;
                         typeAttack = 1;
                         PlayAnim(0, aec.jumpOut, true);
-                        rightFace.gameObject.SetActive(true);
+                       // rightFace.gameObject.SetActive(true);
                         for (int i = 0; i < target.Count; i++)
                         {
                             target[i].gameObject.SetActive(false);
@@ -357,6 +356,7 @@ public class MiniBoss3Controller : EnemyBase
                 combo = 0;
                 timePreviousAttack = maxtimeDelayAttack1;
                 rightFace.gameObject.SetActive(false);
+                Debug.LogError("------ hahahah -------");
             }
             else
                 timePreviousAttack = maxtimeDelayAttack1 / 3;
