@@ -66,12 +66,14 @@ public class PopupSetting : MonoBehaviour
     }
     public void HideSetting()
     {
-        gPanelSetting.SetActive(false);
         if (AdsManager.Instance != null)
             AdsManager.Instance.HideBanner();
+        gPanelSetting.SetActive(false);
     }
     public void ExitBattle()
     {
+        if (AdsManager.Instance != null)
+            AdsManager.Instance.HideBanner();
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             gPanelSetting.SetActive(false);
