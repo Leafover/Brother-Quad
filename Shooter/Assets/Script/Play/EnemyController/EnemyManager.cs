@@ -299,7 +299,7 @@ public class EnemyManager : MonoBehaviour
         CallMiniBoss1Action(deltaTime);
         CallBoss1Action(deltaTime);
 
-        CallMNB3Action(deltaTime);
+        //CallMNB3Action(deltaTime);
         //CallEM1Action(deltaTime);
         //CallEM2Action(deltaTime);
         //CallEM3Action(deltaTime);
