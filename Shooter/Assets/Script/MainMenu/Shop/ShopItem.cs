@@ -32,7 +32,7 @@ public class ShopItem : MonoBehaviour
                 packID = DataUtils.P_BEST_CHOICE;
                 break;
         }
-        txtPrice.text = GameIAPManager.GetPriceByID(packID);
+        txtPrice.text = "BUY";//GameIAPManager.GetPriceByID(packID);
     }
     // Start is called before the first frame update
     void Start()
@@ -59,7 +59,18 @@ public class ShopItem : MonoBehaviour
     }
     private void ProcessBuyPackage()
     {
-        GameIAPManager.Instance.BuyProduct(packID);
+        switch (packName)
+        {
+            case PACK_NAME.CHEAP_PACK:
+                ShopManager.Instance.ShowBuyPanel("Beginner Pack", GameIAPManager.GetPriceByID(packID), packID, 0, 25, 7500);
+                break;
+            case PACK_NAME.PROFESSIONAL_PACK:
+                ShopManager.Instance.ShowBuyPanel("Professional Pack", GameIAPManager.GetPriceByID(packID), packID, 50, 100, 85000);
+                break;
+            case PACK_NAME.BEST_CHOICE:
+                ShopManager.Instance.ShowBuyPanel("Best Choice", GameIAPManager.GetPriceByID(packID), packID, 20, 50, 15000);
+                break;
+        }
     }
     public void ProcessBuyResources()
     {
