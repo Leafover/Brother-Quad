@@ -299,13 +299,13 @@ public class EnemyManager : MonoBehaviour
         CallMiniBoss1Action(deltaTime);
         CallBoss1Action(deltaTime);
 
-        //CallMNB3Action(deltaTime);
-        CallEM1Action(deltaTime);
-        CallEM2Action(deltaTime);
-        CallEM3Action(deltaTime);
-        CallEM4Action(deltaTime);
-        CallEM5Action(deltaTime);
-        CallEM6Action(deltaTime);
+        CallMNB3Action(deltaTime);
+        //CallEM1Action(deltaTime);
+        //CallEM2Action(deltaTime);
+        //CallEM3Action(deltaTime);
+        //CallEM4Action(deltaTime);
+        //CallEM5Action(deltaTime);
+        //CallEM6Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {

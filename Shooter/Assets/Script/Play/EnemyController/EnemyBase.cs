@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : AutoTarget
 {
+    public List<EnemyFearRun> enemyfearruns = new List<EnemyFearRun>();
     public GameObject haveItem;
     public GameObject foot;
     //  [HideInInspector]
@@ -97,8 +98,8 @@ public class EnemyBase : AutoTarget
         {
             skeletonAnimation.AnimationState.SetAnimation(indexTrack, anim, loop);
             currentAnim = anim;
-            if (anim == aec.standup)
-                Debug.LogError("zoooo");
+            //if (anim == aec.standup)
+            //    Debug.LogError("zoooo");
         }
     }
 
