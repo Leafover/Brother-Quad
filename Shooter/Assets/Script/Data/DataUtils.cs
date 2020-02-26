@@ -660,6 +660,7 @@ public class DataUtils
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
+
             lstAllStageNormal[stage].levelUnlock = mapIndex;
 
             if (mapIndex == 7)
@@ -678,11 +679,12 @@ public class DataUtils
         {
 
             lstAllStageHard[stage].levels[mapIndex].hasComplete = true;
-            lstAllStageHard[stage].levelUnlock = mapIndex;
+            if (lstAllStageHard[stage].levelUnlock < mapIndex)
+                lstAllStageHard[stage].levelUnlock = mapIndex;
 
             if (mapIndex == 7)
             {
-                lstAllStageHard[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
+                lstAllStageHard[(stage + 1 >= /*lstAllStageNormal*/lstAllStageHard.Count ? stage : stage + 1)].stageHasUnlock = true;
 
                 StageHardIncrease();
             }
@@ -700,8 +702,10 @@ public class DataUtils
         {
             string key = stage + "_" + mapIndex;
             lstAllStageNormal[stage].levels[mapIndex].mission[0].isPass = true;
-            lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass = miss1;
-            lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass = miss2;
+            if (!lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass)
+                lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass = miss1;
+            if (!lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass)
+                lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass = miss2;
 
             string jSave = JsonMapper.ToJson(lstAllStageNormal);
             SaveStage(jSave);
@@ -709,8 +713,10 @@ public class DataUtils
         else if (modeSelected == 1)
         {
             lstAllStageHard[stage].levels[mapIndex].mission[0].isPass = true;
-            lstAllStageHard[stage].levels[mapIndex].mission[1].isPass = miss1;
-            lstAllStageHard[stage].levels[mapIndex].mission[2].isPass = miss2;
+            if (!lstAllStageHard[stage].levels[mapIndex].mission[1].isPass)
+                lstAllStageHard[stage].levels[mapIndex].mission[1].isPass = miss1;
+            if (!lstAllStageHard[stage].levels[mapIndex].mission[2].isPass)
+                lstAllStageHard[stage].levels[mapIndex].mission[2].isPass = miss2;
 
             string jSaveHard = JsonMapper.ToJson(lstAllStageHard);
             SaveStageHard(jSaveHard);
@@ -796,7 +802,7 @@ public class DataUtils
         {
             string sHeroData = GetAllHeroData();
             JsonData jHeroData = JsonMapper.ToObject(sHeroData);
-            for(int i = 0; i < jHeroData.Count; i++)
+            for (int i = 0; i < jHeroData.Count; i++)
             {
 
                 HeroDataInfo hdInfo = JsonMapper.ToObject<HeroDataInfo>(jHeroData[i].ToJson());
@@ -879,24 +885,21 @@ public class DataUtils
             HeroDataInfo heroInfo = new HeroDataInfo();
             heroInfo.id = hID;
             heroInfo.pices = hPices;
-            dicAllHero.Add(hID,heroInfo);
-            Debug.LogError(hID + ":" + hPices);
+            dicAllHero.Add(hID, heroInfo);
         }
         else
         {
             dicAllHero[hID].pices += hPices;
             ChooseHero(dicAllHero[hID]);
-            Debug.LogError(hID + ":" + hPices);
         }
-        Debug.LogError(hID + ":" + hPices);
         SaveAllHero();
     }
     public static int GetHeroHPByID(string id)
     {
         double dbResult = 500;
-        for(int i = 0; i < DataController.instance.playerData.Count; i++)
+        for (int i = 0; i < DataController.instance.playerData.Count; i++)
         {
-            for(int j = 0; j< DataController.instance.playerData[i].playerData.Count; j++)
+            for (int j = 0; j < DataController.instance.playerData[i].playerData.Count; j++)
             {
                 if (DataController.instance.playerData[i].playerData[j].ID.Equals(id))
                 {
