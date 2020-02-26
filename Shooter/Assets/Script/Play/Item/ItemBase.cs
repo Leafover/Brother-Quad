@@ -56,6 +56,7 @@ public class ItemBase : MonoBehaviour
         if (!GameController.instance.itemDrops.Contains(this))
         {
             GameController.instance.itemDrops.Add(this);
+            rid.gravityScale = 1;
         }
     }
     public virtual void OnDisable()
