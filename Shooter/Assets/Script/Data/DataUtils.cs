@@ -660,8 +660,8 @@ public class DataUtils
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
-
-            lstAllStageNormal[stage].levelUnlock = mapIndex;
+            if(lstAllStageNormal[stage].levelUnlock < mapIndex)
+                lstAllStageNormal[stage].levelUnlock = mapIndex;
 
             if (mapIndex == 7)
             {
@@ -679,6 +679,7 @@ public class DataUtils
         {
 
             lstAllStageHard[stage].levels[mapIndex].hasComplete = true;
+
             if (lstAllStageHard[stage].levelUnlock < mapIndex)
                 lstAllStageHard[stage].levelUnlock = mapIndex;
 
