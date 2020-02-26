@@ -41,7 +41,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
             if (!GameController.instance.enemyLockCam.Contains(myEnemyBase) && !myEnemyBase.enemyAutoSpawn)
             {
                 GameController.instance.enemyLockCam.Add(myEnemyBase);
-                GameController.instance.NotSoFastWin();
+               // GameController.instance.NotSoFastWin();
             }
         }
         else
@@ -49,7 +49,7 @@ public class GoInAndGoOutCamera : MonoBehaviour
             if (!GameController.instance.enemyLockCam.Contains(myEnemyBase))
             {
                 GameController.instance.enemyLockCam.Add(myEnemyBase);
-                GameController.instance.NotSoFastWin();
+               // GameController.instance.NotSoFastWin();
             }
         }
 
