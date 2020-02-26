@@ -358,6 +358,11 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         uiPanel.DisplayFinish(countStar);
     }
+    IEnumerator delayDisplayEnd()
+    {
+        yield return new WaitForSeconds(2f);
+        uiPanel.DisplayDefeat();
+    }
     int timePlay;
     WaitForSecondsRealtime timeCountPlay;
     public void StopAll()
@@ -470,7 +475,7 @@ public class GameController : MonoBehaviour
     {
         win = false;
         gameState = GameState.gameover;
-        StartCoroutine(delayDisplayFinish());
+        StartCoroutine(delayDisplayEnd());
     }
     void OnUpdateItemDrop(float deltaTime)
     {
@@ -498,13 +503,13 @@ public class GameController : MonoBehaviour
             listcirtwhambang[i].DisableMe(deltaTime);
         }
     }
-    public void NotSoFastWin()
-    {
-        if (win)
-        {
-            win = false;
-        }
-    }
+    //public void NotSoFastWin()
+    //{
+    //    if (win)
+    //    {
+    //        win = false;
+    //    }
+    //}
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)

@@ -512,6 +512,9 @@ public class EnemyBase : AutoTarget
     }
     public virtual void Active()
     {
+        if (GameController.instance.win)
+            return;
+
         isActive = true;
 
         if (haveItem != null)

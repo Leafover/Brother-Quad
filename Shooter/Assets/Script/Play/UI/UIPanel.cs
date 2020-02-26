@@ -10,7 +10,7 @@ public class UIPanel : MonoBehaviour
     public GameObject[] bouders;
     public Image[] rewardImg, bouderLevel;
     public Text[] rewardText;
-    public Sprite[] rewardSp,levelSp;
+    public Sprite[] rewardSp, levelSp;
 
 
     public List<Text> missionTexts;
@@ -91,69 +91,65 @@ public class UIPanel : MonoBehaviour
         PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
-    public void DisplayFinish(int _countstar)
+    public void DisplayDefeat()
     {
-        if (GameController.instance.win)
-        {
-            if (winPanel.activeSelf)
-                return;
-            missionTexts[0].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission1name;
-
-            if (MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
-            {
-                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-                //  Debug.LogError("TH1");
-            }
-            else if (MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
-            {
-                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-                //  Debug.LogError("TH2");
-            }
-            else if (!MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
-            {
-                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-                //  Debug.LogError("TH3");
-            }
-            else if (!MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
-            {
-                missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
-                missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
-                //   Debug.LogError("TH4");
-            }
-
-            winPanel.SetActive(true);
-            switch (_countstar)
-            {
-                case 1:
-                    animGamOver.Play("Win1Star");
-                    break;
-                case 2:
-
-                    animGamOver.Play("Win2Star");
-                    break;
-                case 3:
-
-                    animGamOver.Play("Win3Star");
-                    break;
-            }
-
-        }
+        if (defeatPanel.activeSelf)
+            return;
+        if (GameController.instance.reviveCount == 0)
+            btnRevive.SetActive(true);
         else
         {
-            if (defeatPanel.activeSelf)
-                return;
-            if (GameController.instance.reviveCount == 0)
-                btnRevive.SetActive(true);
-            else
-            {
-                btnRevive.SetActive(false);
-                DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
-            }
-            defeatPanel.SetActive(true);
-            SoundController.instance.PlaySound(soundGame.soundlose);
+            btnRevive.SetActive(false);
+            DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+        }
+        defeatPanel.SetActive(true);
+        SoundController.instance.PlaySound(soundGame.soundlose);
+    }
+    public void DisplayFinish(int _countstar)
+    {
+        if (winPanel.activeSelf)
+            return;
+        missionTexts[0].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission1name;
+
+        if (MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
+        {
+            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+            //  Debug.LogError("TH1");
+        }
+        else if (MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
+        {
+            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+            //  Debug.LogError("TH2");
+        }
+        else if (!MissionController.Instance.listMissions[0].isDone && MissionController.Instance.listMissions[1].isDone)
+        {
+            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+            //  Debug.LogError("TH3");
+        }
+        else if (!MissionController.Instance.listMissions[0].isDone && !MissionController.Instance.listMissions[1].isDone)
+        {
+            missionTexts[1].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission2name;
+            missionTexts[2].text = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].mission3name;
+            //   Debug.LogError("TH4");
+        }
+
+        winPanel.SetActive(true);
+        switch (_countstar)
+        {
+            case 1:
+                animGamOver.Play("Win1Star");
+                break;
+            case 2:
+
+                animGamOver.Play("Win2Star");
+                break;
+            case 3:
+
+                animGamOver.Play("Win3Star");
+                break;
         }
 
     }

@@ -911,7 +911,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            skeletonAnimation.state.GetCurrent(0).TimeScale = 0.5f;
+            skeletonAnimation.state.GetCurrent(0).TimeScale = 1.3f;
             if (currentAnim == apc.jumpAnim)
                 return;
             skeletonAnimation.AnimationState.SetAnimation(0, apc.jumpAnim, true);
