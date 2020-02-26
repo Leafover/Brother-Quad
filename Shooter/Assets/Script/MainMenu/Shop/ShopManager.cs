@@ -2,13 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
     public Button[] btnTabs;
     public Sprite sprSelect, sprUnSelect;
+    public GameObject gPanelBuy;
+    public TextMeshProUGUI txtPacktitle;
+    public Text txtPackPrice;
+    public Text txtPlayerPice, txtGem, txtCoin;
+    public Button btnBuyPack;
 
-    public void ChooseTab(int _index) {
+    private Button btnPanelBuy;
+    private string _packID;
+    private void Awake()
+    {
+        Instance = this;
+    }
+    private void Start()
+    {
+        btnPanelBuy = gPanelBuy.GetComponent<Button>();
+        btnPanelBuy.onClick.AddListener(() => { gPanelBuy.SetActive(false); });
+
+        btnBuyPack.onClick.AddListener(() =>
+        {
+            GameIAPManager.Instance.BuyProduct(_packID);
+            gPanelBuy.SetActive(false);
+        });
+    }
+
+
+    public void ChooseTab(int _index)
+    {
         for (int i = 0; i < btnTabs.Length; i++)
         {
             if (i == _index)
@@ -39,6 +66,24 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin)
+    {
+        _packID = packID;
+        txtPacktitle.text = packTitle;
+        txtCoin.text = "x " + totalCoin;
+        txtGem.text = "x " + totalGem;
+        txtPlayerPice.text = "x " + totalPlayerPice;
+        if (totalPlayerPice == 0)
+        {
+            txtPlayerPice.gameObject.transform.parent.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            txtPlayerPice.gameObject.transform.parent.parent.gameObject.SetActive(true);
+        }
+        txtPackPrice.text = priceText;
+        gPanelBuy.SetActive(true);
+    }
     public void HideShop()
     {
         gameObject.SetActive(false);
