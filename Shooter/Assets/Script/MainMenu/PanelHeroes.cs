@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Spine.Unity;
+using Spine;
 
 public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
+    public SkeletonGraphic skeletonGraphic;
+    private Skin[] skins;
+
     public GameObject gAllEquippedItem;
     public GameObject gHeroInfo;
     public GameObject gItem, gItemClone;
@@ -48,6 +53,9 @@ public class PanelHeroes : MonoBehaviour
             dicAllEquip.Add(lstEquip[i].itemData.type, lstEquip[i].itemData);
         }
 
+        skins = skeletonGraphic.Skeleton.Data.Skins.Items;
+
+
         if (heroSelected == null)
         {
             heroSelected = DataUtils.heroInfo;
@@ -56,7 +64,7 @@ public class PanelHeroes : MonoBehaviour
 
     private void OnEnable()
     {
-
+        
 
         ChooseTab(0);
 
@@ -85,6 +93,8 @@ public class PanelHeroes : MonoBehaviour
             imgAllStars[i].sprite = sprStar;
         }
         FillDataPlayer();
+
+        skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
     }
     private void FillDataPlayer()
     {

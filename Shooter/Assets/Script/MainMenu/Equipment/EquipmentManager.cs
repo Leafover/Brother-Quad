@@ -107,13 +107,11 @@ public class EquipmentManager : MonoBehaviour
     {
         if (itemEquipped != null)
         {
-            Debug.LogError("_keyItemEquipped: " + _keyItemSelected + " vs " + _keyItemEquipped);
             string keyCompare1, keyCompare2;
             keyCompare1 = DataUtils.dicAllEquipment[_keyItemEquipped].id + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].level + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].isUnlock;
             keyCompare2 = DataUtils.dicAllEquipment[_keyItemSelected].id + "_" + DataUtils.dicAllEquipment[_keyItemSelected].level + "_" + DataUtils.dicAllEquipment[_keyItemSelected].isUnlock;
             if (keyCompare1.Equals(keyCompare2))
             {
-                Debug.LogError(keyCompare1 + " v--------s " + keyCompare2 + " vs " + _keyItemEquipped + " vs " + _keyItemSelected);
                 ItemData iCurEquip = DataUtils.dicAllEquipment[_keyItemEquipped];
                 ItemData iCurSelect = DataUtils.dicAllEquipment[_keyItemSelected];
 
@@ -140,7 +138,6 @@ public class EquipmentManager : MonoBehaviour
             }
             else
             {
-
                 CheckInitNewItem(itemEquipped);
                 DataUtils.dicAllEquipment[_keyItemSelected].isEquipped = true;
                 DataUtils.dicAllEquipment[_keyItemEquipped].isEquipped = false;
@@ -168,9 +165,9 @@ public class EquipmentManager : MonoBehaviour
 
                 ItemData iData1 = DataUtils.dicAllEquipment[_keyItemSelected];
                 string _key1 = iData1.id + "_" + iData1.level.ToString() + "_" + iData1.isUnlock + "_" + iData1.isEquipped;
-                Debug.LogError("_Key: " + _key1);
                 DataUtils.dicAllEquipment.Remove(_keyItemSelected);
                 DataUtils.dicAllEquipment.Add(_key1, iData1);
+
                 for (int i = 0; i < trContain.childCount; i++)
                 {
                     EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
@@ -197,8 +194,7 @@ public class EquipmentManager : MonoBehaviour
             string _key2 = iData2.id + "_" + iData2.level.ToString() + "_" + iData2.isUnlock + "_" + iData2.isEquipped;
             DataUtils.dicAllEquipment.Remove(_keyItemSelected);
             DataUtils.dicAllEquipment.Add(_key2, iData2);
-
-
+            
             for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
@@ -232,6 +228,7 @@ public class EquipmentManager : MonoBehaviour
         {
             if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
             {
+                itemNew.isEquipped = false;
                 key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
                 gItemClone = Instantiate(gItems);
                 gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
