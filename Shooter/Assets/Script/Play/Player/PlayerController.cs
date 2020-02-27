@@ -242,14 +242,29 @@ public class PlayerController : MonoBehaviour
     }
     public void CalculateForGun()
     {
-        damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
-        maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0];
-        maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
-        critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0];
-        critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0];
-        bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
-        attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
-        timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+        if (currentGun != DataUtils.itemWeapon.weponIndex)
+        {
+            damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
+            maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0];
+            maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
+            critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0];
+            critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0];
+            bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
+            attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
+            timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+        }
+        else
+        {
+            damageBullet = DataUtils.itemWeapon.DmgValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
+            maxTimeReload = DataUtils.itemWeapon.ReloadSpeedValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0];
+            maxNumberBullet = (int)DataUtils.itemWeapon.MagazineValue; //(int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
+            critRate = DataUtils.itemWeapon.CritRateValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0];
+            critDamage = DataUtils.itemWeapon.CritDmgValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0];
+            bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
+            attackRange = DataUtils.itemWeapon.AtkRangeValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
+            timedelayAttackGun = DataUtils.itemWeapon.AtksecValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+        }
+
         numberBullet = maxNumberBullet;
         timeReload = 0;
         isShoot = false;
@@ -330,7 +345,7 @@ public class PlayerController : MonoBehaviour
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
         // skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
         AddProperties();
-        SetGun(0);
+        SetGun(DataUtils.itemWeapon.weponIndex);
         //   Debug.Log(skins.Length);
 
         au.mute = !DataUtils.IsSoundOn();
@@ -624,9 +639,9 @@ public class PlayerController : MonoBehaviour
         {
             if (numberBullet == 0)
             {
-                if (currentGun != 0)
+                if (currentGun != DataUtils.itemWeapon.weponIndex)
                 {
-                    SetGun(0);
+                    SetGun(DataUtils.itemWeapon.weponIndex);
                     //  Debug.LogError("reset gun");
                     return;
                 }
