@@ -5,12 +5,10 @@ using LitJson;
 
 public class DataUtils
 {
-
-
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES }
-    public const int TOTAL_STAGE = 2;
+    public const int TOTAL_STAGE = 3;
     public const int MAX_LEVEL_HERO = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
