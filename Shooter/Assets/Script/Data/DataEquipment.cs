@@ -16,3 +16,16 @@ public class ItemData
     public string itemName;
     public bool isEquipped;
 }
+[Serializable]
+public class ItemWeapon
+{
+    public int weponIndex;//W1:0, W2:1, W3:2, W4:3, W5:4, W6:5
+    public float DmgValue;
+    public float ReloadSpeedValue;
+    public float MagazineValue;
+    public float CritRateValue;
+    public float CritDmgValue;
+    public float BulletSpeedValue;
+    public float AtkRangeValue;
+    public float AtksecValue;
+}

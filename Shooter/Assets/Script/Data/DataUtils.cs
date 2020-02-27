@@ -40,6 +40,8 @@ public class DataUtils
     public const string P_BEST_CHOICE = "com.brothersquad.pack2";
     public const string P_PROFESSIONAL_PACK = "com.brothersquad.pack3";
 
+    public static ItemWeapon itemWeapon;
+
     #region Remove Ads
     public static void RemoveAds()
     {
@@ -145,7 +147,41 @@ public class DataUtils
                 }
             }
         }
+        CheckEquipWeapon();
         #endregion
+    }
+    public static void CheckEquipWeapon()
+    {
+        itemWeapon = new ItemWeapon();
+        string _key = "";
+        foreach(ItemData item in dicEquippedItem.Values)
+        {
+            _key = item.id + "_" + item.level;// + "_" + item.isUnlock + "_" + item.isEquipped;
+            switch (item.type)
+            {
+                case "WEAPON":
+                    itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
+                    itemWeapon.DmgValue = dicWeapon[_key].DmgValue[item.curStar];
+                    itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[item.curStar];
+                    itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[item.curStar];
+                    itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[item.curStar];
+                    itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[item.curStar];
+                    itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[item.curStar];
+                    itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[item.curStar];
+                    itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[item.curStar];
+                    break;
+                case "ARMOR":
+                    break;
+                case "HELMET":
+                    break;
+                case "GLOVES":
+                    break;
+                case "BAG":
+                    break;
+                case "SHOES":
+                    break;
+            }
+        }
     }
     private static string _keyEquip = "";
 
@@ -972,31 +1008,52 @@ public class DataUtils
         #endregion
         return _spr;
     }
-    public static double GetPriceByType(ItemData itemData)
+
+    public static double GetSellPrice(ItemData itemData)
     {
-        double dbValue = 0;
-        string keyEquipped = itemData.id + "_" + itemData.level;
+        string realKey = itemData.id + "_" + itemData.level.ToString() + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
+        string itemKey = itemData.id + "_" + itemData.level;
+        float dbValue = 0;
+        double dSell = 0;
+        double dPiceRequire = 0;
+        double dQuantity = dicAllEquipment[realKey].quantity;
+        double dPices = dicAllEquipment[realKey].pices;
+
         switch (itemData.type)
         {
             case "ARMOR":
-                dbValue = dicArmor[keyEquipped].GiaKhiRaDo;
+                dSell = dicArmor[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicArmor[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "BAG":
-                dbValue = dicBag[keyEquipped].GiaKhiRaDo;
+                dSell = dicBag[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicBag[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "GLOVES":
-                dbValue = dicGloves[keyEquipped].GiaKhiRaDo;
+                dSell = dicGloves[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicGloves[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "HELMET":
-                dbValue = dicHelmet[keyEquipped].GiaKhiRaDo;
+                dSell = dicHelmet[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicHelmet[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "SHOES":
-                dbValue = dicShoes[keyEquipped].GiaKhiRaDo;
+                dSell = dicShoes[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicShoes[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "WEAPON":
-                dbValue = dicWeapon[keyEquipped].GiaKhiRaDo;
+                dSell = dicWeapon[itemKey].GiaKhiRaDo;
+                dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
         }
+        if (itemData.isUnlock) {
+            dbValue = (float)(dSell * (dPiceRequire > 0 ? dPiceRequire : 1) * (dQuantity > 0 ? dQuantity + 1 : 1) * (dPices > 0 ? dPices : 1));
+        }
+        else
+        {
+            dbValue = (float)(dSell * (dPices > 0 ? dPices : 1));
+        }
+        //Debug.LogError(dSell + " vs " + dPiceRequire + " vs " + dQuantity + " vs " + dPices + " vs " + dbValue);
         return dbValue;
     }
     #endregion
