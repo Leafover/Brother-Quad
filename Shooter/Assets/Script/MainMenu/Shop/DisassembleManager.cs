@@ -17,10 +17,9 @@ public class DisassembleManager : MonoBehaviour
         imgItemPriview.sprite = DataUtils.GetSpriteByName(iDisassemble.id, MainMenuController.Instance.allSpriteData);
         keyEquipped = iDisassemble.id + "_" + iDisassemble.level;
         keyItem = keyEquipped + "_" + iDisassemble.isUnlock + "_" + iDisassemble.isEquipped;
-        Debug.LogError("keyEquipped: " + keyEquipped);
 
         imgQuality.sprite = DataUtils.GetSpriteByType(iDisassemble);
-        dbValue = DataUtils.GetPriceByType(iDisassemble);
+        dbValue = DataUtils.GetSellPrice(iDisassemble);//DataUtils.GetPriceByType(iDisassemble);
         txtReward.text = "x " + dbValue;
     }
     public void DisassebleItem()

@@ -363,7 +363,7 @@ public class EquipmentManager : MonoBehaviour
 
             if (!itemSelected.isUnlock)
             {
-                btnRemove.interactable = false;
+                //btnRemove.interactable = false;
                 btnReplace.interactable = false;
             }
             else
@@ -523,12 +523,11 @@ public class EquipmentManager : MonoBehaviour
             double dTotal = 0;
             foreach (EquipmentItem epi in lstAllItemSell)
             {
-                Debug.LogError("--------> " + epi.itemKey + " vs " + DataUtils.GetPriceByType(epi.itemData));
+                dTotal += DataUtils.GetSellPrice(epi.itemData);//DataUtils.GetPriceByType(epi.itemData);
                 DataUtils.dicAllEquipment.Remove(epi.itemKey);
-                dTotal += DataUtils.GetPriceByType(epi.itemData);
             }
 
-            for(int i = 0; i < lstAllItemSell.Count; i++)
+            for (int i = 0; i < lstAllItemSell.Count; i++)
             {
                 Destroy(lstAllItemSell[i].gameObject);
             }

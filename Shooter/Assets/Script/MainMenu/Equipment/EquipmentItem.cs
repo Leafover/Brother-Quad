@@ -26,7 +26,6 @@ public class EquipmentItem : MonoBehaviour
     Button btnItem;
     private void OnEnable()
     {
-        //Debug.LogError("OnEnable: " + gameObject.name);
         btnItem = GetComponent<Button>();
         if (!string.IsNullOrEmpty(itemKey))
         {
@@ -79,7 +78,7 @@ public class EquipmentItem : MonoBehaviour
                 else
                 {
                     isSelected = !isSelected;
-                    if (itemData.isUnlock)
+                    //if (itemData.isUnlock)
                     {
                         if (isSelected)
                         {
@@ -105,7 +104,6 @@ public class EquipmentItem : MonoBehaviour
     Sprite sprimgQualityTemp;
     public void CheckItemUnlock()
     {
-        //Debug.LogError("::: " + dicAllEquipment.ContainsKey(itemKey));
         if (itemData.isEquipped) gameObject.SetActive(false);
         if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
 
