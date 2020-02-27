@@ -24,6 +24,7 @@ public class EquipmentItem : MonoBehaviour
     //[HideInInspector]
     public ItemData itemData;
     Button btnItem;
+    
     private void OnEnable()
     {
         btnItem = GetComponent<Button>();
