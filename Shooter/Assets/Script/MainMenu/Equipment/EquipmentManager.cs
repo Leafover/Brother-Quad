@@ -7,7 +7,8 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
-
+    public Sprite sprWhite, sprYellow;
+    public Image[] allStars;
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
     public Button btnRemove, btnReplace;
@@ -444,6 +445,17 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
             gCurItemPriview.SetActive(true);
 
+            for(int i = 0; i < allStars.Length; i++)
+            {
+                if (i <= itemEquipped.curStar)
+                {
+                    allStars[i].sprite = sprYellow;
+                }
+                else
+                {
+                    allStars[i].sprite = sprWhite;
+                }
+            }
 
             #region Check Selected Item has Unlock
             if (itemData.isUnlock)
