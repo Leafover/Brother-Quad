@@ -40,6 +40,8 @@ public class DataUtils
     public const string P_BEST_CHOICE = "com.brothersquad.pack2";
     public const string P_PROFESSIONAL_PACK = "com.brothersquad.pack3";
 
+    public static ItemWeapon itemWeapon;
+
     #region Remove Ads
     public static void RemoveAds()
     {
@@ -145,7 +147,41 @@ public class DataUtils
                 }
             }
         }
+        CheckEquipWeapon();
         #endregion
+    }
+    public static void CheckEquipWeapon()
+    {
+        itemWeapon = new ItemWeapon();
+        string _key = "";
+        foreach(ItemData item in dicEquippedItem.Values)
+        {
+            _key = item.id + "_" + item.level;// + "_" + item.isUnlock + "_" + item.isEquipped;
+            switch (item.type)
+            {
+                case "WEAPON":
+                    itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
+                    itemWeapon.DmgValue = dicWeapon[_key].DmgValue[item.curStar];
+                    itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[item.curStar];
+                    itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[item.curStar];
+                    itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[item.curStar];
+                    itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[item.curStar];
+                    itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[item.curStar];
+                    itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[item.curStar];
+                    itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[item.curStar];
+                    break;
+                case "ARMOR":
+                    break;
+                case "HELMET":
+                    break;
+                case "GLOVES":
+                    break;
+                case "BAG":
+                    break;
+                case "SHOES":
+                    break;
+            }
+        }
     }
     private static string _keyEquip = "";
 

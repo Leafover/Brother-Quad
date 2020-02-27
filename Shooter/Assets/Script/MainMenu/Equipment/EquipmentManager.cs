@@ -210,7 +210,7 @@ public class EquipmentManager : MonoBehaviour
                 }
             }
         }
-
+        DataUtils.CheckEquipWeapon();
         ChooseItem(null);
     }
     public bool IsItemHasInit(string id)
