@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyBase : AutoTarget
 {
+    private Skin[] skins = new Skin[0];
     public List<EnemyFearRun> enemyfearruns = new List<EnemyFearRun>();
     public GameObject haveItem;
     public GameObject foot;
@@ -115,7 +116,7 @@ public class EnemyBase : AutoTarget
         }
         if (takeDamageBox == null)
             takeDamageBox = GetComponent<Collider2D>();
-
+        skins = skeletonAnimation.Skeleton.Data.Skins.Items;
     }
     public Vector2 GetOriginGun()
     {
@@ -224,9 +225,17 @@ public class EnemyBase : AutoTarget
     float healthTotalTempBoss;
     public virtual void Start()
     {
-        skeletonAnimation.Initialize(true);
+        //skeletonAnimation.Initialize(true);
 
-        //  Debug.Log("init =====");
+        //Debug.LogError("skin length:" + skins.Length);
+    }
+  public  void InitInpool()
+    {
+        if (skins.Length == 0)
+        {
+            skins = skeletonAnimation.Skeleton.Data.Skins.Items;
+            skeletonAnimation.Initialize(true);
+        }
     }
     void ActiveSound()
     {
@@ -234,6 +243,7 @@ public class EnemyBase : AutoTarget
     }
     public virtual void Init()
     {
+        InitInpool();
 
         if (au != null)
         {
@@ -304,7 +314,30 @@ public class EnemyBase : AutoTarget
 
         currentHealth = health;
 
+        if (skins != null)
+        {
+            if (skins.Length > 1)
+            {
+                switch (DataParam.indexStage)
+                {
+                    case 0:
+                        skeletonAnimation.Skeleton.SetSkin(skins[1]);
+                        break;
+                    case 1:
+                        skeletonAnimation.Skeleton.SetSkin(skins[1]);
+                        break;
+                    case 2:
+                        skeletonAnimation.Skeleton.SetSkin(skins[2]);
+                        break;
+                }
+            }
+            else
+            {
+                skeletonAnimation.Skeleton.SetSkin(skins[0]);
+            }
+        }
         skeletonAnimation.gameObject.SetActive(false);
+
         frameOn = false;
     }
     int randomHaveCoin;

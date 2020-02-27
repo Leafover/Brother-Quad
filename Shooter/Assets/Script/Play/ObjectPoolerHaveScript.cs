@@ -153,6 +153,7 @@ public class ObjectPoolerHaveScript : MonoBehaviour
         }
 
         go.gameObject.SetActive(false);
+        go.InitInpool();
         PooledEnemy.Add(go);
         if (Parent != null)
             go.transform.parent = this.Parent;
