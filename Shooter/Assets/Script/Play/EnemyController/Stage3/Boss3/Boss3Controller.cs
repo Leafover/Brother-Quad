@@ -87,7 +87,7 @@ public class Boss3Controller : EnemyBase
 
                 timeChangePos -= deltaTime;
 
-                if(timeChangePos > 0 && timeChangePos <= 0.5f)
+                if (timeChangePos > 0 && timeChangePos <= 0.5f)
                 {
                     PlayAnim(0, aec.idle, true);
                 }
@@ -108,6 +108,8 @@ public class Boss3Controller : EnemyBase
                                 case 1:
                                     typeAttack = 2;
                                     timePreviousAttack = maxtimeDelayAttack1;
+                                    randomCombo = 2;
+                                    combo = 0;
                                     break;
                                 case 2:
                                     typeAttack = 0;
@@ -197,7 +199,7 @@ public class Boss3Controller : EnemyBase
                 enemyState = EnemyState.falldown;
                 previousTypeAttack = typeAttack;
                 timeChangePos = 1f;
-                for(int i = 0;  i < targets.Count; i ++)
+                for (int i = 0; i < targets.Count; i++)
                 {
                     targets[i].SetActive(false);
                 }
@@ -274,12 +276,23 @@ public class Boss3Controller : EnemyBase
     void Attack3(float deltaTime)
     {
         timePreviousAttack -= deltaTime;
-        if(timePreviousAttack <= 0)
+        if (timePreviousAttack <= 0)
         {
-            previousState = enemyState;
-            enemyState = EnemyState.falldown;
-            previousTypeAttack = typeAttack;
-            timeChangePos = 1f;
+            PlayAnim(0, aec.attack3, false);
+
+            combo++;
+
+            if (combo == randomCombo)
+            {
+                previousState = enemyState;
+                enemyState = EnemyState.falldown;
+                previousTypeAttack = typeAttack;
+                timeChangePos = 1f;
+            }
+            else
+            {
+                timePreviousAttack = maxtimeDelayAttack1;
+            }
         }
     }
     void Attack4(float deltaTime)
