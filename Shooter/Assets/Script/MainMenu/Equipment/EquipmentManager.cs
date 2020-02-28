@@ -7,7 +7,8 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
-
+    public Sprite sprWhite, sprYellow, sprButton, sprButtonCur;
+    public Image[] allStars;
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
     public Button btnRemove, btnReplace;
@@ -20,6 +21,7 @@ public class EquipmentManager : MonoBehaviour
     public TextMeshProUGUI txtCurItemName, txtCurDamagePriview, txtCurAttSpeed, txtCurCritRate, txtCurCritDamage, txtCurRange, txtCurMagazine;
     #endregion
 
+    public TextMeshProUGUI txtItemInfoEquip, txtItemSelectInfo;
     public GameObject gWeaponData, gCurWeaponData;
     public GameObject gItemSelectPriview, gCurItemPriview;
     public GameObject gCurrentItemEquip;
@@ -34,6 +36,7 @@ public class EquipmentManager : MonoBehaviour
     public ItemData itemSelected;
 
     private Button btnPanel;
+    public int tabSelected = 0;
 
 
     private void Awake()
@@ -43,7 +46,15 @@ public class EquipmentManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChooseTab(0);
+        //ChooseTab(0);
+        for (int i = 0; i < btnTabs.Length; i++)
+        {
+            if (i == tabSelected)
+            {
+                btnTabs[i].image.sprite = sprSelect;
+            }
+            else btnTabs[i].image.sprite = sprUnSelect;
+        }
         InitAllItems();
     }
     string _keyCompare = "";
@@ -57,6 +68,7 @@ public class EquipmentManager : MonoBehaviour
     }
     private void OnDisable()
     {
+        ChooseTab(0);
         ChooseItem(null);
     }
 
@@ -65,7 +77,7 @@ public class EquipmentManager : MonoBehaviour
     {
         foreach (ItemData itemData in DataUtils.dicAllEquipment.Values)
         {
-            if (!itemData.isEquipped)
+            //if (!itemData.isEquipped)
             {
                 key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
                 gItemClone = Instantiate(gItems);
@@ -73,6 +85,8 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
                 item.itemKey = key;
                 item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
+                item.itemData = DataUtils.dicAllEquipment[item.itemKey];
+                gItemClone.SetActive(!item.itemData.isUnlock);
                 gItemClone.transform.SetParent(trContain, false);
             }
         }
@@ -107,82 +121,91 @@ public class EquipmentManager : MonoBehaviour
     {
         if (itemEquipped != null)
         {
-            string keyCompare1, keyCompare2;
-            keyCompare1 = DataUtils.dicAllEquipment[_keyItemEquipped].id + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].level + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].isUnlock;
-            keyCompare2 = DataUtils.dicAllEquipment[_keyItemSelected].id + "_" + DataUtils.dicAllEquipment[_keyItemSelected].level + "_" + DataUtils.dicAllEquipment[_keyItemSelected].isUnlock;
-            if (keyCompare1.Equals(keyCompare2))
-            {
-                ItemData iCurEquip = DataUtils.dicAllEquipment[_keyItemEquipped];
-                ItemData iCurSelect = DataUtils.dicAllEquipment[_keyItemSelected];
-
-                iCurEquip.isEquipped = false;
-                iCurSelect.isEquipped = true;
-                DataUtils.dicAllEquipment[_keyItemEquipped] = iCurSelect;
-                DataUtils.dicAllEquipment[_keyItemSelected] = iCurEquip;
-
-
-                DataUtils.dicEquippedItem.Remove(_keyItemEquipped);
-                DataUtils.EquipItem(iCurSelect);
-
-                for (int i = 0; i < trContain.childCount; i++)
+            if (itemSelected.isUnlock) {
+                #region Item Selected has unlock
+                string keyCompare1, keyCompare2;
+                keyCompare1 = DataUtils.dicAllEquipment[_keyItemEquipped].id + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].level + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].isUnlock;
+                keyCompare2 = DataUtils.dicAllEquipment[_keyItemSelected].id + "_" + DataUtils.dicAllEquipment[_keyItemSelected].level + "_" + DataUtils.dicAllEquipment[_keyItemSelected].isUnlock;
+                if (keyCompare1.Equals(keyCompare2))
                 {
-                    if (trContain.GetChild(i).gameObject.name.Equals(_keyItemSelected))
-                    {
-                        EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-                        _iEquipData.itemKey = _keyItemSelected;
-                        trContain.GetChild(i).gameObject.name = _iEquipData.itemKey;
-                        _iEquipData.itemData = iCurEquip;
-                        _iEquipData.CheckItemUnlock();
-                    }
-                }
-            }
-            else
-            {
-                CheckInitNewItem(itemEquipped);
-                DataUtils.dicAllEquipment[_keyItemSelected].isEquipped = true;
-                DataUtils.dicAllEquipment[_keyItemEquipped].isEquipped = false;
-                DataUtils.dicEquippedItem.Remove(_keyItemEquipped);
-                DataUtils.EquipItem(itemSelected);
+                    ItemData iCurEquip = DataUtils.dicAllEquipment[_keyItemEquipped];
+                    ItemData iCurSelect = DataUtils.dicAllEquipment[_keyItemSelected];
 
-                ItemData iData = DataUtils.dicAllEquipment[_keyItemEquipped];
-                string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
-                DataUtils.dicAllEquipment.Remove(_keyItemEquipped);
-                if (!DataUtils.dicAllEquipment.ContainsKey(_key)) {
-                    DataUtils.dicAllEquipment.Add(_key, iData);
-                }
-                else
-                {
-                    DataUtils.dicAllEquipment[_key].quantity += 1;
+                    iCurEquip.isEquipped = false;
+                    iCurSelect.isEquipped = true;
+                    DataUtils.dicAllEquipment[_keyItemEquipped] = iCurSelect;
+                    DataUtils.dicAllEquipment[_keyItemSelected] = iCurEquip;
+
+
+                    DataUtils.dicEquippedItem.Remove(_keyItemEquipped);
+                    DataUtils.EquipItem(iCurSelect);
+
                     for (int i = 0; i < trContain.childCount; i++)
                     {
-                        if (trContain.GetChild(i).gameObject.name.Equals(_keyItemEquipped))
+                        if (trContain.GetChild(i).gameObject.name.Equals(_keyItemSelected))
                         {
-                            Destroy(trContain.GetChild(i).gameObject);
+                            EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                            _iEquipData.itemKey = _keyItemSelected;
+                            trContain.GetChild(i).gameObject.name = _iEquipData.itemKey;
+                            _iEquipData.itemData = iCurEquip;
+                            _iEquipData.CheckItemUnlock();
                         }
                     }
                 }
-
-
-                ItemData iData1 = DataUtils.dicAllEquipment[_keyItemSelected];
-                string _key1 = iData1.id + "_" + iData1.level.ToString() + "_" + iData1.isUnlock + "_" + iData1.isEquipped;
-                DataUtils.dicAllEquipment.Remove(_keyItemSelected);
-                DataUtils.dicAllEquipment.Add(_key1, iData1);
-
-                for (int i = 0; i < trContain.childCount; i++)
+                else
                 {
-                    EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-                    trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
-                    _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
+                    CheckInitNewItem(itemEquipped);
+                    DataUtils.dicAllEquipment[_keyItemSelected].isEquipped = true;
+                    DataUtils.dicAllEquipment[_keyItemEquipped].isEquipped = false;
+                    DataUtils.dicEquippedItem.Remove(_keyItemEquipped);
+                    DataUtils.EquipItem(itemSelected);
 
-                    if (_iEquipData.itemData.isEquipped)
+                    ItemData iData = DataUtils.dicAllEquipment[_keyItemEquipped];
+                    string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+                    DataUtils.dicAllEquipment.Remove(_keyItemEquipped);
+                    if (!DataUtils.dicAllEquipment.ContainsKey(_key))
                     {
-                        trContain.GetChild(i).gameObject.SetActive(false);
+                        DataUtils.dicAllEquipment.Add(_key, iData);
                     }
                     else
                     {
-                        trContain.GetChild(i).gameObject.SetActive(true);
+                        DataUtils.dicAllEquipment[_key].quantity += 1;
+                        for (int i = 0; i < trContain.childCount; i++)
+                        {
+                            if (trContain.GetChild(i).gameObject.name.Equals(_keyItemEquipped))
+                            {
+                                Destroy(trContain.GetChild(i).gameObject);
+                            }
+                        }
+                    }
+
+
+                    ItemData iData1 = DataUtils.dicAllEquipment[_keyItemSelected];
+                    string _key1 = iData1.id + "_" + iData1.level.ToString() + "_" + iData1.isUnlock + "_" + iData1.isEquipped;
+                    DataUtils.dicAllEquipment.Remove(_keyItemSelected);
+                    DataUtils.dicAllEquipment.Add(_key1, iData1);
+
+                    for (int i = 0; i < trContain.childCount; i++)
+                    {
+                        EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                        trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
+                        _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
+
+                        //if (_iEquipData.itemData.isEquipped)
+                        //{
+                        //    trContain.GetChild(i).gameObject.SetActive(false);
+                        //}
+                        //else
+                        //{
+                        //    trContain.GetChild(i).gameObject.SetActive(true);
+                        //}
                     }
                 }
+                #endregion
+            }
+            else
+            {
+                MainMenuController.Instance.ShowMapNotify("Item not yet unlock");
             }
         }
         else
@@ -200,10 +223,10 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                 trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
                 _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
-                if (_iEquipData.itemData.isEquipped)
-                {
-                    trContain.GetChild(i).gameObject.SetActive(false);
-                }
+                //if (_iEquipData.itemData.isEquipped)
+                //{
+                //    trContain.GetChild(i).gameObject.SetActive(false);
+                //}
             }
         }
         DataUtils.CheckEquipWeapon();
@@ -211,7 +234,6 @@ public class EquipmentManager : MonoBehaviour
     }
     public bool IsItemHasInit(string id)
     {
-        //bool rs = false;
         int count = 0;
         for (int i = 0; i < trContain.childCount; i++)
         {
@@ -224,7 +246,7 @@ public class EquipmentManager : MonoBehaviour
     }
     private void CheckInitNewItem(ItemData itemNew)
     {
-        if (itemNew.isEquipped)
+        //if (itemNew.isEquipped)
         {
             if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
             {
@@ -267,6 +289,8 @@ public class EquipmentManager : MonoBehaviour
 
     public void ChooseTab(int _index)
     {
+        tabSelected = _index;
+        ChooseItem(null);
         for (int i = 0; i < btnTabs.Length; i++)
         {
             if (i == _index)
@@ -311,18 +335,26 @@ public class EquipmentManager : MonoBehaviour
         for (int i = 0; i < trContain.childCount; i++)
         {
             EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-            if (_type.Equals(ALL_EQUIP))
+            if(_type.Equals(ALL_EQUIP) && !_iEquipData.itemData.isUnlock)
             {
-                trContain.GetChild(i).gameObject.SetActive(true);
-            }
-            else if (!_iEquipData.itemData.type.Equals(_type))
+                trContain.GetChild(i).gameObject.SetActive(!_iEquipData.itemData.isUnlock);
+            }else if (_iEquipData.itemData.type.Equals(_type))
             {
-                trContain.GetChild(i).gameObject.SetActive(false);
+                trContain.GetChild(i).gameObject.SetActive(_iEquipData.itemData.isUnlock);
             }
             else
             {
-                trContain.GetChild(i).gameObject.SetActive(true);
+                trContain.GetChild(i).gameObject.SetActive(false);
             }
+            //else 
+            //if (!_iEquipData.itemData.type.Equals(_type))
+            //{
+            //    trContain.GetChild(i).gameObject.SetActive(false);
+            //}
+            //else if(_iEquipData.itemData.isUnlock)
+            //{
+            //    trContain.GetChild(i).gameObject.SetActive(true);
+            //}
         }
     }
 
@@ -343,6 +375,7 @@ public class EquipmentManager : MonoBehaviour
         if (itemData == null)
         {
             gWeaponData.SetActive(false);
+            txtItemSelectInfo.gameObject.SetActive(false);
             txtDamagePriview.gameObject.SetActive(false);
             imgDamagePriview.gameObject.SetActive(false);
             gItemSelectPriview.SetActive(false);
@@ -360,11 +393,13 @@ public class EquipmentManager : MonoBehaviour
 
             if (!itemSelected.isUnlock)
             {
+                btnReplace.image.sprite = sprButton;
                 //btnRemove.interactable = false;
                 btnReplace.interactable = false;
             }
             else
             {
+                btnReplace.image.sprite = sprButtonCur;
                 btnRemove.interactable = true;
                 btnReplace.interactable = true;
             }
@@ -422,6 +457,7 @@ public class EquipmentManager : MonoBehaviour
             imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
             txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
+            #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
             {
                 txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar];
@@ -431,30 +467,47 @@ public class EquipmentManager : MonoBehaviour
                 txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar] + "</color>";
                 txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar] + "</color>";
 
+                txtItemInfoEquip.gameObject.SetActive(false);
                 gCurWeaponData.SetActive(true);
                 txtCurDamagePriview.gameObject.SetActive(true);
                 imgCurDamagePriview.gameObject.SetActive(true);
             }
             else
             {
+                txtItemInfoEquip.text = DataUtils.GetItemInfo(itemEquipped);
+
                 gCurWeaponData.SetActive(false);
+                txtItemInfoEquip.gameObject.SetActive(true);
                 txtCurDamagePriview.gameObject.SetActive(false);
                 imgCurDamagePriview.gameObject.SetActive(false);
             }
             UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
             gCurItemPriview.SetActive(true);
 
-
-            #region Check Selected Item has Unlock
-            if (itemData.isUnlock)
+            for(int i = 0; i < allStars.Length; i++)
             {
-                gCurrentItemEquip.SetActive(true);
-            }
-            else
-            {
-                gCurrentItemEquip.SetActive(false);
+                if (i <= itemEquipped.curStar)
+                {
+                    allStars[i].sprite = sprYellow;
+                }
+                else
+                {
+                    allStars[i].sprite = sprWhite;
+                }
             }
             #endregion
+
+            #region Check Selected Item has Unlock
+            //if (itemData.isUnlock)
+            //{
+                gCurrentItemEquip.SetActive(true);
+            //}
+            //else
+            //{
+            //    gCurrentItemEquip.SetActive(false);
+            //}
+            #endregion
+
             if (itemData.type.Contains("WEAPON"))
             {
                 txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
@@ -464,6 +517,7 @@ public class EquipmentManager : MonoBehaviour
                 txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
                 txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
 
+                txtItemSelectInfo.gameObject.SetActive(false);
                 gWeaponData.SetActive(true);
                 txtDamagePriview.gameObject.SetActive(true);
                 imgDamagePriview.gameObject.SetActive(true);
@@ -473,11 +527,22 @@ public class EquipmentManager : MonoBehaviour
                 gWeaponData.SetActive(false);
                 txtDamagePriview.gameObject.SetActive(false);
                 imgDamagePriview.gameObject.SetActive(false);
+                txtItemSelectInfo.gameObject.SetActive(true);
             }
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             gItemSelectPriview.SetActive(true);
 
             imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(itemEquipped);
+        }
+
+        if (!itemData.type.Contains("WEAPON"))
+        {
+            txtItemSelectInfo.text = DataUtils.GetItemInfo(itemSelected);
+            txtItemSelectInfo.gameObject.SetActive(true);
+        }
+        else
+        {
+            txtItemSelectInfo.gameObject.SetActive(false);
         }
 
         UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());

@@ -105,7 +105,7 @@ public class EquipmentItem : MonoBehaviour
     Sprite sprimgQualityTemp;
     public void CheckItemUnlock()
     {
-        if (itemData.isEquipped) gameObject.SetActive(false);
+        //if (itemData.isEquipped) gameObject.SetActive(false);
         if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
 
         #region Check Item quality
@@ -144,6 +144,11 @@ public class EquipmentItem : MonoBehaviour
             imgProgress.gameObject.SetActive(true);
             imgPart.gameObject.SetActive(true);
             imgFillProgress.fillAmount = GetPercent();
+        }
+
+        if(EquipmentManager.Instance.tabSelected == 0)
+        {
+            gameObject.SetActive(!itemData.isUnlock);
         }
     }
 

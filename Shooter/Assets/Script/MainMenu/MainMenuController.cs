@@ -12,6 +12,7 @@ public class MainMenuController : MonoBehaviour
     public EquipmentManager equipmentManager;
     public PopupManager popManager;
     public ShopManager shopManager;
+    public DailyGift dailyGift;
     public Text txtStageName;
     public Button[] buttonStages;
     public Text txtGems, txtCoins;
@@ -26,7 +27,12 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         InitButtonStage();
-
+        dailyGift.PrepareData();
+        Debug.LogError("-----> " + DataUtils.IsClaimReward() + " vs " + DataUtils.SReward());
+        if (!DataUtils.IsClaimReward())
+        {
+            dailyGift.ShowDailyGiftPanel();
+        }
         //equipmentManager.InitAllItems();
     }
     public void SoundClickButton()
@@ -168,17 +174,19 @@ public class MainMenuController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
-            DataUtils.TakeHeroPice("P1", 2);
+            //DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            //DataUtils.TakeHeroPice("P1", 2);
+            dailyGift.PrepareData();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, true);
-            DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Uncommon, 3, true);
-            DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Rare, 3, true);
-            DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Epic, 3, true);
-            DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
+            //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, true);
+            //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Uncommon, 3, true);
+            //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Rare, 3, true);
+            //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Epic, 3, true);
+            //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
+            dailyGift.ShowDailyGiftPanel();
         }
     }
     private void HideAllPanel()

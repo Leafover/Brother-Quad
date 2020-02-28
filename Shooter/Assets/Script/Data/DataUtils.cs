@@ -5,12 +5,10 @@ using LitJson;
 
 public class DataUtils
 {
-
-
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
-    public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON }
+    public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON, P1 }
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES }
-    public const int TOTAL_STAGE = 2;
+    public const int TOTAL_STAGE = 3;
     public const int MAX_LEVEL_HERO = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
@@ -31,6 +29,7 @@ public class DataUtils
     public const string KEY_GAME_STAGE_INDEX_HARD = GAME_KEY + "KEY_GAME_STAGE_INDEX_HARD";
     public const string KEY_EQUIPMENT_DATA = GAME_KEY + "KEY_EQUIPMENT_DATA";
     public const string KEY_EQUIPPED_DATA = GAME_KEY + "KEY_EQUIPPED_DATA";
+    public const string KEY_DAILY_REWARD = GAME_KEY + "KEY_DAILY_REWARD";
 
     public const string LINK_MORE_GAME = "https://play.google.com/store/apps/developer?id=Ohze+Games+Studio";
     public static string LINK_RATE_US = "market://details?id=" + Application.identifier;
@@ -77,6 +76,46 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
+    public static string GetItemInfo(ItemData itemData)
+    {
+        string _str = "";
+        string itemKey = itemData.id + "_" + itemData.level;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[itemData.curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[itemData.curStar] + "</color> move speed";
+                break;
+            case "BAG":
+                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[itemData.curStar];
+                if (HealthRegeneration <= 0)
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[itemData.curStar] + "%</color> of first aid dropped on the map";
+                else
+                {
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[itemData.curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
+                }
+                break;
+            case "GLOVES":
+                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[itemData.curStar] + "'s</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[itemData.curStar] + "</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[itemData.curStar] + "%</color>";
+                break;
+            case "HELMET":
+                _str = "- Increase <color=green>" + dicHelmet[itemKey].DefValue[itemData.curStar] + "%</color> def. \n- Bonus Exp: <color=green>" + dicHelmet[itemKey].BonusExpValue[itemData.curStar] + "%</color>";
+                break;
+            case "SHOES":
+                _str = "- Move Speed: <color=green>+" + dicShoes[itemKey].TangSpeeDichuyenValue[itemData.curStar] + "%</color>\n- Jump Height: <color=green>+" + dicShoes[itemKey].TangDoCaoNhayValue[itemData.curStar] + "%</color>";
+                break;
+            case "WEAPON":
+                //dSell = dicWeapon[itemKey].GiaKhiRaDo;
+                //dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[itemData.curStar];
+                break;
+            case "P1":
+                _str = "";
+                break;
+            default:
+                _str = "";
+                break;
+        }
+        return _str;
+    }
 
     public static void FillEquipmentData()
     {
@@ -154,7 +193,7 @@ public class DataUtils
     {
         itemWeapon = new ItemWeapon();
         string _key = "";
-        foreach(ItemData item in dicEquippedItem.Values)
+        foreach (ItemData item in dicEquippedItem.Values)
         {
             _key = item.id + "_" + item.level;// + "_" + item.isUnlock + "_" + item.isEquipped;
             switch (item.type)
@@ -696,7 +735,7 @@ public class DataUtils
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
-            if(lstAllStageNormal[stage].levelUnlock < mapIndex)
+            if (lstAllStageNormal[stage].levelUnlock < mapIndex)
                 lstAllStageNormal[stage].levelUnlock = mapIndex;
 
             if (mapIndex == 7)
@@ -960,6 +999,24 @@ public class DataUtils
     }
     #endregion
 
+    #region Daily reward
+    public static bool IsClaimReward()
+    {
+        string _key = System.DateTime.Now.Day + "_" + System.DateTime.Now.Month;
+        return _key.Equals(SReward());
+    }
+    public static string SReward()
+    {
+        return PlayerPrefs.GetString(KEY_DAILY_REWARD, /*System.DateTime.Now.ToString()*/"");
+    }
+    public static void HasClaimReward()
+    {
+        string _key = System.DateTime.Now.Day +"_"+ System.DateTime.Now.Month;
+        PlayerPrefs.SetString(KEY_DAILY_REWARD, _key);
+        PlayerPrefs.Save();
+    }
+    #endregion
+
     #region Other
     public static string DisplayRichText(double dFrom, double dTo)
     {
@@ -1046,7 +1103,8 @@ public class DataUtils
                 dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
         }
-        if (itemData.isUnlock) {
+        if (itemData.isUnlock)
+        {
             dbValue = (float)(dSell * (dPiceRequire > 0 ? dPiceRequire : 1) * (dQuantity > 0 ? dQuantity + 1 : 1) * (dPices > 0 ? dPices : 1));
         }
         else
