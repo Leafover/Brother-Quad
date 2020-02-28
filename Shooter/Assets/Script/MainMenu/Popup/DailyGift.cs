@@ -101,7 +101,7 @@ public class DailyGift : MonoBehaviour
 
         if (_eType == DataUtils.eType.WEAPON)
         {
-            txtItemInfo.gameObject.SetActive(true);
+            txtItemInfo.gameObject.SetActive(false);
             txtAtk.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtksecValue[itemData.curStar].ToString();
             txtBulletSpeed.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].BulletSpeedValue[itemData.curStar].ToString();
             txtRange.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtkRangeValue[itemData.curStar].ToString();
