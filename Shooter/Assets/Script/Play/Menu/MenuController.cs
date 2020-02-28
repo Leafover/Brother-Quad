@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
         // PanelHeroes 66->78
 
         instance = this;
-       // Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
     }
     int randomAds;
     private void Start()
@@ -40,7 +40,7 @@ public class MenuController : MonoBehaviour
 
 #else
         randomAds = Random.Range(0, 100);
-        if (randomAds < 38)
+        if (randomAds < 60)
         {
             AdsManager.Instance.ShowInterstitial((b) => { });
         }

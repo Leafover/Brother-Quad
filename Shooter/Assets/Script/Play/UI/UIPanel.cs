@@ -144,7 +144,7 @@ public class UIPanel : MonoBehaviour
 
 #else
         randomAds = Random.Range(0, 100);
-        if (randomAds < 30)
+        if (randomAds < 40)
         {
             AdsManager.Instance.ShowInterstitial((b) => { });
         }
