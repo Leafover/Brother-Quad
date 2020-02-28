@@ -7,7 +7,7 @@ public class DisableObject : MonoBehaviour
     public float time = 2;
     WaitForSeconds waitforsecond;
     public BulletEnemy bulletEnemy;
-
+  //  public GameObject afterEnd,bodydie;
     public bool isExploOffboss;
 
     public enum TypeExplo
@@ -41,6 +41,10 @@ public class DisableObject : MonoBehaviour
         {
             if (GameController.instance.enemyLockCam.Count == 0)
                 GameController.instance.DelayWinFunc();
+            //if (afterEnd != null)
+            //    afterEnd.SetActive(true);
+            //if (bodydie != null)
+            //    bodydie.SetActive(false);
             //  GameController.instance.win = true;
         }
     }

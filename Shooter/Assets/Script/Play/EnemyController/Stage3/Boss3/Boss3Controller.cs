@@ -8,7 +8,8 @@ public class Boss3Controller : EnemyBase
 {
     public List<GameObject> targets;
     public LineRenderer line1, line2;
-    public GameObject eye1, eye2, endLine1, endLine2, allEndLine;
+    public GameObject eye1, eye2, endLine1, endLine2, allEndLine, effectattack3, effectattack4, defendeffect, smokeEffect, explodieeffect;
+    public GameObject bodydie;
     public override void Start()
     {
         base.Start();
@@ -35,6 +36,8 @@ public class Boss3Controller : EnemyBase
         base.Active();
         enemyState = EnemyState.idle;
     }
+    bool isActive2 = false;
+    int randomChangeAttack;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -47,7 +50,7 @@ public class Boss3Controller : EnemyBase
         switch (enemyState)
         {
             case EnemyState.idle:
-                if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= 0.5f)
+                if (PlayerController.instance.GetTranformXPlayer() > transform.position.x)
                 {
                     if (GameController.instance.uiPanel.CheckWarning())
                     {
@@ -58,10 +61,10 @@ public class Boss3Controller : EnemyBase
                     PlayAnim(1, aec.idle, true);
                     enemyState = EnemyState.attack;
                     takeDamageBox.enabled = true;
-                    randomCombo = 4;
-                    timePreviousAttack = maxtimeDelayAttack1;
+                    randomCombo = 1;
+                    timePreviousAttack = maxtimeDelayAttack1 * 1.5f;
                     typeAttack = 0;
-                    timeChangePos = 0;
+                    randomChangeAttack = 0;
                 }
                 break;
             case EnemyState.attack:
@@ -79,19 +82,14 @@ public class Boss3Controller : EnemyBase
                     case 3:
                         Attack4(deltaTime);
                         break;
+
                 }
                 break;
             case EnemyState.run:
+                Def(deltaTime);
                 break;
             case EnemyState.falldown:
-
                 timeChangePos -= deltaTime;
-
-                if (timeChangePos > 0 && timeChangePos <= 0.5f)
-                {
-                    PlayAnim(0, aec.idle, true);
-                }
-
                 if (timeChangePos <= 0)
                 {
                     enemyState = EnemyState.attack;
@@ -102,26 +100,209 @@ public class Boss3Controller : EnemyBase
                             switch (previousTypeAttack)
                             {
                                 case 0:
-                                    timePreviousAttack = 2;
-                                    typeAttack = 1;
+                                    if (currentHealth >= health / 2)
+                                    {
+                                        if (randomChangeAttack == 0)
+                                        {
+                                            enemyState = EnemyState.run;
+                                            timePreviousAttack = Random.Range(2.5f, 3f);
+                                            combo = 0;
+                                        }
+                                        else
+                                        {
+                                            typeAttack = 0;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 1;
+                                            combo = 0;
+                                            randomChangeAttack = 0;
+                                        }
+                                    }
+                                    else if (currentHealth < health / 2)
+                                    {
+                                        if (!isActive2)
+                                        {
+                                            isActive2 = true;
+                                            typeAttack = 2;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 2;
+                                            combo = 0;
+                                            smokeEffect.SetActive(true);
+                                        }
+                                        else
+                                        {
+                                            if (randomChangeAttack == 0)
+                                            {
+                                                enemyState = EnemyState.run;
+                                                timePreviousAttack = Random.Range(2.5f, 3f);
+                                                combo = 0;
+                                            }
+                                            else
+                                            {
+                                                typeAttack = 2;
+                                                timePreviousAttack = maxtimeDelayAttack1;
+                                                randomCombo = 2;
+                                                combo = 0;
+                                                randomChangeAttack = 0;
+                                            }
+                                        }
+                                    }
                                     break;
                                 case 1:
-                                    typeAttack = 2;
-                                    timePreviousAttack = maxtimeDelayAttack1;
-                                    randomCombo = 2;
-                                    combo = 0;
+                                    if (currentHealth >= health / 2)
+                                    {
+                                        enemyState = EnemyState.run;
+                                        timePreviousAttack = Random.Range(2.5f, 3f);
+                                        combo = 0;
+                                    }
+                                    else if (currentHealth < health / 2)
+                                    {
+                                        if (!isActive2)
+                                        {
+                                            isActive2 = true;
+                                            typeAttack = 2;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 2;
+                                            combo = 0;
+                                            smokeEffect.SetActive(true);
+                                        }
+                                        else
+                                        {
+                                            randomChangeAttack = Random.Range(0, 2);
+                                            if (randomChangeAttack == 0)
+                                            {
+                                                typeAttack = 0;
+                                                timePreviousAttack = maxtimeDelayAttack1;
+                                                randomCombo = 1;
+                                                combo = 0;
+                                            }
+                                            else
+                                            {
+                                                typeAttack = 3;
+                                                timePreviousAttack = maxtimeDelayAttack3;
+                                                randomCombo = Random.Range(5, 7);
+                                                combo = 0;
+                                            }
+                                        }
+                                    }
                                     break;
                                 case 2:
-                                    typeAttack = 0;
-                                    timePreviousAttack = maxtimeDelayAttack1;
-                                    randomCombo = 4;
-                                    combo = 0;
+                                    if (currentHealth >= health / 2)
+                                    {
+                                        randomChangeAttack = Random.Range(0, 2);
+                                        if (randomChangeAttack == 0)
+                                        {
+                                            timePreviousAttack = 2;
+                                            typeAttack = 1;
+                                            combo = 0;
+                                        }
+                                        else
+                                        {
+                                            typeAttack = 3;
+                                            timePreviousAttack = maxtimeDelayAttack3;
+                                            randomCombo = Random.Range(5, 7);
+                                            combo = 0;
+                                        }
+                                    }
+                                    else if (currentHealth < health / 2)
+                                    {
+                                        if (!isActive2)
+                                        {
+                                            isActive2 = true;
+                                            typeAttack = 2;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 2;
+                                            combo = 0;
+                                            smokeEffect.SetActive(true);
+                                        }
+                                        else
+                                        {
+                                            enemyState = EnemyState.run;
+                                            timePreviousAttack = Random.Range(3f, 5f);
+                                            combo = 0;
+                                            randomChangeAttack = 0;
+                                        }
+                                    }
                                     break;
                                 case 3:
+                                    if (currentHealth >= health / 2)
+                                    {
+                                        if (randomChangeAttack == 1)
+                                        {
+                                            typeAttack = 0;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 1;
+                                            combo = 0;
+                                        }
+                                    }
+                                    else if (currentHealth < health / 2)
+                                    {
+                                        if (!isActive2)
+                                        {
+                                            isActive2 = true;
+                                            typeAttack = 2;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 2;
+                                            combo = 0;
+                                            smokeEffect.SetActive(true);
+                                        }
+                                        else
+                                        {
+                                            typeAttack = 0;
+                                            timePreviousAttack = maxtimeDelayAttack1;
+                                            randomCombo = 1;
+                                            combo = 0;
+                                        }
+                                    }
                                     break;
                             }
                             break;
                         case EnemyState.run:
+                            if (currentHealth >= health / 2)
+                            {
+                                if (previousTypeAttack == 0)
+                                {
+                                    typeAttack = 2;
+                                    timePreviousAttack = maxtimeDelayAttack1;
+                                    randomCombo = Random.Range(1, 3);
+                                    combo = 0;
+                                }
+                                else if (previousTypeAttack == 1)
+                                {
+                                    typeAttack = 0;
+                                    timePreviousAttack = maxtimeDelayAttack1;
+                                    randomCombo = 1;
+                                    combo = 0;
+                                    randomChangeAttack = 0;
+                                }
+                            }
+                            else if (currentHealth < health / 2)
+                            {
+                                if (!isActive2)
+                                {
+                                    isActive2 = true;
+                                    typeAttack = 2;
+                                    timePreviousAttack = maxtimeDelayAttack1;
+                                    randomCombo = 2;
+                                    combo = 0;
+                                    smokeEffect.SetActive(true);
+                                }
+                                else
+                                {
+                                    if (previousTypeAttack == 2)
+                                    {
+                                        timePreviousAttack = 2;
+                                        typeAttack = 1;
+                                        combo = 0;
+                                    }
+                                    else if (previousTypeAttack == 0)
+                                    {
+                                        typeAttack = 2;
+                                        timePreviousAttack = maxtimeDelayAttack1;
+                                        randomCombo = 2;
+                                        combo = 0;
+                                    }
+                                }
+                            }
                             break;
                     }
                 }
@@ -175,34 +356,47 @@ public class Boss3Controller : EnemyBase
         {
             PlayAnim(0, aec.attack1, false);
 
-            combo++;
+            counttimeshot++;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketMiniBoss3Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketBoss3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
 
             listMyBullet.Add(bulletEnemy);
-            if (combo - 1 < 2)
+            if (counttimeshot - 1 < 2)
                 bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             else
                 bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
 
 
-            Throw(targets, combo - 1, bulletEnemy.transform.position);
-            bulletEnemy.BeginDisplay(new Vector2(xVelo[combo - 1], yVelo[combo - 1]), this);
+            Throw(targets, counttimeshot - 1, bulletEnemy.transform.position);
+            bulletEnemy.BeginDisplay(new Vector2(xVelo[counttimeshot - 1], yVelo[counttimeshot - 1]), this);
             bulletEnemy.gameObject.SetActive(true);
 
-            Debug.Log("combo:" + combo);
+            //  Debug.Log("combo:" + counttimeshot);
 
-            if (combo == randomCombo)
+            if (counttimeshot == 4)
             {
-                previousState = enemyState;
-                enemyState = EnemyState.falldown;
-                previousTypeAttack = typeAttack;
-                timeChangePos = 1f;
-                for (int i = 0; i < targets.Count; i++)
+                combo++;
+                if (combo == randomCombo)
                 {
-                    targets[i].SetActive(false);
+                    previousState = enemyState;
+                    enemyState = EnemyState.falldown;
+                    previousTypeAttack = typeAttack;
+                    timeChangePos = 1f;
+                    for (int i = 0; i < targets.Count; i++)
+                    {
+                        targets[i].SetActive(false);
+                    }
                 }
+                else
+                {
+                    timePreviousAttack = maxtimeDelayAttack1;
+                    for (int i = 0; i < targets.Count; i++)
+                    {
+                        targets[i].SetActive(false);
+                    }
+                }
+                counttimeshot = 0;
             }
             else
             {
@@ -210,6 +404,7 @@ public class Boss3Controller : EnemyBase
             }
         }
     }
+    int counttimeshot;
     Vector2 pos;
     float timeChangePos;
     int previousTypeAttack;
@@ -267,6 +462,7 @@ public class Boss3Controller : EnemyBase
             previousTypeAttack = typeAttack;
             timeChangePos = 1f;
 
+            PlayAnim(0, aec.idle, true);
             eye1.SetActive(false);
             eye2.SetActive(false);
             line1.gameObject.SetActive(false);
@@ -281,6 +477,42 @@ public class Boss3Controller : EnemyBase
             PlayAnim(0, aec.attack3, false);
 
             combo++;
+            Debug.LogError("combo:" + combo);
+            if (combo == randomCombo)
+            {
+                previousState = enemyState;
+                enemyState = EnemyState.falldown;
+                previousTypeAttack = typeAttack;
+                timeChangePos = 1f;
+                combo = 0;
+            }
+            else
+            {
+                timePreviousAttack = maxtimeDelayAttack1 * 3;
+                Debug.LogError("reset:");
+            }
+        }
+    }
+    void Attack4(float deltaTime)
+    {
+        timePreviousAttack -= deltaTime;
+        if (timePreviousAttack > 0 && timePreviousAttack <= maxtimeDelayAttack3 / 2)
+        {
+            PlayAnim(0, aec.run, false);
+        }
+        else if (timePreviousAttack <= 0)
+        {
+            combo++;
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.tialuaBoss3Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.transform.position = rightFace.transform.position;
+            bulletEnemy.AddProperties(damage3, bulletspeed3);
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
+            rotation.x = 0;
+            rotation.y = 0;
+            rotation.z = Random.Range(-360, 360);
+            bulletEnemy.transform.eulerAngles = rotation;
+            bulletEnemy.gameObject.SetActive(true);
 
             if (combo == randomCombo)
             {
@@ -288,27 +520,79 @@ public class Boss3Controller : EnemyBase
                 enemyState = EnemyState.falldown;
                 previousTypeAttack = typeAttack;
                 timeChangePos = 1f;
+                effectattack4.SetActive(false);
+                PlayAnim(0, aec.idle, true);
+                combo = 0;
             }
             else
             {
-                timePreviousAttack = maxtimeDelayAttack1;
+                timePreviousAttack = maxtimeDelayAttack3 / 3;
+                Debug.LogError("reset:");
             }
         }
     }
-    void Attack4(float deltaTime)
+    void Def(float deltaTime)
     {
+        if (!isShield)
+        {
+            PlayAnim(0, aec.run2, false);
+            isShield = true;
+            defendeffect.gameObject.SetActive(true);
+        }
+        timePreviousAttack -= deltaTime;
+        if (timePreviousAttack <= 0)
+        {
+            previousState = enemyState;
+            enemyState = EnemyState.falldown;
+            previousTypeAttack = typeAttack;
+            timeChangePos = 1f;
+            PlayAnim(0, aec.idle, true);
+            isShield = false;
+            defendeffect.gameObject.SetActive(false);
+        }
 
     }
-    void Def()
-    {
-
-    }
+    Vector3 rotation;
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
-        if (trackEntry.Animation.Name.Equals(aec.attack1.name))
+        // if (trackEntry.Animation.Name.Equals(aec.attack1.name))
+        // {
+        //     PlayAnim(0, aec.idle, true);
+        // }
+        //else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        // {
+        //     PlayAnim(0, aec.idle, true);
+        // }
+        if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
+            effectattack3.SetActive(true);
 
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.quacauluaBoss3Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.transform.position = leftFace.transform.position;
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
+            rotation.x = 0;
+            rotation.y = 0;
+            rotation.z = 0;
+            bulletEnemy.transform.eulerAngles = rotation;
+            bulletEnemy.gameObject.SetActive(true);
+
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.quacauluaBoss3Pooler.GetBulletEnemyPooledObject();
+            bulletEnemy.transform.position = leftFace.transform.position;
+            bulletEnemy.AddProperties(damage1, bulletspeed1);
+            bulletEnemy.BeginDisplay(Vector2.zero, this);
+            listMyBullet.Add(bulletEnemy);
+            rotation.x = 0;
+            rotation.y = -180;
+            rotation.z = 0;
+            bulletEnemy.transform.eulerAngles = rotation;
+            bulletEnemy.gameObject.SetActive(true);
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.run.name))
+        {
+            effectattack4.SetActive(true);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -316,7 +600,15 @@ public class Boss3Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-
+            PlayAnim(0, aec.idle, true);
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack2.name))
+        {
+            //  PlayAnim(0, aec.idle, true);
+        }
+        else if (trackEntry.Animation.Name.Equals(aec.attack3.name))
+        {
+            PlayAnim(0, aec.idle, true);
         }
     }
     public override void Dead()
@@ -331,5 +623,16 @@ public class Boss3Controller : EnemyBase
         allEndLine.SetActive(false);
         line1.gameObject.SetActive(false);
         line2.gameObject.SetActive(false);
+        effectattack3.SetActive(false);
+        effectattack4.SetActive(false);
+        explodieeffect.SetActive(true);
+        StartCoroutine(delayDie());
+    }
+    IEnumerator delayDie()
+    {
+        yield return new WaitForSeconds(3.6f);
+        gameObject.SetActive(false);
+        bodydie.SetActive(true);
+        GameController.instance.SpawnCoin(15, transform.position);
     }
 }

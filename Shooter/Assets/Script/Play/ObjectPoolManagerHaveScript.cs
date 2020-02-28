@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectPoolManagerHaveScript : MonoBehaviour
 {
     [HideInInspector]
-    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,grenadeN3Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler,bulletMachinegunBoss2Pooler,grenadeenemyBoss2Pooler,rocketBoss2Pooler,bulletenergyBoss2Pooler,gunItemPooler, itemHealthPooler,itemCoinPooler, enemyN0Pooler, rocketMiniBoss3Pooler, energyMNB3BasePooler;
+    public ObjectPoolerHaveScript numberDamgageTextPooler, bullet3EnemyBasepooler, grenade4EnemyBasepooler, bulletEnemyV1Pooler,boomEnemyV3Pooler, rocketEnemyV2Pooler, rocketMiniBoss1Pooler, bulletBoss1Pooler, bulletEnemy2Pooler, bulletEnemy6Pooler, enemy1Pooler, enemy5Pooler,bulletEnemyEN0Pooler,enemyN1Pooler,enemyN2Pooler,grenadeN3Pooler,bulletMiniBoss2Pooler,superBulletMiniBoss2Pooler,bulletMachinegunBoss2Pooler,grenadeenemyBoss2Pooler,rocketBoss2Pooler,bulletenergyBoss2Pooler,gunItemPooler, itemHealthPooler,itemCoinPooler, enemyN0Pooler, rocketMiniBoss3Pooler, energyMNB3BasePooler,quacauluaBoss3Pooler,tialuaBoss3Pooler,rocketBoss3Pooler;
     public NumberDamageTextController numberDamgageTextPrefab;
-    public BulletEnemy bulletEnemy3BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, grenadeN3Prefab, bulletMiniBoss2Prefab, superBulletMiniBoss2Prefab, bulletMachinegunBoss2Prefab, grenadeenemyBoss2Prefab, rocketBoss2Prefab, bulletenergyBoss2Prefab, rocketMiniBoss3Prefab, energyMNB3BasePrefab;
+    public BulletEnemy bulletEnemy3BasePrefab, grenade4EnemyBasePrefab, bulletEnemyV1Prefab, boomEnemyV3Prefab, rocketEnemyV2Prefab, rocketMiniBoss1Prefab, bulletBoss1Prefab, bulletEnemy2Prefab, bulletEnemy6Prefab, bulletEnemyEN0Prefab, grenadeN3Prefab, bulletMiniBoss2Prefab, superBulletMiniBoss2Prefab, bulletMachinegunBoss2Prefab, grenadeenemyBoss2Prefab, rocketBoss2Prefab, bulletenergyBoss2Prefab, rocketMiniBoss3Prefab, energyMNB3BasePrefab, quacauluaBoss3Prefab, tialuaBoss3Prefab, rocketBoss3Prefab;
     public EnemyBase enemy1Prefab, enemy5Prefab, enemyN1Prefab, enemyN2Prefab,enemyN0Prefab;
     public ItemBase gunItemPrefab, itemHealthPrefab, itemCoinPrefab;
     [HideInInspector]
@@ -291,6 +291,33 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
             go.transform.parent = this.gameObject.transform;
             energyMNB3BasePooler.InitializeBulletEnemy(2);
             AllPool.Add(energyMNB3BasePooler);
+        }
+        if (quacauluaBoss3Pooler == null)
+        {
+            go = new GameObject("quacauluaBoss3Pooler");
+            quacauluaBoss3Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            quacauluaBoss3Pooler.bulletEnemyPooledObject = quacauluaBoss3Prefab;
+            go.transform.parent = this.gameObject.transform;
+            quacauluaBoss3Pooler.InitializeBulletEnemy(4);
+            AllPool.Add(quacauluaBoss3Pooler);
+        }
+        if (tialuaBoss3Pooler == null)
+        {
+            go = new GameObject("tialuaBoss3Pooler");
+            tialuaBoss3Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            tialuaBoss3Pooler.bulletEnemyPooledObject = tialuaBoss3Prefab;
+            go.transform.parent = this.gameObject.transform;
+            tialuaBoss3Pooler.InitializeBulletEnemy(7);
+            AllPool.Add(tialuaBoss3Pooler);
+        }
+        if (rocketBoss3Pooler == null)
+        {
+            go = new GameObject("rocketBoss3Pooler");
+            rocketBoss3Pooler = go.AddComponent<ObjectPoolerHaveScript>();
+            rocketBoss3Pooler.bulletEnemyPooledObject = rocketBoss3Prefab;
+            go.transform.parent = this.gameObject.transform;
+            rocketBoss3Pooler.InitializeBulletEnemy(10);
+            AllPool.Add(rocketBoss3Pooler);
         }
     }
     GameObject go;
