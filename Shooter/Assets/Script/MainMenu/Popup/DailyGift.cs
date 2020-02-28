@@ -125,7 +125,15 @@ public class DailyGift : MonoBehaviour
 
     public void TakeDailyGift()
     {
-        DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
+        if(_eType == DataUtils.eType.P1)
+        {
+            DataUtils.TakeHeroPice(itemID, totalPart);
+        }
+        else
+        {
+            DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
+        }
+        
         DataUtils.HasClaimReward();
         HideDailyGiftPanel();
     }
@@ -134,7 +142,13 @@ public class DailyGift : MonoBehaviour
         HideDailyGiftPanel();
         AdsManager.Instance.ShowRewardedVideo((b) => {
             if (b) {
-                DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart * 2, false);
+                if (_eType == DataUtils.eType.P1)
+                {
+                    DataUtils.TakeHeroPice(itemID, totalPart);
+                }
+                else {
+                    DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart * 2, false);
+                }
                 DataUtils.HasClaimReward();
             }
         });
