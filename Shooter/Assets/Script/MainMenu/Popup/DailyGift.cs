@@ -8,6 +8,8 @@ public class DailyGift : MonoBehaviour
 {
     public Image imgQuality, imgItemPriview;
     public TextMeshProUGUI txtItemInfo;
+    public Sprite sprNotAvaiable;
+    public Button btnX2;
     public GameObject gItemInfo;
     public Text txtItemName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtTotalPart;
     public int totalPart = 3;
@@ -96,6 +98,9 @@ public class DailyGift : MonoBehaviour
 
     public void ShowDailyGiftPanel()
     {
+        Debug.LogError("--> " + AdsManager.Instance.IsRewardLoaded());
+        if(AdsManager.Instance != null)
+            btnX2.interactable = AdsManager.Instance.IsRewardLoaded();
         #region Fill info
         txtItemName.text = itemName;
 
