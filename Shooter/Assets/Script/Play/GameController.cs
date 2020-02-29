@@ -135,6 +135,8 @@ public class GameController : MonoBehaviour
 
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
+
+
     }
     public void ActiveUI()
     {
