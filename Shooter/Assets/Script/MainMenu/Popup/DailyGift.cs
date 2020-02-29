@@ -144,9 +144,11 @@ public class DailyGift : MonoBehaviour
     }
     public void TakeX2Gift()
     {
-        //HideDailyGiftPanel();
-        //AdsManager.Instance.ShowRewardedVideo((b) => {
-        //    if (b) {
+        HideDailyGiftPanel();
+        AdsManager.Instance.ShowRewardedVideo((b) =>
+        {
+            if (b)
+            {
                 if (_eType == DataUtils.eType.P1)
                 {
                     DataUtils.TakeHeroPice(itemID, totalPart);
@@ -155,8 +157,8 @@ public class DailyGift : MonoBehaviour
                     DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
                 }
                 DataUtils.HasClaimReward();
-        //    }
-        //});
+            }
+        });
         TakeDailyGift();
     }
 
