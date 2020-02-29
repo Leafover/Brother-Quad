@@ -125,7 +125,7 @@ public class DailyGift : MonoBehaviour
         txtTotalPart.text = "" + totalPart;
         #endregion
 
-       // gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void TakeDailyGift()
