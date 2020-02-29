@@ -629,6 +629,7 @@ public class GameController : MonoBehaviour
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         DisplayReward(rePlaceID, i, eLevel);
+        Debug.Log("ID:" + rePlaceID);
     }
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
     {

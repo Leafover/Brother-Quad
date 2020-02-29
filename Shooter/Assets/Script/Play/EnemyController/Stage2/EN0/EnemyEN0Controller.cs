@@ -7,9 +7,9 @@ using Spine.Unity;
 
 public class EnemyEN0Controller : EnemyBase
 {
-   // public int indexPath;
-   // float distanceTravelled;
-  //  VertexPath myPath;
+    // public int indexPath;
+    // float distanceTravelled;
+    //  VertexPath myPath;
     int activeAttack;
     Vector2 posTemp;
 
@@ -26,7 +26,7 @@ public class EnemyEN0Controller : EnemyBase
         {
             EnemyManager.instance.enemyen0s.Add(this);
         }
-     //   myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
+        //   myPath = GameController.instance.currentMap.pathCreator[indexPath].path;
         activeAttack = 0;
         combo = 0;
         randomCombo = 2;
@@ -60,7 +60,7 @@ public class EnemyEN0Controller : EnemyBase
 
         switch (activeAttack)
         {
-            case 0:
+            case 0://moi vao
                 //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
@@ -69,8 +69,9 @@ public class EnemyEN0Controller : EnemyBase
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Random.Range(1f, 3f))
                 {
                     activeAttack = 2;
-                    PosBegin = new Vector2(Origin().x + Random.Range(-2,2),Origin().y - 2);
+                    PosBegin = new Vector2(Origin().x + Random.Range(-2, 2), Origin().y - 2);
                     DetecPosPlayer();
+                    Debug.LogError("begin:" + speed);
                 }
 
                 break;
@@ -82,6 +83,7 @@ public class EnemyEN0Controller : EnemyBase
                 //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                Debug.LogError("end" + speed);
                 break;
             case 2:
                 transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
@@ -90,6 +92,7 @@ public class EnemyEN0Controller : EnemyBase
                 {
                     activeAttack = 3;
                 }
+                Debug.LogError("lao vao player" + speed);
                 break;
             case 3:
                 transform.position = Vector2.MoveTowards(transform.position, PosBegin, deltaTime * speed);
@@ -98,13 +101,15 @@ public class EnemyEN0Controller : EnemyBase
                 {
                     activeAttack = 4;
                 }
+                Debug.LogError("quay ve vi tri ban" + speed);
                 break;
             case 4:
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 Attack(1, aec.attack1, false, maxtimeDelayAttack1);
+                Debug.LogError("ban");
                 break;
 
-           
+
         }
 
         //if (transform.position == myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop))
@@ -117,16 +122,17 @@ public class EnemyEN0Controller : EnemyBase
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
-
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
+
+
+
             if (!incam)
                 return;
 
-            DetecPosPlayer();
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bulletEnemyEN0Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
@@ -150,7 +156,7 @@ public class EnemyEN0Controller : EnemyBase
             bulletEnemy.gameObject.SetActive(true);
 
             combo++;
-
+            DetecPosPlayer();
             SoundController.instance.PlaySound(soundGame.soundEN0Attack);
         }
     }
@@ -159,13 +165,14 @@ public class EnemyEN0Controller : EnemyBase
         base.OnComplete(trackEntry);
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
-            if (combo == randomCombo)
+
+            if (combo >= randomCombo)
             {
                 activeAttack = 1;
                 posTemp.x = CameraController.instance.bouders[3].transform.position.x;
-                posTemp.y = Camera.main.transform.position.y + Random.Range(-5, 5);
+                posTemp.y = Camera.main.transform.position.y + Random.Range(-2, 1);
             }
-        //    activeAttack = 1;
+            //    activeAttack = 1;
         }
     }
     void ExPlo()

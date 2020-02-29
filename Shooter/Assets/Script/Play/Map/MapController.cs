@@ -63,12 +63,36 @@ public class MapController : MonoBehaviour
                             break;
                     }
                     break;
-                    
+                case 2:
+                    if (DataParam.indexMap >= 4)
+                    {
+                        switch (randomTypeEnemy)
+                        {
+                            case 0:
+                                _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN1Pooler.GetEnemyPooledObject();
+                                break;
+                            case 1:
+                                _scriptE = ObjectPoolManagerHaveScript.Instance.enemyN2Pooler.GetEnemyPooledObject();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (randomTypeEnemy)
+                        {
+                            case 0:
+                                _scriptE = ObjectPoolManagerHaveScript.Instance.enemyM2Pooler.GetEnemyPooledObject();
+                                break;
+                            case 1:
+                                _scriptE = ObjectPoolManagerHaveScript.Instance.enemyM2Pooler.GetEnemyPooledObject();
+                                break;
+                        }
+                    }
+                    break;
+
             }
 
-            // enemy.transform.position = posSpawn;
             _scriptE.transform.position = posSpawn;
-          //   _scriptE = enemy.GetComponent<EnemyBase>();
             _scriptE.Init();
             _scriptE.enemyAutoSpawn = true;
 

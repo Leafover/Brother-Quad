@@ -320,7 +320,7 @@ public class EnemyManager : MonoBehaviour
         //CallVN2Action(deltaTime);
         //CallN3Action(deltaTime);
         //CallMNB3Action(deltaTime);
-        CallBoss3Action(deltaTime);
+        //CallBoss3Action(deltaTime);
     }
     public void OnUpdateByStage2(float deltaTime)
     {
@@ -349,6 +349,8 @@ public class EnemyManager : MonoBehaviour
         CallBoss3Action(deltaTime);
 
         CallEV3Action(deltaTime);
+        CallN1Action(deltaTime);
+        CallN2Action(deltaTime);
         CallN4Action(deltaTime);
         CallEN0Action(deltaTime);
         CallVN2Action(deltaTime);

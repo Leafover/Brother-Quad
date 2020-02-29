@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemCoin : ItemBase
 {
+    public GameObject foot;
     WaitForSeconds wait;
     public override void Hit()
     {
@@ -17,6 +18,7 @@ public class ItemCoin : ItemBase
         base.OnEnable();
         if (wait == null)
             wait = new WaitForSeconds(2.5f);
+        foot.SetActive(true);
         isactive = false;
         rid.gravityScale = 1;
         point.x = Random.Range(-2.5f, 2.5f);
@@ -36,5 +38,20 @@ public class ItemCoin : ItemBase
     {
         yield return wait;
         isactive = true;
+        rid.gravityScale = 0;
+        foot.SetActive(false);
+    }
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        switch(collision.gameObject.layer)
+        {
+            case 8:
+                rid.velocity = Vector2.zero;
+                break;
+            case 21:
+                rid.velocity = Vector2.zero;
+                break;
+        }
     }
 }

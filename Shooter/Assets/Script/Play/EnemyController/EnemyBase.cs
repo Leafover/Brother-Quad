@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EnemyBase : AutoTarget
 {
+    public int levelBase = 1;
+
     private Skin[] skins = new Skin[0];
     public List<EnemyFearRun> enemyfearruns = new List<EnemyFearRun>();
     public GameObject haveItem;
@@ -22,7 +24,8 @@ public class EnemyBase : AutoTarget
     bool haveCoin;
     [HideInInspector]
     public bool enemyAutoSpawn;
-    public int levelBase = 1;
+
+
 
     public bool activeFar;
     [HideInInspector]
@@ -55,8 +58,8 @@ public class EnemyBase : AutoTarget
     [HideInInspector]
     public Collider2D takeDamageBox;
     [HideInInspector]
-    public float damage1, damage2, damage3, health, bulletspeed1, bulletspeed2, bulletspeed3, attackrank, bulletimeexist, exp, speed, maxtimeDelayAttack1, maxtimeDelayAttack2, maxtimeDelayAttack3;
-
+    public float damage1, damage2, damage3, health, bulletspeed1, bulletspeed2, bulletspeed3, attackrank, bulletimeexist, exp/*, speed*/, maxtimeDelayAttack1, maxtimeDelayAttack2, maxtimeDelayAttack3;
+    public float speed;
     public float maxtimedelayChangePos = 4;
     [HideInInspector]
     public AnimationReferenceAsset currentAnim;
@@ -235,6 +238,7 @@ public class EnemyBase : AutoTarget
         {
             skins = skeletonAnimation.Skeleton.Data.Skins.Items;
             skeletonAnimation.Initialize(true);
+            Debug.LogError("======zo day======");
         }
     }
     void ActiveSound()
@@ -585,6 +589,9 @@ public class EnemyBase : AutoTarget
                     case 1:
                         GameController.instance.uiPanel.healthBarBoss.DisplayBegin("EYE-BIO HAZARD");
                         break;
+                    case 2:
+                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("UFO CLEOPATRA");
+                        break;
                 }
 
             }
@@ -597,6 +604,9 @@ public class EnemyBase : AutoTarget
                         break;
                     case 1:
                         GameController.instance.uiPanel.healthBarBoss.DisplayBegin("ALIEN BASE");
+                        break;
+                    case 2:
+                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("IMHOTEP PHARAON");
                         break;
                 }
             }

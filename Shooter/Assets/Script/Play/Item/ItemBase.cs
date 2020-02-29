@@ -33,16 +33,16 @@ public class ItemBase : MonoBehaviour
             case 13:
                 Hit();
                 break;
-            case 8:
-                rid.gravityScale = 0;
-                rid.velocity = Vector2.zero;
-              //  Debug.LogError("wtf");
-                break;
-            case 21:
-                rid.gravityScale = 0;
-                rid.velocity = Vector2.zero;
-             //   Debug.LogError("wtf");
-                break;
+            //case 8:
+            //    rid.gravityScale = 0;
+            //    rid.velocity = Vector2.zero;
+            //  //  Debug.LogError("wtf");
+            //    break;
+            //case 21:
+            //    rid.gravityScale = 0;
+            //    rid.velocity = Vector2.zero;
+            // //   Debug.LogError("wtf");
+            //    break;
         }
     }
     public virtual void CalculateDisable(float deltaTime)
