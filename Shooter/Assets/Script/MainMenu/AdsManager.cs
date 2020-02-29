@@ -76,7 +76,7 @@ public class AdsManager : MonoBehaviour
         return interstitial.IsLoaded();
     }
 
-    private bool IsRewardLoaded()
+    public bool IsRewardLoaded()
     {
         return rewardedAd.IsLoaded();
     }
@@ -166,23 +166,25 @@ public class AdsManager : MonoBehaviour
         this.rewardedAd.LoadAd(CreateRequest());
     }
 
-    private void RewardedAd_OnAdLoaded(object sender, EventArgs e)
-    {
-        print("Ads-RewardedAd_OnAdLoaded");
-    }
+ 
 
     #region Handler
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
-        print("Ads-HandleAdClosed event received");
+        Debug.LogError("Ads-HandleAdClosed event received");
         if (acInterClosed != null)
             acInterClosed(true);
         interstitial.LoadAd(CreateRequest());
     }
 
+    private void RewardedAd_OnAdLoaded(object sender, EventArgs e)
+    {
+        Debug.LogError("Ads-RewardedAd_OnAdLoaded");
+    }
+
     public void HandleRewardedAdClosed(object sender, EventArgs args)
     {
-        MonoBehaviour.print("Ads-HandleRewardedAdClosed event received");
+        Debug.LogError("Ads-HandleRewardedAdClosed event received");
         if (acRewarded != null)
         {
             acRewarded(false);

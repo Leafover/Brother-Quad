@@ -146,9 +146,11 @@ public class EquipmentItem : MonoBehaviour
             imgFillProgress.fillAmount = GetPercent();
         }
 
-        if(EquipmentManager.Instance.tabSelected == 0)
-        {
-            gameObject.SetActive(!itemData.isUnlock);
+        if (EquipmentManager.Instance != null) {
+            if (EquipmentManager.Instance.tabSelected == 0)
+            {
+                gameObject.SetActive(!itemData.isUnlock);
+            }
         }
     }
 
