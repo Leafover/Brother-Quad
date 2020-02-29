@@ -337,8 +337,13 @@ public class MiniBoss3Controller : EnemyBase
         if (timePreviousAttack <= 0)
         {
             enemySpawn = ObjectPoolManagerHaveScript.Instance.enemyN0Pooler.GetEnemyPooledObject();
+
             enemySpawn.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/rightFace.position;
+
+
+
             enemySpawn.Init();
+            enemySpawn.enemyAutoSpawn = true;
             enemySpawn.gameObject.SetActive(true);
 
             PlayAnim(0, aec.attack2, true);

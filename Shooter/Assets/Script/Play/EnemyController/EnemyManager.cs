@@ -309,22 +309,23 @@ public class EnemyManager : MonoBehaviour
         CallBoss1Action(deltaTime);
 
 
-        CallEM1Action(deltaTime);
-        CallEM2Action(deltaTime);
-        CallEM3Action(deltaTime);
-        CallEM4Action(deltaTime);
-        CallEM5Action(deltaTime);
-        CallEM6Action(deltaTime);
-        CallBoss3Action(deltaTime);
+        //CallEM1Action(deltaTime);
+        //CallEM2Action(deltaTime);
+        //CallEM3Action(deltaTime);
+        //CallEM4Action(deltaTime);
+        //CallEM5Action(deltaTime);
+        //CallEM6Action(deltaTime);
+        //CallBoss3Action(deltaTime);
 
-        CallEV3Action(deltaTime);
-        CallN1Action(deltaTime);
-        CallN2Action(deltaTime);
-        CallN4Action(deltaTime);
-        CallEN0Action(deltaTime);
-        CallVN2Action(deltaTime);
-        CallN3Action(deltaTime);
-        CallMNB3Action(deltaTime);
+        //CallEV3Action(deltaTime);
+        //CallN1Action(deltaTime);
+        //CallN2Action(deltaTime);
+        //CallN4Action(deltaTime);
+        //CallEN0Action(deltaTime);
+        //CallVN2Action(deltaTime);
+        //CallN3Action(deltaTime);
+        //CallMNB3Action(deltaTime);
+      //  Debug.LogError(":" + DataParam.indexStage);
     }
     public void OnUpdateByStage2(float deltaTime)
     {
@@ -338,6 +339,7 @@ public class EnemyManager : MonoBehaviour
         CallVN2Action(deltaTime);
         CallMiniBoss2Action(deltaTime);
         CallBoss2Action(deltaTime);
+     //   Debug.LogError(":" + DataParam.indexStage);
     }
     public void OnUpdateByStage3(float deltaTime)
     {
@@ -360,6 +362,7 @@ public class EnemyManager : MonoBehaviour
         CallVN2Action(deltaTime);
         CallN3Action(deltaTime);
         CallMNB3Action(deltaTime);
+    //    Debug.LogError(":" + DataParam.indexStage);
     }
 
     public void OnUpdate(float deltaTime)

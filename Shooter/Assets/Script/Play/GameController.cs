@@ -136,7 +136,9 @@ public class GameController : MonoBehaviour
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
 
+      //  DataParam.indexStage = 2;
 
+      //  Debug.LogError(":" + DataParam.indexStage + ":" + DataParam.indexMap);
     }
     public void ActiveUI()
     {

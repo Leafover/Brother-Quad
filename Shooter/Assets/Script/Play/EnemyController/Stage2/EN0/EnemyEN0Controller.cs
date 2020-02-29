@@ -31,7 +31,17 @@ public class EnemyEN0Controller : EnemyBase
         combo = 0;
         randomCombo = 2;
 
+        if(enemyAutoSpawn)
+        {
+            moveSpeed = speed/3;
+        }
+        else
+        {
+            moveSpeed = speed;
+        }
+
     }
+    float moveSpeed;
     public override void Active()
     {
         base.Active();
@@ -64,49 +74,49 @@ public class EnemyEN0Controller : EnemyBase
                 //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                transform.position = Vector2.Lerp(transform.position, posTemp, deltaTime * speed);
                 CheckDirFollowPlayer(posTemp.x);
                 if (Mathf.Abs(transform.position.x - Camera.main.transform.position.x) <= Random.Range(1f, 3f))
                 {
                     activeAttack = 2;
                     PosBegin = new Vector2(Origin().x + Random.Range(-2, 2), Origin().y - 2);
                     DetecPosPlayer();
-                    Debug.LogError("begin:" + speed);
+                 //   Debug.LogError("begin:" + speed);
                 }
 
                 break;
             case 1:
-                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                transform.position = Vector2.Lerp(transform.position, posTemp, deltaTime * speed);
                 CheckDirFollowPlayer(posTemp.x);
                 if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                     gameObject.SetActive(false);
                 //CheckDirFollowPlayer(myPath.GetPointAtDistance(myPath.length, EndOfPathInstruction.Stop).x);
                 //distanceTravelled += speed * deltaTime;
                 //transform.position = myPath.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                Debug.LogError("end" + speed);
+               // Debug.LogError("end" + speed);
                 break;
             case 2:
-                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * speed);
+                transform.position = Vector2.Lerp(transform.position, posTemp, deltaTime * speed);
                 CheckDirFollowPlayer(posTemp.x);
                 if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                 {
                     activeAttack = 3;
                 }
-                Debug.LogError("lao vao player" + speed);
+              //  Debug.LogError("lao vao player" + speed);
                 break;
             case 3:
-                transform.position = Vector2.MoveTowards(transform.position, PosBegin, deltaTime * speed);
+                transform.position = Vector2.Lerp(transform.position, PosBegin, deltaTime * speed);
                 CheckDirFollowPlayer(PosBegin.x);
                 if (transform.position.x == PosBegin.x && transform.position.y == PosBegin.y)
                 {
                     activeAttack = 4;
                 }
-                Debug.LogError("quay ve vi tri ban" + speed);
+              //  Debug.LogError("quay ve vi tri ban" + speed);
                 break;
             case 4:
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                 Attack(1, aec.attack1, false, maxtimeDelayAttack1);
-                Debug.LogError("ban");
+             //   Debug.LogError("ban");
                 break;
 
 
@@ -204,6 +214,8 @@ public class EnemyEN0Controller : EnemyBase
         {
             EnemyManager.instance.enemyen0s.Remove(this);
         }
+
+        transform.position = Vector3.zero;
     }
 
     public override void Dead()
