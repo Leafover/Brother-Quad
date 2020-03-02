@@ -9,9 +9,12 @@ public class EquipmentManager : MonoBehaviour
     const string ALL_EQUIP = "ALL";
     public Sprite sprWhite, sprYellow, sprButton, sprButtonCur;
     public Image[] allStars;
+    public Image[] allStarsItemSelect;
+    public GameObject gAllStarItemSelect;
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
-    public Button btnRemove, btnReplace;
+    public Button btnRemove, btnReplace, btnUpgrade;
+    public Text txtPriceUpgrade;
     #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine;
@@ -370,6 +373,28 @@ public class EquipmentManager : MonoBehaviour
         //}
     }
 
+    public void UpgradeItem()
+    {
+        if(DataUtils.playerInfo.coins >= DataUtils.GetItemPrice(itemSelected))
+        {
+            string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
+            if (DataUtils.dicAllEquipment[key].curStar < 5)
+            {
+                DataUtils.AddCoinAndGame(-(int)DataUtils.GetItemPrice(itemSelected), 0);
+                DataUtils.dicAllEquipment[key].curStar += 1;
+                DataUtils.SaveEquipmentData();
+                UpdateStar(DataUtils.dicAllEquipment[key]);
+            }
+            else
+            {
+                MainMenuController.Instance.ShowMapNotify("Item has reach max level");
+            }
+        }
+        else
+        {
+            MainMenuController.Instance.ShowMapNotify("Not enough coin to upgrade this item");
+        }
+    }
     public void ChooseItem(ItemData itemData)
     {
         if (itemData == null)
@@ -386,22 +411,40 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                 _iEquipData.imgSingleSelect.enabled = false;
             }
+            gAllStarItemSelect.SetActive(false);
         }
         else
         {
             itemSelected = itemData;
 
+            txtPriceUpgrade.text = DataUtils.GetItemPrice(itemData).ToString();
             if (!itemSelected.isUnlock)
             {
                 btnReplace.image.sprite = sprButton;
-                //btnRemove.interactable = false;
                 btnReplace.interactable = false;
+                btnRemove.gameObject.SetActive(true);
+                btnUpgrade.gameObject.SetActive(false);
             }
             else
             {
+                gAllStarItemSelect.SetActive(true);
+
                 btnReplace.image.sprite = sprButtonCur;
                 btnRemove.interactable = true;
                 btnReplace.interactable = true;
+                btnRemove.gameObject.SetActive(false);
+                btnUpgrade.gameObject.SetActive(true);
+                for (int i = 0; i < allStarsItemSelect.Length; i++)
+                {
+                    if (i <= itemData.curStar)
+                    {
+                        allStarsItemSelect[i].sprite = sprYellow;
+                    }
+                    else
+                    {
+                        allStarsItemSelect[i].sprite = sprWhite;
+                    }
+                }
             }
             #region Fill Info for EquipmentItem
             FillEquipmentInfo(itemSelected);
@@ -421,6 +464,20 @@ public class EquipmentManager : MonoBehaviour
                 }
             }
             #endregion
+        }
+    }
+    private void UpdateStar(ItemData itemData)
+    {
+        for (int i = 0; i < allStarsItemSelect.Length; i++)
+        {
+            if (i <= itemData.curStar)
+            {
+                allStarsItemSelect[i].sprite = sprYellow;
+            }
+            else
+            {
+                allStarsItemSelect[i].sprite = sprWhite;
+            }
         }
     }
 
