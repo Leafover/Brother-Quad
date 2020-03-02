@@ -12,11 +12,11 @@ public class UIPanel : MonoBehaviour
     public Text[] rewardText;
     public Sprite[] rewardSp, levelSp;
 
-
+    public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth,btnReviveByGem;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth;
     public Image grenadeFillAmout, fillbouderGrenade;
-    public Text levelText, bulletText, timeText;
+    public Text levelText, bulletText, timeText,pricegemText;
     public TextMeshProUGUI myGemText;
 
     public Animator animGamOver;
@@ -27,7 +27,7 @@ public class UIPanel : MonoBehaviour
     public Slider slideMiniMap;
     public GameObject haveBossInMiniMap, warning;
 
-
+    public int pricesGemRevive;
 
     public bool CheckWarning()
     {
@@ -88,14 +88,24 @@ public class UIPanel : MonoBehaviour
         if (GameController.instance.reviveCount == 0)
         {
             myGemText.text = "Own: <color=green>" + DataUtils.playerInfo.gems + "</color>";
-
+            pricegemText.text = "" + pricesGemRevive;
             btnReviveByAds.SetActive(true);
-            btnReviveByGem.SetActive(true);
+
+            if (DataUtils.playerInfo.gems >= pricesGemRevive)
+            {
+                btnReviveByGem.image.color = Color.white;
+            }
+            else
+            {
+                btnReviveByGem.image.color = Color.gray;
+            }
+
+            btnReviveByGem.gameObject.SetActive(true);
         }
         else
         {
             btnReviveByAds.SetActive(false);
-            btnReviveByGem.SetActive(false);
+            btnReviveByGem.gameObject.SetActive(false);
             DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         }
         defeatPanel.SetActive(true);
@@ -160,27 +170,27 @@ public class UIPanel : MonoBehaviour
     public void BtnReviveByGem()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        if (DataUtils.playerInfo.gems >= 20)
+        if (DataUtils.playerInfo.gems >= pricesGemRevive)
         {
-            Reward();
-            DataUtils.AddCoinAndGame(0, -20);
+            Reward(30);
+            DataUtils.AddCoinAndGame(0, -pricesGemRevive);
         }
     }
     public void BtnRevive()
     {
 #if UNITY_EDITOR
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        Reward();
+        Reward(50);
 #else
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(); });
+        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(50); });
 #endif
 
 
     }
-    void Reward()
+    void Reward(int healthBonus)
     {
-        PlayerController.instance.Revive();
+        PlayerController.instance.Revive(healthBonus);
         defeatPanel.SetActive(false);
         GameController.instance.gameState = GameController.GameState.play;
     }

@@ -8,7 +8,7 @@ public class BulletEnemy : MonoBehaviour
 {
     public bool isGrenade;
     public EnemyBase myEnemy;
-    // [HideInInspector]
+    [HideInInspector]
     public Vector2 dir = new Vector2(-1, 1);
     [HideInInspector]
     public Vector2 dir1 = new Vector2(-1, 0);
@@ -17,13 +17,11 @@ public class BulletEnemy : MonoBehaviour
     System.Action hit;
     Vector2 myTransform;
     public SkeletonAnimation skelatonAnim;
-
     public void AddProperties(float _damage, float _speed)
     {
         damage = _damage;
         speed = _speed;
     }
-
     int tempRange;
     public void SetDir(float _attackrank, bool randomtempRange,bool haveRandomRange = true)
     {
@@ -120,7 +118,6 @@ public class BulletEnemy : MonoBehaviour
         hit -= Hit;
         rid.velocity = Vector2.zero;
         transform.rotation = Quaternion.identity;
-
         //if (skelatonAnim != null)
         //{
         //  //  skelatonAnim.AnimationState.Event -= Event;
@@ -148,27 +145,18 @@ public class BulletEnemy : MonoBehaviour
                 break;
         }
     }
-
-
-
     //private void Event(TrackEntry trackEntry, Spine.Event e)
     //{
     //    OnEvent(trackEntry, e);
     //}
-
     //private void Complete(TrackEntry trackEntry)
     //{
     //    OnComplete(trackEntry);
     //}
-
     //protected virtual void OnEvent(TrackEntry trackEntry, Spine.Event e)
     //{
-
     //}
-
     //protected virtual void OnComplete(TrackEntry trackEntry)
     //{
-
-
     //}
 }

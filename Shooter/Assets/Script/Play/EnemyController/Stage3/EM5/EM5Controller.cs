@@ -25,7 +25,6 @@ public class EM5Controller : EnemyBase
         randomCombo = 3;
         isGrenadeStage = true;
         speedMove = speed / 2;
-        //   timedelayShoot = maxtimeDelayAttack;
         if (!EnemyManager.instance.em5s.Contains(this))
         {
             EnemyManager.instance.em5s.Add(this);
@@ -39,16 +38,12 @@ public class EM5Controller : EnemyBase
         {
             EnemyManager.instance.em5s.Remove(this);
         }
-        // Debug.LogError("tu nhien bien mat");
     }
 
     public override void Active()
     {
         base.Active();
-        //  enemyState = EnemyState.idle;
-
         enemyState = EnemyState.attack;
-        //  StartCoroutine(delayActive());
     }
     void ShootNormal(float deltaTime)
     {
@@ -194,19 +189,14 @@ public class EM5Controller : EnemyBase
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.rocketEnemyV2Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.rotation = Quaternion.identity;
             bulletEnemy.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-
-
             if (!FlipX)
                 bulletEnemy.transform.rotation = leftFace.rotation;
             else
                 bulletEnemy.transform.rotation = rightFace.rotation;
-
-
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             bulletEnemy.SetTimeExist(/*bulletimeexist*/0.5f);
             bulletEnemy.BeginDisplay(Vector2.zero, this);
             listMyBullet.Add(bulletEnemy);
-
             bulletEnemy.gameObject.SetActive(true);
         }
 
@@ -214,7 +204,6 @@ public class EM5Controller : EnemyBase
     protected override void OnComplete(TrackEntry trackEntry)
     {
         base.OnComplete(trackEntry);
-
         if (trackEntry.Animation.Name.Equals(aec.attack1.name))
         {
             PlayAnim(0, aec.idle, true);
@@ -242,7 +231,6 @@ public class EM5Controller : EnemyBase
         {
             enemyState = EnemyState.attack;
         }
-
         //if (enemyState == EnemyState.die)
         //    return;
         //if (aec.standup == null)
@@ -251,10 +239,8 @@ public class EM5Controller : EnemyBase
         //{
         //    enemyState = EnemyState.attack;
         //}
-
     }
     public float speedMove;
-
     public override void Dead()
     {
         base.Dead();

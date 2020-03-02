@@ -238,7 +238,7 @@ public class EnemyBase : AutoTarget
         {
             skins = skeletonAnimation.Skeleton.Data.Skins.Items;
             skeletonAnimation.Initialize(true);
-            Debug.LogError("======zo day======");
+          //  Debug.LogError("======zo day======");
         }
     }
     void ActiveSound()
@@ -612,8 +612,6 @@ public class EnemyBase : AutoTarget
             }
             GameController.instance.isDestroyBoss = true;
         }
-
-
         if (aec.aimTargetAnim == null)
             return;
         skeletonAnimation.AnimationState.SetAnimation(2, aec.aimTargetAnim, false);
@@ -712,7 +710,6 @@ public class EnemyBase : AutoTarget
                 DataController.instance.DoAchievement(2, 1);
                 break;
         }
-
     }
     void DisableAllBullet()
     {
@@ -758,7 +755,6 @@ public class EnemyBase : AutoTarget
                     currenthealthfill += healthFill[indexHealthFill];
                     GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                 }
-
             }
             return;
         }
@@ -772,7 +768,6 @@ public class EnemyBase : AutoTarget
             hiteffect.transform.position = posHitTemp;
             hiteffect.SetActive(true);
             SpawnNumberMissionText();
-
             return;
         }
         currentHealth -= damage;
@@ -788,7 +783,6 @@ public class EnemyBase : AutoTarget
         {
             if (isBoss || isMiniBoss)
             {
-
                 currenthealthfill -= damage;
                 GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                 if (currenthealthfill <= 0)
@@ -802,19 +796,13 @@ public class EnemyBase : AutoTarget
                         GameController.instance.uiPanel.healthBarBoss.DisplayHealthFill(currenthealthfill, healthFill[indexHealthFill], indexHealthFill);
                     }
                 }
-
             }
         }
-
         if (isBoss || isMiniBoss || isMachine)
         {
-
             SpawnHitEffect();
         }
-
         SpawnNumberDamageText((int)damage, crit);
-
-
     }
     void SpawnNumberMissionText()
     {
@@ -830,24 +818,16 @@ public class EnemyBase : AutoTarget
         numberText.transform.position = transform.position;
         numberText.Display("" + (int)damage * 10, crit);
         numberText.gameObject.SetActive(true);
-
-        // Debug.LogError("zooooo wtf text ");
     }
     void SpawnHitEffect()
     {
         hitPosTemp = 0.2f;
         posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
         posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
-
         hiteffect = ObjectPoolerManager.Instance.hitMachinePooler.GetPooledObject();
         hiteffect.transform.position = posHitTemp;
         hiteffect.SetActive(true);
-
-        //  Debug.LogError("zooooo wtf effect");
     }
-
-
-
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.layer)
@@ -855,7 +835,6 @@ public class EnemyBase : AutoTarget
             case 11:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-
                 takecrithit = Random.Range(0, 100);
                 if (takecrithit <= PlayerController.instance.critRate)
                 {
@@ -867,7 +846,6 @@ public class EnemyBase : AutoTarget
                 else
                 {
                     TakeDamage(PlayerController.instance.damageBullet);
-                    //  Debug.Log("Take Dâmgwe");
                 }
                 if (!collision.CompareTag("shotgun"))
                     collision.gameObject.SetActive(false);
@@ -875,9 +853,7 @@ public class EnemyBase : AutoTarget
             case 14:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-
                 TakeDamage(PlayerController.instance.damgeGrenade);
-
                 if (currentHealth <= 0)
                 {
                     if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
@@ -893,7 +869,6 @@ public class EnemyBase : AutoTarget
                         PlayerController.instance.countKillByGrenade = 0;
                         Debug.LogError("tieu diet 3");
                     }
-
                 }
                 break;
             case 26:
@@ -919,17 +894,6 @@ public class EnemyBase : AutoTarget
                 break;
         }
     }
-    //bool isSlow = false; 
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("slowdamage"))
-    //        isSlow = true;
-    //}
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("slowdamage"))
-    //        isSlow = false;
-    //}
     [HideInInspector]
     public int typeAttack;
     public void ChangeStage()

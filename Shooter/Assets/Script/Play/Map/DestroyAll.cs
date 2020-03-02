@@ -18,7 +18,7 @@ public class DestroyAll : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
                 PlayerController.instance.TakeDamage(PlayerController.instance.maxHealth / 100 * 10,false);
                 if (PlayerController.instance.health > 0)
-                    PlayerController.instance.ResetPosRevive(false);
+                    PlayerController.instance.ResetPosRevive(false,0);
                 //if (PlayerController.instance.currentStand != null)
                 //{
                 //    if (PlayerController.instance.currentStand.transform.position.x < transform.position.x)

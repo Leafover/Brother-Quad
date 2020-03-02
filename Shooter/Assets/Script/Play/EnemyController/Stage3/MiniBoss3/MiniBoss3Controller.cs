@@ -451,23 +451,17 @@ public class MiniBoss3Controller : EnemyBase
         exploDie.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         exploDie.SetActive(true);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
         yield return new WaitForSeconds(0.3f);
-
         exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
         exploDie.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
         exploDie.SetActive(true);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
         yield return new WaitForSeconds(0.3f);
-
         exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
         exploDie.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
         exploDie.SetActive(true);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
-
         yield return new WaitForSeconds(0.5f);
-
         SoundController.instance.PlaySound(soundGame.soundexploenemy);
         exploDie = ObjectPoolerManager.Instance.exploMiniBoss1Pooler.GetPooledObject();
         posExplo.x = gameObject.transform.position.x;

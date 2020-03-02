@@ -1253,14 +1253,14 @@ public class PlayerController : MonoBehaviour
     Vector3 posCamRevive;
     Vector3 posPlayerRevive;
     bool isReviving;
-    public void Revive()
+    public void Revive(int healthBonus)
     {
         if (GameController.instance.reviveCount == 0)
         {
-            ResetPosRevive(true);
+            ResetPosRevive(true, healthBonus);
         }
     }
-    public void ResetPosRevive(bool afterdie)
+    public void ResetPosRevive(bool afterdie,int healthBonus)
     {
         var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
 
@@ -1308,6 +1308,7 @@ public class PlayerController : MonoBehaviour
         Camera.main.transform.position = posCamRevive;
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         GameController.instance.reviveCount = 1;
-        AddHealth(maxHealth / 100 * 30);
+        AddHealth(maxHealth / 100 * healthBonus);
     }
+
 }

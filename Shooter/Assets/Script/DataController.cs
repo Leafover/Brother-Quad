@@ -368,8 +368,6 @@ public class DataController : MonoBehaviour
                 if (!saveIndexQuest.Contains(randomIndex))
                     saveIndexQuest.Add(randomIndex);
             }
-
-
         }
         else
         {
