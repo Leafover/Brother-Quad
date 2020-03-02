@@ -15,6 +15,20 @@ public class Boss3Controller : EnemyBase
         base.Start();
         Init();
     }
+    void PlaySoundAttack2(bool play)
+    {
+        if (play)
+        {
+            if (!au.isPlaying)
+                au.Play();
+        }
+        else
+        {
+            if (au.isPlaying)
+                au.Stop();
+        }
+        au.mute = !DataUtils.IsSoundOn();
+    }
     public override void Init()
     {
         base.Init();
@@ -35,6 +49,7 @@ public class Boss3Controller : EnemyBase
     {
         base.Active();
         enemyState = EnemyState.idle;
+        SoundController.instance.PlaySound(soundGame.soundBoss3Begin);
     }
     bool isActive2 = false;
     int randomChangeAttack;
@@ -372,7 +387,7 @@ public class Boss3Controller : EnemyBase
             bulletEnemy.BeginDisplay(new Vector2(xVelo[counttimeshot - 1], yVelo[counttimeshot - 1]), this);
             bulletEnemy.gameObject.SetActive(true);
 
-            //  Debug.Log("combo:" + counttimeshot);
+            SoundController.instance.PlaySound(soundGame.soundBoss3Attack1);
 
             if (counttimeshot == 4)
             {
@@ -414,6 +429,7 @@ public class Boss3Controller : EnemyBase
         if (timePreviousAttack > 0 && timePreviousAttack <= 1.5f)
         {
             PlayAnim(0, aec.attack2, true);
+            PlaySoundAttack2(true);
         }
         else if (timePreviousAttack <= 0 && timePreviousAttack > -5)
         {
@@ -467,6 +483,7 @@ public class Boss3Controller : EnemyBase
             eye2.SetActive(false);
             line1.gameObject.SetActive(false);
             line2.gameObject.SetActive(false);
+            PlaySoundAttack2(false);
         }
     }
     void Attack3(float deltaTime)
@@ -567,6 +584,7 @@ public class Boss3Controller : EnemyBase
         if (trackEntry.Animation.Name.Equals(aec.attack3.name))
         {
             effectattack3.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundBoss3Attack3);
 
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.quacauluaBoss3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.position = leftFace.transform.position;
@@ -593,6 +611,7 @@ public class Boss3Controller : EnemyBase
         else if (trackEntry.Animation.Name.Equals(aec.run.name))
         {
             effectattack4.SetActive(true);
+            SoundController.instance.PlaySound(soundGame.soundBoss3Attack4);
         }
     }
     protected override void OnComplete(TrackEntry trackEntry)
@@ -630,9 +649,16 @@ public class Boss3Controller : EnemyBase
     }
     IEnumerator delayDie()
     {
-        yield return new WaitForSeconds(3.6f);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        yield return new WaitForSeconds(0.1f);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+        yield return new WaitForSeconds(0.1f);
+        SoundController.instance.PlaySound(soundGame.soundexploenemy);
+
+        yield return new WaitForSeconds(3.4f);
         gameObject.SetActive(false);
         bodydie.SetActive(true);
         GameController.instance.SpawnCoin(15, transform.position);
+        SoundController.instance.PlaySound(soundGame.soundBoss3Dead);
     }
 }

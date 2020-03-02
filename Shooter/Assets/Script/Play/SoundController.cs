@@ -6,7 +6,8 @@ public enum soundGame
     sounde6fire, soundmissilewarning, soundev3dropbomb, soundv3die, soundv3bombexplo, soundv1die, soundv1attack, soundv2die, soundv2attack, soundexploenemy, soundwin, soundlose, soundroixuongnuoc, soundreload,
     soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin, sounddapchao, soundCritHit, soundGrenadeKill, soundWham,
     soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1, soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die,
-    soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2, soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun
+    soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2, soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun,
+    soundBoss3Attack1,soundBoss3Attack3,soundBoss3Attack4,soundBoss3Dead,soundBoss3Begin,soundBoss3Def,soundBoss3HitWhenDef
 }
 
 public class SoundController : MonoBehaviour
@@ -20,6 +21,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1;
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die, soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2;
     public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun;
+    public AudioClip soundBoss3Attack1, soundBoss3Attack3, soundBoss3Attack4, soundBoss3Dead, soundBoss3Begin, soundBoss3Def, soundBoss3HitWhenDef;
     public AudioSource au;
     void Awake()
     {
@@ -365,6 +367,27 @@ public class SoundController : MonoBehaviour
                     break;
                 case soundGame.soundChangeGun:
                     au.PlayOneShot(instance.soundChangeGun);
+                    break;
+                case soundGame.soundBoss3Attack1:
+                    au.PlayOneShot(instance.soundBoss3Attack1);
+                    break;
+                case soundGame.soundBoss3Attack3:
+                    au.PlayOneShot(instance.soundBoss3Attack3);
+                    break;
+                case soundGame.soundBoss3Attack4:
+                    au.PlayOneShot(instance.soundBoss3Attack4);
+                    break;
+                case soundGame.soundBoss3Dead:
+                    au.PlayOneShot(instance.soundBoss3Dead);
+                    break;
+                case soundGame.soundBoss3Begin:
+                    au.PlayOneShot(instance.soundBoss3Begin);
+                    break;
+                case soundGame.soundBoss3Def:
+                    au.PlayOneShot(instance.soundBoss3Def);
+                    break;
+                case soundGame.soundBoss3HitWhenDef:
+                    au.PlayOneShot(instance.soundBoss3HitWhenDef);
                     break;
             }
         }
