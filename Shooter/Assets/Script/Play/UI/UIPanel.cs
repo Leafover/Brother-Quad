@@ -172,7 +172,7 @@ public class UIPanel : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
         if (DataUtils.playerInfo.gems >= pricesGemRevive)
         {
-            Reward(30);
+            Reward(80);
             DataUtils.AddCoinAndGame(0, -pricesGemRevive);
         }
     }
@@ -183,10 +183,8 @@ public class UIPanel : MonoBehaviour
         Reward(50);
 #else
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(50); });
+        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(50);});
 #endif
-
-
     }
     void Reward(int healthBonus)
     {
