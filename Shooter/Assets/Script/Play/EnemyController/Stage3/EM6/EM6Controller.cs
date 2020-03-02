@@ -134,5 +134,6 @@ public class EM6Controller : EnemyBase
     public override void Dead()
     {
         base.Dead();
+        SoundController.instance.PlaySound(soundGame.soundv1die);
     }
 }

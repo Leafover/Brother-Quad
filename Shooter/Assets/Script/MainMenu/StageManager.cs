@@ -200,17 +200,17 @@ public class StageManager : MonoBehaviour
     ListMission _listMission;
     public void StartLevel()
     {
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        if (_stageSelect < 0 || _mapSelect < 0)
-        {
-            MainMenuController.Instance.ShowMapNotify("Please select map to play.");
-        }
-        ///USING ONLY FOR TEST
-        else if (!levelControll.canPlay)
-        {
-            MainMenuController.Instance.ShowMapNotify("Map " + (_mapSelect + 1) + " not yet unlock.");
-        }
-        else
+        //SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        //if (_stageSelect < 0 || _mapSelect < 0)
+        //{
+        //    MainMenuController.Instance.ShowMapNotify("Please select map to play.");
+        //}
+        /////USING ONLY FOR TEST
+        //else if (!levelControll.canPlay)
+        //{
+        //    MainMenuController.Instance.ShowMapNotify("Map " + (_mapSelect + 1) + " not yet unlock.");
+        //}
+        //else
         {
             DataParam.indexStage = _stageSelect;
             DataParam.indexMap = _mapSelect;

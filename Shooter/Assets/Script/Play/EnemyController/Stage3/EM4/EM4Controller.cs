@@ -189,6 +189,7 @@ public class EM4Controller : EnemyBase
     {
         base.Dead();
         RunToDie();
+        SoundController.instance.PlaySound(soundGame.sounde5die);
     }
     int randomDie;
     public void RunToDie()

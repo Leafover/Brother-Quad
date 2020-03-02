@@ -22,7 +22,7 @@ public class EnemyBase : AutoTarget
     //  public bool haveHealhItem;
     public float percentHealthForPlayer = 10;
     bool haveCoin;
-    [HideInInspector]
+  //  [HideInInspector]
     public bool enemyAutoSpawn;
 
 
