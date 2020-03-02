@@ -14,6 +14,9 @@ public class ShopManager : MonoBehaviour
     public Text txtPackPrice;
     public Text txtPlayerPice, txtGem, txtCoin;
     public Button btnBuyPack;
+    public Transform trShopContain;
+    public ShopItem[] shopItems;
+
 
     private Button btnPanelBuy;
     private string _packID;
@@ -32,7 +35,10 @@ public class ShopManager : MonoBehaviour
             gPanelBuy.SetActive(false);
         });
     }
-
+    private void OnEnable()
+    {
+        ChooseTab(0);
+    }
 
     public void ChooseTab(int _index)
     {
@@ -43,6 +49,31 @@ public class ShopManager : MonoBehaviour
                 btnTabs[i].image.sprite = sprSelect;
             }
             else btnTabs[i].image.sprite = sprUnSelect;
+        }
+        switch (_index)
+        {
+            case 0://Package
+                trShopContain.GetChild(0).gameObject.SetActive(true);
+                ShowShopItem(DataUtils.ITEM_SHOP_TYPE.PACKAGE);
+                break;
+            case 1://Gem
+                trShopContain.GetChild(0).gameObject.SetActive(false);
+                ShowShopItem(DataUtils.ITEM_SHOP_TYPE.GEM);
+                break;
+        }
+    }
+    private void ShowShopItem(DataUtils.ITEM_SHOP_TYPE shopType)
+    {
+        foreach(ShopItem shopItem in shopItems)
+        {
+            if(shopItem.shopType == shopType)
+            {
+                shopItem.gameObject.SetActive(true);
+            }
+            else
+            {
+                shopItem.gameObject.SetActive(false);
+            }
         }
     }
     public void WatchVideo()
@@ -81,6 +112,25 @@ public class ShopManager : MonoBehaviour
         {
             txtPlayerPice.gameObject.transform.parent.parent.gameObject.SetActive(true);
         }
+
+        if (totalGem == 0)
+        {
+            txtGem.gameObject.transform.parent.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            txtGem.gameObject.transform.parent.parent.gameObject.SetActive(true);
+        }
+
+        if (totalCoin == 0)
+        {
+            txtCoin.gameObject.transform.parent.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            txtCoin.gameObject.transform.parent.parent.gameObject.SetActive(true);
+        }
+
         txtPackPrice.text = priceText;
         gPanelBuy.SetActive(true);
     }

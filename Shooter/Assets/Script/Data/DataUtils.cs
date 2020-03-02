@@ -38,6 +38,12 @@ public class DataUtils
     public const string P_CHEAP_PACK = "com.brothersquad.pack1";
     public const string P_BEST_CHOICE = "com.brothersquad.pack2";
     public const string P_PROFESSIONAL_PACK = "com.brothersquad.pack3";
+    public const string P_25GEM_PACK = "com.ohze.rambo.25gem";
+    public const string P_220GEM_PACK = "com.ohze.rambo.220gem";
+    public const string P_600GEM_PACK = "com.ohze.rambo.600gem";
+    public const string P_1750GEM_PACK = "com.ohze.rambo.1750gem";
+    public const string P_4000GEM_PACK = "com.ohze.rambo.4000gem";
+    public const string P_12500GEM_PACK = "com.ohze.rambo.12500gem";
 
     public static ItemWeapon itemWeapon;
 
