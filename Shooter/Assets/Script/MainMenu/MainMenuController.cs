@@ -22,6 +22,7 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DataUtils.InitSpriteData(allSpriteData);
     }
     private void Start()
     {

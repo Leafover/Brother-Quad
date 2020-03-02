@@ -1022,18 +1022,36 @@ public class DataUtils
     {
         return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
     }
-
+    public static Dictionary<string, Sprite> dicSpriteData;
+    public static void InitSpriteData(ItemSpriteData allSpriteData)
+    {
+        dicSpriteData = new Dictionary<string, Sprite>();
+        foreach (ItemSprite item in allSpriteData.spriteDatas)
+        {
+            dicSpriteData.Add(item.itemName, item.sprItem);
+        }
+    }
     public static Sprite GetSpriteByName(string name, ItemSpriteData allSpriteData)
     {
         Sprite _spr = null;
+        Debug.LogError("Name: " + name);
         string[] strSP = name.Split('-');
 
-        for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+        //for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
+        //{
+        //    if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
+        //    {
+        //        _spr = allSpriteData.spriteDatas[i].sprItem;
+        //        break;
+        //    }
+        //}
+        //return _spr;
+        if (name.Contains("M-")) {
+            _spr = dicSpriteData[name];
+        }
+        else
         {
-            if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
-            {
-                _spr = allSpriteData.spriteDatas[i].sprItem;
-            }
+            _spr = dicSpriteData[strSP[strSP.Length - 1]];
         }
         return _spr;
     }
