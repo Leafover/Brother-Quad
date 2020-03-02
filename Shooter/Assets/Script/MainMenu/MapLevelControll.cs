@@ -168,7 +168,6 @@ public class MapLevelControll : MonoBehaviour
     }
     private void GetMapInfo(Mission miss_, int stageSelect, int mapSelect)
     {
-        Debug.LogError(stageSelect + " vs " + mapSelect + " vs " + stageIndex);
         for (int i = 0; i < StageManager.Instance.imgItemReward.Length; i++) {
             StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
         }
@@ -177,14 +176,17 @@ public class MapLevelControll : MonoBehaviour
         {
             GetRewardItemName(stageSelect + 1, mapSelect + 1);
             int total = DataController.instance.allTileVatPham.Count;
-            Debug.LogError("total:::: " + lstString.Count);
             for(int i = 0; i < lstString.Count; i++)
             {
-                Debug.LogError("1111:: " + lstString[i]);
                 if (DataUtils.dicSpriteData.ContainsKey(lstString[i]))
                 {
+                    Debug.LogError(StageManager.Instance.imgItemReward[i]);
                     StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+                }
+                else
+                {
+                    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
                 }
             }
 
@@ -202,6 +204,7 @@ public class MapLevelControll : MonoBehaviour
     }
     List<string> lstString = new List<string>();
     private void GetRewardItemName(int stageSelect, int mapSelect) {
+        lstString.Clear();
         string _sResult = "";
         for (int i = 0; i < DataController.instance.allTileVatPham.Count; i++)
         {
