@@ -160,10 +160,10 @@ public class UIPanel : MonoBehaviour
     public void BtnReviveByGem()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        if (DataUtils.playerInfo.gems >= 15)
+        if (DataUtils.playerInfo.gems >= 20)
         {
             Reward();
-            DataUtils.AddCoinAndGame(0, -15);
+            DataUtils.AddCoinAndGame(0, -20);
         }
     }
     public void BtnRevive()
