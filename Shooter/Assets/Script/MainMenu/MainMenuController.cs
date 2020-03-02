@@ -174,19 +174,20 @@ public class MainMenuController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, 9, false);
             //DataUtils.TakeHeroPice("P1", 2);
-            dailyGift.PrepareData();
+            //dailyGift.PrepareData();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
+            DataUtils.TakeItem("A2", DataUtils.eType.ARMOR, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Uncommon, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Rare, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Epic, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
-            dailyGift.ShowDailyGiftPanel();
+            //dailyGift.ShowDailyGiftPanel();
         }
     }
     private void HideAllPanel()

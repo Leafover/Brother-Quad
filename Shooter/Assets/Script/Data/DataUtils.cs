@@ -352,7 +352,35 @@ public class DataUtils
         }
         return res;
     }
-    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
+
+    public static float GetItemPrice(ItemData itemData)
+    {
+        float res = 0;
+        string key = itemData.id + "_" + itemData.level;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                res = dicArmor[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+            case "BAG":
+                res = dicBag[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+            case "GLOVES":
+                res = dicGloves[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+            case "HELMET":
+                res = dicHelmet[key].GiaValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+            case "SHOES":
+                res = dicShoes[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+            case "WEAPON":
+                res = dicWeapon[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                break;
+        }
+        return res;
+    }
+    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)                                
     {
         bool result = false;
         string key = id + "_" + level + "_" + isUnlock + "_" + isEquipped;
@@ -412,7 +440,7 @@ public class DataUtils
             {
                 dicAllEquipment.Add(_newKey, itemNew);
 
-                dicAllEquipment[_newKey].curStar += 1;
+                //dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
 
@@ -423,8 +451,8 @@ public class DataUtils
             }
             else
             {
-                dicAllEquipment[_newKey].quantity += 1;
-                dicAllEquipment[_newKey].curStar += 1;
+                //dicAllEquipment[_newKey].quantity += 1;
+                //dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
                 ItemData iAddNew = dicAllEquipment[_newKey];
@@ -476,26 +504,66 @@ public class DataUtils
             string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
             if (dicAllEquipment.ContainsKey(_key))
             {
-                if (!iData.isUnlock)
-                {
-                    if (!dicAllEquipment[_key].isUnlock)
+                int _curPiece = dicAllEquipment[_key].pices;
+                Debug.LogError("IsUnlock: " + dicAllEquipment[_key].isUnlock + " vs " + GetPiceByStar(dicAllEquipment[_key]) + " vs " + _pices + " vs " + dicAllEquipment[_key].pices);
+                if (!dicAllEquipment[_key].isUnlock) {
+                    dicAllEquipment[_key].pices += _pices;
+                    if(dicAllEquipment[_key].pices >= (int)GetPiceByStar(dicAllEquipment[_key]))
                     {
-                        string _newKey = iData.id + "_" + iData.level.ToString() + "_" + /*true*/iData.isUnlock + "_" + iData.isEquipped;
-                        dicAllEquipment[_key].pices += _pices;
-                        CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
-                    }
-                    else
-                    {
-                        dicAllEquipment[_key].quantity += 1;
+                        int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key]);
+                        dicAllEquipment[_key].pices = newPiece;
+
+                        ItemData iData_New = new ItemData();
+                        iData_New.id = _id;
+                        iData_New.type = _itemType.ToString();
+                        iData_New.level = _itemLevel.ToString();
+                        iData_New.isUnlock = true;
+                        iData_New.pices = 0;
+                        iData_New.itemName = GetItemName(iData_New, _itemType);
+                        iData_New.isEquipped = false;
+                        string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
+                        if (!dicAllEquipment.ContainsKey(_keyNew)) {
+                            dicAllEquipment.Add(_keyNew, iData_New);
+                            if (EquipmentManager.Instance != null)
+                            {
+                                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
+                            }
+                        }
+                        else
+                        {
+                            dicAllEquipment[_key].pices = _curPiece + _pices;
+                            Debug.LogError("1");
+                        }
                     }
                 }
                 else
                 {
-                    dicAllEquipment[_key].quantity += 1;
+                    Debug.LogError("2");
+
                 }
+
+
+                //if (!iData.isUnlock)
+                //{
+                //    if (!dicAllEquipment[_key].isUnlock)
+                //    {
+                //        string _newKey = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+                //        dicAllEquipment[_key].pices += _pices;
+                //        CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
+                //    }
+                //    else
+                //    {
+                //        dicAllEquipment[_key].quantity += 1;
+                //    }
+                //}
+                //else
+                //{
+                //    dicAllEquipment[_key].quantity += 1;
+                //}
             }
             else
             {
+                Debug.LogError("AddNewItem: " + iData.id + " vs " + iData.isUnlock);
                 dicAllEquipment.Add(_key, iData);
                 if (EquipmentManager.Instance != null)
                 {

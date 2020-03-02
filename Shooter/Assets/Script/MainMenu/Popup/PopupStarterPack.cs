@@ -29,11 +29,11 @@ public class PopupStarterPack : MonoBehaviour
     {
         var _wp = DataController.instance.allWeapon[1].weaponList[0];
         txtWPName.text = _wp.NAME;
-       // txtAtk.text = _wp.Dmg.ToString();
-        txtBulletSpeed.text = _wp.BulletSpeed.ToString();
-        txtReload.text = _wp.ReloadSpeed.ToString();
-        txtRange.text = _wp.AtkRange.ToString();
-        txtMagazine.text = _wp.Magazine.ToString();
+        // txtAtk.text = _wp.Dmg.ToString();
+        txtBulletSpeed.text = _wp.BulletSpeedValue[0].ToString(); //_wp.BulletSpeed.ToString();
+        txtReload.text = _wp.ReloadSpeedValue[0].ToString(); //_wp.ReloadSpeed.ToString();
+        txtRange.text = _wp.AtkRangeValue[0].ToString(); //_wp.AtkRange.ToString();
+        txtMagazine.text = _wp.MagazineValue[0].ToString(); //_wp.Magazine.ToString();
     }
     //void HandleBuyComplete()
     //{
