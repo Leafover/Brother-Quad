@@ -633,17 +633,21 @@ public class GameController : MonoBehaviour
         DisplayReward(rePlaceID, i, eLevel);
         Debug.Log("ID:" + rePlaceID);
     }
+    List<string> lstItemRewardName;
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
     {
+        lstItemRewardName = new List<string>();
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
             if (/*!vatphamnhanduoc[i].ID.Contains("P") &&*/ vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
+                Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
                 if (!vatphamnhanduoc[i].ID.Contains("P"))
                 {
-                    uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
-                    uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                    //uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
+                    //uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                    lstItemRewardName.Add(vatphamnhanduoc[i].ID);
                 }
                 else
                 {
@@ -656,6 +660,15 @@ public class GameController : MonoBehaviour
             else
             {
                 uiPanel.bouders[i].gameObject.SetActive(false);
+            }
+        }
+
+        for(int i = 0; i < lstItemRewardName.Count; i++)
+        {
+            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]))
+            {
+                uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i]];
+                uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
             }
         }
         uiPanel.rewardText[2].text = "" + DataParam.totalCoin;

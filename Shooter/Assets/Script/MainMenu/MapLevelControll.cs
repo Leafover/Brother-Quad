@@ -42,7 +42,7 @@ public class MapLevelControll : MonoBehaviour
             MainMenuController.Instance.SoundClickButton();
             OnMapSelected(stageIndex, mapIndex);
         });
-        RefreshMap();
+        //RefreshMap();
     }
 
     public void RefreshMap()
@@ -168,35 +168,57 @@ public class MapLevelControll : MonoBehaviour
     }
     private void GetMapInfo(Mission miss_, int stageSelect, int mapSelect)
     {
+        Debug.LogError(stageSelect + " vs " + mapSelect + " vs " + stageIndex);
         for (int i = 0; i < StageManager.Instance.imgItemReward.Length; i++) {
             StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
         }
         StageManager.Instance.FillMapInfo(miss_, stageSelect, mapSelect);
         if (DataUtils.StageHasInit())
         {
-            for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
+            GetRewardItemName(stageSelect + 1, mapSelect + 1);
+            int total = DataController.instance.allTileVatPham.Count;
+            Debug.LogError("total:::: " + lstString.Count);
+            for(int i = 0; i < lstString.Count; i++)
             {
-                //Debug.LogError("_sCutName: " + DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType);
-                //string _str = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Replace("M-", "");
-                if (DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData) != null)
+                Debug.LogError("1111:: " + lstString[i]);
+                if (DataUtils.dicSpriteData.ContainsKey(lstString[i]))
                 {
-                    //_sCutName = DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Split('-');
-                    StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData);
-                    //if (_sCutName[_sCutName.Length - 1].Contains("W"))
-                    //{
-                    //    StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 45);
-                    //    ///WILL REMOVE
-                    //    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
-                    //}
-                    //else
-                    //{
-                    //    StageManager.Instance.imgItemReward[i].GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
-                        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
-                    //}
+                    StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
+                    StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+                }
+            }
+
+
+            //for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
+            //{
+            //    if (DataUtils.GetSpriteByName(/*DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim()*/GetRewardItemName(stageSelect + 1, mapSelect + 1), MainMenuController.Instance.allSpriteData) != null)
+            //    {
+            //        //StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData);
+            //        StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(GetRewardItemName(stageSelect + 1, mapSelect + 1), MainMenuController.Instance.allSpriteData);
+            //        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
+            //    }
+            //}
+        }
+    }
+    List<string> lstString = new List<string>();
+    private void GetRewardItemName(int stageSelect, int mapSelect) {
+        string _sResult = "";
+        for (int i = 0; i < DataController.instance.allTileVatPham.Count; i++)
+        {
+            foreach (TileVatPhamList vatPhamList in DataController.instance.allTileVatPham[i].tilevatphamList)
+            {
+                if (vatPhamList.Stage == stageSelect && vatPhamList.Level == mapSelect)
+                {
+                    Debug.LogError("vatPhamList----> " + vatPhamList.ID);
+                    _sResult = vatPhamList.ID;
+                    lstString.Add(_sResult.Replace("M-",""));
                 }
             }
         }
+        //return _sResult;
     }
+
+
     string[] _sCutName = new string[1];
 
     private bool MapHasUnlock()
