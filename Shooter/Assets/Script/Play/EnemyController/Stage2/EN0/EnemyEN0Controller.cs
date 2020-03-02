@@ -44,7 +44,6 @@ public class EnemyEN0Controller : EnemyBase
         posTemp.x = PlayerController.instance.GetTranformXPlayer();
         posTemp.y = PlayerController.instance.transform.position.y;
     }
-    Vector3 dir;
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);

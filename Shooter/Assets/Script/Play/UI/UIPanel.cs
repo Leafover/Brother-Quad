@@ -14,9 +14,10 @@ public class UIPanel : MonoBehaviour
 
 
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnRevive, lowHealth;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth,btnReviveByGem;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText;
+    public TextMeshProUGUI myGemText;
 
     public Animator animGamOver;
     public HealthBarBoss healthBarBoss;
@@ -85,10 +86,16 @@ public class UIPanel : MonoBehaviour
         if (defeatPanel.activeSelf)
             return;
         if (GameController.instance.reviveCount == 0)
-            btnRevive.SetActive(true);
+        {
+            myGemText.text = "Own: <color=green>" + DataUtils.playerInfo.gems + "</color>";
+
+            btnReviveByAds.SetActive(true);
+            btnReviveByGem.SetActive(true);
+        }
         else
         {
-            btnRevive.SetActive(false);
+            btnReviveByAds.SetActive(false);
+            btnReviveByGem.SetActive(false);
             DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         }
         defeatPanel.SetActive(true);
@@ -150,7 +157,15 @@ public class UIPanel : MonoBehaviour
         }
 #endif
     }
-
+    public void BtnReviveByGem()
+    {
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        if (DataUtils.playerInfo.gems >= 15)
+        {
+            Reward();
+            DataUtils.AddCoinAndGame(0, -15);
+        }
+    }
     public void BtnRevive()
     {
 #if UNITY_EDITOR

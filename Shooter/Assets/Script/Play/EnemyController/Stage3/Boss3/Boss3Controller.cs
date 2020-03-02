@@ -661,4 +661,21 @@ public class Boss3Controller : EnemyBase
         GameController.instance.SpawnCoin(15, transform.position);
         SoundController.instance.PlaySound(soundGame.soundBoss3Dead);
     }
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        switch (collision.gameObject.layer)
+        {
+            case 11:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
+                SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
+                break;
+            case 27:
+                if (!incam || enemyState == EnemyState.die)
+                    return;
+                SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
+                break;
+        }
+    }
 }
