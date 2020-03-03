@@ -612,9 +612,7 @@ public class GameController : MonoBehaviour
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
-            //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.P, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
-           // Debug.Log("ID:" + rePlaceID);
-            DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
+           // DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
         }
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {

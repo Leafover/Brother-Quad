@@ -36,7 +36,7 @@ public class DailyGift : MonoBehaviour
         lstEType.Add(DataUtils.eType.BAG);
         lstEType.Add(DataUtils.eType.GLOVES);
         lstEType.Add(DataUtils.eType.HELMET);
-        lstEType.Add(DataUtils.eType.P1);
+       // lstEType.Add(DataUtils.eType.P1);
         lstEType.Add(DataUtils.eType.SHOES);
         lstEType.Add(DataUtils.eType.WEAPON);
 
@@ -65,11 +65,11 @@ public class DailyGift : MonoBehaviour
                 itemName = DataController.instance.allHelmet[itemIndex - 1].helmetList[0].NAME;
                 itemID = "H" + itemIndex;
                 break;
-            case DataUtils.eType.P1:
-                itemIndex = 1;
-                itemName = "Player " + itemIndex;
-                itemID = "P" + itemIndex;
-                break;
+            //case DataUtils.eType.P1:
+            //    itemIndex = 1;
+            //    itemName = "Player " + itemIndex;
+            //    itemID = "P" + itemIndex;
+            //    break;
             case DataUtils.eType.SHOES:
                 itemIndex = Random.Range(1, DataController.instance.allShoes.Count + 1);
                 itemName = DataController.instance.allShoes[itemIndex - 1].shoesList[0].NAME;
@@ -131,11 +131,11 @@ public class DailyGift : MonoBehaviour
 
     public void TakeDailyGift()
     {
-        if(_eType == DataUtils.eType.P1)
-        {
-            DataUtils.TakeHeroPice(itemID, totalPart);
-        }
-        else
+        //if(_eType == DataUtils.eType.P1)
+        //{
+        //    DataUtils.TakeHeroPice(itemID, totalPart);
+        //}
+        //else
         {
             DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
         }
@@ -150,11 +150,12 @@ public class DailyGift : MonoBehaviour
         {
             if (b)
             {
-                if (_eType == DataUtils.eType.P1)
+                //if (_eType == DataUtils.eType.P1)
+                //{
+                //    DataUtils.TakeHeroPice(itemID, totalPart);
+                //}
+                //else
                 {
-                    DataUtils.TakeHeroPice(itemID, totalPart);
-                }
-                else {
                     DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
                 }
                 DataUtils.HasClaimReward();
