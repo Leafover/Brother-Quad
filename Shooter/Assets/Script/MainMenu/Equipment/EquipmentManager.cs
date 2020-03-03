@@ -14,6 +14,7 @@ public class EquipmentManager : MonoBehaviour
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
     public Button btnRemove, btnReplace, btnUpgrade;
+    public Text txtEquip;
     public Text txtPriceUpgrade;
     #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
@@ -340,6 +341,7 @@ public class EquipmentManager : MonoBehaviour
             EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
             if(_type.Equals(ALL_EQUIP) && !_iEquipData.itemData.isUnlock)
             {
+                Debug.LogError(_iEquipData.itemData.isUnlock + " v-----s " + _iEquipData.itemData.pices);
                 trContain.GetChild(i).gameObject.SetActive(!_iEquipData.itemData.isUnlock);
             }else if (_iEquipData.itemData.type.Equals(_type))
             {
@@ -349,15 +351,6 @@ public class EquipmentManager : MonoBehaviour
             {
                 trContain.GetChild(i).gameObject.SetActive(false);
             }
-            //else 
-            //if (!_iEquipData.itemData.type.Equals(_type))
-            //{
-            //    trContain.GetChild(i).gameObject.SetActive(false);
-            //}
-            //else if(_iEquipData.itemData.isUnlock)
-            //{
-            //    trContain.GetChild(i).gameObject.SetActive(true);
-            //}
         }
     }
 
@@ -384,6 +377,7 @@ public class EquipmentManager : MonoBehaviour
                 DataUtils.dicAllEquipment[key].curStar += 1;
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
+                DataController.instance.DoDailyQuest(5, 1);
             }
             else
             {
@@ -429,9 +423,20 @@ public class EquipmentManager : MonoBehaviour
             {
                 gAllStarItemSelect.SetActive(true);
 
-                btnReplace.image.sprite = sprButtonCur;
+                if (itemSelected.isEquipped) {
+                    btnReplace.image.sprite = sprButton;
+                    btnReplace.interactable = false;
+                    txtEquip.text = "EQUIPPED";
+                }
+                else
+                {
+                    btnReplace.image.sprite = sprButtonCur;
+                    btnReplace.interactable = true;
+                    txtEquip.text = "EQUIP";
+                }
+
+                
                 btnRemove.interactable = true;
-                btnReplace.interactable = true;
                 btnRemove.gameObject.SetActive(false);
                 btnUpgrade.gameObject.SetActive(true);
                 for (int i = 0; i < allStarsItemSelect.Length; i++)
