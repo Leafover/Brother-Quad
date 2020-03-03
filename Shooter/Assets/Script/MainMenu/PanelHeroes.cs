@@ -94,7 +94,7 @@ public class PanelHeroes : MonoBehaviour
         }
         FillDataPlayer();
 
-        skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
+       // skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
     }
     private void FillDataPlayer()
     {
