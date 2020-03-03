@@ -237,7 +237,7 @@ public class EquipmentManager : MonoBehaviour
                 //}
             }
         }
-        DataUtils.CheckEquipWeapon();
+        //DataUtils.CheckEquipWeapon();
         ChooseItem(null);
     }
     public bool IsItemHasInit(string id)
@@ -382,33 +382,16 @@ public class EquipmentManager : MonoBehaviour
                 DataUtils.dicAllEquipment[key].curStar += 1;
 
 
-                //DataUtils.dicEquippedItem[key] = DataUtils.dicAllEquipment[key];
-                foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
-                {
-                    if (_iData.type.Equals(DataUtils.dicAllEquipment[key].type))
-                    {
-                        itemEquipped = _iData;
-                        break;
-                    }
-                    else
-                    {
-                        itemEquipped = null;
-                    }
-                }
-                if (itemEquipped != null)
-                {
-                    string _keyEquip = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
-                    DataUtils.dicEquippedItem[_keyEquip] = DataUtils.dicAllEquipment[key];
-                    DataUtils.SaveEquippedData();
-                }
-
-
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
                 txtPriceUpgrade.text = DataUtils.GetItemPrice(DataUtils.dicAllEquipment[key]).ToString();
 
+                if (DataUtils.dicEquippedItem.ContainsKey(key))
+                {
+                    Debug.LogError("curStar: " + DataUtils.dicEquippedItem[key].curStar);
+                }
 
-                Debug.LogError("curStar: " + DataUtils.dicAllEquipment[key].curStar);
+                //Debug.LogError("curStar: " + DataUtils.dicAllEquipment[key].curStar);
 
                 DataController.instance.DoDailyQuest(5, 1);
             }
@@ -509,16 +492,18 @@ public class EquipmentManager : MonoBehaviour
     }
     private void UpdateStar(ItemData itemData)
     {
-        string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
-        if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
-        {
-            imgCoinItemUpdate.gameObject.SetActive(true);
-            txtMaxReach.gameObject.SetActive(false);
-        }
-        else
-        {
-            imgCoinItemUpdate.gameObject.SetActive(false);
-            txtMaxReach.gameObject.SetActive(true);
+        string key = /*itemSelected*/itemData.id + "_" + /*itemSelected*/itemData.level + "_" + /*itemSelected*/itemData.isUnlock + "_" + /*itemSelected*/itemData.isEquipped;
+        if (DataUtils.dicAllEquipment.ContainsKey(key)) {
+            if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
+            {
+                imgCoinItemUpdate.gameObject.SetActive(true);
+                txtMaxReach.gameObject.SetActive(false);
+            }
+            else
+            {
+                imgCoinItemUpdate.gameObject.SetActive(false);
+                txtMaxReach.gameObject.SetActive(true);
+            }
         }
 
         for (int i = 0; i < allStarsItemSelect.Length; i++)
@@ -569,7 +554,8 @@ public class EquipmentManager : MonoBehaviour
             _keyItemEquipped = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
 
             imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
-            txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
+            if(DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
+                txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
@@ -638,7 +624,8 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             gItemSelectPriview.SetActive(true);
 
-            imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(/*itemEquipped*/DataUtils.dicAllEquipment[_keyItemEquipped]);
+            if(DataUtils.dicAllEquipment.ContainsKey(_keyItemEquipped))
+                imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(DataUtils.dicAllEquipment[_keyItemEquipped]);
         }
 
         if (!itemData.type.Contains("WEAPON"))
