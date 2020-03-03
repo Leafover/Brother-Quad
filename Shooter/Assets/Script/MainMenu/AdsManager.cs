@@ -51,7 +51,14 @@ public class AdsManager : MonoBehaviour
         banner.OnAdLoaded += Banner_OnAdLoaded;
         banner.LoadAd(CreateRequest());
     }
-
+    public void ShowBannerWithPos()
+    {
+        if(banner != null)
+        {
+            banner.SetPosition(AdPosition.BottomLeft);
+            banner.Show();
+        }
+    }
     public void ShowBanner()
     {
         if(banner != null)
