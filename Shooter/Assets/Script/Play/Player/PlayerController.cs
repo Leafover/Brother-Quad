@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
             bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
             attackRange = DataUtils.itemWeapon.AtkRangeValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
             timedelayAttackGun = DataUtils.itemWeapon.AtksecValue; //(float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
-         //   Debug.LogError("-0--------:" + damageBullet + ":" + DataUtils.itemWeapon.DmgValue);
+            Debug.LogError("-0--------:" + damageBullet + ":" + DataUtils.itemWeapon.DmgValue);
         }
 
         numberBullet = maxNumberBullet;

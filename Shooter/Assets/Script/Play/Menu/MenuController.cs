@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
         // PanelHeroes 66->78
 
         instance = this;
-        //Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
 
         //DataController.instance.DoDailyQuest(5, 1);
         //DataController.instance.DoAchievement(11, 1);
