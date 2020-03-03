@@ -72,9 +72,18 @@ public class EquipmentManager : MonoBehaviour
             ChooseItem(null);
             DoCancelDisassemble();
         });
+        
+        if(AdsManager.Instance != null)
+        {
+            AdsManager.Instance.ShowBannerWithPos();
+        }
     }
     private void OnDisable()
     {
+        if (AdsManager.Instance != null)
+        {
+            AdsManager.Instance.HideBanner();
+        }
         ChooseTab(0);
         ChooseItem(null);
     }
@@ -496,7 +505,8 @@ public class EquipmentManager : MonoBehaviour
     private void UpdateStar(ItemData itemData)
     {
         string key = /*itemSelected*/itemData.id + "_" + /*itemSelected*/itemData.level + "_" + /*itemSelected*/itemData.isUnlock + "_" + /*itemSelected*/itemData.isEquipped;
-        if (DataUtils.dicAllEquipment.ContainsKey(key)) {
+        if (DataUtils.dicAllEquipment.ContainsKey(key))
+        {
             if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
             {
                 imgCoinItemUpdate.gameObject.SetActive(true);
@@ -557,13 +567,13 @@ public class EquipmentManager : MonoBehaviour
             _keyItemEquipped = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
 
             imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
-            if(DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
+            if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
                 txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
             {
-                txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[curStar];
+                txtCurDamagePriview.text = "" + (DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10);
                 txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
                 txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
                 txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
@@ -605,7 +615,7 @@ public class EquipmentManager : MonoBehaviour
             if (itemData.type.Contains("WEAPON"))
             {
                 int itemData_curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
-                txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar];
+                txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10);
                 txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar] + "</color>";
                 txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar] + "</color>";
                 txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar] + "</color>";
@@ -627,7 +637,7 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             gItemSelectPriview.SetActive(true);
 
-            if(DataUtils.dicAllEquipment.ContainsKey(_keyItemEquipped))
+            if (DataUtils.dicAllEquipment.ContainsKey(_keyItemEquipped))
                 imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(DataUtils.dicAllEquipment[_keyItemEquipped]);
         }
 

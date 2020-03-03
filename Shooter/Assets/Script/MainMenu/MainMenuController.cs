@@ -129,6 +129,7 @@ public class MainMenuController : MonoBehaviour
         //popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
         //gPanelPopup.SetActive(true);
         //Debug.LogError("ShowShop");
+        equipmentManager.gameObject.SetActive(false);
         shopManager.gameObject.SetActive(true);
     }
     public void ShowHeroTab()
