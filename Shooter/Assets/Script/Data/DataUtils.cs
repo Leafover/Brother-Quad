@@ -527,6 +527,8 @@ public class DataUtils
                             if (EquipmentManager.Instance != null)
                             {
                                 EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
+                                if(iData_New.type.Equals("WEAPON"))
+                                    DataController.instance.DoAchievement(11, 1);
                             }
                         }
                         else
@@ -563,7 +565,6 @@ public class DataUtils
             }
             else
             {
-                Debug.LogError("AddNewItem: " + iData.id + " vs " + iData.isUnlock);
                 dicAllEquipment.Add(_key, iData);
                 if (EquipmentManager.Instance != null)
                 {
@@ -1108,7 +1109,6 @@ public class DataUtils
     public static Sprite GetSpriteByName(string name, ItemSpriteData allSpriteData)
     {
         Sprite _spr = null;
-        Debug.LogError("Name: " + name);
         string[] strSP = name.Split('-');
 
         //for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)

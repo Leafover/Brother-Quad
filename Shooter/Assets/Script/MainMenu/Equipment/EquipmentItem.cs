@@ -30,8 +30,8 @@ public class EquipmentItem : MonoBehaviour
         btnItem = GetComponent<Button>();
         if (!string.IsNullOrEmpty(itemKey))
         {
-            if (itemData != null)
-            {
+            //if (itemData != null)
+            //{
                 //itemKey = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
                 //if (dicAllEquipment.ContainsKey(itemKey))
                 //{
@@ -45,11 +45,9 @@ public class EquipmentItem : MonoBehaviour
                 //{
                 //    Destroy(gameObject);
                 //}
-
                 //EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
-
-                Refresh();
-            }
+                //Refresh();
+            //}
 
             CheckItemUnlock();
         }
@@ -57,14 +55,14 @@ public class EquipmentItem : MonoBehaviour
 
     public void Refresh()
     {
-        if (!dicAllEquipment.ContainsKey(itemKey))
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        //if (!dicAllEquipment.ContainsKey(itemKey))
+        //{
+        //    gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    gameObject.SetActive(true);
+        //}
     }
 
     // Start is called before the first frame update
@@ -106,7 +104,7 @@ public class EquipmentItem : MonoBehaviour
     public void CheckItemUnlock()
     {
         //if (itemData.isEquipped) gameObject.SetActive(false);
-        if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
+        //if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
 
         #region Check Item quality
         switch (itemData.level)
@@ -146,10 +144,23 @@ public class EquipmentItem : MonoBehaviour
             imgFillProgress.fillAmount = GetPercent();
         }
 
-        if (EquipmentManager.Instance != null) {
+        //if(itemData.pices == 0)
+        //{
+        //    gameObject.SetActive(false);
+        //}
+
+        if (EquipmentManager.Instance != null)
+        {
             if (EquipmentManager.Instance.tabSelected == 0)
             {
-                gameObject.SetActive(!itemData.isUnlock);
+                if (itemData.pices == 0)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    gameObject.SetActive(!itemData.isUnlock);
+                }
             }
         }
     }
@@ -158,8 +169,16 @@ public class EquipmentItem : MonoBehaviour
     {
         float res = 0.0f;
         float _p = GetPiceByStar(itemData);
-        txtFillProgress.text = itemData.pices + "/" + (int)_p;
+       
         res = itemData.pices * 1.0f / _p;
+        if(res <= 1)
+        {
+            txtFillProgress.text = itemData.pices + "/" + (int)_p;
+        }
+        else
+        {
+            txtFillProgress.text = itemData.pices.ToString();
+        }
         return res;
     }
 }
