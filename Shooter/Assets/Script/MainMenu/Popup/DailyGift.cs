@@ -107,11 +107,12 @@ public class DailyGift : MonoBehaviour
         if (_eType == DataUtils.eType.WEAPON)
         {
             txtItemInfo.gameObject.SetActive(false);
-            txtAtk.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtksecValue[itemData.curStar].ToString();
-            txtBulletSpeed.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].BulletSpeedValue[itemData.curStar].ToString();
-            txtRange.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtkRangeValue[itemData.curStar].ToString();
-            txtReload.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].ReloadSpeedValue[itemData.curStar].ToString();
-            txtMagazine.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].MagazineValue[itemData.curStar].ToString();
+            int curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
+            txtAtk.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtksecValue[curStar].ToString();
+            txtBulletSpeed.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].BulletSpeedValue[curStar].ToString();
+            txtRange.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtkRangeValue[curStar].ToString();
+            txtReload.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].ReloadSpeedValue[curStar].ToString();
+            txtMagazine.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].MagazineValue[curStar].ToString();
             gItemInfo.SetActive(true);
         }
         else

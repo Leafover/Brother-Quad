@@ -14,6 +14,8 @@ public class EquipmentManager : MonoBehaviour
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
     public Button btnRemove, btnReplace, btnUpgrade;
+    public Image imgCoinItemUpdate;
+    public Text txtMaxReach;
     public Text txtEquip;
     public Text txtPriceUpgrade;
     #region Equipment Selected
@@ -65,7 +67,8 @@ public class EquipmentManager : MonoBehaviour
     private void OnEnable()
     {
         btnPanel = GetComponent<Button>();
-        btnPanel.onClick.AddListener(() => {
+        btnPanel.onClick.AddListener(() =>
+        {
             ChooseItem(null);
             DoCancelDisassemble();
         });
@@ -106,7 +109,7 @@ public class EquipmentManager : MonoBehaviour
     public void DoDisassemble(ItemData iSell, string strRemoveKey)
     {
         Debug.LogError("strRemoveKey: " + strRemoveKey);
-        for(int i = 0; i< trContain.childCount; i++)
+        for (int i = 0; i < trContain.childCount; i++)
         {
             if (trContain.GetChild(i).gameObject.name.Equals(strRemoveKey))
             {
@@ -125,7 +128,8 @@ public class EquipmentManager : MonoBehaviour
     {
         if (itemEquipped != null)
         {
-            if (itemSelected.isUnlock) {
+            if (itemSelected.isUnlock)
+            {
                 #region Item Selected has unlock
                 string keyCompare1, keyCompare2;
                 keyCompare1 = DataUtils.dicAllEquipment[_keyItemEquipped].id + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].level + "_" + DataUtils.dicAllEquipment[_keyItemEquipped].isUnlock;
@@ -221,7 +225,7 @@ public class EquipmentManager : MonoBehaviour
             string _key2 = iData2.id + "_" + iData2.level.ToString() + "_" + iData2.isUnlock + "_" + iData2.isEquipped;
             DataUtils.dicAllEquipment.Remove(_keyItemSelected);
             DataUtils.dicAllEquipment.Add(_key2, iData2);
-            
+
             for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
@@ -339,11 +343,12 @@ public class EquipmentManager : MonoBehaviour
         for (int i = 0; i < trContain.childCount; i++)
         {
             EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-            if(_type.Equals(ALL_EQUIP) && !_iEquipData.itemData.isUnlock)
+            if (_type.Equals(ALL_EQUIP) && !_iEquipData.itemData.isUnlock)
             {
-                Debug.LogError(_iEquipData.itemData.isUnlock + " v-----s " + _iEquipData.itemData.pices);
+                //Debug.LogError(_iEquipData.itemData.isUnlock + " v-----s " + _iEquipData.itemData.pices);
                 trContain.GetChild(i).gameObject.SetActive(!_iEquipData.itemData.isUnlock);
-            }else if (_iEquipData.itemData.type.Equals(_type))
+            }
+            else if (_iEquipData.itemData.type.Equals(_type))
             {
                 trContain.GetChild(i).gameObject.SetActive(_iEquipData.itemData.isUnlock);
             }
@@ -368,15 +373,42 @@ public class EquipmentManager : MonoBehaviour
 
     public void UpgradeItem()
     {
-        if(DataUtils.playerInfo.coins >= DataUtils.GetItemPrice(itemSelected))
+        if (DataUtils.playerInfo.coins >= DataUtils.GetItemPrice(itemSelected))
         {
             string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
-            if (DataUtils.dicAllEquipment[key].curStar < 5)
+            if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
             {
                 DataUtils.AddCoinAndGame(-(int)DataUtils.GetItemPrice(itemSelected), 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
+
+
+                //DataUtils.dicEquippedItem[key] = DataUtils.dicAllEquipment[key];
+                foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
+                {
+                    if (_iData.type.Equals(DataUtils.dicAllEquipment[key].type))
+                    {
+                        itemEquipped = _iData;
+                        break;
+                    }
+                    else
+                    {
+                        itemEquipped = null;
+                    }
+                }
+                if (itemEquipped != null)
+                {
+                    string _keyEquip = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
+                    DataUtils.dicEquippedItem[_keyEquip] = DataUtils.dicAllEquipment[key];
+                }
+
+
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
+                txtPriceUpgrade.text = DataUtils.GetItemPrice(DataUtils.dicAllEquipment[key]).ToString();
+
+
+                Debug.LogError("curStar: " + DataUtils.dicAllEquipment[key].curStar);
+
                 DataController.instance.DoDailyQuest(5, 1);
             }
             else
@@ -423,7 +455,8 @@ public class EquipmentManager : MonoBehaviour
             {
                 gAllStarItemSelect.SetActive(true);
 
-                if (itemSelected.isEquipped) {
+                if (itemSelected.isEquipped)
+                {
                     btnReplace.image.sprite = sprButton;
                     btnReplace.interactable = false;
                     txtEquip.text = "EQUIPPED";
@@ -435,7 +468,7 @@ public class EquipmentManager : MonoBehaviour
                     txtEquip.text = "EQUIP";
                 }
 
-                
+
                 btnRemove.interactable = true;
                 btnRemove.gameObject.SetActive(false);
                 btnUpgrade.gameObject.SetActive(true);
@@ -450,6 +483,8 @@ public class EquipmentManager : MonoBehaviour
                         allStarsItemSelect[i].sprite = sprWhite;
                     }
                 }
+
+                UpdateStar(/*DataUtils.dicAllEquipment[key]*/itemSelected);
             }
             #region Fill Info for EquipmentItem
             FillEquipmentInfo(itemSelected);
@@ -473,6 +508,18 @@ public class EquipmentManager : MonoBehaviour
     }
     private void UpdateStar(ItemData itemData)
     {
+        string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
+        if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
+        {
+            imgCoinItemUpdate.gameObject.SetActive(true);
+            txtMaxReach.gameObject.SetActive(false);
+        }
+        else
+        {
+            imgCoinItemUpdate.gameObject.SetActive(false);
+            txtMaxReach.gameObject.SetActive(true);
+        }
+
         for (int i = 0; i < allStarsItemSelect.Length; i++)
         {
             if (i <= itemData.curStar)
@@ -484,6 +531,8 @@ public class EquipmentManager : MonoBehaviour
                 allStarsItemSelect[i].sprite = sprWhite;
             }
         }
+
+        UpdateTextDes();
     }
 
     ItemData itemEquipped;
@@ -513,6 +562,8 @@ public class EquipmentManager : MonoBehaviour
         }
         else
         {
+            int curStar = itemEquipped.curStar < DataUtils.MAX_STARS ? itemEquipped.curStar : 4;
+
             string keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
             _keyItemEquipped = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
 
@@ -522,12 +573,12 @@ public class EquipmentManager : MonoBehaviour
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
             {
-                txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar];
-                txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[itemEquipped.curStar] + "</color>";
-                txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[itemEquipped.curStar] + "</color>";
-                txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[itemEquipped.curStar] + "</color>";
-                txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar] + "</color>";
-                txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar] + "</color>";
+                txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[curStar];
+                txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
+                txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
+                txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
+                txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar] + "</color>";
+                txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar] + "</color>";
 
                 txtItemInfoEquip.gameObject.SetActive(false);
                 gCurWeaponData.SetActive(true);
@@ -546,7 +597,7 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
             gCurItemPriview.SetActive(true);
 
-            for(int i = 0; i < allStars.Length; i++)
+            for (int i = 0; i < allStars.Length; i++)
             {
                 if (i <= itemEquipped.curStar)
                 {
@@ -559,25 +610,17 @@ public class EquipmentManager : MonoBehaviour
             }
             #endregion
 
-            #region Check Selected Item has Unlock
-            //if (itemData.isUnlock)
-            //{
-                gCurrentItemEquip.SetActive(true);
-            //}
-            //else
-            //{
-            //    gCurrentItemEquip.SetActive(false);
-            //}
-            #endregion
+            gCurrentItemEquip.SetActive(true);
 
             if (itemData.type.Contains("WEAPON"))
             {
-                txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData.curStar];
-                txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData.curStar] + "</color>";
-                txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData.curStar] + "</color>";
-                txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData.curStar] + "</color>";
-                txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData.curStar] + "</color>";
-                txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[itemEquipped.curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData.curStar] + "</color>";
+                int itemData_curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
+                txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar];
+                txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar] + "</color>";
+                txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar] + "</color>";
+                txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar] + "</color>";
+                txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar] + "</color>";
+                txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar] + "</color>";
 
                 txtItemSelectInfo.gameObject.SetActive(false);
                 gWeaponData.SetActive(true);
@@ -594,12 +637,12 @@ public class EquipmentManager : MonoBehaviour
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
             gItemSelectPriview.SetActive(true);
 
-            imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(itemEquipped);
+            imgItemEquipPriview.sprite = DataUtils.GetSpriteByType(/*itemEquipped*/DataUtils.dicAllEquipment[_keyItemEquipped]);
         }
 
         if (!itemData.type.Contains("WEAPON"))
         {
-            txtItemSelectInfo.text = DataUtils.GetItemInfo(itemSelected);
+            txtItemSelectInfo.text = DataUtils.GetItemInfo(/*itemSelected*/DataUtils.dicAllEquipment[_keyItemSelected]);
             txtItemSelectInfo.gameObject.SetActive(true);
         }
         else
@@ -612,6 +655,28 @@ public class EquipmentManager : MonoBehaviour
         gItemSelectPriview.SetActive(true);
     }
 
+    private void UpdateTextDes()
+    {
+        //itemSelected
+        FillEquipmentInfo(itemSelected);
+
+        //txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[curStar];
+        //txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
+        //txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
+        //txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
+        //txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar] + "</color>";
+        //txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar] + "</color>";
+
+
+
+
+        //txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar];
+        //txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar] + "</color>";
+        //txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar] + "</color>";
+        //txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar] + "</color>";
+        //txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar] + "</color>";
+        //txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar] + "</color>";
+    }
     private string GetColorByItemData(float f1, float f2)
     {
         string cl = "white";
@@ -643,7 +708,8 @@ public class EquipmentManager : MonoBehaviour
     }
     public void DoDisassblem()
     {
-        if (lstAllItemSell.Count > 0) {
+        if (lstAllItemSell.Count > 0)
+        {
             double dTotal = 0;
             foreach (EquipmentItem epi in lstAllItemSell)
             {

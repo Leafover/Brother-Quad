@@ -10,6 +10,7 @@ public class DataUtils
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, RESOURCES }
     public const int TOTAL_STAGE = 3;
     public const int MAX_LEVEL_HERO = 5;
+    public const int MAX_STARS = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
     const string KEY_SOUND = GAME_KEY + "KEY_SOUND";
@@ -86,28 +87,29 @@ public class DataUtils
     {
         string _str = "";
         string itemKey = itemData.id + "_" + itemData.level;
+        int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
             case "ARMOR":
-                _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[itemData.curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[itemData.curStar] + "</color> move speed";
+                _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[curStar] + "</color> move speed";
                 break;
             case "BAG":
-                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[itemData.curStar];
+                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar];
                 if (HealthRegeneration <= 0)
-                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[itemData.curStar] + "%</color> of first aid dropped on the map";
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar] + "%</color> of first aid dropped on the map";
                 else
                 {
-                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[itemData.curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
                 }
                 break;
             case "GLOVES":
-                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[itemData.curStar] + "'s</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[itemData.curStar] + "</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[itemData.curStar] + "%</color>";
+                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[curStar] + "'s</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[curStar] + "</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[curStar] + "%</color>";
                 break;
             case "HELMET":
-                _str = "- Increase <color=green>" + dicHelmet[itemKey].DefValue[itemData.curStar] + "%</color> def. \n- Bonus Exp: <color=green>" + dicHelmet[itemKey].BonusExpValue[itemData.curStar] + "%</color>";
+                _str = "- Increase <color=green>" + dicHelmet[itemKey].DefValue[curStar] + "%</color> def. \n- Bonus Exp: <color=green>" + dicHelmet[itemKey].BonusExpValue[curStar] + "%</color>";
                 break;
             case "SHOES":
-                _str = "- Move Speed: <color=green>+" + dicShoes[itemKey].TangSpeeDichuyenValue[itemData.curStar] + "%</color>\n- Jump Height: <color=green>+" + dicShoes[itemKey].TangDoCaoNhayValue[itemData.curStar] + "%</color>";
+                _str = "- Move Speed: <color=green>+" + dicShoes[itemKey].TangSpeeDichuyenValue[curStar] + "%</color>\n- Jump Height: <color=green>+" + dicShoes[itemKey].TangDoCaoNhayValue[curStar] + "%</color>";
                 break;
             case "WEAPON":
                 //dSell = dicWeapon[itemKey].GiaKhiRaDo;
@@ -202,18 +204,19 @@ public class DataUtils
         foreach (ItemData item in dicEquippedItem.Values)
         {
             _key = item.id + "_" + item.level;// + "_" + item.isUnlock + "_" + item.isEquipped;
+            int curStar = item.curStar < 5 ? item.curStar : 4;
             switch (item.type)
             {
                 case "WEAPON":
                     itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
-                    itemWeapon.DmgValue = dicWeapon[_key].DmgValue[item.curStar];
-                    itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[item.curStar];
-                    itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[item.curStar];
-                    itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[item.curStar];
-                    itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[item.curStar];
-                    itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[item.curStar];
-                    itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[item.curStar];
-                    itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[item.curStar];
+                    itemWeapon.DmgValue = dicWeapon[_key].DmgValue[curStar];
+                    itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[curStar];
+                    itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[curStar];
+                    itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[curStar];
+                    itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[curStar];
+                    itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar];
+                    itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar];
+                    itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar];
                     break;
                 case "ARMOR":
                     break;
@@ -329,25 +332,26 @@ public class DataUtils
     {
         float res = 0;
         string key = itemData.id + "_" + itemData.level/* + "_"+ itemData.isUnlock*/;
+        int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
             case "ARMOR":
-                res = dicArmor[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicArmor[key].SoManhYeuCauValue[curStar];
                 break;
             case "BAG":
-                res = dicBag[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicBag[key].SoManhYeuCauValue[curStar];
                 break;
             case "GLOVES":
-                res = dicGloves[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicGloves[key].SoManhYeuCauValue[curStar];
                 break;
             case "HELMET":
-                res = dicHelmet[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicHelmet[key].SoManhYeuCauValue[curStar];
                 break;
             case "SHOES":
-                res = dicShoes[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicShoes[key].SoManhYeuCauValue[curStar];
                 break;
             case "WEAPON":
-                res = dicWeapon[key].SoManhYeuCauValue[itemData.curStar];
+                res = dicWeapon[key].SoManhYeuCauValue[curStar];
                 break;
         }
         return res;
@@ -357,25 +361,27 @@ public class DataUtils
     {
         float res = 0;
         string key = itemData.id + "_" + itemData.level;
+        int curStar = (itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4);
+        //Debug.LogError("itemData.curStar: " + itemData.curStar + " v------s " + curStar);
         switch (itemData.type)
         {
             case "ARMOR":
-                res = dicArmor[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicArmor[key].GiaNangCapValue[curStar];
                 break;
             case "BAG":
-                res = dicBag[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicBag[key].GiaNangCapValue[curStar];
                 break;
             case "GLOVES":
-                res = dicGloves[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicGloves[key].GiaNangCapValue[curStar];
                 break;
             case "HELMET":
-                res = dicHelmet[key].GiaValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicHelmet[key].GiaValue[curStar];
                 break;
             case "SHOES":
-                res = dicShoes[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicShoes[key].GiaNangCapValue[curStar];
                 break;
             case "WEAPON":
-                res = dicWeapon[key].GiaNangCapValue[(itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4)];
+                res = dicWeapon[key].GiaNangCapValue[curStar];
                 break;
         }
         return res;
@@ -1167,32 +1173,32 @@ public class DataUtils
         double dPiceRequire = 0;
         double dQuantity = dicAllEquipment[realKey].quantity;
         double dPices = dicAllEquipment[realKey].pices;
-
+        int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
             case "ARMOR":
                 dSell = dicArmor[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicArmor[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicArmor[itemKey].SoManhYeuCauValue[curStar];
                 break;
             case "BAG":
                 dSell = dicBag[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicBag[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicBag[itemKey].SoManhYeuCauValue[curStar];
                 break;
             case "GLOVES":
                 dSell = dicGloves[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicGloves[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicGloves[itemKey].SoManhYeuCauValue[curStar];
                 break;
             case "HELMET":
                 dSell = dicHelmet[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicHelmet[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicHelmet[itemKey].SoManhYeuCauValue[curStar];
                 break;
             case "SHOES":
                 dSell = dicShoes[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicShoes[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicShoes[itemKey].SoManhYeuCauValue[curStar];
                 break;
             case "WEAPON":
                 dSell = dicWeapon[itemKey].GiaKhiRaDo;
-                dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[itemData.curStar];
+                dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[curStar];
                 break;
         }
         if (itemData.isUnlock)
