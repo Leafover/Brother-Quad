@@ -215,6 +215,8 @@ public class StageManager : MonoBehaviour
             DataParam.indexStage = _stageSelect;
             DataParam.indexMap = _mapSelect;
 
+            DataUtils.CheckEquipWeapon();
+
             #region Start Level
             _listMission = new ListMission();
             _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
