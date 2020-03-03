@@ -18,11 +18,12 @@ public class MainMenuController : MonoBehaviour
     public Text txtGems, txtCoins;
     [HideInInspector]
     public int stageSelected = 0;
-
     private void Awake()
     {
         Instance = this;
         DataUtils.InitSpriteData(allSpriteData);
+
+        
     }
     private void Start()
     {

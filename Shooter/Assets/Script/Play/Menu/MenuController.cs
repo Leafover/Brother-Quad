@@ -20,6 +20,9 @@ public class MenuController : MonoBehaviour
 
         instance = this;
         Debug.unityLogger.logEnabled = false;
+
+        //DataController.instance.DoDailyQuest(5, 1);
+        //DataController.instance.DoAchievement(11, 1);
     }
     int randomAds;
     private void Start()
