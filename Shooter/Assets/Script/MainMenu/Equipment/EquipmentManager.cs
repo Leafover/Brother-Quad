@@ -399,6 +399,7 @@ public class EquipmentManager : MonoBehaviour
                 {
                     string _keyEquip = itemEquipped.id + "_" + itemEquipped.level + "_" + itemEquipped.isUnlock + "_" + itemEquipped.isEquipped;
                     DataUtils.dicEquippedItem[_keyEquip] = DataUtils.dicAllEquipment[key];
+                    DataUtils.SaveEquippedData();
                 }
 
 
