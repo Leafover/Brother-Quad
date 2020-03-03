@@ -373,6 +373,7 @@ public class EquipmentManager : MonoBehaviour
 
     public void UpgradeItem()
     {
+        int total = 0;
         if (DataUtils.playerInfo.coins >= DataUtils.GetItemPrice(itemSelected))
         {
             string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
@@ -380,7 +381,7 @@ public class EquipmentManager : MonoBehaviour
             {
                 DataUtils.AddCoinAndGame(-(int)DataUtils.GetItemPrice(itemSelected), 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
-
+                total = DataUtils.dicAllEquipment[key].curStar;
 
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
@@ -388,7 +389,9 @@ public class EquipmentManager : MonoBehaviour
 
                 if (DataUtils.dicEquippedItem.ContainsKey(key))
                 {
+                    DataUtils.dicEquippedItem[key].curStar = total;
                     Debug.LogError("curStar: " + DataUtils.dicEquippedItem[key].curStar);
+                    DataUtils.SaveEquippedData();
                 }
 
                 //Debug.LogError("curStar: " + DataUtils.dicAllEquipment[key].curStar);
