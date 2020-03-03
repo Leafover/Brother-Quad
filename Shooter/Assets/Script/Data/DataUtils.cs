@@ -194,40 +194,45 @@ public class DataUtils
                 }
             }
         }
-        CheckEquipWeapon();
         #endregion
+        //CheckEquipWeapon();
     }
     public static void CheckEquipWeapon()
     {
         itemWeapon = new ItemWeapon();
+        Debug.LogError("CheckEquipWeapon");
         string _key = "";
-        foreach (ItemData item in dicEquippedItem.Values)
+        foreach (ItemData item in /*dicEquippedItem.Values*/dicAllEquipment.Values)
         {
-            _key = item.id + "_" + item.level;// + "_" + item.isUnlock + "_" + item.isEquipped;
-            int curStar = item.curStar < 5 ? item.curStar : 4;
-            switch (item.type)
+            if (item.isEquipped)
             {
-                case "WEAPON":
-                    itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
-                    itemWeapon.DmgValue = dicWeapon[_key].DmgValue[curStar];
-                    itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[curStar];
-                    itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[curStar];
-                    itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[curStar];
-                    itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[curStar];
-                    itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar];
-                    itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar];
-                    itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar];
-                    break;
-                case "ARMOR":
-                    break;
-                case "HELMET":
-                    break;
-                case "GLOVES":
-                    break;
-                case "BAG":
-                    break;
-                case "SHOES":
-                    break;
+                _key = item.id + "_" + item.level;
+                Debug.LogError("item______curStar: " + item.curStar);
+                int curStar = item.curStar < 5 ? item.curStar : 4;
+                switch (item.type)
+                {
+                    case "WEAPON":
+                        itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
+                        itemWeapon.DmgValue = dicWeapon[_key].DmgValue[curStar];
+                        itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[curStar];
+                        itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[curStar];
+                        itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[curStar];
+                        itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[curStar];
+                        itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar];
+                        itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar];
+                        itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar];
+                        break;
+                    case "ARMOR":
+                        break;
+                    case "HELMET":
+                        break;
+                    case "GLOVES":
+                        break;
+                    case "BAG":
+                        break;
+                    case "SHOES":
+                        break;
+                }
             }
         }
     }

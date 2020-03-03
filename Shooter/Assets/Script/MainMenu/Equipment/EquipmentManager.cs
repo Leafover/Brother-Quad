@@ -658,25 +658,7 @@ public class EquipmentManager : MonoBehaviour
 
     private void UpdateTextDes()
     {
-        //itemSelected
         FillEquipmentInfo(itemSelected);
-
-        //txtCurDamagePriview.text = "" + DataUtils.dicWeapon[keyEquipped].DmgValue[curStar];
-        //txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
-        //txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
-        //txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
-        //txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar] + "</color>";
-        //txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar] + "</color>";
-
-
-
-
-        //txtDamagePriview.text = "<color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar];
-        //txtCritDamage.text = "Crit Damage: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar] + "</color>";
-        //txtAttSpeed.text = "Attack Speed: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar] + "</color>";
-        //txtCritRate.text = "Crit Rate: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar] + "</color>";
-        //txtRange.text = "Range: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar] + "</color>";
-        //txtMagazine.text = "Magazine: <color=" + GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar] + "</color>";
     }
     private string GetColorByItemData(float f1, float f2)
     {
