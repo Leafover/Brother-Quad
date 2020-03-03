@@ -48,28 +48,34 @@ public class PanelHeroes : MonoBehaviour
     {
         Instance = this;
         pEvolve.Stop();
-        for(int i = 0; i < lstEquip.Count; i++)
+
+    }
+
+    private void OnEnable()
+    {
+        for (int i = 0; i < lstEquip.Count; i++)
         {
-            dicAllEquip.Add(lstEquip[i].itemData.type, lstEquip[i].itemData);
+            if (!dicAllEquip.ContainsKey(lstEquip[i].itemData.type))
+            {
+                dicAllEquip.Add(lstEquip[i].itemData.type, lstEquip[i].itemData);
+            }
         }
 
-        skins = skeletonGraphic.Skeleton.Data.Skins.Items;
+      //  skins = skeletonGraphic.Skeleton.Data.Skins.Items;
 
 
         if (heroSelected == null)
         {
             heroSelected = DataUtils.heroInfo;
         }
-    }
-
-    private void OnEnable()
-    {
-        
 
         ChooseTab(0);
 
         FillHeroData();
         InitEquippedItem();
+
+
+
     }
     private void InitEquippedItem()
     {

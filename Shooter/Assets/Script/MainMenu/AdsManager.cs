@@ -63,6 +63,7 @@ public class AdsManager : MonoBehaviour
     {
         if(banner != null)
         {
+            banner.SetPosition(AdPosition.BottomRight);
             banner.Show();
         }
     }
