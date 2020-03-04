@@ -14,7 +14,10 @@ public class MainMenuController : MonoBehaviour
     public ShopManager shopManager;
     public DailyGift dailyGift;
     public Text txtStageName;
+    public Sprite sprUnlock, sprNotYetUnlock;
     public Button[] buttonStages;
+    public Image[] imgStages;
+
     public Text txtGems, txtCoins;
     [HideInInspector]
     public int stageSelected = 0;
@@ -29,13 +32,15 @@ public class MainMenuController : MonoBehaviour
     {
         InitButtonStage();
         dailyGift.PrepareData();
-        Debug.LogError("-----> " + DataUtils.IsClaimReward() + " vs " + DataUtils.SReward());
+        
         if (!DataUtils.IsClaimReward())
         {
             dailyGift.ShowDailyGiftPanel();
         }
         //equipmentManager.InitAllItems();
     }
+
+
     public void SoundClickButton()
     {
         if (SoundController.instance != null)
@@ -64,6 +69,21 @@ public class MainMenuController : MonoBehaviour
     {
         UpdateCoinAndGem();
         HideAllPanel();
+        UpdateStageImage();
+    }
+
+    private void UpdateStageImage()
+    {
+        Debug.LogError("Stage: " + DataUtils.GetStageIndex());
+        for (int i = 0; i < imgStages.Length; i++)
+        {
+            if (i <= DataUtils.GetStageIndex())
+            {
+                imgStages[i].sprite = sprUnlock;
+            }
+            else
+                imgStages[i].sprite = sprNotYetUnlock;
+        }
     }
 
     public void UpdateCoinAndGem()
@@ -176,7 +196,7 @@ public class MainMenuController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            DataUtils.TakeItem("G1", DataUtils.eType.GLOVES, DataUtils.eLevel.Normal, 9, false);
+            DataUtils.TakeItem("W1", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 9, false);
             //DataUtils.TakeHeroPice("P1", 2);
             //dailyGift.PrepareData();
         }
