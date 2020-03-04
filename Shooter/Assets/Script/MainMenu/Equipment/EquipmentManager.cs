@@ -73,17 +73,17 @@ public class EquipmentManager : MonoBehaviour
             DoCancelDisassemble();
         });
         
-        if(AdsManager.Instance != null)
-        {
-            AdsManager.Instance.ShowBannerWithPos();
-        }
+        //if(AdsManager.Instance != null)
+        //{
+        //    AdsManager.Instance.ShowBannerWithPos();
+        //}
     }
     private void OnDisable()
     {
-        if (AdsManager.Instance != null)
-        {
-            AdsManager.Instance.HideBanner();
-        }
+        //if (AdsManager.Instance != null)
+        //{
+        //    AdsManager.Instance.HideBanner();
+        //}
         ChooseTab(0);
         ChooseItem(null);
     }
