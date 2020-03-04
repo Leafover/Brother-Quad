@@ -90,7 +90,7 @@ public class EquipmentManager : MonoBehaviour
 
     string key = "";
     public void InitAllItems()
-    {
+    { 
         foreach (ItemData itemData in DataUtils.dicAllEquipment.Values)
         {
             //if (!itemData.isEquipped)
