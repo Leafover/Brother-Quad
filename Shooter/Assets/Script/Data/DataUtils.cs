@@ -367,7 +367,6 @@ public class DataUtils
         float res = 0;
         string key = itemData.id + "_" + itemData.level;
         int curStar = (itemData.curStar + 1 < 5 ? itemData.curStar + 1 : 4);
-        //Debug.LogError("itemData.curStar: " + itemData.curStar + " v------s " + curStar);
         switch (itemData.type)
         {
             case "ARMOR":
@@ -533,14 +532,36 @@ public class DataUtils
                         iData_New.itemName = GetItemName(iData_New, _itemType);
                         iData_New.isEquipped = false;
                         string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
+                        string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
+                        Debug.LogError(_keyCompare);
                         if (!dicAllEquipment.ContainsKey(_keyNew)) {
-                            dicAllEquipment.Add(_keyNew, iData_New);
-                            if (EquipmentManager.Instance != null)
+
+                            string _keyDisplay = "--";
+                            bool isEqual = true;
+                            foreach(ItemData itData in dicAllEquipment.Values)
                             {
-                                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
-                                if(iData_New.type.Equals("WEAPON"))
-                                    DataController.instance.DoAchievement(11, 1);
+                                _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
+                                Debug.LogError(_keyCompare + " vs " + _keyDisplay + " vs " + _keyCompare.Equals(_keyDisplay));
+                                if (_keyCompare.Equals(_keyDisplay))
+                                {
+                                    dicAllEquipment[_key].pices = _curPiece + _pices;
+                                    break;
+                                }
+                                else
+                                {
+                                    isEqual = false;
+                                }
                             }
+                            if (!isEqual) {
+                                dicAllEquipment.Add(_keyNew, iData_New);
+                                if (EquipmentManager.Instance != null)
+                                {
+                                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
+                                    if (iData_New.type.Equals("WEAPON"))
+                                        DataController.instance.DoAchievement(11, 1);
+                                }
+                            }
+
                         }
                         else
                         {
