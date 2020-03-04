@@ -581,34 +581,11 @@ public class EnemyBase : AutoTarget
             }
             if (isMiniBoss)
             {
-                switch (DataParam.indexStage)
-                {
-                    case 0:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("ASSAULT COPTER");
-                        break;
-                    case 1:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("EYE-BIO HAZARD");
-                        break;
-                    case 2:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("UFO CLEOPATRA");
-                        break;
-                }
-
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin(DataParam.indexStage, 0);
             }
             if (isBoss)
             {
-                switch (DataParam.indexStage)
-                {
-                    case 0:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("MEGATRON");
-                        break;
-                    case 1:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("ALIEN BASE");
-                        break;
-                    case 2:
-                        GameController.instance.uiPanel.healthBarBoss.DisplayBegin("IMHOTEP PHARAON");
-                        break;
-                }
+                GameController.instance.uiPanel.healthBarBoss.DisplayBegin(DataParam.indexStage, 1);
             }
             GameController.instance.isDestroyBoss = true;
         }

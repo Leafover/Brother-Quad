@@ -10,19 +10,26 @@ public class MenuController : MonoBehaviour
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
     public GameObject PrimeAccountPanel;
 
-    public GameObject warningEvent, warningDailyQuest, warningAchievment;
+    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount;
 
     private void Awake()
     {
-
-        //cmd o? popupStarterPack dong` 32
-        // PanelHeroes 66->78
-
         instance = this;
-      //  Debug.unityLogger.logEnabled = false;
 
-        //DataController.instance.DoDailyQuest(5, 1);
-        //DataController.instance.DoAchievement(11, 1);
+    }
+    public void CheckDisplayWarningPrimeAccount()
+    {
+        if (!DataController.primeAccout.isVIP)
+        {
+            warningPrimeAccount.SetActive(false);
+        }
+        else
+        {
+            if (!DataController.primeAccout.takecoin || !DataController.primeAccout.takegem)
+            {
+                warningPrimeAccount.SetActive(true);
+            }
+        }
     }
     int randomAds;
     private void Start()
@@ -52,13 +59,20 @@ public class MenuController : MonoBehaviour
 
         DataParam.first = false;
         DisplayWarning();
+        CheckDisplayWarningPrimeAccount();
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
         if (open)
+        {
+            warningPrimeAccount.SetActive(false);
             PrimeAccountPanel.SetActive(true);
+        }
         else
+        {
             PrimeAccountPanel.SetActive(false);
+            CheckDisplayWarningPrimeAccount();
+        }
     }
     public void DisplayWarning()
     {

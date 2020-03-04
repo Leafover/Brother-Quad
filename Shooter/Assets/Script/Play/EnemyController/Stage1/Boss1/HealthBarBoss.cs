@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 public class HealthBarBoss : MonoBehaviour
 {
+    public Image icons;
     public List<Image> healthFill;
     public Text nameBossText, healthbossText;
-    public void DisplayHealthFill(float _health,float maxHealth,int current)
+    public void DisplayHealthFill(float _health, float maxHealth, int current)
     {
         healthFill[current].fillAmount = _health / maxHealth;
         healthbossText.color = healthFill[current].color;
     }
-    public void DisplayBegin(string _name)
+    public void DisplayBegin(int index1, int index2)
     {
-        nameBossText.text = _name;
+        icons.sprite = DataController.instance.allbossandminibossInfo.infos[index1].icons[index2];
+        nameBossText.text = DataController.instance.allbossandminibossInfo.infos[index1].names[index2];
         gameObject.SetActive(true);
     }
     public void DisableHealthBar()
