@@ -51,7 +51,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
             case 0:
                 //MenuController.instance.warningDailyQuest.SetActive(false);
                 timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
-               // Debug.Log("=============" + DataController.saveIndexQuest.Count);
+                Debug.Log("=============" + DataController.saveIndexQuest.Count);
                 for (int i = 0; i < DataController.saveIndexQuest.Count; i++)
                 {
                     dailyquestBouders[i].DisplayMe();
@@ -79,6 +79,10 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
     }
     public void CloseMe()
     {
+        for (int i = 0; i < Tabs.Length; i++)
+        {
+            Tabs[i].SetActive(false);
+        }
         gameObject.SetActive(false);
         MenuController.instance.DisplayWarning();
     }

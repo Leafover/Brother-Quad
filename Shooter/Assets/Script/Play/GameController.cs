@@ -439,7 +439,7 @@ public class GameController : MonoBehaviour
             DataController.instance.DoDailyQuest(2, 1);
         }
         DataUtils.SaveLevel(DataParam.indexStage, DataParam.indexMap);
-        DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+
         MissionController.Instance.CheckMission();
         MyAnalytics.LogEventLevelComplete(DataParam.indexMap, DataParam.indexStage);
         DataController.instance.DoAchievement(6, 1);
@@ -467,6 +467,9 @@ public class GameController : MonoBehaviour
         }
         DataUtils.AddCoinAndGame(0, gemAdd);
 
+        if (DataController.primeAccout.isVIP)
+            DataParam.AddCoin(DataParam.totalCoin / 100 * 20);
+        DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         ThemManh();
 
         StartCoroutine(delayDisplayFinish());
@@ -639,7 +642,7 @@ public class GameController : MonoBehaviour
         lstItemRewardName = new List<string>();
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
-            if (/*!vatphamnhanduoc[i].ID.Contains("P") &&*/ vatphamnhanduoc[i].TotalNumber > 0)
+            if (!vatphamnhanduoc[i].ID.Contains("P") && vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
                 Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
@@ -672,7 +675,7 @@ public class GameController : MonoBehaviour
                 uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
             }
         }
-        uiPanel.rewardText[2].text = "" + DataParam.totalCoin;
+        uiPanel.rewardText[2].text = "" + (int)DataParam.totalCoin;
         uiPanel.rewardText[3].text = "" + gemAdd;
         uiPanel.rewardImg[2].sprite = uiPanel.rewardSp[0];
         uiPanel.rewardImg[3].sprite = uiPanel.rewardSp[1];

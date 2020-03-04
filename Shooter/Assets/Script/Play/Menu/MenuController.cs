@@ -8,7 +8,7 @@ public class MenuController : MonoBehaviour
     public AudioSource auBG;
 
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
-
+    public GameObject PrimeAccountPanel;
 
     public GameObject warningEvent, warningDailyQuest, warningAchievment;
 
@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
         // PanelHeroes 66->78
 
         instance = this;
-        Debug.unityLogger.logEnabled = false;
+      //  Debug.unityLogger.logEnabled = false;
 
         //DataController.instance.DoDailyQuest(5, 1);
         //DataController.instance.DoAchievement(11, 1);
@@ -52,6 +52,13 @@ public class MenuController : MonoBehaviour
 
         DataParam.first = false;
         DisplayWarning();
+    }
+    public void BtnDisplayPrimeAccount(bool open)
+    {
+        if (open)
+            PrimeAccountPanel.SetActive(true);
+        else
+            PrimeAccountPanel.SetActive(false);
     }
     public void DisplayWarning()
     {

@@ -13,7 +13,9 @@ public class DataParam : MonoBehaviour
     public const string OLDDATETIME = "olddatetime";
     public const string ALLDAILYQUEST = "alldailyquest";
     public const string SAVEINDEXQUEST = "saveindexquest";
-    public static bool first = true, isVIP = false, doneAllDailyQuest = false;
+    public const string PRIMEACCOUNTINFO = "primeaccountinfo";
+    public const string TIMEBEGINBUYPRIMEACCOUNT = "timebeginbuyprimeaccount";
+    public static bool first = true, doneAllDailyQuest = false;
     public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",
@@ -24,7 +26,7 @@ public class DataParam : MonoBehaviour
     "Kill as many enemies as possible to unlock achievements and daily quests",
     "Shotguns may have low attack range but can deal massive damage",
     "Upgrading your character also grants you skill points that can be used in the skill tree",};
-    public static System.DateTime oldDateTime;
+    public static System.DateTime oldDateTime,timeBeginBuyPrimeAccount;
     public static void AddCoin(float _coin)
     {
         totalCoin += _coin;

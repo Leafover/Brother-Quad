@@ -3,6 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region primeAccount
+[System.Serializable]
+public class PrimeAccountClass
+{
+    public bool takegem = false, takecoin = false, isVIP = false;
+    public int countDay = 30;
+}
+#endregion
+
 #region AllDailyQuest
 [System.Serializable]
 public class DailyQuest
@@ -180,6 +189,7 @@ public class AllMission
 #endregion
 public class DataController : MonoBehaviour
 {
+    public static PrimeAccountClass primeAccout = new PrimeAccountClass();
     public List<DailyQuest> allDailyQuest = new List<DailyQuest>();
     public static List<DailyQuest> allSaveDailyQuest = new List<DailyQuest>();
     public List<Achievement> allAchievement = new List<Achievement>();
@@ -276,7 +286,7 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < jData.Count; i++)
         {
             PlayerData _playerDate = JsonMapper.ToObject<PlayerData>(jData[i].ToJson());
-            switch(_playerDate.ID)
+            switch (_playerDate.ID)
             {
                 case "P1":
                     playerData[0].playerData.Add(_playerDate);
@@ -357,10 +367,11 @@ public class DataController : MonoBehaviour
         }
     }
     public static List<int> saveIndexQuest = new List<int>();
-    void AddNewQuest()
+
+    public void AddNewQuest()
     {
         int randomIndex;
-        if (DataParam.isVIP)
+        if (!primeAccout.isVIP)
         {
             while (saveIndexQuest.Count < 3)
             {
@@ -389,8 +400,6 @@ public class DataController : MonoBehaviour
         for (int i = 0; i < saveIndexQuest.Count; i++)
         {
             allSaveDailyQuest[saveIndexQuest[i]].isActive = true;
-
-            Debug.Log(saveIndexQuest[i]);
         }
         if (saveIndexQuest.Contains(10))
         {
@@ -474,6 +483,7 @@ public class DataController : MonoBehaviour
             allMission[index].missionData.Add(_missionData);
         }
     }
+
     List<WeaponList> weaponList = new List<WeaponList>();
     public void LoadWeapon(string path)
     {
@@ -940,15 +950,53 @@ public class DataController : MonoBehaviour
             allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Add(tilevatphamList[i]);
         }
     }
+    public void LoadDataPrimeAccount()
+    {
+        strPrimeAccount = PlayerPrefs.GetString(DataParam.PRIMEACCOUNTINFO);
+
+        if (string.IsNullOrEmpty(strPrimeAccount))
+            return;
+        JsonData jsonData = JsonMapper.ToObject(strPrimeAccount);
+        Debug.LogError(strPrimeAccount + ":=======:" + jsonData.Count);
+        //for (int i = 0; i < jsonData.Count; i++)
+        //{
+        //    if (jsonData[i] != null)
+        //    {
+        primeAccout.isVIP = bool.Parse(jsonData["isVIP"].ToString());
+        primeAccout.takecoin = bool.Parse(jsonData["takecoin"].ToString());
+        primeAccout.takegem = bool.Parse(jsonData["takegem"].ToString());
+        primeAccout.countDay = int.Parse(jsonData["countDay"].ToString());
+        //  }
+        // }
+
+        if (primeAccout.isVIP)
+        {
+            DataParam.timeBeginBuyPrimeAccount = System.Convert.ToDateTime(PlayerPrefs.GetString(DataParam.TIMEBEGINBUYPRIMEACCOUNT));
+            if (primeAccout.takecoin && primeAccout.takegem)
+            {
+                if ((System.DateTime.Now - DataParam.timeBeginBuyPrimeAccount).TotalSeconds >= 86400)
+                {
+                    primeAccout.takecoin = primeAccout.takegem = false;
+                }
+            }
+        }
+    }
     public void SaveData()
     {
+        SavePrimeAccount();
         SaveAchievement();
         SaveDailyQuest();
     }
     public void LoadData()
     {
+        LoadDataPrimeAccount();
         LoadAchievement();
         LoadDailyQuest();
+    }
+    void SavePrimeAccount()
+    {
+        PlayerPrefs.SetString(DataParam.TIMEBEGINBUYPRIMEACCOUNT, DataParam.timeBeginBuyPrimeAccount.ToString());
+        PlayerPrefs.SetString(DataParam.PRIMEACCOUNTINFO, JsonMapper.ToJson(primeAccout));
     }
     void SaveDailyQuest()
     {
@@ -964,7 +1012,7 @@ public class DataController : MonoBehaviour
     {
         PlayerPrefs.SetString(DataParam.ALLACHIEVEMENT, JsonMapper.ToJson(saveAllAchievement));
     }
-    string strAllAchievement, strAllDailyQuest, strSaveIndexQuest;
+    string strAllAchievement, strAllDailyQuest, strSaveIndexQuest, strPrimeAccount;
     void LoadAchievement()
     {
         for (int i = 0; i < allAchievement.Count; i++)
@@ -1016,7 +1064,7 @@ public class DataController : MonoBehaviour
         checkDaily = false;
         for (int i = 0; i < allSaveDailyQuest.Count; i++)
         {
-            if(allSaveDailyQuest[i].isPass && !allSaveDailyQuest[i].isDone)
+            if (allSaveDailyQuest[i].isPass && !allSaveDailyQuest[i].isDone)
             {
                 checkDaily = true;
             }
@@ -1030,11 +1078,11 @@ public class DataController : MonoBehaviour
         {
             if (saveAllAchievement[i].isPass && !saveAllAchievement[i].isDone)
             {
-               // Debug.LogError(i + ":" + saveAllAchievement[i]);
+                // Debug.LogError(i + ":" + saveAllAchievement[i]);
                 checkAchi = true;
             }
         }
-      //  Debug.LogError(checkAchi);
+        //  Debug.LogError(checkAchi);
         return checkAchi;
     }
 
@@ -1042,7 +1090,7 @@ public class DataController : MonoBehaviour
     {
         if (!saveIndexQuest.Contains(10))
         {
-           // Debug.Log("111111111");
+            // Debug.Log("111111111");
             return;
         }
         DataParam.doneAllDailyQuest = true;
@@ -1051,7 +1099,7 @@ public class DataController : MonoBehaviour
             if (!allSaveDailyQuest[i].isDone && allSaveDailyQuest[i].isActive)
             {
                 DataParam.doneAllDailyQuest = false;
-               // Debug.Log("false");
+                // Debug.Log("false");
                 break;
             }
         }
@@ -1063,7 +1111,7 @@ public class DataController : MonoBehaviour
                 {
                     DoDailyQuest(10, 1);
                     MenuController.instance.achievementAndDailyQuestPanel.dailyquestBouders[i].DisplayMe();
-                   // Debug.LogError("zoooooooooooo");
+                    // Debug.LogError("zoooooooooooo");
                 }
             }
         }
