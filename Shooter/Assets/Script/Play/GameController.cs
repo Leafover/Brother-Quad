@@ -665,9 +665,10 @@ public class GameController : MonoBehaviour
 
         for(int i = 0; i < lstItemRewardName.Count; i++)
         {
-            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]))
+            Debug.LogError("Replace---> " + DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]) + " vs " + lstItemRewardName[i]);
+            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i].Replace("M-","")))
             {
-                uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i]];
+                uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i].Replace("M-", "")];
                 uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
             }
         }
