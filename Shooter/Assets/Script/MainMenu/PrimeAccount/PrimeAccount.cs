@@ -101,5 +101,9 @@ public class PrimeAccount : MonoBehaviour
             DataController.instance.AddNewQuest();
             DisplayButtom();
         }
+        else
+        {
+            MainMenuController.Instance.shopManager.gameObject.SetActive(true);
+        }
     }
 }

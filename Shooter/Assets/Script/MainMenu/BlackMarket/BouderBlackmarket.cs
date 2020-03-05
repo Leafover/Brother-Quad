@@ -101,5 +101,9 @@ public class BouderBlackmarket : MonoBehaviour
                 DisplayAgainWhenBuy();
             }
         }
+        else
+        {
+            MainMenuController.Instance.shopManager.gameObject.SetActive(true);
+        }
     }
 }

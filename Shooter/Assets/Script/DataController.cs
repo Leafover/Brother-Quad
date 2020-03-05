@@ -14,19 +14,6 @@ public class BlackMarketData
 }
 #endregion
 
-#region AllBossAndMiniBoss
-[CreateAssetMenu(fileName = "AllInfoBossAndMiniBoss", menuName = "Create Info Boss And MiniBoss")]
-public class AllBossAndMiniBossInfo : ScriptableObject
-{
-    public List<InfoBossAndMiniBoss> infos = new List<InfoBossAndMiniBoss>();
-}
-[System.Serializable]
-public class InfoBossAndMiniBoss
-{
-    public string[] names;
-    public Sprite[] icons;
-}
-#endregion
 
 #region primeAccount
 [System.Serializable]
@@ -216,7 +203,6 @@ public class DataController : MonoBehaviour
 {
     public List<BlackMarketData> blackMarketData = new List<BlackMarketData>();
     public static List<BlackMarketData> blackMarketSave = new List<BlackMarketData>();
-    public AllBossAndMiniBossInfo allbossandminibossInfo;
     public static PrimeAccountClass primeAccout = new PrimeAccountClass();
     public List<DailyQuest> allDailyQuest = new List<DailyQuest>();
     public static List<DailyQuest> allSaveDailyQuest = new List<DailyQuest>();
@@ -246,6 +232,7 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
+      //  Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;

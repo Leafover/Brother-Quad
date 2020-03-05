@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
+    public AllBossAndMiniBossInfo allbossandminibossInfo;
     public Sprite nvSprite;
     public GameObject[] bouders;
     public Image[] rewardImg, bouderLevel;
@@ -24,7 +25,8 @@ public class UIPanel : MonoBehaviour
     public TextMeshProUGUI comboText, comboNumberText;
 
     public Slider slideMiniMap;
-    public GameObject haveBossInMiniMap, warning;
+    public GameObject warning;
+    public Image haveBossInMiniMap;
 
     public int pricesGemRevive;
 
@@ -43,7 +45,13 @@ public class UIPanel : MonoBehaviour
     {
         slideMiniMap.value = 0;
         if (GameController.instance.currentMap.haveBoss || GameController.instance.currentMap.haveMiniBoss)
-            haveBossInMiniMap.SetActive(true);
+        {
+            if (GameController.instance.currentMap.haveMiniBoss)
+                haveBossInMiniMap.sprite = allbossandminibossInfo.infos[DataParam.indexStage].icons[0];
+            else if (GameController.instance.currentMap.haveBoss)
+                haveBossInMiniMap.sprite = allbossandminibossInfo.infos[DataParam.indexStage].icons[1];
+            haveBossInMiniMap.gameObject.SetActive(true);
+        }
     }
     public void BtnBackToWorld()
     {

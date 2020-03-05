@@ -68,6 +68,10 @@ public class BlackMarketPanel : MonoBehaviour
                 DataUtils.AddCoinAndGame(0, -DataParam.countResetBlackMarket * 5);
                 priceRefreshText.text = "" + DataParam.countResetBlackMarket * 5;
             }
+            else
+            {
+                MainMenuController.Instance.shopManager.gameObject.SetActive(true);
+            }
         }
 
 

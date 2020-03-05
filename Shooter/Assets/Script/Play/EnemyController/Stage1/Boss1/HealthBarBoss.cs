@@ -14,8 +14,12 @@ public class HealthBarBoss : MonoBehaviour
     }
     public void DisplayBegin(int index1, int index2)
     {
-        icons.sprite = DataController.instance.allbossandminibossInfo.infos[index1].icons[index2];
-        nameBossText.text = DataController.instance.allbossandminibossInfo.infos[index1].names[index2];
+       
+        icons.sprite = GameController.instance.uiPanel.allbossandminibossInfo.infos[index1].icons[index2];
+        Debug.LogError("=====h1=====" + index1 + ":" + index2);
+        nameBossText.text = GameController.instance.uiPanel.allbossandminibossInfo.infos[index1].names[index2];
+        Debug.LogError("=====h2=====" + index1 + ":" + index2);
+
         gameObject.SetActive(true);
     }
     public void DisableHealthBar()

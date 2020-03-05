@@ -615,7 +615,7 @@ public class GameController : MonoBehaviour
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
-           // DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
+            DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
         }
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {
@@ -642,7 +642,7 @@ public class GameController : MonoBehaviour
         lstItemRewardName = new List<string>();
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
-            if (!vatphamnhanduoc[i].ID.Contains("P") && vatphamnhanduoc[i].TotalNumber > 0)
+            if (/*!vatphamnhanduoc[i].ID.Contains("P") && */vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
                 Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
