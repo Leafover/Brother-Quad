@@ -509,15 +509,15 @@ public class DataController : MonoBehaviour
             if (string.IsNullOrEmpty(strAllDailyQuest))
                 return;
 
-            JsonData jsonData = JsonMapper.ToObject(strAllDailyQuest);
-            for (int i = 0; i < jsonData.Count; i++)
+             jData = JsonMapper.ToObject(strAllDailyQuest);
+            for (int i = 0; i < jData.Count; i++)
             {
-                if (jsonData[i] != null)
+                if (jData[i] != null)
                 {
-                    allSaveDailyQuest[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
-                    allSaveDailyQuest[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
-                    allSaveDailyQuest[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
-                    allSaveDailyQuest[i].isActive = bool.Parse(jsonData[i]["isActive"].ToString());
+                    allSaveDailyQuest[i].currentNumber = int.Parse(jData[i]["currentNumber"].ToString());
+                    allSaveDailyQuest[i].isPass = bool.Parse(jData[i]["isPass"].ToString());
+                    allSaveDailyQuest[i].isDone = bool.Parse(jData[i]["isDone"].ToString());
+                    allSaveDailyQuest[i].isActive = bool.Parse(jData[i]["isActive"].ToString());
                 }
             }
 
@@ -1021,12 +1021,12 @@ public class DataController : MonoBehaviour
 
         if (string.IsNullOrEmpty(strPrimeAccount))
             return;
-        JsonData jsonData = JsonMapper.ToObject(strPrimeAccount);
-        Debug.LogError(strPrimeAccount + ":=======:" + jsonData.Count);
-        primeAccout.isVIP = bool.Parse(jsonData["isVIP"].ToString());
-        primeAccout.takecoin = bool.Parse(jsonData["takecoin"].ToString());
-        primeAccout.takegem = bool.Parse(jsonData["takegem"].ToString());
-        primeAccout.countDay = int.Parse(jsonData["countDay"].ToString());
+         jData = JsonMapper.ToObject(strPrimeAccount);
+      //  Debug.LogError(strPrimeAccount + ":=======:" + jData.Count);
+        primeAccout.isVIP = bool.Parse(jData["isVIP"].ToString());
+        primeAccout.takecoin = bool.Parse(jData["takecoin"].ToString());
+        primeAccout.takegem = bool.Parse(jData["takegem"].ToString());
+        primeAccout.countDay = int.Parse(jData["countDay"].ToString());
 
         //primeAccout = JsonMapper.ToObject<PrimeAccountClass>(jData[0].ToJson()); // dung` dc
 
@@ -1052,16 +1052,17 @@ public class DataController : MonoBehaviour
             AddNewBlackMarket();
             return;
         }
-        JsonData jsonData = JsonMapper.ToObject(strBlackMarket);
-        for (int i = 0; i < jsonData.Count; i++)
+        jData = JsonMapper.ToObject(strBlackMarket);
+        Debug.LogError(":" + strBlackMarket);
+        for (int i = 0; i < jData.Count; i++)
         {
             BlackMarketData _blackMarketSave = new BlackMarketData();
-            _blackMarketSave.ID = jsonData["ID"].ToString();
-            _blackMarketSave.NAME = jsonData["NAME"].ToString();
-            _blackMarketSave.Level = jsonData["Level"].ToString();
-            _blackMarketSave.GiaBanCoin = float.Parse(jsonData["GiaBanCoin"].ToString());
-            _blackMarketSave.GiaGem1Manh = float.Parse(jsonData["GiaGem1Manh"].ToString());
-            _blackMarketSave.countnumber = int.Parse(jsonData["countnumber"].ToString());
+            _blackMarketSave.ID = jData[i]["ID"].ToString();
+            _blackMarketSave.NAME = jData[i]["NAME"].ToString();
+            _blackMarketSave.Level = jData[i]["Level"].ToString();
+            _blackMarketSave.GiaBanCoin = float.Parse(jData[i]["GiaBanCoin"].ToString());
+            _blackMarketSave.GiaGem1Manh = float.Parse(jData[i]["GiaGem1Manh"].ToString());
+            _blackMarketSave.countnumber = int.Parse(jData[i]["countnumber"].ToString());
             blackMarketSave.Add(_blackMarketSave);
         }
     }
@@ -1114,15 +1115,15 @@ public class DataController : MonoBehaviour
 
         if (string.IsNullOrEmpty(strAllAchievement))
             return;
-        JsonData jsonData = JsonMapper.ToObject(strAllAchievement);
-        for (int i = 0; i < jsonData.Count; i++)
+        jData = JsonMapper.ToObject(strAllAchievement);
+        for (int i = 0; i < jData.Count; i++)
         {
-            if (jsonData[i] != null)
+            if (jData[i] != null)
             {
-                saveAllAchievement[i].currentLevel = int.Parse(jsonData[i]["currentLevel"].ToString());
-                saveAllAchievement[i].currentNumber = int.Parse(jsonData[i]["currentNumber"].ToString());
-                saveAllAchievement[i].isPass = bool.Parse(jsonData[i]["isPass"].ToString());
-                saveAllAchievement[i].isDone = bool.Parse(jsonData[i]["isDone"].ToString());
+                saveAllAchievement[i].currentLevel = int.Parse(jData[i]["currentLevel"].ToString());
+                saveAllAchievement[i].currentNumber = int.Parse(jData[i]["currentNumber"].ToString());
+                saveAllAchievement[i].isPass = bool.Parse(jData[i]["isPass"].ToString());
+                saveAllAchievement[i].isDone = bool.Parse(jData[i]["isDone"].ToString());
             }
         }
     }
