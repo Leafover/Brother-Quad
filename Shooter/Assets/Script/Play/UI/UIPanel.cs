@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
-    public ItemSpriteData allSpriteData;
     public Sprite nvSprite;
     public GameObject[] bouders;
     public Image[] rewardImg, bouderLevel;
@@ -178,11 +177,11 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnRevive()
     {
-#if UNITY_EDITOR
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
+#if UNITY_EDITOR
+
         Reward(50);
 #else
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(50);});
 #endif
     }

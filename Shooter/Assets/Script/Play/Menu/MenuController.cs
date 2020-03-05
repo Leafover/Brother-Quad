@@ -8,7 +8,7 @@ public class MenuController : MonoBehaviour
     public AudioSource auBG;
 
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
-    public GameObject PrimeAccountPanel;
+    public GameObject PrimeAccountPanel,blackMarketpanel;
 
     public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount;
 
@@ -72,6 +72,17 @@ public class MenuController : MonoBehaviour
         {
             PrimeAccountPanel.SetActive(false);
             CheckDisplayWarningPrimeAccount();
+        }
+    }
+    public void BtnDisplayBlackMarket(bool open)
+    {
+        if(open)
+        {
+            blackMarketpanel.SetActive(true);
+        }
+        else
+        {
+            blackMarketpanel.SetActive(false);
         }
     }
     public void DisplayWarning()
