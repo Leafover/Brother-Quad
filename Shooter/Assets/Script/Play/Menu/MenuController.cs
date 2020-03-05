@@ -29,6 +29,10 @@ public class MenuController : MonoBehaviour
             {
                 warningPrimeAccount.SetActive(true);
             }
+            else
+            {
+                warningPrimeAccount.SetActive(false);
+            }
         }
     }
     int randomAds;

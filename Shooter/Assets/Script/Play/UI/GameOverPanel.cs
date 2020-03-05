@@ -20,6 +20,18 @@ public class GameOverPanel : MonoBehaviour
                 break;
         }
     }
+    public void ShowAds()
+    {
+#if UNITY_EDITOR
+
+#else
+        randomAds = Random.Range(0, 100);
+        if (randomAds < 40)
+        {
+            AdsManager.Instance.ShowInterstitial((b) => { });
+        }
+#endif
+    }
     //int randonvictorysound;
     //public void WinSound()
     //{

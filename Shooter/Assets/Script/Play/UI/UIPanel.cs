@@ -164,15 +164,7 @@ public class UIPanel : MonoBehaviour
                 animGamOver.Play("Win3Star");
                 break;
         }
-#if UNITY_EDITOR
 
-#else
-        randomAds = Random.Range(0, 100);
-        if (randomAds < 40)
-        {
-            AdsManager.Instance.ShowInterstitial((b) => { });
-        }
-#endif
     }
     public void BtnReviveByGem()
     {
