@@ -1031,6 +1031,7 @@ public class DataUtils
         lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
         lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
 
+        Debug.LogError("gem ads:" + gemAdded);
 
         SavePlayerData();
         if (MainMenuController.Instance != null)

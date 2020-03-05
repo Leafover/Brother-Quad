@@ -33,6 +33,8 @@ public class BlackMarketPanel : MonoBehaviour
             iconRefreshImg.sprite = videoSp;
             priceRefreshText.gameObject.SetActive(false);
         }
+
+       // DataUtils.AddCoinAndGame(0, 7);
     }
 
     // Update is called once per frame
@@ -61,11 +63,11 @@ public class BlackMarketPanel : MonoBehaviour
         }
         else
         {
+            Debug.LogError(DataUtils.playerInfo.gems + ":" + DataParam.countResetBlackMarket * 5);
             if (DataUtils.playerInfo.gems >= DataParam.countResetBlackMarket * 5)
             {
-                Reward();
-
                 DataUtils.AddCoinAndGame(0, -DataParam.countResetBlackMarket * 5);
+                Reward();
                 priceRefreshText.text = "" + DataParam.countResetBlackMarket * 5;
             }
             else
@@ -88,5 +90,7 @@ public class BlackMarketPanel : MonoBehaviour
 
         priceRefreshText.text = "" + DataParam.countResetBlackMarket * 5;
         priceRefreshText.gameObject.SetActive(true);
+
+        Debug.LogError("zooooooooooooooooooooooooo " + DataParam.countResetBlackMarket);
     }
 }

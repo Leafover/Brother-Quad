@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
 {
-    int randomAds;
+
     public void EventDisplayStar(int i)
     {
         switch(i)
@@ -22,15 +22,15 @@ public class GameOverPanel : MonoBehaviour
     }
     public void ShowAds()
     {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
-#else
-        randomAds = Random.Range(0, 100);
-        if (randomAds < 40)
-        {
-            AdsManager.Instance.ShowInterstitial((b) => { });
-        }
-#endif
+//#else
+//        randomAds = Random.Range(0, 100);
+//        if (randomAds < 40)
+//        {
+//            AdsManager.Instance.ShowInterstitial((b) => { });
+//        }
+//#endif
     }
     //int randonvictorysound;
     //public void WinSound()
