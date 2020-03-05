@@ -115,17 +115,23 @@ public class PanelHeroes : MonoBehaviour
 
         keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
         curWeponStar = itemEquipped.curStar;
-        nextWeaponStar = itemEquipped.curStar + 1 > 5 ? itemEquipped.curStar : itemEquipped.curStar + 1;
+        nextWeaponStar = itemEquipped.curStar + 1 > 4 ? itemEquipped.curStar : itemEquipped.curStar + 1;
+        Debug.LogError("Unity-HERO--HeroLevel: " + heroSelected.pices);
         pData = DataController.instance.playerData[0].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
+        //Debug.LogError("Unity-HERO--pData: " + (pData == null ? "NULLLL" : "NOT NULL"));
         pNext = DataController.instance.playerData[0].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
+        //Debug.LogError("Unity-HERO--pNext: " + (pNext == null ? "NULLLL" : "NOT NULL"));
+        //Debug.LogError("curWeponStar: " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
+        //Debug.LogError("Unity-HERO--CurWeapon: " + DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
+        //Debug.LogError("Unity-HERO--Damage: " + DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
+        //Debug.LogError("Unity-HERO--NextDamage: " + DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
 
         txtHealth.text = pData.hp.ToString();
         txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, pNext.hp);
-        //txtHealthUP.text = DataUtils.DisplayRichText(heroSelected.hp, DataController.instance.playerData[0].playerData[(heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO-1 ? heroSelected.level + 1 : heroSelected.level-1)].hp);
 
 
-        txtDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
-        txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]),GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]));
+        txtDamage.text = ""+10*GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
+        txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar])*10,GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]) * 10);
 
         txtAttSpeed.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]).ToString();
         txtAttSpeedUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[nextWeaponStar]));
@@ -136,7 +142,7 @@ public class PanelHeroes : MonoBehaviour
         txtCritRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]).ToString();
         txtCritRateUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[nextWeaponStar]));
 
-        txtCurDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
+        txtCurDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
 
         priceUpdate = 165 * /*pData*/pNext.SoManhYeuCau * /*pData*/pNext.Giamua1manh;
 
