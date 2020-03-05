@@ -148,6 +148,24 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
                 DataUtils.TakeHeroPice("P1", 50);
                 DataUtils.RemoveAds();
                 break;
+            case DataUtils.P_12500GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 12500);
+                break;
+            case DataUtils.P_1750GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 1750);
+                break;
+            case DataUtils.P_220GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 220);
+                break;
+            case DataUtils.P_25GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 25);
+                break;
+            case DataUtils.P_4000GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 4000);
+                break;
+            case DataUtils.P_600GEM_PACK:
+                DataUtils.AddCoinAndGame(0, 600);
+                break;
         }
         return PurchaseProcessingResult.Complete;
     }

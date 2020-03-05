@@ -72,7 +72,7 @@ public class EquipmentManager : MonoBehaviour
             ChooseItem(null);
             DoCancelDisassemble();
         });
-        
+
         //if(AdsManager.Instance != null)
         //{
         //    AdsManager.Instance.ShowBannerWithPos();
@@ -90,7 +90,7 @@ public class EquipmentManager : MonoBehaviour
 
     string key = "";
     public void InitAllItems()
-    { 
+    {
         foreach (ItemData itemData in DataUtils.dicAllEquipment.Values)
         {
             //if (!itemData.isEquipped)
@@ -379,22 +379,23 @@ public class EquipmentManager : MonoBehaviour
         //    _rect.eulerAngles = new Vector3(0, 0, 0);
         //}
     }
-
+    float priceUpgrade;
     public void UpgradeItem()
     {
         int total = 0;
-        if (DataUtils.playerInfo.coins >= DataUtils.GetItemPrice(itemSelected))
+
+        if (DataUtils.playerInfo.coins >= /*DataUtils.GetItemPrice(itemSelected)*/priceUpgrade)
         {
             string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
             if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
             {
-                DataUtils.AddCoinAndGame(-(int)DataUtils.GetItemPrice(itemSelected), 0);
+                DataUtils.AddCoinAndGame(-(int)/*DataUtils.GetItemPrice(itemSelected)*/priceUpgrade, 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
                 total = DataUtils.dicAllEquipment[key].curStar;
 
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
-                txtPriceUpgrade.text = DataUtils.GetItemPrice(DataUtils.dicAllEquipment[key]).ToString();
+                txtPriceUpgrade.text = /*DataUtils.GetItemPrice(DataUtils.dicAllEquipment[key])*/priceUpgrade.ToString();
 
                 if (DataUtils.dicEquippedItem.ContainsKey(key))
                 {
@@ -439,7 +440,16 @@ public class EquipmentManager : MonoBehaviour
         {
             itemSelected = itemData;
 
-            txtPriceUpgrade.text = DataUtils.GetItemPrice(itemData).ToString();
+            if (DataController.primeAccout.isVIP)
+            {
+                priceUpgrade = (int)(DataUtils.GetItemPrice(itemSelected) - DataUtils.GetItemPrice(itemSelected) * 0.1f);
+            }
+            else
+            {
+                priceUpgrade = DataUtils.GetItemPrice(itemSelected);
+            }
+
+            txtPriceUpgrade.text = /*DataUtils.GetItemPrice(itemData)*/priceUpgrade.ToString();
             if (!itemSelected.isUnlock)
             {
                 btnReplace.image.sprite = sprButton;
