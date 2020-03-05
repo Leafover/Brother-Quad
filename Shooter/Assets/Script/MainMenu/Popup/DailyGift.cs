@@ -12,7 +12,7 @@ public class DailyGift : MonoBehaviour
     public Button btnX2;
     public GameObject gItemInfo;
     public Text txtItemName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtTotalPart;
-    public int totalPart = 3;
+    public int totalPart = 2;
     public ItemData itemData;
 
     private DataUtils.eLevel _eLevel;
@@ -81,7 +81,7 @@ public class DailyGift : MonoBehaviour
                 itemID = "W" + itemIndex;
                 break;
         }
-        Debug.LogError(_eLevel.ToString() + " vs " + _eType.ToString() + " vs " + itemIndex + " vs " + itemName);
+        //Debug.LogError(_eLevel.ToString() + " vs " + _eType.ToString() + " vs " + itemIndex + " vs " + itemName);
 
         itemData = new ItemData();
         itemData.id = itemID;
@@ -98,7 +98,7 @@ public class DailyGift : MonoBehaviour
 
     public void ShowDailyGiftPanel()
     {
-        Debug.LogError("--> " + AdsManager.Instance.IsRewardLoaded());
+        //Debug.LogError("--> " + AdsManager.Instance.IsRewardLoaded());
         if(AdsManager.Instance != null)
             btnX2.interactable = AdsManager.Instance.IsRewardLoaded();
         #region Fill info

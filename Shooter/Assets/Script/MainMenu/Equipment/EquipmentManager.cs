@@ -644,6 +644,7 @@ public class EquipmentManager : MonoBehaviour
         if (!itemData.type.Contains("WEAPON"))
         {
             txtItemSelectInfo.text = DataUtils.GetItemInfo(/*itemSelected*/DataUtils.dicAllEquipment[_keyItemSelected]);
+            gWeaponData.SetActive(false);
             txtItemSelectInfo.gameObject.SetActive(true);
         }
         else
