@@ -467,15 +467,15 @@ public class DataController : MonoBehaviour
             _tempBlackMarket = blackMarketData[randomBlackMarket];
             if (!blackMarketSave.Contains(_tempBlackMarket));
             {
-                Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
+              //  Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
                 blackMarketSave.Add(_tempBlackMarket);
             }
         }
 
-        for(int i = 0; i < blackMarketSave.Count; i++)
-        {
-            Debug.LogError(blackMarketSave[i].ID + ":" + blackMarketSave[i].Level + ":" + blackMarketSave[i].NAME + ":" + blackMarketSave[i].GiaBanCoin);
-        }
+        //for(int i = 0; i < blackMarketSave.Count; i++)
+        //{
+        //   // Debug.LogError(blackMarketSave[i].ID + ":" + blackMarketSave[i].Level + ":" + blackMarketSave[i].NAME + ":" + blackMarketSave[i].GiaBanCoin);
+        //}
     }
     public void LoadDailyQuest()
     {
@@ -1052,8 +1052,8 @@ public class DataController : MonoBehaviour
             AddNewBlackMarket();
             return;
         }
-        JsonData jsonData = JsonMapper.ToObject(strPrimeAccount);
-        for (int i = 0; i < jData.Count; i++)
+        JsonData jsonData = JsonMapper.ToObject(strBlackMarket);
+        for (int i = 0; i < jsonData.Count; i++)
         {
             BlackMarketData _blackMarketSave = new BlackMarketData();
             _blackMarketSave.ID = jsonData["ID"].ToString();
