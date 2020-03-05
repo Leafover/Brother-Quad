@@ -61,7 +61,7 @@ public class UIPanel : MonoBehaviour
         PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
-    int randomAds;
+
     public void BtnBack()
     {
         PopupSetting.Instance.ShowPanelSetting();

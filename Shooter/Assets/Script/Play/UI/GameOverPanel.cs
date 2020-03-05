@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameOverPanel : MonoBehaviour
 {
-
+    int randomAds;
     public void EventDisplayStar(int i)
     {
         switch(i)
