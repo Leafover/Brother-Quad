@@ -21,7 +21,7 @@ public class MenuController : MonoBehaviour
     {
         if (!DataController.primeAccout.isVIP)
         {
-            warningPrimeAccount.SetActive(false);
+            warningPrimeAccount.SetActive(true);
         }
         else
         {
