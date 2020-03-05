@@ -61,7 +61,7 @@ public class PanelHeroes : MonoBehaviour
             }
         }
 
-      //  skins = skeletonGraphic.Skeleton.Data.Skins.Items;
+        //  skins = skeletonGraphic.Skeleton.Data.Skins.Items;
 
 
         if (heroSelected == null)
@@ -79,9 +79,11 @@ public class PanelHeroes : MonoBehaviour
     }
     private void InitEquippedItem()
     {
-        for (int i = 0; i < lstEquip.Count; i++) {
-            foreach (ItemData itemData in DataUtils.dicEquippedItem.Values) {
-                if(itemData.type == lstEquip[i].itemData.type)
+        for (int i = 0; i < lstEquip.Count; i++)
+        {
+            foreach (ItemData itemData in DataUtils.dicEquippedItem.Values)
+            {
+                if (itemData.type == lstEquip[i].itemData.type)
                 {
                     lstEquip[i].itemData = itemData;
                     lstEquip[i].imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
@@ -100,7 +102,7 @@ public class PanelHeroes : MonoBehaviour
         }
         FillDataPlayer();
 
-       // skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
+        // skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
     }
     private void FillDataPlayer()
     {
@@ -130,8 +132,8 @@ public class PanelHeroes : MonoBehaviour
         txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, pNext.hp);
 
 
-        txtDamage.text = ""+10*GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
-        txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar])*10,GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]) * 10);
+        txtDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
+        txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]) * 10, GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]) * 10);
 
         txtAttSpeed.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]).ToString();
         txtAttSpeedUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[nextWeaponStar]));
@@ -144,12 +146,18 @@ public class PanelHeroes : MonoBehaviour
 
         txtCurDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
 
-        priceUpdate = 165 * /*pData*/pNext.SoManhYeuCau * /*pData*/pNext.Giamua1manh;
+        if (!DataController.primeAccout.isVIP)
+            priceUpdate = 165 * /*pData*/pNext.SoManhYeuCau * /*pData*/pNext.Giamua1manh;
+        else
+        {
+            double price__ = 165 * pNext.SoManhYeuCau * pNext.Giamua1manh;
+            priceUpdate = (int)(price__ - 165 * pNext.SoManhYeuCau * pNext.Giamua1manh * 0.1f);
+        }
 
         txtPriceUpdate.text = priceUpdate.ToString();
 
 
-        txtDamageDis.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]).ToString();
+        txtDamageDis.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
         txtHealthDis.text = pData.hp.ToString();
         txtTotalPower.text = pData.MoveSpeed.ToString();
 
@@ -163,11 +171,11 @@ public class PanelHeroes : MonoBehaviour
     }
     public void EvolveHero()
     {
-        if(DataUtils.playerInfo.coins >= priceUpdate)
+        if (DataUtils.playerInfo.coins >= priceUpdate)
         {
             if (DataUtils.playerInfo.level < DataUtils.MAX_LEVEL_HERO)
             {
-                if(DataUtils.dicAllHero[heroSelected.id].pices >= (int)pNext.SoManhYeuCau)
+                if (DataUtils.dicAllHero[heroSelected.id].pices >= (int)pNext.SoManhYeuCau)
                 {
                     DataUtils.playerInfo.level += 1;
                     heroSelected.level += 1;
@@ -188,7 +196,8 @@ public class PanelHeroes : MonoBehaviour
                     MainMenuController.Instance.ShowMapNotify("Not enough material.");
                 }
             }
-            else {
+            else
+            {
                 MainMenuController.Instance.ShowMapNotify("Hero has reached the maximum level");
             }
         }

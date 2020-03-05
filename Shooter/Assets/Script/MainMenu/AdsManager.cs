@@ -90,9 +90,10 @@ public class AdsManager : MonoBehaviour
     }
     public void ShowInterstitial(Action<bool> _ac)
     {
-        if (!DataUtils.HasRemoveAds())
+         //if(DataController.primeAccout.isVIP)
+        if (!DataUtils.HasRemoveAds() || !DataController.primeAccout.isVIP)
         {
-            Debug.LogError("Show Interstitial");
+            //Debug.LogError("Show Interstitial");
             if (IsIntersLoaded())
             {
                 acInterClosed = _ac;
@@ -118,7 +119,7 @@ public class AdsManager : MonoBehaviour
 
     public void ShowRewardedVideo(Action<bool> _ac)
     {
-        Debug.LogError("Ads:: _ac: " + (_ac == null ? "_ac NULL" : "_ac NOT NULL") + "  ,,,,,, rewardedAd: " + rewardedAd.IsLoaded());
+        //Debug.LogError("Ads:: _ac: " + (_ac == null ? "_ac NULL" : "_ac NOT NULL") + "  ,,,,,, rewardedAd: " + rewardedAd.IsLoaded());
         if (IsRewardLoaded())
         {
             acRewarded = _ac;
@@ -154,7 +155,7 @@ public class AdsManager : MonoBehaviour
     #region Init Admob
     AdRequest CreateRequest()
     {
-        AdRequest request = new AdRequest.Builder().AddTestDevice("BA730DD6C0C19894C11CB7FDF6D75AA8").Build();
+        AdRequest request = new AdRequest.Builder().AddTestDevice("BA730DD6C0C19894C11CB7FDF6D75AA8").AddTestDevice("D96EFB8D3BB99E5B5CAF739EB1EB5E9D").Build();
         return request;
     }
     void InitInterstitial()
@@ -179,7 +180,7 @@ public class AdsManager : MonoBehaviour
     #region Handler
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
-        Debug.LogError("Ads-HandleAdClosed event received");
+        //Debug.LogError("Ads-HandleAdClosed event received");
         if (acInterClosed != null)
             acInterClosed(true);
         interstitial.LoadAd(CreateRequest());
@@ -187,12 +188,12 @@ public class AdsManager : MonoBehaviour
 
     private void RewardedAd_OnAdLoaded(object sender, EventArgs e)
     {
-        Debug.LogError("Ads-RewardedAd_OnAdLoaded");
+        //Debug.LogError("Ads-RewardedAd_OnAdLoaded");
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args)
     {
-        Debug.LogError("Ads-HandleRewardedAdClosed event received");
+        //Debug.LogError("Ads-HandleRewardedAdClosed event received");
         if (acRewarded != null)
         {
             acRewarded(false);
