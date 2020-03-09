@@ -1025,6 +1025,7 @@ public class DataController : MonoBehaviour
                 if ((System.DateTime.Now - DataParam.timeBeginBuyPrimeAccount).TotalSeconds >= 86400)
                 {
                     primeAccout.takecoin = primeAccout.takegem = false;
+                    Debug.LogError("wtfffffffffffff");
                 }
             }
         }

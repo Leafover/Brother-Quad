@@ -77,6 +77,7 @@ public class PrimeAccount : MonoBehaviour
         {
             DataController.primeAccout.countDay--;
             timeText.text = "TIME EXPIRED TIME: " + DataController.primeAccout.countDay;
+            DataParam.timeBeginBuyPrimeAccount = System.DateTime.Now;
             if (DataController.primeAccout.countDay <= 0)
             {
                 ResetPrimeAccount();

@@ -117,8 +117,6 @@ public class GameController : MonoBehaviour
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
         CameraController.instance.Init();
-        //   PlayerController.instance.transform.position = currentMap.pointBeginPlayer.transform.position;
-        //  PlayerController.instance.skeletonAnimation.gameObject.SetActive(false);
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
@@ -126,20 +124,13 @@ public class GameController : MonoBehaviour
         StartCoroutine(CountTimePlay());
         countCombo = 0;
         AddProperties();
-        //  currentMap.myBg.transform.position = new Vector3(Camera.main.transform.position.x,Camera.main.transform.position.y,currentMap.myBg.transform.position.z);
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
         DisplaySetting();
-
         maybay.Begin(currentMap.pointBeginPlayer.transform.position);
-
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
-
         StartCoroutine(DelayLoadMap());
-        //  DataParam.indexStage = 2;
-
-        //  Debug.LogError(":" + DataParam.indexStage + ":" + DataParam.indexMap);
     }
     IEnumerator DelayLoadMap()
     {

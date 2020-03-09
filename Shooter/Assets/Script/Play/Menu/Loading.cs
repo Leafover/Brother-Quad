@@ -58,9 +58,6 @@ public class Loading : MonoBehaviour
                 isloading = false;
                 currentLoadingOperation.allowSceneActivation = true;
             }
-
-
-
         }
     }
 }
