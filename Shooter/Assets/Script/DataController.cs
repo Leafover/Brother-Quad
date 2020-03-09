@@ -236,8 +236,6 @@ public class DataController : MonoBehaviour
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;
-
-
     }
     public bool loaddatabegin;
     private void OnValidate()

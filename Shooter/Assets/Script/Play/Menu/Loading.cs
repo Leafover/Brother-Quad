@@ -9,7 +9,7 @@ public class Loading : MonoBehaviour
     public Image fillImage;
     public Text hintText, versionText;
     public AsyncOperation currentLoadingOperation;
-
+    public RectTransform fill;
 
     public void Show(AsyncOperation loadingOperation)
     {
@@ -28,16 +28,39 @@ public class Loading : MonoBehaviour
         versionText.text = "Version: " + Application.version;
         Show(SceneManager.LoadSceneAsync(DataParam.nextSceneAfterLoad));
     }
+    Vector2 size;
+    Vector2 pos;
     private void Update()
     {
         if (isloading)
         {
-            fillImage.fillAmount += Time.deltaTime / 3;
-            if (fillImage.fillAmount >= 1)
+            //fillImage.fillAmount += Time.deltaTime / 3;
+            //if (fillImage.fillAmount >= 1)
+            //{
+            //    isloading = false;
+            //    currentLoadingOperation.allowSceneActivation = true;
+            //}
+
+
+            pos = fill.anchoredPosition;
+            size = fill.sizeDelta;
+            size.x += Time.deltaTime * 200;
+            size.y = fill.sizeDelta.y;
+            pos.x = size.x / 2;
+            pos.y = fill.anchoredPosition.y;
+
+
+            fill.sizeDelta = size;
+            fill.anchoredPosition = pos;
+
+            if (fill.sizeDelta.x >= 1300)
             {
                 isloading = false;
                 currentLoadingOperation.allowSceneActivation = true;
             }
+
+
+
         }
     }
 }
