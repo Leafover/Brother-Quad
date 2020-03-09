@@ -44,7 +44,7 @@ public class Loading : MonoBehaviour
 
             pos = fill.anchoredPosition;
             size = fill.sizeDelta;
-            size.x += Time.deltaTime * 200;
+            size.x += Time.deltaTime * 250;
             size.y = fill.sizeDelta.y;
             pos.x = size.x / 2;
             pos.y = fill.anchoredPosition.y;

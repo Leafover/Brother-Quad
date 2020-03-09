@@ -136,9 +136,15 @@ public class GameController : MonoBehaviour
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
 
-      //  DataParam.indexStage = 2;
+        StartCoroutine(DelayLoadMap());
+        //  DataParam.indexStage = 2;
 
-      //  Debug.LogError(":" + DataParam.indexStage + ":" + DataParam.indexMap);
+        //  Debug.LogError(":" + DataParam.indexStage + ":" + DataParam.indexMap);
+    }
+    IEnumerator DelayLoadMap()
+    {
+        yield return new WaitForSeconds(0.2f);
+        uiPanel.loadingPanel.SetActive(false);
     }
     public void ActiveUI()
     {
@@ -666,10 +672,10 @@ public class GameController : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < lstItemRewardName.Count; i++)
+        for (int i = 0; i < lstItemRewardName.Count; i++)
         {
             Debug.LogError("Replace---> " + DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]) + " vs " + lstItemRewardName[i]);
-            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i].Replace("M-","")))
+            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i].Replace("M-", "")))
             {
                 uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i].Replace("M-", "")];
                 uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];

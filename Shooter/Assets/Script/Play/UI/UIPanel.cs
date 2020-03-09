@@ -14,7 +14,7 @@ public class UIPanel : MonoBehaviour
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth,loadingPanel;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText,pricegemText;
     public TextMeshProUGUI myGemText;
