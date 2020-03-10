@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
 #endif
         gameState = GameState.begin;
+
     }
     ItemBase coinItem;
     public void SpawnCoin(int total, Vector2 pos)
@@ -103,10 +104,22 @@ public class GameController : MonoBehaviour
             MissionController.Instance.listMissions[i].isDone = false;
         }
         vatphamnhanduoc.Clear();
-        for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
+
+        if (DataUtils.modeSelected == 0)
         {
-            if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
-                vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
+            for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
+            {
+                if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
+                    vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList.Count; i++)
+            {
+                if (DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
+                    vatphamnhanduoc.Add(DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i]);
+            }
         }
         //  ThemManh();
     }

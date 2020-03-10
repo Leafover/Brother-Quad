@@ -64,7 +64,7 @@ public class StageManager : MonoBehaviour
                     MapLevelControll levelControll = gStages[i].transform.GetChild(j).GetComponent<MapLevelControll>();
                     MapLevel mapLevel = new MapLevel();
                     mapLevel.levelID = levelControll.stageIndex + "_" + levelControll.mapIndex;
-                    if(i==0 && j == 0)
+                    if (i == 0 && j == 0)
                     {
                         levelControll.canPlay = true;
                     }
@@ -144,8 +144,9 @@ public class StageManager : MonoBehaviour
         for (int j = 0; j < gStages[MainMenuController.Instance.stageSelected - 1].transform.childCount; j++)
         {
             MapLevelControll levelControll = gStages[MainMenuController.Instance.stageSelected - 1].transform.GetChild(j).GetComponent<MapLevelControll>();
-            if (levelControll.canPlay) {
-                if(levelControll.mapIndex != _mapIndex)
+            if (levelControll.canPlay)
+            {
+                if (levelControll.mapIndex != _mapIndex)
                 {
                     levelControll.imgMap.sprite = imgMapUnlock;
                     levelControll.transform.localScale = levelControll.vCurScale;
@@ -235,7 +236,7 @@ public class StageManager : MonoBehaviour
             DataController.instance.DoAchievement(5, 1);
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-            
+
             MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
         }
@@ -252,7 +253,7 @@ public class StageManager : MonoBehaviour
         txtMission2.text = "";
         txtMission3.text = "";
         levelControll = null;
-        for(int i = 0; i < imgMission.Length; i++)
+        for (int i = 0; i < imgMission.Length; i++)
         {
             imgMission[i].sprite = imgStarNotYetUnlock;
         }
@@ -270,7 +271,7 @@ public class StageManager : MonoBehaviour
         MapLevel mapLevel = DataUtils.GetMapByIndex(stageSelect, mapSelect);
         for (int i = 0; i < mapLevel.mission.Count; i++)
         {
-            if(mapLevel.mission[i].isPass)
+            if (mapLevel.mission[i].isPass)
             {
                 imgMission[i].sprite = imgStar;
             }

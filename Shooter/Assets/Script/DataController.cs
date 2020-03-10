@@ -209,6 +209,7 @@ public class DataController : MonoBehaviour
     public List<Achievement> allAchievement = new List<Achievement>();
     public static List<SaveAchievement> saveAllAchievement = new List<SaveAchievement>();
     public List<AllTileVatPham> allTileVatPham = new List<AllTileVatPham>();
+    public List<AllTileVatPham> allTileVatPhamHard = new List<AllTileVatPham>();
     public List<AllShoes> allShoes = new List<AllShoes>();
     public List<AllBag> allBag = new List<AllBag>();
     public List<AllGloves> allGloves = new List<AllGloves>();
@@ -221,7 +222,7 @@ public class DataController : MonoBehaviour
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
-    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData,nameBlackMarketData;
+    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData,nameBlackMarketData, nameDataTiLeVatPhamHard;
     private void Awake()
     {
         instance = this;
@@ -232,7 +233,7 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-        Debug.unityLogger.logEnabled = false;
+       // Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;
@@ -264,6 +265,7 @@ public class DataController : MonoBehaviour
             bagList.Clear();
             shoesList.Clear();
             tilevatphamList.Clear();
+            tilevatphamListHard.Clear();
             LoadWeapon(nameDataWeapon);
             LoadArmor(nameDataArmor);
             LoadHelmet(nameDataHelmet);
@@ -271,6 +273,7 @@ public class DataController : MonoBehaviour
             LoadBag(nameDataBag);
             LoadShoes(nameDataShoes);
             LoadTiLeVatPham(nameDataTiLeVatPham);
+            LoadTiLeVatPhamHard(nameDataTiLeVatPhamHard);
             #endregion
 
             loaddatabegin = true;
@@ -998,6 +1001,30 @@ public class DataController : MonoBehaviour
             allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Add(tilevatphamList[i]);
         }
     }
+    List<TileVatPhamList> tilevatphamListHard = new List<TileVatPhamList>();
+    public void LoadTiLeVatPhamHard(string path)
+    {
+        if (tilevatphamListHard.Count == 44)
+            return;
+        _ta = Resources.Load<TextAsset>("JsonData/" + path);
+
+        jData = JsonMapper.ToObject(_ta.text);
+        for (int i = 0; i < jData.Count; i++)
+        {
+            TileVatPhamList _tilevatphamList = JsonMapper.ToObject<TileVatPhamList>(jData[i].ToJson());
+            tilevatphamListHard.Add(_tilevatphamList);
+        }
+
+
+        for (int i = 0; i < tilevatphamListHard.Count; i++)
+        {
+            if (allTileVatPhamHard[tilevatphamListHard[i].Stage - 1].tilevatphamList.Count == 9)
+                return;
+            allTileVatPhamHard[tilevatphamListHard[i].Stage - 1].tilevatphamList.Add(tilevatphamListHard[i]);
+        }
+    }
+
+
     public void LoadDataPrimeAccount()
     {
         strPrimeAccount = PlayerPrefs.GetString(DataParam.PRIMEACCOUNTINFO);

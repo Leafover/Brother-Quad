@@ -346,6 +346,7 @@ public class PlayerController : MonoBehaviour
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
         // skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
         AddProperties();
+
         SetGun(DataUtils.itemWeapon.weponIndex);
         //   Debug.Log(skins.Length);
 
