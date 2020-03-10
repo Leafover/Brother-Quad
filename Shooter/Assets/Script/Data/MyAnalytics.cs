@@ -30,7 +30,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent(EVENT_LEVEL_PLAY, _pamLevelPlay);
+        FirebaseAnalytics.LogEvent(EVENT_LEVEL_PLAY + "_" + level + "_stage_" + stage, _pamLevelPlay);
     }
 
     public static void LogMoreGame()
@@ -45,7 +45,7 @@ public class MyAnalytics
                 new Parameter("checkpoint_index", checkPointIndex),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent(EVENT_LOSE_LEVEL, _pamLevelLose);
+        FirebaseAnalytics.LogEvent(EVENT_LOSE_LEVEL + "_" + level + "_stage_" + stage, _pamLevelLose);
         LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
@@ -54,7 +54,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent("level_complete", _pamLevelComplete);
+        FirebaseAnalytics.LogEvent("level_complete_" + level + "_stage_" + stage, _pamLevelComplete);
     }
     public static void LogEventGameOver(int level, int stage)//3
     {
@@ -62,7 +62,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent("level_end", _pamLevelEnd);
+        FirebaseAnalytics.LogEvent("level_end_" + level + "_stage_" + stage, _pamLevelEnd);
     }
     #endregion
 }

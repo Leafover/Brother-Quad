@@ -233,7 +233,7 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-       // Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;
