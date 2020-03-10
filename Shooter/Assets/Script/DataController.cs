@@ -452,17 +452,13 @@ public class DataController : MonoBehaviour
         {
             randomBlackMarket = Random.Range(0, blackMarketData.Count);
             _tempBlackMarket = blackMarketData[randomBlackMarket];
-            if (!blackMarketSave.Contains(_tempBlackMarket));
+            _tempBlackMarket.countnumber = 5;
+            if (!blackMarketSave.Contains(_tempBlackMarket))
             {
               //  Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
                 blackMarketSave.Add(_tempBlackMarket);
             }
         }
-
-        //for(int i = 0; i < blackMarketSave.Count; i++)
-        //{
-        //   // Debug.LogError(blackMarketSave[i].ID + ":" + blackMarketSave[i].Level + ":" + blackMarketSave[i].NAME + ":" + blackMarketSave[i].GiaBanCoin);
-        //}
     }
     public void LoadDailyQuest()
     {
@@ -1060,6 +1056,16 @@ public class DataController : MonoBehaviour
         SaveAchievement();
         SaveDailyQuest();
         SaveBlackMarket();
+
+        if(Application.loadedLevelName == "play")
+        {
+            if(GameController.instance != null)
+            {
+                if (!GameController.instance.uiPanel.loadingPanel.activeSelf)
+                    PopupSetting.Instance.ShowPanelSetting();
+            }
+
+        }
     }
     public void LoadData()
     {

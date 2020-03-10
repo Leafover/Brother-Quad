@@ -83,7 +83,7 @@ public class MiniBoss1 : EnemyBase
     {
         //for(int i = 0; i < 3; i ++)
         //{
-        randomSlot = Random.Range(0, 3);
+        randomSlot = Random.Range(0, 2);
 
 
         //g = ObjectPoolerManager.Instance.rocketMiniBoss1Pooler.GetPooledObject();
@@ -114,12 +114,12 @@ public class MiniBoss1 : EnemyBase
                 //g.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
                 //g.transform.rotation = gunRotation1.rotation;
                 break;
-            case 2:
-                bulletEnemy.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-                bulletEnemy.transform.rotation = gunRotation2.rotation;
-                //g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-                //g.transform.rotation = gunRotation2.rotation;
-                break;
+            //case 2:
+            //    bulletEnemy.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+            //    bulletEnemy.transform.rotation = gunRotation2.rotation;
+            //    //g.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+            //    //g.transform.rotation = gunRotation2.rotation;
+            //    break;
         }
         listMyBullet.Add(bulletEnemy);
         bulletEnemy.gameObject.SetActive(true);
@@ -172,11 +172,11 @@ public class MiniBoss1 : EnemyBase
         exploDie.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
         exploDie.SetActive(true);
 
-        yield return new WaitForSeconds(0.3f);
+        //yield return new WaitForSeconds(0.3f);
 
-        exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
-        exploDie.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
-        exploDie.SetActive(true);
+        //exploDie = ObjectPoolerManager.Instance.exploBeforeBoss2DiePooler.GetPooledObject();
+        //exploDie.transform.position = boneBarrelGun2.GetWorldPosition(skeletonAnimation.transform);
+        //exploDie.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
         SoundController.instance.PlaySound(soundGame.soundexploenemy);

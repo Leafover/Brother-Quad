@@ -38,6 +38,8 @@ public class MainMenuController : MonoBehaviour
             dailyGift.ShowDailyGiftPanel();
         }
         //equipmentManager.InitAllItems();
+
+
     }
 
 

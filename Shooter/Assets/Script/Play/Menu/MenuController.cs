@@ -64,6 +64,9 @@ public class MenuController : MonoBehaviour
         DataParam.first = false;
         DisplayWarning();
         CheckDisplayWarningPrimeAccount();
+
+
+      //  DataUtils.AddCoinAndGame(10000000, 100000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
