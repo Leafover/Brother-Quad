@@ -10,7 +10,7 @@ public class MenuController : MonoBehaviour
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
     public GameObject PrimeAccountPanel;
     public BlackMarketPanel blackMarketpanel;
-    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount,warningvideoreward;
+    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount, warningvideoreward;
 
     private void Awake()
     {
@@ -65,13 +65,15 @@ public class MenuController : MonoBehaviour
         DisplayWarning();
         CheckDisplayWarningPrimeAccount();
 
-        if(DataParam.indexRewardVideo < freeRewardVideoPanel.btnvideo.Length)
+        if (DataParam.indexRewardVideo < freeRewardVideoPanel.btnvideo.Length)
         {
             warningvideoreward.SetActive(true);
         }
         else
             warningvideoreward.SetActive(false);
-        //  DataUtils.AddCoinAndGame(10000000, 100000);
+
+        if (DataController.instance.isHack)
+            DataUtils.AddCoinAndGame(10000000, 100000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
@@ -88,7 +90,7 @@ public class MenuController : MonoBehaviour
     }
     public void BtnDisplayBlackMarket(bool open)
     {
-        if(open)
+        if (open)
         {
             blackMarketpanel.gameObject.SetActive(true);
         }

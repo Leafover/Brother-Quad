@@ -50,7 +50,7 @@ public class ShopItem : MonoBehaviour
                 packID = DataUtils.P_600GEM_PACK;
                 break;
         }
-        txtPrice.text = GameIAPManager.GetPriceByID(packID); //"BUY";
+        txtPrice.text = /*GameIAPManager.GetPriceByID(packID);*/ "BUY";
     }
     // Start is called before the first frame update
     void Start()
