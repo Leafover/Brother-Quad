@@ -474,11 +474,13 @@ public class DataController : MonoBehaviour
             AddNewQuest();
             AddNewBlackMarket();
             DataParam.countResetBlackMarket = 0;
-            // Debug.LogError("load data lần đầu tiên");
+            DataParam.indexRewardVideo = 0;
         }
         DataParam.oldDateTime = System.Convert.ToDateTime(PlayerPrefs.GetString(DataParam.OLDDATETIME));
         if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 86400)
         {
+            DataParam.indexRewardVideo = PlayerPrefs.GetInt(DataParam.INDEXREWARDVIDEO);
+
             strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
 
             string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
@@ -516,6 +518,7 @@ public class DataController : MonoBehaviour
         AddNewQuest();
         AddNewBlackMarket();
         DataParam.countResetBlackMarket = 0;
+        DataParam.indexRewardVideo = 0;
         // Debug.LogError("load data mới sau 1 ngày");
     }
     public void LoadDataMission(string path, int index)
@@ -1119,6 +1122,8 @@ public class DataController : MonoBehaviour
             strSaveIndexQuest += saveIndexQuest[i] + "@";
         }
         PlayerPrefs.SetString(DataParam.SAVEINDEXQUEST, strSaveIndexQuest);
+
+        PlayerPrefs.SetInt(DataParam.INDEXREWARDVIDEO, DataParam.indexRewardVideo);
     }
     void SaveAchievement()
     {

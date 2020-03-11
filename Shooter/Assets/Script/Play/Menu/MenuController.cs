@@ -6,11 +6,11 @@ public class MenuController : MonoBehaviour
 {
     public static MenuController instance;
     public AudioSource auBG;
-
+    public FreeRewardVideoPanel freeRewardVideoPanel;
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
-    public GameObject PrimeAccountPanel,blackMarketpanel;
+    public GameObject PrimeAccountPanel, blackMarketpanel;
 
-    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount;
+    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount,warningvideoreward;
 
     private void Awake()
     {
@@ -65,8 +65,13 @@ public class MenuController : MonoBehaviour
         DisplayWarning();
         CheckDisplayWarningPrimeAccount();
 
-
-      //  DataUtils.AddCoinAndGame(10000000, 100000);
+        if(DataParam.indexRewardVideo < freeRewardVideoPanel.btnvideo.Length)
+        {
+            warningvideoreward.SetActive(true);
+        }
+        else
+            warningvideoreward.SetActive(false);
+        //  DataUtils.AddCoinAndGame(10000000, 100000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
@@ -91,6 +96,10 @@ public class MenuController : MonoBehaviour
         {
             blackMarketpanel.SetActive(false);
         }
+    }
+    public void BtnDisplayFreeRewardVideoPanel(bool open)
+    {
+        freeRewardVideoPanel.gameObject.SetActive(open);
     }
     public void DisplayWarning()
     {

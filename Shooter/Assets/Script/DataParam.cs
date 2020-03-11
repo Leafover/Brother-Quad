@@ -17,8 +17,9 @@ public class DataParam : MonoBehaviour
     public const string TIMEBEGINBUYPRIMEACCOUNT = "timebeginbuyprimeaccount";
     public const string BLACKMARKET = "blackmarket";
     public const string COUNTRESETBLACKMARKET = "countresetblackmarket";
+    public const string INDEXREWARDVIDEO = "indexrewardvideo";
     public static bool first = true, doneAllDailyQuest = false;
-    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase,countResetBlackMarket = 0;
+    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase,countResetBlackMarket = 0, indexRewardVideo = 0;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",
     "Daily free gifts contain many useful items",
