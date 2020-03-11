@@ -47,6 +47,11 @@ public class DataUtils
     public const string P_12500GEM_PACK = "com.ohze.rambo.12500gem";
 
     public static ItemWeapon itemWeapon;
+    public static ItemArmor itemArmor;
+    public static ItemBag itemBag;
+    public static ItemGloves itemGloves;
+    public static ItemHelmet itemHelmet;
+    public static ItemShoes itemShoes;
 
     #region Remove Ads
     public static void RemoveAds()
@@ -200,14 +205,18 @@ public class DataUtils
     public static void CheckEquipWeapon()
     {
         itemWeapon = new ItemWeapon();
-        Debug.LogError("CheckEquipWeapon");
+        itemArmor = new ItemArmor();
+        itemBag = new ItemBag();
+        itemGloves = new ItemGloves();
+        itemHelmet = new ItemHelmet();
+        itemShoes = new ItemShoes();
+
         string _key = "";
         foreach (ItemData item in /*dicEquippedItem.Values*/dicAllEquipment.Values)
         {
             if (item.isEquipped)
             {
                 _key = item.id + "_" + item.level;
-                Debug.LogError("item______curStar: " + item.curStar);
                 int curStar = item.curStar < 5 ? item.curStar : 4;
                 switch (item.type)
                 {
@@ -223,14 +232,30 @@ public class DataUtils
                         itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar];
                         break;
                     case "ARMOR":
+                        itemArmor.armorIndex = int.Parse(item.id.Replace("A", "").Trim()) - 1;
+                        itemArmor.defIncrease = dicArmor[_key].DefValue[curStar];
+                        itemArmor.speedReduce = dicArmor[_key].SpeedTruValue[curStar];
                         break;
                     case "HELMET":
+                        itemHelmet.helIndex = int.Parse(item.id.Replace("H", "").Trim()) - 1;
+                        itemHelmet.bonusExp = dicHelmet[_key].BonusExpValue[curStar];
+                        itemHelmet.defIncrease = dicHelmet[_key].DefValue[curStar];
                         break;
                     case "GLOVES":
+                        itemGloves.gloveIndex = int.Parse(item.id.Replace("G", "").Trim()) - 1;
+                        itemGloves.reloadTimeReduce = dicGloves[_key].GiamtimereloadValue[curStar];
+                        itemGloves.critDamageIncrease = dicGloves[_key].TangcritdmgValue[curStar];
+                        itemGloves.critRateIncrease = dicGloves[_key].tangcritrateValue[curStar];
                         break;
                     case "BAG":
+                        itemBag.bagIndex = int.Parse(item.id.Replace("B", "").Trim()) - 1;
+                        itemBag.totalAidDrop = dicBag[_key].BonussoluongmauanduocValue[curStar];
+                        itemBag.HealthRegeneration = dicBag[_key].HealthRegenerationValue[curStar];
                         break;
                     case "SHOES":
+                        itemShoes.shoeIndex = int.Parse(item.id.Replace("S", "").Trim()) - 1;
+                        itemShoes.moveSpeedIncrease = dicShoes[_key].TangSpeeDichuyenValue[curStar];
+                        itemShoes.jumpHeight = dicShoes[_key].TangDoCaoNhayValue[curStar];
                         break;
                 }
             }
@@ -390,7 +415,7 @@ public class DataUtils
         }
         return res;
     }
-    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)                                
+    private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
     {
         bool result = false;
         string key = id + "_" + level + "_" + isUnlock + "_" + isEquipped;
@@ -516,9 +541,10 @@ public class DataUtils
             {
                 int _curPiece = dicAllEquipment[_key].pices;
                 Debug.LogError("IsUnlock: " + dicAllEquipment[_key].isUnlock + " vs " + GetPiceByStar(dicAllEquipment[_key]) + " vs " + _pices + " vs " + dicAllEquipment[_key].pices);
-                if (!dicAllEquipment[_key].isUnlock) {
+                if (!dicAllEquipment[_key].isUnlock)
+                {
                     dicAllEquipment[_key].pices += _pices;
-                    if(dicAllEquipment[_key].pices >= (int)GetPiceByStar(dicAllEquipment[_key]))
+                    if (dicAllEquipment[_key].pices >= (int)GetPiceByStar(dicAllEquipment[_key]))
                     {
                         int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key]);
                         dicAllEquipment[_key].pices = newPiece;
@@ -534,11 +560,12 @@ public class DataUtils
                         string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
                         string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
                         Debug.LogError(_keyCompare);
-                        if (!dicAllEquipment.ContainsKey(_keyNew)) {
+                        if (!dicAllEquipment.ContainsKey(_keyNew))
+                        {
 
                             string _keyDisplay = "--";
                             bool isEqual = true;
-                            foreach(ItemData itData in dicAllEquipment.Values)
+                            foreach (ItemData itData in dicAllEquipment.Values)
                             {
                                 _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
                                 Debug.LogError(_keyCompare + " vs " + _keyDisplay + " vs " + _keyCompare.Equals(_keyDisplay));
@@ -552,7 +579,8 @@ public class DataUtils
                                     isEqual = false;
                                 }
                             }
-                            if (!isEqual) {
+                            if (!isEqual)
+                            {
                                 dicAllEquipment.Add(_keyNew, iData_New);
                                 if (EquipmentManager.Instance != null)
                                 {
@@ -1119,7 +1147,7 @@ public class DataUtils
     }
     public static void HasClaimReward()
     {
-        string _key = System.DateTime.Now.Day +"_"+ System.DateTime.Now.Month;
+        string _key = System.DateTime.Now.Day + "_" + System.DateTime.Now.Month;
         PlayerPrefs.SetString(KEY_DAILY_REWARD, _key);
         PlayerPrefs.Save();
     }
@@ -1153,7 +1181,8 @@ public class DataUtils
         //    }
         //}
         //return _spr;
-        if (name.Contains("M-")) {
+        if (name.Contains("M-"))
+        {
             _spr = dicSpriteData[name];
         }
         else
