@@ -192,16 +192,6 @@ public class MapLevelControll : MonoBehaviour
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(false);
                 }
             }
-
-            //for (int i = 0; i < DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards.Count; i++)
-            //{
-            //    if (DataUtils.GetSpriteByName(/*DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim()*/GetRewardItemName(stageSelect + 1, mapSelect + 1), MainMenuController.Instance.allSpriteData) != null)
-            //    {
-            //        //StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(DataUtils.GetMapByIndex(stageIndex, mapIndex).rewards[i].rType.Trim(), MainMenuController.Instance.allSpriteData);
-            //        StageManager.Instance.imgItemReward[i].sprite = DataUtils.GetSpriteByName(GetRewardItemName(stageSelect + 1, mapSelect + 1), MainMenuController.Instance.allSpriteData);
-            //        StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
-            //    }
-            //}
         }
     }
     List<string> lstString = new List<string>();
@@ -209,15 +199,30 @@ public class MapLevelControll : MonoBehaviour
     {
         lstString.Clear();
         string _sResult = "";
-        for (int i = 0; i < DataController.instance.allTileVatPham.Count; i++)
+        if (DataUtils.modeSelected == 0)
         {
-            foreach (TileVatPhamList vatPhamList in DataController.instance.allTileVatPham[i].tilevatphamList)
+            for (int i = 0; i < DataController.instance.allTileVatPham.Count; i++)
             {
-                if (vatPhamList.Stage == stageSelect && vatPhamList.Level == mapSelect)
+                foreach (TileVatPhamList vatPhamList in DataController.instance.allTileVatPham[i].tilevatphamList)
                 {
-                    Debug.LogError("vatPhamList----> " + vatPhamList.ID);
-                    _sResult = vatPhamList.ID;
-                    lstString.Add(_sResult.Replace("M-", ""));
+                    if (vatPhamList.Stage == stageSelect && vatPhamList.Level == mapSelect)
+                    {
+                        _sResult = vatPhamList.ID;
+                        lstString.Add(_sResult.Replace("M-", ""));
+                    }
+                }
+            }
+        }
+        else if (DataUtils.modeSelected == 1) {
+            for (int i = 0; i < DataController.instance.allTileVatPhamHard.Count; i++)
+            {
+                foreach (TileVatPhamList vatPhamList in DataController.instance.allTileVatPhamHard[i].tilevatphamList)
+                {
+                    if (vatPhamList.Stage == stageSelect && vatPhamList.Level == mapSelect)
+                    {
+                        _sResult = vatPhamList.ID;
+                        lstString.Add(_sResult.Replace("M-", ""));
+                    }
                 }
             }
         }

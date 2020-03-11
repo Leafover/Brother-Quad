@@ -47,7 +47,7 @@ public class AdsManager : MonoBehaviour
 
     private void InitBanner()
     {
-        banner = new BannerView("ca-app-pub-8566745611252640/6715057094", AdSize.Banner, AdPosition.BottomRight);
+        banner = new BannerView(DataParam.BANNER_ID, AdSize.Banner, AdPosition.BottomRight);
         banner.OnAdLoaded += Banner_OnAdLoaded;
         banner.LoadAd(CreateRequest());
     }
