@@ -28,11 +28,13 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         btnPanelBuy = gPanelBuy.GetComponent<Button>();
-        btnPanelBuy.onClick.AddListener(() => { gPanelBuy.SetActive(false); });
+        btnPanelBuy.onClick.AddListener(() => {
+            gPanelBuy.SetActive(false);
+        });
 
         btnBuyPack.onClick.AddListener(() =>
         {
-            GameIAPManager.Instance.BuyProduct(_packID);
+            //GameIAPManager.Instance.BuyProduct(_packID);
             gPanelBuy.SetActive(false);
         });
     }
@@ -72,9 +74,9 @@ public class ShopManager : MonoBehaviour
     }
     private void ShowShopItem(DataUtils.ITEM_SHOP_TYPE shopType)
     {
-        foreach(ShopItem shopItem in shopItems)
+        foreach (ShopItem shopItem in shopItems)
         {
-            if(shopItem.shopType == shopType)
+            if (shopItem.shopType == shopType)
             {
                 shopItem.gameObject.SetActive(true);
             }
@@ -139,7 +141,7 @@ public class ShopManager : MonoBehaviour
             txtCoin.gameObject.transform.parent.parent.gameObject.SetActive(true);
         }
 
-        txtPackPrice.text = priceText;
+        //txtPackPrice.text = priceText;
         gPanelBuy.SetActive(true);
     }
     public void HideShop()

@@ -9,6 +9,7 @@ public class ShopItem : MonoBehaviour
     public PACK_NAME packName;
     public Text txtPrice;
     public DataUtils.ITEM_SHOP_TYPE shopType;
+    public Button btnInfo;
     public string packID;
     private Button btn;
 
@@ -60,16 +61,35 @@ public class ShopItem : MonoBehaviour
             switch (shopType)
             {
                 case DataUtils.ITEM_SHOP_TYPE.GEM:
-                    ProcessBuyGem();
+                    GameIAPManager.Instance.BuyProduct(packID);
+                    //ProcessBuyGem();
                     break;
                 case DataUtils.ITEM_SHOP_TYPE.PACKAGE:
-                    ProcessBuyPackage();
+                    GameIAPManager.Instance.BuyProduct(packID);
+                    //ProcessBuyPackage();
                     break;
                 case DataUtils.ITEM_SHOP_TYPE.LUCKYCHEST:
                     ProcessBuyResources();
                     break;
             }
         });
+        if (btnInfo != null) {
+            btnInfo.onClick.AddListener(() =>
+            {
+                switch (shopType)
+                {
+                    case DataUtils.ITEM_SHOP_TYPE.GEM:
+                        ProcessBuyGem();
+                        break;
+                    case DataUtils.ITEM_SHOP_TYPE.PACKAGE:
+                        ProcessBuyPackage();
+                        break;
+                    case DataUtils.ITEM_SHOP_TYPE.LUCKYCHEST:
+                        ProcessBuyResources();
+                        break;
+                }
+            });
+        }
     }
 
     private void ProcessBuyGem()
