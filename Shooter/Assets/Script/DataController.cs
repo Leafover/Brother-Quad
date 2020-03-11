@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+#region Ti le quay manh
+[System.Serializable]
+public class TileQuayManh
+{
+    public int Time;
+    public double item1, item2, item3, item4, item5, item6, TOTAL;
+}
+#endregion
+
 #region BlackMarket
 [System.Serializable]
 public class BlackMarketData
@@ -201,6 +210,8 @@ public class AllMission
 #endregion
 public class DataController : MonoBehaviour
 {
+    public static List<int> levelOfLuckChest = new List<int>();
+    public List<TileQuayManh> tilemanhquay = new List<TileQuayManh>();
     public List<BlackMarketData> blackMarketData = new List<BlackMarketData>();
     public static List<BlackMarketData> blackMarketSave = new List<BlackMarketData>();
     public static PrimeAccountClass primeAccout = new PrimeAccountClass();
@@ -222,7 +233,7 @@ public class DataController : MonoBehaviour
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
-    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData,nameBlackMarketData, nameDataTiLeVatPhamHard;
+    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData,nameBlackMarketData, nameDataTiLeVatPhamHard,nameDataTiLeQuayManh;
     private void Awake()
     {
         instance = this;
@@ -233,7 +244,8 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-        Debug.unityLogger.logEnabled = false;
+
+      //  Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;
@@ -253,6 +265,8 @@ public class DataController : MonoBehaviour
             {
                 LoadDataMission(nameDataMissionText[i], i);
             }
+
+            LoadTileQuayManhData(nameDataTiLeQuayManh);
             LoadBlackMarketData(nameBlackMarketData);
             LoadAchievement(nameAchievementData);
             LoadDailyQuest(nameDailyQuestData);
@@ -281,6 +295,20 @@ public class DataController : MonoBehaviour
     }
     TextAsset _ta;
     JsonData jData;
+    public void LoadTileQuayManhData(string path)
+    {
+        if (tilemanhquay.Count == 45)
+            return;
+
+        _ta = Resources.Load<TextAsset>("JsonData/" + path);
+        jData = JsonMapper.ToObject(_ta.text);
+
+        for (int i = 0; i < jData.Count; i++)
+        {
+            TileQuayManh _tilequaymanh = JsonMapper.ToObject<TileQuayManh>(jData[i].ToJson());
+            tilemanhquay.Add(_tilequaymanh);
+        }
+    }
     public void LoadBlackMarketData (string path)
     {
         if (blackMarketData.Count == 177)
@@ -1099,6 +1127,8 @@ public class DataController : MonoBehaviour
     }
     public void LoadData()
     {
+        for (int i = 0; i < 4; i++)
+            levelOfLuckChest.Add(0);
         LoadDataPrimeAccount();
         LoadAchievement();
         LoadDailyQuest();

@@ -65,7 +65,7 @@ public class ShopItem : MonoBehaviour
                 case DataUtils.ITEM_SHOP_TYPE.PACKAGE:
                     ProcessBuyPackage();
                     break;
-                case DataUtils.ITEM_SHOP_TYPE.RESOURCES:
+                case DataUtils.ITEM_SHOP_TYPE.LUCKYCHEST:
                     ProcessBuyResources();
                     break;
             }

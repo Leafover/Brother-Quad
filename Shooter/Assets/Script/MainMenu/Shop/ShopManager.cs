@@ -17,6 +17,7 @@ public class ShopManager : MonoBehaviour
     public Transform trShopContain;
     public ShopItem[] shopItems;
 
+    public GameObject TabLuckyChest;
 
     private Button btnPanelBuy;
     private string _packID;
@@ -55,10 +56,17 @@ public class ShopManager : MonoBehaviour
             case 0://Package
                 trShopContain.GetChild(0).gameObject.SetActive(true);
                 ShowShopItem(DataUtils.ITEM_SHOP_TYPE.PACKAGE);
+                TabLuckyChest.SetActive(false);
                 break;
             case 1://Gem
                 trShopContain.GetChild(0).gameObject.SetActive(false);
                 ShowShopItem(DataUtils.ITEM_SHOP_TYPE.GEM);
+                TabLuckyChest.SetActive(false);
+                break;
+            case 2://Luck Chest
+                trShopContain.GetChild(0).gameObject.SetActive(false);
+                ShowShopItem(DataUtils.ITEM_SHOP_TYPE.LUCKYCHEST);
+                TabLuckyChest.SetActive(true);
                 break;
         }
     }

@@ -8,8 +8,8 @@ public class MenuController : MonoBehaviour
     public AudioSource auBG;
     public FreeRewardVideoPanel freeRewardVideoPanel;
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
-    public GameObject PrimeAccountPanel, blackMarketpanel;
-
+    public GameObject PrimeAccountPanel;
+    public BlackMarketPanel blackMarketpanel;
     public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount,warningvideoreward;
 
     private void Awake()
@@ -90,11 +90,11 @@ public class MenuController : MonoBehaviour
     {
         if(open)
         {
-            blackMarketpanel.SetActive(true);
+            blackMarketpanel.gameObject.SetActive(true);
         }
         else
         {
-            blackMarketpanel.SetActive(false);
+            blackMarketpanel.gameObject.SetActive(false);
         }
     }
     public void BtnDisplayFreeRewardVideoPanel(bool open)
