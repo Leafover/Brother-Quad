@@ -429,7 +429,7 @@ public class PlayerController : MonoBehaviour
                     if (!isLowJump)
                         jumpVelo.y = force;
                     else
-                        jumpVelo.y = force / 3;
+                        jumpVelo.y = force / 2;
                     rid.velocity = /*new Vector2(rid.velocity.x, force)*/jumpVelo;
                     yield return null;
                 }

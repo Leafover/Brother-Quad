@@ -202,6 +202,40 @@ public class StageManager : MonoBehaviour
     public void StartLevel()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
+
+
+        if (DataController.instance.isHack)
+        {
+            DataParam.indexStage = _stageSelect;
+            DataParam.indexMap = _mapSelect;
+
+            DataUtils.CheckEquipWeapon();
+
+            #region Start Level
+            _listMission = new ListMission();
+            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
+            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+
+            MissionController.Instance.listMissions.Add(_listMission);
+
+            _listMission = new ListMission();
+            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
+            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+
+            MissionController.Instance.listMissions.Add(_listMission);
+
+            DataParam.nextSceneAfterLoad = 2;
+
+            DataController.instance.DoAchievement(5, 1);
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+            #endregion
+            return;
+        }
+
+
         if (_stageSelect < 0 || _mapSelect < 0)
         {
             MainMenuController.Instance.ShowMapNotify("Please select map to play.");

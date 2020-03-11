@@ -116,6 +116,17 @@ public class MainMenuController : MonoBehaviour
     public void ChooseStage(int stage)
     {
         SoundClickButton();
+
+        if(DataController.instance.isHack)
+        {
+            stageSelected = stage;
+            gPanelUIButton.SetActive(false);
+            gPanelStage.SetActive(true);
+            StageManager.Instance.ChooseNormalMode();
+            return;
+        }
+
+
         if (stage > DataUtils.TOTAL_STAGE)
         {
             ShowMapNotify("Stage " + stage + " Coming Soon");

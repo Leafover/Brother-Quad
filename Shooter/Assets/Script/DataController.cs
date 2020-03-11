@@ -210,6 +210,7 @@ public class AllMission
 #endregion
 public class DataController : MonoBehaviour
 {
+    public bool isHack;
     public static List<int> levelOfLuckChest = new List<int>();
     public List<TileQuayManh> tilemanhquay = new List<TileQuayManh>();
     public List<BlackMarketData> blackMarketData = new List<BlackMarketData>();

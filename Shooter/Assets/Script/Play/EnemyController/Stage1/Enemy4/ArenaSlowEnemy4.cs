@@ -28,7 +28,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
             if (damage)
             {
                 PlayerController.instance.isLowJump = true;
-                PlayerController.instance.slowRate = 65;
+                PlayerController.instance.slowRate = 45;
                 timedamage -= Time.deltaTime;
                 if (timedamage <= 0)
                 {
@@ -38,7 +38,7 @@ public class ArenaSlowEnemy4 : MonoBehaviour
             }
             else
             {
-                PlayerController.instance.slowRate = 50;
+                PlayerController.instance.slowRate = 30;
             }
         }
     }
