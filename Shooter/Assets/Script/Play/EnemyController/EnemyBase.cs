@@ -486,22 +486,23 @@ public class EnemyBase : AutoTarget
     ItemBase itemDrop;
     int randomCoin;
 
-
-
     public void ItemDropFormDead()
     {
         switch (typeItemDrop)
         {
             case TypeItemDrop.coin:
-                if (haveCoin && GameController.instance.totalDropCoin > 0)
+                if (!enemyAutoSpawn)
                 {
-                    randomCoin = Random.Range(3, 5);
-                    if (GameController.instance.totalDropCoin - randomCoin < 0)
+                    if (haveCoin && GameController.instance.totalDropCoin > 0)
                     {
-                        randomCoin = GameController.instance.totalDropCoin;
+                        randomCoin = Random.Range(3, 5);
+                        if (GameController.instance.totalDropCoin - randomCoin < 0)
+                        {
+                            randomCoin = GameController.instance.totalDropCoin;
+                        }
+                        GameController.instance.totalDropCoin -= randomCoin;
+                        GameController.instance.SpawnCoin(randomCoin, transform.position);
                     }
-                    GameController.instance.totalDropCoin -= randomCoin;
-                    GameController.instance.SpawnCoin(randomCoin, transform.position);
                 }
                 break;
             case TypeItemDrop.health:
