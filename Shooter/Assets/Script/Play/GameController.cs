@@ -583,6 +583,8 @@ public class GameController : MonoBehaviour
     }
     public void HealthBtn()
     {
+        if (win || PlayerController.instance.playerState == PlayerController.PlayerState.Die)
+            return;
         if (usingHealthPack == 1 && DataUtils.playerInfo.healthPack > 0)
         {
             DataUtils.AddHPPack(-1);
