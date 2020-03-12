@@ -540,7 +540,7 @@ public class DataUtils
             if (dicAllEquipment.ContainsKey(_key))
             {
                 int _curPiece = dicAllEquipment[_key].pices;
-                Debug.LogError("IsUnlock: " + dicAllEquipment[_key].isUnlock + " vs " + GetPiceByStar(dicAllEquipment[_key]) + " vs " + _pices + " vs " + dicAllEquipment[_key].pices);
+                //Debug.LogError("IsUnlock: " + dicAllEquipment[_key].isUnlock + " vs " + GetPiceByStar(dicAllEquipment[_key]) + " vs " + _pices + " vs " + dicAllEquipment[_key].pices);
                 if (!dicAllEquipment[_key].isUnlock)
                 {
                     dicAllEquipment[_key].pices += _pices;
@@ -559,7 +559,7 @@ public class DataUtils
                         iData_New.isEquipped = false;
                         string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
                         string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
-                        Debug.LogError(_keyCompare);
+                        //Debug.LogError(_keyCompare);
                         if (!dicAllEquipment.ContainsKey(_keyNew))
                         {
 
@@ -568,7 +568,7 @@ public class DataUtils
                             foreach (ItemData itData in dicAllEquipment.Values)
                             {
                                 _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
-                                Debug.LogError(_keyCompare + " vs " + _keyDisplay + " vs " + _keyCompare.Equals(_keyDisplay));
+                                //Debug.LogError(_keyCompare + " vs " + _keyDisplay + " vs " + _keyCompare.Equals(_keyDisplay));
                                 if (_keyCompare.Equals(_keyDisplay))
                                 {
                                     dicAllEquipment[_key].pices = _curPiece + _pices;
@@ -594,14 +594,9 @@ public class DataUtils
                         else
                         {
                             dicAllEquipment[_key].pices = _curPiece + _pices;
-                            Debug.LogError("1");
+                            //Debug.LogError("1");
                         }
                     }
-                }
-                else
-                {
-                    Debug.LogError("2");
-
                 }
 
 
@@ -1059,8 +1054,6 @@ public class DataUtils
         lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
         lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
 
-        Debug.LogError("gem ads:" + gemAdded);
-
         SavePlayerData();
         if (MainMenuController.Instance != null)
         {
@@ -1068,6 +1061,18 @@ public class DataUtils
         }
 
         DataController.instance.DoDailyQuest(6, coinAdded);
+    }
+    public static void AddHPPack(int total_)
+    {
+        lstAllPlayerHeroes[HeroIndex()].healthPack += total_;
+        SavePlayerData();
+    }
+    public static int HPPack()
+    {
+        int _res = 0;
+        if (lstAllPlayerHeroes == null) _res = 0;
+        else _res = lstAllPlayerHeroes[HeroIndex()].healthPack;
+        return _res;
     }
 
     public static string GetAllHeroData()
