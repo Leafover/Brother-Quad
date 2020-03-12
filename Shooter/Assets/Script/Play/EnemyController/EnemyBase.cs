@@ -506,16 +506,22 @@ public class EnemyBase : AutoTarget
                 }
                 break;
             case TypeItemDrop.health:
-                itemDrop = ObjectPoolManagerHaveScript.Instance.itemHealthPooler.GetItemPooledObject();
-                itemDrop.transform.position = gameObject.transform.position;
-                itemDrop.AddNumberTemp(percentHealthForPlayer);
-                itemDrop.gameObject.SetActive(true);
+                if (DataUtils.modeSelected == 0)
+                {
+                    itemDrop = ObjectPoolManagerHaveScript.Instance.itemHealthPooler.GetItemPooledObject();
+                    itemDrop.transform.position = gameObject.transform.position;
+                    itemDrop.AddNumberTemp(percentHealthForPlayer);
+                    itemDrop.gameObject.SetActive(true);
+                }
                 break;
             case TypeItemDrop.gun:
-                itemDrop = ObjectPoolManagerHaveScript.Instance.gunItemPooler.GetItemPooledObject();
-                itemDrop.transform.position = gameObject.transform.position;
-                itemDrop.index = (int)percentHealthForPlayer/*Random.Range(0, GameController.instance.gunSprite.Count)*/;
-                itemDrop.gameObject.SetActive(true);
+                if (DataUtils.modeSelected == 0)
+                {
+                    itemDrop = ObjectPoolManagerHaveScript.Instance.gunItemPooler.GetItemPooledObject();
+                    itemDrop.transform.position = gameObject.transform.position;
+                    itemDrop.index = (int)percentHealthForPlayer/*Random.Range(0, GameController.instance.gunSprite.Count)*/;
+                    itemDrop.gameObject.SetActive(true);
+                }
                 break;
         }
 
@@ -555,15 +561,18 @@ public class EnemyBase : AutoTarget
 
         isActive = true;
 
-        if (haveItem != null)
+        if (DataUtils.modeSelected == 0)
         {
-            if (typeItemDrop == TypeItemDrop.health || typeItemDrop == TypeItemDrop.gun)
+            if (haveItem != null)
             {
-                haveItem.SetActive(true);
-            }
-            else
-            {
-                haveItem.SetActive(false);
+                if (typeItemDrop == TypeItemDrop.health || typeItemDrop == TypeItemDrop.gun)
+                {
+                    haveItem.SetActive(true);
+                }
+                else
+                {
+                    haveItem.SetActive(false);
+                }
             }
         }
         skeletonAnimation.gameObject.SetActive(true);
