@@ -585,7 +585,7 @@ public class GameController : MonoBehaviour
     {
         if (usingHealthPack == 1 && DataUtils.playerInfo.healthPack > 0)
         {
-            DataUtils.playerInfo.healthPack--;
+            DataUtils.AddHPPack(-1);
             usingHealthPack = 2;
             PlayerController.instance.AddHealth(PlayerController.instance.maxHealth);
             uiPanel.DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);

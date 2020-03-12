@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         {
             if (GameController.instance.usingHealthPack == 0)
             {
-                GameController.instance.uiPanel.DisplayBtnHealth(false, 3);
+                GameController.instance.uiPanel.DisplayBtnHealth(false, DataUtils.playerInfo.healthPack);
                 GameController.instance.usingHealthPack = 1;
             }
         }

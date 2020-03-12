@@ -61,7 +61,7 @@ public class FreeRewardVideoPanel : MonoBehaviour
                 DataUtils.AddCoinAndGame(freeReward[index].numberReward, 0);
                 break;
             case 2:
-                DataUtils.playerInfo.healthPack++;
+                DataUtils.AddHPPack(freeReward[index].numberReward);
                 break;
         }
 
