@@ -1116,15 +1116,19 @@ public class DataController : MonoBehaviour
         SaveDailyQuest();
         SaveBlackMarket();
 
+#if UNITY_EDITOR
+
+#else
         if(Application.loadedLevelName == "play")
         {
             if(GameController.instance != null)
             {
-                if (!GameController.instance.uiPanel.loadingPanel.activeSelf)
+                if (!GameController.instance.uiPanel.loadingPanel.activeSelf && !GameController.instance.uiPanel.defeatPanel.activeSelf)
                     PopupSetting.Instance.ShowPanelSetting();
             }
 
         }
+#endif
     }
     public void LoadData()
     {
