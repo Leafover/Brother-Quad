@@ -64,7 +64,7 @@ public class UIPanel : MonoBehaviour
                 haveBossInMiniMap.sprite = allbossandminibossInfo.infos[DataParam.indexStage].icons[1];
             haveBossInMiniMap.gameObject.SetActive(true);
         }
-        DisplayBtnHealth(true, 3);
+        DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
     }
     public void BtnBackToWorld()
     {

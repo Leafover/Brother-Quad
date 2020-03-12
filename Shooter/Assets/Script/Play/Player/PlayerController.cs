@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public Animator animArrow;
     public int level = 1;
     //public bool isGrenade;
-    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate, missRate, healthRateBonus,healthRegenRate;
+    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate, missRate, healthRateBonus, healthRegenRate;
     [HideInInspector]
     public bool reload, stun;
     public Collider2D meleeAtackBox;
@@ -125,12 +125,14 @@ public class PlayerController : MonoBehaviour
                 GameController.instance.uiPanel.lowHealth.SetActive(true);
             }
         }
-        if(GameController.instance.usingHealthPack == 0)
+        if (DataUtils.playerInfo.healthPack > 0)
         {
-            GameController.instance.uiPanel.DisplayBtnHealth(false, 3);
-            GameController.instance.usingHealthPack = 1;
+            if (GameController.instance.usingHealthPack == 0)
+            {
+                GameController.instance.uiPanel.DisplayBtnHealth(false, 3);
+                GameController.instance.usingHealthPack = 1;
+            }
         }
-
         ShowLineBlood();
         StartCoroutine(BeAttackFill());
         SoundController.instance.PlaySound(soundGame.soundplayerhit);
@@ -654,7 +656,7 @@ public class PlayerController : MonoBehaviour
         else
             isMeleeAttack = false;
 
-        if(isregen)
+        if (isregen)
         {
             timeRegen -= deltaTime;
             if (timeRegen <= 0)

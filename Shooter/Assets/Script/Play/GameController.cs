@@ -22,8 +22,7 @@ public class AllMap
 }
 public class GameController : MonoBehaviour
 {
-    int totalHealthPack = 3;
-   public int usingHealthPack = 0;
+    public int usingHealthPack = 0;
     public GameObject letgo, uiDisplay;
     public MayBayController maybay;
 
@@ -86,7 +85,6 @@ public class GameController : MonoBehaviour
     void AddProperties()
     {
         usingHealthPack = 0;
-        totalHealthPack = 3;
         if (DataUtils.modeSelected == 0)
             totalDropCoin = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].totaldropcoin;
         else
@@ -585,12 +583,12 @@ public class GameController : MonoBehaviour
     }
     public void HealthBtn()
     {
-        if(usingHealthPack == 1 && totalHealthPack > 0)
+        if (usingHealthPack == 1 && DataUtils.playerInfo.healthPack > 0)
         {
-            totalHealthPack--;
+            DataUtils.playerInfo.healthPack--;
             usingHealthPack = 2;
             PlayerController.instance.AddHealth(PlayerController.instance.maxHealth);
-            uiPanel.DisplayBtnHealth(true, totalHealthPack);
+            uiPanel.DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
         }
     }
     public void TryShot()

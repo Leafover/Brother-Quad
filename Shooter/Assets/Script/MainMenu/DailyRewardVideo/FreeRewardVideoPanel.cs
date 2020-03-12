@@ -60,6 +60,9 @@ public class FreeRewardVideoPanel : MonoBehaviour
             case 1:
                 DataUtils.AddCoinAndGame(freeReward[index].numberReward, 0);
                 break;
+            case 2:
+                DataUtils.playerInfo.healthPack++;
+                break;
         }
 
         DataParam.indexRewardVideo = (index + 1);
