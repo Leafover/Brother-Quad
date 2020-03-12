@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     public GameObject gPanelBuy;
     public TextMeshProUGUI txtPacktitle;
     public Text txtPackPrice;
-    public Text txtPlayerPice, txtGem, txtCoin;
+    public Text txtPlayerPice, txtGem, txtCoin, txtHPPack;
     public Button btnBuyPack;
     public Transform trShopContain;
     public ShopItem[] shopItems;
@@ -107,13 +107,23 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin)
+    public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin, int totalHpPack)
     {
         _packID = packID;
         txtPacktitle.text = packTitle;
         txtCoin.text = "x " + totalCoin;
         txtGem.text = "x " + totalGem;
         txtPlayerPice.text = "x " + totalPlayerPice;
+        txtHPPack.text = "x " + totalHpPack;
+        if (totalHpPack == 0)
+        {
+            txtHPPack.gameObject.transform.parent.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            txtHPPack.gameObject.transform.parent.parent.gameObject.SetActive(true);
+        }
+
         if (totalPlayerPice == 0)
         {
             txtPlayerPice.gameObject.transform.parent.parent.gameObject.SetActive(false);
