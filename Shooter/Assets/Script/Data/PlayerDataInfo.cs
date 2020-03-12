@@ -14,6 +14,7 @@ public class PlayerDataInfo
     public int gems = 0;
     public int curStars = 1;
     public int pices = 0;
+    public int healthPack = 0;
     public bool isUnlock;
     public bool isEquipped;
 }

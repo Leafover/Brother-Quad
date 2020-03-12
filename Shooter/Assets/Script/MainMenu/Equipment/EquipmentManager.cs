@@ -449,7 +449,7 @@ public class EquipmentManager : MonoBehaviour
                 priceUpgrade = DataUtils.GetItemPrice(itemSelected);
             }
 
-            txtPriceUpgrade.text = /*DataUtils.GetItemPrice(itemData)*/priceUpgrade.ToString();
+            txtPriceUpgrade.text = priceUpgrade.ToString();
             if (!itemSelected.isUnlock)
             {
                 btnReplace.image.sprite = sprButton;
@@ -490,7 +490,7 @@ public class EquipmentManager : MonoBehaviour
                     }
                 }
 
-                UpdateStar(/*DataUtils.dicAllEquipment[key]*/itemSelected);
+                UpdateStar(itemSelected);
             }
             #region Fill Info for EquipmentItem
             FillEquipmentInfo(itemSelected);
@@ -514,7 +514,7 @@ public class EquipmentManager : MonoBehaviour
     }
     private void UpdateStar(ItemData itemData)
     {
-        string key = /*itemSelected*/itemData.id + "_" + /*itemSelected*/itemData.level + "_" + /*itemSelected*/itemData.isUnlock + "_" + /*itemSelected*/itemData.isEquipped;
+        string key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
         if (DataUtils.dicAllEquipment.ContainsKey(key))
         {
             if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
@@ -580,47 +580,54 @@ public class EquipmentManager : MonoBehaviour
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
                 txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
-            #region Item Equipped Info
-            if (itemEquipped.type.Contains("WEAPON"))
-            {
-                txtCurDamagePriview.text = "" + (DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10);
-                txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
-                txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
-                txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
-                txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar] + "</color>";
-                txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar] + "</color>";
-
-                txtItemInfoEquip.gameObject.SetActive(false);
-                gCurWeaponData.SetActive(true);
-                txtCurDamagePriview.gameObject.SetActive(true);
-                imgCurDamagePriview.gameObject.SetActive(true);
-            }
-            else
-            {
-                txtItemInfoEquip.text = DataUtils.GetItemInfo(itemEquipped);
-
-                gCurWeaponData.SetActive(false);
-                txtItemInfoEquip.gameObject.SetActive(true);
-                txtCurDamagePriview.gameObject.SetActive(false);
-                imgCurDamagePriview.gameObject.SetActive(false);
-            }
-            UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
-            gCurItemPriview.SetActive(true);
-
-            for (int i = 0; i < allStars.Length; i++)
-            {
-                if (i <= itemEquipped.curStar)
+            if (itemData.isUnlock) {
+                #region Item Equipped Info
+                if (itemEquipped.type.Contains("WEAPON"))
                 {
-                    allStars[i].sprite = sprYellow;
+                    txtCurDamagePriview.text = "" + (DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10);
+                    txtCurCritDamage.text = "Crit Damage: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar] + "</color>";
+                    txtCurAttSpeed.text = "Attack Speed: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar] + "</color>";
+                    txtCurCritRate.text = "Crit Rate: <color=white>" + DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar] + "</color>";
+                    txtCurRange.text = "Range: <color=white>" + DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar] + "</color>";
+                    txtCurMagazine.text = "Magazine: <color=white>" + DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar] + "</color>";
+
+                    txtItemInfoEquip.gameObject.SetActive(false);
+                    gCurWeaponData.SetActive(true);
+                    txtCurDamagePriview.gameObject.SetActive(true);
+                    imgCurDamagePriview.gameObject.SetActive(true);
                 }
                 else
                 {
-                    allStars[i].sprite = sprWhite;
-                }
-            }
-            #endregion
+                    txtItemInfoEquip.text = DataUtils.GetItemInfo(itemEquipped);
 
-            gCurrentItemEquip.SetActive(true);
+                    gCurWeaponData.SetActive(false);
+                    txtItemInfoEquip.gameObject.SetActive(true);
+                    txtCurDamagePriview.gameObject.SetActive(false);
+                    imgCurDamagePriview.gameObject.SetActive(false);
+                }
+                UpdateRotation(itemEquipped, imgCurItemPriview.GetComponent<RectTransform>());
+                gCurItemPriview.SetActive(true);
+
+                for (int i = 0; i < allStars.Length; i++)
+                {
+                    if (i <= itemEquipped.curStar)
+                    {
+                        allStars[i].sprite = sprYellow;
+                    }
+                    else
+                    {
+                        allStars[i].sprite = sprWhite;
+                    }
+                }
+                #endregion
+                gCurrentItemEquip.SetActive(true);
+            }
+            else
+            {
+                gCurrentItemEquip.SetActive(false);
+            }
+
+            
 
             if (itemData.type.Contains("WEAPON"))
             {
