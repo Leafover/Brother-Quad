@@ -125,6 +125,12 @@ public class PlayerController : MonoBehaviour
                 GameController.instance.uiPanel.lowHealth.SetActive(true);
             }
         }
+        if(GameController.instance.usingHealthPack == 0)
+        {
+            GameController.instance.uiPanel.DisplayBtnHealth(false, 3);
+            GameController.instance.usingHealthPack = 1;
+        }
+
         ShowLineBlood();
         StartCoroutine(BeAttackFill());
         SoundController.instance.PlaySound(soundGame.soundplayerhit);

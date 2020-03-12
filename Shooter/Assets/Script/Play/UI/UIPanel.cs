@@ -8,15 +8,15 @@ public class UIPanel : MonoBehaviour
     public AllBossAndMiniBossInfo allbossandminibossInfo;
     public Sprite nvSprite;
     public GameObject[] bouders;
-    public Image[] rewardImg, bouderLevel;
+    public Image[] rewardImg, bouderLevel, allImgHealthBtn;
     public Text[] rewardText;
     public Sprite[] rewardSp, levelSp;
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth,loadingPanel;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth, loadingPanel;
     public Image grenadeFillAmout, fillbouderGrenade;
-    public Text levelText, bulletText, timeText,pricegemText;
+    public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
 
     public Animator animGamOver;
@@ -29,6 +29,18 @@ public class UIPanel : MonoBehaviour
     public Image haveBossInMiniMap;
 
     public int pricesGemRevive;
+
+    public void DisplayBtnHealth(bool disable, int _total)
+    {
+        numberHealthPack.text = "" + _total;
+        for (int i = 0; i < allImgHealthBtn.Length; i++)
+        {
+            if (disable)
+                allImgHealthBtn[i].color = Color.gray;
+            else
+                allImgHealthBtn[i].color = Color.white;
+        }
+    }
 
     public bool CheckWarning()
     {
@@ -52,6 +64,7 @@ public class UIPanel : MonoBehaviour
                 haveBossInMiniMap.sprite = allbossandminibossInfo.infos[DataParam.indexStage].icons[1];
             haveBossInMiniMap.gameObject.SetActive(true);
         }
+        DisplayBtnHealth(true, 3);
     }
     public void BtnBackToWorld()
     {
