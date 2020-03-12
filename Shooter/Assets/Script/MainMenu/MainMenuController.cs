@@ -76,7 +76,6 @@ public class MainMenuController : MonoBehaviour
 
     private void UpdateStageImage()
     {
-        Debug.LogError("Stage: " + DataUtils.GetStageIndex());
         for (int i = 0; i < imgStages.Length; i++)
         {
             if (i <= DataUtils.GetStageIndex())
@@ -159,18 +158,12 @@ public class MainMenuController : MonoBehaviour
     public void ShowShop()
     {
         SoundClickButton();
-        //popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
-        //gPanelPopup.SetActive(true);
-        //Debug.LogError("ShowShop");
         equipmentManager.gameObject.SetActive(false);
         shopManager.gameObject.SetActive(true);
     }
     public void ShowHeroTab()
     {
         SoundClickButton();
-        //popManager.pType = PopupManager.POPUP_TYPE.NOTIFY;
-        //gPanelPopup.SetActive(true);
-        //Debug.LogError("Show Hero Infomation");
         gPanelUIButton.SetActive(false);
         gPanelHeroes.SetActive(true);
     }
@@ -183,14 +176,12 @@ public class MainMenuController : MonoBehaviour
     public void AddMoreCoin()
     {
         SoundClickButton();
-        Debug.LogError("AddMoreCoin");
         ShowShop();
     }
     public void AddMoreDiamond()
     {
         SoundClickButton();
         ShowShop();
-        Debug.LogError("AddMoreDiamond");
     }
 
     public void ShowMapNotify(string mess)
