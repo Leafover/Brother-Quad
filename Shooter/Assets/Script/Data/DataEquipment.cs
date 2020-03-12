@@ -33,36 +33,36 @@ public class ItemWeapon
 [Serializable]
 public class ItemArmor
 {
-    public int armorIndex;//A1:0, A2:1, A3:2, A4:3, A5:4, A6:5
-    public float defIncrease;//%
-    public float speedReduce;//%
+    public int armorIndex = 0;//A1:0, A2:1, A3:2, A4:3, A5:4, A6:5
+    public float defIncrease = 0;//%
+    public float speedReduce = 0;//%
 }
 [Serializable]
 public class ItemHelmet
 {
-    public int helIndex;//H1:0, H2:1, H3:2, H4:3, H5:4, H6:5
-    public float defIncrease;//%
-    public float bonusExp;//%
+    public int helIndex = 0;//H1:0, H2:1, H3:2, H4:3, H5:4, H6:5
+    public float defIncrease = 0;//%
+    public float bonusExp = 0;//%
 }
 [Serializable] 
 public class ItemGloves
 {
-    public int gloveIndex;//G1:0, G2:1, G3:2, G4:3, G5:4, G6:5
-    public float reloadTimeReduce;//second
-    public float critRateIncrease;//%
-    public float critDamageIncrease;//%
+    public int gloveIndex = 0;//G1:0, G2:1, G3:2, G4:3, G5:4, G6:5
+    public float reloadTimeReduce = 0;//second
+    public float critRateIncrease = 0;//%
+    public float critDamageIncrease = 0;//%
 }
 [Serializable] 
 public class ItemBag
 {
-    public int bagIndex;//B1:0, B2:1, B3:2, B4:3, B5:4, B6:5
-    public float totalAidDrop;
-    public float HealthRegeneration;//%
+    public int bagIndex = 0;//B1:0, B2:1, B3:2, B4:3, B5:4, B6:5
+    public float totalAidDrop = 0;
+    public float HealthRegeneration = 0;//%
 }
 [Serializable] 
 public class ItemShoes
 {
-    public int shoeIndex;//S1:0, S2:1, S3:2, S4:3, S5:4, S6:5
-    public float moveSpeedIncrease;//%
-    public float jumpHeight;//%
+    public int shoeIndex = 0;//S1:0, S2:1, S3:2, S4:3, S5:4, S6:5
+    public float moveSpeedIncrease = 0;//%
+    public float jumpHeight = 0;//%
 }
