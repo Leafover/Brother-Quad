@@ -133,18 +133,21 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
             case DataUtils.P_STARTER_PACK:
                 Debug.LogError("P_STARTER_PACK");
                 DataUtils.AddCoinAndGame(7500, 0);
-                DataUtils.RemoveAds();
+                //DataUtils.RemoveAds();
                 DataUtils.TakeItem("W2", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 10, true);
                 break;
             case DataUtils.P_CHEAP_PACK:
                 DataUtils.AddCoinAndGame(7500, 25);
+                DataUtils.AddHPPack(10);
                 break;
             case DataUtils.P_BEST_CHOICE:
                 DataUtils.AddCoinAndGame(15000, 50);
+                DataUtils.AddHPPack(25);
                 DataUtils.TakeHeroPice("P1", 20);
                 break;
             case DataUtils.P_PROFESSIONAL_PACK:
                 DataUtils.AddCoinAndGame(85000, 100);
+                DataUtils.AddHPPack(45);
                 DataUtils.TakeHeroPice("P1", 50);
                 DataUtils.RemoveAds();
                 break;
