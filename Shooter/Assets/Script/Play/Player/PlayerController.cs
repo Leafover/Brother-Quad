@@ -9,6 +9,8 @@ using Spine;
 
 public class PlayerController : MonoBehaviour
 {
+    bool isregen;
+
     public int countKillByGrenade;
     public GameObject shield;
     private Skin[] skins;
@@ -16,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public Animator animArrow;
     public int level = 1;
     //public bool isGrenade;
-    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate;
+    public float damageBullet = 1, damgeGrenade = 3, critRate, critDamage, bulletSpeed, attackRange, slowRate, missRate, healthRateBonus,healthRegenRate;
     [HideInInspector]
     public bool reload, stun;
     public Collider2D meleeAtackBox;
@@ -101,11 +103,15 @@ public class PlayerController : MonoBehaviour
         }
         stunEffect.SetActive(true);
     }
+    int randomMiss;
     public void TakeDamage(float damage, bool isNotDestroyAll = true)
     {
         if (playerState == PlayerState.Die || GameController.instance.gameState == GameController.GameState.gameover)
             return;
         if (isReviving && isNotDestroyAll || GameController.instance.win)
+            return;
+        randomMiss = UnityEngine.Random.Range(0, 100);
+        if (randomMiss < missRate)
             return;
 
         health -= damage;
@@ -113,6 +119,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!GameController.instance.uiPanel.lowHealth.activeSelf)
             {
+                if (healthRegenRate > 0)
+                    isregen = true;
                 au.Play();
                 GameController.instance.uiPanel.lowHealth.SetActive(true);
             }
@@ -139,6 +147,8 @@ public class PlayerController : MonoBehaviour
             //isGrenade = false;
             isGround = false;
             health = 0;
+            isregen = false;
+            timeRegen = 0;
         }
     }
     public void CalculateTimeStun(float deltaTime)
@@ -233,6 +243,18 @@ public class PlayerController : MonoBehaviour
         //SetGun(currentGun);
         //Debug.Log(currentGun);
     }
+    public void AddProperties()
+    {
+        damgeGrenade = (float)DataController.instance.playerData[0].playerData[level - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed + ((float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
+        maxHealth = (float)DataController.instance.playerData[0].playerData[level - 1].hp;
+        missRate = DataUtils.itemArmor.defIncrease + DataUtils.itemHelmet.defIncrease;
+        healthRateBonus = DataUtils.itemBag.totalAidDrop;
+        healthRegenRate = DataUtils.itemBag.HealthRegeneration;
+        forceJump += (forceJump * DataUtils.itemShoes.jumpHeight / 100);
+        health = maxHealth;
+        speedmove = 0;
+    }
     public void SetGun(int index)
     {
         currentGun = index;
@@ -245,10 +267,10 @@ public class PlayerController : MonoBehaviour
         if (currentGun != DataUtils.itemWeapon.weponIndex)
         {
             damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
-            maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0];
+            maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
             maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
-            critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0];
-            critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0];
+            critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0] + ((float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0] * DataUtils.itemGloves.critRateIncrease / 100);
+            critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0] + ((float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0] * DataUtils.itemGloves.critDamageIncrease / 100);
             bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
             attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
             timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
@@ -256,10 +278,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             damageBullet = DataUtils.itemWeapon.DmgValue;
-            maxTimeReload = DataUtils.itemWeapon.ReloadSpeedValue;
+            maxTimeReload = DataUtils.itemWeapon.ReloadSpeedValue - (DataUtils.itemWeapon.ReloadSpeedValue * DataUtils.itemGloves.reloadTimeReduce / 100);
             maxNumberBullet = (int)DataUtils.itemWeapon.MagazineValue;
-            critRate = DataUtils.itemWeapon.CritRateValue;
-            critDamage = DataUtils.itemWeapon.CritDmgValue;
+            critRate = DataUtils.itemWeapon.CritRateValue + (DataUtils.itemWeapon.CritRateValue * DataUtils.itemGloves.critRateIncrease / 100);
+            critDamage = DataUtils.itemWeapon.CritDmgValue + (DataUtils.itemWeapon.CritDmgValue * DataUtils.itemGloves.critDamageIncrease / 100);
             bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue;
             attackRange = DataUtils.itemWeapon.AtkRangeValue;
             timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
@@ -354,20 +376,9 @@ public class PlayerController : MonoBehaviour
 
         skeletonAnimation.gameObject.SetActive(false);
     }
+
     public int currentGun;
-    public void AddProperties()
-    {
-        damgeGrenade = (float)DataController.instance.playerData[0].playerData[level - 1].DmgGrenade;
-        speedMoveMax = (float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed;
-        maxHealth = (float)DataController.instance.playerData[0].playerData[level - 1].hp;
 
-        health = maxHealth;
-        speedmove = 0;
-
-        //     CalculateForGun();
-
-        //  health = 50000000;
-    }
     public void DetectGround()
     {
         if (isfalldow)
@@ -497,7 +508,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    float timeRegen;
     public void OnUpdate(float deltaTime)
     {
 
@@ -636,6 +647,16 @@ public class PlayerController : MonoBehaviour
         }
         else
             isMeleeAttack = false;
+
+        if(isregen)
+        {
+            timeRegen -= deltaTime;
+            if (timeRegen <= 0)
+            {
+                AddHealth(maxHealth * healthRegenRate / 100);
+                timeRegen = 3;
+            }
+        }
 
         if (!reload)
         {
@@ -1241,6 +1262,13 @@ public class PlayerController : MonoBehaviour
             au.Stop();
             GameController.instance.uiPanel.lowHealth.SetActive(false);
         }
+        if (isregen)
+        {
+            if (health > maxHealth / 100 * 20)
+            {
+                isregen = false;
+            }
+        }
         ShowLineBlood();
         if (health >= maxHealth)
             health = maxHealth;
@@ -1262,7 +1290,7 @@ public class PlayerController : MonoBehaviour
             ResetPosRevive(true, healthBonus);
         }
     }
-    public void ResetPosRevive(bool afterdie,int healthBonus)
+    public void ResetPosRevive(bool afterdie, int healthBonus)
     {
         var checkplatform = Physics2D.Raycast(foot.transform.position, -transform.up, 100, lm);
 

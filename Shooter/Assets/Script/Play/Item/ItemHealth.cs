@@ -8,7 +8,7 @@ public class ItemHealth : ItemBase
     public override void Hit()
     {
         base.Hit();
-        PlayerController.instance.AddHealth(PlayerController.instance.maxHealth / 100 * numberTemp);
+        PlayerController.instance.AddHealth(PlayerController.instance.maxHealth / 100 * (numberTemp + PlayerController.instance.healthRateBonus));
         SoundController.instance.PlaySound(soundGame.soundEatHP);
     }
     public override void CalculateDisable(float deltaTime)
