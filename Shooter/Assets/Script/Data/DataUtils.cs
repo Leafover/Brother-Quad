@@ -117,8 +117,6 @@ public class DataUtils
                 _str = "- Move Speed: <color=green>+" + dicShoes[itemKey].TangSpeeDichuyenValue[curStar] + "%</color>\n- Jump Height: <color=green>+" + dicShoes[itemKey].TangDoCaoNhayValue[curStar] + "%</color>";
                 break;
             case "WEAPON":
-                //dSell = dicWeapon[itemKey].GiaKhiRaDo;
-                //dPiceRequire = dicWeapon[itemKey].SoManhYeuCauValue[itemData.curStar];
                 break;
             case "P1":
                 _str = "";
@@ -200,7 +198,6 @@ public class DataUtils
             }
         }
         #endregion
-        //CheckEquipWeapon();
     }
     public static void CheckEquipWeapon()
     {
@@ -212,7 +209,7 @@ public class DataUtils
         itemShoes = new ItemShoes();
 
         string _key = "";
-        foreach (ItemData item in /*dicEquippedItem.Values*/dicAllEquipment.Values)
+        foreach (ItemData item in dicAllEquipment.Values)
         {
             if (item.isEquipped)
             {
@@ -361,7 +358,7 @@ public class DataUtils
     public static float GetPiceByStar(ItemData itemData)
     {
         float res = 0;
-        string key = itemData.id + "_" + itemData.level/* + "_"+ itemData.isUnlock*/;
+        string key = itemData.id + "_" + itemData.level;
         int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
@@ -474,8 +471,6 @@ public class DataUtils
             if (!dicAllEquipment.ContainsKey(_newKey))
             {
                 dicAllEquipment.Add(_newKey, itemNew);
-
-                //dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
 
@@ -486,8 +481,6 @@ public class DataUtils
             }
             else
             {
-                //dicAllEquipment[_newKey].quantity += 1;
-                //dicAllEquipment[_newKey].curStar += 1;
                 dicAllEquipment[_newKey].pices = pices;
                 dicAllEquipment[_newKey].isUnlock = result;
                 ItemData iAddNew = dicAllEquipment[_newKey];
@@ -540,7 +533,6 @@ public class DataUtils
             if (dicAllEquipment.ContainsKey(_key))
             {
                 int _curPiece = dicAllEquipment[_key].pices;
-                //Debug.LogError("IsUnlock: " + dicAllEquipment[_key].isUnlock + " vs " + GetPiceByStar(dicAllEquipment[_key]) + " vs " + _pices + " vs " + dicAllEquipment[_key].pices);
                 if (!dicAllEquipment[_key].isUnlock)
                 {
                     dicAllEquipment[_key].pices += _pices;
@@ -559,7 +551,6 @@ public class DataUtils
                         iData_New.isEquipped = false;
                         string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
                         string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
-                        //Debug.LogError(_keyCompare);
                         if (!dicAllEquipment.ContainsKey(_keyNew))
                         {
 
@@ -568,7 +559,6 @@ public class DataUtils
                             foreach (ItemData itData in dicAllEquipment.Values)
                             {
                                 _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
-                                //Debug.LogError(_keyCompare + " vs " + _keyDisplay + " vs " + _keyCompare.Equals(_keyDisplay));
                                 if (_keyCompare.Equals(_keyDisplay))
                                 {
                                     dicAllEquipment[_key].pices = _curPiece + _pices;
@@ -594,29 +584,9 @@ public class DataUtils
                         else
                         {
                             dicAllEquipment[_key].pices = _curPiece + _pices;
-                            //Debug.LogError("1");
                         }
                     }
                 }
-
-
-                //if (!iData.isUnlock)
-                //{
-                //    if (!dicAllEquipment[_key].isUnlock)
-                //    {
-                //        string _newKey = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
-                //        dicAllEquipment[_key].pices += _pices;
-                //        CheckItemUnlock(iData.id, _itemType, iData.level, dicAllEquipment[_key].pices, iData.curStar, iData.isUnlock, iData.isEquipped);
-                //    }
-                //    else
-                //    {
-                //        dicAllEquipment[_key].quantity += 1;
-                //    }
-                //}
-                //else
-                //{
-                //    dicAllEquipment[_key].quantity += 1;
-                //}
             }
             else
             {
@@ -687,7 +657,7 @@ public class DataUtils
     public static List<DataStage> lstAllStage = new List<DataStage>();
     public static List<DataStage> lstAllStageHard = new List<DataStage>();
     public static List<DataStage> lstAllStageNormal = new List<DataStage>();
-    public static int modeSelected = 0;///
+    public static int modeSelected = 0;
     #region Mode Hard
 
     private static string GetStageHardTextData()
@@ -1161,7 +1131,7 @@ public class DataUtils
     #region Other
     public static string DisplayRichText(double dFrom, double dTo)
     {
-        return /*"<color=white>" + dFrom + "</color>" + */"<color=green>" + dTo + "</color>";
+        return "<color=green>" + dTo + "</color>";
     }
     public static Dictionary<string, Sprite> dicSpriteData;
     public static void InitSpriteData(ItemSpriteData allSpriteData)
@@ -1176,16 +1146,6 @@ public class DataUtils
     {
         Sprite _spr = null;
         string[] strSP = name.Split('-');
-
-        //for (int i = 0; i < allSpriteData.spriteDatas.Count; i++)
-        //{
-        //    if (allSpriteData.spriteDatas[i].itemName.Equals(strSP[strSP.Length - 1]))
-        //    {
-        //        _spr = allSpriteData.spriteDatas[i].sprItem;
-        //        break;
-        //    }
-        //}
-        //return _spr;
         if (name.Contains("M-"))
         {
             _spr = dicSpriteData[name];
@@ -1270,7 +1230,6 @@ public class DataUtils
         {
             dbValue = (float)(dSell * (dPices > 0 ? dPices : 1));
         }
-        //Debug.LogError(dSell + " vs " + dPiceRequire + " vs " + dQuantity + " vs " + dPices + " vs " + dbValue);
         return dbValue;
     }
     #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using TMPro;
 
 public class EquipmentManager : MonoBehaviour
@@ -73,51 +74,70 @@ public class EquipmentManager : MonoBehaviour
             DoCancelDisassemble();
         });
 
-        //if(AdsManager.Instance != null)
-        //{
-        //    AdsManager.Instance.ShowBannerWithPos();
-        //}
+        SortingItem();
     }
     private void OnDisable()
     {
-        //if (AdsManager.Instance != null)
-        //{
-        //    AdsManager.Instance.HideBanner();
-        //}
         ChooseTab(0);
         ChooseItem(null);
     }
+    void SortingItem()
+    {
+        List<Transform> lstAllChild = new List<Transform>();
 
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            lstAllChild.Add(trContain.GetChild(i));
+        }
+        var _sortList = lstAllChild.OrderByDescending(c => c.name.StartsWith("W")).ThenByDescending(c=>c.name.StartsWith("A")).ThenByDescending(c => c.name.StartsWith("G"))
+            .ThenByDescending(c => c.name.StartsWith("H")).ThenByDescending(c => c.name.StartsWith("B")).ThenByDescending(c => c.name.StartsWith("S")).ToList();
+
+        for (int i = 0; i < _sortList.Count; i++)
+        {
+            //Debug.LogError("--> " + _sortList[i].name);
+            for(int j = 0;j< trContain.childCount; j++)
+            {
+                if (trContain.GetChild(j).name.Contains(_sortList[i].name))
+                {
+                    trContain.GetChild(j).SetSiblingIndex(i);
+                }
+            }
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SortingItem();
+        }
+    }
     string key = "";
     public void InitAllItems()
     {
         foreach (ItemData itemData in DataUtils.dicAllEquipment.Values)
         {
-            //if (!itemData.isEquipped)
-            {
-                key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
-                gItemClone = Instantiate(gItems);
-                gItemClone.name = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
-                EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
-                item.itemKey = key;
-                item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
-                item.itemData = DataUtils.dicAllEquipment[item.itemKey];
-                gItemClone.SetActive(!item.itemData.isUnlock);
-                gItemClone.transform.SetParent(trContain, false);
-            }
+            key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
+            gItemClone = Instantiate(gItems);
+            gItemClone.name = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
+            EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
+            item.itemKey = key;
+            item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
+            item.itemData = DataUtils.dicAllEquipment[item.itemKey];
+            gItemClone.SetActive(!item.itemData.isUnlock);
+            gItemClone.transform.SetParent(trContain, false);
         }
+
+        SortingItem();
     }
 
     public void RemoveSelectedItem()
     {
-        Debug.LogError(_keyItemSelected + " vs " + DataUtils.dicAllEquipment[_keyItemSelected]);
         disassembleManager.iDisassemble = DataUtils.dicAllEquipment[_keyItemSelected];
         disassembleManager.keyItem = _keyItemSelected;
         disassembleManager.gameObject.SetActive(true);
     }
     public void DoDisassemble(ItemData iSell, string strRemoveKey)
     {
-        Debug.LogError("strRemoveKey: " + strRemoveKey);
         for (int i = 0; i < trContain.childCount; i++)
         {
             if (trContain.GetChild(i).gameObject.name.Equals(strRemoveKey))
@@ -207,15 +227,6 @@ public class EquipmentManager : MonoBehaviour
                         EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                         trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
                         _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
-
-                        //if (_iEquipData.itemData.isEquipped)
-                        //{
-                        //    trContain.GetChild(i).gameObject.SetActive(false);
-                        //}
-                        //else
-                        //{
-                        //    trContain.GetChild(i).gameObject.SetActive(true);
-                        //}
                     }
                 }
                 #endregion
@@ -240,13 +251,8 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                 trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
                 _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
-                //if (_iEquipData.itemData.isEquipped)
-                //{
-                //    trContain.GetChild(i).gameObject.SetActive(false);
-                //}
             }
         }
-        //DataUtils.CheckEquipWeapon();
         ChooseItem(null);
     }
     public bool IsItemHasInit(string id)
@@ -263,21 +269,18 @@ public class EquipmentManager : MonoBehaviour
     }
     private void CheckInitNewItem(ItemData itemNew)
     {
-        //if (itemNew.isEquipped)
+        if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
         {
-            if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
-            {
-                itemNew.isEquipped = false;
-                key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
-                gItemClone = Instantiate(gItems);
-                gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
-                EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
-                item.itemKey = key;
-                item.itemData = itemNew;
-                item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
+            itemNew.isEquipped = false;
+            key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
+            gItemClone = Instantiate(gItems);
+            gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
+            EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
+            item.itemKey = key;
+            item.itemData = itemNew;
+            item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
-                gItemClone.transform.SetParent(trContain, false);
-            }
+            gItemClone.transform.SetParent(trContain, false);
         }
     }
     public void RefreshInventory(ItemData itemNew)
@@ -354,7 +357,6 @@ public class EquipmentManager : MonoBehaviour
             EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
             if (_type.Equals(ALL_EQUIP) && !_iEquipData.itemData.isUnlock)
             {
-                //Debug.LogError(_iEquipData.itemData.isUnlock + " v-----s " + _iEquipData.itemData.pices);
                 trContain.GetChild(i).gameObject.SetActive(!_iEquipData.itemData.isUnlock);
             }
             else if (_iEquipData.itemData.type.Equals(_type))
@@ -384,28 +386,24 @@ public class EquipmentManager : MonoBehaviour
     {
         int total = 0;
 
-        if (DataUtils.playerInfo.coins >= /*DataUtils.GetItemPrice(itemSelected)*/priceUpgrade)
+        if (DataUtils.playerInfo.coins >= priceUpgrade)
         {
             string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
             if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
             {
-                DataUtils.AddCoinAndGame(-(int)/*DataUtils.GetItemPrice(itemSelected)*/priceUpgrade, 0);
+                DataUtils.AddCoinAndGame(-(int)priceUpgrade, 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
                 total = DataUtils.dicAllEquipment[key].curStar;
 
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
-                txtPriceUpgrade.text = /*DataUtils.GetItemPrice(DataUtils.dicAllEquipment[key])*/priceUpgrade.ToString();
+                txtPriceUpgrade.text = priceUpgrade.ToString();
 
                 if (DataUtils.dicEquippedItem.ContainsKey(key))
                 {
                     DataUtils.dicEquippedItem[key].curStar = total;
-                    Debug.LogError("curStar: " + DataUtils.dicEquippedItem[key].curStar);
                     DataUtils.SaveEquippedData();
                 }
-
-                //Debug.LogError("curStar: " + DataUtils.dicAllEquipment[key].curStar);
-
                 DataController.instance.DoDailyQuest(5, 1);
             }
             else
@@ -580,7 +578,8 @@ public class EquipmentManager : MonoBehaviour
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
                 txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
 
-            if (itemData.isUnlock) {
+            if (itemData.isUnlock)
+            {
                 #region Item Equipped Info
                 if (itemEquipped.type.Contains("WEAPON"))
                 {
@@ -627,7 +626,7 @@ public class EquipmentManager : MonoBehaviour
                 gCurrentItemEquip.SetActive(false);
             }
 
-            
+
 
             if (itemData.type.Contains("WEAPON"))
             {
@@ -714,7 +713,7 @@ public class EquipmentManager : MonoBehaviour
             double dTotal = 0;
             foreach (EquipmentItem epi in lstAllItemSell)
             {
-                dTotal += DataUtils.GetSellPrice(epi.itemData);//DataUtils.GetPriceByType(epi.itemData);
+                dTotal += DataUtils.GetSellPrice(epi.itemData);
                 DataUtils.dicAllEquipment.Remove(epi.itemKey);
             }
 
@@ -727,7 +726,6 @@ public class EquipmentManager : MonoBehaviour
             ChooseItem(null);
             DoCancelDisassemble();
             DataUtils.AddCoinAndGame((int)dTotal, 0);
-            Debug.LogError("dTotal: " + dTotal);
         }
     }
     public void AddItemToList(EquipmentItem epi)
@@ -739,4 +737,22 @@ public class EquipmentManager : MonoBehaviour
         lstAllItemSell.Remove(epi);
     }
     public List<EquipmentItem> lstAllItemSell = new List<EquipmentItem>();
+}
+public class FixedOrderComparer<T> : IComparer<T>
+{
+    private readonly T[] fixedOrderItems;
+
+    public FixedOrderComparer(params T[] fixedOrderItems)
+    {
+        this.fixedOrderItems = fixedOrderItems;
+    }
+
+    public int Compare(T x, T y)
+    {
+        var xIndex = System.Array.IndexOf(fixedOrderItems, x);
+        var yIndex = System.Array.IndexOf(fixedOrderItems, y);
+        xIndex = xIndex == -1 ? int.MaxValue : xIndex;
+        yIndex = yIndex == -1 ? int.MaxValue : yIndex;
+        return xIndex.CompareTo(yIndex);
+    }
 }
