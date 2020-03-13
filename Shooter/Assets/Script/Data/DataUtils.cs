@@ -108,7 +108,7 @@ public class DataUtils
                 }
                 break;
             case "GLOVES":
-                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[curStar] + "'s</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[curStar] + "</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[curStar] + "%</color>";
+                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[curStar] + "%</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[curStar] + "%</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[curStar] + "%</color>";
                 break;
             case "HELMET":
                 _str = "- Increase <color=green>" + dicHelmet[itemKey].DefValue[curStar] + "%</color> def. \n- Bonus Exp: <color=green>" + dicHelmet[itemKey].BonusExpValue[curStar] + "%</color>";

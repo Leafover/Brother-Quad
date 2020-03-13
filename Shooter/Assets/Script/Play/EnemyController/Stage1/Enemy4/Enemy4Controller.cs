@@ -164,7 +164,7 @@ public class Enemy4Controller : EnemyBase
             if (!incam)
                 return;
 
-            bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenade4EnemyBasepooler.GetBulletEnemyPooledObject();
+            bulletEnemy = ObjectPoolManagerHaveScript.Instance.grenadeN3Pooler.GetBulletEnemyPooledObject();
             bulletEnemy.transform.position = boneBarrelGun1.GetWorldPosition(skeletonAnimation.transform);
             bulletEnemy.AddProperties(0, 6);
             if (FlipX)
