@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
-
+    bool first;
     private void Awake()
     {
         if (instance == null)
@@ -131,6 +131,9 @@ public class GameController : MonoBehaviour
         DataParam.totalCoin = 0;
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
+
+        first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
+
         CameraController.instance.Init();
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
@@ -625,17 +628,22 @@ public class GameController : MonoBehaviour
         yield return delaywinwait;
         WinGame();
     }
-
+    int numberReward;
+    int numberAdd(int i)
+    {
+        numberReward = first ? 1 : (int)vatphamnhanduoc[i].TotalNumber;
+        return numberReward;
+    }
     void AddItem(int i, DataUtils.eLevel eLevel)
     {
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
         }
         else if (vatphamnhanduoc[i].ID.Contains("A"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, numberAdd(i), first);
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
@@ -643,19 +651,19 @@ public class GameController : MonoBehaviour
         }
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, numberAdd(i), first);
         }
         else if (vatphamnhanduoc[i].ID.Contains("S"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, numberAdd(i), first);
         }
         else if (vatphamnhanduoc[i].ID.Contains("G"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, numberAdd(i), first);
         }
         else if (vatphamnhanduoc[i].ID.Contains("B"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, numberAdd(i), first);
         }
         DisplayReward(rePlaceID, i, eLevel);
         Debug.Log("ID:" + rePlaceID);
@@ -668,7 +676,7 @@ public class GameController : MonoBehaviour
         {
             if (/*!vatphamnhanduoc[i].ID.Contains("P") && */vatphamnhanduoc[i].TotalNumber > 0)
             {
-                uiPanel.rewardText[i].text = "" + (int)vatphamnhanduoc[i].TotalNumber;
+                uiPanel.rewardText[i].text = "" + /*(int)vatphamnhanduoc[i].TotalNumber*/numberAdd(i);
                 Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
                 if (!vatphamnhanduoc[i].ID.Contains("P"))
                 {
@@ -697,6 +705,7 @@ public class GameController : MonoBehaviour
             {
                 uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i].Replace("M-", "")];
                 uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+                uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
             }
         }
         uiPanel.rewardText[2].text = "" + (int)DataParam.totalCoin;

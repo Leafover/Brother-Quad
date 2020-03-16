@@ -34,6 +34,7 @@ public class AchievementBouder : MonoBehaviour
         {
             if (DataController.saveAllAchievement[index].isPass)
             {
+                transform.SetAsFirstSibling();
                 btnClaim.SetActive(true);
                 processObj.SetActive(false);
                 doneObj.SetActive(false);
@@ -53,6 +54,7 @@ public class AchievementBouder : MonoBehaviour
         }
         else
         {
+            transform.SetAsLastSibling();
             btnClaim.SetActive(false);
             processObj.SetActive(false);
             doneObj.SetActive(true);

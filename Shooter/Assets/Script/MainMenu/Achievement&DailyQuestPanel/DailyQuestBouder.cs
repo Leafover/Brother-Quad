@@ -29,6 +29,7 @@ public class DailyQuestBouder : MonoBehaviour
             rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType - 1];
             if (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass)
             {
+                transform.SetAsFirstSibling();
                 btnClaim.SetActive(true);
                 doneObj.SetActive(false);
                 rewardObj.SetActive(false);
@@ -42,6 +43,7 @@ public class DailyQuestBouder : MonoBehaviour
         }
         else
         {
+            transform.SetAsLastSibling();
             rewardObj.SetActive(false);
             btnClaim.SetActive(false);
             doneObj.SetActive(true);

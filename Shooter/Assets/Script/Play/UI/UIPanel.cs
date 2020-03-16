@@ -7,7 +7,7 @@ public class UIPanel : MonoBehaviour
 {
     public AllBossAndMiniBossInfo allbossandminibossInfo;
     public Sprite nvSprite;
-    public GameObject[] bouders;
+    public GameObject[] bouders, iconPartOfBouderReward;
     public Image[] rewardImg, bouderLevel, allImgHealthBtn;
     public Text[] rewardText;
     public Sprite[] rewardSp, levelSp;
