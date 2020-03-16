@@ -167,6 +167,7 @@ public class MapLevelControll : MonoBehaviour
             }
         }
     }
+    bool _levelHasComplete = false;
     private void GetMapInfo(Mission miss_, int stageSelect, int mapSelect)
     {
         for (int i = 0; i < StageManager.Instance.imgItemReward.Length; i++)
@@ -176,14 +177,14 @@ public class MapLevelControll : MonoBehaviour
         StageManager.Instance.FillMapInfo(miss_, stageSelect, mapSelect);
         if (DataUtils.StageHasInit())
         {
-
+            _levelHasComplete = DataUtils.GetMapByIndex(stageSelect, mapSelect).hasComplete;
             GetRewardItemName(stageSelect + 1, mapSelect + 1);
             int total = DataController.instance.allTileVatPham.Count;
             for (int i = 0; i < lstString.Count; i++)
             {
                 if (DataUtils.dicSpriteData.ContainsKey(lstString[i]))
                 {
-                    Debug.LogError(StageManager.Instance.imgItemReward[i]);
+                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(0).gameObject.SetActive(_levelHasComplete);
                     StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                 }
