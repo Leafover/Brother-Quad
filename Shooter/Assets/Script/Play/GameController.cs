@@ -131,9 +131,10 @@ public class GameController : MonoBehaviour
         DataParam.totalCoin = 0;
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
-
-        first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
-
+        if (DataUtils.modeSelected == 0)
+            first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
+        else
+            first = false;
         CameraController.instance.Init();
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
@@ -251,12 +252,9 @@ public class GameController : MonoBehaviour
             }
         }
     }
-
     public void CheckAfterJump(UltimateJoystick joystick)
     {
-
         movePosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
-
         var angle = Mathf.Atan2(movePosition.x, movePosition.y) * Mathf.Rad2Deg;
         var h = movePosition.x;
         if (angle <= 135f && angle >= -135.5f)
