@@ -168,6 +168,7 @@ public class MapLevelControll : MonoBehaviour
         }
     }
     bool _levelHasComplete = false;
+    int lChild = 0;
     private void GetMapInfo(Mission miss_, int stageSelect, int mapSelect)
     {
         for (int i = 0; i < StageManager.Instance.imgItemReward.Length; i++)
@@ -184,7 +185,8 @@ public class MapLevelControll : MonoBehaviour
             {
                 if (DataUtils.dicSpriteData.ContainsKey(lstString[i]))
                 {
-                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(0).gameObject.SetActive(_levelHasComplete);
+                    lChild = StageManager.Instance.imgItemReward[i].transform.parent.childCount - 1;
+                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
                     StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                 }
