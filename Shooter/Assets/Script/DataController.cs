@@ -312,7 +312,7 @@ public class DataController : MonoBehaviour
     }
     public void LoadBlackMarketData (string path)
     {
-        if (blackMarketData.Count == 177)
+        if (blackMarketData.Count == 105)
             return;
 
         _ta = Resources.Load<TextAsset>("JsonData/" + path);
