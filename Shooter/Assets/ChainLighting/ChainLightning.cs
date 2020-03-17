@@ -109,10 +109,12 @@ public class ChainLightning : MonoBehaviour
     {
         if (collision.gameObject.layer == 10 || collision.gameObject.layer == 19)
         {
+            if (collision.tag == "gunboss")
+                return;
             if (targetPos.Count >= 3)
                 return;
             enemyBase = collision.GetComponent<EnemyBase>();
-            if (enemyBase.incam)
+            if (enemyBase.incam && enemyBase.gameObject != originPos)
                 targetPos.Add(enemyBase);
         }
     }

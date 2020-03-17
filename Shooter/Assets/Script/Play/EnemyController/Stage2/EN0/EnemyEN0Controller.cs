@@ -185,7 +185,7 @@ public class EnemyEN0Controller : EnemyBase
             EnemyManager.instance.enemyen0s.Remove(this);
         }
 
-        transform.position = Vector3.zero;
+        //transform.position = Vector3.zero;
     }
 
     public override void Dead()
