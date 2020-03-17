@@ -335,7 +335,7 @@ public class EquipmentManager : MonoBehaviour
             gItemClone.transform.SetParent(trContain, false);
         }
     }
-    public void RefreshInventory(ItemData itemNew)
+    public void RefreshInventory(ItemData itemNew, bool activeItem)
     {
         key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
         gItemClone = Instantiate(gItems);
@@ -346,6 +346,8 @@ public class EquipmentManager : MonoBehaviour
         item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
         gItemClone.transform.SetParent(trContain, false);
+
+        gItemClone.SetActive(activeItem);
 
         for (int i = 0; i < trContain.childCount; i++)
         {
@@ -478,7 +480,7 @@ public class EquipmentManager : MonoBehaviour
         bool _b = false;
         foreach (ItemData _iSearch in DataUtils.dicAllEquipment.Values)
         {
-            if (_iSearch.id.Equals(itemData.id) && _iSearch.level.Equals(EvolveItemLevel(itemData.level)))
+            if (_iSearch.id.Equals(itemData.id) && _iSearch.level.Equals(EvolveItemLevel(itemData.level)) && _iSearch.isUnlock)
             {
                 _b = true;
             }
@@ -510,7 +512,7 @@ public class EquipmentManager : MonoBehaviour
             MainMenuController.Instance.ShowMapNotify("Item has exits");
         }
         else {
-            if (_strEvolveText.Equals("Legendary"))
+            if (/*_strEvolveText*/curItem.Equals("Legendary"))
             {
                 MainMenuController.Instance.ShowMapNotify("Item has reached max");
             }
@@ -542,7 +544,6 @@ public class EquipmentManager : MonoBehaviour
                         iDataEvolve.isEquipped = curItem.isEquipped;
                         
                         string _keyEvolve = iDataEvolve.id + "_" + iDataEvolve.level + "_" + iDataEvolve.isUnlock + "_" + iDataEvolve.isEquipped;
-                        Debug.LogError(iDataEvolve.isEquipped + " vs " + curItem.isEquipped);
 
                         string _keyiSearchRS = iSearchRS.id + "_" + iSearchRS.level + "_" + iSearchRS.isUnlock + "_" + iSearchRS.isEquipped;
                         DataUtils.dicAllEquipment[_keyiSearchRS].pices = _newPiece;
@@ -584,8 +585,14 @@ public class EquipmentManager : MonoBehaviour
                 }
                 else
                 {
-                    MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
-                    GetMoreItem();
+                    if (DataUtils.dicAllEquipment[itemKey].level.Equals("Legendary")) {
+                        MainMenuController.Instance.ShowMapNotify("Item has reached max");
+                    }
+                    else
+                    {
+                        MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                        GetMoreItem();
+                    }
                 }
             }
         }
