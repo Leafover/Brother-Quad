@@ -168,7 +168,7 @@ public class EquipmentItem : MonoBehaviour
     private float GetPercent()
     {
         float res = 0.0f;
-        float _p = GetPiceByStar(itemData);
+        float _p = GetPiceByStar(itemData, false);
        
         res = itemData.pices * 1.0f / _p;
         if(res <= 1)

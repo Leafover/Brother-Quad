@@ -8,17 +8,18 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
-    public Sprite sprWhite, sprYellow, sprButton, sprButtonCur;
+    public Sprite sprWhite, sprYellow, sprButton, sprButtonCur, sprButtonYellow;
     public Image[] allStars;
     public Image[] allStarsItemSelect;
-    public GameObject gAllStarItemSelect;
+    public GameObject gAllStarItemSelect, gBuyMore;
     public DisassembleManager disassembleManager;
     public static EquipmentManager Instance;
-    public Button btnRemove, btnReplace, btnUpgrade;
-    public Image imgCoinItemUpdate;
+    public Button btnRemove, btnReplace, btnUpgrade, btnUnlock, btnGetMore;
+    public Image imgCoinItemUpdate, imgPieceEvolve;
     public Text txtMaxReach;
     public Text txtEquip;
-    public Text txtPriceUpgrade;
+    public Text txtPriceUpgrade, txtPieceEvolve;
+    public Text txtUpgrade;
     #region Equipment Selected
     public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine;
@@ -38,7 +39,10 @@ public class EquipmentManager : MonoBehaviour
     public Transform trContain;
     public bool isMultiSell;
     public GameObject gItems;
+    public GameObject gItemSelected;
+    public TextMeshProUGUI txtBuy3, txtBuy5;
     private GameObject gItemClone;
+
 
     public ItemData itemSelected;
 
@@ -53,7 +57,6 @@ public class EquipmentManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ChooseTab(0);
         for (int i = 0; i < btnTabs.Length; i++)
         {
             if (i == tabSelected)
@@ -89,13 +92,12 @@ public class EquipmentManager : MonoBehaviour
         {
             lstAllChild.Add(trContain.GetChild(i));
         }
-        var _sortList = lstAllChild.OrderByDescending(c => c.name.StartsWith("W")).ThenByDescending(c=>c.name.StartsWith("A")).ThenByDescending(c => c.name.StartsWith("G"))
+        var _sortList = lstAllChild.OrderByDescending(c => c.name.StartsWith("W")).ThenByDescending(c => c.name.StartsWith("A")).ThenByDescending(c => c.name.StartsWith("G"))
             .ThenByDescending(c => c.name.StartsWith("H")).ThenByDescending(c => c.name.StartsWith("B")).ThenByDescending(c => c.name.StartsWith("S")).ToList();
 
         for (int i = 0; i < _sortList.Count; i++)
         {
-            //Debug.LogError("--> " + _sortList[i].name);
-            for(int j = 0;j< trContain.childCount; j++)
+            for (int j = 0; j < trContain.childCount; j++)
             {
                 if (trContain.GetChild(j).name.Contains(_sortList[i].name))
                 {
@@ -152,7 +154,41 @@ public class EquipmentManager : MonoBehaviour
         DataUtils.SaveEquipmentData();
         ChooseItem(null);
     }
+    public void GetMoreItem()
+    {
+        txtBuy3.text = (3 * DataUtils.GetDiamondPrice(itemSelected)).ToString();
+        txtBuy5.text = (5 * DataUtils.GetDiamondPrice(itemSelected)).ToString();
+        gBuyMore.SetActive(true);
+    }
+    public void UnlockThisItem()
+    {
+        if (itemSelected.pices >= DataUtils.GetPiceByStar(itemSelected, false))
+        {
+            ///Check Unlock item
+            DataUtils.UnlockThisItem(itemSelected);
+            for (int i = 0; i < trContain.childCount; i++)
+            {
+                EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                _iEquipData.CheckItemUnlock();
+            }
+        }
+        ChooseItem(null);
+    }
 
+    public void RemoverThisItem(ItemData IData)
+    {
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+            if (_iEquipData.itemData != null)
+            {
+                if (_iEquipData.itemData == IData)
+                {
+                    trContain.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+        }
+    }
     public void EquipItem()
     {
         if (itemEquipped != null)
@@ -267,7 +303,7 @@ public class EquipmentManager : MonoBehaviour
         }
         return count == 0 ? false : true;
     }
-    private void CheckInitNewItem(ItemData itemNew)
+    public void CheckInitNewItem(ItemData itemNew)
     {
         if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
         {
@@ -294,8 +330,6 @@ public class EquipmentManager : MonoBehaviour
         item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemNew.id, MainMenuController.Instance.allSpriteData);
 
         gItemClone.transform.SetParent(trContain, false);
-
-
 
         for (int i = 0; i < trContain.childCount; i++)
         {
@@ -416,6 +450,8 @@ public class EquipmentManager : MonoBehaviour
             MainMenuController.Instance.ShowMapNotify("Not enough coin to upgrade this item");
         }
     }
+
+    string _keySelect1, _keySelect2 = "--";
     public void ChooseItem(ItemData itemData)
     {
         if (itemData == null)
@@ -433,6 +469,7 @@ public class EquipmentManager : MonoBehaviour
                 _iEquipData.imgSingleSelect.enabled = false;
             }
             gAllStarItemSelect.SetActive(false);
+            HideBuyMore();
         }
         else
         {
@@ -448,12 +485,38 @@ public class EquipmentManager : MonoBehaviour
             }
 
             txtPriceUpgrade.text = priceUpgrade.ToString();
+            txtPieceEvolve.text = DataUtils.GetPiceByStar(itemSelected, true).ToString();
             if (!itemSelected.isUnlock)
             {
-                btnReplace.image.sprite = sprButton;
                 btnReplace.interactable = false;
                 btnRemove.gameObject.SetActive(true);
                 btnUpgrade.gameObject.SetActive(false);
+                if (itemSelected.pices >= DataUtils.GetPiceByStar(itemSelected, false))
+                {
+                    _keySelect1 = itemSelected.id + "_" + itemSelected.level + "_" + true + "_" + itemSelected.isEquipped;
+                    _keySelect1 = itemSelected.id + "_" + itemSelected.level + "_" + true + "_" + true;
+                    if (DataUtils.dicAllEquipment.ContainsKey(_keySelect1) || DataUtils.dicAllEquipment.ContainsKey(_keySelect2))
+                    {
+                        btnReplace.image.sprite = sprButtonCur;
+                        btnReplace.gameObject.SetActive(false);
+                        btnUnlock.gameObject.SetActive(false);
+                        btnGetMore.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        btnReplace.image.sprite = sprButtonYellow;
+                        btnReplace.gameObject.SetActive(false);
+                        btnUnlock.gameObject.SetActive(true);
+                        btnGetMore.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    btnReplace.image.sprite = sprButtonCur;
+                    btnReplace.gameObject.SetActive(false);
+                    btnUnlock.gameObject.SetActive(false);
+                    btnGetMore.gameObject.SetActive(true);
+                }
             }
             else
             {
@@ -463,12 +526,18 @@ public class EquipmentManager : MonoBehaviour
                 {
                     btnReplace.image.sprite = sprButton;
                     btnReplace.interactable = false;
+                    btnReplace.gameObject.SetActive(true);
+                    btnUnlock.gameObject.SetActive(false);
+                    btnGetMore.gameObject.SetActive(false);
                     txtEquip.text = "EQUIPPED";
                 }
                 else
                 {
                     btnReplace.image.sprite = sprButtonCur;
                     btnReplace.interactable = true;
+                    btnReplace.gameObject.SetActive(true);
+                    btnUnlock.gameObject.SetActive(false);
+                    btnGetMore.gameObject.SetActive(false);
                     txtEquip.text = "EQUIP";
                 }
 
@@ -518,12 +587,16 @@ public class EquipmentManager : MonoBehaviour
             if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
             {
                 imgCoinItemUpdate.gameObject.SetActive(true);
-                txtMaxReach.gameObject.SetActive(false);
+                imgPieceEvolve.gameObject.SetActive(false);
+                //txtMaxReach.gameObject.SetActive(false);
+                txtUpgrade.text = "UPGRADE";
             }
             else
             {
                 imgCoinItemUpdate.gameObject.SetActive(false);
-                txtMaxReach.gameObject.SetActive(true);
+                imgPieceEvolve.gameObject.SetActive(true);
+                txtUpgrade.text = "EVOLVE";
+                //txtMaxReach.gameObject.SetActive(true);
             }
         }
 
@@ -737,22 +810,42 @@ public class EquipmentManager : MonoBehaviour
         lstAllItemSell.Remove(epi);
     }
     public List<EquipmentItem> lstAllItemSell = new List<EquipmentItem>();
-}
-public class FixedOrderComparer<T> : IComparer<T>
-{
-    private readonly T[] fixedOrderItems;
 
-    public FixedOrderComparer(params T[] fixedOrderItems)
+    public void HideBuyMore()
     {
-        this.fixedOrderItems = fixedOrderItems;
+        gBuyMore.SetActive(false);
     }
-
-    public int Compare(T x, T y)
+    public void GetFreeItem()
     {
-        var xIndex = System.Array.IndexOf(fixedOrderItems, x);
-        var yIndex = System.Array.IndexOf(fixedOrderItems, y);
-        xIndex = xIndex == -1 ? int.MaxValue : xIndex;
-        yIndex = yIndex == -1 ? int.MaxValue : yIndex;
-        return xIndex.CompareTo(yIndex);
+        AdsManager.Instance.ShowRewardedVideo((b) =>
+        {
+            if (b)
+            {
+                DataUtils.TakeItem(itemSelected, 1);
+                for (int i = 0; i < trContain.childCount; i++)
+                {
+                    EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                    _iEquipData.CheckItemUnlock();
+                }
+            }
+        });
+    }
+    public void GetItemByDiamond(int totalPiece)
+    {
+        int _diamond = (int)(totalPiece * DataUtils.GetDiamondPrice(itemSelected));
+        if (DataUtils.playerInfo.gems >= _diamond)
+        {
+            DataUtils.AddCoinAndGame(0, -_diamond);
+            DataUtils.TakeItem(itemSelected, totalPiece);
+            for (int i = 0; i < trContain.childCount; i++)
+            {
+                EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                _iEquipData.CheckItemUnlock();
+            }
+        }
+        else
+        {
+            MainMenuController.Instance.ShowMapNotify("Not enought gem");
+        }
     }
 }
