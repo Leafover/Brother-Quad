@@ -99,12 +99,12 @@ public class DataUtils
                 _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[curStar] + "</color> move speed";
                 break;
             case "BAG":
-                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar];
+                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count? dicBag[itemKey].HealthRegenerationValue.Count-1:curStar];
                 if (HealthRegeneration <= 0)
-                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar] + "%</color> of first aid dropped on the map";
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar] + "%</color> of first aid dropped on the map";
                 else
                 {
-                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
                 }
                 break;
             case "GLOVES":
@@ -662,7 +662,7 @@ public class DataUtils
                 dicAllEquipment.Add(_key, iData);
                 if (EquipmentManager.Instance != null)
                 {
-                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key]);
+                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key], true);
                 }
             }
             SaveEquipmentData();
@@ -670,8 +670,29 @@ public class DataUtils
     }
     public static void TakeItem(ItemData iData, int _piece)
     {
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
-        dicAllEquipment[_key].pices += _piece;
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + /*iData.isUnlock*/false + "_" + iData.isEquipped;
+        if (dicAllEquipment.ContainsKey(_key))
+        {
+            dicAllEquipment[_key].pices += _piece;
+        }
+        else
+        {
+            ItemData iDataNew = new ItemData();
+            iDataNew.id = iData.id;
+            iDataNew.type = iData.type;
+            iDataNew.level = iData.level;
+            iDataNew.isUnlock = false;
+            iDataNew.pices = _piece;
+            iDataNew.itemName = iData.itemName;
+            iDataNew.isEquipped = false;
+            string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" + /*iData.isUnlock*/false + "_" + iDataNew.isEquipped;
+            dicAllEquipment.Add(_keyNew, iDataNew);
+            if (EquipmentManager.Instance != null)
+            {
+                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key], false);
+            }
+        }
+
         SaveEquipmentData();
     }
 

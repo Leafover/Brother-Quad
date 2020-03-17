@@ -95,7 +95,6 @@ public class EquipmentItem : MonoBehaviour
         });
         if (!string.IsNullOrEmpty(itemKey))
         {
-            Debug.LogError("----> " + itemKey);
             itemData = dicAllEquipment[itemKey];
             CheckItemUnlock();
             EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
