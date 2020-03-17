@@ -78,7 +78,7 @@ public class GunMiniBoss2 : AutoTarget
     }
 
 
-
+    ChainLightning chainLightning;
     void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.layer)
@@ -101,7 +101,15 @@ public class GunMiniBoss2 : AutoTarget
                     myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true);
                 }
 
-                collision.gameObject.SetActive(false);
+                if (!collision.CompareTag("shotgun"))
+                    collision.gameObject.SetActive(false);
+                if (collision.CompareTag("bulletw6"))
+                {
+                    chainLightning = ObjectPoolManagerHaveScript.Instance.chainlightningPooler.GetChainLightningPooledObject();
+                    chainLightning.originPos = gameObject;
+                    chainLightning.transform.position = gameObject.transform.position;
+                    chainLightning.gameObject.SetActive(true);
+                }
                 break;
             case 14:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)

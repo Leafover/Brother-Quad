@@ -10,7 +10,6 @@ using Spine;
 public class PlayerController : MonoBehaviour
 {
     bool isregen;
-
     public int countKillByGrenade;
     public GameObject shield;
     private Skin[] skins;
@@ -763,7 +762,7 @@ public class PlayerController : MonoBehaviour
             box.size = size;
     }
 
-    Vector2 GetTargetTranform()
+    public Vector2 GetTargetTranform()
     {
         return targetPos.transform.position;
     }
@@ -777,64 +776,46 @@ public class PlayerController : MonoBehaviour
         bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        //angle2 = angle + 10;
-        //angle3 = angle - 10;
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
-        //    if (i == 1)
-        //    {
-        //        rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
-        //        bullet.transform.rotation = rotation2;
-        //    }
-        //    else if (i == 2)
-        //    {
-        //        rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
-        //        bullet.transform.rotation = rotation3;
-        //    }
-        //    else if (i == 0)
-        //    {
-        //        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        //        bullet.transform.rotation = rotation;
-        //    }
-        //    bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //    bullet.SetActive(true);
-        //}
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
         bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         bullet.SetActive(true);
     }
+
+    public void CreateBulletToa()
+    {
+        SoundController.instance.PlaySound(soundGame.soundshootW4);
+        dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+        angle2 = angle + 5;
+        angle3 = angle - 5;
+        for (int i = 0; i < 3; i++)
+        {
+            bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
+            if (i == 1)
+            {
+                rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
+                bullet.transform.rotation = rotation2;
+            }
+            else if (i == 2)
+            {
+                rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
+                bullet.transform.rotation = rotation3;
+            }
+            else if (i == 0)
+            {
+                rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                bullet.transform.rotation = rotation;
+            }
+            bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+            bullet.SetActive(true);
+        }
+    }
+
     int posIndexBullet;
-    //public void CreateBullet1()
-    //{
-    //    SoundController.instance.PlaySound(soundGame.soundshootW5);
-    //    bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
-    //    dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-    //    angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-    //    rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    //    bullet.transform.rotation = rotation;
-
-    //    posBulletTemp.x = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x;
-    //    if (posIndexBullet == 0)
-    //    {
-    //        posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y + 0.05f;
-    //        posIndexBullet = 1;
-    //    }
-    //    else
-    //    {
-    //        posBulletTemp.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y - 0.05f;
-    //        posIndexBullet = 0;
-    //    }
-    //    bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posBulletTemp;
-
-    //    bullet.SetActive(true);
-
-
-    //}
-
     public void CreateBullet(bool lech)
     {
+        dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         switch (currentGun)
         {
             case 0:
@@ -844,13 +825,14 @@ public class PlayerController : MonoBehaviour
             case 1:
                 bullet = ObjectPoolerManager.Instance.bulletW2Pooler.GetPooledObject();
                 break;
-            case 3:
-                SoundController.instance.PlaySound(soundGame.soundshootW4);
-                bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
-                break;
+            //case 3:
+            //    SoundController.instance.PlaySound(soundGame.soundshootW4);
+            //    bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
+            //    break;
             case 4:
                 SoundController.instance.PlaySound(soundGame.soundshootW5);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
+                bullet.GetComponent<Bullet>().dir = GetTargetTranform();
                 break;
             case 5:
                 SoundController.instance.PlaySound(soundGame.soundshootW6);
@@ -859,7 +841,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
@@ -1099,6 +1081,11 @@ public class PlayerController : MonoBehaviour
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
                 SoundController.instance.PlaySound(soundGame.soundshootW3);
+                break;
+            case 3:
+                CreateBulletToa();
+                timePreviousAttack = timedelayAttackGun;
+                AddNumberBullet(1);
                 break;
             default:
                 CreateBullet(true);

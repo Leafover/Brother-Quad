@@ -224,6 +224,7 @@ public class EnemyBase : AutoTarget
 
         enemyAutoSpawn = false;
         incam = false;
+        ischain = false;
     }
     float healthTotalTempBoss;
     public virtual void Start()
@@ -815,6 +816,8 @@ public class EnemyBase : AutoTarget
         hiteffect.transform.position = posHitTemp;
         hiteffect.SetActive(true);
     }
+    bool ischain;
+    ChainLightning chainLightning;
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.layer)
@@ -836,6 +839,13 @@ public class EnemyBase : AutoTarget
                 }
                 if (!collision.CompareTag("shotgun"))
                     collision.gameObject.SetActive(false);
+                if(collision.CompareTag("bulletw6"))
+                {
+                    chainLightning = ObjectPoolManagerHaveScript.Instance.chainlightningPooler.GetChainLightningPooledObject();
+                    chainLightning.originPos = gameObject;
+                    chainLightning.transform.position = gameObject.transform.position;
+                    chainLightning.gameObject.SetActive(true);
+                }
                 break;
             case 14:
                 if (!incam || enemyState == EnemyState.die)
@@ -879,6 +889,7 @@ public class EnemyBase : AutoTarget
             case 20:
                 gameObject.SetActive(false);
                 break;
+
         }
     }
     [HideInInspector]

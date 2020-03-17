@@ -20,6 +20,9 @@ public class ObjectPoolerHaveScript : MonoBehaviour
     public List<ItemBase> PooledItem;
 
 
+    public ChainLightning chainLightningPooledObject;
+    public List<ChainLightning> PooledChainLightning;
+
     public int PoolLength;
 
     void Awake()
@@ -198,6 +201,48 @@ public class ObjectPoolerHaveScript : MonoBehaviour
 
         go.gameObject.SetActive(false);
         PooledItem.Add(go);
+        if (Parent != null)
+            go.transform.parent = this.Parent;
+        else
+            go.transform.parent = transform;
+    }
+    #endregion
+
+    #region Chain Lightning
+    public void InitializeChainLightning(int length)
+    {
+        PooledChainLightning = new List<ChainLightning>();
+        for (int i = 0; i < length; i++)
+        {
+            CreateChainLightningObjectInPool();
+        }
+    }
+    public ChainLightning GetChainLightningPooledObject()
+    {
+        for (int i = 0; i < PooledChainLightning.Count; i++)
+        {
+            if (!PooledChainLightning[i].gameObject.activeInHierarchy)
+            {
+                return PooledChainLightning[i];
+            }
+        }
+        int indexToReturn = PooledChainLightning.Count;
+        CreateChainLightningObjectInPool();
+        return PooledChainLightning[indexToReturn];
+    }
+
+    private void CreateChainLightningObjectInPool()
+    {
+        ChainLightning go;
+        if (chainLightningPooledObject == null)
+            go = new ChainLightning();
+        else
+        {
+            go = Instantiate(chainLightningPooledObject) as ChainLightning;
+        }
+
+        go.gameObject.SetActive(false);
+        PooledChainLightning.Add(go);
         if (Parent != null)
             go.transform.parent = this.Parent;
         else
