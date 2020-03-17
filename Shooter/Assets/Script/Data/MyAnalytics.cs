@@ -6,10 +6,10 @@ using Firebase.Analytics;
 
 public class MyAnalytics
 {
-    const string EVENT_LOGIN_BY_DAY = "event_login_by_day";
-    const string EVENT_TIME_OPEN = "time_open";
-    const string EVENT_LEVEL_PLAY = "level_play";
-    const string EVENT_LOSE_LEVEL = "lose_level_checkpoint";
+    const string EVENT_LOGIN_BY_DAY = "event_login_by_day_mygame";
+    const string EVENT_TIME_OPEN = "time_open_mygame";
+    const string EVENT_LEVEL_PLAY = "level_play_mygame";
+    const string EVENT_LOSE_LEVEL = "lose_level_checkpoint_mygame";
 
     public static void LogEventLogin()
     {

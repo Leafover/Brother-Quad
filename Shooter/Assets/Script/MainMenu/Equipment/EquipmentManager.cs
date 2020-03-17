@@ -579,11 +579,13 @@ public class EquipmentManager : MonoBehaviour
                     else
                     {
                         MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                        GetMoreItem();
                     }
                 }
                 else
                 {
                     MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                    GetMoreItem();
                 }
             }
         }
