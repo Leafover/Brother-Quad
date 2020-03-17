@@ -355,11 +355,12 @@ public class DataUtils
     public static ItemData itemNew;
 
     public static List<ItemData> lstAllEquipment = new List<ItemData>();
-    public static float GetPiceByStar(ItemData itemData)
+    public static float GetPiceByStar(ItemData itemData, bool isEvolve)
     {
         float res = 0;
         string key = itemData.id + "_" + itemData.level;
-        int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
+        int curStar = (isEvolve ? 0 : (itemData.curStar < 5 ? itemData.curStar : 4));
+        //int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
             case "ARMOR":
@@ -379,6 +380,36 @@ public class DataUtils
                 break;
             case "WEAPON":
                 res = dicWeapon[key].SoManhYeuCauValue[curStar];
+                break;
+        }
+        return res;
+    }
+
+
+
+    public static double GetDiamondPrice(ItemData itemData)
+    {
+        double res = 0;
+        string key = itemData.id + "_" + itemData.level;
+        switch (itemData.type)
+        {
+            case "ARMOR":
+                res = dicArmor[key].GiaMua1Manh;
+                break;
+            case "BAG":
+                res = dicBag[key].GiaMua1Manh;
+                break;
+            case "GLOVES":
+                res = dicGloves[key].GiaMua1Manh;
+                break;
+            case "HELMET":
+                res = dicHelmet[key].GiaMua1Manh;
+                break;
+            case "SHOES":
+                res = dicShoes[key].GiaMua1Manh;
+                break;
+            case "WEAPON":
+                res = dicWeapon[key].GiaMua1Manh;
                 break;
         }
         return res;
@@ -414,78 +445,78 @@ public class DataUtils
     }
     private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
     {
-        bool result = false;
-        string key = id + "_" + level + "_" + isUnlock + "_" + isEquipped;
-        string key_ = id + "_" + level;
-        switch (itemType)
-        {
-            case eType.ARMOR:
-                if ((pices >= (int)dicArmor[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicArmor[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-            case eType.BAG:
-                if ((pices >= (int)dicBag[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicBag[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-            case eType.GLOVES:
-                if ((pices >= (int)dicGloves[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicGloves[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-            case eType.HELMET:
-                if ((pices >= (int)dicHelmet[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicHelmet[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-            case eType.SHOES:
-                if ((pices >= (int)dicShoes[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicShoes[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-            case eType.WEAPON:
-                if ((pices >= (int)dicWeapon[key_].SoManhYeuCauValue[curStar]))
-                {
-                    pices -= (int)dicWeapon[key_].SoManhYeuCauValue[curStar];
-                    result = true;
-                }
-                break;
-        }
+        //bool result = false;
+        //string key = id + "_" + level + "_" + isUnlock + "_" + isEquipped;
+        //string key_ = id + "_" + level;
+        //switch (itemType)
+        //{
+        //    case eType.ARMOR:
+        //        if ((pices >= (int)dicArmor[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicArmor[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //    case eType.BAG:
+        //        if ((pices >= (int)dicBag[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicBag[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //    case eType.GLOVES:
+        //        if ((pices >= (int)dicGloves[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicGloves[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //    case eType.HELMET:
+        //        if ((pices >= (int)dicHelmet[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicHelmet[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //    case eType.SHOES:
+        //        if ((pices >= (int)dicShoes[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicShoes[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //    case eType.WEAPON:
+        //        if ((pices >= (int)dicWeapon[key_].SoManhYeuCauValue[curStar]))
+        //        {
+        //            pices -= (int)dicWeapon[key_].SoManhYeuCauValue[curStar];
+        //            result = true;
+        //        }
+        //        break;
+        //}
 
-        if (result)
-        {
-            ItemData itemNew = dicAllEquipment[key];
-            dicAllEquipment.Remove(key);
-            string _newKey = id + "_" + level + "_" + result + "_" + isEquipped;
-            if (!dicAllEquipment.ContainsKey(_newKey))
-            {
-                dicAllEquipment.Add(_newKey, itemNew);
-                dicAllEquipment[_newKey].pices = pices;
-                dicAllEquipment[_newKey].isUnlock = result;
+        //if (result)
+        //{
+        //    ItemData itemNew = dicAllEquipment[key];
+        //    dicAllEquipment.Remove(key);
+        //    string _newKey = id + "_" + level + "_" + result + "_" + isEquipped;
+        //    if (!dicAllEquipment.ContainsKey(_newKey))
+        //    {
+        //        dicAllEquipment.Add(_newKey, itemNew);
+        //        dicAllEquipment[_newKey].pices = pices;
+        //        dicAllEquipment[_newKey].isUnlock = result;
 
-                if (EquipmentManager.Instance != null)
-                {
-                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
-                }
-            }
-            else
-            {
-                dicAllEquipment[_newKey].pices = pices;
-                dicAllEquipment[_newKey].isUnlock = result;
-                ItemData iAddNew = dicAllEquipment[_newKey];
-            }
-        }
+        //        if (EquipmentManager.Instance != null)
+        //        {
+        //            EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_newKey]);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        dicAllEquipment[_newKey].pices = pices;
+        //        dicAllEquipment[_newKey].isUnlock = result;
+        //        ItemData iAddNew = dicAllEquipment[_newKey];
+        //    }
+        //}
     }
 
     private static string GetItemName(ItemData iData, eType _itemType)
@@ -516,6 +547,42 @@ public class DataUtils
         }
         return _name;
     }
+
+    public static void UnlockThisItem(ItemData itemData) {
+        string _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
+        int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key], false);
+
+        ItemData iData_New = new ItemData();
+        iData_New.id = dicAllEquipment[_key].id;
+        iData_New.type = dicAllEquipment[_key].type;
+        iData_New.level = dicAllEquipment[_key].level;
+        iData_New.isUnlock = true;
+        iData_New.pices = 0;
+        iData_New.itemName = dicAllEquipment[_key].itemName;
+        iData_New.isEquipped = false;
+        string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
+
+        dicAllEquipment.Add(_keyNew, iData_New);
+        EquipmentManager.Instance.CheckInitNewItem(dicAllEquipment[_keyNew]);
+
+        if (iData_New.type.Equals("WEAPON"))
+            DataController.instance.DoAchievement(11, 1);
+
+
+        if (newPiece > 0)
+        {
+            dicAllEquipment[_key].pices = newPiece;
+        }
+        else {
+            dicAllEquipment[_key].pices = 0;
+            if (EquipmentManager.Instance != null)
+            {
+                EquipmentManager.Instance.RemoverThisItem(dicAllEquipment[_key]);
+                dicAllEquipment.Remove(_key);
+            }
+        }
+        SaveEquipmentData();
+    }
     public static void TakeItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart)
     {
         if (_pices > 0)
@@ -536,56 +603,58 @@ public class DataUtils
                 if (!dicAllEquipment[_key].isUnlock)
                 {
                     dicAllEquipment[_key].pices += _pices;
-                    if (dicAllEquipment[_key].pices >= (int)GetPiceByStar(dicAllEquipment[_key]))
-                    {
-                        int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key]);
-                        dicAllEquipment[_key].pices = newPiece;
+                    #region RAW
+                    //if (dicAllEquipment[_key].pices >= (int)GetPiceByStar(dicAllEquipment[_key]))
+                    //{
+                    //    int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key]);
+                    //    dicAllEquipment[_key].pices = newPiece;
 
-                        ItemData iData_New = new ItemData();
-                        iData_New.id = _id;
-                        iData_New.type = _itemType.ToString();
-                        iData_New.level = _itemLevel.ToString();
-                        iData_New.isUnlock = true;
-                        iData_New.pices = 0;
-                        iData_New.itemName = GetItemName(iData_New, _itemType);
-                        iData_New.isEquipped = false;
-                        string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
-                        string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
-                        if (!dicAllEquipment.ContainsKey(_keyNew))
-                        {
+                    //    ItemData iData_New = new ItemData();
+                    //    iData_New.id = _id;
+                    //    iData_New.type = _itemType.ToString();
+                    //    iData_New.level = _itemLevel.ToString();
+                    //    iData_New.isUnlock = true;
+                    //    iData_New.pices = 0;
+                    //    iData_New.itemName = GetItemName(iData_New, _itemType);
+                    //    iData_New.isEquipped = false;
+                    //    string _keyNew = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock + "_" + iData_New.isEquipped;
+                    //    string _keyCompare = iData_New.id + "_" + iData_New.level.ToString() + "_" + iData_New.isUnlock;
+                    //    if (!dicAllEquipment.ContainsKey(_keyNew))
+                    //    {
 
-                            string _keyDisplay = "--";
-                            bool isEqual = true;
-                            foreach (ItemData itData in dicAllEquipment.Values)
-                            {
-                                _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
-                                if (_keyCompare.Equals(_keyDisplay))
-                                {
-                                    dicAllEquipment[_key].pices = _curPiece + _pices;
-                                    break;
-                                }
-                                else
-                                {
-                                    isEqual = false;
-                                }
-                            }
-                            if (!isEqual)
-                            {
-                                dicAllEquipment.Add(_keyNew, iData_New);
-                                if (EquipmentManager.Instance != null)
-                                {
-                                    EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
-                                    if (iData_New.type.Equals("WEAPON"))
-                                        DataController.instance.DoAchievement(11, 1);
-                                }
-                            }
+                    //        string _keyDisplay = "--";
+                    //        bool isEqual = true;
+                    //        foreach (ItemData itData in dicAllEquipment.Values)
+                    //        {
+                    //            _keyDisplay = itData.id + "_" + itData.level.ToString() + "_" + itData.isUnlock;
+                    //            if (_keyCompare.Equals(_keyDisplay))
+                    //            {
+                    //                dicAllEquipment[_key].pices = _curPiece + _pices;
+                    //                break;
+                    //            }
+                    //            else
+                    //            {
+                    //                isEqual = false;
+                    //            }
+                    //        }
+                    //        if (!isEqual)
+                    //        {
+                    //            dicAllEquipment.Add(_keyNew, iData_New);
+                    //            if (EquipmentManager.Instance != null)
+                    //            {
+                    //                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_keyNew]);
+                    //                if (iData_New.type.Equals("WEAPON"))
+                    //                    DataController.instance.DoAchievement(11, 1);
+                    //            }
+                    //        }
 
-                        }
-                        else
-                        {
-                            dicAllEquipment[_key].pices = _curPiece + _pices;
-                        }
-                    }
+                    //    }
+                    //    else
+                    //    {
+                    //        dicAllEquipment[_key].pices = _curPiece + _pices;
+                    //    }
+                    //}
+                    #endregion
                 }
             }
             else
@@ -598,6 +667,12 @@ public class DataUtils
             }
             SaveEquipmentData();
         }
+    }
+    public static void TakeItem(ItemData iData, int _piece)
+    {
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+        dicAllEquipment[_key].pices += _piece;
+        SaveEquipmentData();
     }
 
 

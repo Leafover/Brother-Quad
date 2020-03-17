@@ -95,6 +95,7 @@ public class EquipmentItem : MonoBehaviour
         });
         if (!string.IsNullOrEmpty(itemKey))
         {
+            Debug.LogError("----> " + itemKey);
             itemData = dicAllEquipment[itemKey];
             CheckItemUnlock();
             EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
@@ -168,7 +169,7 @@ public class EquipmentItem : MonoBehaviour
     private float GetPercent()
     {
         float res = 0.0f;
-        float _p = GetPiceByStar(itemData);
+        float _p = GetPiceByStar(itemData, false);
        
         res = itemData.pices * 1.0f / _p;
         if(res <= 1)
