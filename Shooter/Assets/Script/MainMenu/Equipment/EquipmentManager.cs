@@ -165,11 +165,27 @@ public class EquipmentManager : MonoBehaviour
         if (itemSelected.pices >= DataUtils.GetPiceByStar(itemSelected, false))
         {
             ///Check Unlock item
-            DataUtils.UnlockThisItem(itemSelected);
-            for (int i = 0; i < trContain.childCount; i++)
+            bool _b = false;
+            foreach (ItemData _iSearch in DataUtils.dicAllEquipment.Values)
             {
-                EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
-                _iEquipData.CheckItemUnlock();
+                if (_iSearch.id.Equals(itemSelected.id) && _iSearch.level.Equals(itemSelected.level) && _iSearch.isUnlock)
+                {
+                    _b = true;
+                }
+            }
+
+
+            if (_b)
+            {
+                MainMenuController.Instance.ShowMapNotify("Item has exits");
+            }
+            else {
+                DataUtils.UnlockThisItem(itemSelected);
+                for (int i = 0; i < trContain.childCount; i++)
+                {
+                    EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
+                    _iEquipData.CheckItemUnlock();
+                }
             }
         }
         ChooseItem(null);
@@ -307,7 +323,7 @@ public class EquipmentManager : MonoBehaviour
     {
         if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
         {
-            itemNew.isEquipped = false;
+            //itemNew.isEquipped = false;
             key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
             gItemClone = Instantiate(gItems);
             gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
@@ -416,14 +432,18 @@ public class EquipmentManager : MonoBehaviour
         //}
     }
     float priceUpgrade;
+    private bool IsReachMaxLevel(ItemData iData)
+    {
+        return iData.curStar < DataUtils.MAX_STARS - 1;
+    }
     public void UpgradeItem()
     {
         int total = 0;
+        string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
 
         if (DataUtils.playerInfo.coins >= priceUpgrade)
         {
-            string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
-            if (DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1)
+            if (/*DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1*/IsReachMaxLevel(DataUtils.dicAllEquipment[key]))
             {
                 DataUtils.AddCoinAndGame(-(int)priceUpgrade, 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
@@ -442,13 +462,148 @@ public class EquipmentManager : MonoBehaviour
             }
             else
             {
-                MainMenuController.Instance.ShowMapNotify("Item has reach max level");
+                EvolveThisItem(key);
             }
         }
         else
         {
             MainMenuController.Instance.ShowMapNotify("Not enough coin to upgrade this item");
         }
+    }
+
+    string _strEvolveText = "";
+
+    private bool IsExitsItem(ItemData itemData)
+    {
+        bool _b = false;
+        foreach (ItemData _iSearch in DataUtils.dicAllEquipment.Values)
+        {
+            if (_iSearch.id.Equals(itemData.id) && _iSearch.level.Equals(EvolveItemLevel(itemData.level)))
+            {
+                _b = true;
+            }
+        }
+        return _b;
+    }
+    private void DestroyItemByKey(string _key) {
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            if (trContain.GetChild(i).gameObject.name.Equals(_key))
+            {
+                Destroy(trContain.GetChild(i).gameObject);
+            }
+        }
+    }
+    private void RemoveItem(string _key) {
+        if (DataUtils.dicAllEquipment.ContainsKey(_key))
+        {
+            DataUtils.dicAllEquipment.Remove(_key);
+        }
+    }
+    private void EvolveThisItem(string itemKey)
+    {
+        ItemData iSearchRS = null;
+        ItemData curItem = DataUtils.dicAllEquipment[itemKey];
+        _strEvolveText = EvolveItemLevel(curItem.level);
+        if (IsExitsItem(curItem))
+        {
+            MainMenuController.Instance.ShowMapNotify("Item has exits");
+        }
+        else {
+            if (_strEvolveText.Equals("Legendary"))
+            {
+                MainMenuController.Instance.ShowMapNotify("Item has reached max");
+            }
+            else
+            {
+                foreach (ItemData _iSearch in DataUtils.dicAllEquipment.Values)
+                {
+                    if (_iSearch.id.Equals(curItem.id) && _iSearch.level.Equals(curItem.level) && !_iSearch.isUnlock)
+                    {
+                        iSearchRS = _iSearch;
+                    }
+                }
+                if (iSearchRS != null)
+                {
+                    int curPiece = iSearchRS.pices; /*Search all pice of this item*/
+                    int pieceEvolve = (int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[itemKey], true);
+                    int _newPiece = curPiece - pieceEvolve;
+                    if (curPiece >= pieceEvolve)
+                    {
+                        MainMenuController.Instance.ShowMapNotify("Evolve " + DataUtils.dicAllEquipment[itemKey].itemName + " success!");
+
+                        ItemData iDataEvolve = new ItemData();
+                        iDataEvolve.id = curItem.id;
+                        iDataEvolve.type = curItem.type;
+                        iDataEvolve.level = EvolveItemLevel(curItem.level);
+                        iDataEvolve.isUnlock = true;
+                        iDataEvolve.pices = 0;
+                        iDataEvolve.itemName = curItem.itemName;
+                        iDataEvolve.isEquipped = curItem.isEquipped;
+                        
+                        string _keyEvolve = iDataEvolve.id + "_" + iDataEvolve.level + "_" + iDataEvolve.isUnlock + "_" + iDataEvolve.isEquipped;
+                        Debug.LogError(iDataEvolve.isEquipped + " vs " + curItem.isEquipped);
+
+                        string _keyiSearchRS = iSearchRS.id + "_" + iSearchRS.level + "_" + iSearchRS.isUnlock + "_" + iSearchRS.isEquipped;
+                        DataUtils.dicAllEquipment[_keyiSearchRS].pices = _newPiece;
+                        if (_newPiece <= 0) {
+                            RemoverThisItem(iSearchRS);
+                        }
+
+                        ChooseItem(null);
+
+                        if (curItem.isEquipped) {
+                            /*Item đã được trang bị*/
+                            DataUtils.dicEquippedItem.Remove(itemKey);
+                            DataUtils.dicEquippedItem.Add(_keyEvolve, iDataEvolve);
+
+                            DestroyItemByKey(itemKey);
+                            RemoveItem(itemKey);
+                            DataUtils.dicAllEquipment.Add(_keyEvolve, iDataEvolve);
+                            CheckInitNewItem(iDataEvolve);
+                        }
+                        else
+                        {
+                            /*Item chưa được trang bị*/
+                            DestroyItemByKey(itemKey);
+                            RemoveItem(itemKey);
+                            DataUtils.dicAllEquipment.Add(_keyEvolve, iDataEvolve);
+                            CheckInitNewItem(iDataEvolve);
+                        }
+
+                        DataUtils.SaveEquippedData();
+                        DataUtils.SaveEquipmentData();
+
+                        
+                    }
+                    else
+                    {
+                        MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                    }
+                }
+                else
+                {
+                    MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                }
+            }
+        }
+    }
+
+    private string EvolveItemLevel(string eLevel)
+    {
+        string _sResult = "";
+        if (!eLevel.Equals("Legendary"))
+        {
+            if (eLevel.Equals("Normal")) _sResult = "Uncommon";
+            else if (eLevel.Equals("Uncommon")) _sResult = "Rare";
+            else if (eLevel.Equals("Rare")) _sResult = "Epic";
+            else if (eLevel.Equals("Epic")) _sResult = "Legendary";
+        }
+        else
+        {
+            MainMenuController.Instance.ShowMapNotify("Item reach max");
+        }
+        return _sResult;
     }
 
     string _keySelect1, _keySelect2 = "--";
@@ -597,6 +752,7 @@ public class EquipmentManager : MonoBehaviour
                 imgPieceEvolve.gameObject.SetActive(true);
                 txtUpgrade.text = "EVOLVE";
                 //txtMaxReach.gameObject.SetActive(true);
+                //MainMenuController.Instance.ShowMapNotify("Item reached max. Evolution to be stronger.");
             }
         }
 
@@ -732,7 +888,7 @@ public class EquipmentManager : MonoBehaviour
 
         if (!itemData.type.Contains("WEAPON"))
         {
-            txtItemSelectInfo.text = DataUtils.GetItemInfo(/*itemSelected*/DataUtils.dicAllEquipment[_keyItemSelected]);
+            txtItemSelectInfo.text = DataUtils.GetItemInfo(DataUtils.dicAllEquipment[_keyItemSelected]);
             gWeaponData.SetActive(false);
             txtItemSelectInfo.gameObject.SetActive(true);
         }
