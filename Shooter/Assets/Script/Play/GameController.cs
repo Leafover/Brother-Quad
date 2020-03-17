@@ -257,7 +257,7 @@ public class GameController : MonoBehaviour
         movePosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
         var angle = Mathf.Atan2(movePosition.x, movePosition.y) * Mathf.Rad2Deg;
         var h = movePosition.x;
-        if (angle <= 135f && angle >= -135.5f)
+        if (angle <= 135f && angle >= -135f)
         {
             PlayerController.instance.speedmove = h > 0 ? 1.5f : -1.5f;
             PlayerController.instance.dirMove = h > 0 ? true : false;
@@ -279,7 +279,7 @@ public class GameController : MonoBehaviour
     {
         var angle = Mathf.Atan2(axis.x, axis.y) * Mathf.Rad2Deg;
         var h = axis.x;
-        if (angle <= 135f && angle >= -135.5f)
+        if (angle <= 135f && angle >= -135f)
         {
 
             PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
@@ -629,6 +629,7 @@ public class GameController : MonoBehaviour
     int numberReward;
     int numberAdd(int i)
     {
+
         numberReward = first ? 1 : (int)vatphamnhanduoc[i].TotalNumber;
         return numberReward;
     }
@@ -637,7 +638,10 @@ public class GameController : MonoBehaviour
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
+            if (vatphamnhanduoc[i].ID.Contains("W2"))
+                DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
+            else
+                DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
         }
         else if (vatphamnhanduoc[i].ID.Contains("A"))
         {
