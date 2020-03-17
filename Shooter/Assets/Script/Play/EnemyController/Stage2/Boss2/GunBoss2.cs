@@ -76,7 +76,7 @@ public class GunBoss2 : AutoTarget
         hiteffect.SetActive(true);
     }
 
-
+    GameObject explobulletW5;
     ChainLightning chainLightning;
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -85,31 +85,40 @@ public class GunBoss2 : AutoTarget
             case 11:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                takecrithit = Random.Range(0, 100);
-                if (takecrithit <= 10)
+                if (collision.tag != "bulletW5")
                 {
-                    TakeDamage(PlayerController.instance.damageBullet * 2, true);
-                    myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 2, true, true);
-                    if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
-                        SoundController.instance.PlaySound(soundGame.soundCritHit);
-                    GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
+                    takecrithit = Random.Range(0, 100);
+                    if (takecrithit <= 10)
+                    {
+                        TakeDamage(PlayerController.instance.damageBullet * 2, true);
+                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 2, true, true);
+                        if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
+                            SoundController.instance.PlaySound(soundGame.soundCritHit);
+                        GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
+                    }
+                    else
+                    {
+                        TakeDamage(PlayerController.instance.damageBullet, false);
+                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true);
+                    }
+
+                    if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
+                        collision.gameObject.SetActive(false);
+                    if (collision.tag == "bulletw6")
+                    {
+                        chainLightning = ObjectPoolManagerHaveScript.Instance.chainlightningPooler.GetChainLightningPooledObject();
+                        chainLightning.originPos = gameObject;
+                        chainLightning.transform.position = gameObject.transform.position;
+                        chainLightning.gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
-                    TakeDamage(PlayerController.instance.damageBullet, false);
-                    myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true);
-                }
-
-                if (!collision.CompareTag("shotgun"))
+                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
+                    explobulletW5.transform.position = collision.transform.position;
+                    explobulletW5.SetActive(true);
                     collision.gameObject.SetActive(false);
-                if (collision.CompareTag("bulletw6"))
-                {
-                    chainLightning = ObjectPoolManagerHaveScript.Instance.chainlightningPooler.GetChainLightningPooledObject();
-                    chainLightning.originPos = gameObject;
-                    chainLightning.transform.position = gameObject.transform.position;
-                    chainLightning.gameObject.SetActive(true);
                 }
-
                 break;
             case 14:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)

@@ -67,19 +67,30 @@ public class Barrier : MonoBehaviour
     }
     Vector2 posTemp;
     GameObject poisionArena;
+    GameObject explobulletW5;
     public void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.layer)
         {
             case 11:
-                TakeDamage(PlayerController.instance.damageBullet);
-                //Debug.LogError("zoooooooo");
-                if (!collision.CompareTag("shotgun"))
+                if (collision.tag != "bulletW5")
+                {
+                    TakeDamage(PlayerController.instance.damageBullet);
+                    //Debug.LogError("zoooooooo");
+                    if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
+                        collision.gameObject.SetActive(false);
+                }
+                else
+                {
+                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
+                    explobulletW5.transform.position = collision.transform.position;
+                    explobulletW5.SetActive(true);
                     collision.gameObject.SetActive(false);
+                }
                 break;
             case 14:
                 TakeDamage(PlayerController.instance.damgeGrenade);
-               // Debug.LogError("zoooooooo");
+                // Debug.LogError("zoooooooo");
                 break;
             case 26:
                 TakeDamage(PlayerController.instance.damgeGrenade);
@@ -88,7 +99,7 @@ public class Barrier : MonoBehaviour
                 if (dongrom)
                 {
                     TakeDamage(1000);
-                   // Debug.LogError("cham");
+                    // Debug.LogError("cham");
                 }
                 break;
         }
