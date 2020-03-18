@@ -784,7 +784,7 @@ public class PlayerController : MonoBehaviour
 
     public void CreateBulletToa()
     {
-        SoundController.instance.PlaySound(soundGame.soundshootW4);
+        SoundController.instance.PlaySound(soundGame.soundshootW3);
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         angle2 = angle + 5;
@@ -829,13 +829,13 @@ public class PlayerController : MonoBehaviour
             //    SoundController.instance.PlaySound(soundGame.soundshootW4);
             //    bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
             //    break;
-            case 4:
-                SoundController.instance.PlaySound(soundGame.soundshootW5);
+            case 5:
+                SoundController.instance.PlaySound(soundGame.soundshootW6);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
                 bullet.GetComponent<Bullet>().dir = GetTargetTranform();
                 break;
-            case 5:
-                SoundController.instance.PlaySound(soundGame.soundshootW6);
+            case 3:
+                SoundController.instance.PlaySound(soundGame.soundshootW3);
                 bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
                 break;
 
@@ -1082,7 +1082,7 @@ public class PlayerController : MonoBehaviour
                 AddNumberBullet(1);
                 SoundController.instance.PlaySound(soundGame.soundshootW3);
                 break;
-            case 3:
+            case 4:
                 CreateBulletToa();
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
