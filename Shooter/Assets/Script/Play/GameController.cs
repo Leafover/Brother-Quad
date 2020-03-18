@@ -336,6 +336,14 @@ public class GameController : MonoBehaviour
         }
         else
         {
+#if UNITY_EDITOR
+
+#else
+            if (PlayerController.instance.currentGun == 6)
+            {
+                PlayerController.instance.DisableLaser();
+            }
+#endif
             if (isShoot)
             {
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
@@ -545,6 +553,10 @@ public class GameController : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             TryShot();
+        }
+        else if(Input.GetKeyUp(KeyCode.S))
+        {
+            PlayerController.instance.DisableLaser();
         }
         if (Input.GetKey(KeyCode.Space))
         {

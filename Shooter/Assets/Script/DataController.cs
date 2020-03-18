@@ -246,7 +246,7 @@ public class DataController : MonoBehaviour
         if (loadData)
             return;
 
-        Debug.unityLogger.logEnabled = false;
+        //Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
         loadData = true;
@@ -570,7 +570,7 @@ public class DataController : MonoBehaviour
     List<WeaponList> weaponList = new List<WeaponList>();
     public void LoadWeapon(string path)
     {
-        if (weaponList.Count == 30)
+        if (weaponList.Count == 35)
             return;
         _ta = Resources.Load<TextAsset>("JsonData/" + path);
 
@@ -649,6 +649,11 @@ public class DataController : MonoBehaviour
                     if (allWeapon[5].weaponList.Count == 5)
                         return;
                     allWeapon[5].weaponList.Add(weaponList[i]);
+                    break;
+                case "W7":
+                    if (allWeapon[6].weaponList.Count == 5)
+                        return;
+                    allWeapon[6].weaponList.Add(weaponList[i]);
                     break;
             }
         }
@@ -1028,7 +1033,7 @@ public class DataController : MonoBehaviour
 
         for (int i = 0; i < tilevatphamList.Count; i++)
         {
-            if (allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Count == 9)
+            if (allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Count == 8)
                 return;
             allTileVatPham[tilevatphamList[i].Stage - 1].tilevatphamList.Add(tilevatphamList[i]);
         }
@@ -1050,7 +1055,7 @@ public class DataController : MonoBehaviour
 
         for (int i = 0; i < tilevatphamListHard.Count; i++)
         {
-            if (allTileVatPhamHard[tilevatphamListHard[i].Stage - 1].tilevatphamList.Count == 9)
+            if (allTileVatPhamHard[tilevatphamListHard[i].Stage - 1].tilevatphamList.Count == 8)
                 return;
             allTileVatPhamHard[tilevatphamListHard[i].Stage - 1].tilevatphamList.Add(tilevatphamListHard[i]);
         }

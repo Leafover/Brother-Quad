@@ -156,6 +156,7 @@ public class PlayerController : MonoBehaviour
             health = 0;
             isregen = false;
             timeRegen = 0;
+            DisableLaser();
         }
     }
     public void CalculateTimeStun(float deltaTime)
@@ -265,14 +266,25 @@ public class PlayerController : MonoBehaviour
     public void SetGun(int index)
     {
         currentGun = index;
-        skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
+
         CalculateForGun();
+        if (currentGun != 6)
+        {
+            DisableLaser();
+        }
+        skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
+        //else
+        //{
+        //    skeletonAnimation.Skeleton.SetSkin(skins[5 + 2]);
+        //}
         //  Debug.LogError(currentGun);
     }
     public void CalculateForGun()
     {
         if (currentGun != DataUtils.itemWeapon.weponIndex)
         {
+            //if (currentGun != 6)
+            //{
             damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
             maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
             maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
@@ -281,18 +293,45 @@ public class PlayerController : MonoBehaviour
             bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
             attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
             timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+            //}
+            //else
+            //{
+            //    damageBullet = (float)DataController.instance.allWeapon[5].weaponList[0].DmgValue[0];
+            //    maxTimeReload = (float)DataController.instance.allWeapon[5].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[5].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
+            //    maxNumberBullet = (int)DataController.instance.allWeapon[5].weaponList[0].MagazineValue[0];
+            //    critRate = (float)DataController.instance.allWeapon[5].weaponList[0].CritRateValue[0] + ((float)DataController.instance.allWeapon[5].weaponList[0].CritRateValue[0] * DataUtils.itemGloves.critRateIncrease / 100);
+            //    critDamage = (float)DataController.instance.allWeapon[5].weaponList[0].CritDmgValue[0] + ((float)DataController.instance.allWeapon[5].weaponList[0].CritDmgValue[0] * DataUtils.itemGloves.critDamageIncrease / 100);
+            //    bulletSpeed = (float)DataController.instance.allWeapon[5].weaponList[0].BulletSpeedValue[0];
+            //    attackRange = (float)DataController.instance.allWeapon[5].weaponList[0].AtkRangeValue[0];
+            //    timedelayAttackGun = (float)DataController.instance.allWeapon[5].weaponList[0].AtksecValue[0];
+            //}
         }
         else
         {
-            damageBullet = DataUtils.itemWeapon.DmgValue;
-            maxTimeReload = DataUtils.itemWeapon.ReloadSpeedValue - (DataUtils.itemWeapon.ReloadSpeedValue * DataUtils.itemGloves.reloadTimeReduce / 100);
-            maxNumberBullet = (int)DataUtils.itemWeapon.MagazineValue;
-            critRate = DataUtils.itemWeapon.CritRateValue + (DataUtils.itemWeapon.CritRateValue * DataUtils.itemGloves.critRateIncrease / 100);
-            critDamage = DataUtils.itemWeapon.CritDmgValue + (DataUtils.itemWeapon.CritDmgValue * DataUtils.itemGloves.critDamageIncrease / 100);
-            bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue;
-            attackRange = DataUtils.itemWeapon.AtkRangeValue;
-            timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
-            Debug.LogError("-0--------:" + damageBullet + ":" + DataUtils.itemWeapon.DmgValue);
+            if (currentGun != 6)
+            {
+                damageBullet = DataUtils.itemWeapon.DmgValue;
+                maxTimeReload = DataUtils.itemWeapon.ReloadSpeedValue - (DataUtils.itemWeapon.ReloadSpeedValue * DataUtils.itemGloves.reloadTimeReduce / 100);
+                maxNumberBullet = (int)DataUtils.itemWeapon.MagazineValue;
+                critRate = DataUtils.itemWeapon.CritRateValue + (DataUtils.itemWeapon.CritRateValue * DataUtils.itemGloves.critRateIncrease / 100);
+                critDamage = DataUtils.itemWeapon.CritDmgValue + (DataUtils.itemWeapon.CritDmgValue * DataUtils.itemGloves.critDamageIncrease / 100);
+                bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue;
+                attackRange = DataUtils.itemWeapon.AtkRangeValue;
+                timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
+                //  Debug.LogError("-0--------:" + damageBullet + ":" + DataUtils.itemWeapon.DmgValue);
+            }
+            else
+            {
+                damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
+                maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
+                maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
+                critRate = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0] + ((float)DataController.instance.allWeapon[currentGun].weaponList[0].CritRateValue[0] * DataUtils.itemGloves.critRateIncrease / 100);
+                critDamage = (float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0] + ((float)DataController.instance.allWeapon[currentGun].weaponList[0].CritDmgValue[0] * DataUtils.itemGloves.critDamageIncrease / 100);
+                bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
+                attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
+                timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+            }
+
         }
 
         numberBullet = maxNumberBullet;
@@ -382,6 +421,7 @@ public class PlayerController : MonoBehaviour
         au.mute = !DataUtils.IsSoundOn();
 
         skeletonAnimation.gameObject.SetActive(false);
+        DisableLaser();
     }
 
     public int currentGun;
@@ -497,10 +537,10 @@ public class PlayerController : MonoBehaviour
     public float radius;
     float timeStand = 6;
     public GameObject poitRayGround;
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(poitRayGround.transform.position, radius);
+    //}
     float timereviving = 2;
 
     public void BeginPlayer()
@@ -543,7 +583,10 @@ public class PlayerController : MonoBehaviour
         {
             SetGun(5);
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            SetGun(6);
+        }
 
         isGround = Physics2D.OverlapCircle(poitRayGround.transform.position, radius, lm);
         movePos = rid.velocity;
@@ -582,7 +625,7 @@ public class PlayerController : MonoBehaviour
         }
 
         LockPlayer();
-        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 20);
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 30);
 
         if (isShoot)
         {
@@ -685,6 +728,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         timeReload -= deltaTime;
+        DisableLaser();
         if (timeReload <= 0)
         {
             skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
@@ -1023,6 +1067,7 @@ public class PlayerController : MonoBehaviour
             return;
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
+        DisableLaser();
     }
     public void AnimIdle()
     {
@@ -1053,19 +1098,64 @@ public class PlayerController : MonoBehaviour
             //     Debug.LogError("======wtf=====");
             return;
         }
-
+        DisableLaser();
         timePreviousMeleeAttack = timedelayMeleeAttack;
         skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
         meleeAtackBox.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         meleeAtackBox.gameObject.SetActive(true);
     }
     bool isShoot;
+    public LineRenderer laserRender;
+    public BoxCollider2D boxLaser;
+    public void ActiveLaser()
+    {
+        laserRender.SetPosition(0, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform));
+        laserRender.SetPosition(1, GetTargetTranform());
+        laserRender.enabled = true;
+        addColliderToLine();
+    }
+    Vector2 startPos, endPos,midPoint;
+    float lineLength;
+
+    private void addColliderToLine()
+    {
+        startPos = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        endPos = GetTargetTranform();
+        lineLength = Vector3.Distance(startPos, endPos);
+        boxLaser.size = new Vector2(lineLength, 0.1f);
+        midPoint = (startPos + endPos) / 2;
+        boxLaser.transform.position = midPoint;
+        angle = (Mathf.Abs(startPos.y - endPos.y) / Mathf.Abs(startPos.x - endPos.x));
+        if ((startPos.y < endPos.y && startPos.x > endPos.x) || (endPos.y < startPos.y && endPos.x > startPos.x))
+        {
+            angle *= -1;
+        }
+        angle = Mathf.Rad2Deg * Mathf.Atan(angle);
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        boxLaser.transform.rotation = rotation;
+    }
+
+
+    public void DisableLaser()
+    {
+        if (!laserRender.enabled)
+            return;
+        laserRender.enabled = false;
+        boxLaser.gameObject.SetActive(false);
+        //   Debug.LogError("disable laser");
+    }
     public void ShootDown()
     {
-        if (reload /*|| isGrenade*/ || meleeAtackBox.gameObject.activeSelf || isShoot || timePreviousAttack > 0)
+        if (reload /*|| isGrenade*/ || meleeAtackBox.gameObject.activeSelf)
         {
             return;
         }
+        if (currentGun == 6)
+        {
+            ActiveLaser();
+        }
+        if (isShoot || timePreviousAttack > 0)
+            return;
 
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
         isShoot = true;
@@ -1084,6 +1174,11 @@ public class PlayerController : MonoBehaviour
                 break;
             case 4:
                 CreateBulletToa();
+                timePreviousAttack = timedelayAttackGun;
+                AddNumberBullet(1);
+                break;
+            case 6:
+                boxLaser.gameObject.SetActive(true);
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
                 break;

@@ -135,7 +135,7 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
                 DataUtils.AddCoinAndGame(7500, 0);
                 DataUtils.AddHPPack(5);
                 //DataUtils.RemoveAds();
-                DataUtils.TakeItem("W2", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 10, true);
+                DataUtils.TakeItem("W7", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 10, true);
                 break;
             case DataUtils.P_CHEAP_PACK:
                 DataUtils.AddCoinAndGame(7500, 25);
