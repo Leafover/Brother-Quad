@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Loading : MonoBehaviour
 {
     bool isloading;
-    public Image fillImage;
+  //  public Image fillImage;
     public Text hintText, versionText;
     public AsyncOperation currentLoadingOperation;
     public RectTransform fill;
@@ -21,7 +21,7 @@ public class Loading : MonoBehaviour
     void Start()
     {
         isloading = true;
-        fillImage.fillAmount = 0;
+      //  fillImage.fillAmount = 0;
         ObjectPoolerManager.Instance.ClearAllPool();
         ObjectPoolManagerHaveScript.Instance.ClearAllPool();
         hintText.text = DataParam.hints[Random.Range(0, DataParam.hints.Length)];
