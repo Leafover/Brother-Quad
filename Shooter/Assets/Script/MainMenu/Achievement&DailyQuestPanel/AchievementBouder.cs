@@ -71,6 +71,9 @@ public class AchievementBouder : MonoBehaviour
             case 2:
                 DataUtils.AddCoinAndGame(DataController.instance.allAchievement[index].maxNumberReward[DataController.saveAllAchievement[index].currentLevel - 1], 0);
                 break;
+            case 3:
+                DataUtils.AddHPPack(DataController.instance.allAchievement[index].maxNumberReward[DataController.saveAllAchievement[index].currentLevel - 1]);
+                break;
         }
         DataController.saveAllAchievement[index].isPass = false;
         DataController.saveAllAchievement[index].currentNumber = 0;

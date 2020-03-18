@@ -62,6 +62,9 @@ public class DailyQuestBouder : MonoBehaviour
             case 2:
                 DataUtils.AddCoinAndGame(DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards, 0);
                 break;
+            case 3:
+                DataUtils.AddHPPack(DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards);
+                break;
         }
         DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass = false;
         DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isDone = true;
