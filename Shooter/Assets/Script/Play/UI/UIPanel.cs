@@ -14,7 +14,7 @@ public class UIPanel : MonoBehaviour
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel,takeDamgePanel, lowHealth;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel,takeDamgePanel, lowHealth,hackbouder;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
@@ -64,6 +64,8 @@ public class UIPanel : MonoBehaviour
             haveBossInMiniMap.gameObject.SetActive(true);
         }
         DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
+
+        hackbouder.SetActive(DataController.instance.isHack);
     }
     public void BtnBackToWorld()
     {
@@ -211,5 +213,11 @@ public class UIPanel : MonoBehaviour
         PlayerController.instance.Revive(healthBonus);
         defeatPanel.SetActive(false);
         GameController.instance.gameState = GameController.GameState.play;
+    }
+
+
+    public void HackGun(int index)
+    {
+        PlayerController.instance.SetGun(index);
     }
 }
