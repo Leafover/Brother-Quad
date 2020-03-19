@@ -14,7 +14,7 @@ public class UIPanel : MonoBehaviour
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, lowHealth, loadingPanel;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel,takeDamgePanel, lowHealth;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
@@ -41,7 +41,6 @@ public class UIPanel : MonoBehaviour
                 allImgHealthBtn[i].color = Color.white;
         }
     }
-
     public bool CheckWarning()
     {
         return true ? warning.activeSelf : !warning.activeSelf;

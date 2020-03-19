@@ -114,16 +114,30 @@ public class PlayerController : MonoBehaviour
             return;
 
         health -= damage;
+
+
         if (health <= maxHealth / 100 * 10)
         {
             if (!GameController.instance.uiPanel.lowHealth.activeSelf)
             {
                 if (healthRegenRate > 0)
                     isregen = true;
-                au.Play();
+                if (!au.isPlaying)
+                    au.Play();
+                GameController.instance.uiPanel.takeDamgePanel.SetActive(false);
                 GameController.instance.uiPanel.lowHealth.SetActive(true);
             }
         }
+        else
+        {
+            if (!GameController.instance.uiPanel.takeDamgePanel.activeSelf)
+            {
+                GameController.instance.uiPanel.takeDamgePanel.SetActive(true);
+                Debug.LogError("take damage");
+            }
+        }
+
+
         if (DataUtils.playerInfo.healthPack > 0)
         {
             if (GameController.instance.usingHealthPack == 0)
@@ -133,7 +147,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         ShowLineBlood();
-        StartCoroutine(BeAttackFill());
+        // StartCoroutine(BeAttackFill());
         SoundController.instance.PlaySound(soundGame.soundplayerhit);
         if (health <= 0)
         {
@@ -409,7 +423,7 @@ public class PlayerController : MonoBehaviour
         timePreviousAttack = 0;
         timePreviousMeleeAttack = 0;
 
-        waitBeAttack = new WaitForSeconds(0.075f);
+        // waitBeAttack = new WaitForSeconds(0.075f);
         // currentGun = 0;
         skins = skeletonAnimation.Skeleton.Data.Skins.Items;
         // skeletonAnimation.Skeleton.SetSkin(skins[currentGun + 1]);
@@ -944,8 +958,6 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask layerTarget;
 
-
-
     public bool FlipX
     {
         get { return skeletonAnimation.skeleton.FlipX; }
@@ -1041,24 +1053,24 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    WaitForSeconds waitBeAttack;
-    //   int randomWin;
-    IEnumerator BeAttackFill()
-    {
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-        yield return waitBeAttack;
+    //WaitForSeconds waitBeAttack;
+    ////   int randomWin;
+    //IEnumerator BeAttackFill()
+    //{
+    //    skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+    //    yield return waitBeAttack;
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-        yield return waitBeAttack;
+    //    skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+    //    yield return waitBeAttack;
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-        yield return waitBeAttack;
+    //    skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
+    //    yield return waitBeAttack;
 
-        skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-        yield return waitBeAttack;
+    //    skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
+    //    yield return waitBeAttack;
 
-        skeletonAnimation.skeleton.SetColor(Color.white);
-    }
+    //    skeletonAnimation.skeleton.SetColor(Color.white);
+    //}
 
     public void AnimWin()
     {
@@ -1114,7 +1126,7 @@ public class PlayerController : MonoBehaviour
         laserRender.enabled = true;
         addColliderToLine();
     }
-    Vector2 startPos, endPos,midPoint;
+    Vector2 startPos, endPos, midPoint;
     float lineLength;
 
     private void addColliderToLine()
@@ -1350,7 +1362,7 @@ public class PlayerController : MonoBehaviour
         if (health > maxHealth / 100 * 10)
         {
             au.Stop();
-            GameController.instance.uiPanel.lowHealth.SetActive(false);
+            GameController.instance.uiPanel.lowHealth.gameObject.SetActive(false);
         }
         if (isregen)
         {
