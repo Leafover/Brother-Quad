@@ -8,8 +8,8 @@ public class MyAnalytics
 {
     const string EVENT_LOGIN_BY_DAY = "event_login_by_day";
     const string EVENT_TIME_OPEN = "time_open";
-    const string EVENT_LEVEL_PLAY = "level_play";
-    const string EVENT_LOSE_LEVEL = "lose_level_checkpoint";
+    const string EVENT_STAGE_PLAY = "stage_play_";
+    const string EVENT_LOSE_STAGE = "lose_stage_checkpoint_";
 
     public static void LogEventLogin()
     {
@@ -30,7 +30,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent(EVENT_LEVEL_PLAY + "_" + (level + 1) + "_stage_" + (stage + 1), _pamLevelPlay);
+        FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_Level_" + (level + 1), _pamLevelPlay);
     }
 
     public static void LogMoreGame()
@@ -45,7 +45,7 @@ public class MyAnalytics
                 new Parameter("checkpoint_index", checkPointIndex),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent(EVENT_LOSE_LEVEL + "_" + (level + 1) + "_stage_" + (stage + 1), _pamLevelLose);
+        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1), _pamLevelLose);
         LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
@@ -54,7 +54,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent("level_complete_" + (level + 1) + "_stage_" + (stage + 1), _pamLevelComplete);
+        FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1), _pamLevelComplete);
     }
     public static void LogEventGameOver(int level, int stage)//3
     {
@@ -62,7 +62,7 @@ public class MyAnalytics
                 new Parameter(FirebaseAnalytics.ParameterLevel, level),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent("level_end_" + (level + 1) + "_stage_" + (stage + 1), _pamLevelEnd);
+        FirebaseAnalytics.LogEvent("stage_end_" + (stage + 1) + "_Level_" + (level + 1), _pamLevelEnd);
     }
     #endregion
 }
