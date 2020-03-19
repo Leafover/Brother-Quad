@@ -31,6 +31,13 @@ public class AdsManager : MonoBehaviour
             MyAnalytics.LogEventOpenByDay();
             MyAnalytics.LogEventTimeOpen();
             InitAds();
+
+
+            GameObject g = new GameObject("-----");
+            if (g.GetComponent<PushNotificationManager>() == null)
+            {
+                g.AddComponent<PushNotificationManager>();
+            }
         }
     }
 
