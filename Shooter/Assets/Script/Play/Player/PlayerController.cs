@@ -639,7 +639,7 @@ public class PlayerController : MonoBehaviour
         }
 
         LockPlayer();
-        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 30);
+        targetPos.position = Vector2.MoveTowards(targetPos.position, target, deltaTime * 35f);
 
         if (isShoot)
         {
