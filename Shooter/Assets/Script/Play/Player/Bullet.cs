@@ -28,7 +28,6 @@ public class Bullet : MonoBehaviour
             StartCoroutine(DelayTarget());
         }
     }
-
     float angle;
     Quaternion rotation;
     IEnumerator DelayTarget()
@@ -42,6 +41,9 @@ public class Bullet : MonoBehaviour
         transform.rotation = rotation;
 
         rid.AddForce(transform.right * speed / 2);
+
+        yield return new WaitForSeconds(0.1f);
+        rid.AddForce(transform.right * speed);
     }
     private void Update()
     {

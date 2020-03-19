@@ -75,9 +75,7 @@ public class DailyQuestBouder : MonoBehaviour
             DataController.instance.DoAchievement(12, 1);
             return;
         }
-
         DataController.instance.CheckDoneAllDailyQuest();
-
         MenuController.instance.warningDailyQuest.SetActive(false);
     }
 }

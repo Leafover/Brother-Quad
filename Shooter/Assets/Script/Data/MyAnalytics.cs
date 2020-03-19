@@ -10,12 +10,10 @@ public class MyAnalytics
     const string EVENT_TIME_OPEN = "time_open";
     const string EVENT_STAGE_PLAY = "stage_play_";
     const string EVENT_LOSE_STAGE = "lose_stage_checkpoint_";
-
     public static void LogEventLogin()
     {
         FirebaseAnalytics.LogEvent(FirebaseAnalytics.EventLogin);
     }
-
     public static void LogEventOpenByDay()
     {
         FirebaseAnalytics.LogEvent(EVENT_LOGIN_BY_DAY);
@@ -32,7 +30,6 @@ public class MyAnalytics
                 };
         FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_Level_" + (level + 1), _pamLevelPlay);
     }
-
     public static void LogMoreGame()
     {
         FirebaseAnalytics.LogEvent("more_game_click");
