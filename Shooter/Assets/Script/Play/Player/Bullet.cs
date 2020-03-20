@@ -40,9 +40,10 @@ public class Bullet : MonoBehaviour
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = rotation;
 
-        rid.AddForce(transform.right * speed / 2);
+        rid.AddForce(transform.right * speed / 5);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
+        rid.velocity = Vector2.zero;
         rid.AddForce(transform.right * speed);
     }
     private void Update()

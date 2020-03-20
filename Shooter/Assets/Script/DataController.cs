@@ -1128,7 +1128,7 @@ public class DataController : MonoBehaviour
         {
             if(GameController.instance != null)
             {
-                if (!GameController.instance.uiPanel.loadingPanel.activeSelf && !GameController.instance.uiPanel.defeatPanel.activeSelf)
+                if (!GameController.instance.uiPanel.loadingPanel.activeSelf && !GameController.instance.uiPanel.defeatPanel.activeSelf && !GameController.instance.uiPanel.winPanel.activeSelf)
                     PopupSetting.Instance.ShowPanelSetting();
             }
 
