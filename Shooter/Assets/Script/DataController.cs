@@ -245,7 +245,6 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-
         Debug.unityLogger.logEnabled = false;
         LoadData();
         DataUtils.FillEquipmentData();
@@ -261,12 +260,10 @@ public class DataController : MonoBehaviour
                 LoadDataEnemy(nameDataText[i], i);
             }
             LoadDataPlayer(nameDataPlayerText);
-
             for (int i = 0; i < nameDataMissionText.Length; i++)
             {
                 LoadDataMission(nameDataMissionText[i], i);
             }
-
             LoadTileQuayManhData(nameDataTiLeQuayManh);
             LoadBlackMarketData(nameBlackMarketData);
             LoadAchievement(nameAchievementData);
