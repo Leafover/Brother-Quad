@@ -110,10 +110,10 @@ public class EquipmentManager : MonoBehaviour
         ChooseTab(0);
         ChooseItem(null);
     }
+    List<Transform> lstAllChild = new List<Transform>();
     void SortingItem()
     {
-        List<Transform> lstAllChild = new List<Transform>();
-
+        lstAllChild.Clear();
         for (int i = 0; i < trContain.childCount; i++)
         {
             lstAllChild.Add(trContain.GetChild(i));
@@ -155,7 +155,7 @@ public class EquipmentManager : MonoBehaviour
             gItemClone.transform.SetParent(trContain, false);
         }
 
-        SortingItem();
+        //SortingItem();
     }
 
     public void RemoveSelectedItem()
@@ -205,7 +205,8 @@ public class EquipmentManager : MonoBehaviour
             {
                 MainMenuController.Instance.ShowMapNotify("Item has exits");
             }
-            else {
+            else
+            {
                 DataUtils.UnlockThisItem(itemSelected);
                 for (int i = 0; i < trContain.childCount; i++)
                 {
@@ -491,7 +492,11 @@ public class EquipmentManager : MonoBehaviour
         int total = 0;
         string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
 
-        if (DataUtils.playerInfo.coins >= priceUpgrade)
+        if (itemSelected.id.Contains("W7"))
+        {
+            MainMenuController.Instance.ShowMapNotify("Item use only, cannot upgrade/evolve.");
+        }
+        else if (DataUtils.playerInfo.coins >= priceUpgrade)
         {
             if (/*DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1*/IsReachMaxLevel(DataUtils.dicAllEquipment[key]))
             {
@@ -535,7 +540,8 @@ public class EquipmentManager : MonoBehaviour
         }
         return _b;
     }
-    private void DestroyItemByKey(string _key) {
+    private void DestroyItemByKey(string _key)
+    {
         for (int i = 0; i < trContain.childCount; i++)
         {
             if (trContain.GetChild(i).gameObject.name.Equals(_key))
@@ -544,7 +550,8 @@ public class EquipmentManager : MonoBehaviour
             }
         }
     }
-    private void RemoveItem(string _key) {
+    private void RemoveItem(string _key)
+    {
         if (DataUtils.dicAllEquipment.ContainsKey(_key))
         {
             DataUtils.dicAllEquipment.Remove(_key);
@@ -559,7 +566,8 @@ public class EquipmentManager : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Item has exits");
         }
-        else {
+        else
+        {
             if (/*_strEvolveText*/curItem.Equals("Legendary"))
             {
                 MainMenuController.Instance.ShowMapNotify("Item has reached max");
@@ -590,18 +598,20 @@ public class EquipmentManager : MonoBehaviour
                         iDataEvolve.pices = 0;
                         iDataEvolve.itemName = curItem.itemName;
                         iDataEvolve.isEquipped = curItem.isEquipped;
-                        
+
                         string _keyEvolve = iDataEvolve.id + "_" + iDataEvolve.level + "_" + iDataEvolve.isUnlock + "_" + iDataEvolve.isEquipped;
 
                         string _keyiSearchRS = iSearchRS.id + "_" + iSearchRS.level + "_" + iSearchRS.isUnlock + "_" + iSearchRS.isEquipped;
                         DataUtils.dicAllEquipment[_keyiSearchRS].pices = _newPiece;
-                        if (_newPiece <= 0) {
+                        if (_newPiece <= 0)
+                        {
                             RemoverThisItem(iSearchRS);
                         }
 
                         ChooseItem(null);
 
-                        if (curItem.isEquipped) {
+                        if (curItem.isEquipped)
+                        {
                             /*Item đã được trang bị*/
                             DataUtils.dicEquippedItem.Remove(itemKey);
                             DataUtils.dicEquippedItem.Add(_keyEvolve, iDataEvolve);
@@ -623,7 +633,7 @@ public class EquipmentManager : MonoBehaviour
                         DataUtils.SaveEquippedData();
                         DataUtils.SaveEquipmentData();
 
-                        
+
                     }
                     else
                     {
@@ -633,7 +643,8 @@ public class EquipmentManager : MonoBehaviour
                 }
                 else
                 {
-                    if (DataUtils.dicAllEquipment[itemKey].level.Equals("Legendary")) {
+                    if (DataUtils.dicAllEquipment[itemKey].level.Equals("Legendary"))
+                    {
                         MainMenuController.Instance.ShowMapNotify("Item has reached max");
                     }
                     else
@@ -1048,8 +1059,40 @@ public class EquipmentManager : MonoBehaviour
         int _diamond = (int)(totalPiece * DataUtils.GetDiamondPrice(itemSelected));
         if (DataUtils.playerInfo.gems >= _diamond)
         {
-            DataUtils.AddCoinAndGame(0, -_diamond);
-            DataUtils.TakeItem(itemSelected, totalPiece);
+            string _key = itemSelected.id + "_" + itemSelected.level.ToString() + "_" + false + "_" + itemSelected.isEquipped;
+            if (DataUtils.dicAllEquipment.ContainsKey(_key))
+            {
+                DataUtils.dicAllEquipment[_key].pices += totalPiece;
+                DataUtils.AddCoinAndGame(0, -_diamond);
+            }
+            else
+            {
+                ItemData iDataNew = new ItemData();
+                iDataNew.id = itemSelected.id;
+                iDataNew.type = itemSelected.type;
+                iDataNew.level = itemSelected.level;
+                iDataNew.isUnlock = false;
+                iDataNew.pices = totalPiece;
+                iDataNew.itemName = itemSelected.itemName;
+                iDataNew.isEquipped = false;
+                string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" + false + "_" + iDataNew.isEquipped;
+                if (!DataUtils.dicAllEquipment.ContainsKey(_keyNew))
+                {
+                    DataUtils.dicAllEquipment.Add(_keyNew, iDataNew);
+                    RefreshInventory(iDataNew, false);
+                    DataUtils.AddCoinAndGame(0, -_diamond);
+                }
+                else
+                {
+                    DataUtils.dicAllEquipment[_keyNew].pices += totalPiece;
+                    DataUtils.AddCoinAndGame(0, -_diamond);
+                }
+            }
+
+            DataUtils.SaveEquipmentData();
+
+
+            //DataUtils.TakeItem(itemSelected, totalPiece);
             for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
