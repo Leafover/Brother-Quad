@@ -336,13 +336,13 @@ public class GameController : MonoBehaviour
         }
         else
         {
-#if UNITY_EDITOR
-
+#if UNITY_EDITOR           
 #else
             if (PlayerController.instance.currentGun == 6)
             {
                 PlayerController.instance.DisableLaser();
             }
+            PlayerController.instance.EndShot();
 #endif
             if (isShoot)
             {
@@ -556,7 +556,9 @@ public class GameController : MonoBehaviour
         }
         else if(Input.GetKeyUp(KeyCode.S))
         {
-            PlayerController.instance.DisableLaser();
+            if (PlayerController.instance.currentGun == 6)
+                PlayerController.instance.DisableLaser();
+            PlayerController.instance.EndShot();
         }
         if (Input.GetKey(KeyCode.Space))
         {

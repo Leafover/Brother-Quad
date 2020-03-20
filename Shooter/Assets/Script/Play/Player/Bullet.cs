@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
             rid.AddForce(transform.right * speed);
         else
         {
-            rid.AddForce(-transform.up * speed / 10);
+            rid.AddForce(/*!PlayerController.instance.FlipX ?*/ -Vector2.up /*: transform.up*/ * speed / 10);
             StartCoroutine(DelayTarget());
         }
     }

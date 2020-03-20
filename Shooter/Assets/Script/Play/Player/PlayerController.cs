@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
-    public ParticleSystem effectG4;
+    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -171,6 +171,7 @@ public class PlayerController : MonoBehaviour
             isregen = false;
             timeRegen = 0;
             effectG4.Stop();
+            effectG345.Stop();
             DisableLaser();
         }
     }
@@ -287,8 +288,6 @@ public class PlayerController : MonoBehaviour
         {
             DisableLaser();
         }
-        else if (currentGun != 3)
-            effectG4.Stop();
         skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
         //else
         //{
@@ -831,7 +830,7 @@ public class PlayerController : MonoBehaviour
     Vector2 dirBullet;
     float angle, angle2, angle3;
     Quaternion rotation, rotation2, rotation3;
-
+    Vector2 posEffect;
     public void CreateBulletShotGun()
     {
         bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
@@ -840,12 +839,22 @@ public class PlayerController : MonoBehaviour
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
         bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+        posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+        effectG345.transform.position = posEffect;
+        effectG345.transform.rotation = rotation;
+        effectG345.Play();
         bullet.SetActive(true);
     }
 
     public void CreateBulletToa()
     {
         SoundController.instance.PlaySound(soundGame.soundshootW3);
+        posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+        posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+        effectG345.transform.position = posEffect;
+        effectG345.transform.rotation = rotation;
+        effectG345.Play();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         angle2 = angle + 5;
@@ -892,6 +901,11 @@ public class PlayerController : MonoBehaviour
             //    bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
             //    break;
             case 5:
+                posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+                posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+                effectG345.transform.position = posEffect;
+                effectG345.transform.rotation = rotation;
+                effectG345.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW6);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
                 bullet.GetComponent<Bullet>().dir = GetTargetTranform();
@@ -1391,7 +1405,19 @@ public class PlayerController : MonoBehaviour
         if (health >= maxHealth)
             health = maxHealth;
     }
-
+    public void EndShot()
+    {
+        if (isMeleeAttack)
+            return;
+        if (currentGun == 2 || currentGun == 4 || currentGun == 5)
+        {
+            if (effectsmokeendshot.isStopped)
+            {
+                effectsmokeendshot.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                effectsmokeendshot.Play();
+            }
+        }
+    }
 
     public void DeTectPosRevive()
     {
