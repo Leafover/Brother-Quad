@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
-
+    public ParticleSystem effectG4;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -170,6 +170,7 @@ public class PlayerController : MonoBehaviour
             health = 0;
             isregen = false;
             timeRegen = 0;
+            effectG4.Stop();
             DisableLaser();
         }
     }
@@ -286,6 +287,8 @@ public class PlayerController : MonoBehaviour
         {
             DisableLaser();
         }
+        else if (currentGun != 3)
+            effectG4.Stop();
         skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
         //else
         //{
@@ -869,11 +872,12 @@ public class PlayerController : MonoBehaviour
             bullet.SetActive(true);
         }
     }
-
     int posIndexBullet;
     public void CreateBullet(bool lech)
     {
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         switch (currentGun)
         {
             case 0:
@@ -893,15 +897,14 @@ public class PlayerController : MonoBehaviour
                 bullet.GetComponent<Bullet>().dir = GetTargetTranform();
                 break;
             case 3:
+                effectG4.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                effectG4.transform.rotation = rotation;
+                effectG4.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW3);
                 bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
                 break;
-
         }
 
-
-        angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
 
         if (lech)
@@ -1119,7 +1122,7 @@ public class PlayerController : MonoBehaviour
     bool isShoot;
     public LineRenderer laserRender;
     public BoxCollider2D boxLaser;
-    public GameObject effectbeginW7,effectendW7;
+    public GameObject effectbeginW7, effectendW7;
     public void ActiveLaser()
     {
         addColliderToLine();
