@@ -1119,11 +1119,9 @@ public class PlayerController : MonoBehaviour
     bool isShoot;
     public LineRenderer laserRender;
     public BoxCollider2D boxLaser;
+    public GameObject effectbeginW7,effectendW7;
     public void ActiveLaser()
     {
-        laserRender.SetPosition(0, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform));
-        laserRender.SetPosition(1, GetTargetTranform());
-        laserRender.enabled = true;
         addColliderToLine();
     }
     Vector2 startPos, endPos, midPoint;
@@ -1145,6 +1143,17 @@ public class PlayerController : MonoBehaviour
         angle = Mathf.Rad2Deg * Mathf.Atan(angle);
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         boxLaser.transform.rotation = rotation;
+
+        effectbeginW7.transform.position = startPos;
+        laserRender.SetPosition(0, startPos);
+        laserRender.SetPosition(1, endPos);
+        effectendW7.transform.position = endPos;
+        effectendW7.transform.rotation = rotation;
+
+
+        effectbeginW7.SetActive(true);
+        effectendW7.SetActive(true);
+        laserRender.enabled = true;
     }
 
 
@@ -1154,6 +1163,8 @@ public class PlayerController : MonoBehaviour
             return;
         laserRender.enabled = false;
         boxLaser.gameObject.SetActive(false);
+        effectbeginW7.SetActive(false);
+        effectendW7.SetActive(false);
         //   Debug.LogError("disable laser");
     }
     public void ShootDown()
@@ -1190,6 +1201,8 @@ public class PlayerController : MonoBehaviour
                 AddNumberBullet(1);
                 break;
             case 6:
+                if (boxLaser.gameObject.activeSelf)
+                    boxLaser.gameObject.SetActive(false);
                 boxLaser.gameObject.SetActive(true);
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
