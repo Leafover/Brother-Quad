@@ -79,6 +79,7 @@ public class EquipmentManager : MonoBehaviour
 
         SortingItem();
     }
+    int totalEnable = 0;
     private void OnDisable()
     {
         ChooseTab(0);
@@ -400,6 +401,25 @@ public class EquipmentManager : MonoBehaviour
                 break;
         }
         #endregion
+        totalEnable = 0;
+
+        for (int i = 0; i < trContain.childCount; i++)
+        {
+            if (trContain.GetChild(i).gameObject.activeSelf)
+            {
+                totalEnable++;
+            }
+        }
+
+        if (trContain.GetComponent<GridLayoutGroup>() != null)
+        {
+            if (totalEnable < 5)
+            {
+                trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
+            }
+            else
+                trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+        }
     }
 
     private void ShowItemTypeSelect(string _type)
