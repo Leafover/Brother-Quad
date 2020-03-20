@@ -54,7 +54,7 @@ public class PushNotificationManager : MonoBehaviour
         Firebase.Messaging.FirebaseMessaging.MessageReceived += OnMessageReceived;
         Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
         Firebase.Messaging.FirebaseMessaging.SubscribeAsync(topic).ContinueWithOnMainThread(task => {
-            Debug.LogError(task +  "  --->SubscribeAsync");
+            //Debug.LogError(task +  "  --->SubscribeAsync");
         });
         //Debug.LogError("Firebase Messaging Initialized");
 
@@ -64,7 +64,7 @@ public class PushNotificationManager : MonoBehaviour
         // the OS and can be changed in the OS settings).
         Firebase.Messaging.FirebaseMessaging.RequestPermissionAsync().ContinueWithOnMainThread(
           task => {
-              Debug.LogError(task+ " --->RequestPermissionAsync");
+              //Debug.LogError(task+ " --->RequestPermissionAsync");
           }
         );
     }

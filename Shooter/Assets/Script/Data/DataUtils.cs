@@ -674,6 +674,7 @@ public class DataUtils
         if (dicAllEquipment.ContainsKey(_key))
         {
             dicAllEquipment[_key].pices += _piece;
+            Debug.LogError("ContainsKey");
         }
         else
         {
@@ -691,6 +692,7 @@ public class DataUtils
             {
                 EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key], false);
             }
+            Debug.LogError("Not ContainsKey");
         }
 
         SaveEquipmentData();

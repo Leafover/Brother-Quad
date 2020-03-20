@@ -162,7 +162,7 @@ public class AdsManager : MonoBehaviour
     #region Init Admob
     AdRequest CreateRequest()
     {
-        AdRequest request = new AdRequest.Builder().AddTestDevice("BA730DD6C0C19894C11CB7FDF6D75AA8").AddTestDevice("D96EFB8D3BB99E5B5CAF739EB1EB5E9D").Build();
+        AdRequest request = new AdRequest.Builder().AddTestDevice("BA730DD6C0C19894C11CB7FDF6D75AA8").AddTestDevice("D96EFB8D3BB99E5B5CAF739EB1EB5E9D").AddTestDevice("256FC58E8184F47CC4E7BE3570B2AC3B").Build();
         return request;
     }
     void InitInterstitial()
