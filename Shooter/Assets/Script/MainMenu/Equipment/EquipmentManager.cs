@@ -67,7 +67,7 @@ public class EquipmentManager : MonoBehaviour
         }
         InitAllItems();
 
-        ChildAlignment();
+        
     }
     string _keyCompare = "";
     private void OnEnable()
@@ -80,6 +80,7 @@ public class EquipmentManager : MonoBehaviour
         });
 
         SortingItem();
+        ChildAlignment();
     }
 
     private void ChildAlignment()
@@ -90,6 +91,7 @@ public class EquipmentManager : MonoBehaviour
         {
             if (trContain.GetChild(i).gameObject.activeSelf)
             {
+                Debug.LogError("----> " + i);
                 totalEnable++;
             }
         }
@@ -388,6 +390,8 @@ public class EquipmentManager : MonoBehaviour
 
     public void ChooseTab(int _index)
     {
+        ChildAlignment();
+
         tabSelected = _index;
         ChooseItem(null);
         for (int i = 0; i < btnTabs.Length; i++)
@@ -429,7 +433,7 @@ public class EquipmentManager : MonoBehaviour
         #endregion
 
 
-        ChildAlignment();
+
         //totalEnable = 0;
 
         //for (int i = 0; i < trContain.childCount; i++)

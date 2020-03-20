@@ -99,7 +99,7 @@ public class DataUtils
                 _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[curStar] + "</color> move speed";
                 break;
             case "BAG":
-                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count? dicBag[itemKey].HealthRegenerationValue.Count-1:curStar];
+                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar];
                 if (HealthRegeneration <= 0)
                     _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar] + "%</color> of first aid dropped on the map";
                 else
@@ -219,40 +219,40 @@ public class DataUtils
                 {
                     case "WEAPON":
                         itemWeapon.weponIndex = int.Parse(item.id.Replace("W", "").Trim()) - 1;
-                        itemWeapon.DmgValue = dicWeapon[_key].DmgValue[curStar];
-                        itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[curStar];
-                        itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[curStar];
-                        itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[curStar];
-                        itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[curStar];
-                        itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar];
-                        itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar];
-                        itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar];
+                        itemWeapon.DmgValue = dicWeapon[_key].DmgValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.ReloadSpeedValue = dicWeapon[_key].ReloadSpeedValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.MagazineValue = dicWeapon[_key].MagazineValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.CritRateValue = dicWeapon[_key].CritRateValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.CritDmgValue = dicWeapon[_key].CritDmgValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+                        itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
                         break;
                     case "ARMOR":
                         itemArmor.armorIndex = int.Parse(item.id.Replace("A", "").Trim()) - 1;
-                        itemArmor.defIncrease = dicArmor[_key].DefValue[curStar];
-                        itemArmor.speedReduce = dicArmor[_key].SpeedTruValue[curStar];
+                        itemArmor.defIncrease = dicArmor[_key].DefValue[curStar >= dicArmor[_key].SpeedTruValue.Count ? dicArmor[_key].SpeedTruValue.Count - 1 : curStar];
+                        itemArmor.speedReduce = dicArmor[_key].SpeedTruValue[curStar >= dicArmor[_key].SpeedTruValue.Count ? dicArmor[_key].SpeedTruValue.Count - 1 : curStar];
                         break;
                     case "HELMET":
                         itemHelmet.helIndex = int.Parse(item.id.Replace("H", "").Trim()) - 1;
-                        itemHelmet.bonusExp = dicHelmet[_key].BonusExpValue[curStar];
-                        itemHelmet.defIncrease = dicHelmet[_key].DefValue[curStar];
+                        itemHelmet.bonusExp = dicHelmet[_key].BonusExpValue[curStar >= dicHelmet[_key].DefValue.Count ? dicHelmet[_key].DefValue.Count - 1 : curStar];
+                        itemHelmet.defIncrease = dicHelmet[_key].DefValue[curStar >= dicHelmet[_key].DefValue.Count ? dicHelmet[_key].DefValue.Count - 1 : curStar];
                         break;
                     case "GLOVES":
                         itemGloves.gloveIndex = int.Parse(item.id.Replace("G", "").Trim()) - 1;
-                        itemGloves.reloadTimeReduce = dicGloves[_key].GiamtimereloadValue[curStar];
-                        itemGloves.critDamageIncrease = dicGloves[_key].TangcritdmgValue[curStar];
-                        itemGloves.critRateIncrease = dicGloves[_key].tangcritrateValue[curStar];
+                        itemGloves.reloadTimeReduce = dicGloves[_key].GiamtimereloadValue[curStar >= dicGloves[_key].tangcritrateValue.Count ? dicGloves[_key].tangcritrateValue.Count - 1 : curStar];
+                        itemGloves.critDamageIncrease = dicGloves[_key].TangcritdmgValue[curStar >= dicGloves[_key].tangcritrateValue.Count ? dicGloves[_key].tangcritrateValue.Count - 1 : curStar];
+                        itemGloves.critRateIncrease = dicGloves[_key].tangcritrateValue[curStar >= dicGloves[_key].tangcritrateValue.Count ? dicGloves[_key].tangcritrateValue.Count - 1 : curStar];
                         break;
                     case "BAG":
                         itemBag.bagIndex = int.Parse(item.id.Replace("B", "").Trim()) - 1;
-                        itemBag.totalAidDrop = dicBag[_key].BonussoluongmauanduocValue[curStar];
-                        itemBag.HealthRegeneration = dicBag[_key].HealthRegenerationValue[curStar];
+                        itemBag.totalAidDrop = dicBag[_key].BonussoluongmauanduocValue[curStar >= dicBag[_key].BonussoluongmauanduocValue.Count ? dicBag[_key].BonussoluongmauanduocValue.Count - 1 : curStar];
+                        itemBag.HealthRegeneration = dicBag[_key].HealthRegenerationValue[curStar >= dicBag[_key].BonussoluongmauanduocValue.Count ? dicBag[_key].BonussoluongmauanduocValue.Count - 1 : curStar];
                         break;
                     case "SHOES":
                         itemShoes.shoeIndex = int.Parse(item.id.Replace("S", "").Trim()) - 1;
-                        itemShoes.moveSpeedIncrease = dicShoes[_key].TangSpeeDichuyenValue[curStar];
-                        itemShoes.jumpHeight = dicShoes[_key].TangDoCaoNhayValue[curStar];
+                        itemShoes.moveSpeedIncrease = dicShoes[_key].TangSpeeDichuyenValue[curStar >= dicShoes[_key].TangSpeeDichuyenValue.Count ? dicShoes[_key].TangSpeeDichuyenValue.Count - 1 : curStar];
+                        itemShoes.jumpHeight = dicShoes[_key].TangDoCaoNhayValue[curStar >= dicShoes[_key].TangSpeeDichuyenValue.Count ? dicShoes[_key].TangSpeeDichuyenValue.Count - 1 : curStar];
                         break;
                 }
             }
@@ -423,22 +423,23 @@ public class DataUtils
         switch (itemData.type)
         {
             case "ARMOR":
-                res = dicArmor[key].GiaNangCapValue[curStar];
+                res = dicArmor[key].GiaNangCapValue[curStar >= dicArmor[key].GiaNangCapValue.Count ? dicArmor[key].GiaNangCapValue.Count - 1 : curStar];
                 break;
             case "BAG":
-                res = dicBag[key].GiaNangCapValue[curStar];
+                Debug.LogError((curStar >= dicBag[key].GiaNangCapValue.Count ? "--->"+(curStar - 1) : "|||--->" + curStar));
+                res = dicBag[key].GiaNangCapValue[curStar >= dicBag[key].GiaNangCapValue.Count ? curStar - 1 : curStar];
                 break;
             case "GLOVES":
-                res = dicGloves[key].GiaNangCapValue[curStar];
+                res = dicGloves[key].GiaNangCapValue[curStar >= dicGloves[key].GiaNangCapValue.Count ? dicGloves[key].GiaNangCapValue.Count - 1 : curStar];
                 break;
             case "HELMET":
-                res = dicHelmet[key].GiaValue[curStar];
+                res = dicHelmet[key].GiaValue[curStar >= dicHelmet[key].GiaValue.Count ? dicHelmet[key].GiaValue.Count - 1 : curStar];
                 break;
             case "SHOES":
-                res = dicShoes[key].GiaNangCapValue[curStar];
+                res = dicShoes[key].GiaNangCapValue[curStar >= dicShoes[key].GiaNangCapValue.Count ? dicShoes[key].GiaNangCapValue.Count - 1 : curStar];
                 break;
             case "WEAPON":
-                res = dicWeapon[key].GiaNangCapValue[curStar];
+                res = dicWeapon[key].GiaNangCapValue[curStar >= dicWeapon[key].GiaNangCapValue.Count ? dicWeapon[key].GiaNangCapValue.Count - 1 : curStar];
                 break;
         }
         return res;
@@ -548,7 +549,8 @@ public class DataUtils
         return _name;
     }
 
-    public static void UnlockThisItem(ItemData itemData) {
+    public static void UnlockThisItem(ItemData itemData)
+    {
         string _key = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
         int newPiece = dicAllEquipment[_key].pices - (int)GetPiceByStar(dicAllEquipment[_key], false);
 
@@ -573,7 +575,8 @@ public class DataUtils
         {
             dicAllEquipment[_key].pices = newPiece;
         }
-        else {
+        else
+        {
             dicAllEquipment[_key].pices = 0;
             if (EquipmentManager.Instance != null)
             {
@@ -685,7 +688,7 @@ public class DataUtils
             iDataNew.pices = _piece;
             iDataNew.itemName = iData.itemName;
             iDataNew.isEquipped = false;
-            string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" +false + "_" + iDataNew.isEquipped;
+            string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" + false + "_" + iDataNew.isEquipped;
             if (!dicAllEquipment.ContainsKey(_keyNew))
             {
                 dicAllEquipment.Add(_keyNew, iDataNew);
