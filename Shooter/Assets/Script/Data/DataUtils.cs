@@ -670,11 +670,10 @@ public class DataUtils
     }
     public static void TakeItem(ItemData iData, int _piece)
     {
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + /*iData.isUnlock*/false + "_" + iData.isEquipped;
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + false + "_" + iData.isEquipped;
         if (dicAllEquipment.ContainsKey(_key))
         {
             dicAllEquipment[_key].pices += _piece;
-            Debug.LogError("ContainsKey");
         }
         else
         {
@@ -686,13 +685,19 @@ public class DataUtils
             iDataNew.pices = _piece;
             iDataNew.itemName = iData.itemName;
             iDataNew.isEquipped = false;
-            string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" + /*iData.isUnlock*/false + "_" + iDataNew.isEquipped;
-            dicAllEquipment.Add(_keyNew, iDataNew);
-            if (EquipmentManager.Instance != null)
+            string _keyNew = iDataNew.id + "_" + iDataNew.level + "_" +false + "_" + iDataNew.isEquipped;
+            if (!dicAllEquipment.ContainsKey(_keyNew))
             {
-                EquipmentManager.Instance.RefreshInventory(dicAllEquipment[_key], false);
+                dicAllEquipment.Add(_keyNew, iDataNew);
+                if (EquipmentManager.Instance != null)
+                {
+                    EquipmentManager.Instance.RefreshInventory(iDataNew, false);
+                }
             }
-            Debug.LogError("Not ContainsKey");
+            else
+            {
+                dicAllEquipment[_keyNew].pices += _piece;
+            }
         }
 
         SaveEquipmentData();
