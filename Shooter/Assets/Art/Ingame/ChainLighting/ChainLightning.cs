@@ -115,7 +115,13 @@ public class ChainLightning : MonoBehaviour
                 return;
             enemyBase = collision.GetComponent<EnemyBase>();
             if (enemyBase.incam && enemyBase.gameObject != originPos)
+            {
+                if (targetPos.Count == 0)
+                {
+                    SoundController.instance.PlaySound(soundGame.soundw4truyendien);
+                }
                 targetPos.Add(enemyBase);
+            }
         }
     }
 }

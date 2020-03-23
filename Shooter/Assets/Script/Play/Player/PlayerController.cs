@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public int countKillByGrenade;
     public GameObject shield;
     private Skin[] skins;
-    public AudioSource au;
+    public AudioSource au,auW7;
     public Animator animArrow;
     public int level = 1;
     //public bool isGrenade;
@@ -853,8 +853,8 @@ public class PlayerController : MonoBehaviour
         effectG345.Play();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        angle2 = angle + 5;
-        angle3 = angle - 5;
+        angle2 = angle + 10;
+        angle3 = angle - 10;
         for (int i = 0; i < 3; i++)
         {
             bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
@@ -910,7 +910,7 @@ public class PlayerController : MonoBehaviour
                 effectG4.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
                 effectG4.transform.rotation = rotation;
                 effectG4.Play();
-                SoundController.instance.PlaySound(soundGame.soundshootW3);
+                SoundController.instance.PlaySound(soundGame.soundshootW4);
                 bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
                 break;
         }
@@ -1133,6 +1133,22 @@ public class PlayerController : MonoBehaviour
     public LineRenderer laserRender;
     public BoxCollider2D boxLaser;
     public GameObject effectbeginW7, effectendW7;
+
+    void PlaySoundW7(bool play)
+    {
+        if (play)
+        {
+            if (!auW7.isPlaying)
+                auW7.Play();
+        }
+        else
+        {
+            if (auW7.isPlaying)
+                auW7.Stop();
+        }
+        auW7.mute = !DataUtils.IsSoundOn();
+    }
+
     public void ActiveLaser()
     {
         addColliderToLine();
@@ -1167,6 +1183,8 @@ public class PlayerController : MonoBehaviour
         effectbeginW7.SetActive(true);
         effectendW7.SetActive(true);
         laserRender.enabled = true;
+
+        PlaySoundW7(true);
     }
 
 
@@ -1178,6 +1196,8 @@ public class PlayerController : MonoBehaviour
         boxLaser.gameObject.SetActive(false);
         effectbeginW7.SetActive(false);
         effectendW7.SetActive(false);
+
+        PlaySoundW7(false);
         //   Debug.LogError("disable laser");
     }
     public void ShootDown()

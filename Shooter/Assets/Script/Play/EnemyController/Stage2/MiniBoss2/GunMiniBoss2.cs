@@ -102,6 +102,7 @@ public class GunMiniBoss2 : AutoTarget
                 {
                     explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
                     explobulletW5.transform.position = collision.transform.position;
+                    SoundController.instance.PlaySound(soundGame.soundexplow6);
                     explobulletW5.SetActive(true);
                     collision.gameObject.SetActive(false);
                 }
