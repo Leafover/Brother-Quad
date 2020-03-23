@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
     public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot, effectG2;
+    public GameObject parentFXG345;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -827,27 +828,28 @@ public class PlayerController : MonoBehaviour
     Vector2 posEffect;
     public void CreateBulletShotGun()
     {
+        SoundController.instance.PlaySound(soundGame.soundshootW3);
         bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
         bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-        posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-        effectG345.transform.position = posEffect;
-        effectG345.transform.rotation = rotation;
+        //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+        //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) /*posEffect*/;
+        parentFXG345.transform.rotation = rotation;
         effectG345.Play();
         bullet.SetActive(true);
     }
 
     public void CreateBulletToa()
     {
-        SoundController.instance.PlaySound(soundGame.soundshootW3);
-        posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-        posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-        effectG345.transform.position = posEffect;
-        effectG345.transform.rotation = rotation;
+        SoundController.instance.PlaySound(soundGame.soundshootW5);
+        //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+        //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) /*posEffect*/;
+        parentFXG345.transform.rotation = rotation;
         effectG345.Play();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -895,10 +897,10 @@ public class PlayerController : MonoBehaviour
             //    bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
             //    break;
             case 5:
-                posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-                posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-                effectG345.transform.position = posEffect;
-                effectG345.transform.rotation = rotation;
+                //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
+                //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+                parentFXG345.transform.position = /*posEffect*/(Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+                parentFXG345.transform.rotation = rotation;
                 effectG345.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW6);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
@@ -1209,7 +1211,6 @@ public class PlayerController : MonoBehaviour
                 CreateBulletShotGun();
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
-                SoundController.instance.PlaySound(soundGame.soundshootW3);
                 break;
             case 4:
                 CreateBulletToa();
