@@ -554,7 +554,7 @@ public class GameController : MonoBehaviour
         {
             TryShot();
         }
-        else if(Input.GetKeyUp(KeyCode.S))
+        else if (Input.GetKeyUp(KeyCode.S))
         {
             if (PlayerController.instance.currentGun == 6)
                 PlayerController.instance.DisableLaser();
@@ -602,6 +602,7 @@ public class GameController : MonoBehaviour
             return;
         if (usingHealthPack == 1 && DataUtils.playerInfo.healthPack > 0)
         {
+
             DataUtils.AddHPPack(-1);
             usingHealthPack = 2;
             PlayerController.instance.AddHealth(PlayerController.instance.maxHealth);
@@ -610,6 +611,7 @@ public class GameController : MonoBehaviour
     }
     public void TryShot()
     {
+
         if (PlayerController.instance.stun)
             return;
         if (!PlayerController.instance.isMeleeAttack)

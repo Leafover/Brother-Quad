@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
+
     public AllBossAndMiniBossInfo allbossandminibossInfo;
     public Sprite nvSprite;
     public GameObject[] bouders, iconPartOfBouderReward;

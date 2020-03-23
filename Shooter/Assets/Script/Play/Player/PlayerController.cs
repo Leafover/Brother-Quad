@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
-    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot;
+    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot, effectG2;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -172,6 +172,7 @@ public class PlayerController : MonoBehaviour
             timeRegen = 0;
             effectG4.Stop();
             effectG345.Stop();
+            effectG2.Stop();
             DisableLaser();
         }
     }
@@ -208,7 +209,6 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState == PlayerState.Sit)
         {
-
             if (colliderStand != null)
             {
                 Physics2D.IgnoreCollision(foot.collider, colliderStand, true);
@@ -236,7 +236,6 @@ public class PlayerController : MonoBehaviour
 
     public void TryGrenade()
     {
-
         if (timePreviousGrenade > 0)
             return;
         timePreviousGrenade = timedelayGrenade;
@@ -260,12 +259,7 @@ public class PlayerController : MonoBehaviour
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
 
-        //if (currentGun < GameController.instance.gunSprite.Count - 1)
-        //    currentGun++;
-        //else currentGun = 1;
 
-        //SetGun(currentGun);
-        //Debug.Log(currentGun);
     }
     public void AddProperties()
     {
@@ -1205,6 +1199,11 @@ public class PlayerController : MonoBehaviour
                 countbullet = 3;
                 timePreviousAttack = 0;
                 SoundController.instance.PlaySound(soundGame.soundshootW2);
+                posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.08f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.08f;
+                posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
+                effectG2.transform.position = posEffect;
+                effectG2.transform.rotation = rotation;
+                effectG2.Play();
                 break;
             case 2:
                 CreateBulletShotGun();
