@@ -66,9 +66,8 @@ public class EquipmentManager : MonoBehaviour
             else btnTabs[i].image.sprite = sprUnSelect;
         }
         InitAllItems();
-
-        
     }
+
     string _keyCompare = "";
     private void OnEnable()
     {
@@ -390,8 +389,6 @@ public class EquipmentManager : MonoBehaviour
 
     public void ChooseTab(int _index)
     {
-        ChildAlignment();
-
         tabSelected = _index;
         ChooseItem(null);
         for (int i = 0; i < btnTabs.Length; i++)
@@ -433,26 +430,7 @@ public class EquipmentManager : MonoBehaviour
         #endregion
 
 
-
-        //totalEnable = 0;
-
-        //for (int i = 0; i < trContain.childCount; i++)
-        //{
-        //    if (trContain.GetChild(i).gameObject.activeSelf)
-        //    {
-        //        totalEnable++;
-        //    }
-        //}
-
-        //if (trContain.GetComponent<GridLayoutGroup>() != null)
-        //{
-        //    if (totalEnable < 5)
-        //    {
-        //        trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
-        //    }
-        //    else
-        //        trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
-        //}
+        ChildAlignment();
     }
 
     private void ShowItemTypeSelect(string _type)
@@ -641,7 +619,8 @@ public class EquipmentManager : MonoBehaviour
                     }
                     else
                     {
-                        MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+
+                        MainMenuController.Instance.ShowMapNotify("You need to buy <color="+ DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">"+ (pieceEvolve - curPiece) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
                         GetMoreItem();
                     }
                 }
@@ -653,7 +632,7 @@ public class EquipmentManager : MonoBehaviour
                     }
                     else
                     {
-                        MainMenuController.Instance.ShowMapNotify("You need to buy more parts of " + DataUtils.dicAllEquipment[itemKey].itemName);
+                        MainMenuController.Instance.ShowMapNotify("You need to buy <color="+ DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">" + ((int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[itemKey], true) - DataUtils.dicAllEquipment[itemKey].pices) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
                         GetMoreItem();
                     }
                 }

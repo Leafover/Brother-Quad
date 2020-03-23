@@ -199,6 +199,8 @@ public class DataUtils
             }
         }
         #endregion
+
+        Debug.LogError("FillEquipmentData");
     }
     public static void CheckEquipWeapon()
     {
@@ -910,7 +912,7 @@ public class DataUtils
 
 
 
-
+        Debug.LogError("FillAllStage");
         /*lstAllStage.Clear();
         if (modeSelected == 0)
         {
@@ -1338,6 +1340,38 @@ public class DataUtils
             dbValue = (float)(dSell * (dPices > 0 ? dPices : 1));
         }
         return dbValue;
+    }
+
+    /// Normal : gray
+    /// Uncommon : green
+    /// Rare : blue
+    /// Epic : pink
+    /// Legendary : orange
+    public static string GetColorByItem(ItemData itemData)
+    {
+        string _sResult = "#809080";
+        switch (itemData.level)
+        {
+            case "Normal":
+                _sResult = "#809080";
+                break;
+            case "Uncommon":
+                _sResult ="green";
+                break;
+            case "Rare":
+                _sResult = "#00FFFF";
+                break;
+            case "Epic":
+                _sResult = "#A569BD"; //"pink";
+                break;
+            case "Legendary":
+                _sResult = "#FF5733"; //"orange";
+                break;
+            default:
+                _sResult = "#809080"; //"grey";
+                break;
+        }
+        return _sResult;
     }
     #endregion
 }
