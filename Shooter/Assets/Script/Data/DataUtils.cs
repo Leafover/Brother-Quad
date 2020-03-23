@@ -159,11 +159,12 @@ public class DataUtils
         string sEquipped = GetEquippedItem();
         if (!IsEquippedInit())
         {
+            var _wp = DataController.instance.allWeapon[0].weaponList[0];
             ItemData _item = new ItemData();
             _item.id = "W1";
             _item.type = eType.WEAPON.ToString();
             _item.level = eLevel.Normal.ToString();
-            _item.itemName = "Mac 10";
+            _item.itemName = _wp.NAME;
             _item.curStar = 0;
             _item.isUnlock = true;
             _item.isEquipped = true;
