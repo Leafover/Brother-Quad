@@ -30,22 +30,6 @@ public class GunMiniBoss2 : AutoTarget
         gameObject.SetActive(false);
 
     }
-    void OnValidate()
-    {
-
-    }
-    void Start()
-    {
-
-    }
-    void OnDisable()
-    {
-
-    }
-    void OnEnable()
-    {
-
-    }
 
     public void TakeDamage(float damage, bool crit = false)
     {
@@ -118,6 +102,7 @@ public class GunMiniBoss2 : AutoTarget
                 {
                     explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
                     explobulletW5.transform.position = collision.transform.position;
+                    SoundController.instance.PlaySound(soundGame.soundexplow6);
                     explobulletW5.SetActive(true);
                     collision.gameObject.SetActive(false);
                 }

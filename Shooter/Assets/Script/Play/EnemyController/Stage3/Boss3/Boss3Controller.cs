@@ -669,12 +669,14 @@ public class Boss3Controller : EnemyBase
             case 11:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
+                if (isShield)
+                    SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
                 break;
             case 27:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
+                if (isShield)
+                    SoundController.instance.PlaySound(soundGame.soundBoss3HitWhenDef);
                 break;
         }
     }

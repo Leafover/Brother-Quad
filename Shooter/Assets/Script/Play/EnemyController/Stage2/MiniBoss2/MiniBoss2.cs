@@ -360,17 +360,18 @@ public class MiniBoss2 : EnemyBase
     public override void Dead()
     {
         base.Dead();
-        for (int i = 0; i < gunList.Count; i++)
-        {
-            if (GameController.instance.autoTarget.Contains(gunList[i]))
-            {
-                GameController.instance.autoTarget.Remove(gunList[i]);
-            }
-        }
-        if (GameController.instance.autoTarget.Contains(gunCenter))
-        {
-            GameController.instance.autoTarget.Remove(gunCenter);
-        }
+        //for (int i = 0; i < gunList.Count; i++)
+        //{
+        //    if (GameController.instance.autoTarget.Contains(gunList[i]))
+        //    {
+        //        GameController.instance.autoTarget.Remove(gunList[i]);
+        //    }
+        //}
+        //if (GameController.instance.autoTarget.Contains(gunCenter))
+        //{
+        //    GameController.instance.autoTarget.Remove(gunCenter);
+        //}
+        GameController.instance.autoTarget.Clear();
         boxAttack1.gameObject.SetActive(false);
         boxAttack2.gameObject.SetActive(false);
         boxAttack3.gameObject.SetActive(false);

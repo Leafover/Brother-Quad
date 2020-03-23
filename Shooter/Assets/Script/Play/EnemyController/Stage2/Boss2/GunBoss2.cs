@@ -117,6 +117,7 @@ public class GunBoss2 : AutoTarget
                     explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
                     explobulletW5.transform.position = collision.transform.position;
                     explobulletW5.SetActive(true);
+                    SoundController.instance.PlaySound(soundGame.soundexplow6);
                     collision.gameObject.SetActive(false);
                 }
                 break;
