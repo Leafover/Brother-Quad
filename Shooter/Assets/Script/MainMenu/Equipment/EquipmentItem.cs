@@ -30,39 +30,8 @@ public class EquipmentItem : MonoBehaviour
         btnItem = GetComponent<Button>();
         if (!string.IsNullOrEmpty(itemKey))
         {
-            //if (itemData != null)
-            //{
-                //itemKey = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
-                //if (dicAllEquipment.ContainsKey(itemKey))
-                //{
-                //    itemData = dicAllEquipment[itemKey];
-                //    if (itemData.isUnlock)
-                //    {
-                //        gameObject.name = itemKey;
-                //    }
-                //}
-                //else
-                //{
-                //    Destroy(gameObject);
-                //}
-                //EquipmentManager.Instance.UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
-                //Refresh();
-            //}
-
             CheckItemUnlock();
         }
-    }
-
-    public void Refresh()
-    {
-        //if (!dicAllEquipment.ContainsKey(itemKey))
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    gameObject.SetActive(true);
-        //}
     }
 
     // Start is called before the first frame update
@@ -77,8 +46,6 @@ public class EquipmentItem : MonoBehaviour
                 else
                 {
                     isSelected = !isSelected;
-                    //if (itemData.isUnlock)
-                    {
                         if (isSelected)
                         {
                             EquipmentManager.Instance.AddItemToList(this);
@@ -89,7 +56,6 @@ public class EquipmentItem : MonoBehaviour
                             EquipmentManager.Instance.RemoveItemFromList(this);
                             imgMultiSelect.enabled = false;
                         }
-                    }
                 }
             }
         });
@@ -103,9 +69,6 @@ public class EquipmentItem : MonoBehaviour
     Sprite sprimgQualityTemp;
     public void CheckItemUnlock()
     {
-        //if (itemData.isEquipped) gameObject.SetActive(false);
-        //if(!dicAllEquipment.ContainsKey(itemKey)) gameObject.SetActive(false);
-
         #region Check Item quality
         switch (itemData.level)
         {
@@ -143,12 +106,6 @@ public class EquipmentItem : MonoBehaviour
             imgPart.gameObject.SetActive(true);
             imgFillProgress.fillAmount = GetPercent();
         }
-
-        //if(itemData.pices == 0)
-        //{
-        //    gameObject.SetActive(false);
-        //}
-
         if (EquipmentManager.Instance != null)
         {
             if (EquipmentManager.Instance.tabSelected == 0)

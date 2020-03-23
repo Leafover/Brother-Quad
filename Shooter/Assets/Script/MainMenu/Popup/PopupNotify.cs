@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PopupNotify : MonoBehaviour
 {
     public Text txtContent;
+    public TextMeshProUGUI txtContentUI;
     
     void Start()
     {
@@ -13,6 +15,7 @@ public class PopupNotify : MonoBehaviour
     public void ShowNoti(string noti_)
     {
         txtContent.text = noti_;
+        txtContentUI.text = noti_;
     }
     public void ClosePopup()
     {

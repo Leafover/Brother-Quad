@@ -1349,26 +1349,26 @@ public class DataUtils
     /// Legendary : orange
     public static string GetColorByItem(ItemData itemData)
     {
-        string _sResult = "gray";
+        string _sResult = "#809080";
         switch (itemData.level)
         {
             case "Normal":
-                _sResult = "gray";
+                _sResult = "#809080";
                 break;
             case "Uncommon":
-                _sResult = "green";
+                _sResult ="green";
                 break;
             case "Rare":
-                _sResult = "blue";
+                _sResult = "#00FFFF";
                 break;
             case "Epic":
-                _sResult = "pink";
+                _sResult = "#A569BD"; //"pink";
                 break;
             case "Legendary":
-                _sResult = "orange";
+                _sResult = "#FF5733"; //"orange";
                 break;
             default:
-                _sResult = "gray";
+                _sResult = "#809080"; //"grey";
                 break;
         }
         return _sResult;
