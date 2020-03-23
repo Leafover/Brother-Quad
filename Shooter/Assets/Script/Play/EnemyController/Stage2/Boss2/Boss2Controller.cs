@@ -290,8 +290,13 @@ public class Boss2Controller : EnemyBase
         {
             effectsmoke[i].SetActive(false);
         }
+
+        bodydie.transform.position = transform.position;
+        bodydie.SetActive(true);
+
         gameObject.SetActive(false);
     }
+    public GameObject bodydie;
     public override void OnDisable()
     {
         base.OnDisable();

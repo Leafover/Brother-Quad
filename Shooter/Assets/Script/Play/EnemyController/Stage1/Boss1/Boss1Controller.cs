@@ -213,24 +213,24 @@ public class Boss1Controller : EnemyBase
         else if (typeAttack == 3)
         {
 
-            randomtypebullet = Random.Range(0, 2);
-            if (randomtypebullet == 0)
-            {
-                bulletEnemy.AddProperties(damage1, bulletspeed1);
-                bulletEnemy.dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
-                bulletEnemy.rid.gravityScale = 0;
-                bulletEnemy.gameObject.layer = 16;
-                bulletEnemy.Init(3);
-                bulletEnemy.gameObject.SetActive(true);
-            }
-            else
-            {
+            //randomtypebullet = Random.Range(0, 2);
+            //if (randomtypebullet == 0)
+            //{
+            //    bulletEnemy.AddProperties(damage1, bulletspeed1);
+            //    bulletEnemy.dir1 = FlipX ? new Vector2(1, 0) : new Vector2(-1, 0);
+            //    bulletEnemy.rid.gravityScale = 0;
+            //    bulletEnemy.gameObject.layer = 16;
+            //    bulletEnemy.Init(3);
+            //    bulletEnemy.gameObject.SetActive(true);
+            //}
+            //else
+            //{
                 bulletEnemy.AddProperties(damage1, bulletspeed1);
                 bulletEnemy.dir1 = FlipX ? new Vector2(bulletspeed1 / Random.Range(2f, 3.5f), bulletspeed1 / Random.Range(1.5f, 2.5f)) : new Vector2(-bulletspeed1 / Random.Range(2f, 3.5f), bulletspeed1 / Random.Range(1.5f, 2.5f));
                 bulletEnemy.rid.gravityScale = 1;
                 bulletEnemy.gameObject.layer = 17;
                 bulletEnemy.Init(4);
-            }
+            //}
 
         }
         bulletEnemy.gameObject.SetActive(true);
@@ -413,12 +413,14 @@ public class Boss1Controller : EnemyBase
         }
         StartCoroutine(delayDie());
     }
+    public GameObject bodydie;
     IEnumerator delayDie()
     {
         yield return new WaitForSeconds(1);
         ExploOffBoss();
         gameObject.SetActive(false);
-
+        bodydie.transform.position = transform.position;
+        bodydie.SetActive(true);
         foreach (GameObject _explo in effectsss)
             _explo.SetActive(false);
     }
