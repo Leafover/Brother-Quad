@@ -22,7 +22,7 @@ public class EnemyBase : AutoTarget
     //  public bool haveHealhItem;
     public float percentHealthForPlayer = 10;
     bool haveCoin;
-  //  [HideInInspector]
+    //  [HideInInspector]
     public bool enemyAutoSpawn;
 
 
@@ -233,13 +233,13 @@ public class EnemyBase : AutoTarget
 
         //Debug.LogError("skin length:" + skins.Length);
     }
-  public  void InitInpool()
+    public void InitInpool()
     {
         if (skins.Length == 0)
         {
             skins = skeletonAnimation.Skeleton.Data.Skins.Items;
             skeletonAnimation.Initialize(true);
-          //  Debug.LogError("======zo day======");
+            //  Debug.LogError("======zo day======");
         }
     }
     void ActiveSound()
@@ -832,14 +832,18 @@ public class EnemyBase : AutoTarget
                     takecrithit = Random.Range(0, 100);
                     if (takecrithit <= PlayerController.instance.critRate)
                     {
+
                         TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
+
                         if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                             SoundController.instance.PlaySound(soundGame.soundCritHit);
                         GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
                     }
                     else
                     {
+
                         TakeDamage(PlayerController.instance.damageBullet);
+
                     }
                     if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
                         collision.gameObject.SetActive(false);

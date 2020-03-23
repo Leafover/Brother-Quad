@@ -40,8 +40,6 @@ public class GunMiniBoss2 : AutoTarget
         }
         SpawnHitEffect();
         SpawnNumberDamageText((int)damage, crit);
-
-
     }
     void SpawnNumberDamageText(int damage, bool crit)
     {
@@ -76,8 +74,8 @@ public class GunMiniBoss2 : AutoTarget
                     takecrithit = Random.Range(0, 100);
                     if (takecrithit <= 10)
                     {
-                        TakeDamage(PlayerController.instance.damageBullet * 2, true);
-                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 2, true, true);
+                        TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
+                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, true);
                         if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                             SoundController.instance.PlaySound(soundGame.soundCritHit);
                         GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);

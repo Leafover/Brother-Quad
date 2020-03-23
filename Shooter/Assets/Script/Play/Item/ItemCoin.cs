@@ -36,7 +36,7 @@ public class ItemCoin : ItemBase
         base.CalculateDisable(deltaTime);
         if (isactive)
         {
-            transform.position = Vector2.MoveTowards(transform.position, PlayerController.instance.transform.position, deltaTime * 10);
+            transform.position = Vector2.MoveTowards(transform.position, PlayerController.instance.transform.position, deltaTime * 15);
             scale.x = scale.y = Mathf.Clamp(Vector2.Distance(transform.position, PlayerController.instance.transform.position) / 2, 0.1f, 0.8f);
           //  Debug.LogError(Vector2.Distance(transform.position, PlayerController.instance.transform.position));
             render.gameObject.transform.localScale = scale;

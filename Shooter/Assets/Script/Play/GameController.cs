@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
         gameState = GameState.begin;
 
     }
-    ItemBase coinItem;
+    ItemBase coinItem, itemitemdrop;
     public void SpawnCoin(int total, Vector2 pos)
     {
         for (int i = 0; i < total; i++)
@@ -80,6 +80,22 @@ public class GameController : MonoBehaviour
             coinItem = ObjectPoolManagerHaveScript.Instance.itemCoinPooler.GetItemPooledObject();
             coinItem.transform.position = pos;
             coinItem.gameObject.SetActive(true);
+        }
+        if (!first)
+            return;
+
+        if ((currentMap.haveBoss && total == 15) || (currentMap.haveMiniBoss && total == 8))
+        {
+            for (int i = 0; i < vatphamnhanduoc.Count; i++)
+            {
+                if (vatphamnhanduoc[i].TotalNumber > 0)
+                {
+                    itemitemdrop = ObjectPoolManagerHaveScript.Instance.itemItemDropPooler.GetItemPooledObject();
+                    itemitemdrop.transform.position = pos;
+                    itemitemdrop.render.sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID.Replace("M-", "")];
+                    itemitemdrop.gameObject.SetActive(true);
+                }
+            }
         }
     }
     void AddProperties()

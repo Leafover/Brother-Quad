@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public int countKillByGrenade;
     public GameObject shield;
     private Skin[] skins;
-    public AudioSource au,auW7;
+    public AudioSource au, auW7;
     public Animator animArrow;
     public int level = 1;
     //public bool isGrenade;
@@ -283,6 +283,7 @@ public class PlayerController : MonoBehaviour
         {
             DisableLaser();
         }
+
         skeletonAnimation.Skeleton.SetSkin(skins[index + 2]);
         //else
         //{
@@ -294,8 +295,6 @@ public class PlayerController : MonoBehaviour
     {
         if (currentGun != DataUtils.itemWeapon.weponIndex)
         {
-            //if (currentGun != 6)
-            //{
             damageBullet = (float)DataController.instance.allWeapon[currentGun].weaponList[0].DmgValue[0];
             maxTimeReload = (float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[currentGun].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
             maxNumberBullet = (int)DataController.instance.allWeapon[currentGun].weaponList[0].MagazineValue[0];
@@ -304,18 +303,6 @@ public class PlayerController : MonoBehaviour
             bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
             attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
             timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
-            //}
-            //else
-            //{
-            //    damageBullet = (float)DataController.instance.allWeapon[5].weaponList[0].DmgValue[0];
-            //    maxTimeReload = (float)DataController.instance.allWeapon[5].weaponList[0].ReloadSpeedValue[0] - ((float)DataController.instance.allWeapon[5].weaponList[0].ReloadSpeedValue[0] * DataUtils.itemGloves.reloadTimeReduce / 100);
-            //    maxNumberBullet = (int)DataController.instance.allWeapon[5].weaponList[0].MagazineValue[0];
-            //    critRate = (float)DataController.instance.allWeapon[5].weaponList[0].CritRateValue[0] + ((float)DataController.instance.allWeapon[5].weaponList[0].CritRateValue[0] * DataUtils.itemGloves.critRateIncrease / 100);
-            //    critDamage = (float)DataController.instance.allWeapon[5].weaponList[0].CritDmgValue[0] + ((float)DataController.instance.allWeapon[5].weaponList[0].CritDmgValue[0] * DataUtils.itemGloves.critDamageIncrease / 100);
-            //    bulletSpeed = (float)DataController.instance.allWeapon[5].weaponList[0].BulletSpeedValue[0];
-            //    attackRange = (float)DataController.instance.allWeapon[5].weaponList[0].AtkRangeValue[0];
-            //    timedelayAttackGun = (float)DataController.instance.allWeapon[5].weaponList[0].AtksecValue[0];
-            //}
         }
         else
         {
@@ -329,7 +316,10 @@ public class PlayerController : MonoBehaviour
                 bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue;
                 attackRange = DataUtils.itemWeapon.AtkRangeValue;
                 timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
-                //  Debug.LogError("-0--------:" + damageBullet + ":" + DataUtils.itemWeapon.DmgValue);
+                //if (currentGun == 4)
+                //{
+                //    DataUtils.itemWeapon.l
+                //}
             }
             else
             {
@@ -823,8 +813,8 @@ public class PlayerController : MonoBehaviour
     }
     GameObject bullet, grenade;
     Vector2 dirBullet;
-    float angle, angle2, angle3;
-    Quaternion rotation, rotation2, rotation3;
+    float angle, angle2, angle3, angle4, angle5;
+    Quaternion rotation, rotation2, rotation3, rotation4, rotation5;
     Vector2 posEffect;
     public void CreateBulletShotGun()
     {
@@ -842,7 +832,7 @@ public class PlayerController : MonoBehaviour
         effectG345.Play();
         bullet.SetActive(true);
     }
-
+    int numberLine = 5;
     public void CreateBulletToa()
     {
         SoundController.instance.PlaySound(soundGame.soundshootW5);
@@ -855,7 +845,9 @@ public class PlayerController : MonoBehaviour
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         angle2 = angle + 10;
         angle3 = angle - 10;
-        for (int i = 0; i < 3; i++)
+        angle4 = angle + 20;
+        angle5 = angle - 20;
+        for (int i = 0; i < numberLine; i++)
         {
             bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
             if (i == 1)
@@ -872,6 +864,16 @@ public class PlayerController : MonoBehaviour
             {
                 rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 bullet.transform.rotation = rotation;
+            }
+            else if (i == 3)
+            {
+                rotation4 = Quaternion.AngleAxis(angle4, Vector3.forward);
+                bullet.transform.rotation = rotation4;
+            }
+            else if (i == 4)
+            {
+                rotation5 = Quaternion.AngleAxis(angle5, Vector3.forward);
+                bullet.transform.rotation = rotation5;
             }
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
