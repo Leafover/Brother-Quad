@@ -719,13 +719,25 @@ public class EnemyBase : AutoTarget
     public int indexHealthFill;
     [HideInInspector]
     public float currenthealthfill;
-    public virtual void TakeDamage(float damage, bool crit = false, bool iamGunboss = false)
+    public virtual void TakeDamage(float damage, bool crit, bool iamGunboss, bool takedamagebyrocket)
     {
         if (PlayerController.instance.playerState == PlayerController.PlayerState.Die)
             return;
 
         if (iamGunboss)
         {
+            if (isShield && !takedamagebyrocket)
+            {
+                hitPosTemp = 0.05f;
+                posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
+                posHitTemp.y = transform.position.y + Random.Range(-hitPosTemp, hitPosTemp);
+
+                hiteffect = ObjectPoolerManager.Instance.hitshieldEffectPooler.GetPooledObject();
+                hiteffect.transform.position = posHitTemp;
+                hiteffect.SetActive(true);
+                SpawnNumberMissionText();
+                return;
+            }
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
@@ -746,7 +758,7 @@ public class EnemyBase : AutoTarget
             }
             return;
         }
-        if (isShield)
+        if (isShield && !takedamagebyrocket)
         {
             hitPosTemp = 0.05f;
             posHitTemp.x = transform.position.x + Random.Range(-hitPosTemp, hitPosTemp);
@@ -832,8 +844,10 @@ public class EnemyBase : AutoTarget
                     takecrithit = Random.Range(0, 100);
                     if (takecrithit <= PlayerController.instance.critRate)
                     {
-
-                        TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
+                        if (collision.tag != "explobulletW5")
+                            TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, false, false);
+                        else
+                            TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, false, true);
 
                         if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                             SoundController.instance.PlaySound(soundGame.soundCritHit);
@@ -841,9 +855,10 @@ public class EnemyBase : AutoTarget
                     }
                     else
                     {
-
-                        TakeDamage(PlayerController.instance.damageBullet);
-
+                        if (collision.tag != "explobulletW5")
+                            TakeDamage(PlayerController.instance.damageBullet, false, false, false);
+                        else
+                            TakeDamage(PlayerController.instance.damageBullet, false, false, true);
                     }
                     if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
                         collision.gameObject.SetActive(false);
@@ -867,7 +882,7 @@ public class EnemyBase : AutoTarget
             case 14:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade);
+                TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
                 if (currentHealth <= 0)
                 {
                     if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
@@ -888,12 +903,12 @@ public class EnemyBase : AutoTarget
             case 26:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade);
+                TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
                 break;
             case 27:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damageBullet * 1.5f);
+                TakeDamage(PlayerController.instance.damageBullet * 1.5f, false, false, false);
                 SoundController.instance.PlaySound(soundGame.sounddapchao);
                 if (currentHealth <= 0)
                 {

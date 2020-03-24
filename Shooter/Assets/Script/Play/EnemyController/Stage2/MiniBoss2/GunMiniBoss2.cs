@@ -30,9 +30,14 @@ public class GunMiniBoss2 : AutoTarget
         gameObject.SetActive(false);
 
     }
-
-    public void TakeDamage(float damage, bool crit = false)
+    public void TakeDamage(float damage, bool crit,bool takedamgebyrocket)
     {
+        if (myEnemyBase.isShield && !takedamgebyrocket)
+        {
+            SpawnHitEffect();
+            SpawnNumberMissionText();
+            return;
+        }
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -40,6 +45,14 @@ public class GunMiniBoss2 : AutoTarget
         }
         SpawnHitEffect();
         SpawnNumberDamageText((int)damage, crit);
+    }
+    void SpawnNumberMissionText()
+    {
+        numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
+        numberText.transform.position = transform.position;
+        numberText.Display("Miss", false);
+        numberText.tmp.color = Color.gray;
+        numberText.gameObject.SetActive(true);
     }
     void SpawnNumberDamageText(int damage, bool crit)
     {
@@ -72,18 +85,34 @@ public class GunMiniBoss2 : AutoTarget
                 if (collision.tag != "bulletW5")
                 {
                     takecrithit = Random.Range(0, 100);
-                    if (takecrithit <= 10)
+                    if (takecrithit <= PlayerController.instance.critRate)
                     {
-                        TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true);
-                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, true);
+                        if (collision.tag != "explobulletW5")
+                        {
+                            TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, false);
+                            myEnemyBase.TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, true, false);
+                        }
+                        else
+                        {
+                            TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, true);
+                            myEnemyBase.TakeDamage(PlayerController.instance.damageBullet + (PlayerController.instance.damageBullet / 100 * PlayerController.instance.critDamage), true, true, true);
+                        }
                         if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                             SoundController.instance.PlaySound(soundGame.soundCritHit);
                         GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
                     }
                     else
                     {
-                        TakeDamage(PlayerController.instance.damageBullet, false);
-                        myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true);
+                        if (collision.tag != "explobulletW5")
+                        {
+                            TakeDamage(PlayerController.instance.damageBullet, false, false);
+                            myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true, false);
+                        }
+                        else
+                        {
+                            TakeDamage(PlayerController.instance.damageBullet, false, true);
+                            myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, true, true);
+                        }
                     }
 
                     if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
@@ -109,8 +138,8 @@ public class GunMiniBoss2 : AutoTarget
             case 14:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade, false);
-                myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true);
+                TakeDamage(PlayerController.instance.damgeGrenade, false,false);
+                myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true,false);
                 if (currentHealth <= 0)
                 {
                     if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
@@ -124,14 +153,14 @@ public class GunMiniBoss2 : AutoTarget
             case 26:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade, false);
-                myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true);
+                TakeDamage(PlayerController.instance.damgeGrenade, false,false);
+                myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true,false);
                 break;
             case 27:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damageBullet * 1.5f, false);
-                myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 1.5f, false, true);
+                TakeDamage(PlayerController.instance.damageBullet * 1.5f, false,false);
+                myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 1.5f, false, true,false);
                 SoundController.instance.PlaySound(soundGame.sounddapchao);
 
 

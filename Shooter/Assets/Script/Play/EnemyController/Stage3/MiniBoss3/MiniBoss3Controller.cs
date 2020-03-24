@@ -437,7 +437,7 @@ public class MiniBoss3Controller : EnemyBase
         rightFace.gameObject.SetActive(false);
         for (int i = 0; i < EnemyManager.instance.enemyen0s.Count; i++)
         {
-            EnemyManager.instance.enemyen0s[i].TakeDamage(1000);
+            EnemyManager.instance.enemyen0s[i].TakeDamage(1000,false,false,false);
         }
         for (int i = 0; i < target.Count; i++)
         {

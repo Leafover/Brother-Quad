@@ -91,14 +91,14 @@ public class ChainLightning : MonoBehaviour
             takecrithit = Random.Range(0, 100);
             if (takecrithit <= PlayerController.instance.critRate)
             {
-                targetPos[i].TakeDamage(PlayerController.instance.damageBullet / 3 + (PlayerController.instance.damageBullet / 3 / 100 * PlayerController.instance.critDamage), true);
+                targetPos[i].TakeDamage(PlayerController.instance.damageBullet / 3 + (PlayerController.instance.damageBullet / 3 / 100 * PlayerController.instance.critDamage), true,false,false);
                 //if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
                 //    SoundController.instance.PlaySound(soundGame.soundCritHit);
                 GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
             }
             else
             {
-                targetPos[i].TakeDamage(PlayerController.instance.damageBullet / 3);
+                targetPos[i].TakeDamage(PlayerController.instance.damageBullet / 3,false,false,false);
             }
             LightningBolts[i].DisActive();
         }

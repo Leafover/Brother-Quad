@@ -352,9 +352,9 @@ public class Boss1Controller : EnemyBase
         }
     }
     public int activeType3 = 0;
-    public override void TakeDamage(float damage, bool crit = false, bool iamgunboss = true)
+    public override void TakeDamage(float damage, bool crit, bool iamgunboss,bool takedamgebyrocket)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage,crit,iamgunboss,takedamgebyrocket);
         if (currentHealth <= health / 2)
         {
             if (activeType3 == 0)
