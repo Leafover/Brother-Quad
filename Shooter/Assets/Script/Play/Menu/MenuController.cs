@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     public static MenuController instance;
@@ -11,7 +11,7 @@ public class MenuController : MonoBehaviour
     public GameObject PrimeAccountPanel;
     public BlackMarketPanel blackMarketpanel;
     public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount, warningvideoreward;
-
+    public Text primeText;
     private void Awake()
     {
         instance = this;
@@ -21,10 +21,12 @@ public class MenuController : MonoBehaviour
     {
         if (!DataController.primeAccout.isVIP)
         {
+            primeText.color = Color.gray;
             warningPrimeAccount.SetActive(true);
         }
         else
         {
+            primeText.color = Color.yellow;
             if (!DataController.primeAccout.takecoin || !DataController.primeAccout.takegem)
             {
                 warningPrimeAccount.SetActive(true);
