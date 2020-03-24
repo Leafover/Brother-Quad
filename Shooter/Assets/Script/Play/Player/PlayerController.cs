@@ -322,7 +322,24 @@ public class PlayerController : MonoBehaviour
                 timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
                 if (currentGun == 4)
                 {
-                    
+                    switch (DataUtils.eWeaponLevel)
+                    {
+                        case "Normal":
+                            numberLine = 3;
+                            break;
+                        case "Uncommon":
+                            numberLine = 3;
+                            break;
+                        case "Rare":
+                            numberLine = 5;
+                            break;
+                        case "Epic":
+                            numberLine = 5;
+                            break;
+                        case "Legendary":
+                            numberLine = 5;
+                            break;
+                    }
                 }
             }
             else
@@ -829,9 +846,7 @@ public class PlayerController : MonoBehaviour
         rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
         bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-        //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) /*posEffect*/;
+        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         parentFXG345.transform.rotation = rotation;
         effectG345.Play();
         bullet.SetActive(true);
@@ -840,11 +855,6 @@ public class PlayerController : MonoBehaviour
     public void CreateBulletToa()
     {
         SoundController.instance.PlaySound(soundGame.soundshootW5);
-        //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-        //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform) /*posEffect*/;
-        parentFXG345.transform.rotation = rotation;
-        effectG345.Play();
         dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
         angle2 = angle + 10;
@@ -882,6 +892,9 @@ public class PlayerController : MonoBehaviour
             bullet.transform.position = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
             bullet.SetActive(true);
         }
+        parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        parentFXG345.transform.rotation = rotation;
+        effectG345.Play();
     }
     int posIndexBullet;
     public void CreateBullet(bool lech)
