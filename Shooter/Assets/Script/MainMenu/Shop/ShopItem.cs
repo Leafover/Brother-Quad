@@ -98,22 +98,22 @@ public class ShopItem : MonoBehaviour
         switch (packName)
         {
             case PACK_NAME.P_25GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 25 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 25, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 25 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 25, 0, 0, false);
                 break;
             case PACK_NAME.P_220GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 220 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 220, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 220 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 220, 0, 0, false);
                 break;
             case PACK_NAME.P_600GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 600 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 600, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 600 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 600, 0, 0, false);
                 break;
             case PACK_NAME.P_1750GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 1750 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 1750, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 1750 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 1750, 0, 0, false);
                 break;
             case PACK_NAME.P_4000GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 4000 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 4000, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 4000 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 4000, 0, 0, false);
                 break;
             case PACK_NAME.P_12500GEM_PACK:
-                ShopManager.Instance.ShowBuyPanel("Buy 12500 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 12500, 0, 0);
+                ShopManager.Instance.ShowBuyPanel("Buy 12500 Gem", GameIAPManager.GetPriceByID(packID), packID, 0, 12500, 0, 0, false);
                 break;
         }
     }
@@ -122,13 +122,13 @@ public class ShopItem : MonoBehaviour
         switch (packName)
         {
             case PACK_NAME.CHEAP_PACK:
-                ShopManager.Instance.ShowBuyPanel("Beginner Pack", GameIAPManager.GetPriceByID(packID), packID, 0, 25, 7500, 10);
+                ShopManager.Instance.ShowBuyPanel("Beginner Pack", GameIAPManager.GetPriceByID(packID), packID, 0, 25, 7500, 10, false);
                 break;
             case PACK_NAME.PROFESSIONAL_PACK:
-                ShopManager.Instance.ShowBuyPanel("Professional Pack", GameIAPManager.GetPriceByID(packID), packID, 50, 100, 85000, 45);
+                ShopManager.Instance.ShowBuyPanel("Professional Pack", GameIAPManager.GetPriceByID(packID), packID, 50, 100, 85000, 45, true);
                 break;
             case PACK_NAME.BEST_CHOICE:
-                ShopManager.Instance.ShowBuyPanel("Best Choice", GameIAPManager.GetPriceByID(packID), packID, 20, 50, 15000, 25);
+                ShopManager.Instance.ShowBuyPanel("Best Choice", GameIAPManager.GetPriceByID(packID), packID, 20, 50, 15000, 25, false);
                 break;
         }
     }
