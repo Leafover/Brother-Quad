@@ -88,32 +88,33 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
-     public static eLevel GetItemLevel(ItemData itemData)
-    {
-        eLevel eReturn = eLevel.Normal;
-        switch (itemData.level)
-        {
-            case "Epic":
-                eReturn = eLevel.Epic;
-                break;
-            case "Legendary":
-                eReturn = eLevel.Legendary;
-                break;
-            case "Normal":
-                eReturn = eLevel.Normal;
-                break;
-            case "Rare":
-                eReturn = eLevel.Rare;
-                break;
-            case "Uncommon":
-                eReturn = eLevel.Uncommon;
-                break;
-            default:
-                eReturn = eLevel.Normal;
-                break;
-        }
-        return eReturn;
-    }
+    public static string eWeaponLevel = "Normal";
+    //private static eLevel GetItemLevel(ItemData itemData)
+    //{
+    //    eLevel eReturn = eLevel.Normal;
+    //    switch (itemData.level)
+    //    {
+    //        case "Epic":
+    //            eReturn = eLevel.Epic;
+    //            break;
+    //        case "Legendary":
+    //            eReturn = eLevel.Legendary;
+    //            break;
+    //        case "Normal":
+    //            eReturn = eLevel.Normal;
+    //            break;
+    //        case "Rare":
+    //            eReturn = eLevel.Rare;
+    //            break;
+    //        case "Uncommon":
+    //            eReturn = eLevel.Uncommon;
+    //            break;
+    //        default:
+    //            eReturn = eLevel.Normal;
+    //            break;
+    //    }
+    //    return eReturn;
+    //}
 
 
     public static string GetItemInfo(ItemData itemData)
@@ -258,6 +259,8 @@ public class DataUtils
                         itemWeapon.BulletSpeedValue = dicWeapon[_key].BulletSpeedValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
                         itemWeapon.AtkRangeValue = dicWeapon[_key].AtkRangeValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
                         itemWeapon.AtksecValue = dicWeapon[_key].AtksecValue[curStar >= dicWeapon[_key].AtksecValue.Count ? dicWeapon[_key].AtksecValue.Count - 1 : curStar];
+
+                        eWeaponLevel = item.level;
                         break;
                     case "ARMOR":
                         itemArmor.armorIndex = int.Parse(item.id.Replace("A", "").Trim()) - 1;
