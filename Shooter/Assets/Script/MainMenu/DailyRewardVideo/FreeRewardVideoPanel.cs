@@ -40,7 +40,7 @@ public class FreeRewardVideoPanel : MonoBehaviour
 
     public void Click(int index)
     {
-        if (btnvideo[index].color == Color.gray)
+        if (btnvideo[index].color == Color.gray || !btnvideo[index].gameObject.activeSelf)
             return;
 #if UNITY_EDITOR
 
