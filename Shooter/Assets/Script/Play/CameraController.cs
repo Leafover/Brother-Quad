@@ -48,6 +48,7 @@ public class CameraController : MonoBehaviour
         NumericBoundaries.enabled = true;
         prcShake.enabled = true;
         procam.enabled = true;
+        procam.AddCameraTarget(PlayerController.instance.transform);
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
         //  NumericBoundaries.TopBoundary = 4;
     }
