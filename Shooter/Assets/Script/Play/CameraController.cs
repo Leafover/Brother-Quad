@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     public float speed;
     public ProCamera2DNumericBoundaries NumericBoundaries;
     public ProCamera2DShake prcShake;
-
+    public ProCamera2D procam;
     public int currentCamBoidaries, currentCheckPoint;
 
     public List<GameObject> effectstage;
@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     {
         NumericBoundaries = GetComponent<ProCamera2DNumericBoundaries>();
         prcShake = GetComponent<ProCamera2DShake>();
+        procam = GetComponent<ProCamera2D>();
     }
     private void Awake()
     {
@@ -38,9 +39,15 @@ public class CameraController : MonoBehaviour
         bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 4.5f, bouders[2].transform.localPosition.y);
         bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 4.5f, bouders[3].transform.localPosition.y);
         currentCamBoidaries = 0;
+        NumericBoundaries.enabled = false;
+        prcShake.enabled = false;
+        procam.enabled = false;
     }
     public void Init()
     {
+        NumericBoundaries.enabled = true;
+        prcShake.enabled = true;
+        procam.enabled = true;
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
         //  NumericBoundaries.TopBoundary = 4;
     }
@@ -91,7 +98,10 @@ public class CameraController : MonoBehaviour
     }
     private void LateUpdate()
     {
+
+
         CacheSizeAndViewPos();
+
         var x1 = NumericBoundaries.RightBoundary;
         var x2 = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
         var s = Mathf.Abs(x2 - x1);

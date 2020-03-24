@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
     public int usingHealthPack = 0;
     public GameObject letgo, uiDisplay;
     public MayBayController maybay;
+    public PlayerController[] playerControllers;
 
     public List<Sprite> gunSprite;
 
@@ -70,6 +71,10 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
 #endif
         gameState = GameState.begin;
+
+        int currentChar = 0;
+
+        playerControllers[currentChar].Init();
 
     }
     ItemBase coinItem, itemitemdrop;
@@ -151,8 +156,10 @@ public class GameController : MonoBehaviour
             first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
         else
             first = false;
-        CameraController.instance.Init();
-        Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
+        Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, currentMap.pointBeginPlayer.transform.position.y, Camera.main.transform.position.z);
+
+        Debug.LogError(Camera.main.transform.position);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);
@@ -176,6 +183,7 @@ public class GameController : MonoBehaviour
     {
         uiPanel.gameObject.SetActive(true);
         uiDisplay.gameObject.SetActive(true);
+        CameraController.instance.Init();
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()

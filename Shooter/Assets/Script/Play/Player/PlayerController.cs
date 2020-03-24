@@ -710,7 +710,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
-
+        effectsmokeendshot.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
         if (playerState != PlayerState.Jump)
         {
             isMeleeAttack = Physics2D.Linecast(foot.transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), lmMeleeAtack); /*Physics2D.OverlapCircle(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius, lmMeleeAtack)*/ /*FlipX ? Physics2D.Linecast(transform.position, rightface.position, lmMeleeAtack) : Physics2D.Linecast(transform.position, leftface.position, lmMeleeAtack)*/;
@@ -814,10 +814,10 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
-    private void Awake()
+    public void Init()
     {
-        if (instance == null)
-            instance = this;
+        instance = this;
+        gameObject.SetActive(true);
     }
 
     void SetBox(Vector2 size, Vector2 offset)
@@ -1452,7 +1452,6 @@ public class PlayerController : MonoBehaviour
         {
             if (effectsmokeendshot.isStopped)
             {
-                effectsmokeendshot.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
                 effectsmokeendshot.Play();
             }
         }
