@@ -228,8 +228,6 @@ public class DataUtils
             }
         }
         #endregion
-
-        Debug.LogError("FillEquipmentData");
     }
     public static void CheckEquipWeapon()
     {
@@ -460,7 +458,6 @@ public class DataUtils
                 res = dicArmor[key].GiaNangCapValue[curStar >= dicArmor[key].GiaNangCapValue.Count ? dicArmor[key].GiaNangCapValue.Count - 1 : curStar];
                 break;
             case "BAG":
-                Debug.LogError((curStar >= dicBag[key].GiaNangCapValue.Count ? "--->"+(curStar - 1) : "|||--->" + curStar));
                 res = dicBag[key].GiaNangCapValue[curStar >= dicBag[key].GiaNangCapValue.Count ? curStar - 1 : curStar];
                 break;
             case "GLOVES":
@@ -477,6 +474,13 @@ public class DataUtils
                 break;
         }
         return res;
+    }
+
+    public static bool IsCanEvolve(ItemData itemData)
+    {
+        bool _rs = true;
+        if (itemData.curStar >= 4 && itemData.level.Contains("Legendary")) _rs = false;
+        return _rs;
     }
     private static void CheckItemUnlock(string id, eType itemType, string level, int pices, int curStar, bool isUnlock, bool isEquipped)
     {
@@ -940,20 +944,8 @@ public class DataUtils
         }
         if (StageHardHasInit())
             FillAllStageHard();
-
-
-
-        Debug.LogError("FillAllStage");
-        /*lstAllStage.Clear();
-        if (modeSelected == 0)
-        {
-            lstAllStage.AddRange(lstAllStageNormal);
-        }
-        else if (modeSelected == 1)
-        {
-            lstAllStage.AddRange(lstAllStageHard);
-        }*/
     }
+
 
     public static MapLevel GetMapByIndex(int stage, int level)
     {
