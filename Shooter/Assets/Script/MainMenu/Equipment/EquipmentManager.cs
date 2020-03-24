@@ -86,23 +86,29 @@ public class EquipmentManager : MonoBehaviour
     {
         totalEnable = 0;
 
-        for (int i = 0; i < trContain.childCount; i++)
-        {
-            if (trContain.GetChild(i).gameObject.activeSelf)
-            {
-                totalEnable++;
-            }
-        }
 
-        if (trContain.GetComponent<GridLayoutGroup>() != null)
+
+        if (tabSelected != 0)
         {
-            if (totalEnable < 5)
+            for (int i = 0; i < trContain.childCount; i++)
             {
-                trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
+                if (trContain.GetChild(i).gameObject.activeSelf)
+                {
+                    totalEnable++;
+                }
             }
-            else
-                trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+            if (trContain.GetComponent<GridLayoutGroup>() != null)
+            {
+                if (totalEnable < 5)
+                {
+                    trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
+                }
+                else
+                    trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+            }
         }
+        else
+            trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
     }
     int totalEnable = 0;
     private void OnDisable()
