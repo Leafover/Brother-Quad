@@ -9,7 +9,7 @@ public class ShopManager : MonoBehaviour
     public static ShopManager Instance;
     public Button[] btnTabs;
     public Sprite sprSelect, sprUnSelect;
-    public GameObject gPanelBuy;
+    public GameObject gPanelBuy, gRemoveAds;
     public TextMeshProUGUI txtPacktitle;
     public Text txtPackPrice;
     public Text txtPlayerPice, txtGem, txtCoin, txtHPPack;
@@ -107,7 +107,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin, int totalHpPack)
+    public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin, int totalHpPack, bool isHaveRemoveAds)
     {
         _packID = packID;
         txtPacktitle.text = packTitle;
@@ -115,6 +115,7 @@ public class ShopManager : MonoBehaviour
         txtGem.text = "x " + totalGem;
         txtPlayerPice.text = "x " + totalPlayerPice;
         txtHPPack.text = "x " + totalHpPack;
+        gRemoveAds.SetActive(isHaveRemoveAds);
         if (totalHpPack == 0)
         {
             txtHPPack.gameObject.transform.parent.parent.gameObject.SetActive(false);
