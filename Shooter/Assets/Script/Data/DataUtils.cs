@@ -938,8 +938,8 @@ public class DataUtils
                 lstAllStageNormal.Add(jStage);
             }
         }
-        //if (StageHardHasInit())
-        //    FillAllStageHard();
+        if (StageHardHasInit())
+            FillAllStageHard();
 
 
 
