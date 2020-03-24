@@ -88,6 +88,34 @@ public class DataUtils
     #endregion
 
     #region Equipment Data
+     public static eLevel GetItemLevel(ItemData itemData)
+    {
+        eLevel eReturn = eLevel.Normal;
+        switch (itemData.level)
+        {
+            case "Epic":
+                eReturn = eLevel.Epic;
+                break;
+            case "Legendary":
+                eReturn = eLevel.Legendary;
+                break;
+            case "Normal":
+                eReturn = eLevel.Normal;
+                break;
+            case "Rare":
+                eReturn = eLevel.Rare;
+                break;
+            case "Uncommon":
+                eReturn = eLevel.Uncommon;
+                break;
+            default:
+                eReturn = eLevel.Normal;
+                break;
+        }
+        return eReturn;
+    }
+
+
     public static string GetItemInfo(ItemData itemData)
     {
         string _str = "";
@@ -907,8 +935,8 @@ public class DataUtils
                 lstAllStageNormal.Add(jStage);
             }
         }
-        if (StageHardHasInit())
-            FillAllStageHard();
+        //if (StageHardHasInit())
+        //    FillAllStageHard();
 
 
 
