@@ -303,6 +303,10 @@ public class PlayerController : MonoBehaviour
             bulletSpeed = (float)DataController.instance.allWeapon[currentGun].weaponList[0].BulletSpeedValue[0];
             attackRange = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtkRangeValue[0];
             timedelayAttackGun = (float)DataController.instance.allWeapon[currentGun].weaponList[0].AtksecValue[0];
+            if (currentGun == 4)
+            {
+                numberLine = 3;
+            }
         }
         else
         {
@@ -316,10 +320,10 @@ public class PlayerController : MonoBehaviour
                 bulletSpeed = DataUtils.itemWeapon.BulletSpeedValue;
                 attackRange = DataUtils.itemWeapon.AtkRangeValue;
                 timedelayAttackGun = DataUtils.itemWeapon.AtksecValue;
-                //if (currentGun == 4)
-                //{
-                //    DataUtils.itemWeapon.l
-                //}
+                if (currentGun == 4)
+                {
+                    
+                }
             }
             else
             {
