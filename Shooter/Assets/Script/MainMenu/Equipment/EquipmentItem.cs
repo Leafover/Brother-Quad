@@ -95,8 +95,8 @@ public class EquipmentItem : MonoBehaviour
         #endregion
         if (itemData.isUnlock)
         {
-            imgQuantity.gameObject.SetActive(itemData.quantity == 0 ? false : true);
-            txtQuantity.text = "" + itemData.quantity;
+            imgQuantity.gameObject.SetActive(/*itemData.quantity == 0 ? false : true*/itemData.isEquipped);
+            txtQuantity.text = "E";// + itemData.quantity;
             imgProgress.gameObject.SetActive(false);
             imgPart.gameObject.SetActive(false);
         }
