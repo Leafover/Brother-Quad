@@ -1287,10 +1287,11 @@ public class DataUtils
     #endregion
 
     #region Other
-    //public static float GetRealFloat(float _f)
-    //{
-    //    return (float)System.Math.Round(_f);
-    //}
+    public static string GetRealFloat(float _f)
+    {
+        //return (float)System.Math.Round(_f);
+        return _f.ToString("0.##");
+    }
     public static string DisplayRichText(double dFrom, double dTo)
     {
         return "<color=green>" + dTo + "</color>";

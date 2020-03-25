@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PopupStarterPack : MonoBehaviour
 {
-    public Text txtWPName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtPrice;
+    //public Text txtWPName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtPrice;
 
+    public TextMeshProUGUI tmpWPName;
+    public Text txtDmg, txtFireRate, txtCritRate, txtCritDmg, txtRange, txtMagazine;
     
     private void OnEnable()
     {
@@ -14,13 +17,11 @@ public class PopupStarterPack : MonoBehaviour
 
     private void OnDisable()
     {
-        //GameIAPManager.Instance.acBuyComplete -= HandleBuyComplete;
     }
 
     void Start()
     {
-        //GameIAPManager.Instance.acBuyComplete += HandleBuyComplete;
-        txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
+        //txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
         InitWeaponInfo();
     }
 
@@ -28,19 +29,14 @@ public class PopupStarterPack : MonoBehaviour
     private void InitWeaponInfo()
     {
         var _wp = DataController.instance.allWeapon[6].weaponList[0];
-        txtWPName.text = _wp.NAME;
-        txtAtk.text = _wp.AtksecValue[0].ToString(); //_wp.Dmg.ToString();
-        txtBulletSpeed.text = _wp.BulletSpeedValue[0].ToString(); //_wp.BulletSpeed.ToString();
-        txtReload.text = _wp.ReloadSpeedValue[0].ToString(); //_wp.ReloadSpeed.ToString();
-        txtRange.text = _wp.AtkRangeValue[0].ToString(); //_wp.AtkRange.ToString();
-        txtMagazine.text = _wp.MagazineValue[0].ToString(); //_wp.Magazine.ToString();
+        tmpWPName.text = "<color=blue>"+_wp.NAME+"</color>";
+        txtDmg.text = DataUtils.GetRealFloat(_wp.DmgValue[0]); //_wp.DmgValue[0].ToString("0.##");
+        txtFireRate.text = DataUtils.GetRealFloat(_wp.AtksecValue[0]);
+        txtCritRate.text = DataUtils.GetRealFloat(_wp.CritRateValue[0]);
+        txtCritDmg.text = DataUtils.GetRealFloat(_wp.CritDmgValue[0]);
+        txtRange.text = DataUtils.GetRealFloat(_wp.AtkRangeValue[0]);
+        txtMagazine.text = DataUtils.GetRealFloat(_wp.MagazineValue[0]);
     }
-    //void HandleBuyComplete()
-    //{
-    //    Debug.LogError("Active Starter Pack, unlock Kriss Vector(W2 Normal) +7500 Coins");
-    //    DataUtils.RemoveAds();
-    //    ClosePopup();
-    //}
     public void BuyPack()
     {
         GameIAPManager.Instance.BuyProduct(DataUtils.P_STARTER_PACK);
