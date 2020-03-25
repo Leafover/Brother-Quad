@@ -15,6 +15,18 @@ public class BlackMarketPanel : MonoBehaviour
     double timeCount;
     public List<BouderBlackmarket> bouders;
     public TextMeshProUGUI timeText;
+    public GameObject confirmPanel;
+    public Image bouderConfirm, iconConfirm;
+    public void DisplayConfirm(Sprite _bouder, Sprite _icon)
+    {
+        bouderConfirm.sprite = _bouder;
+        iconConfirm.sprite = _icon;
+        confirmPanel.SetActive(true);
+    }
+    public void CloseConfirmPanel()
+    {
+        confirmPanel.SetActive(false);
+    }
     void Start()
     {
         for (int i = 0; i < bouders.Count; i++)
@@ -24,7 +36,7 @@ public class BlackMarketPanel : MonoBehaviour
         priceRefreshText.text = "" + DataParam.countResetBlackMarket * 5;
 
         if (DataParam.countResetBlackMarket > 0)
-        {   
+        {
             iconRefreshImg.sprite = gemSp;
             priceRefreshText.gameObject.SetActive(true);
         }
@@ -34,7 +46,7 @@ public class BlackMarketPanel : MonoBehaviour
             priceRefreshText.gameObject.SetActive(false);
         }
 
-       // DataUtils.AddCoinAndGame(0, 7);
+        // DataUtils.AddCoinAndGame(0, 7);
     }
 
     // Update is called once per frame

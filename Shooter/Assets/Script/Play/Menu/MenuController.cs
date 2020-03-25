@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     public static MenuController instance;
+    public PanelAnimReward panelAnimReward;
     public AudioSource auBG;
     public FreeRewardVideoPanel freeRewardVideoPanel;
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;

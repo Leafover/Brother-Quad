@@ -6,7 +6,7 @@ public class LuckChestPanel : MonoBehaviour
 {
     public int[] prices;
     public Text[] priceText,numberTakeText;
-    public Image[] rewardImgs,bouderImgs;
+    public Image[] rewardImgs, bouderImgs, iconImgs;
     public GameObject PanelConfirmAfterBuy;
 
     DataUtils.eLevel elevel;
@@ -153,7 +153,8 @@ public class LuckChestPanel : MonoBehaviour
             DataController.levelOfLuckChest[index]++;
 
 
-        PanelConfirmAfterBuy.SetActive(true);
+        MenuController.instance.panelAnimReward.ActiveMe(PanelConfirmAfterBuy,iconImgs[index].sprite);
+       // PanelConfirmAfterBuy.SetActive(true);
     }
     public void CloseConfirm()
     {
