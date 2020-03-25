@@ -102,6 +102,7 @@ public class EquipmentManager : MonoBehaviour
                     totalEnable++;
                 }
             }
+            Debug.LogError("totalEnable:: " + totalEnable);
             if (trContain.GetComponent<GridLayoutGroup>() != null)
             {
                 if (totalEnable < 5)
@@ -167,6 +168,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         //SortingItem();
+        ChildAlignment();
     }
 
     public void RemoveSelectedItem()
