@@ -93,7 +93,7 @@ public class EquipmentManager : MonoBehaviour
 
 
 
-        if (tabSelected != 0)
+        //if (tabSelected != 0)
         {
             for (int i = 0; i < trContain.childCount; i++)
             {
@@ -112,8 +112,8 @@ public class EquipmentManager : MonoBehaviour
                     trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
             }
         }
-        else
-            trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+        //else
+        //    trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
     }
     int totalEnable = 0;
     private void OnDisable()

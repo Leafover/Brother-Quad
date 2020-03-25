@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     public GameObject gPanelBuy, gRemoveAds;
     public TextMeshProUGUI txtPacktitle;
     public Text txtPackPrice;
-    public Text txtPlayerPice, txtGem, txtCoin, txtHPPack;
+    public Text txtPlayerPice, txtGem, txtCoin, txtHPPack, _txtPackTitle;
     public Button btnBuyPack;
     public Transform trShopContain;
     public ShopItem[] shopItems;
@@ -110,7 +110,7 @@ public class ShopManager : MonoBehaviour
     public void ShowBuyPanel(string packTitle, string priceText, string packID, int totalPlayerPice, int totalGem, int totalCoin, int totalHpPack, bool isHaveRemoveAds)
     {
         _packID = packID;
-        txtPacktitle.text = packTitle;
+        /*txtPacktitle*/_txtPackTitle.text = packTitle;
         txtCoin.text = "x " + totalCoin;
         txtGem.text = "x " + totalGem;
         txtPlayerPice.text = "x " + totalPlayerPice;
