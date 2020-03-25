@@ -558,28 +558,28 @@ public class DataUtils
         //}
     }
 
-    public static string GetItemName(eType _itemType)
+    public static string GetItemName(eType _itemType, int _index)
     {
         string sName = "";
         switch (_itemType)
         {
             case eType.ARMOR:
-                sName = DataController.instance.allArmor[0].armorList[0].NAME;
+                sName = DataController.instance.allArmor[_index].armorList[0].NAME;
                 break;
             case eType.BAG:
-                sName = DataController.instance.allBag[0].bagList[0].NAME;
+                sName = DataController.instance.allBag[_index].bagList[0].NAME;
                 break;
             case eType.GLOVES:
-                sName = DataController.instance.allGloves[0].glovesList[0].NAME;
+                sName = DataController.instance.allGloves[_index].glovesList[0].NAME;
                 break;
             case eType.HELMET:
-                sName = DataController.instance.allHelmet[0].helmetList[0].NAME;
+                sName = DataController.instance.allHelmet[_index].helmetList[0].NAME;
                 break;
             case eType.SHOES:
-                sName = DataController.instance.allShoes[0].shoesList[0].NAME;
+                sName = DataController.instance.allShoes[_index].shoesList[0].NAME;
                 break;
             case eType.WEAPON:
-                sName = DataController.instance.allWeapon[0].weaponList[0].NAME;
+                sName = DataController.instance.allWeapon[_index].weaponList[0].NAME;
                 break;
         }
         return sName;
