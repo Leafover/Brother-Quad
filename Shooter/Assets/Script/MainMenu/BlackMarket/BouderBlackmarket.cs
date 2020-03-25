@@ -99,6 +99,8 @@ public class BouderBlackmarket : MonoBehaviour
                 DataController.blackMarketSave[index].countnumber--;
                 DisplayAgainWhenBuy();
 
+            //    DataUtils.GetItemName(type);
+
                 MenuController.instance.blackMarketpanel.DisplayConfirm(bouderImg.sprite,iconItemImg.sprite);
             }
         }
