@@ -558,6 +558,32 @@ public class DataUtils
         //}
     }
 
+    public static string GetItemName(eType _itemType)
+    {
+        string sName = "";
+        switch (_itemType)
+        {
+            case eType.ARMOR:
+                sName = DataController.instance.allArmor[0].armorList[0].NAME;
+                break;
+            case eType.BAG:
+                sName = DataController.instance.allBag[0].bagList[0].NAME;
+                break;
+            case eType.GLOVES:
+                sName = DataController.instance.allGloves[0].glovesList[0].NAME;
+                break;
+            case eType.HELMET:
+                sName = DataController.instance.allHelmet[0].helmetList[0].NAME;
+                break;
+            case eType.SHOES:
+                sName = DataController.instance.allShoes[0].shoesList[0].NAME;
+                break;
+            case eType.WEAPON:
+                sName = DataController.instance.allWeapon[0].weaponList[0].NAME;
+                break;
+        }
+        return sName;
+    }
     private static string GetItemName(ItemData iData, eType _itemType)
     {
         string _name = "";
@@ -1261,6 +1287,11 @@ public class DataUtils
     #endregion
 
     #region Other
+    public static string GetRealFloat(float _f)
+    {
+        //return (float)System.Math.Round(_f);
+        return _f.ToString("0.##");
+    }
     public static string DisplayRichText(double dFrom, double dTo)
     {
         return "<color=green>" + dTo + "</color>";
