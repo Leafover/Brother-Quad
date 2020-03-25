@@ -558,9 +558,11 @@ public class DataUtils
         //}
     }
 
-    public static string GetItemName(eType _itemType, int _index)
+    public static string GetItemName(eType _itemType, string _str)
     {
         string sName = "";
+
+        int _index = int.Parse(_str.Substring(1));
         switch (_itemType)
         {
             case eType.ARMOR:
