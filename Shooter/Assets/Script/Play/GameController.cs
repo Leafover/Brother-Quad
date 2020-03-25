@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.begin;
 
-        int currentChar = 1;
+        int currentChar = 0;
 
         playerControllers[currentChar].Init();
 
