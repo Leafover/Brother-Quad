@@ -558,7 +558,7 @@ public class DataUtils
         //}
     }
 
-    public static string GetItemName(string id, eType _itemType)
+    public static string GetItemName(eType _itemType)
     {
         string sName = "";
         switch (_itemType)
