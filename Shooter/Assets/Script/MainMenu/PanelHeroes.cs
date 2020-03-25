@@ -154,7 +154,7 @@ public class PanelHeroes : MonoBehaviour
             priceUpdate = (int)(price__ - 165 * pNext.SoManhYeuCau * pNext.Giamua1manh * 0.1f);
         }
 
-        txtPriceUpdate.text = priceUpdate.ToString();
+        txtPriceUpdate.text = priceUpdate.ToString("#,0");
 
 
         txtDamageDis.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);

@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
     public ItemSpriteData allSpriteData;
     public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
-    public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes;
+    public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes, gConfirmPanel;
+    public Text nameRewardText;
+    public Image bouderConfirm, iconConfirm;
+    public Text txtConfirmTitle;
     public EquipmentManager equipmentManager;
     public PopupManager popManager;
     public ShopManager shopManager;
@@ -38,10 +42,20 @@ public class MainMenuController : MonoBehaviour
             dailyGift.ShowDailyGiftPanel();
         }
         //equipmentManager.InitAllItems();
-
-
     }
 
+    public void ShowCraftItem(ItemData itemSelected, string _title) {
+        txtConfirmTitle.text = _title;
+        bouderConfirm.sprite = DataUtils.GetSpriteByType(itemSelected);
+        iconConfirm.sprite = DataUtils.GetSpriteByName(itemSelected.id, allSpriteData);
+        nameRewardText.text = itemSelected.itemName;
+        gConfirmPanel.SetActive(true);
+        //MenuController.instance.blackMarketpanel.DisplayConfirm(DataUtils.GetSpriteByType(itemSelected), DataUtils.GetSpriteByName(itemSelected.id, allSpriteData), itemSelected.itemName);
+    }
+    public void HideConfirmPanel()
+    {
+        gConfirmPanel.SetActive(false);
+    }
 
     public void SoundClickButton()
     {
@@ -224,6 +238,7 @@ public class MainMenuController : MonoBehaviour
         gPanelHeroes.SetActive(false);
         shopManager.gameObject.SetActive(false);
         equipmentManager.gameObject.SetActive(false);
+        gConfirmPanel.SetActive(false);
     }
 
 
