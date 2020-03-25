@@ -21,7 +21,7 @@ public class FreeRewardVideoPanel : MonoBehaviour
         for (int i = 0; i < btnvideo.Length; i++)
         {
             iconReward[i].sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[freeReward[i].type];
-            rewardText[i].text = "" + freeReward[i].numberReward;
+            rewardText[i].text = "" + freeReward[i].numberReward.ToString("#,0");
             if (i < DataParam.indexRewardVideo)
             {
                 btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.gray;

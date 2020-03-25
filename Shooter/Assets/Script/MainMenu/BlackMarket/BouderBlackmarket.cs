@@ -21,7 +21,7 @@ public class BouderBlackmarket : MonoBehaviour
     }
     public void DisplayItem()
     {
-        priceText.text = "" + (int)DataController.blackMarketSave[index].GiaBanCoin;
+        priceText.text = "" + DataController.blackMarketSave[index].GiaBanCoin.ToString("#,0");
         DisplayAgainWhenBuy();
         switch (DataController.blackMarketSave[index].Level)
         {

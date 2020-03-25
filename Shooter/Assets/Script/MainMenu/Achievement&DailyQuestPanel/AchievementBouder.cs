@@ -43,7 +43,7 @@ public class AchievementBouder : MonoBehaviour
             {
                 processImg.fillAmount = (float)DataController.saveAllAchievement[index].currentNumber / DataController.instance.allAchievement[index].maxNumber[DataController.saveAllAchievement[index].currentLevel - 1];
                 processText.text = DataController.saveAllAchievement[index].currentNumber + "/" + DataController.instance.allAchievement[index].maxNumber[DataController.saveAllAchievement[index].currentLevel - 1];
-                rewardText.text = "" + DataController.instance.allAchievement[index].maxNumberReward[DataController.saveAllAchievement[index].currentLevel - 1];
+                rewardText.text = "" + DataController.instance.allAchievement[index].maxNumberReward[DataController.saveAllAchievement[index].currentLevel - 1].ToString("#,0");
                 expText.text = "" + DataController.instance.allAchievement[index].expReward[DataController.saveAllAchievement[index].currentLevel - 1];
                 rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.instance.allAchievement[index].typeReward[DataController.saveAllAchievement[index].currentLevel - 1] - 1];
 
