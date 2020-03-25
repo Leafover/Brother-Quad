@@ -167,6 +167,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         //SortingItem();
+        ChildAlignment();
     }
 
     public void RemoveSelectedItem()
@@ -224,6 +225,7 @@ public class EquipmentManager : MonoBehaviour
                     EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                     _iEquipData.CheckItemUnlock();
                 }
+                MainMenuController.Instance.ShowCraftItem(itemSelected, "Craft Success");
             }
         }
         ChooseItem(null);
@@ -499,7 +501,7 @@ public class EquipmentManager : MonoBehaviour
 
                 DataUtils.SaveEquipmentData();
                 UpdateStar(DataUtils.dicAllEquipment[key]);
-                txtPriceUpgrade.text = priceUpgrade.ToString();
+                txtPriceUpgrade.text = priceUpgrade.ToString("#,0");
 
                 if (DataUtils.dicEquippedItem.ContainsKey(key))
                 {
@@ -701,8 +703,8 @@ public class EquipmentManager : MonoBehaviour
                 priceUpgrade = DataUtils.GetItemPrice(itemSelected);
             }
 
-            txtPriceUpgrade.text = priceUpgrade.ToString();
-            txtPieceEvolve.text = DataUtils.GetPiceByStar(itemSelected, true).ToString();
+            txtPriceUpgrade.text = priceUpgrade.ToString("#,0");
+            txtPieceEvolve.text = DataUtils.GetPiceByStar(itemSelected, true).ToString("#,0");
             if (!itemSelected.isUnlock)
             {
                 btnReplace.interactable = false;

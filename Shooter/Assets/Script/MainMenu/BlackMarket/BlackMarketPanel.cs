@@ -19,6 +19,7 @@ public class BlackMarketPanel : MonoBehaviour
     public Image bouderConfirm, iconConfirm;
     public void DisplayConfirm(Sprite _bouder, Sprite _icon,string name)
     {
+        MainMenuController.Instance.txtConfirmTitle.text = "Congratulation";
         nameRewardText.text = name;
         bouderConfirm.sprite = _bouder;
         iconConfirm.sprite = _icon;
