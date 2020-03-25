@@ -55,17 +55,12 @@ public class EquipmentManager : MonoBehaviour
         Instance = this;
     }
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        for (int i = 0; i < btnTabs.Length; i++)
-        {
-            if (i == tabSelected)
-            {
-                btnTabs[i].image.sprite = sprSelect;
-            }
-            else btnTabs[i].image.sprite = sprUnSelect;
-        }
+
         InitAllItems();
+        yield return null;
+        SortingItem();
     }
 
     string _keyCompare = "";
@@ -77,6 +72,16 @@ public class EquipmentManager : MonoBehaviour
             ChooseItem(null);
             DoCancelDisassemble();
         });
+
+        for (int i = 0; i < btnTabs.Length; i++)
+        {
+            if (i == tabSelected)
+            {
+                btnTabs[i].image.sprite = sprSelect;
+            }
+            else btnTabs[i].image.sprite = sprUnSelect;
+        }
+
 
         SortingItem();
         ChildAlignment();
