@@ -9,7 +9,7 @@ public class PopupStarterPack : MonoBehaviour
     //public Text txtWPName, txtAtk, txtBulletSpeed, txtReload, txtRange, txtMagazine, txtPrice;
 
     public TextMeshProUGUI tmpWPName;
-    public Text txtDmg, txtFireRate, txtCritRate, txtCritDmg, txtRange, txtMagazine;
+    public Text txtDmg, txtFireRate, txtCritRate, txtCritDmg, txtRange, txtMagazine, txtPrice;
     
     private void OnEnable()
     {
@@ -21,7 +21,7 @@ public class PopupStarterPack : MonoBehaviour
 
     void Start()
     {
-        //txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
+        txtPrice.text = GameIAPManager.GetPriceByID(DataUtils.P_STARTER_PACK);
         InitWeaponInfo();
     }
 
@@ -29,7 +29,7 @@ public class PopupStarterPack : MonoBehaviour
     private void InitWeaponInfo()
     {
         var _wp = DataController.instance.allWeapon[6].weaponList[0];
-        tmpWPName.text = "<color=blue>"+_wp.NAME+"</color>";
+        tmpWPName.text = "<color=#5DADE2>" + _wp.NAME+"</color>";
         txtDmg.text = DataUtils.GetRealFloat(_wp.DmgValue[0]); //_wp.DmgValue[0].ToString("0.##");
         txtFireRate.text = DataUtils.GetRealFloat(_wp.AtksecValue[0]);
         txtCritRate.text = DataUtils.GetRealFloat(_wp.CritRateValue[0]);
