@@ -111,8 +111,8 @@ public class ShopManager : MonoBehaviour
     {
         _packID = packID;
         /*txtPacktitle*/_txtPackTitle.text = packTitle;
-        txtCoin.text = "x " + totalCoin;
-        txtGem.text = "x " + totalGem;
+        txtCoin.text = "x " + totalCoin.ToString("#,0");
+        txtGem.text = "x " + totalGem.ToString("#,0");
         txtPlayerPice.text = "x " + totalPlayerPice;
         txtHPPack.text = "x " + totalHpPack;
         gRemoveAds.SetActive(isHaveRemoveAds);
