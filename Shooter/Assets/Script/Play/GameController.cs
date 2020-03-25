@@ -144,7 +144,7 @@ public class GameController : MonoBehaviour
                     vatphamnhanduoc.Add(DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i]);
             }
         }
-        //  ThemManh();
+
     }
     bool activeWarningEnemyLeft, activeWarningEnemyRight;
     private void Start()
@@ -750,8 +750,8 @@ public class GameController : MonoBehaviour
                 uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
             }
         }
-        uiPanel.rewardText[2].text = "" + (int)DataParam.totalCoin;
-        uiPanel.rewardText[3].text = "" + gemAdd;
+        uiPanel.rewardText[2].text = "" + DataParam.totalCoin.ToString("#,0");
+        uiPanel.rewardText[3].text = "" + gemAdd.ToString("#,0");
         uiPanel.rewardImg[2].sprite = uiPanel.rewardSp[0];
         uiPanel.rewardImg[3].sprite = uiPanel.rewardSp[1];
     }
