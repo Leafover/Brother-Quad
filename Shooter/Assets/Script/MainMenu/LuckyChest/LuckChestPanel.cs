@@ -16,7 +16,7 @@ public class LuckChestPanel : MonoBehaviour
     {
         for (int i = 0; i < priceText.Length; i++)
         {
-            priceText[i].text = "" + prices[i];
+            priceText[i].text = "" + prices[i].ToString("#,0");
         }
     }
 
