@@ -60,10 +60,6 @@ public class PanelHeroes : MonoBehaviour
                 dicAllEquip.Add(lstEquip[i].itemData.type, lstEquip[i].itemData);
             }
         }
-
-        //  skins = skeletonGraphic.Skeleton.Data.Skins.Items;
-
-
         if (heroSelected == null)
         {
             heroSelected = DataUtils.heroInfo;
@@ -101,8 +97,6 @@ public class PanelHeroes : MonoBehaviour
             imgAllStars[i].sprite = sprStar;
         }
         FillDataPlayer();
-
-        // skeletonGraphic.Skeleton.SetSkin(skins[DataUtils.itemWeapon.weponIndex + 2]);
     }
     private void FillDataPlayer()
     {
@@ -118,15 +112,8 @@ public class PanelHeroes : MonoBehaviour
         keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
         curWeponStar = itemEquipped.curStar;
         nextWeaponStar = itemEquipped.curStar + 1 > 4 ? itemEquipped.curStar : itemEquipped.curStar + 1;
-        Debug.LogError("Unity-HERO--HeroLevel: " + heroSelected.pices);
         pData = DataController.instance.playerData[0].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
-        //Debug.LogError("Unity-HERO--pData: " + (pData == null ? "NULLLL" : "NOT NULL"));
         pNext = DataController.instance.playerData[0].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
-        //Debug.LogError("Unity-HERO--pNext: " + (pNext == null ? "NULLLL" : "NOT NULL"));
-        //Debug.LogError("curWeponStar: " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
-        //Debug.LogError("Unity-HERO--CurWeapon: " + DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
-        //Debug.LogError("Unity-HERO--Damage: " + DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
-        //Debug.LogError("Unity-HERO--NextDamage: " + DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar] + " vs " + curWeponStar + ", nextWeaponStar: " + nextWeaponStar);
 
         txtHealth.text = pData.hp.ToString();
         txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, pNext.hp);
@@ -147,7 +134,7 @@ public class PanelHeroes : MonoBehaviour
         txtCurDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
 
         if (!DataController.primeAccout.isVIP)
-            priceUpdate = 165 * /*pData*/pNext.SoManhYeuCau * /*pData*/pNext.Giamua1manh;
+            priceUpdate = 165 * pNext.SoManhYeuCau * pNext.Giamua1manh;
         else
         {
             double price__ = 165 * pNext.SoManhYeuCau * pNext.Giamua1manh;
@@ -161,8 +148,8 @@ public class PanelHeroes : MonoBehaviour
         txtHealthDis.text = pData.hp.ToString();
         txtTotalPower.text = pData.MoveSpeed.ToString();
 
-        txtPice.text = DataUtils.dicAllHero[heroSelected.id.Trim()].pices + "/" + /*pData*/pNext.SoManhYeuCau;
-        imgProgress.fillAmount = DataUtils.dicAllHero[heroSelected.id.Trim()].pices * 1.0f / (float)/*pData*/pNext.SoManhYeuCau;
+        txtPice.text = DataUtils.dicAllHero[heroSelected.id.Trim()].pices + "/" + pNext.SoManhYeuCau;
+        imgProgress.fillAmount = DataUtils.dicAllHero[heroSelected.id.Trim()].pices * 1.0f / (float)pNext.SoManhYeuCau;
     }
 
     private double GetDoublevalue(double db)
