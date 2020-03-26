@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
 
+    public GameObject rewardItemEquip;
+    public Image[] rewardItemEquipImg, bouderLevelItemEquipImg;
+    public GameObject[] bouderRewardEquip;
+
     public AllBossAndMiniBossInfo allbossandminibossInfo;
     public Sprite nvSprite;
     public GameObject[] bouders, iconPartOfBouderReward;
@@ -15,7 +19,7 @@ public class UIPanel : MonoBehaviour
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
-    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel,takeDamgePanel, lowHealth,hackbouder;
+    public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel, takeDamgePanel, lowHealth, hackbouder;
     public Image grenadeFillAmout, fillbouderGrenade;
     public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
@@ -30,6 +34,12 @@ public class UIPanel : MonoBehaviour
     public Image haveBossInMiniMap;
 
     public int pricesGemRevive;
+
+    public void DisplayRewardEquipPanel()
+    {
+        if (GameController.instance.first && bouderRewardEquip[0].activeSelf)
+            rewardItemEquip.SetActive(true);
+    }
 
     public void DisplayBtnHealth(bool disable, int _total)
     {

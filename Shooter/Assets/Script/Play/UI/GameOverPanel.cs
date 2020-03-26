@@ -7,7 +7,7 @@ public class GameOverPanel : MonoBehaviour
 
     public void EventDisplayStar(int i)
     {
-        switch(i)
+        switch (i)
         {
             case 0:
                 SoundController.instance.PlaySound(soundGame.soundstar1);
@@ -19,26 +19,19 @@ public class GameOverPanel : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundstar3);
                 break;
         }
+
     }
     public void ShowAds()
     {
-//#if UNITY_EDITOR
-
-//#else
-//        randomAds = Random.Range(0, 100);
-//        if (randomAds < 40)
-//        {
-//            AdsManager.Instance.ShowInterstitial((b) => { });
-//        }
-//#endif
+        GameController.instance.uiPanel.DisplayRewardEquipPanel();
     }
-    //int randonvictorysound;
-    //public void WinSound()
-    //{
-    //    randonvictorysound = Random.Range(0, 2);
-    //    if (randonvictorysound == 1)
-    //        SoundController.instance.PlaySound(soundGame.soundwin);
-    //    else
-    //        SoundController.instance.PlaySound(soundGame.soundvictory1);
-    //}
+    public void Exit()
+    {
+        GameController.instance.uiPanel.rewardItemEquip.SetActive(false);
+    }
+    public void Equip()
+    {
+
+    }
+
 }

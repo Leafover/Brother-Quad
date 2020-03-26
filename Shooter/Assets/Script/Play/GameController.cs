@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
-    bool first;
+    public bool first;
     private void Awake()
     {
         if (instance == null)
@@ -93,11 +93,11 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < vatphamnhanduoc.Count; i++)
             {
-                if (vatphamnhanduoc[i].TotalNumber > 0)
+                if (vatphamnhanduoc[i].TotalNumber > 0 && !vatphamnhanduoc[i].ID.Contains("W1"))
                 {
                     itemitemdrop = ObjectPoolManagerHaveScript.Instance.itemItemDropPooler.GetItemPooledObject();
                     itemitemdrop.transform.position = pos;
-                    itemitemdrop.render.sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID.Replace("M-", "")];
+                    itemitemdrop.render.sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID.Replace("M-", "").Trim()];
                     itemitemdrop.gameObject.SetActive(true);
                 }
             }
@@ -130,6 +130,7 @@ public class GameController : MonoBehaviour
 
         if (DataUtils.modeSelected == 0)
         {
+            first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
             for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
             {
                 if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
@@ -138,12 +139,26 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            first = false;
             for (int i = 0; i < DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList.Count; i++)
             {
                 if (DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
                     vatphamnhanduoc.Add(DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i]);
             }
         }
+
+        //if (first)
+        //{
+        //    for (int i = 0; i < vatphamnhanduoc.Count; i++)
+        //    {
+        //        if (vatphamnhanduoc[i].TotalNumber > 0)
+        //        {
+        //            uiPanel.rewardItemEquipImg[i].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID];
+        //            uiPanel.bouderItemEquipImg[i].sprite = uiPanel.levelSp[0];
+        //            uiPanel.bouderRewardEquip[i].SetActive(true);
+        //        }
+        //    }
+        //}
 
     }
     bool activeWarningEnemyLeft, activeWarningEnemyRight;
@@ -152,10 +167,7 @@ public class GameController : MonoBehaviour
         DataParam.totalCoin = 0;
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
-        if (DataUtils.modeSelected == 0)
-            first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
-        else
-            first = false;
+
         Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, currentMap.pointBeginPlayer.transform.position.y, Camera.main.transform.position.z);
 
@@ -669,7 +681,6 @@ public class GameController : MonoBehaviour
     int numberReward;
     int numberAdd(int i)
     {
-
         numberReward = first ? 1 : (int)vatphamnhanduoc[i].TotalNumber;
         return numberReward;
     }
@@ -678,7 +689,7 @@ public class GameController : MonoBehaviour
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
-            if (vatphamnhanduoc[i].ID.Contains("W2"))
+            if (!vatphamnhanduoc[i].ID.Contains("W1"))
                 DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
             else
                 DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
@@ -710,26 +721,38 @@ public class GameController : MonoBehaviour
         DisplayReward(rePlaceID, i, eLevel);
         Debug.Log("ID:" + rePlaceID);
     }
-    List<string> lstItemRewardName;
+    // List<string> lstItemRewardName;
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
     {
-        lstItemRewardName = new List<string>();
+        // lstItemRewardName = new List<string>();
         for (int i = 0; i < vatphamnhanduoc.Count; i++)
         {
             if (/*!vatphamnhanduoc[i].ID.Contains("P") && */vatphamnhanduoc[i].TotalNumber > 0)
             {
                 uiPanel.rewardText[i].text = "" + /*(int)vatphamnhanduoc[i].TotalNumber*/numberAdd(i);
-                Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
+                //   Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
                 if (!vatphamnhanduoc[i].ID.Contains("P"))
                 {
-                    //uiPanel.rewardImg[i].sprite = DataUtils.GetSpriteByName(name, uiPanel.allSpriteData);
-                    //uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
-                    lstItemRewardName.Add(vatphamnhanduoc[i].ID);
+
+                    uiPanel.rewardItemEquipImg[i].sprite = uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID.Replace("M-", "").Trim()];
+                    uiPanel.bouderLevelItemEquipImg[i].sprite = uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+
+                    if (!vatphamnhanduoc[i].ID.Contains("W1"))
+                    {
+                        uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
+                        uiPanel.bouderRewardEquip[i].SetActive(true);
+                    }
+                    else
+                    {
+                        uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(true);
+                        uiPanel.bouderRewardEquip[i].SetActive(false);
+                    }
                 }
                 else
                 {
                     uiPanel.rewardImg[i].sprite = uiPanel.nvSprite;
                     uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[0];
+                    uiPanel.bouderRewardEquip[i].SetActive(false);
                 }
 
                 uiPanel.bouders[i].gameObject.SetActive(true);
@@ -737,19 +760,20 @@ public class GameController : MonoBehaviour
             else
             {
                 uiPanel.bouders[i].gameObject.SetActive(false);
+                uiPanel.bouderRewardEquip[i].SetActive(false);
             }
         }
 
-        for (int i = 0; i < lstItemRewardName.Count; i++)
-        {
-            Debug.LogError("Replace---> " + DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]) + " vs " + lstItemRewardName[i]);
-            if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i].Replace("M-", "")))
-            {
-                uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i].Replace("M-", "")];
-                uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
-                uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
-            }
-        }
+        //for (int i = 0; i < lstItemRewardName.Count; i++)
+        //{
+        //    Debug.LogError("Replace---> " + DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i]) + " vs " + lstItemRewardName[i]);
+        //    if (DataUtils.dicSpriteData.ContainsKey(lstItemRewardName[i].Replace("M-", "")))
+        //    {
+        //        uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[lstItemRewardName[i].Replace("M-", "")];
+        //        uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
+        //        uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
+        //    }
+        //}
         uiPanel.rewardText[2].text = "" + DataParam.totalCoin.ToString("#,0");
         uiPanel.rewardText[3].text = "" + gemAdd.ToString("#,0");
         uiPanel.rewardImg[2].sprite = uiPanel.rewardSp[0];
