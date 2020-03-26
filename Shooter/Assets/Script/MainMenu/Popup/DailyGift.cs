@@ -36,7 +36,6 @@ public class DailyGift : MonoBehaviour
         lstEType.Add(DataUtils.eType.BAG);
         lstEType.Add(DataUtils.eType.GLOVES);
         lstEType.Add(DataUtils.eType.HELMET);
-       // lstEType.Add(DataUtils.eType.P1);
         lstEType.Add(DataUtils.eType.SHOES);
         lstEType.Add(DataUtils.eType.WEAPON);
 
@@ -65,23 +64,18 @@ public class DailyGift : MonoBehaviour
                 itemName = DataController.instance.allHelmet[itemIndex - 1].helmetList[0].NAME;
                 itemID = "H" + itemIndex;
                 break;
-            //case DataUtils.eType.P1:
-            //    itemIndex = 1;
-            //    itemName = "Player " + itemIndex;
-            //    itemID = "P" + itemIndex;
-            //    break;
             case DataUtils.eType.SHOES:
                 itemIndex = Random.Range(1, DataController.instance.allShoes.Count + 1);
                 itemName = DataController.instance.allShoes[itemIndex - 1].shoesList[0].NAME;
                 itemID = "S" + itemIndex;
                 break;
             case DataUtils.eType.WEAPON:
-                itemIndex = Random.Range(1, DataController.instance.allWeapon.Count + 1);
+                itemIndex = Random.Range(1, DataController.instance.allWeapon.Count);
                 itemName = DataController.instance.allWeapon[itemIndex - 1].weaponList[0].NAME;
                 itemID = "W" + itemIndex;
                 break;
         }
-        //Debug.LogError(_eLevel.ToString() + " vs " + _eType.ToString() + " vs " + itemIndex + " vs " + itemName);
+
 
         itemData = new ItemData();
         itemData.id = itemID;
@@ -98,8 +92,7 @@ public class DailyGift : MonoBehaviour
 
     public void ShowDailyGiftPanel()
     {
-        //Debug.LogError("--> " + AdsManager.Instance.IsRewardLoaded());
-        if(AdsManager.Instance != null)
+        if (AdsManager.Instance != null)
             btnX2.interactable = AdsManager.Instance.IsRewardLoaded();
         #region Fill info
         txtItemName.text = itemName;
@@ -131,15 +124,7 @@ public class DailyGift : MonoBehaviour
 
     public void TakeDailyGift()
     {
-        //if(_eType == DataUtils.eType.P1)
-        //{
-        //    DataUtils.TakeHeroPice(itemID, totalPart);
-        //}
-        //else
-        {
-            DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
-        }
-        
+        DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
         DataUtils.HasClaimReward();
         HideDailyGiftPanel();
     }
@@ -150,14 +135,7 @@ public class DailyGift : MonoBehaviour
         {
             if (b)
             {
-                //if (_eType == DataUtils.eType.P1)
-                //{
-                //    DataUtils.TakeHeroPice(itemID, totalPart);
-                //}
-                //else
-                {
-                    DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
-                }
+                DataUtils.TakeItem(itemData.id, _eType, _eLevel, totalPart, false);
                 DataUtils.HasClaimReward();
             }
         });

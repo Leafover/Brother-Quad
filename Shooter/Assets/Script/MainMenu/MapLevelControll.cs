@@ -185,8 +185,18 @@ public class MapLevelControll : MonoBehaviour
             {
                 if (DataUtils.dicSpriteData.ContainsKey(lstString[i]))
                 {
+                    //Debug.LogError("----> " + lstString[i]);
                     lChild = StageManager.Instance.imgItemReward[i].transform.parent.childCount - 1;
-                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
+                    if (lstString[i].Contains("W1"))
+                    {
+                        Debug.LogError("1");
+                        StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogError("2");
+                        StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
+                    }
                     StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);
                 }
