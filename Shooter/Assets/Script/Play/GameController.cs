@@ -128,31 +128,29 @@ public class GameController : MonoBehaviour
         }
         vatphamnhanduoc.Clear();
 
-        if (DataParam.indexStage == 0)
+
+        if (DataUtils.modeSelected == 0)
         {
-            if (DataUtils.modeSelected == 0)
-            {
+            if (DataParam.indexStage == 0)
                 first = !DataUtils.GetMapByIndex(DataParam.indexStage, DataParam.indexMap).hasComplete;
-                for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
-                {
-                    if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
-                        vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
-                }
-            }
             else
-            {
                 first = false;
-                for (int i = 0; i < DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList.Count; i++)
-                {
-                    if (DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
-                        vatphamnhanduoc.Add(DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i]);
-                }
+            for (int i = 0; i < DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList.Count; i++)
+            {
+                if (DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
+                    vatphamnhanduoc.Add(DataController.instance.allTileVatPham[DataParam.indexStage].tilevatphamList[i]);
             }
         }
         else
         {
             first = false;
+            for (int i = 0; i < DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList.Count; i++)
+            {
+                if (DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i].Level == DataParam.indexMap + 1)
+                    vatphamnhanduoc.Add(DataController.instance.allTileVatPhamHard[DataParam.indexStage].tilevatphamList[i]);
+            }
         }
+
     }
     bool activeWarningEnemyLeft, activeWarningEnemyRight;
     private void Start()
@@ -746,6 +744,8 @@ public class GameController : MonoBehaviour
                     uiPanel.rewardImg[i].sprite = uiPanel.nvSprite;
                     uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[0];
                     uiPanel.bouderRewardEquip[i].SetActive(false);
+
+                    Debug.LogError("wtfffffffffffff");
                 }
 
                 uiPanel.bouders[i].gameObject.SetActive(true);
@@ -754,6 +754,8 @@ public class GameController : MonoBehaviour
             {
                 uiPanel.bouders[i].gameObject.SetActive(false);
                 uiPanel.bouderRewardEquip[i].SetActive(false);
+
+                Debug.LogError(" 11111wtfffffffffffff");
             }
         }
 
