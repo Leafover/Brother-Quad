@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
-    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot, effectG2, effectbeginW7, effectendW7;
-    public GameObject parentFXG345, parentFXG2;
+    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot, effectG2;
+    public GameObject parentFXG345, parentFXG2, effectbeginW7, effectendW7;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -444,8 +444,7 @@ public class PlayerController : MonoBehaviour
 
         skeletonAnimation.gameObject.SetActive(false);
         DisableLaser();
-        effectbeginW7.Stop();
-        effectendW7.Stop();
+
     }
 
     public int currentGun;
@@ -1228,11 +1227,10 @@ public class PlayerController : MonoBehaviour
         effectendW7.transform.position = endPos;
         effectendW7.transform.rotation = rotation;
 
+        effectbeginW7.gameObject.SetActive(true);
+        effectendW7.gameObject.SetActive(true);
 
-        effectbeginW7.Play();
-        effectendW7.Play();
         laserRender.enabled = true;
-
         PlaySoundW7(true);
     }
 
@@ -1243,8 +1241,8 @@ public class PlayerController : MonoBehaviour
             return;
         laserRender.enabled = false;
         boxLaser.gameObject.SetActive(false);
-        effectbeginW7.Stop();
-        effectendW7.Stop();
+        effectbeginW7.gameObject.SetActive(false);
+        effectendW7.gameObject.SetActive(false);
 
         PlaySoundW7(false);
         //   Debug.LogError("disable laser");
