@@ -675,19 +675,60 @@ public class GameController : MonoBehaviour
         numberReward = first ? 1 : (int)vatphamnhanduoc[i].TotalNumber;
         return numberReward;
     }
+    List<ItemData> items = new List<ItemData>();
+    ItemData _itemData = new ItemData();
+
+    public void Equip()
+    {
+        Debug.LogError("hahahahah Count" + items.Count);
+        for (int i = 0; i < items.Count; i++)
+            DataUtils.EquipItem(items[i]);
+        uiPanel.rewardItemEquip.SetActive(false);
+    }
+
     void AddItem(int i, DataUtils.eLevel eLevel)
     {
+
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
+
+        if (first)
+        {
+            if (!vatphamnhanduoc[i].ID.Contains("P") && !vatphamnhanduoc[i].ID.Contains("W1"))
+            {
+                _itemData = new ItemData();
+                _itemData.id = rePlaceID;
+                _itemData.level = eLevel.ToString();
+                _itemData.isUnlock = true;
+                _itemData.pices = 0;
+                _itemData.isEquipped = true;
+            }
+            
+            else _itemData = null;
+        }
+
         if (vatphamnhanduoc[i].ID.Contains("W"))
         {
             if (!vatphamnhanduoc[i].ID.Contains("W1"))
+            {
                 DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
+                if (first && _itemData != null)
+                {
+                    _itemData.type = DataUtils.eType.WEAPON.ToString();
+                    _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.WEAPON);
+                }
+            }
             else
                 DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+
         }
         else if (vatphamnhanduoc[i].ID.Contains("A"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, numberAdd(i), first);
+            if (first && _itemData != null)
+            {
+                _itemData.type = DataUtils.eType.ARMOR.ToString();
+                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.ARMOR);
+            }
         }
         else if (vatphamnhanduoc[i].ID.Contains("P"))
         {
@@ -696,68 +737,103 @@ public class GameController : MonoBehaviour
         else if (vatphamnhanduoc[i].ID.Contains("H"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, numberAdd(i), first);
+            if (first && _itemData != null)
+            {
+                _itemData.type = DataUtils.eType.HELMET.ToString();
+                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.HELMET);
+            }
         }
         else if (vatphamnhanduoc[i].ID.Contains("S"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, numberAdd(i), first);
+            if (first && _itemData != null)
+            {
+                _itemData.type = DataUtils.eType.SHOES.ToString();
+                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.SHOES);
+            }
         }
         else if (vatphamnhanduoc[i].ID.Contains("G"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, numberAdd(i), first);
+            if (first && _itemData != null)
+            {
+                _itemData.type = DataUtils.eType.GLOVES.ToString();
+                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.GLOVES);
+            }
         }
         else if (vatphamnhanduoc[i].ID.Contains("B"))
         {
             DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, numberAdd(i), first);
+            if (first && _itemData != null)
+            {
+                _itemData.type = DataUtils.eType.BAG.ToString();
+                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.BAG);
+            }
         }
         DisplayReward(rePlaceID, i, eLevel);
-        Debug.Log("ID:" + rePlaceID);
+
+        if (first)
+        {
+            if (_itemData != null)
+            {
+                items.Add(_itemData);
+
+                Debug.LogError("co hang");
+            }
+            else
+            {
+                Debug.LogError("ko co gi");
+            }
+        }
+        //   Debug.Log("ID:" + rePlaceID);
+
     }
     // List<string> lstItemRewardName;
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)
     {
         // lstItemRewardName = new List<string>();
-        for (int i = 0; i < vatphamnhanduoc.Count; i++)
+        //for (int i = 0; i < vatphamnhanduoc.Count; i++)
+        //{
+        if (/*!vatphamnhanduoc[i].ID.Contains("P") && */vatphamnhanduoc[index].TotalNumber > 0)
         {
-            if (/*!vatphamnhanduoc[i].ID.Contains("P") && */vatphamnhanduoc[i].TotalNumber > 0)
+            uiPanel.rewardText[index].text = "" + /*(int)vatphamnhanduoc[i].TotalNumber*/numberAdd(index);
+            //   Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
+            if (!vatphamnhanduoc[index].ID.Contains("P"))
             {
-                uiPanel.rewardText[i].text = "" + /*(int)vatphamnhanduoc[i].TotalNumber*/numberAdd(i);
-                //   Debug.LogError("ID::: " + vatphamnhanduoc[i].ID);
-                if (!vatphamnhanduoc[i].ID.Contains("P"))
+
+                uiPanel.rewardItemEquipImg[index].sprite = uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
+                uiPanel.bouderLevelItemEquipImg[index].sprite = uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[(int)eLevel];
+
+                if (!vatphamnhanduoc[index].ID.Contains("W1"))
                 {
-
-                    uiPanel.rewardItemEquipImg[i].sprite = uiPanel.rewardImg[i].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[i].ID.Replace("M-", "").Trim()];
-                    uiPanel.bouderLevelItemEquipImg[i].sprite = uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[(int)eLevel];
-
-                    if (!vatphamnhanduoc[i].ID.Contains("W1"))
-                    {
-                        uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(!first);
-                        uiPanel.bouderRewardEquip[i].SetActive(true);
-                    }
-                    else
-                    {
-                        uiPanel.iconPartOfBouderReward[i].gameObject.SetActive(true);
-                        uiPanel.bouderRewardEquip[i].SetActive(false);
-                    }
+                    uiPanel.iconPartOfBouderReward[index].gameObject.SetActive(!first);
+                    uiPanel.bouderRewardEquip[index].SetActive(true);
                 }
                 else
                 {
-                    uiPanel.rewardImg[i].sprite = uiPanel.nvSprite;
-                    uiPanel.bouderLevel[i].sprite = uiPanel.levelSp[0];
-                    uiPanel.bouderRewardEquip[i].SetActive(false);
-
-                    Debug.LogError("wtfffffffffffff");
+                    uiPanel.iconPartOfBouderReward[index].gameObject.SetActive(true);
+                    uiPanel.bouderRewardEquip[index].SetActive(false);
                 }
-
-                uiPanel.bouders[i].gameObject.SetActive(true);
             }
             else
             {
-                uiPanel.bouders[i].gameObject.SetActive(false);
-                uiPanel.bouderRewardEquip[i].SetActive(false);
+                uiPanel.rewardImg[index].sprite = uiPanel.nvSprite;
+                uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[0];
+                uiPanel.bouderRewardEquip[index].SetActive(false);
 
-                Debug.LogError(" 11111wtfffffffffffff");
+                Debug.LogError("wtfffffffffffff");
             }
+
+            uiPanel.bouders[index].gameObject.SetActive(true);
         }
+        else
+        {
+            uiPanel.bouders[index].gameObject.SetActive(false);
+            uiPanel.bouderRewardEquip[index].SetActive(false);
+
+            Debug.LogError(" 11111wtfffffffffffff");
+        }
+        //  }
 
         //for (int i = 0; i < lstItemRewardName.Count; i++)
         //{

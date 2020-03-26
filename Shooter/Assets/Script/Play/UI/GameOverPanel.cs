@@ -31,7 +31,7 @@ public class GameOverPanel : MonoBehaviour
     }
     public void Equip()
     {
-
+        GameController.instance.Equip();
     }
 
 }

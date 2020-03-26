@@ -586,7 +586,7 @@ public class DataUtils
         }
         return sName;
     }
-    private static string GetItemName(ItemData iData, eType _itemType)
+    public static string GetItemNameByItemData(ItemData iData, eType _itemType)
     {
         string _name = "";
 
@@ -662,7 +662,7 @@ public class DataUtils
             iData.level = _itemLevel.ToString();
             iData.isUnlock = fullPart;
             iData.pices = fullPart ? 0 : _pices;
-            iData.itemName = GetItemName(iData, _itemType);
+            iData.itemName = GetItemNameByItemData(iData, _itemType);
             iData.isEquipped = false;
 
             string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
@@ -803,7 +803,7 @@ public class DataUtils
         iData.level = _itemLevel.ToString();
         iData.isUnlock = true;
         iData.pices = fullPart ? 0 : _pices;
-        iData.itemName = GetItemName(iData, _itemType);
+        iData.itemName = GetItemNameByItemData(iData, _itemType);
         iData.isEquipped = true;
 
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
