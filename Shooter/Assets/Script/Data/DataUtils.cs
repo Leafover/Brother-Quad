@@ -795,6 +795,51 @@ public class DataUtils
     {
         return PlayerPrefs.GetString(KEY_EQUIPPED_DATA, "");
     }
+
+    public static void EquipItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart) {
+        ItemData iData = new ItemData();
+        iData.id = _id;
+        iData.type = _itemType.ToString();
+        iData.level = _itemLevel.ToString();
+        iData.isUnlock = true;
+        iData.pices = fullPart ? 0 : _pices;
+        iData.itemName = GetItemName(iData, _itemType);
+        iData.isEquipped = true;
+
+        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+
+        ///Vật phẩm chưa được trang bị trước đó. (1)
+        ///Vật phẩm cùng loại đã được trang bị: (2)
+        ///-Chuyển trạng thái vật phẩm đã trang bị trước đó từ true -> false đồng thời cập nhật trong cả 2 dictionary
+        ///
+
+        //(1)
+        if (!dicEquippedItem.ContainsKey(_key))
+        {
+            dicEquippedItem.Add(_key, iData);
+        }
+        else//(2)
+        {
+            string _keyHasEquipped = "";
+            foreach(ItemData _itemData in dicEquippedItem.Values)
+            {
+                if (_itemData.type.Contains(iData.type))
+                {
+                    _keyHasEquipped = _itemData.id + "_" + _itemData.level + "_" + _itemData.isUnlock + "_" + _itemData.isEquipped;
+                }
+            }
+            if (!string.IsNullOrEmpty(_keyHasEquipped.Trim())) {
+                dicAllEquipment[_keyHasEquipped].isEquipped = false;
+                dicAllEquipment[_key].isEquipped = true;
+                dicEquippedItem.Remove(_keyHasEquipped);
+                dicEquippedItem.Add(_key, iData);
+            }
+
+        }
+
+        SaveEquipmentData();
+        SaveEquippedData();
+    }
     public static void EquipItem(ItemData iData)
     {
         string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
