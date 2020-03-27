@@ -15,7 +15,7 @@ public class BlackMarketPanel : MonoBehaviour
     double timeCount;
     public List<BouderBlackmarket> bouders;
     public TextMeshProUGUI timeText;
-    public GameObject confirmPanel;
+    public GameObject confirmPanel,iconmanh;
     public Image bouderConfirm, iconConfirm;
     public void DisplayConfirm(Sprite _bouder, Sprite _icon,string name)
     {
@@ -23,10 +23,12 @@ public class BlackMarketPanel : MonoBehaviour
         nameRewardText.text = name;
         bouderConfirm.sprite = _bouder;
         iconConfirm.sprite = _icon;
+        iconmanh.SetActive(true);
         confirmPanel.SetActive(true);
     }
     public void CloseConfirmPanel()
     {
+        iconmanh.SetActive(false);
         confirmPanel.SetActive(false);
     }
     void Start()
