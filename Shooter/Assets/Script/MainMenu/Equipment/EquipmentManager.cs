@@ -345,6 +345,7 @@ public class EquipmentManager : MonoBehaviour
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                 trContain.GetChild(i).gameObject.name = _iEquipData.itemData.id + "_" + _iEquipData.itemData.level.ToString() + "_" + _iEquipData.itemData.isUnlock + "_" + _iEquipData.itemData.isEquipped;
                 _iEquipData.itemKey = trContain.GetChild(i).gameObject.name;
+                _iEquipData.CheckItemUnlock();
             }
         }
         ChooseItem(null);
