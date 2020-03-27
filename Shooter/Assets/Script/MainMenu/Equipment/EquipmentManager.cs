@@ -161,6 +161,7 @@ public class EquipmentManager : MonoBehaviour
             EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
             item.itemKey = key;
             item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
+            //Debug.LogError("AAAA: " + DataUtils.dicAllEquipment.ContainsKey(item.itemKey) + " vs " + item.itemKey + " vs " + key);
             item.itemData = DataUtils.dicAllEquipment[item.itemKey];
             gItemClone.SetActive(!item.itemData.isUnlock);
             gItemClone.transform.SetParent(trContain, false);
