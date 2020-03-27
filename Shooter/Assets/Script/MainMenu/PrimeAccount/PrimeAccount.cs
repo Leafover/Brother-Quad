@@ -8,7 +8,7 @@ public class PrimeAccount : MonoBehaviour
     string[] des = { "- Receive 10 Gem rewards daily from the time you log in the game", "- Receive 1000 coins daily from the time you log in the game", "- Adding 20% of the total coin earned in all mission", "- Add 2 special daily missions with more gifts", "- 10% discount when buying and upgrading characters, weapons (gem & coin)", "- Remove Ads" };
     public int index;
 
-    public Text desText, nameText, timeText;
+    public Text desText/*, nameText*/, timeText;
     public GameObject selectObj, btnClaimGem, btnClaimCoin, btnBuy;
 
     public List<GameObject> bouderReward;
@@ -41,12 +41,12 @@ public class PrimeAccount : MonoBehaviour
             btnBuy.SetActive(false);
             timeText.text = "TIME EXPIRED TIME: " + DataController.primeAccout.countDay;
             timeText.gameObject.SetActive(true);
-            nameText.gameObject.SetActive(false);
+            //nameText.gameObject.SetActive(false);
         }
         else
         {
             timeText.gameObject.SetActive(false);
-            nameText.gameObject.SetActive(true);
+            //nameText.gameObject.SetActive(true);
             btnBuy.SetActive(true);
             btnClaimCoin.SetActive(false);
             btnClaimGem.SetActive(false);
