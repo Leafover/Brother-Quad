@@ -680,9 +680,9 @@ public class GameController : MonoBehaviour
 
     public void Equip()
     {
-        Debug.LogError("hahahahah Count" + items.Count);
+        //Debug.LogError("hahahahah Count" + items.Count);
         for (int i = 0; i < items.Count; i++)
-            DataUtils.EquipItem(items[i]);
+            DataUtils.EquipItem(items[i], true);
         uiPanel.rewardItemEquip.SetActive(false);
     }
 
@@ -702,7 +702,7 @@ public class GameController : MonoBehaviour
                 _itemData.pices = 0;
                 _itemData.isEquipped = true;
             }
-            
+
             else _itemData = null;
         }
 
