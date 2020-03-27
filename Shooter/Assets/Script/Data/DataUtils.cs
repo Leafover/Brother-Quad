@@ -566,22 +566,22 @@ public class DataUtils
         switch (_itemType)
         {
             case eType.ARMOR:
-                sName = DataController.instance.allArmor[_index].armorList[0].NAME;
+                sName = DataController.instance.allArmor[_index - 1].armorList[0].NAME;
                 break;
             case eType.BAG:
-                sName = DataController.instance.allBag[_index].bagList[0].NAME;
+                sName = DataController.instance.allBag[_index - 1].bagList[0].NAME;
                 break;
             case eType.GLOVES:
-                sName = DataController.instance.allGloves[_index].glovesList[0].NAME;
+                sName = DataController.instance.allGloves[_index - 1].glovesList[0].NAME;
                 break;
             case eType.HELMET:
-                sName = DataController.instance.allHelmet[_index].helmetList[0].NAME;
+                sName = DataController.instance.allHelmet[_index - 1].helmetList[0].NAME;
                 break;
             case eType.SHOES:
-                sName = DataController.instance.allShoes[_index].shoesList[0].NAME;
+                sName = DataController.instance.allShoes[_index - 1].shoesList[0].NAME;
                 break;
             case eType.WEAPON:
-                sName = DataController.instance.allWeapon[_index].weaponList[0].NAME;
+                sName = DataController.instance.allWeapon[_index - 1].weaponList[0].NAME;
                 break;
         }
         return sName;
