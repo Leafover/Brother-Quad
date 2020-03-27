@@ -60,6 +60,7 @@ public class EquipmentManager : MonoBehaviour
 
         InitAllItems();
         yield return null;
+        ChildAlignment();
         SortingItem();
     }
 
