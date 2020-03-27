@@ -735,6 +735,11 @@ public class DataUtils
                 }
             }
             SaveEquipmentData();
+
+            #region using for equip function in game
+            iItemIngame = iData;
+            _keyItemIngame = _key;
+            #endregion
         }
     }
     public static void TakeItem(ItemData iData, int _piece)
@@ -796,49 +801,53 @@ public class DataUtils
         return PlayerPrefs.GetString(KEY_EQUIPPED_DATA, "");
     }
 
-    public static void EquipItem(string _id, eType _itemType, eLevel _itemLevel, int _pices, bool fullPart) {
-        ItemData iData = new ItemData();
-        iData.id = _id;
-        iData.type = _itemType.ToString();
-        iData.level = _itemLevel.ToString();
-        iData.isUnlock = true;
-        iData.pices = fullPart ? 0 : _pices;
-        iData.itemName = GetItemNameByItemData(iData, _itemType);
-        iData.isEquipped = true;
+    private static string _keyItemIngame = "";
+    private static ItemData iItemIngame;
 
-        string _key = iData.id + "_" + iData.level.ToString() + "_" + iData.isUnlock + "_" + iData.isEquipped;
+    public static void EquipItem(ItemData itemData, bool useInGame)
+    {
 
-        ///Vật phẩm chưa được trang bị trước đó. (1)
-        ///Vật phẩm cùng loại đã được trang bị: (2)
-        ///-Chuyển trạng thái vật phẩm đã trang bị trước đó từ true -> false đồng thời cập nhật trong cả 2 dictionary
-        ///
-
-        //(1)
-        if (!dicEquippedItem.ContainsKey(_key))
+        if (iItemIngame != null && _keyItemIngame.Trim().Length > 0)
         {
-            dicEquippedItem.Add(_key, iData);
-        }
-        else//(2)
-        {
+            string _key = iItemIngame.id + "_" + iItemIngame.level.ToString() + "_" + iItemIngame.isUnlock + "_" + true;
+            
+            iItemIngame.isEquipped = true;
+
             string _keyHasEquipped = "";
-            foreach(ItemData _itemData in dicEquippedItem.Values)
+            ItemData iHasEquip = null;
+            foreach (ItemData _itemData in dicEquippedItem.Values)
             {
-                if (_itemData.type.Contains(iData.type))
+                if (_itemData.type.Contains(itemData.type) && _itemData.isEquipped)
                 {
                     _keyHasEquipped = _itemData.id + "_" + _itemData.level + "_" + _itemData.isUnlock + "_" + _itemData.isEquipped;
+                    iHasEquip = _itemData;
+                    break;
                 }
             }
-            if (!string.IsNullOrEmpty(_keyHasEquipped.Trim())) {
-                dicAllEquipment[_keyHasEquipped].isEquipped = false;
-                dicAllEquipment[_key].isEquipped = true;
+            dicAllEquipment.Add(_key, iItemIngame);
+
+            dicAllEquipment.Remove(_keyItemIngame);
+            dicAllEquipment.Remove(_keyHasEquipped);
+
+            if (iHasEquip != null) {
+                dicAllEquipment.Add(iHasEquip.id + "_" + iHasEquip.level + "_" + iHasEquip.isUnlock + "_" + false, iHasEquip);
+                dicAllEquipment[iHasEquip.id + "_" + iHasEquip.level + "_" + iHasEquip.isUnlock + "_" + false].isEquipped = false;
+            }
+            
+            if (dicEquippedItem.ContainsKey(_keyHasEquipped))
+            {
                 dicEquippedItem.Remove(_keyHasEquipped);
-                dicEquippedItem.Add(_key, iData);
             }
 
-        }
 
-        SaveEquipmentData();
-        SaveEquippedData();
+            if (!dicEquippedItem.ContainsKey(_key))
+            {
+                dicEquippedItem.Add(_key, iItemIngame);
+            }
+
+            SaveEquipmentData();
+            SaveEquippedData();
+        }
     }
     public static void EquipItem(ItemData iData)
     {
@@ -1457,7 +1466,7 @@ public class DataUtils
                 _sResult = "#809080";
                 break;
             case "Uncommon":
-                _sResult ="green";
+                _sResult = "green";
                 break;
             case "Rare":
                 _sResult = "#00FFFF";
