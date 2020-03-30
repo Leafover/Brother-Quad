@@ -35,13 +35,15 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         InitButtonStage();
-        dailyGift.PrepareData();
-        
+        ///Check prepare daily reward item
+
+        //dailyGift.PrepareData();
+
         if (!DataUtils.IsClaimReward())
         {
-            dailyGift.ShowDailyGiftPanel();
+            dailyGift.PrepareData();
+            //dailyGift.ShowDailyGiftPanel();
         }
-        //equipmentManager.InitAllItems();
     }
 
     public void ShowCraftItem(ItemData itemSelected, string _title) {
