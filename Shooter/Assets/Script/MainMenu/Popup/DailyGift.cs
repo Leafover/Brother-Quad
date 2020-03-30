@@ -88,6 +88,9 @@ public class DailyGift : MonoBehaviour
         itemData.quantity = 0;
         itemData.isEquipped = false;
 
+
+
+        ShowDailyGiftPanel();
     }
 
     public void ShowDailyGiftPanel()
