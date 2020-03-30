@@ -60,6 +60,9 @@ public class CameraController : MonoBehaviour
         //ProCamera2D.Instance.OffsetY = 0f;
         _cameraSize.y = Camera.main.orthographicSize;
         _cameraSize.x = Mathf.Max(1, ((float)Screen.width / (float)Screen.height)) * _cameraSize.y;
+
+        if (DataParam.indexStage == 0 && DataParam.indexMap > 4)
+            return;
         effectstage[DataParam.indexStage].SetActive(true);
     }
     public bool setBoudariesLeft = true;
@@ -99,8 +102,6 @@ public class CameraController : MonoBehaviour
     }
     private void LateUpdate()
     {
-
-
         CacheSizeAndViewPos();
 
         var x1 = NumericBoundaries.RightBoundary;

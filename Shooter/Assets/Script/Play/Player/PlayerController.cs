@@ -4,11 +4,13 @@ using UnityEngine;
 using System;
 using Spine.Unity;
 using Spine;
-
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject reloadObj;
+    public Image reloadImg;
     bool isregen;
     public int countKillByGrenade;
     public GameObject shield;
@@ -171,6 +173,7 @@ public class PlayerController : MonoBehaviour
             health = 0;
             isregen = false;
             timeRegen = 0;
+            reloadObj.SetActive(false);
             //effectG4.Stop();
             //effectG345.Stop();
             //effectG2.Stop();
@@ -749,10 +752,12 @@ public class PlayerController : MonoBehaviour
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
                 timeReload = maxTimeReload;
+                reloadObj.SetActive(true);
             }
             return;
         }
         timeReload -= deltaTime;
+        reloadImg.fillAmount = (maxTimeReload - timeReload) / maxTimeReload;
         DisableLaser();
         if (timeReload <= 0)
         {
@@ -760,6 +765,7 @@ public class PlayerController : MonoBehaviour
             AddNumberBullet(-maxNumberBullet);
             reload = false;
             SoundController.instance.PlaySound(soundGame.soundreload);
+            reloadObj.SetActive(false);
         }
 
     }
@@ -872,7 +878,7 @@ public class PlayerController : MonoBehaviour
         bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
         bullet.transform.rotation = rotation;
         bullet.transform.position = posGun();
-       // effectG345.Play();
+        // effectG345.Play();
         bullet.SetActive(true);
     }
     int numberLine = 5;
@@ -905,7 +911,7 @@ public class PlayerController : MonoBehaviour
             bullet.transform.position = posGun();
             bullet.SetActive(true);
         }
-       // effectG345.Play();
+        // effectG345.Play();
     }
     int posIndexBullet;
     public void CreateBullet(bool lech)
@@ -920,13 +926,13 @@ public class PlayerController : MonoBehaviour
                 bullet = ObjectPoolerManager.Instance.bulletW2Pooler.GetPooledObject();
                 break;
             case 5:
-               // effectG345.Play();
+                // effectG345.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW6);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
                 bullet.GetComponent<Bullet>().dir = GetTargetTranform();
                 break;
             case 3:
-               // effectG4.Play();
+                // effectG4.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW4);
                 bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
                 break;
@@ -1183,7 +1189,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ShootDown()
     {
-        if (reload  || meleeAtackBox.gameObject.activeSelf)
+        if (reload || meleeAtackBox.gameObject.activeSelf)
         {
             return;
         }
