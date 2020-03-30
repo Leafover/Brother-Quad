@@ -47,7 +47,6 @@ public class MenuController : MonoBehaviour
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
-            //   Debug.LogError("zooooooooooo2");
         }
 
         if (!DataParam.first)
