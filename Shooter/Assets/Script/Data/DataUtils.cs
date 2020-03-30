@@ -847,6 +847,8 @@ public class DataUtils
 
             SaveEquipmentData();
             SaveEquippedData();
+
+            CheckEquipWeapon();
         }
     }
     public static void EquipItem(ItemData iData)

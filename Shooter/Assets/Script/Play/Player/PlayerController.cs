@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     public LineBlood lineBlood;
     public AnimationReferenceAsset currentAnim;
     public AssetSpinePlayerController apc;
-    public ParticleSystem effectG4, effectG345, effecthutcoin, effectsmokeendshot, effectG2;
-    public GameObject parentFXG345, parentFXG2, effectbeginW7, effectendW7;
+    public ParticleSystem /*effectG4, effectG345,*/ effecthutcoin, effectsmokeendshot/*, effectG2*/;
+    public GameObject /*parentFXG345, parentFXG2,*/ effectbeginW7, effectendW7;
     Bone boneBarrelGun, boneHandGrenade;
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
@@ -171,9 +171,9 @@ public class PlayerController : MonoBehaviour
             health = 0;
             isregen = false;
             timeRegen = 0;
-            effectG4.Stop();
-            effectG345.Stop();
-            effectG2.Stop();
+            //effectG4.Stop();
+            //effectG345.Stop();
+            //effectG2.Stop();
             DisableLaser();
         }
     }
@@ -862,75 +862,54 @@ public class PlayerController : MonoBehaviour
         rotation4 = Quaternion.AngleAxis(angle4, Vector3.forward);
         rotation5 = Quaternion.AngleAxis(angle5, Vector3.forward);
 
-        parentFXG2.transform.position = effectG4.transform.position = parentFXG345.transform.position = /*(Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
-        parentFXG2.transform.rotation = parentFXG345.transform.rotation = effectG4.transform.rotation = rotation;
+        //parentFXG2.transform.position = effectG4.transform.position = parentFXG345.transform.position = /*(Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
+        //parentFXG2.transform.rotation = parentFXG345.transform.rotation = effectG4.transform.rotation = rotation;
     }
 
     public void CreateBulletShotGun()
     {
         SoundController.instance.PlaySound(soundGame.soundshootW3);
         bullet = ObjectPoolerManager.Instance.bulletW3Pooler.GetPooledObject();
-        //dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         bullet.transform.rotation = rotation;
         bullet.transform.position = posGun();
-        //parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //parentFXG345.transform.rotation = rotation;
-        effectG345.Play();
+       // effectG345.Play();
         bullet.SetActive(true);
     }
     int numberLine = 5;
     public void CreateBulletToa()
     {
         SoundController.instance.PlaySound(soundGame.soundshootW5);
-        //dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        //angle2 = angle + 10;
-        //angle3 = angle - 10;
-        //angle4 = angle + 20;
-        //angle5 = angle - 20;
         for (int i = 0; i < numberLine; i++)
         {
             bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
             if (i == 1)
             {
-                // rotation2 = Quaternion.AngleAxis(angle2, Vector3.forward);
                 bullet.transform.rotation = rotation2;
             }
             else if (i == 2)
             {
-                //  rotation3 = Quaternion.AngleAxis(angle3, Vector3.forward);
                 bullet.transform.rotation = rotation3;
             }
             else if (i == 0)
             {
-                //  rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 bullet.transform.rotation = rotation;
             }
             else if (i == 3)
             {
-                // rotation4 = Quaternion.AngleAxis(angle4, Vector3.forward);
                 bullet.transform.rotation = rotation4;
             }
             else if (i == 4)
             {
-                //  rotation5 = Quaternion.AngleAxis(angle5, Vector3.forward);
                 bullet.transform.rotation = rotation5;
             }
-            bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
+            bullet.transform.position = posGun();
             bullet.SetActive(true);
         }
-        //parentFXG345.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //parentFXG345.transform.rotation = rotation;
-        effectG345.Play();
+       // effectG345.Play();
     }
     int posIndexBullet;
     public void CreateBullet(bool lech)
     {
-        //dirBullet = GetTargetTranform() - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-        //angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
-        //rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         switch (currentGun)
         {
             case 0:
@@ -940,24 +919,14 @@ public class PlayerController : MonoBehaviour
             case 1:
                 bullet = ObjectPoolerManager.Instance.bulletW2Pooler.GetPooledObject();
                 break;
-            //case 3:
-            //    SoundController.instance.PlaySound(soundGame.soundshootW4);
-            //    bullet = ObjectPoolerManager.Instance.bulletW4Pooler.GetPooledObject();
-            //    break;
             case 5:
-                //posEffect.x = !FlipX ? boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x + 0.5f : boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).x - 0.5f;
-                //posEffect.y = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform).y;
-                //parentFXG345.transform.position = /*posEffect*/(Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-                //parentFXG345.transform.rotation = rotation;
-                effectG345.Play();
+               // effectG345.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW6);
                 bullet = ObjectPoolerManager.Instance.bulletW5Pooler.GetPooledObject();
                 bullet.GetComponent<Bullet>().dir = GetTargetTranform();
                 break;
             case 3:
-                //effectG4.transform.position = (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
-                //effectG4.transform.rotation = rotation;
-                effectG4.Play();
+               // effectG4.Play();
                 SoundController.instance.PlaySound(soundGame.soundshootW4);
                 bullet = ObjectPoolerManager.Instance.bulletW6Pooler.GetPooledObject();
                 break;
@@ -967,42 +936,27 @@ public class PlayerController : MonoBehaviour
 
         if (lech)
         {
-            posBulletTemp.x = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().x;
+            posBulletTemp.x = posGun().x;
             if (posIndexBullet == 0)
             {
-                posBulletTemp.y = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().y + 0.07f;
+                posBulletTemp.y = posGun().y + 0.07f;
                 posIndexBullet = 1;
             }
             else
             {
-                posBulletTemp.y = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().y - 0.07f;
+                posBulletTemp.y = posGun().y - 0.07f;
                 posIndexBullet = 0;
             }
-            bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posBulletTemp;
+            bullet.transform.position = posBulletTemp;
         }
         else
         {
-            bullet.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
+            bullet.transform.position = posGun();
         }
         bullet.SetActive(true);
 
     }
     Vector2 posBulletTemp;
-    //void HandleEvent(TrackEntry trackEntry, Spine.Event e)
-    //{
-    //    if (trackEntry.Animation.Name.Equals(apc.fireAnim.name))
-    //    {
-    //        //  CreateBullet();
-    //        //  Debug.Log(currentGun);
-    //    }
-    //    else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
-    //    {
-    //        grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
-    //        grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
-    //        grenade.SetActive(true);
-    //        isGrenade = false;
-    //    }
-    //}
     private void OnComplete(TrackEntry trackEntry)
     {
         if (trackEntry.Animation.Name.Equals(apc.waitstandAnim.name))
@@ -1098,7 +1052,7 @@ public class PlayerController : MonoBehaviour
             if (currentAnim == apc.runForwardAnim)
                 return;
 
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true)/*.TimeScale = timeScaleRun*/;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runForwardAnim, true);
             currentAnim = apc.runForwardAnim;
             SetBox(sizeBox, offsetBox);
 
@@ -1107,31 +1061,13 @@ public class PlayerController : MonoBehaviour
         {
             if (currentAnim == apc.runBackAnim)
                 return;
-            skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true)/*.TimeScale = timeScaleRun*/;
+            skeletonAnimation.AnimationState.SetAnimation(0, apc.runBackAnim, true);
             currentAnim = apc.runBackAnim;
             SetBox(sizeBox, offsetBox);
 
         }
 
     }
-    //WaitForSeconds waitBeAttack;
-    ////   int randomWin;
-    //IEnumerator BeAttackFill()
-    //{
-    //    skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-    //    yield return waitBeAttack;
-
-    //    skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-    //    yield return waitBeAttack;
-
-    //    skeletonAnimation.skeleton.SetColor(new Color(1, 1, 1, 1));
-    //    yield return waitBeAttack;
-
-    //    skeletonAnimation.skeleton.SetColor(new Color(1, 0.5f, 0, 1));
-    //    yield return waitBeAttack;
-
-    //    skeletonAnimation.skeleton.SetColor(Color.white);
-    //}
 
     public void AnimWin()
     {
@@ -1166,15 +1102,14 @@ public class PlayerController : MonoBehaviour
     }
     public void MeleeAttack()
     {
-        if (/*isGrenade ||*/ /*meleeAtackBox.gameObject.activeSelf ||*/ timePreviousMeleeAttack > 0)
+        if (timePreviousMeleeAttack > 0)
         {
-            //     Debug.LogError("======wtf=====");
             return;
         }
         DisableLaser();
         timePreviousMeleeAttack = timedelayMeleeAttack;
         skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
-        meleeAtackBox.transform.position = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
+        meleeAtackBox.transform.position = posGun();
         meleeAtackBox.gameObject.SetActive(true);
     }
     bool isShoot;
@@ -1206,7 +1141,7 @@ public class PlayerController : MonoBehaviour
 
     private void addColliderToLine()
     {
-        startPos = /*(Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun();
+        startPos = posGun();
         endPos = GetTargetTranform();
         lineLength = Vector3.Distance(startPos, endPos);
         boxLaser.size = new Vector2(lineLength, 0.1f);
@@ -1245,11 +1180,10 @@ public class PlayerController : MonoBehaviour
         effectendW7.gameObject.SetActive(false);
 
         PlaySoundW7(false);
-        //   Debug.LogError("disable laser");
     }
     public void ShootDown()
     {
-        if (reload /*|| isGrenade*/ || meleeAtackBox.gameObject.activeSelf)
+        if (reload  || meleeAtackBox.gameObject.activeSelf)
         {
             return;
         }
@@ -1268,11 +1202,7 @@ public class PlayerController : MonoBehaviour
                 countbullet = 3;
                 timePreviousAttack = 0;
                 SoundController.instance.PlaySound(soundGame.soundshootW2);
-                // posEffect.x = !FlipX ? /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().x - 0.08f : /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().x + 0.08f;
-                //  posEffect.y = /*boneBarrelGun.GetWorldPosition(skeletonAnimation.transform)*/posGun().y;
-                //effectG2.transform.position = posEffect;
-                //effectG2.transform.rotation = rotation;
-                effectG2.Play();
+                //effectG2.Play();
                 break;
             case 2:
                 CreateBulletShotGun();
@@ -1295,7 +1225,6 @@ public class PlayerController : MonoBehaviour
                 CreateBullet(true);
                 timePreviousAttack = timedelayAttackGun;
                 AddNumberBullet(1);
-                //  Debug.LogError("shooooooot" + timePreviousAttack);
                 break;
         }
 
@@ -1316,9 +1245,6 @@ public class PlayerController : MonoBehaviour
         var origin = GetOriginGun();
         direction.Normalize();
         var hit = Physics2D.Raycast(origin, direction, 1000, layerTarget);
-        //#if UNITY_EDITOR
-        //        Debug.DrawRay(origin, direction * 1000, Color.red);
-        //#endif
         if (hit.collider != null)
         {
             targetTemp = hit.point;
@@ -1343,8 +1269,7 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
 
-            //if (enemy.incam)
-            //{
+
             var from = (Vector2)transform.position;
             var to = enemy.Origin();
             var d = Vector2.Distance(from, to);
@@ -1366,31 +1291,7 @@ public class PlayerController : MonoBehaviour
                     GameController.instance.targetDetectSprite.SetActive(false);
                     haveTarget = false;
                 }
-
-
-                //if (dMin < 0.5f || target.x >= float.MaxValue || target.y >= float.MaxValue)
-                //{
-                //    haveTarget = false;
-                //    targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-                //}
-
             }
-
-            //}
-            //else
-            //{
-            //    if (!GameController.instance.joystickShot.GetJoystickState())
-            //    {
-            //        targetTemp = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
-            //        haveTarget = false;
-            //    }
-            //    else
-            //    {
-            //        targetTemp = GetTargetFromDirection(GameController.instance.shootPosition);
-            //        haveTarget = false;
-            //    }
-            //}
-
         }
 
         return targetTemp;
@@ -1419,35 +1320,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    //float timeTakeDamagePoision;
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    switch (collision.gameObject.layer)
-    //    {
-    //        case 28:
-    //            if (collision.CompareTag("slowdamage"))
-    //            {
-    //                timeTakeDamagePoision -= Time.deltaTime;
-    //                if (timeTakeDamagePoision <= 0)
-    //                {
-    //                    TakeDamage(health / 100 * 2);
-    //                    timeTakeDamagePoision = 1;
-    //                }
-    //            }
-    //            isSlow = true;
-    //            break;
-    //    }
-    //}
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    switch (collision.gameObject.layer)
-    //    {
-    //        case 28:
-    //            isSlow = false;
-    //            Debug.LogError("thoat ra");
-    //            break;
-    //    }
-    //}
     public void AddHealth(float _health)
     {
         if (playerState == PlayerState.Die)
@@ -1533,7 +1405,6 @@ public class PlayerController : MonoBehaviour
         isSlow = false;
         isLowJump = false;
         isMeleeAttack = false;
-        //  isGrenade = false;
         isGround = false;
 
         timereviving = 2;

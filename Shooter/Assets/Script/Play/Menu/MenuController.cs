@@ -78,7 +78,7 @@ public class MenuController : MonoBehaviour
         if (DataController.instance.isHack)
             DataUtils.AddCoinAndGame(10000000, 100000);
 
-        DataUtils.AddCoinAndGame(10000000, 100000);
+        //DataUtils.AddCoinAndGame(10000000, 100000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
