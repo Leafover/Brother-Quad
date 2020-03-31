@@ -685,102 +685,100 @@ public class GameController : MonoBehaviour
 
         string rePlaceID = vatphamnhanduoc[i].ID.Replace("M-", "").Trim();
 
-        if (first)
-        {
-            if (!vatphamnhanduoc[i].ID.Contains("P") && !vatphamnhanduoc[i].ID.Contains("W1"))
-            {
-                _itemData = new ItemData();
-                _itemData.id = rePlaceID;
-                _itemData.level = eLevel.ToString();
-                _itemData.isUnlock = true;
-                _itemData.pices = 0;
-                _itemData.isEquipped = true;
-            }
+        //if (first)
+        //{
+        //    if (!vatphamnhanduoc[i].ID.Contains("P") && !vatphamnhanduoc[i].ID.Contains("W1"))
+        //    {
+        //        _itemData = new ItemData();
+        //        _itemData.id = rePlaceID;
+        //        _itemData.level = eLevel.ToString();
+        //        _itemData.isUnlock = true;
+        //        _itemData.pices = 0;
+        //        _itemData.isEquipped = true;
+        //    }
 
-            else _itemData = null;
-        }
+        //    else _itemData = null;
+        //}
 
-        if (vatphamnhanduoc[i].ID.Contains("W"))
-        {
-            if (!vatphamnhanduoc[i].ID.Contains("W1"))
-            {
-                DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
-                if (first && _itemData != null)
-                {
-                    _itemData.type = DataUtils.eType.WEAPON.ToString();
-                    _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.WEAPON);
-                }
-            }
-            else
-                DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
+        //if (vatphamnhanduoc[i].ID.Contains("W"))
+        //{
+        //    if (!vatphamnhanduoc[i].ID.Contains("W1"))
+        //    {
+        //        DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, numberAdd(i), first);
+        //        if (first && _itemData != null)
+        //        {
+        //            _itemData.type = DataUtils.eType.WEAPON.ToString();
+        //            _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.WEAPON);
+        //        }
+        //    }
+        //    else
+        //        DataUtils.TakeItem(rePlaceID, DataUtils.eType.WEAPON, eLevel, (int)vatphamnhanduoc[i].TotalNumber, false);
 
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("A"))
-        {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, numberAdd(i), first);
-            if (first && _itemData != null)
-            {
-                _itemData.type = DataUtils.eType.ARMOR.ToString();
-                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.ARMOR);
-            }
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("P"))
-        {
-            DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("H"))
-        {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, numberAdd(i), first);
-            if (first && _itemData != null)
-            {
-                _itemData.type = DataUtils.eType.HELMET.ToString();
-                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.HELMET);
-            }
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("S"))
-        {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, numberAdd(i), first);
-            if (first && _itemData != null)
-            {
-                _itemData.type = DataUtils.eType.SHOES.ToString();
-                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.SHOES);
-            }
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("G"))
-        {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, numberAdd(i), first);
-            if (first && _itemData != null)
-            {
-                _itemData.type = DataUtils.eType.GLOVES.ToString();
-                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.GLOVES);
-            }
-        }
-        else if (vatphamnhanduoc[i].ID.Contains("B"))
-        {
-            DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, numberAdd(i), first);
-            if (first && _itemData != null)
-            {
-                _itemData.type = DataUtils.eType.BAG.ToString();
-                _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.BAG);
-            }
-        }
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("A"))
+        //{
+        //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.ARMOR, eLevel, numberAdd(i), first);
+        //    if (first && _itemData != null)
+        //    {
+        //        _itemData.type = DataUtils.eType.ARMOR.ToString();
+        //        _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.ARMOR);
+        //    }
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("P"))
+        //{
+        //    DataUtils.TakeHeroPice(rePlaceID, (int)vatphamnhanduoc[i].TotalNumber);
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("H"))
+        //{
+        //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.HELMET, eLevel, numberAdd(i), first);
+        //    if (first && _itemData != null)
+        //    {
+        //        _itemData.type = DataUtils.eType.HELMET.ToString();
+        //        _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.HELMET);
+        //    }
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("S"))
+        //{
+        //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.SHOES, eLevel, numberAdd(i), first);
+        //    if (first && _itemData != null)
+        //    {
+        //        _itemData.type = DataUtils.eType.SHOES.ToString();
+        //        _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.SHOES);
+        //    }
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("G"))
+        //{
+        //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.GLOVES, eLevel, numberAdd(i), first);
+        //    if (first && _itemData != null)
+        //    {
+        //        _itemData.type = DataUtils.eType.GLOVES.ToString();
+        //        _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.GLOVES);
+        //    }
+        //}
+        //else if (vatphamnhanduoc[i].ID.Contains("B"))
+        //{
+        //    DataUtils.TakeItem(rePlaceID, DataUtils.eType.BAG, eLevel, numberAdd(i), first);
+        //    if (first && _itemData != null)
+        //    {
+        //        _itemData.type = DataUtils.eType.BAG.ToString();
+        //        _itemData.itemName = DataUtils.GetItemNameByItemData(_itemData, DataUtils.eType.BAG);
+        //    }
+        //}
         DisplayReward(rePlaceID, i, eLevel);
 
-        if (first)
-        {
-            if (_itemData != null)
-            {
-                items.Add(_itemData);
+        //if (first)
+        //{
+        //    if (_itemData != null)
+        //    {
+        //        items.Add(_itemData);
 
-                Debug.LogError("co hang");
-            }
-            else
-            {
-                Debug.LogError("ko co gi");
-            }
-        }
-        //   Debug.Log("ID:" + rePlaceID);
-
+        //        Debug.LogError("co hang");
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("ko co gi");
+        //    }
+        //}
     }
     // List<string> lstItemRewardName;
     void DisplayReward(string name, int index, DataUtils.eLevel eLevel)

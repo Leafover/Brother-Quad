@@ -104,6 +104,7 @@ public class PrimeAccount : MonoBehaviour
         }
         else
         {
+            MenuController.instance.BtnDisplayPrimeAccount(false);
             MainMenuController.Instance.shopManager.gameObject.SetActive(true);
         }
     }
