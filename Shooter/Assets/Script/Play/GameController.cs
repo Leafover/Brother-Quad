@@ -558,13 +558,7 @@ public class GameController : MonoBehaviour
             listcirtwhambang[i].DisableMe(deltaTime);
         }
     }
-    //public void NotSoFastWin()
-    //{
-    //    if (win)
-    //    {
-    //        win = false;
-    //    }
-    //}
+
     private void Update()
     {
         if (gameState == GameState.begin || gameState == GameState.gameover)
