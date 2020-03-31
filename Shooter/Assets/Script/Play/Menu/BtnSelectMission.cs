@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class BtnSelectMission : MonoBehaviour
 {
-    public int myStage;
+    //public int myStage;
 
-    public void BtnSelectLevel()
-    {
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.indexStage = myStage;
-        DataParam.indexMap = int.Parse(gameObject.name.Replace("Level ", "")) - 1;
-        Debug.LogError("Level: " + DataParam.indexMap + ", Stage: " + DataParam.indexStage);
-        MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+    //public void BtnSelectLevel()
+    //{
+    //    SoundController.instance.PlaySound(soundGame.soundbtnclick);
+    //    DataParam.indexStage = myStage;
+    //    DataParam.indexMap = int.Parse(gameObject.name.Replace("Level ", "")) - 1;
+    //    Debug.LogError("Level: " + DataParam.indexMap + ", Stage: " + DataParam.indexStage);
+    //    MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
 
-        MissionController.Instance.AddMission();
+    //    MissionController.Instance.AddMission();
 
-        DataParam.nextSceneAfterLoad = 2;
-        Application.LoadLevel(1);
-    }
+    //    DataParam.nextSceneAfterLoad = 2;
+    //    Application.LoadLevel(1);
+    //}
 }

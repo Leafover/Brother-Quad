@@ -212,17 +212,20 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
-            _listMission = new ListMission();
-            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+            //_listMission = new ListMission();
+            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
+            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
 
-            MissionController.Instance.listMissions.Add(_listMission);
+            //MissionController.Instance.listMissions.Add(_listMission);
 
-            _listMission = new ListMission();
-            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+            //_listMission = new ListMission();
+            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
+            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
 
-            MissionController.Instance.listMissions.Add(_listMission);
+            //MissionController.Instance.listMissions.Add(_listMission);
+
+
+            MissionController.Instance.AddMission();
 
             DataParam.nextSceneAfterLoad = 2;
 
@@ -253,17 +256,19 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
-            _listMission = new ListMission();
-            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+            //_listMission = new ListMission();
+            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
+            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
 
-            MissionController.Instance.listMissions.Add(_listMission);
+            //MissionController.Instance.listMissions.Add(_listMission);
 
-            _listMission = new ListMission();
-            _listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            _listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+            //_listMission = new ListMission();
+            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
+            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
 
-            MissionController.Instance.listMissions.Add(_listMission);
+            //MissionController.Instance.listMissions.Add(_listMission);
+
+            MissionController.Instance.AddMission();
 
             DataParam.nextSceneAfterLoad = 2;
 
