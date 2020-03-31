@@ -5,9 +5,15 @@ using UnityEngine.UI;
 public class LuckChestPanel : MonoBehaviour
 {
     public int[] prices;
-    public Text[] priceText,numberTakeText;
+    public Text[] priceText, numberTakeText,packText;
     public Image[] rewardImgs, bouderImgs, iconImgs;
-    public GameObject PanelConfirmAfterBuy;
+    public GameObject PanelConfirmAfterBuy, PanelInfoLuckyChest;
+
+    public Image iconChestInfo, iconPriceInfo;
+    public Text priceTextInfo, nameItemText;
+
+    public ScrollRect sc;
+    public GameObject[] grids;
 
     DataUtils.eLevel elevel;
     DataUtils.eType etype;
@@ -19,18 +25,43 @@ public class LuckChestPanel : MonoBehaviour
             priceText[i].text = "" + prices[i].ToString("#,0");
         }
     }
+    int index;
+    public void BtnClickShowPanelInfoLuckyChest(int _index)
+    {
 
-    public void BtnBuy(int index)
+        index = _index;
+
+        if (index == 0)
+        {
+            iconPriceInfo.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[1];
+        }
+        else
+        {
+            iconPriceInfo.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[0];
+        }
+
+        priceTextInfo.text = "" + prices[index].ToString("#,0");
+        iconChestInfo.sprite = iconImgs[index].sprite;
+        nameItemText.text = packText[index].text;
+        grids[index].SetActive(true);
+        sc.content = grids[index].GetComponent<RectTransform>();
+
+        PanelInfoLuckyChest.SetActive(true);
+
+        sc.verticalNormalizedPosition = 1;
+    }
+    public void BtnBuy()
     {
         if (index == 0)
         {
             if (DataUtils.playerInfo.coins >= prices[index])
             {
                 DataUtils.AddCoinAndGame(-prices[index], 0);
-                Calculate(index);
+                Calculate();
             }
             else
             {
+                CloseInfoLuckyChest();
                 MainMenuController.Instance.shopManager.ChooseTab(0);
             }
         }
@@ -39,17 +70,18 @@ public class LuckChestPanel : MonoBehaviour
             if (DataUtils.playerInfo.gems >= prices[index])
             {
                 DataUtils.AddCoinAndGame(0, -prices[index]);
-                Calculate(index);
+                Calculate();
             }
             else
             {
+                CloseInfoLuckyChest();
                 MainMenuController.Instance.shopManager.ChooseTab(1);
             }
         }
     }
-    int randomsIndexName, randomsLevel, total1, total2, total3, total4, total5, total6,totalTake;
+    int randomsIndexName, randomsLevel, total1, total2, total3, total4, total5, total6, totalTake;
     string nameItem, nameIndexItem;
-    void Calculate(int index)
+    void Calculate()
     {
         total1 = (int)DataController.instance.tilemanhquay[DataController.levelOfLuckChest[index]].item1;
         total2 = (int)DataController.instance.tilemanhquay[DataController.levelOfLuckChest[index]].item2 + total1;
@@ -89,7 +121,7 @@ public class LuckChestPanel : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             randomsIndexName = Random.Range(0, 100);
-      //      Debug.LogError("random index name:" + randomsIndexName);
+            //      Debug.LogError("random index name:" + randomsIndexName);
             if (randomsIndexName >= 0 && randomsIndexName < total1)
             {
                 nameIndexItem = "1";
@@ -142,22 +174,28 @@ public class LuckChestPanel : MonoBehaviour
                     break;
 
             }
-       //     Debug.LogError(nameItem + nameIndexItem);
+            //     Debug.LogError(nameItem + nameIndexItem);
             numberTakeText[i].text = "" + totalTake;
             bouderImgs[i].sprite = MenuController.instance.blackMarketpanel.levelSp[(int)elevel];
             rewardImgs[i].sprite = DataUtils.dicSpriteData[nameItem + nameIndexItem];
-            DataUtils.TakeItem(nameItem + nameIndexItem,etype, elevel, totalTake, false);
+            DataUtils.TakeItem(nameItem + nameIndexItem, etype, elevel, totalTake, false);
         }
 
         if (DataController.levelOfLuckChest[index] < DataController.instance.tilemanhquay.Count - 1)
             DataController.levelOfLuckChest[index]++;
 
 
-        MenuController.instance.panelAnimReward.ActiveMe(PanelConfirmAfterBuy,iconImgs[index].sprite);
-       // PanelConfirmAfterBuy.SetActive(true);
+        MenuController.instance.panelAnimReward.ActiveMe(PanelConfirmAfterBuy, iconImgs[index].sprite);
+        // PanelConfirmAfterBuy.SetActive(true);
+    }
+    public void CloseInfoLuckyChest()
+    {
+        grids[index].SetActive(false);
+        PanelInfoLuckyChest.SetActive(false);
     }
     public void CloseConfirm()
     {
+        CloseInfoLuckyChest();
         PanelConfirmAfterBuy.SetActive(false);
     }
 }

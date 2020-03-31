@@ -365,6 +365,7 @@ public class PlayerController : MonoBehaviour
         timePreviousAttack = 0;
         countbullet = 0;
         reload = false;
+        reloadObj.SetActive(false);
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
 
         //Debug.LogError(currentGun + ":"+numberBullet);
