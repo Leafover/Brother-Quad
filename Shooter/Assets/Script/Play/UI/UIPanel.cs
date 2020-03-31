@@ -86,7 +86,13 @@ public class UIPanel : MonoBehaviour
         PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
     }
-
+    public void BtnBackToWorldWin()
+    {
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        DataParam.nextSceneAfterLoad = 1;
+        PlayerController.instance.EndEvent();
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+    }
     public void BtnBack()
     {
         PopupSetting.Instance.ShowPanelSetting();
