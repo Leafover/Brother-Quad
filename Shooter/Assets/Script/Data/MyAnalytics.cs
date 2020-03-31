@@ -42,7 +42,7 @@ public class MyAnalytics
                 new Parameter("checkpoint_index", checkPointIndex),
                 new Parameter("level_stage", stage)
                 };
-        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1), _pamLevelLose);
+        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1) + "_Check Point_" + (checkPointIndex + 1), _pamLevelLose);
         LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
