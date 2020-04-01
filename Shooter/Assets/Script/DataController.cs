@@ -234,7 +234,7 @@ public class DataController : MonoBehaviour
     public static DataController instance;
     public string[] nameDataText;
     public string[] nameDataMissionText;
-    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData,nameBlackMarketData, nameDataTiLeVatPhamHard,nameDataTiLeQuayManh;
+    public string nameDataPlayerText, nameDataWeapon, nameDataArmor, nameDataHelmet, nameDataGloves, nameDataBag, nameDataShoes, nameDataTiLeVatPham, nameAchievementData, nameDailyQuestData, nameBlackMarketData, nameDataTiLeVatPhamHard, nameDataTiLeQuayManh;
     private void Awake()
     {
         instance = this;
@@ -307,7 +307,7 @@ public class DataController : MonoBehaviour
             tilemanhquay.Add(_tilequaymanh);
         }
     }
-    public void LoadBlackMarketData (string path)
+    public void LoadBlackMarketData(string path)
     {
         if (blackMarketData.Count == 105)
             return;
@@ -428,6 +428,7 @@ public class DataController : MonoBehaviour
 
     public void AddNewQuest()
     {
+        DataParam.countdonedailyquest = 0;
         int randomIndex;
         if (!primeAccout.isVIP)
         {
@@ -477,14 +478,14 @@ public class DataController : MonoBehaviour
     public void AddNewBlackMarket()
     {
         blackMarketSave.Clear();
-        while(blackMarketSave.Count < 10)
+        while (blackMarketSave.Count < 10)
         {
             randomBlackMarket = Random.Range(0, blackMarketData.Count);
             _tempBlackMarket = blackMarketData[randomBlackMarket];
             _tempBlackMarket.countnumber = 5;
             if (!blackMarketSave.Contains(_tempBlackMarket))
             {
-              //  Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
+                //  Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
                 blackMarketSave.Add(_tempBlackMarket);
             }
         }
@@ -506,7 +507,7 @@ public class DataController : MonoBehaviour
         if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds < 86400)
         {
             DataParam.indexRewardVideo = PlayerPrefs.GetInt(DataParam.INDEXREWARDVIDEO);
-
+            DataParam.countdonedailyquest = PlayerPrefs.GetInt(DataParam.COUNTDONEDAILYQUEST);
             strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
 
             string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
@@ -518,12 +519,16 @@ public class DataController : MonoBehaviour
                 }
             }
 
+            LoadBlackMarket();
+
             strAllDailyQuest = PlayerPrefs.GetString(DataParam.ALLDAILYQUEST);
+
+
 
             if (string.IsNullOrEmpty(strAllDailyQuest))
                 return;
 
-             jData = JsonMapper.ToObject(strAllDailyQuest);
+            jData = JsonMapper.ToObject(strAllDailyQuest);
             for (int i = 0; i < jData.Count; i++)
             {
                 if (jData[i] != null)
@@ -535,7 +540,7 @@ public class DataController : MonoBehaviour
                 }
             }
 
-            LoadBlackMarket();
+
 
             return;
         }
@@ -1065,8 +1070,8 @@ public class DataController : MonoBehaviour
 
         if (string.IsNullOrEmpty(strPrimeAccount))
             return;
-         jData = JsonMapper.ToObject(strPrimeAccount);
-      //  Debug.LogError(strPrimeAccount + ":=======:" + jData.Count);
+        jData = JsonMapper.ToObject(strPrimeAccount);
+        //  Debug.LogError(strPrimeAccount + ":=======:" + jData.Count);
         primeAccout.isVIP = bool.Parse(jData["isVIP"].ToString());
         primeAccout.takecoin = bool.Parse(jData["takecoin"].ToString());
         primeAccout.takegem = bool.Parse(jData["takegem"].ToString());
@@ -1152,6 +1157,7 @@ public class DataController : MonoBehaviour
     }
     void SaveDailyQuest()
     {
+        PlayerPrefs.SetInt(DataParam.COUNTDONEDAILYQUEST, DataParam.countdonedailyquest);
         PlayerPrefs.SetString(DataParam.ALLDAILYQUEST, JsonMapper.ToJson(allSaveDailyQuest));
         strSaveIndexQuest = null;
         for (int i = 0; i < saveIndexQuest.Count; i++)
@@ -1166,7 +1172,7 @@ public class DataController : MonoBehaviour
     {
         PlayerPrefs.SetString(DataParam.ALLACHIEVEMENT, JsonMapper.ToJson(saveAllAchievement));
     }
-    string strAllAchievement, strAllDailyQuest, strSaveIndexQuest, strPrimeAccount,strBlackMarket;
+    string strAllAchievement, strAllDailyQuest, strSaveIndexQuest, strPrimeAccount, strBlackMarket;
     void LoadAchievement()
     {
         for (int i = 0; i < allAchievement.Count; i++)

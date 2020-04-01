@@ -20,6 +20,7 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            Init();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -31,14 +32,14 @@ public class ObjectPoolManagerHaveScript : MonoBehaviour
         {
             for (int j = 0; j < AllPool[i].transform.childCount; j++)
             {
-                if (!AllPool[i].transform.GetChild(j).gameObject.activeSelf)
-                    continue;
+                //if (!AllPool[i].transform.GetChild(j).gameObject.activeSelf)
+                //    continue;
 
                 AllPool[i].transform.GetChild(j).gameObject.SetActive(false);
             }
         }
     }
-    public void Start()
+    public void Init()
     {
         if (numberDamgageTextPooler == null)
         {

@@ -15,6 +15,7 @@ public class ObjectPoolerManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            Init();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -26,14 +27,14 @@ public class ObjectPoolerManager : MonoBehaviour
         {
             for (int j = 0; j < AllPool[i].transform.childCount; j++)
             {
-                if (!AllPool[i].transform.GetChild(j).gameObject.activeSelf)
-                    continue;
+                //if (!AllPool[i].transform.GetChild(j).gameObject.activeSelf)
+                //    continue;
 
                 AllPool[i].transform.GetChild(j).gameObject.SetActive(false);
             }
         }
     }
-    public void Start()
+    public void Init()
     {
         if (bulletW1Pooler == null)
         {
@@ -319,6 +320,7 @@ public class ObjectPoolerManager : MonoBehaviour
         if (!focus)
         {
             DataController.instance.SaveData();
+            Debug.LogError("application focus");
         }
     }
     private void OnApplicationPause(bool pause)
@@ -326,6 +328,7 @@ public class ObjectPoolerManager : MonoBehaviour
         if (pause)
         {
             DataController.instance.SaveData();
+            Debug.LogError("application pause");
         }
     }
 }

@@ -69,8 +69,8 @@ public class DailyQuestBouder : MonoBehaviour
         DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass = false;
         DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isDone = true;
         DisplayMe();
-
-        if (DataController.saveIndexQuest[index] == 10)
+        DataParam.countdonedailyquest++;
+        if (DataParam.countdonedailyquest == DataController.allSaveDailyQuest.Count)
         {
             DataController.instance.DoAchievement(12, 1);
             return;
