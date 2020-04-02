@@ -15,7 +15,14 @@ public class MenuController : MonoBehaviour
     public Text primeText;
     private void Awake()
     {
-        instance = this;
+
+        if (instance == null)
+        {
+
+            instance = this;
+
+            DataUtils.FillEquipmentData();
+        }
 
     }
     public void CheckDisplayWarningPrimeAccount()
@@ -43,7 +50,7 @@ public class MenuController : MonoBehaviour
     {
         SoundController.instance.DisplaySetting();
 
-        DataUtils.FillPlayerDataInfo();
+         DataUtils.FillPlayerDataInfo();
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
@@ -51,7 +58,6 @@ public class MenuController : MonoBehaviour
 
         if (!DataParam.first)
         {
-            //   AdsManager.Instance.ShowInterstitial((b) => { });
 #if UNITY_EDITOR
 
 #else
@@ -77,7 +83,7 @@ public class MenuController : MonoBehaviour
         if (DataController.instance.isHack)
             DataUtils.AddCoinAndGame(10000000, 100000);
 
-        //DataUtils.AddCoinAndGame(10000000, 100000);
+      //  DataUtils.AddCoinAndGame(10000, 10000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {

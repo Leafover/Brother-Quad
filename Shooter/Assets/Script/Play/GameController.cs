@@ -655,6 +655,8 @@ public class GameController : MonoBehaviour
     public void DelayWinFunc()
     {
         win = true;
+        ResetActiveLeft();
+        ResetActiveRight();
         StartCoroutine(delayWin());
     }
     WaitForSeconds delaywinwait;

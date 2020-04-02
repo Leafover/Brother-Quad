@@ -245,10 +245,11 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-        Debug.unityLogger.logEnabled = isHack;
+       // Debug.unityLogger.logEnabled = isHack;
         LoadData();
-        DataUtils.FillEquipmentData();
+
         loadData = true;
+        Debug.LogError("load every thing");
     }
     public bool loaddatabegin;
     private void OnValidate()
@@ -287,6 +288,8 @@ public class DataController : MonoBehaviour
             LoadTiLeVatPham(nameDataTiLeVatPham);
             LoadTiLeVatPhamHard(nameDataTiLeVatPhamHard);
             #endregion
+
+            Debug.Log("----------- Onvalidate");
 
             loaddatabegin = true;
         }
@@ -539,9 +542,7 @@ public class DataController : MonoBehaviour
                     allSaveDailyQuest[i].isActive = bool.Parse(jData[i]["isActive"].ToString());
                 }
             }
-
-
-
+            Debug.Log("----------- save all daily quest count 0:" + allSaveDailyQuest.Count);
             return;
         }
         DataParam.oldDateTime = System.DateTime.Now;
@@ -551,6 +552,9 @@ public class DataController : MonoBehaviour
         DataParam.countResetBlackMarket = 0;
         DataParam.indexRewardVideo = 0;
         // Debug.LogError("load data mới sau 1 ngày");
+
+        Debug.Log("----------- save all daily quest count 1:" + allSaveDailyQuest.Count);
+
     }
     public void LoadDataMission(string path, int index)
     {
@@ -1087,10 +1091,10 @@ public class DataController : MonoBehaviour
                 if ((System.DateTime.Now - DataParam.timeBeginBuyPrimeAccount).TotalSeconds >= 86400)
                 {
                     primeAccout.takecoin = primeAccout.takegem = false;
-                    Debug.LogError("wtfffffffffffff");
                 }
             }
         }
+        Debug.LogError("---------- load prime account");
     }
     void LoadBlackMarket()
     {
@@ -1115,6 +1119,8 @@ public class DataController : MonoBehaviour
             _blackMarketSave.countnumber = int.Parse(jData[i]["countnumber"].ToString());
             blackMarketSave.Add(_blackMarketSave);
         }
+
+        Debug.Log("----------- save all black market count:" + blackMarketSave.Count);
     }
     public void SaveData()
     {
@@ -1195,6 +1201,9 @@ public class DataController : MonoBehaviour
                 saveAllAchievement[i].isDone = bool.Parse(jData[i]["isDone"].ToString());
             }
         }
+
+
+        Debug.Log("----------- save all achievement count:" + saveAllAchievement.Count);
     }
     public void DoAchievement(int index, int _numberAdd)
     {

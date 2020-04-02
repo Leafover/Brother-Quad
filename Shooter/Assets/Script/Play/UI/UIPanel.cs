@@ -74,7 +74,8 @@ public class UIPanel : MonoBehaviour
                 haveBossInMiniMap.sprite = allbossandminibossInfo.infos[DataParam.indexStage].icons[1];
             haveBossInMiniMap.gameObject.SetActive(true);
         }
-        DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
+
+       // DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
 
         hackbouder.SetActive(DataController.instance.isHack);
     }

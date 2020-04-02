@@ -57,7 +57,7 @@ public class EM3Controller : EnemyBase
                     if (isGround)
                     {
                         if (aec.standup == null)
-                            enemyState = EnemyState.run;
+                            enemyState = EnemyState.attack;
                         else
                         {
                             PlayAnim(0, aec.standup, false);
@@ -146,7 +146,7 @@ public class EM3Controller : EnemyBase
                     if (isGround)
                     {
                         if (aec.standup == null)
-                            enemyState = EnemyState.run;
+                            enemyState = EnemyState.attack;
                         else
                         {
                             PlayAnim(0, aec.standup, false);

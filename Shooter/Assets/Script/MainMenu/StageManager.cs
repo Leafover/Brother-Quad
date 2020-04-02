@@ -333,7 +333,8 @@ public class StageManager : MonoBehaviour
     }
     public void ChooseHardMode()
     {
-        if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
+
+        if (DataController.instance.isHack)
         {
             DataUtils.modeSelected = 1;
             imgNormal.sprite = imgModeUnSelect;
@@ -342,7 +343,17 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            MainMenuController.Instance.ShowMapNotify("Please complete Normal Mode first.");
+            if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
+            {
+                DataUtils.modeSelected = 1;
+                imgNormal.sprite = imgModeUnSelect;
+                imgHard.sprite = imgModeSelected;
+                RefreshMap();
+            }
+            else
+            {
+                MainMenuController.Instance.ShowMapNotify("Please complete Normal Mode first.");
+            }
         }
     }
 

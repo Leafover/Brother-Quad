@@ -123,6 +123,7 @@ public class CameraController : MonoBehaviour
         if (GameController.instance.win || PlayerController.instance.playerState == PlayerController.PlayerState.Die)
             return;
 
+
         if (!setBoudariesLeft)
         {
             if (GameController.instance.enemyLockCam.Count == 0)

@@ -21,9 +21,11 @@ public class Loading : MonoBehaviour
     void Start()
     {
         isloading = true;
-      //  fillImage.fillAmount = 0;
-        ObjectPoolerManager.Instance.ClearAllPool();
-        ObjectPoolManagerHaveScript.Instance.ClearAllPool();
+        if (ObjectPoolerManager.Instance != null)
+        {
+            ObjectPoolerManager.Instance.ClearAllPool();
+            ObjectPoolManagerHaveScript.Instance.ClearAllPool();
+        }
         hintText.text = DataParam.hints[Random.Range(0, DataParam.hints.Length)];
         versionText.text = "Version: " + Application.version;
         Show(SceneManager.LoadSceneAsync(DataParam.nextSceneAfterLoad));
