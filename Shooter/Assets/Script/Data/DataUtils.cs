@@ -1225,26 +1225,26 @@ public class DataUtils
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
-        //lstAllPlayerHeroes[HeroIndex()].coins = newCoin;
-        //lstAllPlayerHeroes[HeroIndex()].gems = newGem;
+        lstAllPlayerHeroes[HeroIndex()].coins = newCoin;
+        lstAllPlayerHeroes[HeroIndex()].gems = newGem;
 
 
-        //SavePlayerData();
-        //if (MainMenuController.Instance != null)
-        //{
-        //    MainMenuController.Instance.UpdateCoinAndGem();
-        //}
+        SavePlayerData();
+        if (MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
     }
     public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
-        //lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
-        //lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
+        lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
+        lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
 
-        //SavePlayerData();
-        //if (MainMenuController.Instance != null)
-        //{
-        //    MainMenuController.Instance.UpdateCoinAndGem();
-        //}
+        SavePlayerData();
+        if (MainMenuController.Instance != null)
+        {
+            MainMenuController.Instance.UpdateCoinAndGem();
+        }
 
         DataController.instance.DoDailyQuest(6, coinAdded);
     }

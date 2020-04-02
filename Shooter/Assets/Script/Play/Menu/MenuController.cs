@@ -22,6 +22,8 @@ public class MenuController : MonoBehaviour
             instance = this;
 
             DataUtils.FillEquipmentData();
+
+
         }
 
     }
@@ -50,12 +52,6 @@ public class MenuController : MonoBehaviour
     {
         SoundController.instance.DisplaySetting();
 
-         DataUtils.FillPlayerDataInfo();
-        if (DataUtils.StageHasInit())
-        {
-            DataUtils.FillAllStage();
-        }
-
         if (!DataParam.first)
         {
 #if UNITY_EDITOR
@@ -83,7 +79,14 @@ public class MenuController : MonoBehaviour
         if (DataController.instance.isHack)
             DataUtils.AddCoinAndGame(10000000, 100000);
 
-      //  DataUtils.AddCoinAndGame(10000, 10000);
+
+        #region problem
+        DataUtils.FillPlayerDataInfo();
+        if (DataUtils.StageHasInit())
+        {
+            DataUtils.FillAllStage();
+        }
+        #endregion
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
