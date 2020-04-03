@@ -127,7 +127,7 @@ public class StageManager : MonoBehaviour
 
                     if (levelControll.mapIndex == 7 && !DataUtils.StageHardHasInit())
                     {
-                        DataUtils.UnlockHardMode();
+                        DataUtils.UnlockHardMode(levelControll.stageIndex);
                     }
                 }
                 else
@@ -212,19 +212,6 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
-
-            //MissionController.Instance.listMissions.Add(_listMission);
-
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
-
-            //MissionController.Instance.listMissions.Add(_listMission);
-
-
             MissionController.Instance.AddMission();
 
             DataParam.nextSceneAfterLoad = 2;
@@ -256,18 +243,6 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
-
-            //MissionController.Instance.listMissions.Add(_listMission);
-
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
-
-            //MissionController.Instance.listMissions.Add(_listMission);
-
             MissionController.Instance.AddMission();
 
             DataParam.nextSceneAfterLoad = 2;
@@ -279,6 +254,8 @@ public class StageManager : MonoBehaviour
             MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
         }
+
+        DataUtils.SavePlayerData();
     }
     #region Fill Map Info
     private void ResetInfo()

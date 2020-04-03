@@ -903,6 +903,7 @@ public class DataUtils
             if (!lstAllStageHard.Contains(jStage))
                 lstAllStageHard.Add(jStage);
         }
+        Debug.LogError("FillAllStageHard: " + lstAllStageHard.Count);
     }
     public static void SaveStageHard(string stageData)
     {
@@ -925,8 +926,9 @@ public class DataUtils
         if (mLevel.mission == null) mLevel.mission = new List<LVMission>();
         mLevel.mission.Add(lvMiss);
     }
-    public static void UnlockHardMode()
+    public static void UnlockHardMode(int _stageIndex)
     {
+        Debug.LogError("lstAllStageHard: " + lstAllStageHard.Count);
         #region UnlockHardMode
         List<DataStage> lstStagesHard = new List<DataStage>();
         for (int i = 0; i < lstAllStageNormal.Count; i++)
@@ -977,14 +979,23 @@ public class DataUtils
                 lstStagesHard.Add(dataStageHard);
             }
         }
+
+
         string jHardSave = JsonMapper.ToJson(lstStagesHard);
+        if (lstAllStageHard.Count > 0)
+        {
+            lstAllStageHard[_stageIndex].stageHasUnlock = true;
+            jHardSave = JsonMapper.ToJson(lstAllStageHard);
+        }
+        Debug.LogError("DataHard: " + jHardSave);
         SaveStageHard(jHardSave);
         #endregion
     }
-    private static void StageHardIncrease()
+    private static void StageHardIncrease(int _curStage)
     {
-        int curStage = GetStageIndex() + 1;
-        PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX_HARD, curStage);
+        int curStage = /*GetStageIndex()*/PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX_HARD, 0) + 1;
+        if (_curStage >= curStage || /*GetStageIndex()*/PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX_HARD, 0) == 0)
+            PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX_HARD, curStage);
     }
     #endregion
 
@@ -993,10 +1004,11 @@ public class DataUtils
     {
         return PlayerPrefs.GetInt(KEY_GAME_STAGE_INDEX, 0);
     }
-    private static void StageIncrease()
+    private static void StageIncrease(int _curStage)
     {
         int curStage = GetStageIndex() + 1;
-        PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX, curStage);
+        if(_curStage >= curStage || GetStageIndex() == 0)
+            PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX, curStage);
     }
     public static bool StageHasInit()
     {
@@ -1058,9 +1070,10 @@ public class DataUtils
             {
                 lstAllStageNormal[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
 
-                UnlockHardMode();
+                Debug.LogError("Stage: " + stage + ", Level: " + mapIndex);
+                UnlockHardMode(stage);
 
-                StageIncrease();
+                StageIncrease(stage + 1);
             }
 
             string jSave = JsonMapper.ToJson(lstAllStageNormal);
@@ -1078,7 +1091,7 @@ public class DataUtils
             {
                 lstAllStageHard[(stage + 1 >= lstAllStageHard.Count ? stage : stage + 1)].stageHasUnlock = true;
 
-                StageHardIncrease();
+                StageHardIncrease(stage + 1);
             }
 
             string jSave = JsonMapper.ToJson(lstAllStageHard);
@@ -1171,6 +1184,7 @@ public class DataUtils
                     lstAllPlayerHeroes.Add(jPlayerInfo);
             }
         }
+
         dicAllHero = new Dictionary<string, HeroDataInfo>();
         if (!PlayerPrefs.HasKey(KEY_ALL_HERO_DATA) || string.IsNullOrEmpty(GetAllHeroData()))
         {
