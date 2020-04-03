@@ -127,7 +127,7 @@ public class StageManager : MonoBehaviour
 
                     if (levelControll.mapIndex == 7 && !DataUtils.StageHardHasInit())
                     {
-                        DataUtils.UnlockHardMode(levelControll.stageIndex);
+                        DataUtils.UnlockHardMode();
                     }
                 }
                 else
@@ -204,26 +204,26 @@ public class StageManager : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 
 
-        if (DataController.instance.isHack)
-        {
-            DataParam.indexStage = _stageSelect;
-            DataParam.indexMap = _mapSelect;
+        //if (DataController.instance.isHack)
+        //{
+        //    DataParam.indexStage = _stageSelect;
+        //    DataParam.indexMap = _mapSelect;
 
-            DataUtils.CheckEquipWeapon();
+        //    DataUtils.CheckEquipWeapon();
 
-            #region Start Level
-            MissionController.Instance.AddMission();
+        //    #region Start Level
+        //    MissionController.Instance.AddMission();
 
-            DataParam.nextSceneAfterLoad = 2;
+        //    DataParam.nextSceneAfterLoad = 2;
 
-            DataController.instance.DoAchievement(5, 1);
+        //    DataController.instance.DoAchievement(5, 1);
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
-            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
-            #endregion
-            return;
-        }
+        //    MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+        //    #endregion
+        //    return;
+        //}
 
 
         if (_stageSelect < 0 || _mapSelect < 0)
@@ -243,6 +243,8 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
+
+
             MissionController.Instance.AddMission();
 
             DataParam.nextSceneAfterLoad = 2;
@@ -254,8 +256,6 @@ public class StageManager : MonoBehaviour
             MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
         }
-
-        DataUtils.SavePlayerData();
     }
     #region Fill Map Info
     private void ResetInfo()
@@ -311,14 +311,14 @@ public class StageManager : MonoBehaviour
     public void ChooseHardMode()
     {
 
-        if (DataController.instance.isHack)
-        {
-            DataUtils.modeSelected = 1;
-            imgNormal.sprite = imgModeUnSelect;
-            imgHard.sprite = imgModeSelected;
-            RefreshMap();
-        }
-        else
+        //if (DataController.instance.isHack)
+        //{
+        //    DataUtils.modeSelected = 1;
+        //    imgNormal.sprite = imgModeUnSelect;
+        //    imgHard.sprite = imgModeSelected;
+        //    RefreshMap();
+        //}
+        //else
         {
             if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
             {
