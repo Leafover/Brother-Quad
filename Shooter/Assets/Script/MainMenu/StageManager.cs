@@ -127,7 +127,8 @@ public class StageManager : MonoBehaviour
 
                     if (levelControll.mapIndex == 7 && !DataUtils.StageHardHasInit())
                     {
-                        DataUtils.UnlockHardMode();
+                        // DataUtils.UnlockHardMode();
+                        DataUtils.UnlockHardMode(levelControll.stageIndex);
                     }
                 }
                 else
