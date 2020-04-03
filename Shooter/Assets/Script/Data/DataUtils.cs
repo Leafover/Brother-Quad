@@ -1076,7 +1076,7 @@ public class DataUtils
 
             if (mapIndex == 7)
             {
-                lstAllStageHard[(stage + 1 >= /*lstAllStageNormal*/lstAllStageHard.Count ? stage : stage + 1)].stageHasUnlock = true;
+                lstAllStageHard[(stage + 1 >= lstAllStageHard.Count ? stage : stage + 1)].stageHasUnlock = true;
 
                 StageHardIncrease();
             }
@@ -1229,7 +1229,7 @@ public class DataUtils
         lstAllPlayerHeroes[HeroIndex()].gems = newGem;
 
 
-        SavePlayerData();
+        //SavePlayerData();
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
@@ -1240,7 +1240,7 @@ public class DataUtils
         lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
         lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
 
-        SavePlayerData();
+        //SavePlayerData();
         if (MainMenuController.Instance != null)
         {
             MainMenuController.Instance.UpdateCoinAndGem();
@@ -1251,7 +1251,7 @@ public class DataUtils
     public static void AddHPPack(int total_)
     {
         lstAllPlayerHeroes[HeroIndex()].healthPack += total_;
-        SavePlayerData();
+        //SavePlayerData();
     }
     public static int HPPack()
     {

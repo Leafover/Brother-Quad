@@ -41,6 +41,10 @@ public class AdsManager : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        DataUtils.SavePlayerData();
+    }
     private void InitAds()
     {
         // string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
