@@ -40,7 +40,7 @@ public class ShopManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        ChooseTab(0);
+        ChooseTab(2);
     }
 
     public void ChooseTab(int _index)
