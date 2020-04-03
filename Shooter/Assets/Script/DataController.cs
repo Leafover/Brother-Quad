@@ -1129,6 +1129,8 @@ public class DataController : MonoBehaviour
         SaveDailyQuest();
         SaveBlackMarket();
 
+        DataUtils.SavePlayerData();
+
 #if UNITY_EDITOR
 
 #else
@@ -1151,7 +1153,7 @@ public class DataController : MonoBehaviour
         LoadAchievement();
         LoadDailyQuest();
 
-        DataUtils.FillPlayerDataInfo();
+
     }
     void SaveBlackMarket()
     {

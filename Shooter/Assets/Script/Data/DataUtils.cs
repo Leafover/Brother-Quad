@@ -1159,6 +1159,8 @@ public class DataUtils
             playerInfo.isUnlock = true;
             playerInfo.isEquipped = true;
             lstAllPlayerHeroes.Add(playerInfo);
+
+            Debug.LogError("---------- loadheroTH1");
         }
         else
         {
@@ -1170,6 +1172,8 @@ public class DataUtils
                 if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
                     lstAllPlayerHeroes.Add(jPlayerInfo);
             }
+
+            Debug.LogError("---------- loadheroTH2");
         }
         dicAllHero = new Dictionary<string, HeroDataInfo>();
         if (!PlayerPrefs.HasKey(KEY_ALL_HERO_DATA) || string.IsNullOrEmpty(GetAllHeroData()))
@@ -1189,6 +1193,9 @@ public class DataUtils
                 dicAllHero.Add(heroInfo.id, heroInfo);
             }
             ChooseHero(heroInfo);
+
+
+            Debug.LogError("---------- loadheroTH3");
         }
         else
         {
@@ -1203,6 +1210,9 @@ public class DataUtils
                     dicAllHero.Add(hdInfo.id, hdInfo);
                 }
             }
+
+
+            Debug.LogError("---------- loadheroTH4");
         }
 
 

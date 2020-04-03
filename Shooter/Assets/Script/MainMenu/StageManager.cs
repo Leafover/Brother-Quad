@@ -204,39 +204,26 @@ public class StageManager : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 
 
-        if (DataController.instance.isHack)
-        {
-            DataParam.indexStage = _stageSelect;
-            DataParam.indexMap = _mapSelect;
+        //if (DataController.instance.isHack)
+        //{
+        //    DataParam.indexStage = _stageSelect;
+        //    DataParam.indexMap = _mapSelect;
 
-            DataUtils.CheckEquipWeapon();
+        //    DataUtils.CheckEquipWeapon();
 
-            #region Start Level
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
+        //    #region Start Level
+        //    MissionController.Instance.AddMission();
 
-            //MissionController.Instance.listMissions.Add(_listMission);
+        //    DataParam.nextSceneAfterLoad = 2;
 
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
+        //    DataController.instance.DoAchievement(5, 1);
 
-            //MissionController.Instance.listMissions.Add(_listMission);
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
-
-            MissionController.Instance.AddMission();
-
-            DataParam.nextSceneAfterLoad = 2;
-
-            DataController.instance.DoAchievement(5, 1);
-
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-
-            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
-            #endregion
-            return;
-        }
+        //    MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+        //    #endregion
+        //    return;
+        //}
 
 
         if (_stageSelect < 0 || _mapSelect < 0)
@@ -256,17 +243,7 @@ public class StageManager : MonoBehaviour
             DataUtils.CheckEquipWeapon();
 
             #region Start Level
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission2;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission2;
 
-            //MissionController.Instance.listMissions.Add(_listMission);
-
-            //_listMission = new ListMission();
-            //_listMission.typeMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].typemission3;
-            //_listMission.valueMission = DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].valuemission3;
-
-            //MissionController.Instance.listMissions.Add(_listMission);
 
             MissionController.Instance.AddMission();
 
@@ -334,14 +311,14 @@ public class StageManager : MonoBehaviour
     public void ChooseHardMode()
     {
 
-        if (DataController.instance.isHack)
-        {
-            DataUtils.modeSelected = 1;
-            imgNormal.sprite = imgModeUnSelect;
-            imgHard.sprite = imgModeSelected;
-            RefreshMap();
-        }
-        else
+        //if (DataController.instance.isHack)
+        //{
+        //    DataUtils.modeSelected = 1;
+        //    imgNormal.sprite = imgModeUnSelect;
+        //    imgHard.sprite = imgModeSelected;
+        //    RefreshMap();
+        //}
+        //else
         {
             if (DataUtils.lstAllStageNormal[_stageSelect].levelUnlock >= 7)
             {

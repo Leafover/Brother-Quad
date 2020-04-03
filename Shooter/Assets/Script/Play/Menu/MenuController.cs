@@ -23,7 +23,7 @@ public class MenuController : MonoBehaviour
 
             DataUtils.FillEquipmentData();
 
-
+            DataUtils.FillPlayerDataInfo();
         }
 
     }
@@ -77,7 +77,7 @@ public class MenuController : MonoBehaviour
             warningvideoreward.SetActive(false);
 
         if (DataController.instance.isHack)
-            DataUtils.AddCoinAndGame(10000000, 100000);
+            DataUtils.AddCoinAndGame(100000, 1000);
 
 
         #region problem
