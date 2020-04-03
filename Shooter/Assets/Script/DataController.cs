@@ -245,7 +245,7 @@ public class DataController : MonoBehaviour
     {
         if (loadData)
             return;
-       // Debug.unityLogger.logEnabled = isHack;
+        Debug.unityLogger.logEnabled = isHack;
         LoadData();
 
         loadData = true;
@@ -1150,6 +1150,8 @@ public class DataController : MonoBehaviour
         LoadDataPrimeAccount();
         LoadAchievement();
         LoadDailyQuest();
+
+        DataUtils.FillPlayerDataInfo();
     }
     void SaveBlackMarket()
     {

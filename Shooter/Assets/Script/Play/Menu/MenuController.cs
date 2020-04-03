@@ -81,7 +81,7 @@ public class MenuController : MonoBehaviour
 
 
         #region problem
-        DataUtils.FillPlayerDataInfo();
+        //DataUtils.FillPlayerDataInfo();
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
