@@ -58,6 +58,7 @@ public class LuckChestPanel : MonoBehaviour
             {
                 DataUtils.AddCoinAndGame(-prices[index], 0);
                 Calculate();
+                MyAnalytics.LogOpenLuckyChest("class_chest");
             }
             else
             {
@@ -71,6 +72,19 @@ public class LuckChestPanel : MonoBehaviour
             {
                 DataUtils.AddCoinAndGame(0, -prices[index]);
                 Calculate();
+                switch (index) {
+                    case 1:
+                        MyAnalytics.LogOpenLuckyChest("rare_chest");
+                        break;
+                    case 2:
+                        MyAnalytics.LogOpenLuckyChest("high_class_chest");
+                        break;
+                    case 3:
+                        MyAnalytics.LogOpenLuckyChest("legend_chest");
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {

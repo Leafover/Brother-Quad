@@ -14,64 +14,67 @@ public class MyAnalytics
     const string EVENT_OPEN_HEROTAB = "open_hero_tab";
     const string EVENT_OPEN_DAILYQUEST = "open_dailyquest_chievement";
     const string EVENT_OPEN_BLACKMARKET = "open_black_market";
-    const string EVENT_BUY_SUCCESS_MARKET = "buy_item_blackmarket";
+    const string EVENT_BUY_SUCCESS_MARKET = "buy_item_blackmarket_success";
     const string EVENT_CLICK_REFRESH = "click_refresh";
     const string EVENT_OPEN_SHOP = "open_shop";
     const string EVENT_OPEN_LUCKYCHEST = "open_chest_";
     const string EVENT_GET_REWARD = "free_reward";
     const string EVENT_CLICK_FANPAGE = "click_fanpage";
-    const string EVENT_STARTERPACK = "buy_starter_pack";
+    const string EVENT_STARTERPACK = "buy_starter_pack_success";
     const string EVENT_PRIME_ACCOUNT = "upgrade_to_prime_account";
     const string EVENT_SHOW_PRIME_ACCOUNT = "not_yet_upgrade_prime_account";
 
 
-    public static void LogEvolveItem(string itemID, string itemType) {
-        FirebaseAnalytics.LogEvent("evolve_" + itemID + "_" + itemType);
+    public static void LogEvolveItem(string itemID, string itemType, bool isEvolve) {//v
+        FirebaseAnalytics.LogEvent(isEvolve?"evolve_":"upgrade_" + itemID + "_" + itemType);
     }
     public static void LogNotYetUpgradePrime() {
         FirebaseAnalytics.LogEvent(EVENT_SHOW_PRIME_ACCOUNT);
     }
-    public static void LogPrimeAccount() {
+    public static void LogPrimeAccount() {//v
         FirebaseAnalytics.LogEvent(EVENT_PRIME_ACCOUNT);
     }
-    public static void LogBuyStarterPack() {
+    public static void LogBuyStarterPack() {//v
         FirebaseAnalytics.LogEvent(EVENT_STARTERPACK);
     }
-    public static void LogClickFanpage() {
+    public static void LogClickFanpage() {//v
         FirebaseAnalytics.LogEvent(EVENT_CLICK_FANPAGE);
     }
-    public static void LogFreeReward() {
+    public static void LogFreeReward() {//v
         FirebaseAnalytics.LogEvent(EVENT_GET_REWARD);
     }
     public static void LogOpenLuckyChest(string chestName) {
         FirebaseAnalytics.LogEvent(EVENT_OPEN_LUCKYCHEST + chestName);
     }
-    public static void LogOpenShop() {
+    public static void LogOpenShop() {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_SHOP);
     }
-    public static void LogClickRefresh() {
+    public static void LogClickRefresh() {//v
         FirebaseAnalytics.LogEvent(EVENT_CLICK_REFRESH);
     }
-    public static void LogBuyInBlackMarket() {
+    public static void LogRefreshByVideo() {//v
+        FirebaseAnalytics.LogEvent(EVENT_CLICK_REFRESH+"_by_video");
+    }
+    public static void LogBuyInBlackMarket() {//v
         FirebaseAnalytics.LogEvent(EVENT_BUY_SUCCESS_MARKET);
     }
-    public static void LogOpenBlackMarket() {
+    public static void LogOpenBlackMarket() {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_BLACKMARKET);
     }
-    public static void LogOpenInventory() {
+    public static void LogOpenInventory() {//v
         FirebaseAnalytics.LogEvent(EVENT_INVENTORY);
     }
-    public static void LogEventTakeItem(string itemID, string itemType, bool isCraft) {
-        string _eventName = isCraft ? "craft_" : "unlock" + itemID + "_" + itemType + "success";
+    public static void LogEventTakeItem(string itemID, string itemType) {//v
+        string _eventName = "craft_" + itemID + "_" + itemType + "success";
     }
-    public static void LogOpenHeroTab() {
+    public static void LogOpenHeroTab() {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_HEROTAB);
     }
-    public static void LogOpenTabDailyQuest() {
+    public static void LogOpenTabDailyQuest() {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_DAILYQUEST);
     }
-    public static void LogEventBuyInapp(string packName) {
-        FirebaseAnalytics.LogEvent("buy_pack_"+packName);
+    public static void LogEventBuyInapp(string packName) {//v
+        FirebaseAnalytics.LogEvent("buy_inapp_"+packName);
     }
 
 

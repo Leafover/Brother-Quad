@@ -129,46 +129,57 @@ public class GameIAPManager : MonoBehaviour, IStoreListener
             case DataUtils.P_DONATE:
                 Debug.LogError("Process Donate");
                 DataUtils.RemoveAds();
+                MyAnalytics.LogEventBuyInapp("donate_pack");
                 break;
             case DataUtils.P_STARTER_PACK:
                 Debug.LogError("P_STARTER_PACK");
                 DataUtils.AddCoinAndGame(7500, 0);
                 DataUtils.AddHPPack(5);
-                //DataUtils.RemoveAds();
+                MyAnalytics.LogEventBuyInapp("starter_pack");
+                MyAnalytics.LogBuyStarterPack();
                 DataUtils.TakeItem("W7", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 10, true);
                 break;
             case DataUtils.P_CHEAP_PACK:
                 DataUtils.AddCoinAndGame(7500, 25);
                 DataUtils.AddHPPack(10);
+                MyAnalytics.LogEventBuyInapp("cheap_pack");
                 break;
             case DataUtils.P_BEST_CHOICE:
                 DataUtils.AddCoinAndGame(15000, 50);
                 DataUtils.AddHPPack(25);
                 DataUtils.TakeHeroPice("P1", 20);
+                MyAnalytics.LogEventBuyInapp("best_choice_pack");
                 break;
             case DataUtils.P_PROFESSIONAL_PACK:
                 DataUtils.AddCoinAndGame(85000, 100);
                 DataUtils.AddHPPack(45);
                 DataUtils.TakeHeroPice("P1", 50);
                 DataUtils.RemoveAds();
+                MyAnalytics.LogEventBuyInapp("professional_pack");
                 break;
             case DataUtils.P_12500GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 12500);
+                MyAnalytics.LogEventBuyInapp("pack_12500_gems");
                 break;
             case DataUtils.P_1750GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 1750);
+                MyAnalytics.LogEventBuyInapp("pack_1750_gems");
                 break;
             case DataUtils.P_220GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 220);
+                MyAnalytics.LogEventBuyInapp("pack_220_gems");
                 break;
             case DataUtils.P_25GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 25);
+                MyAnalytics.LogEventBuyInapp("pack_25_gems");
                 break;
             case DataUtils.P_4000GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 4000);
+                MyAnalytics.LogEventBuyInapp("pack_4000_gems");
                 break;
             case DataUtils.P_600GEM_PACK:
                 DataUtils.AddCoinAndGame(0, 600);
+                MyAnalytics.LogEventBuyInapp("pack_600_gems");
                 break;
         }
         return PurchaseProcessingResult.Complete;

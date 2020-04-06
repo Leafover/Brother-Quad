@@ -40,6 +40,7 @@ public class ShopManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        MyAnalytics.LogOpenShop();
         ChooseTab(2);
     }
 
@@ -96,6 +97,7 @@ public class ShopManager : MonoBehaviour
                 if (b)
                 {
                     DataUtils.AddCoinAndGame(200, 0);
+                    MyAnalytics.LogFreeReward();
                 }
 
             });
