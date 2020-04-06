@@ -59,7 +59,6 @@ public class CameraController : MonoBehaviour
         prcShake.enabled = false;
         procam.enabled = false;
 
-
     }
     public void Init()
     {
@@ -75,40 +74,44 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            objRedZone.transform.position = new Vector3(transform.position.x, transform.position.y, objRedZone.transform.position.z);
-
-            pointlineredzone[0].transform.localPosition = new Vector2(pointlineredzone[0].transform.localPosition.x, bouders[0].transform.localPosition.y);
-            pointlineredzone[1].transform.localPosition = new Vector2(pointlineredzone[1].transform.localPosition.x, bouders[1].transform.localPosition.y);
-            redzone.transform.localPosition = new Vector2(bouders[3].transform.localPosition.x, redzone.transform.localPosition.y);
-            lineredzone.SetPosition(0, pointlineredzone[0].position);
-            lineredzone.SetPosition(1, pointlineredzone[1].position);
-            lineredzone.transform.position = new Vector2(GameController.instance.currentMap.pointBeginPlayer.transform.position.x - 1, lineredzone.transform.position.y);
-
-            BeginRedZone();
+            ActiveRedZone();
+            objRedZone.SetActive(true);
+            lineredzone.enabled = true;
         }
     }
 
     public void BeginRedZone()
     {
-        ActiveRedZone();
 
+        if (!GameController.instance.currentMap.isRedZone)
+            return;
 
-        objRedZone.SetActive(true);
+        objRedZone.transform.position = new Vector3(transform.position.x, transform.position.y, objRedZone.transform.position.z);
+
+        pointlineredzone[0].transform.localPosition = new Vector2(pointlineredzone[0].transform.localPosition.x, bouders[0].transform.localPosition.y);
+        pointlineredzone[1].transform.localPosition = new Vector2(pointlineredzone[1].transform.localPosition.x, bouders[1].transform.localPosition.y);
+        redzone.transform.localPosition = new Vector2(bouders[3].transform.localPosition.x, redzone.transform.localPosition.y);
+        lineredzone.SetPosition(0, pointlineredzone[0].position);
+        lineredzone.SetPosition(1, pointlineredzone[1].position);
+        lineredzone.transform.position = new Vector2(bouders[3].transform.position.x, lineredzone.transform.position.y);
+
+        lineredzone.enabled = false;
 
         if (DataUtils.modeSelected == 0)
         {
-            speedRedZone = 0.05f;
+            speedRedZone = 0.1f;
             maxTimeResetRedZone = 4;
             maxTimeTakeDamageRedZone = 2;
             damageRedZone = 5;
         }
         else
         {
-            speedRedZone = 0.1f;
+            speedRedZone = 0.2f;
             maxTimeResetRedZone = 3f;
             maxTimeTakeDamageRedZone = 1;
             damageRedZone = 10f;
         }
+
     }
     Color red = new Color(1, 0.03798597f, 0, 0.2235294f), blue = new Color(0, 0.8888178f, 1, 0.2235294f);
     public void ActiveRedZone()
@@ -123,9 +126,10 @@ public class CameraController : MonoBehaviour
         lineredzone.SetColors(Color.blue, Color.blue);
         activeRedZone = false;
         timeResetActiveRedZone = maxTimeResetRedZone;
+
     }
     Vector2 posLineZone, scaleRedZone;
-
+    float speedTempLineRedZone;
 
     public void SetPosRedZone(float deltaTime)
     {
@@ -133,21 +137,29 @@ public class CameraController : MonoBehaviour
         if (!objRedZone.activeSelf)
             return;
 
+        if (lineredzone.transform.position.x < GameController.instance.currentMap.procam2DTriggerBoudaries[GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[GameController.instance.currentMap.procam2DTriggerBoudaries.Length - 1].transform.position.x)
+        {
+            lineredzone.SetPosition(0, pointlineredzone[0].position);
+            lineredzone.SetPosition(1, pointlineredzone[1].position);
 
+            posLineZone.x = lineredzone.transform.position.x;
+            posLineZone.y = lineredzone.transform.position.y;
 
-        lineredzone.SetPosition(0, pointlineredzone[0].position);
-        lineredzone.SetPosition(1, pointlineredzone[1].position);
+            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 50 : deltaTime * speedRedZone * 10;
 
-        posLineZone.x = lineredzone.transform.position.x;
-        posLineZone.y = lineredzone.transform.position.y;
+            //   Debug.LogError("speed:" + speedtemp);
+            posLineZone.x += speedTempLineRedZone;
 
+            lineredzone.transform.position = posLineZone;
 
+            scaleRedZone.x += speedTempLineRedZone * 3/*Mathf.Abs(lineredzone.transform.position.x - redzone.transform.position.x) * 3.15f*/;
 
-        scaleRedZone.x = Vector2.Distance(lineredzone.transform.position, redzone.transform.position) * 3.1f;
-        scaleRedZone.y = redzone.transform.localScale.y;
-        lineredzone.transform.position = posLineZone;
-        redzone.transform.localScale = scaleRedZone;
+            //    Debug.LogError("==========" + Mathf.Abs(lineredzone.transform.position.x - redzone.transform.position.x) * 3.15f);
 
+            scaleRedZone.y = redzone.transform.localScale.y;
+
+            redzone.transform.localScale = scaleRedZone;
+        }
 
         if (!activeRedZone)
         {
@@ -168,14 +180,6 @@ public class CameraController : MonoBehaviour
                 PlayerController.instance.TakeDamage(damageRedZone);
             }
         }
-
-        if (lineredzone.transform.position.x >= bouders[2].transform.position.x)
-            return;
-
-
-
-        posLineZone.x += deltaTime * speedRedZone;
-
 
 
     }
@@ -231,6 +235,9 @@ public class CameraController : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (GameController.instance.win || PlayerController.instance.playerState == PlayerController.PlayerState.Die)
+            return;
+
         CacheSizeAndViewPos();
 
         var x1 = NumericBoundaries.RightBoundary;

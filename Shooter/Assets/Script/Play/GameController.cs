@@ -176,6 +176,8 @@ public class GameController : MonoBehaviour
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
         StartCoroutine(DelayLoadMap());
+
+        CameraController.instance.BeginRedZone();
     }
     IEnumerator DelayLoadMap()
     {
@@ -530,6 +532,7 @@ public class GameController : MonoBehaviour
     {
         win = false;
         gameState = GameState.gameover;
+        CameraController.instance.procam.enabled = false;
         StartCoroutine(delayDisplayEnd());
     }
     void OnUpdateItemDrop(float deltaTime)

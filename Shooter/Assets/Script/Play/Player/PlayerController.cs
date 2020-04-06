@@ -1427,6 +1427,8 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(2, apc.aimTargetAnim, false);
         GameController.instance.reviveCount = 1;
         AddHealth(maxHealth / 100 * healthBonus);
+
+        CameraController.instance.procam.enabled = true;
     }
 
 }
