@@ -35,11 +35,12 @@ public class MainMenuController : MonoBehaviour
     }
     public void InitLevelSelectEffect(Transform _tr) {
         gLevelEffect.transform.SetParent(_tr, true);
-        gLevelEffect.transform.localScale = new Vector3(40, 40, 40);
-        gLevelEffect.transform.localPosition = Vector3.zero;
+        gLevelEffect.transform.localScale = new Vector3(25, 25, 25);
+        gLevelEffect.transform.localPosition = new Vector3(0, -10, 0);
     }
     private void InitStageEffect(Transform _tr) {
         gStageEffect.transform.SetParent(_tr, true);
+        gStageEffect.transform.localScale = new Vector3(60, 60, 60);
         gStageEffect.gameObject.transform.localPosition = Vector3.zero;
     }
     private void Start()
