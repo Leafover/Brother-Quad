@@ -76,19 +76,17 @@ public class MenuController : MonoBehaviour
         else
             warningvideoreward.SetActive(false);
 
-        
+        if (DataController.instance.isHack)
+            DataUtils.AddCoinAndGame(100000, 1000);
 
 
         #region problem
-        DataUtils.FillPlayerDataInfo();
+        //DataUtils.FillPlayerDataInfo();
         if (DataUtils.StageHasInit())
         {
             DataUtils.FillAllStage();
         }
         #endregion
-
-        if (DataController.instance.isHack)
-            DataUtils.AddCoinAndGame(100000, 1000);
     }
     public void BtnDisplayPrimeAccount(bool open)
     {
