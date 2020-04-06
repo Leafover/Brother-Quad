@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
         //  NumericBoundaries.TopBoundary = 4;
 
-        if (DataParam.playMode == 0 || DataParam.playMode == 2)
+        if (!GameController.instance.currentMap.isRedZone)
         {
         }
         else
@@ -78,7 +78,7 @@ public class CameraController : MonoBehaviour
             lineredzone.SetPosition(0, pointlineredzone[0].position);
             lineredzone.SetPosition(1, pointlineredzone[1].position);
             lineredzone.transform.position = GameController.instance.currentMap.pointBeginPlayer.transform.position;
-
+            BeginRedZone();
         }
     }
 
@@ -87,26 +87,32 @@ public class CameraController : MonoBehaviour
         ActiveRedZone();
         objRedZone.SetActive(true);
     }
-
+    Color red = new Color(1, 0.03798597f, 0, 0.2235294f), blue = new Color(0, 0.8888178f, 1, 0.2235294f);
     public void ActiveRedZone()
     {
-        redzone.color = Color.red;
+        redzone.color = red;
+        lineredzone.SetColors(Color.red, Color.red);
         activeRedZone = true;
     }
     public void DisableRedZone()
     {
-        redzone.color = Color.blue;
+        redzone.color = blue;
+        lineredzone.SetColors(Color.blue, Color.blue);
         activeRedZone = false;
     }
     Vector2 posLineZone;
+    public float speedRedZone = 0.2f;
     public void SetPosRedZone(float deltaTime)
     {
-        if (!activeRedZone || !objRedZone.activeSelf)
+        if (!activeRedZone || !objRedZone.activeSelf || lineredzone.transform.position.x >= bouders[2].transform.position.x)
             return;
+
+        lineredzone.SetPosition(0, pointlineredzone[0].position);
+        lineredzone.SetPosition(1, pointlineredzone[1].position);
 
         posLineZone.x = lineredzone.transform.position.x;
         posLineZone.y = lineredzone.transform.position.y;
-        posLineZone.x += deltaTime * speed;
+        posLineZone.x += deltaTime * speedRedZone;
 
         lineredzone.transform.position = posLineZone;
     }
@@ -197,6 +203,8 @@ public class CameraController : MonoBehaviour
                 nextPointCheck.gameObject.SetActive(false);
             }
         }
+
+        SetPosRedZone(deltaTime);
     }
 
     public Vector2 Size()

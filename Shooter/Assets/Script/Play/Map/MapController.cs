@@ -6,6 +6,7 @@ using PathCreation;
 
 public class MapController : MonoBehaviour
 {
+    public bool isRedZone;
     public ScrollBackground myBg;
     public float distanceMap;
     public bool haveMiniBoss,haveBoss;
