@@ -106,6 +106,7 @@ public class MenuController : MonoBehaviour
         if (open)
         {
             blackMarketpanel.gameObject.SetActive(true);
+            MyAnalytics.LogOpenBlackMarket();
         }
         else
         {

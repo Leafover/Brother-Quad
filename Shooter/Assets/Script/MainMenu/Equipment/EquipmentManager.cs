@@ -67,6 +67,8 @@ public class EquipmentManager : MonoBehaviour
     string _keyCompare = "";
     private void OnEnable()
     {
+        MyAnalytics.LogOpenInventory();
+
         btnPanel = GetComponent<Button>();
         btnPanel.onClick.AddListener(() =>
         {
@@ -227,6 +229,7 @@ public class EquipmentManager : MonoBehaviour
                     EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                     _iEquipData.CheckItemUnlock();
                 }
+                MyAnalytics.LogEventTakeItem(itemSelected.id, itemSelected.type);
                 MainMenuController.Instance.ShowCraftItem(itemSelected, "Craft Success");
             }
         }
@@ -512,6 +515,7 @@ public class EquipmentManager : MonoBehaviour
                     DataUtils.SaveEquippedData();
                 }
                 DataController.instance.DoDailyQuest(5, 1);
+                MyAnalytics.LogEvolveItem(itemSelected.id, itemSelected.type, false);
             }
             else
             {
@@ -631,7 +635,7 @@ public class EquipmentManager : MonoBehaviour
                         DataUtils.SaveEquippedData();
                         DataUtils.SaveEquipmentData();
 
-
+                        MyAnalytics.LogEvolveItem(itemSelected.id, itemSelected.type, true);
                     }
                     else
                     {

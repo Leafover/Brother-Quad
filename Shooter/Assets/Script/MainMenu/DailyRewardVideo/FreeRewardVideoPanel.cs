@@ -46,7 +46,14 @@ public class FreeRewardVideoPanel : MonoBehaviour
 
         Reward(index);
 #else
-        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward(index);});
+        AdsManager.Instance.ShowRewardedVideo((b) =>
+        {
+            if (b)
+            {
+                Reward(index);
+                MyAnalytics.LogFreeReward();
+            }
+        });
 #endif
 
     }

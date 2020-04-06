@@ -8,16 +8,16 @@ public class BlackMarketPanel : MonoBehaviour
 {
     public Sprite[] levelSp;
     public Sprite gemSp, videoSp;
-    public Text priceRefreshText,nameRewardText;
+    public Text priceRefreshText, nameRewardText;
     public Image iconRefreshImg;
     public TimeSpan timeSpanTemp;
     string timetemp = "20:20:02";
     double timeCount;
     public List<BouderBlackmarket> bouders;
     public TextMeshProUGUI timeText;
-    public GameObject confirmPanel,iconmanh;
+    public GameObject confirmPanel, iconmanh;
     public Image bouderConfirm, iconConfirm;
-    public void DisplayConfirm(Sprite _bouder, Sprite _icon,string name)
+    public void DisplayConfirm(Sprite _bouder, Sprite _icon, string name)
     {
         MainMenuController.Instance.txtConfirmTitle.text = "Congratulation";
         nameRewardText.text = name;
@@ -71,11 +71,18 @@ public class BlackMarketPanel : MonoBehaviour
         if (DataParam.countResetBlackMarket == 0)
         {
             SoundController.instance.PlaySound(soundGame.soundbtnclick);
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             Reward();
-#else
-        AdsManager.Instance.ShowRewardedVideo((b) => {if(b) Reward();});
-#endif
+            #else
+            AdsManager.Instance.ShowRewardedVideo((b) =>
+            {
+                if (b)
+                {
+                    Reward();
+                    MyAnalytics.LogRefreshByVideo();
+                }
+            });
+            #endif
         }
         else
         {
@@ -85,6 +92,8 @@ public class BlackMarketPanel : MonoBehaviour
                 DataUtils.AddCoinAndGame(0, -DataParam.countResetBlackMarket * 5);
                 Reward();
                 priceRefreshText.text = "" + DataParam.countResetBlackMarket * 5;
+
+                MyAnalytics.LogClickRefresh();
             }
             else
             {

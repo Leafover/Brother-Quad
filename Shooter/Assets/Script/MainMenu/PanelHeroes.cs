@@ -65,6 +65,7 @@ public class PanelHeroes : MonoBehaviour
             heroSelected = DataUtils.heroInfo;
         }
 
+        MyAnalytics.LogOpenHeroTab();
         ChooseTab(0);
 
         FillHeroData();

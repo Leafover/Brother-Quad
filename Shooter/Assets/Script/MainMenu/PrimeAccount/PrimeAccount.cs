@@ -17,6 +17,10 @@ public class PrimeAccount : MonoBehaviour
     {
         DisplayButtom();
         Click(0);
+        if (!DataController.primeAccout.isVIP)
+        {
+            MyAnalytics.LogNotYetUpgradePrime();
+        }
     }
     void DisplayButtom()
     {
@@ -101,6 +105,7 @@ public class PrimeAccount : MonoBehaviour
             DataParam.timeBeginBuyPrimeAccount = System.DateTime.Now;
             DataController.instance.AddNewQuest();
             DisplayButtom();
+            MyAnalytics.LogPrimeAccount();
         }
         else
         {

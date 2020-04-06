@@ -98,7 +98,7 @@ public class BouderBlackmarket : MonoBehaviour
                 DataUtils.AddCoinAndGame(-(int)DataController.blackMarketSave[index].GiaBanCoin, 0);
                 DataController.blackMarketSave[index].countnumber--;
                 DisplayAgainWhenBuy();
-
+                MyAnalytics.LogBuyInBlackMarket();
                 MenuController.instance.blackMarketpanel.DisplayConfirm(bouderImg.sprite,iconItemImg.sprite, DataUtils.GetItemName(type, DataController.blackMarketSave[index].ID));
             }
         }

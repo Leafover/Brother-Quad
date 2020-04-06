@@ -245,10 +245,12 @@ public class MainMenuController : MonoBehaviour
     public void BtnLike()
     {
         Application.OpenURL("https://www.facebook.com/rambo.contra.brothersquad/");
+        MyAnalytics.LogClickFanpage();
     }
     public void BtnOpenAchievementAndDailyQuest()
     {
         MenuController.instance.achievementAndDailyQuestPanel.DisPlayMe(0);
+        MyAnalytics.LogOpenTabDailyQuest();
     }
     public void WatchAds()
     {
