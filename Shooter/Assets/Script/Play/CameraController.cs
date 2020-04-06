@@ -23,7 +23,8 @@ public class CameraController : MonoBehaviour
 
     public List<GameObject> effectstage;
 
-    public GameObject redzone, objRedZone;
+    public GameObject objRedZone;
+    public SpriteRenderer redzone;
     public Transform[] pointlineredzone;
     public LineRenderer lineredzone;
 
@@ -67,25 +68,35 @@ public class CameraController : MonoBehaviour
 
         if (DataParam.playMode == 0 || DataParam.playMode == 2)
         {
-            activeRedZone = false;
         }
         else
         {
-            activeRedZone = true;
-
 
             pointlineredzone[0].transform.localPosition = new Vector2(pointlineredzone[0].transform.localPosition.x, bouders[0].transform.localPosition.y);
             pointlineredzone[1].transform.localPosition = new Vector2(pointlineredzone[1].transform.localPosition.x, bouders[1].transform.localPosition.y);
-
+            redzone.transform.localPosition = new Vector2(bouders[3].transform.localPosition.x, redzone.transform.localPosition.y);
             lineredzone.SetPosition(0, pointlineredzone[0].position);
             lineredzone.SetPosition(1, pointlineredzone[1].position);
             lineredzone.transform.position = GameController.instance.currentMap.pointBeginPlayer.transform.position;
 
         }
     }
+
+    public void BeginRedZone()
+    {
+        ActiveRedZone();
+        objRedZone.SetActive(true);
+    }
+
     public void ActiveRedZone()
     {
-        objRedZone.SetActive(true);
+        redzone.color = Color.red;
+        activeRedZone = true;
+    }
+    public void DisableRedZone()
+    {
+        redzone.color = Color.blue;
+        activeRedZone = false;
     }
     Vector2 posLineZone;
     public void SetPosRedZone(float deltaTime)
