@@ -159,8 +159,8 @@ public class GunMiniBoss2 : AutoTarget
             case 27:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damageBullet * 1.5f, false,false);
-                myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 1.5f, false, true,false);
+                TakeDamage(PlayerController.instance.damageBullet * 3f, false,false);
+                myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 3f, false, true,false);
                 SoundController.instance.PlaySound(soundGame.sounddapchao);
 
 

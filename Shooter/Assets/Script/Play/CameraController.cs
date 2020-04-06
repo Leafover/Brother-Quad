@@ -23,6 +23,12 @@ public class CameraController : MonoBehaviour
 
     public List<GameObject> effectstage;
 
+    public GameObject redzone, objRedZone;
+    public Transform[] pointlineredzone;
+    public LineRenderer lineredzone;
+
+    public bool activeRedZone;
+
     private void OnValidate()
     {
         NumericBoundaries = GetComponent<ProCamera2DNumericBoundaries>();
@@ -34,14 +40,21 @@ public class CameraController : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        bouders[0].transform.localPosition = new Vector2(bouders[0].transform.localPosition.x, Camera.main.orthographicSize + 0.5f);
-        bouders[1].transform.localPosition = new Vector2(bouders[1].transform.localPosition.x, -Camera.main.orthographicSize - 0.5f);
-        bouders[2].transform.localPosition = new Vector2(Camera.main.orthographicSize + 4.5f, bouders[2].transform.localPosition.y);
-        bouders[3].transform.localPosition = new Vector2(-Camera.main.orthographicSize - 4.5f, bouders[3].transform.localPosition.y);
+        float height = 2f * Camera.main.orthographicSize;
+        float width = height * Camera.main.aspect;
+
+        Debug.LogError(height + ":" + width);
+
+        bouders[0].transform.localPosition = new Vector2(bouders[0].transform.localPosition.x, /*Camera.main.orthographicSize + 0.5f*/height / 2 + 0.5f);
+        bouders[1].transform.localPosition = new Vector2(bouders[1].transform.localPosition.x, /*-Camera.main.orthographicSize - 0.5f*/-height / 2 - 0.5f);
+        bouders[2].transform.localPosition = new Vector2(/*Camera.main.orthographicSize + 4.5f*/width / 2 + 0.5f, bouders[2].transform.localPosition.y);
+        bouders[3].transform.localPosition = new Vector2(/*-Camera.main.orthographicSize - 4.5f*/-width / 2 - 0.5f, bouders[3].transform.localPosition.y);
         currentCamBoidaries = 0;
         NumericBoundaries.enabled = false;
         prcShake.enabled = false;
         procam.enabled = false;
+
+
     }
     public void Init()
     {
@@ -51,6 +64,40 @@ public class CameraController : MonoBehaviour
         procam.AddCameraTarget(PlayerController.instance.transform);
         NumericBoundaries.RightBoundary = GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].RightBoundary + GameController.instance.currentMap.procam2DTriggerBoudaries[currentCamBoidaries].transform.position.x;
         //  NumericBoundaries.TopBoundary = 4;
+
+        if (DataParam.playMode == 0 || DataParam.playMode == 2)
+        {
+            activeRedZone = false;
+        }
+        else
+        {
+            activeRedZone = true;
+
+
+            pointlineredzone[0].transform.localPosition = new Vector2(pointlineredzone[0].transform.localPosition.x, bouders[0].transform.localPosition.y);
+            pointlineredzone[1].transform.localPosition = new Vector2(pointlineredzone[1].transform.localPosition.x, bouders[1].transform.localPosition.y);
+
+            lineredzone.SetPosition(0, pointlineredzone[0].position);
+            lineredzone.SetPosition(1, pointlineredzone[1].position);
+            lineredzone.transform.position = GameController.instance.currentMap.pointBeginPlayer.transform.position;
+
+        }
+    }
+    public void ActiveRedZone()
+    {
+        objRedZone.SetActive(true);
+    }
+    Vector2 posLineZone;
+    public void SetPosRedZone(float deltaTime)
+    {
+        if (!activeRedZone || !objRedZone.activeSelf)
+            return;
+
+        posLineZone.x = lineredzone.transform.position.x;
+        posLineZone.y = lineredzone.transform.position.y;
+        posLineZone.x += deltaTime * speed;
+
+        lineredzone.transform.position = posLineZone;
     }
     Vector2 _cameraSize;
     float velocity;
@@ -96,7 +143,7 @@ public class CameraController : MonoBehaviour
             {
                 return;
             }
-         //   GameController.instance.waitForWin = true;
+            //   GameController.instance.waitForWin = true;
             GameController.instance.DelayWinFunc();
         }
     }
@@ -134,7 +181,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if(Camera.main.transform.position.x - lockCamPos > 1)
+            if (Camera.main.transform.position.x - lockCamPos > 1)
             {
                 nextPointCheck.gameObject.SetActive(false);
             }

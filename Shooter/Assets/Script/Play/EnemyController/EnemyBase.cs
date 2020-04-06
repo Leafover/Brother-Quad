@@ -908,7 +908,7 @@ public class EnemyBase : AutoTarget
             case 27:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damageBullet * 1.5f, false, false, false);
+                TakeDamage(PlayerController.instance.damageBullet * 3f, false, false, false);
                 SoundController.instance.PlaySound(soundGame.sounddapchao);
                 if (currentHealth <= 0)
                 {

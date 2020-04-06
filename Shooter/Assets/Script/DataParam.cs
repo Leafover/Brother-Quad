@@ -20,7 +20,7 @@ public class DataParam : MonoBehaviour
     public const string INDEXREWARDVIDEO = "indexrewardvideo";
     public const string COUNTDONEDAILYQUEST = "countdonedailyquest";
     public static bool first = true, doneAllDailyQuest = false;
-    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase,countResetBlackMarket = 0, indexRewardVideo = 0,countdonedailyquest;
+    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase,countResetBlackMarket = 0, indexRewardVideo = 0,countdonedailyquest,playMode;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",
     "Daily free gifts contain many useful items",
