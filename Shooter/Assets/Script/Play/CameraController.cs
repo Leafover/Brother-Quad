@@ -30,9 +30,9 @@ public class CameraController : MonoBehaviour
 
     public bool activeRedZone;
 
-    float maxTimeResetRedZone,maxTimeTakeDamageRedZone;
+    float maxTimeResetRedZone, maxTimeTakeDamageRedZone;
     float speedRedZone;
-    float timeResetActiveRedZone, timeTakeDamgeRedZone,damageRedZone;
+    float timeResetActiveRedZone, timeTakeDamgeRedZone, damageRedZone;
 
     private void OnValidate()
     {
@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            objRedZone.transform.position = new Vector3(transform.position.x, transform.position.y, objRedZone.transform.position.z);
 
             pointlineredzone[0].transform.localPosition = new Vector2(pointlineredzone[0].transform.localPosition.x, bouders[0].transform.localPosition.y);
             pointlineredzone[1].transform.localPosition = new Vector2(pointlineredzone[1].transform.localPosition.x, bouders[1].transform.localPosition.y);
@@ -82,6 +83,7 @@ public class CameraController : MonoBehaviour
             lineredzone.SetPosition(0, pointlineredzone[0].position);
             lineredzone.SetPosition(1, pointlineredzone[1].position);
             lineredzone.transform.position = new Vector2(GameController.instance.currentMap.pointBeginPlayer.transform.position.x - 1, lineredzone.transform.position.y);
+
             BeginRedZone();
         }
     }
@@ -89,9 +91,11 @@ public class CameraController : MonoBehaviour
     public void BeginRedZone()
     {
         ActiveRedZone();
+
+
         objRedZone.SetActive(true);
 
-        if(DataUtils.modeSelected == 0)
+        if (DataUtils.modeSelected == 0)
         {
             speedRedZone = 0.05f;
             maxTimeResetRedZone = 4;
@@ -129,12 +133,28 @@ public class CameraController : MonoBehaviour
         if (!objRedZone.activeSelf)
             return;
 
+
+
+        lineredzone.SetPosition(0, pointlineredzone[0].position);
+        lineredzone.SetPosition(1, pointlineredzone[1].position);
+
+        posLineZone.x = lineredzone.transform.position.x;
+        posLineZone.y = lineredzone.transform.position.y;
+
+
+
+        scaleRedZone.x = Vector2.Distance(lineredzone.transform.position, redzone.transform.position) * 3.1f;
+        scaleRedZone.y = redzone.transform.localScale.y;
+        lineredzone.transform.position = posLineZone;
+        redzone.transform.localScale = scaleRedZone;
+
+
         if (!activeRedZone)
         {
             timeResetActiveRedZone -= deltaTime;
             if (timeResetActiveRedZone <= 0)
             {
-                activeRedZone = true;
+                ActiveRedZone();
             }
             return;
         }
@@ -152,18 +172,12 @@ public class CameraController : MonoBehaviour
         if (lineredzone.transform.position.x >= bouders[2].transform.position.x)
             return;
 
-        lineredzone.SetPosition(0, pointlineredzone[0].position);
-        lineredzone.SetPosition(1, pointlineredzone[1].position);
 
-        posLineZone.x = lineredzone.transform.position.x;
-        posLineZone.y = lineredzone.transform.position.y;
+
         posLineZone.x += deltaTime * speedRedZone;
 
-        lineredzone.transform.position = posLineZone;
-        scaleRedZone.x = Vector2.Distance(lineredzone.transform.position, redzone.transform.position) * 3.1f;
-        scaleRedZone.y = redzone.transform.localScale.y;
 
-        redzone.transform.localScale = scaleRedZone;
+
 
         Debug.LogError(Vector2.Distance(lineredzone.transform.position, redzone.transform.position));
     }
