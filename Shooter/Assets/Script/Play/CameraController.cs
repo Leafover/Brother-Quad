@@ -178,8 +178,6 @@ public class CameraController : MonoBehaviour
 
 
 
-
-        Debug.LogError(Vector2.Distance(lineredzone.transform.position, redzone.transform.position));
     }
     Vector2 _cameraSize;
     float velocity;

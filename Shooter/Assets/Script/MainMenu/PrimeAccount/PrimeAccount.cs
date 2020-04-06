@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class PrimeAccount : MonoBehaviour
 {
-    string[] des = { "- Receive 10 Gem rewards daily from the time you log in the game", "- Receive 1000 coins daily from the time you log in the game", "- Adding 20% of the total coin earned in all mission", "- Add 2 special daily missions with more gifts", "- 10% discount when buying and upgrading characters, weapons (gem & coin)", "- Remove Ads" };
+    string[] des = { "- 10 Gems daily for 30 days", "- 1.000 Coins daily  for 30 days", "- Mission Coins increased by 20%", "- 2 more special Daily Missions", "- Buy and upgrade cost reduced by 10%", "- Remove Ads" };
     public int index;
 
     public Text desText/*, nameText*/, timeText;
@@ -43,7 +43,7 @@ public class PrimeAccount : MonoBehaviour
                 btnClaimGem.SetActive(true);
             }
             btnBuy.SetActive(false);
-            timeText.text = "TIME EXPIRED TIME: " + DataController.primeAccout.countDay;
+            timeText.text = "Ends after " + DataController.primeAccout.countDay + " days";
             timeText.gameObject.SetActive(true);
             //nameText.gameObject.SetActive(false);
         }
@@ -80,7 +80,7 @@ public class PrimeAccount : MonoBehaviour
         if (DataController.primeAccout.takecoin && DataController.primeAccout.takegem)
         {
             DataController.primeAccout.countDay--;
-            timeText.text = "TIME EXPIRED TIME: " + DataController.primeAccout.countDay;
+            timeText.text = "Ends after " + DataController.primeAccout.countDay + " days";
             DataParam.timeBeginBuyPrimeAccount = System.DateTime.Now;
             if (DataController.primeAccout.countDay <= 0)
             {
