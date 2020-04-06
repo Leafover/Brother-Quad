@@ -895,6 +895,7 @@ public class DataUtils
     public static void FillAllStageHard()
     {
         string sData = GetStageHardTextData();
+        Debug.LogError("sData: " + sData);
         JsonData jData = JsonMapper.ToObject(sData);
         lstAllStageHard = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
@@ -1038,8 +1039,8 @@ public class DataUtils
                 lstAllStageNormal.Add(jStage);
             }
         }
-        //if (StageHardHasInit())
-        //    FillAllStageHard();
+        if (StageHardHasInit())
+            FillAllStageHard();
     }
 
 

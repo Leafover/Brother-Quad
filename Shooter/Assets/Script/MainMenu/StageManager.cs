@@ -139,7 +139,7 @@ public class StageManager : MonoBehaviour
             }
 
             //if (StageHardHasInit())
-                DataUtils.FillAllStageHard();
+                //DataUtils.FillAllStageHard();
         }
     }
 
