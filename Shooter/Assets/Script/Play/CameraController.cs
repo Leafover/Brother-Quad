@@ -30,6 +30,10 @@ public class CameraController : MonoBehaviour
 
     public bool activeRedZone;
 
+    float maxTimeResetRedZone,maxTimeTakeDamageRedZone;
+    float speedRedZone;
+    float timeResetActiveRedZone, timeTakeDamgeRedZone,damageRedZone;
+
     private void OnValidate()
     {
         NumericBoundaries = GetComponent<ProCamera2DNumericBoundaries>();
@@ -77,7 +81,7 @@ public class CameraController : MonoBehaviour
             redzone.transform.localPosition = new Vector2(bouders[3].transform.localPosition.x, redzone.transform.localPosition.y);
             lineredzone.SetPosition(0, pointlineredzone[0].position);
             lineredzone.SetPosition(1, pointlineredzone[1].position);
-            lineredzone.transform.position = GameController.instance.currentMap.pointBeginPlayer.transform.position;
+            lineredzone.transform.position = new Vector2(GameController.instance.currentMap.pointBeginPlayer.transform.position.x - 1, lineredzone.transform.position.y);
             BeginRedZone();
         }
     }
@@ -86,6 +90,21 @@ public class CameraController : MonoBehaviour
     {
         ActiveRedZone();
         objRedZone.SetActive(true);
+
+        if(DataUtils.modeSelected == 0)
+        {
+            speedRedZone = 0.05f;
+            maxTimeResetRedZone = 4;
+            maxTimeTakeDamageRedZone = 2;
+            damageRedZone = 5;
+        }
+        else
+        {
+            speedRedZone = 0.1f;
+            maxTimeResetRedZone = 3f;
+            maxTimeTakeDamageRedZone = 1;
+            damageRedZone = 10f;
+        }
     }
     Color red = new Color(1, 0.03798597f, 0, 0.2235294f), blue = new Color(0, 0.8888178f, 1, 0.2235294f);
     public void ActiveRedZone()
@@ -99,12 +118,38 @@ public class CameraController : MonoBehaviour
         redzone.color = blue;
         lineredzone.SetColors(Color.blue, Color.blue);
         activeRedZone = false;
+        timeResetActiveRedZone = maxTimeResetRedZone;
     }
-    Vector2 posLineZone;
-    public float speedRedZone = 0.2f;
+    Vector2 posLineZone, scaleRedZone;
+
+
     public void SetPosRedZone(float deltaTime)
     {
-        if (!activeRedZone || !objRedZone.activeSelf || lineredzone.transform.position.x >= bouders[2].transform.position.x)
+
+        if (!objRedZone.activeSelf)
+            return;
+
+        if (!activeRedZone)
+        {
+            timeResetActiveRedZone -= deltaTime;
+            if (timeResetActiveRedZone <= 0)
+            {
+                activeRedZone = true;
+            }
+            return;
+        }
+
+        if (PlayerController.instance.GetTranformXPlayer() <= lineredzone.transform.position.x)
+        {
+            timeTakeDamgeRedZone -= deltaTime;
+            if (timeTakeDamgeRedZone <= 0)
+            {
+                timeTakeDamgeRedZone = maxTimeTakeDamageRedZone;
+                PlayerController.instance.TakeDamage(damageRedZone);
+            }
+        }
+
+        if (lineredzone.transform.position.x >= bouders[2].transform.position.x)
             return;
 
         lineredzone.SetPosition(0, pointlineredzone[0].position);
@@ -115,6 +160,12 @@ public class CameraController : MonoBehaviour
         posLineZone.x += deltaTime * speedRedZone;
 
         lineredzone.transform.position = posLineZone;
+        scaleRedZone.x = Vector2.Distance(lineredzone.transform.position, redzone.transform.position) * 3.1f;
+        scaleRedZone.y = redzone.transform.localScale.y;
+
+        redzone.transform.localScale = scaleRedZone;
+
+        Debug.LogError(Vector2.Distance(lineredzone.transform.position, redzone.transform.position));
     }
     Vector2 _cameraSize;
     float velocity;
@@ -153,6 +204,8 @@ public class CameraController : MonoBehaviour
             GameController.instance.currentMap.ResetAutoSpawn();
 
             setBoudariesLeft = true;
+
+
         }
         else
         {
