@@ -1038,8 +1038,8 @@ public class DataUtils
                 lstAllStageNormal.Add(jStage);
             }
         }
-        if (StageHardHasInit())
-            FillAllStageHard();
+        //if (StageHardHasInit())
+        //    FillAllStageHard();
     }
 
 
@@ -1186,7 +1186,7 @@ public class DataUtils
                     lstAllPlayerHeroes.Add(jPlayerInfo);
             }
 
-            Debug.LogError("---------- loadheroTH2");
+            Debug.LogError("---------- loadheroTH2: " + sData);
         }
 
         dicAllHero = new Dictionary<string, HeroDataInfo>();
@@ -1224,12 +1224,11 @@ public class DataUtils
                     dicAllHero.Add(hdInfo.id, hdInfo);
                 }
             }
-
-
             Debug.LogError("---------- loadheroTH4");
         }
 
 
+        Debug.LogError("HeroIndex: " + HeroIndex() + " vs " + lstAllPlayerHeroes.Count);
         playerInfo = lstAllPlayerHeroes[HeroIndex()];
 
         heroInfo = DataHero();

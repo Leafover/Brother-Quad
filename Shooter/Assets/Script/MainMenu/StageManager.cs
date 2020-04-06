@@ -137,6 +137,9 @@ public class StageManager : MonoBehaviour
                 }
                 levelControll.gameObject.SetActive(true);
             }
+
+            //if (StageHardHasInit())
+                DataUtils.FillAllStageHard();
         }
     }
 
