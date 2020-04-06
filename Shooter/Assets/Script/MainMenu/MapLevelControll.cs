@@ -71,6 +71,7 @@ public class MapLevelControll : MonoBehaviour
             StageManager.Instance.SwitchColor(_mapIndex);
             imgMap.color = StageManager.Instance.clSelected;
             imgMap.sprite = StageManager.Instance.imgMapSelected;
+            MainMenuController.Instance.InitLevelSelectEffect(transform);
         }
         var miss_ = DataController.instance.allMission[_stage].missionData[_mapIndex];
         GetMapInfo(miss_, _stage, _mapIndex);
@@ -125,6 +126,8 @@ public class MapLevelControll : MonoBehaviour
             OnMapSelected(stageIndex, _mIndex);
             imgMap.color = StageManager.Instance.clSelected;
             imgMap.sprite = StageManager.Instance.imgMapSelected;
+
+            MainMenuController.Instance.InitLevelSelectEffect(transform);
             canPlay = true;
         }
     }

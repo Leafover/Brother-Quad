@@ -21,6 +21,7 @@ public class MainMenuController : MonoBehaviour
     public Sprite sprUnlock, sprNotYetUnlock;
     public Button[] buttonStages;
     public Image[] imgStages;
+    public GameObject gStageEffect, gLevelEffect;
 
     public Text txtGems, txtCoins;
     [HideInInspector]
@@ -30,11 +31,22 @@ public class MainMenuController : MonoBehaviour
         Instance = this;
         DataUtils.InitSpriteData(allSpriteData);
 
-        
+
+    }
+    public void InitLevelSelectEffect(Transform _tr) {
+        gLevelEffect.transform.SetParent(_tr, true);
+        gLevelEffect.transform.localScale = new Vector3(40, 40, 40);
+        gLevelEffect.transform.localPosition = Vector3.zero;
+    }
+    private void InitStageEffect(Transform _tr) {
+        gStageEffect.transform.SetParent(_tr, true);
+        gStageEffect.gameObject.transform.localPosition = Vector3.zero;
     }
     private void Start()
     {
         InitButtonStage();
+
+        InitStageEffect(imgStages[DataUtils.GetStageIndex()].transform);
 
         if (!DataUtils.IsClaimReward())
         {
@@ -152,6 +164,7 @@ public class MainMenuController : MonoBehaviour
             gPanelUIButton.SetActive(false);
             gPanelStage.SetActive(true);
             StageManager.Instance.ChooseNormalMode();
+            InitStageEffect(imgStages[stage - 1].transform);
         }
     }
     public void GoReady()
