@@ -152,7 +152,7 @@ public class CameraController : MonoBehaviour
 
             lineredzone.transform.position = posLineZone;
 
-            scaleRedZone.x += speedTempLineRedZone * 3/*Mathf.Abs(lineredzone.transform.position.x - redzone.transform.position.x) * 3.15f*/;
+            scaleRedZone.x += speedTempLineRedZone * 3.23f/*Mathf.Abs(lineredzone.transform.position.x - redzone.transform.position.x) * 3.15f*/;
 
             //    Debug.LogError("==========" + Mathf.Abs(lineredzone.transform.position.x - redzone.transform.position.x) * 3.15f);
 
