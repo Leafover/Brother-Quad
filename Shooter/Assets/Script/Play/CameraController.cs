@@ -98,9 +98,9 @@ public class CameraController : MonoBehaviour
         if (DataUtils.modeSelected == 0)
         {
             speedRedZone = 0.1f;
-            maxTimeResetRedZone = 6;
+            maxTimeResetRedZone = 7f;
             maxTimeTakeDamageRedZone = 2f;
-            damageRedZone = 30f;
+            damageRedZone = 20f;
         }
         else
         {
@@ -143,7 +143,7 @@ public class CameraController : MonoBehaviour
             posLineZone.x = lineredzone.transform.position.x;
             posLineZone.y = lineredzone.transform.position.y;
 
-            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 70 : deltaTime * speedRedZone * 10;
+            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 70 : deltaTime * speedRedZone * 9.5f;
 
             //   Debug.LogError("speed:" + speedtemp);
             posLineZone.x += speedTempLineRedZone;
