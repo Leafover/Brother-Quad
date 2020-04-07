@@ -145,7 +145,7 @@ public class CameraController : MonoBehaviour
             posLineZone.x = lineredzone.transform.position.x;
             posLineZone.y = lineredzone.transform.position.y;
 
-            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 50 : deltaTime * speedRedZone * 10;
+            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 60 : deltaTime * speedRedZone * 10;
 
             //   Debug.LogError("speed:" + speedtemp);
             posLineZone.x += speedTempLineRedZone;
