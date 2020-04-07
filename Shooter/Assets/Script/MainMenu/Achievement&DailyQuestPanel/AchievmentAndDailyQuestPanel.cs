@@ -65,7 +65,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
                 }
                 break;
         }
-
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         Tabs[index].SetActive(true);
         btnChangeTabs[index].image.sprite = btntabSps[0];
         for (int i = 0; i < Tabs.Length; i++)
@@ -79,6 +79,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
     }
     public void CloseMe()
     {
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
         for (int i = 0; i < Tabs.Length; i++)
         {
             Tabs[i].SetActive(false);

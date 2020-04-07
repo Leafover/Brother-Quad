@@ -53,6 +53,11 @@ public class MainMenuController : MonoBehaviour
         {
             dailyGift.PrepareData();
         }
+
+        if(DataParam.showstarterpack)
+        {
+            ShowStarterPack();
+        }
     }
 
     public void ShowCraftItem(ItemData itemSelected, string _title) {
@@ -136,6 +141,8 @@ public class MainMenuController : MonoBehaviour
         SoundClickButton();
         popManager.pType = PopupManager.POPUP_TYPE.STARTER_PACK;
         gPanelPopup.SetActive(true);
+
+        DataParam.showstarterpack = false;
     }
     public void ChooseStage(int stage)
     {
@@ -157,7 +164,7 @@ public class MainMenuController : MonoBehaviour
         }
         else if (stage - 1 > DataUtils.GetStageIndex())
         {
-            ShowMapNotify("Please complete Stage " + (stage - 1) + " first");
+            ShowMapNotify("You need complete stage " + (stage - 1));
         }
         else
         {

@@ -752,6 +752,7 @@ public class PlayerController : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
                 reload = true;
+                SoundController.instance.PlaySound(soundGame.soundreload);
                 timeReload = maxTimeReload;
                 reloadObj.SetActive(true);
             }
@@ -765,7 +766,6 @@ public class PlayerController : MonoBehaviour
             skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
             AddNumberBullet(-maxNumberBullet);
             reload = false;
-            SoundController.instance.PlaySound(soundGame.soundreload);
             reloadObj.SetActive(false);
         }
 

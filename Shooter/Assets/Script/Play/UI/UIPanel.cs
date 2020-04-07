@@ -63,6 +63,9 @@ public class UIPanel : MonoBehaviour
             return;
         slideMiniMap.value = (PlayerController.instance.transform.position.x - GameController.instance.currentMap.pointBeginPlayer.transform.position.x) / GameController.instance.currentMap.distanceMap;
     }
+
+
+
     public void Begin()
     {
         slideMiniMap.value = 0;
@@ -79,20 +82,30 @@ public class UIPanel : MonoBehaviour
 
         hackbouder.SetActive(DataController.instance.isHack);
     }
-    public void BtnBackToWorld()
+    void OutPlay(int nextscene,bool showstarterpack)
     {
+        GameController.instance.StopAll();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.nextSceneAfterLoad = 1;
-        MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
+        DataParam.nextSceneAfterLoad = nextscene;
         PlayerController.instance.EndEvent();
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+
+        if (showstarterpack)
+        {
+            if (DataParam.indexMap >= GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
+            {
+                DataParam.showstarterpack = true;
+            }
+        }
+    }
+    public void BtnBackToWorld()
+    {
+        OutPlay(1, false);
+        MyAnalytics.LogEventLoseLevel(DataParam.indexMap, CameraController.instance.currentCheckPoint, DataParam.indexStage);
     }
     public void BtnBackToWorldWin()
     {
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        DataParam.nextSceneAfterLoad = 1;
-        PlayerController.instance.EndEvent();
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+        OutPlay(1, true);
     }
     public void BtnBack()
     {
@@ -105,20 +118,19 @@ public class UIPanel : MonoBehaviour
     }
     public void BtnNext()
     {
-        GameController.instance.StopAll();
+
         if (DataParam.indexMap < GameController.instance.listMaps[DataParam.indexStage].listMap.Count - 1)
         {
             DataParam.indexMap++;
             MissionController.Instance.AddMission();
-            DataParam.nextSceneAfterLoad = 2;
+            OutPlay(2, false);
         }
         else
         {
-            DataParam.nextSceneAfterLoad = 1;
+            OutPlay(1, false);
+            DataParam.showstarterpack = true;
         }
-        SoundController.instance.PlaySound(soundGame.soundbtnclick);
-        PlayerController.instance.EndEvent();
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(0);
+
     }
     public void DisplayDefeat()
     {

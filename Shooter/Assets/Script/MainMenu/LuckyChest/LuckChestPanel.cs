@@ -49,6 +49,8 @@ public class LuckChestPanel : MonoBehaviour
         PanelInfoLuckyChest.SetActive(true);
 
         sc.verticalNormalizedPosition = 1;
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void BtnBuy()
     {
@@ -92,6 +94,8 @@ public class LuckChestPanel : MonoBehaviour
                 MainMenuController.Instance.shopManager.ChooseTab(1);
             }
         }
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     int randomsIndexName, randomsLevel, total1, total2, total3, total4, total5, total6, totalTake;
     string nameItem, nameIndexItem;
@@ -206,10 +210,14 @@ public class LuckChestPanel : MonoBehaviour
     {
         grids[index].SetActive(false);
         PanelInfoLuckyChest.SetActive(false);
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void CloseConfirm()
     {
         CloseInfoLuckyChest();
         PanelConfirmAfterBuy.SetActive(false);
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
 }

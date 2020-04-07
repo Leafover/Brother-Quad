@@ -55,6 +55,8 @@ public class PrimeAccount : MonoBehaviour
             btnClaimCoin.SetActive(false);
             btnClaimGem.SetActive(false);
         }
+
+
     }
 
     public void Click(int _index)
@@ -62,6 +64,8 @@ public class PrimeAccount : MonoBehaviour
         index = _index;
         desText.text = des[index];
         selectObj.transform.position = bouderReward[index].transform.position; /*EventSystem.current.currentSelectedGameObject.transform.position*/;
+
+     //   SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void Claim(bool gem)
     {
@@ -88,6 +92,8 @@ public class PrimeAccount : MonoBehaviour
                 DisplayButtom();
             }
         }
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     void ResetPrimeAccount()
     {
@@ -95,6 +101,7 @@ public class PrimeAccount : MonoBehaviour
         DataController.primeAccout.takecoin = false;
         DataController.primeAccout.takegem = false;
         DataController.primeAccout.isVIP = false;
+
     }
     public void Buy()
     {
@@ -112,5 +119,7 @@ public class PrimeAccount : MonoBehaviour
             MenuController.instance.BtnDisplayPrimeAccount(false);
             MainMenuController.Instance.shopManager.gameObject.SetActive(true);
         }
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
 }

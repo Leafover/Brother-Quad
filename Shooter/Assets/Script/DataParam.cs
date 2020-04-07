@@ -35,4 +35,5 @@ public class DataParam : MonoBehaviour
     {
         totalCoin += _coin;
     }
+    public static bool showstarterpack;
 }

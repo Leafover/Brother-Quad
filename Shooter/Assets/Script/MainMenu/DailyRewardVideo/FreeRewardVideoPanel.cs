@@ -42,6 +42,9 @@ public class FreeRewardVideoPanel : MonoBehaviour
     {
         if (btnvideo[index].color == Color.gray || !btnvideo[index].gameObject.activeSelf)
             return;
+
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+
 #if UNITY_EDITOR
 
         Reward(index);

@@ -100,6 +100,7 @@ public class MenuController : MonoBehaviour
             PrimeAccountPanel.SetActive(false);
             CheckDisplayWarningPrimeAccount();
         }
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void BtnDisplayBlackMarket(bool open)
     {
@@ -112,10 +113,12 @@ public class MenuController : MonoBehaviour
         {
             blackMarketpanel.gameObject.SetActive(false);
         }
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void BtnDisplayFreeRewardVideoPanel(bool open)
     {
         freeRewardVideoPanel.gameObject.SetActive(open);
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     public void DisplayWarning()
     {
