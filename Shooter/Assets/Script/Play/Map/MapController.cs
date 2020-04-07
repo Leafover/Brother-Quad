@@ -6,16 +6,16 @@ using PathCreation;
 
 public class MapController : MonoBehaviour
 {
-    public bool isRedZone;
+    public bool isRedZone, isVIPProtect;
     public ScrollBackground myBg;
     public float distanceMap;
-    public bool haveMiniBoss,haveBoss;
+    public bool haveMiniBoss, haveBoss;
     public bool moreTypeE = true;
     public float timeDelayMax = 1.25f, timeDelay;
-    public int maxSpawn = 3,countspawn;
+    public int maxSpawn = 3, countspawn;
     public bool autoSpawn;
 
-   // GameObject enemy;
+    // GameObject enemy;
     EnemyBase _scriptE;
     Vector2 posSpawn;
     int randomPosY;
@@ -27,7 +27,7 @@ public class MapController : MonoBehaviour
         if (!autoSpawn || countspawn == maxSpawn)
             return;
         timeDelay -= Time.deltaTime;
-      //  Debug.Log(timeDelay);
+        //  Debug.Log(timeDelay);
         if (timeDelay <= 0)
         {
             if (moreTypeE)
@@ -40,10 +40,10 @@ public class MapController : MonoBehaviour
             posSpawn.y = CameraController.instance.transform.position.y + randomPosY;
 
 
-            switch(DataParam.indexStage)
+            switch (DataParam.indexStage)
             {
                 case 0:
-                    switch(randomTypeEnemy)
+                    switch (randomTypeEnemy)
                     {
                         case 0:
                             _scriptE = ObjectPoolManagerHaveScript.Instance.enemy1Pooler.GetEnemyPooledObject();
@@ -111,7 +111,7 @@ public class MapController : MonoBehaviour
             //    enemy.SetActive(true);
             _scriptE.gameObject.SetActive(true);
 
-        //    Debug.Log(":::::::: spawn nó de" + CameraController.instance.currentCamBoidaries);
+            //    Debug.Log(":::::::: spawn nó de" + CameraController.instance.currentCamBoidaries);
         }
 
     }
@@ -131,7 +131,7 @@ public class MapController : MonoBehaviour
     public ProCamera2DTriggerBoundaries[] procam2DTriggerBoudaries;
     public AutoSpawnEnemy[] autoSpawnEnemys;
     public PathCreator[] pathCreator;
-    public GameObject pointBeginPlayer,endMap;
+    public GameObject pointBeginPlayer, endMap;
     private void OnValidate()
     {
         procam2DTriggerBoudaries = GetComponentsInChildren<ProCamera2DTriggerBoundaries>();
