@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
             //effectG345.Stop();
             //effectG2.Stop();
             DisableLaser();
+            Debug.LogError("============ die ===========");
         }
     }
     public void CalculateTimeStun(float deltaTime)
@@ -585,6 +586,8 @@ public class PlayerController : MonoBehaviour
     float timeRegen;
     public void OnUpdate(float deltaTime)
     {
+
+
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {

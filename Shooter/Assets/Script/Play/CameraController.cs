@@ -29,10 +29,8 @@ public class CameraController : MonoBehaviour
     public LineRenderer lineredzone;
 
     public bool activeRedZone;
-
-    float maxTimeResetRedZone, maxTimeTakeDamageRedZone;
-    float speedRedZone;
-    float timeResetActiveRedZone, timeTakeDamgeRedZone, damageRedZone;
+    [HideInInspector]
+    public float timeResetActiveRedZone, timeTakeDamgeRedZone, damageRedZone, maxTimeResetRedZone, maxTimeTakeDamageRedZone, speedRedZone;
 
     private void OnValidate()
     {
@@ -106,7 +104,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            speedRedZone = 0.2f;
+            speedRedZone = 0.1f;
             maxTimeResetRedZone = 5f;
             maxTimeTakeDamageRedZone = 1f;
             damageRedZone = 35f;
@@ -145,7 +143,7 @@ public class CameraController : MonoBehaviour
             posLineZone.x = lineredzone.transform.position.x;
             posLineZone.y = lineredzone.transform.position.y;
 
-            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 70 : deltaTime * speedRedZone * 15;
+            speedTempLineRedZone = bouders[3].transform.position.x > lineredzone.transform.position.x ? deltaTime * speedRedZone * 70 : deltaTime * speedRedZone * 10;
 
             //   Debug.LogError("speed:" + speedtemp);
             posLineZone.x += speedTempLineRedZone;
@@ -170,18 +168,11 @@ public class CameraController : MonoBehaviour
             }
             return;
         }
-
-        if (PlayerController.instance.GetTranformXPlayer() <= lineredzone.transform.position.x)
-        {
-            timeTakeDamgeRedZone -= deltaTime;
-            if (timeTakeDamgeRedZone <= 0)
-            {
-                timeTakeDamgeRedZone = maxTimeTakeDamageRedZone;
-                PlayerController.instance.TakeDamage(damageRedZone);
-            }
-        }
-
-
+    //    CalculateDamageRedZone(deltaTime);
+    }
+    public float GetXLineRedZone()
+    {
+        return lineredzone.transform.position.x;
     }
     Vector2 _cameraSize;
     float velocity;
@@ -254,8 +245,22 @@ public class CameraController : MonoBehaviour
         NumericBoundaries.LeftBoundary = leftBoundary;
     }
     float lockCamPos;
+    //public void CalculateDamageRedZone(float deltaTime)
+    //{
+    //    if (PlayerController.instance.GetTranformXPlayer() <= GetXLineRedZone())
+    //    {
+    //        timeTakeDamgeRedZone -= deltaTime;
+    //        if (timeTakeDamgeRedZone <= 0)
+    //        {
+    //            timeTakeDamgeRedZone = maxTimeTakeDamageRedZone;
+    //            PlayerController.instance.TakeDamage(damageRedZone);
+    //            Debug.LogError("take damge by red zone");
+    //        }
+    //    }
+    //}
     public void OnUpdate(float deltaTime)
     {
+
         if (GameController.instance.win || PlayerController.instance.playerState == PlayerController.PlayerState.Die)
             return;
 

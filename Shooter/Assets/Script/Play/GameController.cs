@@ -405,6 +405,7 @@ public class GameController : MonoBehaviour
     {
         if (CameraController.instance == null)
             return;
+
         CameraController.instance.OnUpdate(deltaTime);
     }
     IEnumerator delayDisplayFinish()

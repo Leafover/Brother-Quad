@@ -70,6 +70,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void HideConfirmPanel()
     {
+        MenuController.instance.blackMarketpanel.iconmanh.SetActive(false);
         gConfirmPanel.SetActive(false);
     }
 
