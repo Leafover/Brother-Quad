@@ -1139,7 +1139,7 @@ public class DataUtils
 
     public static int HeroIndex()
     {
-        return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
+        return 0;// PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
     }
     public static void SetHeroIndex(int index)
     {
@@ -1172,6 +1172,7 @@ public class DataUtils
             playerInfo.pices = 0;
             playerInfo.isUnlock = true;
             playerInfo.isEquipped = true;
+
             lstAllPlayerHeroes.Add(playerInfo);
 
             Debug.LogError("---------- loadheroTH1");
@@ -1180,14 +1181,17 @@ public class DataUtils
         {
             string sData = GetAllPlayerData();
             JsonData jData = JsonMapper.ToObject(sData);
-            for (int i = 0; i < jData.Count; i++)
-            {
-                PlayerDataInfo jPlayerInfo = JsonMapper.ToObject<PlayerDataInfo>(jData[i].ToJson());
-                if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
-                    lstAllPlayerHeroes.Add(jPlayerInfo);
-            }
+            //for (int i = 0; i < jData.Count; i++)
+            //{
+            //    PlayerDataInfo jPlayerInfo = JsonMapper.ToObject<PlayerDataInfo>(jData[i].ToJson());
+            //    if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
+            //        lstAllPlayerHeroes.Add(jPlayerInfo);
+            //}
 
-            Debug.LogError("---------- loadheroTH2: " + sData);
+            PlayerDataInfo jPlayerInfo = JsonMapper.ToObject<PlayerDataInfo>(jData[0].ToJson());
+            if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
+                lstAllPlayerHeroes.Add(jPlayerInfo);
+            Debug.LogError("---------- loadheroTH2: " + jData.Count);
         }
 
         dicAllHero = new Dictionary<string, HeroDataInfo>();
@@ -1208,8 +1212,6 @@ public class DataUtils
                 dicAllHero.Add(heroInfo.id, heroInfo);
             }
             ChooseHero(heroInfo);
-
-
             Debug.LogError("---------- loadheroTH3");
         }
         else
@@ -1225,7 +1227,7 @@ public class DataUtils
                     dicAllHero.Add(hdInfo.id, hdInfo);
                 }
             }
-            Debug.LogError("---------- loadheroTH4");
+            Debug.LogError("---------- loadheroTH4: " + jHeroData.Count);
         }
 
 

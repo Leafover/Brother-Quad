@@ -107,7 +107,7 @@ public class EquipmentManager : MonoBehaviour
             }
             if (trContain.GetComponent<GridLayoutGroup>() != null)
             {
-                if (totalEnable < 5)
+                if (totalEnable <= 5)
                 {
                     trContain.GetComponent<GridLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
                 }
