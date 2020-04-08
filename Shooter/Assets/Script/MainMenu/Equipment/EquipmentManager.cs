@@ -862,6 +862,7 @@ public class EquipmentManager : MonoBehaviour
         string keyItem = itemData.id + "_" + itemData.level;
         txtItemName.text = "<color="+DataUtils.GetColorByItem(itemData)+">"+DataUtils.dicAllEquipment[_keyItemSelected].itemName+"</color>";
         txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
+        
 
 
         foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
@@ -890,6 +891,9 @@ public class EquipmentManager : MonoBehaviour
             imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
                 txtCurItemName.text = "<color="+DataUtils.GetColorByItem(itemSelected)+">"+DataUtils.dicEquippedItem[_keyItemEquipped].itemName + "</color>";
+
+
+            txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
 
             //if (itemData.isUnlock)
             //{

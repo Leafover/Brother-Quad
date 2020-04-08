@@ -252,8 +252,9 @@ public class MainMenuController : MonoBehaviour
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
             //dailyGift.ShowDailyGiftPanel();
         }
+        
     }
-    private void HideAllPanel()
+    public void HideAllPanel()
     {
         gPanelUIButton.SetActive(true);
         gPanelStage.SetActive(false);

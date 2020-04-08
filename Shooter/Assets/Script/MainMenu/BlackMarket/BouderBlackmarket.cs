@@ -7,6 +7,72 @@ public class BouderBlackmarket : MonoBehaviour
     public Text priceText, numberText;
     public Image bouderImg, iconItemImg, iconCoinImg, btnBuyImg;
     public int index;
+
+
+    public Button btnBounder;
+    private string _keyItemSelected = "";
+    private void OnEnable()
+    {
+
+        if (DataController.blackMarketSave[index].ID.Contains("W"))
+        {
+            type = DataUtils.eType.WEAPON;
+        }
+        else if (DataController.blackMarketSave[index].ID.Contains("A"))
+        {
+            type = DataUtils.eType.ARMOR;
+        }
+        else if (DataController.blackMarketSave[index].ID.Contains("H"))
+        {
+            type = DataUtils.eType.HELMET;
+        }
+        else if (DataController.blackMarketSave[index].ID.Contains("S"))
+        {
+            type = DataUtils.eType.SHOES;
+        }
+        else if (DataController.blackMarketSave[index].ID.Contains("G"))
+        {
+            type = DataUtils.eType.GLOVES;
+        }
+        else if (DataController.blackMarketSave[index].ID.Contains("B"))
+        {
+            type = DataUtils.eType.BAG;
+        }
+        switch (DataController.blackMarketSave[index].Level)
+        {
+            case "Normal":
+                level = DataUtils.eLevel.Normal;
+                break;
+            case "Uncommon":
+                level = DataUtils.eLevel.Uncommon;
+                break;
+            case "Rare":
+                level = DataUtils.eLevel.Rare;
+                break;
+            case "Epic":
+                level = DataUtils.eLevel.Epic;
+                break;
+            case "Legendary":
+                level = DataUtils.eLevel.Legendary;
+                break;
+        }
+
+
+
+
+        _keyItemSelected = DataController.blackMarketSave[index].ID + "_" + level.ToString();
+    }
+    private void Start()
+    {
+        btnBounder.onClick.AddListener(() =>
+        {
+            Debug.LogError("--<> " + _keyItemSelected + "--> " + DataUtils.GetItemInfo(_keyItemSelected, type.ToString().ToUpper()));
+            MainMenuController.Instance.pItemInfo.ShowItemInfo(DataController.blackMarketSave[index].ID, level.ToString(), type.ToString(), false);
+        });
+    }
+
+
+
     void DisplayAgainWhenBuy()
     {
         numberText.text = "" + DataController.blackMarketSave[index].countnumber;
@@ -51,48 +117,48 @@ public class BouderBlackmarket : MonoBehaviour
         {
             if (DataController.blackMarketSave[index].countnumber > 0)
             {
-                if (DataController.blackMarketSave[index].ID.Contains("W"))
-                {
-                    type = DataUtils.eType.WEAPON;
-                }
-                else if (DataController.blackMarketSave[index].ID.Contains("A"))
-                {
-                    type = DataUtils.eType.ARMOR;
-                }
-                else if (DataController.blackMarketSave[index].ID.Contains("H"))
-                {
-                    type = DataUtils.eType.HELMET;
-                }
-                else if (DataController.blackMarketSave[index].ID.Contains("S"))
-                {
-                    type = DataUtils.eType.SHOES;
-                }
-                else if (DataController.blackMarketSave[index].ID.Contains("G"))
-                {
-                    type = DataUtils.eType.GLOVES;
-                }
-                else if (DataController.blackMarketSave[index].ID.Contains("B"))
-                {
-                    type = DataUtils.eType.BAG;
-                }
-                switch(DataController.blackMarketSave[index].Level)
-                {
-                    case "Normal":
-                        level = DataUtils.eLevel.Normal;
-                        break;
-                    case "Uncommon":
-                        level = DataUtils.eLevel.Uncommon;
-                        break;
-                    case "Rare":
-                        level = DataUtils.eLevel.Rare;
-                        break;
-                    case "Epic":
-                        level = DataUtils.eLevel.Epic;
-                        break;
-                    case "Legendary":
-                        level = DataUtils.eLevel.Legendary;
-                        break;
-                }
+                //if (DataController.blackMarketSave[index].ID.Contains("W"))
+                //{
+                //    type = DataUtils.eType.WEAPON;
+                //}
+                //else if (DataController.blackMarketSave[index].ID.Contains("A"))
+                //{
+                //    type = DataUtils.eType.ARMOR;
+                //}
+                //else if (DataController.blackMarketSave[index].ID.Contains("H"))
+                //{
+                //    type = DataUtils.eType.HELMET;
+                //}
+                //else if (DataController.blackMarketSave[index].ID.Contains("S"))
+                //{
+                //    type = DataUtils.eType.SHOES;
+                //}
+                //else if (DataController.blackMarketSave[index].ID.Contains("G"))
+                //{
+                //    type = DataUtils.eType.GLOVES;
+                //}
+                //else if (DataController.blackMarketSave[index].ID.Contains("B"))
+                //{
+                //    type = DataUtils.eType.BAG;
+                //}
+                //switch(DataController.blackMarketSave[index].Level)
+                //{
+                //    case "Normal":
+                //        level = DataUtils.eLevel.Normal;
+                //        break;
+                //    case "Uncommon":
+                //        level = DataUtils.eLevel.Uncommon;
+                //        break;
+                //    case "Rare":
+                //        level = DataUtils.eLevel.Rare;
+                //        break;
+                //    case "Epic":
+                //        level = DataUtils.eLevel.Epic;
+                //        break;
+                //    case "Legendary":
+                //        level = DataUtils.eLevel.Legendary;
+                //        break;
+                //}
 
                 DataUtils.TakeItem(DataController.blackMarketSave[index].ID, type, level, 1, false);          
                 DataUtils.AddCoinAndGame(-(int)DataController.blackMarketSave[index].GiaBanCoin, 0);

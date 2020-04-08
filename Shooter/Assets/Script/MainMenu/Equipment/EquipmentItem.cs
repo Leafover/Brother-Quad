@@ -138,4 +138,8 @@ public class EquipmentItem : MonoBehaviour
         }
         return res;
     }
+
+    public void ShowItemInfo() {
+        MainMenuController.Instance.pItemInfo.ShowItemInfo(itemData.id, itemData.level, itemData.type, true);
+    }
 }
