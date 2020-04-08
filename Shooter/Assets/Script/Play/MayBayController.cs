@@ -32,5 +32,11 @@ public class MayBayController : MonoBehaviour
             PlayerController.instance.transform.position = new Vector2(transform.position.x,transform.position.y - 1.5f);
             isSpawnPlayer = true;
         }
+        if (GameController.instance.currentMap.isVIPProtect && transform.position.x > GameController.instance.currentMap.pointBeginPlayer.transform.position.x + 1 && !GameController.instance.npcController.gameObject.activeSelf)
+        {
+            GameController.instance.npcController.rid.gravityScale = 0.3f;
+            GameController.instance.npcController.transform.position = new Vector2(transform.position.x, transform.position.y - 1.5f);
+            GameController.instance.npcController.gameObject.SetActive(true);
+        }
     }
 }

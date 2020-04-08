@@ -12,7 +12,14 @@ public class AttackBox : MonoBehaviour
     {
         if (collision.gameObject.layer == 13)
         {
-            Damage();
+            if (collision.gameObject.tag == "NPC")
+            {
+                DamageForNPC();
+            }
+            else
+            {
+                DamageForHero();
+            }
         }
     }
 
@@ -37,7 +44,7 @@ public class AttackBox : MonoBehaviour
     //    }
     //}
 
-    public void Damage()
+    public void DamageForHero()
     {
         switch (index)
         {
@@ -68,6 +75,37 @@ public class AttackBox : MonoBehaviour
                 {
                     PlayerController.instance.Stun();
                 }
+
+                if (isflame)
+                {
+                    gameObject.SetActive(false);
+                }
+
+                break;
+        }
+    }
+
+    public void DamageForNPC()
+    {
+        switch (index)
+        {
+            case 0:
+                if (!critHit)
+                    GameController.instance.npcController.TakeDamage(myEnemy.damage1);
+                else
+                    GameController.instance.npcController.TakeDamage(myEnemy.damage1 + (myEnemy.damage1 / 100 * 30));
+
+                if (isflame)
+                {
+                    gameObject.SetActive(false);
+                }
+
+                break;
+            case 1:
+                if (!critHit)
+                    GameController.instance.npcController.TakeDamage(myEnemy.damage2);
+                else
+                    GameController.instance.npcController.TakeDamage(myEnemy.damage2 + (myEnemy.damage2 / 100 * 30));
 
                 if (isflame)
                 {

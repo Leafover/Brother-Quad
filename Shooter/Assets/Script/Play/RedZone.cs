@@ -10,11 +10,14 @@ public class RedZone : MonoBehaviour
             return;
         if (collision.gameObject.layer == 13)
         {
-            CameraController.instance.timeTakeDamgeRedZone -= Time.deltaTime;
-            if (CameraController.instance.timeTakeDamgeRedZone <= 0)
+            if (collision.gameObject.tag != "NPC")
             {
-                CameraController.instance.timeTakeDamgeRedZone = CameraController.instance.maxTimeTakeDamageRedZone;
-                PlayerController.instance.TakeDamage(CameraController.instance.damageRedZone);
+                CameraController.instance.timeTakeDamgeRedZone -= Time.deltaTime;
+                if (CameraController.instance.timeTakeDamgeRedZone <= 0)
+                {
+                    CameraController.instance.timeTakeDamgeRedZone = CameraController.instance.maxTimeTakeDamageRedZone;
+                    PlayerController.instance.TakeDamage(CameraController.instance.damageRedZone);
+                }
             }
         }
     }

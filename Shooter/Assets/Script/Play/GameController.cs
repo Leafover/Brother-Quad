@@ -22,11 +22,13 @@ public class AllMap
 }
 public class GameController : MonoBehaviour
 {
+
+
     public int usingHealthPack = 0;
     public GameObject letgo, uiDisplay;
     public MayBayController maybay;
     public PlayerController[] playerControllers;
-
+    public NPCController npcController;
     public List<Sprite> gunSprite;
 
     public AudioSource auBG;
@@ -159,10 +161,10 @@ public class GameController : MonoBehaviour
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
 
-        Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
+     //   Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, currentMap.pointBeginPlayer.transform.position.y, Camera.main.transform.position.z);
 
-        Debug.LogError(Camera.main.transform.position);
+    //    Debug.LogError(Camera.main.transform.position);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);
@@ -418,6 +420,11 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         uiPanel.DisplayDefeat();
     }
+    IEnumerator delayDisplayEndNPCDIE()
+    {
+        yield return new WaitForSeconds(2f);
+        uiPanel.DisplayDefeatNPCDIE();
+    }
     int timePlay;
     WaitForSecondsRealtime timeCountPlay;
     public void StopAll()
@@ -535,6 +542,12 @@ public class GameController : MonoBehaviour
         gameState = GameState.gameover;
         CameraController.instance.procam.enabled = false;
         StartCoroutine(delayDisplayEnd());
+    }
+    public void NPCDIE()
+    {
+        win = false;
+        gameState = GameState.gameover;
+        StartCoroutine(delayDisplayEndNPCDIE());
     }
     void OnUpdateItemDrop(float deltaTime)
     {

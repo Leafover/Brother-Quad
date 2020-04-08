@@ -26,7 +26,7 @@ public class EnemyEN0Controller : EnemyBase
         activeAttack = 0;
         combo = 0;
         randomCombo = 2;
-        moveSpeed = enemyAutoSpawn ? speed / 3  : speed ;
+        moveSpeed = enemyAutoSpawn ? speed / 3 : speed;
     }
     float moveSpeed;
     public override void Active()
@@ -78,15 +78,15 @@ public class EnemyEN0Controller : EnemyBase
 
                 break;
             case 2:
-                    transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * moveSpeed);
+                transform.position = Vector2.MoveTowards(transform.position, posTemp, deltaTime * moveSpeed);
                 CheckDirFollowPlayer(posTemp.x);
-                 if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
+                if (transform.position.x == posTemp.x && transform.position.y == posTemp.y)
                 {
                     activeAttack = 3;
                 }
                 break;
             case 3:
-                   transform.position = Vector2.MoveTowards(transform.position, PosBegin, deltaTime * moveSpeed);
+                transform.position = Vector2.MoveTowards(transform.position, PosBegin, deltaTime * moveSpeed);
                 CheckDirFollowPlayer(PosBegin.x);
                 if (transform.position.x == PosBegin.x && transform.position.y == PosBegin.y)
                 {
@@ -155,13 +155,16 @@ public class EnemyEN0Controller : EnemyBase
             //    activeAttack = 1;
         }
     }
-    void ExPlo()
+    void ExPlo(string tag)
     {
         gameObject.SetActive(false);
         explo = ObjectPoolerManager.Instance.enemyMachineExploPooler.GetPooledObject();
         explo.transform.position = gameObject.transform.position;
         explo.SetActive(true);
-        PlayerController.instance.TakeDamage(damage1);
+        if (tag == "NPC")
+            GameController.instance.npcController.TakeDamage(damage1);
+        else
+            PlayerController.instance.TakeDamage(damage1);
         SoundController.instance.PlaySound(soundGame.exploGrenade);
     }
     GameObject explo;
@@ -170,7 +173,7 @@ public class EnemyEN0Controller : EnemyBase
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.layer == 13)
         {
-            ExPlo();
+            ExPlo(collision.gameObject.tag);
         }
     }
     public override void OnDisable()

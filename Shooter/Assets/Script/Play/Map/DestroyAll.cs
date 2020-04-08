@@ -15,10 +15,19 @@ public class DestroyAll : MonoBehaviour
                     return;
                 //PlayerController.instance.rid.velocity = Vector2.zero;
                 //PlayerController.instance.speedmove = 0;
-                SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
-                PlayerController.instance.TakeDamage(PlayerController.instance.maxHealth / 100 * 10,false);
-                if (PlayerController.instance.health > 0)
-                    PlayerController.instance.ResetPosRevive(false,0);
+                if (collision.gameObject.tag != "NPC")
+                {
+                    SoundController.instance.PlaySound(soundGame.soundroixuongnuoc);
+                    PlayerController.instance.TakeDamage(PlayerController.instance.maxHealth / 100 * 10, false);
+                    if (PlayerController.instance.health > 0)
+                        PlayerController.instance.ResetPosRevive(false, 0);
+                }
+                else
+                {
+                    GameController.instance.npcController.TakeDamage(PlayerController.instance.maxHealth / 100 * 10);
+                    if (GameController.instance.npcController.health > 0)
+                        GameController.instance.npcController.ResetPosRevive();
+                }
                 //if (PlayerController.instance.currentStand != null)
                 //{
                 //    if (PlayerController.instance.currentStand.transform.position.x < transform.position.x)

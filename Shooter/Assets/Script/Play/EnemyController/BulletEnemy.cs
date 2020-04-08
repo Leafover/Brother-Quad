@@ -139,7 +139,14 @@ public class BulletEnemy : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 13:
-                PlayerController.instance.TakeDamage(damage);
+                if (collision.gameObject.tag == "NPC")
+                {
+                    GameController.instance.npcController.TakeDamage(damage);
+                }
+                else
+                {
+                    PlayerController.instance.TakeDamage(damage);
+                }
                 if (hit != null)
                     hit();
                 break;

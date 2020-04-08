@@ -208,26 +208,28 @@ public class StageManager : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 
 
-        //if (DataController.instance.isHack)
-        //{
-        //    DataParam.indexStage = _stageSelect;
-        //    DataParam.indexMap = _mapSelect;
+        if (DataController.instance.isHack)
+        {
+            DataParam.indexStage = _stageSelect;
+            DataParam.indexMap = _mapSelect;
 
-        //    DataUtils.CheckEquipWeapon();
+            DataUtils.CheckEquipWeapon();
 
-        //    #region Start Level
-        //    MissionController.Instance.AddMission();
+            #region Start Level
 
-        //    DataParam.nextSceneAfterLoad = 2;
 
-        //    DataController.instance.DoAchievement(5, 1);
+            MissionController.Instance.AddMission();
 
-        //    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            DataParam.nextSceneAfterLoad = 2;
 
-        //    MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
-        //    #endregion
-        //    return;
-        //}
+            DataController.instance.DoAchievement(5, 1);
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+            #endregion
+            return;
+        }
 
 
         if (_stageSelect < 0 || _mapSelect < 0)

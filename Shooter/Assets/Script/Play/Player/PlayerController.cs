@@ -154,32 +154,42 @@ public class PlayerController : MonoBehaviour
         SoundController.instance.PlaySound(soundGame.soundplayerhit);
         if (health <= 0)
         {
-            GameController.instance.DIE();
-            AnimDie();
-            playerState = PlayerState.Die;
-            SoundController.instance.PlaySound(soundGame.playerDie);
-            au.Stop();
-            rid.velocity = Vector2.zero;
-            speedmove = 0;
-            stunEffect.SetActive(false);
-            meleeAtackBox.gameObject.SetActive(false);
-            isWaitStand = false;
-            isfalldow = false;
-            isSlow = false;
-            isLowJump = false;
-            isMeleeAttack = false;
-            //isGrenade = false;
-            isGround = false;
-            health = 0;
-            isregen = false;
-            timeRegen = 0;
-            reloadObj.SetActive(false);
-            //effectG4.Stop();
-            //effectG345.Stop();
-            //effectG2.Stop();
-            DisableLaser();
-            Debug.LogError("============ die ===========");
+            DEAD();
         }
+    }
+    public void DEAD()
+    {
+        GameController.instance.DIE();
+        AnimDie();
+        playerState = PlayerState.Die;
+        SoundController.instance.PlaySound(soundGame.playerDie);
+        au.Stop();
+        rid.velocity = Vector2.zero;
+        speedmove = 0;
+        stunEffect.SetActive(false);
+        meleeAtackBox.gameObject.SetActive(false);
+        isWaitStand = false;
+        isfalldow = false;
+        isSlow = false;
+        isLowJump = false;
+        isMeleeAttack = false;
+        //isGrenade = false;
+        isGround = false;
+        health = 0;
+        isregen = false;
+        timeRegen = 0;
+        reloadObj.SetActive(false);
+        //effectG4.Stop();
+        //effectG345.Stop();
+        //effectG2.Stop();
+        DisableLaser();
+
+        if(GameController.instance.currentMap.isVIPProtect)
+        {
+            GameController.instance.npcController.speedmove = 0;
+            GameController.instance.npcController.rid.velocity = Vector2.zero;
+        }
+
     }
     public void CalculateTimeStun(float deltaTime)
     {
@@ -587,8 +597,6 @@ public class PlayerController : MonoBehaviour
     public void OnUpdate(float deltaTime)
     {
 
-
-
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             SetGun(0);
@@ -723,7 +731,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerState != PlayerState.Jump)
         {
-            isMeleeAttack = Physics2D.Linecast(foot.transform.position, boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), lmMeleeAtack); /*Physics2D.OverlapCircle(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius, lmMeleeAtack)*/ /*FlipX ? Physics2D.Linecast(transform.position, rightface.position, lmMeleeAtack) : Physics2D.Linecast(transform.position, leftface.position, lmMeleeAtack)*/;
+            isMeleeAttack = Physics2D.Linecast(foot.transform.position, posGun(), lmMeleeAtack); /*Physics2D.OverlapCircle(boneBarrelGun.GetWorldPosition(skeletonAnimation.transform), radius, lmMeleeAtack)*/ /*FlipX ? Physics2D.Linecast(transform.position, rightface.position, lmMeleeAtack) : Physics2D.Linecast(transform.position, leftface.position, lmMeleeAtack)*/;
             // Debug.DrawLine(transform.position, rightface.position);
 
         }
@@ -977,7 +985,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetOriginGun()
     {
         var vt2 = new Vector2();
-        vt2 = boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
+        vt2 = posGun();
         return vt2;
     }
 
@@ -1087,6 +1095,12 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(0, apc.winAnim, true);
         currentAnim = apc.winAnim;
         DisableLaser();
+
+        if (!GameController.instance.currentMap.isVIPProtect)
+            return;
+
+        GameController.instance.npcController.AnimWin();
+
     }
     public void AnimIdle()
     {
@@ -1107,6 +1121,8 @@ public class PlayerController : MonoBehaviour
             currentAnim = apc.idleAnim;
             speedmove = 0;
             SetBox(sizeBox, offsetBox);
+
+
 
         }
     }

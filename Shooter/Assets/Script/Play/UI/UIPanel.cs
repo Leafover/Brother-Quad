@@ -82,7 +82,7 @@ public class UIPanel : MonoBehaviour
 
         hackbouder.SetActive(DataController.instance.isHack);
     }
-    void OutPlay(int nextscene,bool showstarterpack)
+    void OutPlay(int nextscene, bool showstarterpack)
     {
         GameController.instance.StopAll();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
@@ -132,6 +132,15 @@ public class UIPanel : MonoBehaviour
         }
 
     }
+    public void DisplayDefeatNPCDIE()
+    {
+        btnReviveByAds.SetActive(false);
+        btnReviveByGem.gameObject.SetActive(false);
+        DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
+
+        defeatPanel.SetActive(true);
+        SoundController.instance.PlaySound(soundGame.soundlose);
+    }
     public void DisplayDefeat()
     {
         if (defeatPanel.activeSelf)
@@ -152,6 +161,7 @@ public class UIPanel : MonoBehaviour
             }
 
             btnReviveByGem.gameObject.SetActive(true);
+
         }
         else
         {

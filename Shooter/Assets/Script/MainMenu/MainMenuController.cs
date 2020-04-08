@@ -149,14 +149,15 @@ public class MainMenuController : MonoBehaviour
     {
         SoundClickButton();
 
-        //if(DataController.instance.isHack)
-        //{
-        //    stageSelected = stage;
-        //    gPanelUIButton.SetActive(false);
-        //    gPanelStage.SetActive(true);
-        //    StageManager.Instance.ChooseNormalMode();
-        //    return;
-        //}
+        if (DataController.instance.isHack)
+        {
+            stageSelected = stage;
+            gPanelUIButton.SetActive(false);
+            gPanelStage.SetActive(true);
+            StageManager.Instance.ChooseNormalMode();
+            InitStageEffect(imgStages[stage - 1].transform);
+            return;
+        }
 
 
         if (stage > DataUtils.TOTAL_STAGE)
