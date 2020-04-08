@@ -22,6 +22,8 @@ public class MainMenuController : MonoBehaviour
     public Button[] buttonStages;
     public Image[] imgStages;
     public GameObject gStageEffect, gLevelEffect;
+    public PopupItemInfomation pItemInfo;
+    public Color ClNormal, clUncommon, clRare, clEpic, clLegendary;
 
     public Text txtGems, txtCoins;
     [HideInInspector]
@@ -260,6 +262,7 @@ public class MainMenuController : MonoBehaviour
         shopManager.gameObject.SetActive(false);
         equipmentManager.gameObject.SetActive(false);
         gConfirmPanel.SetActive(false);
+        pItemInfo.HidePopup();
     }
 
 
@@ -285,5 +288,32 @@ public class MainMenuController : MonoBehaviour
             }
         });
         //ShowMapNotify("Watch Video Ads to get coin and crytal.");
+    }
+
+    public Color GetColorByItem(string level)
+    {
+        Color _cl = ClNormal;
+        switch (level)
+        {
+            case "Normal":
+                _cl = ClNormal;
+                break;
+            case "Uncommon":
+                _cl = clUncommon;
+                break;
+            case "Rare":
+                _cl = clRare;
+                break;
+            case "Epic":
+                _cl = clEpic;
+                break;
+            case "Legendary":
+                _cl = clLegendary;
+                break;
+            default:
+                _cl = ClNormal;
+                break;
+        }
+        return _cl;
     }
 }

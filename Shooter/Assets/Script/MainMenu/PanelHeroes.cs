@@ -72,7 +72,7 @@ public class PanelHeroes : MonoBehaviour
         InitEquippedItem();
 
 
-
+        Debug.LogError(DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].DmgGrenade);
     }
     private void InitEquippedItem()
     {

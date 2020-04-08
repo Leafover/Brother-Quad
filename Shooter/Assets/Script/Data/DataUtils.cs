@@ -156,6 +156,44 @@ public class DataUtils
         }
         return _str;
     }
+    public static string GetItemInfo(string itemKey, string type)
+    {
+        string _str = "";
+        int curStar = 0;
+        switch (type)
+        {
+            case "ARMOR":
+                _str = "- Increase <color=green>" + dicArmor[itemKey].DefValue[curStar] + "%</color> def.\n -Reduce: <color=green>" + dicArmor[itemKey].SpeedTruValue[curStar] + "</color> move speed";
+                break;
+            case "BAG":
+                int HealthRegeneration = (int)dicBag[itemKey].HealthRegenerationValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar];
+                if (HealthRegeneration <= 0)
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar] + "%</color> of first aid dropped on the map";
+                else
+                {
+                    _str = "- Increase <color=green>" + dicBag[itemKey].BonussoluongmauanduocValue[curStar >= dicBag[itemKey].HealthRegenerationValue.Count ? dicBag[itemKey].HealthRegenerationValue.Count - 1 : curStar] + "%</color> of first aid dropped on the map\n- Heals <color=green>" + HealthRegeneration + "%</color> health in 1 second when the character's health is below 5% (maximum 50%)";
+                }
+                break;
+            case "GLOVES":
+                _str = "- Reduce <color=green>" + dicGloves[itemKey].GiamtimereloadValue[curStar] + "%</color> reload time.\n- Crit Rate: <color=green>+" + dicGloves[itemKey].tangcritrateValue[curStar] + "%</color>\n- Crit Damage: <color=green>+" + dicGloves[itemKey].TangcritdmgValue[curStar] + "%</color>";
+                break;
+            case "HELMET":
+                _str = "- Increase <color=green>" + dicHelmet[itemKey].DefValue[curStar] + "%</color> def. \n- Bonus Exp: <color=green>" + dicHelmet[itemKey].BonusExpValue[curStar] + "%</color>";
+                break;
+            case "SHOES":
+                _str = "- Move Speed: <color=green>+" + dicShoes[itemKey].TangSpeeDichuyenValue[curStar] + "%</color>\n- Jump Height: <color=green>+" + dicShoes[itemKey].TangDoCaoNhayValue[curStar] + "%</color>";
+                break;
+            case "WEAPON":
+                break;
+            case "P1":
+                _str = "";
+                break;
+            default:
+                _str = "";
+                break;
+        }
+        return _str;
+    }
 
     public static void FillEquipmentData()
     {
@@ -1139,7 +1177,7 @@ public class DataUtils
 
     public static int HeroIndex()
     {
-        return 0;// PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
+        return PlayerPrefs.GetInt(KEY_HEROES_INDEX, 0);
     }
     public static void SetHeroIndex(int index)
     {
@@ -1231,8 +1269,8 @@ public class DataUtils
         }
 
 
-        Debug.LogError("HeroIndex: " + HeroIndex() + " vs " + lstAllPlayerHeroes.Count);
-        playerInfo = lstAllPlayerHeroes[HeroIndex()];
+        //Debug.LogError("HeroIndex: " + HeroIndex() + " vs " + lstAllPlayerHeroes.Count);
+        playerInfo = lstAllPlayerHeroes[/*HeroIndex()*/0];
 
         heroInfo = DataHero();
 
@@ -1251,8 +1289,8 @@ public class DataUtils
     }
     public static void UpdateCoinAndGem(int newCoin, int newGem)
     {
-        lstAllPlayerHeroes[HeroIndex()].coins = newCoin;
-        lstAllPlayerHeroes[HeroIndex()].gems = newGem;
+        lstAllPlayerHeroes[/*HeroIndex()*/0].coins = newCoin;
+        lstAllPlayerHeroes[/*HeroIndex()*/0].gems = newGem;
 
 
         //SavePlayerData();
@@ -1263,8 +1301,8 @@ public class DataUtils
     }
     public static void AddCoinAndGame(int coinAdded, int gemAdded)
     {
-        lstAllPlayerHeroes[HeroIndex()].coins += coinAdded;
-        lstAllPlayerHeroes[HeroIndex()].gems += gemAdded;
+        lstAllPlayerHeroes[/*HeroIndex()*/0].coins += coinAdded;
+        lstAllPlayerHeroes[/*HeroIndex()*/0].gems += gemAdded;
 
         //SavePlayerData();
         if (MainMenuController.Instance != null)
@@ -1276,14 +1314,14 @@ public class DataUtils
     }
     public static void AddHPPack(int total_)
     {
-        lstAllPlayerHeroes[HeroIndex()].healthPack += total_;
+        lstAllPlayerHeroes[/*HeroIndex()*/0].healthPack += total_;
         //SavePlayerData();
     }
     public static int HPPack()
     {
         int _res = 0;
         if (lstAllPlayerHeroes == null) _res = 0;
-        else _res = lstAllPlayerHeroes[HeroIndex()].healthPack;
+        else _res = lstAllPlayerHeroes[/*HeroIndex()*/0].healthPack;
         return _res;
     }
 
@@ -1487,29 +1525,39 @@ public class DataUtils
     /// Legendary : orange
     public static string GetColorByItem(ItemData itemData)
     {
-        string _sResult = "#809080";
+        string _sResult = "#8ea5b1";
         switch (itemData.level)
         {
             case "Normal":
-                _sResult = "#809080";
+                _sResult = "#8ea5b1";
                 break;
             case "Uncommon":
-                _sResult = "green";
+                _sResult = "#81da2c";
                 break;
             case "Rare":
-                _sResult = "#00FFFF";
+                _sResult = "#61c3fa";
                 break;
             case "Epic":
-                _sResult = "#A569BD"; //"pink";
+                _sResult = "#b48eff"; //"pink";
                 break;
             case "Legendary":
-                _sResult = "#FF5733"; //"orange";
+                _sResult = "#f7c300"; //"orange";
                 break;
             default:
-                _sResult = "#809080"; //"grey";
+                _sResult = "#8ea5b1"; //"grey";
                 break;
         }
         return _sResult;
     }
+
+
+    public static string GetColorByItemData(float f1, float f2)
+    {
+        string cl = "white";
+        cl = f1 > f2 ? "green" : (f1 < f2 ? "red" : "white");
+
+        return cl;
+    }
     #endregion
+
 }
