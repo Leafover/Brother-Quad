@@ -6,7 +6,7 @@ public class DailyQuestBouder : MonoBehaviour
 {
     public Text processText, rewardText, expText, desText;
     public Image rewardImg, processImg;
-    public GameObject btnClaim, doneObj,rewardObj;
+    public GameObject btnClaim, doneObj,rewardObj,processBar;
     public int index = -1;
 
     public void DisplayStart()
@@ -52,6 +52,10 @@ public class DailyQuestBouder : MonoBehaviour
             doneObj.SetActive(true);
         }
 
+        if (DataController.saveIndexQuest[index] == 10)
+            processBar.SetActive(false);
+        else
+            processBar.SetActive(true);
         gameObject.SetActive(true);
     }
 

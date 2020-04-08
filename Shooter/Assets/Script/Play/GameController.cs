@@ -209,6 +209,10 @@ public class GameController : MonoBehaviour
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx4);
         }
+        else if (countCombo == 5)
+        {
+            DataController.instance.DoDailyQuest(8, 1);
+        }
         else if (countCombo == 6)
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillx6);
@@ -229,10 +233,7 @@ public class GameController : MonoBehaviour
         {
             SoundController.instance.PlaySound(soundGame.soundmultikillmax);
         }
-        else if (countCombo == 15)
-        {
-            DataController.instance.DoDailyQuest(8, 1);
-        }
+
         uiPanel.comboNumberText.text = "X" + countCombo;
         if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[0].valueMission)
             MissionController.Instance.DoMission(2, countCombo);
