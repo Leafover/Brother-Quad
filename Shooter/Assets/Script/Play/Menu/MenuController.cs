@@ -111,6 +111,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+          DataController.instance.LoadAgainQuestAndBlackMarket();
             blackMarketpanel.gameObject.SetActive(false);
         }
         SoundController.instance.PlaySound(soundGame.soundbtnclick);

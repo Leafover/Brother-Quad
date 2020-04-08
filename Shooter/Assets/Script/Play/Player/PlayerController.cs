@@ -278,9 +278,16 @@ public class PlayerController : MonoBehaviour
     }
     public void AddProperties()
     {
-        damgeGrenade = (float)DataController.instance.playerData[0].playerData[level - 1].DmgGrenade;
-        speedMoveMax = (float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed + ((float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[0].playerData[level - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
-        maxHealth = (float)DataController.instance.playerData[0].playerData[level - 1].hp;
+
+        Debug.LogError("Level:" + DataUtils.heroInfo.level);
+
+        damgeGrenade = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed + ((float)DataController.instance.playerData[0].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[0].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
+        maxHealth = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level  : DataUtils.MAX_LEVEL_HERO - 1].hp;
+
+
+
+
         missRate = DataUtils.itemArmor.defIncrease + DataUtils.itemHelmet.defIncrease;
         healthRateBonus = DataUtils.itemBag.totalAidDrop;
         healthRegenRate = DataUtils.itemBag.HealthRegeneration;

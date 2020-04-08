@@ -11,9 +11,10 @@ public class DailyQuestBouder : MonoBehaviour
 
     public void DisplayStart()
     {
-        if (index != -1)
-            return;
-        index = int.Parse(gameObject.name) - 1;
+        if (index == -1)
+        {
+            index = int.Parse(gameObject.name) - 1;
+        }
         desText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].MissionContent;
     }
 

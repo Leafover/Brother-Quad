@@ -31,7 +31,7 @@ public class BlackMarketPanel : MonoBehaviour
         iconmanh.SetActive(false);
         confirmPanel.SetActive(false);
     }
-    void Start()
+    void OnEnable()
     {
         for (int i = 0; i < bouders.Count; i++)
         {

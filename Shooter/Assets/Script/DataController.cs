@@ -488,9 +488,16 @@ public class DataController : MonoBehaviour
             _tempBlackMarket.countnumber = 5;
             if (!blackMarketSave.Contains(_tempBlackMarket))
             {
-                //  Debug.LogError(_tempBlackMarket.ID + ":" + _tempBlackMarket.Level + ":" + _tempBlackMarket.NAME + ":" + _tempBlackMarket.GiaBanCoin);
                 blackMarketSave.Add(_tempBlackMarket);
             }
+        }
+    }
+
+    public void LoadAgainQuestAndBlackMarket()
+    {
+        if ((System.DateTime.Now - DataParam.oldDateTime).TotalSeconds >= 86400)
+        {
+            LoadDailyQuest();
         }
     }
     public void LoadDailyQuest()
@@ -525,8 +532,6 @@ public class DataController : MonoBehaviour
             LoadBlackMarket();
 
             strAllDailyQuest = PlayerPrefs.GetString(DataParam.ALLDAILYQUEST);
-
-
 
             if (string.IsNullOrEmpty(strAllDailyQuest))
                 return;

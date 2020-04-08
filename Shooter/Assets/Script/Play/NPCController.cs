@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
+    public float distance;
     public float speedmove;
     public GameObject poitRayGround;
     public float radius;
@@ -124,7 +125,7 @@ public class NPCController : MonoBehaviour
 
         if (transform.position.x < PlayerController.instance.GetTranformXPlayer())
         {
-            if (transform.position.x < PlayerController.instance.GetTranformXPlayer() - 1.5f)
+            if (transform.position.x < PlayerController.instance.GetTranformXPlayer() - distance)
             {
                 speedmove = PlayerController.instance.speedMoveMax;
             }
@@ -135,7 +136,7 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            if (transform.position.x > PlayerController.instance.GetTranformXPlayer() + 1.5f)
+            if (transform.position.x > PlayerController.instance.GetTranformXPlayer() + distance)
             {
                 speedmove = -PlayerController.instance.speedMoveMax;
             }
@@ -333,12 +334,12 @@ public class NPCController : MonoBehaviour
     public void SelectNonTarget()
     {
 
-        if (PlayerController.instance.GetTranformXPlayer() < transform.position.x - 1.5f)
+        if (PlayerController.instance.GetTranformXPlayer() < transform.position.x - distance)
         {
             if (PlayerController.instance.FlipX)
                 FlipX = true;
         }
-        if (PlayerController.instance.GetTranformXPlayer() > transform.position.x + 1.5f)
+        if (PlayerController.instance.GetTranformXPlayer() > transform.position.x + distance)
         {
             if (!PlayerController.instance.FlipX)
                 FlipX = false;

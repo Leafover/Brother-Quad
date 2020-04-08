@@ -85,6 +85,10 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
             Tabs[i].SetActive(false);
         }
         gameObject.SetActive(false);
+
+        DataController.instance.LoadAgainQuestAndBlackMarket();
+
         MenuController.instance.DisplayWarning();
+
     }
 }
