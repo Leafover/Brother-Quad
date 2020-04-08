@@ -44,6 +44,8 @@ public class DailyQuestBouder : MonoBehaviour
         }
         else
         {
+            processImg.fillAmount = (float)DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber / DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+            processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
             transform.SetAsLastSibling();
             rewardObj.SetActive(false);
             btnClaim.SetActive(false);
