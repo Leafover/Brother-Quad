@@ -51,7 +51,7 @@ public class NPCController : MonoBehaviour
         boneBarrelGun = sk.Skeleton.FindBone(strboneBarrelGun);
         lineBlood.Reset();
         du.AnimationState.Complete += OnCompleteDu;
-        health = maxHealth = PlayerController.instance.maxHealth;
+        health = maxHealth = PlayerController.instance.maxHealth / 100 * 60;
     }
 
     private void OnCompleteDu(TrackEntry trackEntry)
@@ -94,7 +94,7 @@ public class NPCController : MonoBehaviour
         {
             timeShoot = 1;
             sk.AnimationState.SetAnimation(1, fire, false);
-            bullet = ObjectPoolerManager.Instance.bulletW2Pooler.GetPooledObject();
+            bullet = ObjectPoolerManager.Instance.bulletW1Pooler.GetPooledObject();
             dirBullet = GetTargetTranform() - posGun();
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
