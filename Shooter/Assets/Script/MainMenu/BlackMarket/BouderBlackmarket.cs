@@ -13,7 +13,11 @@ public class BouderBlackmarket : MonoBehaviour
     private string _keyItemSelected = "";
     private void OnEnable()
     {
-
+        //RefreshTypeAndLevel();
+        //_keyItemSelected = DataController.blackMarketSave[index].ID + "_" + level.ToString();
+    }
+    private void RefreshTypeAndLevel()
+    {
         if (DataController.blackMarketSave[index].ID.Contains("W"))
         {
             type = DataUtils.eType.WEAPON;
@@ -56,17 +60,13 @@ public class BouderBlackmarket : MonoBehaviour
                 level = DataUtils.eLevel.Legendary;
                 break;
         }
-
-
-
-
         _keyItemSelected = DataController.blackMarketSave[index].ID + "_" + level.ToString();
     }
     private void Start()
     {
         btnBounder.onClick.AddListener(() =>
         {
-            Debug.LogError("--<> " + _keyItemSelected + "--> " + DataUtils.GetItemInfo(_keyItemSelected, type.ToString().ToUpper()));
+            Debug.LogError("--<> " + _keyItemSelected + " vs " + DataController.blackMarketSave[index].ID + " vs " + level);
             MainMenuController.Instance.pItemInfo.ShowItemInfo(DataController.blackMarketSave[index].ID, level.ToString(), type.ToString(), false);
         });
     }
@@ -108,6 +108,8 @@ public class BouderBlackmarket : MonoBehaviour
                 break;
         }
         iconItemImg.sprite = DataUtils.dicSpriteData[DataController.blackMarketSave[index].ID];
+
+        RefreshTypeAndLevel();
     }
     DataUtils.eType type;
     DataUtils.eLevel level;
