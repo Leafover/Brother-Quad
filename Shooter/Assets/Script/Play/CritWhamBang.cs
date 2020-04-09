@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CritWhamBang : MonoBehaviour
 {
-    float timeDisplay = 1.5f;
+   public float timeDisplay = 1.5f;
     Vector2 temp;
     public void DisplayMe(Vector2 pos)
     {

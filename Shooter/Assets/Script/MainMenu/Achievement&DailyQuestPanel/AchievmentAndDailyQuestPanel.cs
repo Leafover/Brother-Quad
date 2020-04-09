@@ -21,6 +21,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
         //MenuController.instance.warningEvent.SetActive(false);
         ChangeTab(index);
         gameObject.SetActive(true);
+        Debug.LogError("wtf");
     }
     string timetemp = "20:20:02";
     double timeCount;

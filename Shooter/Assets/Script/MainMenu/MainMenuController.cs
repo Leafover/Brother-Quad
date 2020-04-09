@@ -278,6 +278,8 @@ public class MainMenuController : MonoBehaviour
     {
         MenuController.instance.achievementAndDailyQuestPanel.DisPlayMe(0);
         MyAnalytics.LogOpenTabDailyQuest();
+
+        Debug.LogError("wtffffff");
     }
     public void WatchAds()
     {
