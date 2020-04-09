@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class DailyQuestBouder : MonoBehaviour
 {
-    public Text processText, rewardText, expText, desText;
+    public Text processText, rewardText, expText, desText,specialDesText;
     public Image rewardImg, processImg;
     public GameObject btnClaim, doneObj,rewardObj,processBar;
     public int index = -1;
@@ -53,13 +53,15 @@ public class DailyQuestBouder : MonoBehaviour
 
         if (DataController.saveIndexQuest[index] == 10)
         {
-            desText.color = Color.yellow;
+            desText.gameObject.SetActive(false);
             processBar.SetActive(false);
+            specialDesText.gameObject.SetActive(true);
         }
         else
         {
-            desText.color = Color.white;
+            desText.gameObject.SetActive(true);
             processBar.SetActive(true);
+            specialDesText.gameObject.SetActive(false);
         }
         gameObject.SetActive(true);
     }
