@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CritWhamBang : MonoBehaviour
 {
-    float timeDisplay = 1;
+    float timeDisplay = 1.5f;
     Vector2 temp;
     public void DisplayMe(Vector2 pos)
     {
 
         temp.x = pos.x - 0.5f;
         temp.y = pos.y + 0.5f;
-        timeDisplay = 1;
+        timeDisplay = 1.5f;
         gameObject.transform.position = temp;
         gameObject.SetActive(true);
 
