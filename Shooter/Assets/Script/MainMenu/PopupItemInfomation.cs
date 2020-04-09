@@ -74,7 +74,7 @@ public class PopupItemInfomation : MonoBehaviour
             itemData = DataUtils.dicAllEquipment[itemKey];
         else itemData = null;
         txtPiece.text = itemData == null ? "0" : itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
-
+        txtItemLevel.text = level;
         imgItemLevel.color = MainMenuController.Instance.GetColorByItem(level);
         txtItemInfo.text = DataUtils.GetItemInfo(id + "_" + level, type.ToString().ToUpper());
         if (id.Contains("W"))
