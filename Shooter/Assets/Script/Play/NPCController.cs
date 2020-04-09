@@ -128,6 +128,11 @@ public class NPCController : MonoBehaviour
             if (transform.position.x < PlayerController.instance.GetTranformXPlayer() - distance)
             {
                 speedmove = PlayerController.instance.speedMoveMax;
+
+                if(transform.position.x < CameraController.instance.bouders[3].transform.position.x - 2)
+                {
+                    ResetPosRevive();
+                }
             }
             else
             {
