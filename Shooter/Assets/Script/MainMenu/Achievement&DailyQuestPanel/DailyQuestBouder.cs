@@ -17,7 +17,6 @@ public class DailyQuestBouder : MonoBehaviour
         }
         desText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].MissionContent;
     }
-
     public void DisplayMe()
     {
         DisplayStart();
@@ -53,9 +52,15 @@ public class DailyQuestBouder : MonoBehaviour
         }
 
         if (DataController.saveIndexQuest[index] == 10)
+        {
+            desText.color = Color.yellow;
             processBar.SetActive(false);
+        }
         else
+        {
+            desText.color = Color.white;
             processBar.SetActive(true);
+        }
         gameObject.SetActive(true);
     }
 
