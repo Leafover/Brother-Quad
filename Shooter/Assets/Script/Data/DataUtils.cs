@@ -624,6 +624,35 @@ public class DataUtils
         }
         return sName;
     }
+
+    public static string GetItemName(string _itemType, string _key)
+    {
+        string _name = "";
+        switch (_itemType)
+        {
+            case "ARMOR":
+                _name = dicArmor[_key].NAME;
+                break;
+            case "BAG":
+                _name = dicBag[_key].NAME;
+                break;
+            case "GLOVES":
+                _name = dicGloves[_key].NAME;
+                break;
+            case "HELMET":
+                _name = dicHelmet[_key].NAME;
+                break;
+            case "SHOES":
+                _name = dicShoes[_key].NAME;
+                break;
+            case "WEAPON":
+                _name = dicWeapon[_key].NAME;
+                break;
+        }
+        return _name;
+    }
+
+
     public static string GetItemNameByItemData(ItemData iData, eType _itemType)
     {
         string _name = "";
@@ -652,6 +681,7 @@ public class DataUtils
         }
         return _name;
     }
+
 
     public static void UnlockThisItem(ItemData itemData)
     {

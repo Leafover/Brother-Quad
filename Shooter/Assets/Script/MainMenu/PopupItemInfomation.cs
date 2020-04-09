@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PopupItemInfomation : MonoBehaviour
 {
-    public Image imgItemPriview, imgQuality, imgItemLevel;
+    public Image imgItemPriview, imgQuality, imgItemLevel, imgPiece;
     public TextMeshProUGUI txtItemName, txtItemLevel, txtItemInfo, txtPiece, txtDmg, txtFireRate, txtCritRate, txtCritDmg, txtRange, txtMagazine;
     public GameObject gWeapon, gItemInfo;
 
@@ -17,12 +17,12 @@ public class PopupItemInfomation : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void ShowItemInfo(string id, string level, string type, bool isEquipped)
+    public void ShowItemInfo(string _id, string _level, string _type, bool isEquipped)
     {
-        imgItemPriview.sprite = DataUtils.GetSpriteByName(id, MainMenuController.Instance.allSpriteData);
+        imgItemPriview.sprite = DataUtils.GetSpriteByName(_id, MainMenuController.Instance.allSpriteData);
 
         #region Image Quality
-        switch (level)
+        switch (_level)
         {
             case "Normal":
                 imgQuality.sprite = MenuController.instance.blackMarketpanel.levelSp[0];
@@ -45,7 +45,7 @@ public class PopupItemInfomation : MonoBehaviour
         #region Check item equipped
         foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
         {
-            if (_iData.type.Equals(type))
+            if (_iData.type.Equals(_type))
             {
                 itemEquipped = _iData;
                 break;
@@ -69,19 +69,23 @@ public class PopupItemInfomation : MonoBehaviour
         //{
         //    txtFillProgress.text = itemData.pices.ToString();
         //}
-        itemKey = id + "_" + level + "_" + isEquipped + "_" + isEquipped;
+
+        txtItemName.color = MainMenuController.Instance.GetColorByItem(_level);
+        txtItemName.text = DataUtils.GetItemName(_type, _id + "_" + _level);
+        imgPiece.enabled = !isEquipped;
+        itemKey = _id + "_" + _level + "_" + isEquipped + "_" + isEquipped;
         if (DataUtils.dicAllEquipment.ContainsKey(itemKey))
             itemData = DataUtils.dicAllEquipment[itemKey];
         else itemData = null;
         txtPiece.text = itemData == null ? "0" : itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
-        txtItemLevel.text = level;
-        imgItemLevel.color = MainMenuController.Instance.GetColorByItem(level);
-        txtItemInfo.text = DataUtils.GetItemInfo(id + "_" + level, type.ToString().ToUpper());
-        if (id.Contains("W"))
+        txtItemLevel.text = _level;
+        imgItemLevel.color = MainMenuController.Instance.GetColorByItem(_level);
+        txtItemInfo.text = DataUtils.GetItemInfo(_id + "_" + _level, _type.ToString().ToUpper());
+        if (_id.Contains("W"))
         {
             gItemInfo.SetActive(false);
 
-            keyEquipped = !isEquipped ? id + "_" + level : itemEquipped.id + "_" + itemEquipped.level;
+            keyEquipped = !isEquipped ? _id + "_" + _level : itemEquipped.id + "_" + itemEquipped.level;
             int curStar = itemEquipped == null ? 0 : itemEquipped.curStar < DataUtils.MAX_STARS ? itemEquipped.curStar : 4;
 
             txtDmg.text = DataUtils.GetRealFloat((DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10));
