@@ -479,7 +479,7 @@ public class EnemyBase : AutoTarget
         if (trackEntry.Animation.Name.Equals(aec.standup.name))
         {
             enemyState = previousState;
-            Debug.Log("stand up ");
+            Debug.Log("stand up " + previousState);
         }
     }
     [HideInInspector]

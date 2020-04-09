@@ -86,7 +86,6 @@ public class EM4Controller : EnemyBase
 
                 Attack(0, aec.attack1, false, maxtimeDelayAttack1);
                 CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                targetPos.transform.position = GetTarget(false);
                 if (!canmove)
                     return;
                 break;
@@ -125,6 +124,8 @@ public class EM4Controller : EnemyBase
     Vector2 dirBullet;
     Quaternion rotation;
     float angle;
+    bool checkdirPlayer;
+
     protected override void OnEvent(TrackEntry trackEntry, Spine.Event e)
     {
         base.OnEvent(trackEntry, e);
@@ -133,6 +134,11 @@ public class EM4Controller : EnemyBase
             combo++;
             if (!incam)
                 return;
+            if (!checkdirPlayer)
+            {
+                targetPos.transform.position = GetTarget(false);
+                checkdirPlayer = true;
+            }
             bulletEnemy = ObjectPoolManagerHaveScript.Instance.bullet3EnemyBasepooler.GetBulletEnemyPooledObject();
             bulletEnemy.AddProperties(damage1, bulletspeed1);
             dirBullet = (Vector2)targetPos.transform.position - (Vector2)boneBarrelGun.GetWorldPosition(skeletonAnimation.transform);
@@ -159,7 +165,7 @@ public class EM4Controller : EnemyBase
                     enemyState = EnemyState.attack;
                 }
             }
-
+            checkdirPlayer = false;
             if (enemyState == EnemyState.falldown)
                 return;
 
@@ -174,7 +180,6 @@ public class EM4Controller : EnemyBase
                 combo = 0;
                 timedelayChangePos = maxtimedelayChangePos;
                 speedMove = -speedMove;
-
                 if (speedMove <= 0)
                     FlipX = false;
                 else

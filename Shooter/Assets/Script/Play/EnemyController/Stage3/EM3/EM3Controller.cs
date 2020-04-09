@@ -44,6 +44,7 @@ public class EM3Controller : EnemyBase
             return;
         }
         CheckFallDown();
+        Debug.LogError("======zo day=====");
         if (isGrenadeStage)
         {
             switch (enemyState)
@@ -51,13 +52,13 @@ public class EM3Controller : EnemyBase
                 case EnemyState.attack:
                     CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
                     Attack(0, aec.attack1, false, maxtimeDelayAttack1 * 2);
-                   
+                    Debug.LogError("zo day");
                     break;
                 case EnemyState.falldown:
                     if (isGround)
                     {
                         if (aec.standup == null)
-                            enemyState = EnemyState.attack;
+                            enemyState = EnemyState.idle;
                         else
                         {
                             PlayAnim(0, aec.standup, false);
@@ -83,13 +84,13 @@ public class EM3Controller : EnemyBase
                         if (detectPlayer.collider.gameObject.layer == 13)
                         {
                             enemyState = EnemyState.attack;
-                            //     Debug.LogError("zo day");
+                               Debug.LogError("zo day");
                         }
                         else
                         {
                             PlayAnim(0, aec.idle, true);
                             CheckDirFollowPlayer(PlayerController.instance.GetTranformXPlayer());
-                            //  Debug.LogError("-----zo day");
+                           Debug.LogError("-----zo day");
                         }
                     }
                     break;
@@ -105,6 +106,7 @@ public class EM3Controller : EnemyBase
                             PlayAnim(0, aec.idle, true);
                         }
                         enemyState = EnemyState.idle;
+                        Debug.LogError("-----zo day");
                     }
                     else
                     {
@@ -129,6 +131,7 @@ public class EM3Controller : EnemyBase
                             move.y = rid.velocity.y;
                             rid.velocity = move;
                         }
+                        Debug.LogError("-----zo day");
                     }
 
                     break;
@@ -146,9 +149,10 @@ public class EM3Controller : EnemyBase
                     if (isGround)
                     {
                         if (aec.standup == null)
-                            enemyState = EnemyState.attack;
+                            enemyState = EnemyState.idle;
                         else
                         {
+                            previousState = EnemyState.idle;
                             PlayAnim(0, aec.standup, false);
                         }
 
@@ -226,7 +230,8 @@ public class EM3Controller : EnemyBase
             return;
         if (trackEntry.Animation.Name.Equals(aec.standup.name))
         {
-            enemyState = EnemyState.idle;
+            isGrenadeStage = false;
+            Debug.LogError("wtf");
         }
     }
     public override void OnDisable()
