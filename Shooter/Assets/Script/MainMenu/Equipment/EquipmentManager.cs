@@ -860,7 +860,8 @@ public class EquipmentManager : MonoBehaviour
         imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
         _keyItemSelected = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
         string keyItem = itemData.id + "_" + itemData.level;
-        txtItemName.text = "<color="+DataUtils.GetColorByItem(itemData)+">"+DataUtils.dicAllEquipment[_keyItemSelected].itemName+"</color>";
+        txtItemName.color = GetColorByItem(itemData.level);
+        txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;// "<color=" +DataUtils.GetColorByItem(itemData)+">"+DataUtils.dicAllEquipment[_keyItemSelected].itemName+"</color>";
         txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
         
 
@@ -890,8 +891,10 @@ public class EquipmentManager : MonoBehaviour
 
             imgCurItemPriview.sprite = DataUtils.GetSpriteByName(itemEquipped.id, MainMenuController.Instance.allSpriteData);
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
-                txtCurItemName.text = "<color="+DataUtils.GetColorByItem(itemSelected)+">"+DataUtils.dicEquippedItem[_keyItemEquipped].itemName + "</color>";
-
+            {
+                txtCurItemName.color = GetColorByItem(itemEquipped.level);
+                txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;// "<color=" +DataUtils.GetColorByItem(itemSelected)+">"+DataUtils.dicEquippedItem[_keyItemEquipped].itemName + "</color>";
+            }
 
             txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
 
