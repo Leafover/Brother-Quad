@@ -128,14 +128,14 @@ public class MiniBoss3Controller : EnemyBase
                                 enemyState = EnemyState.falldown;
                                 typeAttack = 0;
                                 timePreviousAttack = maxtimeDelayAttack1;
-                                randomCombo = 3;
+                                randomCombo = 5;
                             }
                             else if (previousState == EnemyState.falldown)
                             {
                                 enemyState = EnemyState.attack;
                                 typeAttack = 1;
                                 timePreviousAttack = maxtimeDelayAttack2;
-                                randomCombo = 3;
+                                randomCombo = 5;
                                 PlayAnim(0, aec.jumpOut, true);
 
                             }
@@ -246,7 +246,7 @@ public class MiniBoss3Controller : EnemyBase
                     else
                     {
                         countShootRocket = 0;
-                        randomCombo = 3;
+                        randomCombo = 5;
                         typeAttack = 1;
                         PlayAnim(0, aec.jumpOut, true);
                        // rightFace.gameObject.SetActive(true);
