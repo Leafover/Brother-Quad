@@ -12,14 +12,14 @@ public class EnergyBulletMN3 : BulletEnemy
     {
         Init(0);
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
-    {
-        switch (collision.gameObject.layer)
-        {
-            case 13:
-                myEnemy.ChangeStage();
-                break;
-        }
-        base.OnTriggerEnter2D(collision);
-    }
+    //public override void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    switch (collision.gameObject.layer)
+    //    {
+    //        case 13:
+    //            myEnemy.ChangeStage();
+    //            break;
+    //    }
+    //    base.OnTriggerEnter2D(collision);
+    //}
 }
