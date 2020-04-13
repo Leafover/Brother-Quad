@@ -9,7 +9,10 @@ using Spine;
 public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
-    public SkeletonGraphic skeletonGraphic;
+    public SkeletonGraphic skleCur;
+    public GameObject gP1, gP2;
+    public HeroChoose[] allHeroes;
+
     private Skin[] skins;
 
     public GameObject gAllEquippedItem;
@@ -51,8 +54,28 @@ public class PanelHeroes : MonoBehaviour
 
     }
 
+    public void ChangeAnim(int _index)
+    {
+        switch (_index)
+        {
+            case 1:
+                gP1.SetActive(true);
+                gP2.SetActive(false);
+                break;
+            case 2:
+                gP1.SetActive(false);
+                gP2.SetActive(true);
+                break;
+            default:
+                gP1.SetActive(true);
+                gP2.SetActive(false);
+                break;
+        }
+    }
     private void OnEnable()
     {
+        ChangeAnim(DataUtils.HeroIndex() + 1);
+
         for (int i = 0; i < lstEquip.Count; i++)
         {
             if (!dicAllEquip.ContainsKey(lstEquip[i].itemData.type))
@@ -68,7 +91,7 @@ public class PanelHeroes : MonoBehaviour
         MyAnalytics.LogOpenHeroTab();
         ChooseTab(0);
 
-        FillHeroData();
+        FillHeroData(DataUtils.HeroIndex());
         InitEquippedItem();
 
 
@@ -91,15 +114,15 @@ public class PanelHeroes : MonoBehaviour
             }
         }
     }
-    public void FillHeroData()
+    public void FillHeroData(int _hIndex)
     {
         for (int i = 0; i < DataUtils.playerInfo.level; i++)
         {
             imgAllStars[i].sprite = sprStar;
         }
-        FillDataPlayer();
+        FillDataPlayer(_hIndex);
     }
-    private void FillDataPlayer()
+    private void FillDataPlayer(int _heroIndex)
     {
         foreach (ItemData _id in DataUtils.dicEquippedItem.Values)
         {
@@ -113,8 +136,8 @@ public class PanelHeroes : MonoBehaviour
         keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
         curWeponStar = itemEquipped.curStar;
         nextWeaponStar = itemEquipped.curStar + 1 > 4 ? itemEquipped.curStar : itemEquipped.curStar + 1;
-        pData = DataController.instance.playerData[0].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
-        pNext = DataController.instance.playerData[0].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
+        pData = DataController.instance.playerData[/*0*/_heroIndex].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
+        pNext = DataController.instance.playerData[/*0*/_heroIndex].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
 
         txtHealth.text = pData.hp.ToString();
         txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, pNext.hp);
@@ -173,7 +196,7 @@ public class PanelHeroes : MonoBehaviour
 
                     DataUtils.AddCoinAndGame((int)-priceUpdate, 0);
                     pEvolve.Play();
-                    FillHeroData();
+                    FillHeroData(DataUtils.HeroIndex());
                     DataUtils.SavePlayerData();
                     DataUtils.ChooseHero(DataUtils.dicAllHero[heroSelected.id]);
                     DataUtils.dicAllHero[heroSelected.id] = DataUtils.dicAllHero[heroSelected.id];
@@ -217,5 +240,42 @@ public class PanelHeroes : MonoBehaviour
                 gHeroInfo.SetActive(false);
                 break;
         }
+    }
+
+    public void HeroOnClick(int _index)
+    {
+        HeroChoose heroChoose = allHeroes[_index];
+
+        if (heroChoose.heroData == null)
+        {
+            MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
+        }
+        else
+        {
+            FillData(heroChoose);
+
+            for (int i = 0; i < allHeroes.Length; i++)
+            {
+                HeroChoose _h = allHeroes[i];
+
+                if (_h == heroChoose)
+                {
+                    _h.imgSelected.enabled = true;
+                }
+                else
+                {
+                    _h.imgSelected.enabled = false;
+                }
+            }
+            ChangeAnim(_index + 1);
+            MainMenuController.Instance.heroSelectIndex = _index;
+        }
+    }
+
+    private void FillData(HeroChoose heroChoose)
+    {
+        heroChoose.imgSelected.enabled = true;
+        heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
+        FillHeroData(heroChoose.heroIndex - 1);
     }
 }

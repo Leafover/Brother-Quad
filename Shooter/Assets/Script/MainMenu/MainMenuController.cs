@@ -27,6 +27,8 @@ public class MainMenuController : MonoBehaviour
 
     public Text txtGems, txtCoins;
     [HideInInspector]
+    public int heroSelectIndex = 0;
+    [HideInInspector]
     public int stageSelected = 0;
     private void Awake()
     {
@@ -184,6 +186,8 @@ public class MainMenuController : MonoBehaviour
     }
     public void BackToMain(GameObject g)
     {
+        DataUtils.SetHeroIndex(heroSelectIndex);
+        DataUtils.SaveAllHero();
         g.SetActive(false);
         gPanelUIButton.SetActive(true);
     }
