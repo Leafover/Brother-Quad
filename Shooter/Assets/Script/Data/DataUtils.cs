@@ -429,7 +429,7 @@ public class DataUtils
     {
         float res = 0;
         string key = itemData.id + "_" + itemData.level;
-        int curStar = (isEvolve ? 0 : (itemData.curStar < 5 ? itemData.curStar : 4));
+        int curStar = (isEvolve ? 0 : /*(itemData.curStar < 5 ? itemData.curStar : 4)*/1);
         //int curStar = itemData.curStar < 5 ? itemData.curStar : 4;
         switch (itemData.type)
         {
