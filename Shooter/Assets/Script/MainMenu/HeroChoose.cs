@@ -13,45 +13,48 @@ public class HeroChoose : MonoBehaviour
     public HeroDataInfo heroData;
     public int heroIndex;
 
-    private Button btn;
+    //private Button btn;
     private void OnEnable()
     {
-        imgSelected.enabled = false;
-        btn = GetComponent<Button>();
+        heroIndex = int.Parse(heroID.Replace("P", ""));
+
+        //btn = GetComponent<Button>();
+
         if (DataUtils.dicAllHero.ContainsKey(heroID))
         {
             heroData = DataUtils.dicAllHero[heroID];
+            isUnLock = true;
         }
         else
         {
             heroData = null;
+            isUnLock = false;
         }
+
+
+        if (heroIndex - 1 == DataUtils.HeroIndex())
+        {
+            FillData();
+        }
+        else
+            imgSelected.enabled = false;
     }
     // Start is called before the first frame update
     void Start()
     {
         imgLock.gameObject.SetActive(!isUnLock);
-        btn.onClick.AddListener(() =>
-        {
-            HeroOnClick();
-        });
     }
-    
-    private void HeroOnClick()
+    private void FillData()
     {
-        Debug.LogError("HeroIndex: " + transform.parent.GetSiblingIndex());
-        if (/*!isUnLock*/ heroData == null)
+        if (PanelHeroes.Instance != null)
         {
-            MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
+            imgSelected.enabled = true;
+            PanelHeroes.Instance.heroSelected = DataUtils.dicAllHero[heroID];
+            PanelHeroes.Instance.FillHeroData(heroIndex - 1);
         }
         else
         {
-            if(PanelHeroes.Instance != null)
-            {
-                imgSelected.enabled = true;
-                PanelHeroes.Instance.heroSelected = DataUtils.dicAllHero[heroID];
-                PanelHeroes.Instance.FillHeroData();
-            }
+            imgSelected.enabled = true;
         }
     }
 }
