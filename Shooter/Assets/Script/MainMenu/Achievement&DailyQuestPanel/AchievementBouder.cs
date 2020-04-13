@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class AchievementBouder : MonoBehaviour
 {
     public Text processText, rewardText, expText, desText, nameText;
-    public Image rewardImg, processImg;
-    public GameObject btnClaim, doneObj, processObj;
+    public Image rewardImg, processImg, btnClaimImg;
+    public GameObject /*btnClaim,*/ doneObj/*, processObj*/;
     public int index = -1;
 
     public void DisplayStart()
@@ -35,8 +35,9 @@ public class AchievementBouder : MonoBehaviour
             if (DataController.saveAllAchievement[index].isPass)
             {
                 transform.SetAsFirstSibling();
-                btnClaim.SetActive(true);
-                processObj.SetActive(false);
+                btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[1];
+              //  btnClaim.SetActive(true);
+              //  processObj.SetActive(false);
                 doneObj.SetActive(false);
             }
             else
@@ -47,22 +48,28 @@ public class AchievementBouder : MonoBehaviour
                 expText.text = "" + DataController.instance.allAchievement[index].expReward[DataController.saveAllAchievement[index].currentLevel - 1];
                 rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.instance.allAchievement[index].typeReward[DataController.saveAllAchievement[index].currentLevel - 1] - 1];
 
-                btnClaim.SetActive(false);
-                processObj.SetActive(true);
+                btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0];
+                //  btnClaim.SetActive(false);
+                //   processObj.SetActive(true);
                 doneObj.SetActive(false);
             }
+            btnClaimImg.gameObject.SetActive(true);
         }
         else
         {
             transform.SetAsLastSibling();
-            btnClaim.SetActive(false);
-            processObj.SetActive(false);
+            //  btnClaim.SetActive(false);
+            btnClaimImg.gameObject.SetActive(false);
+            //  processObj.SetActive(false);
             doneObj.SetActive(true);
         }
     }
 
     public void Claim()
     {
+        if (btnClaimImg.sprite == MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0])
+            return;
+        btnClaimImg.gameObject.SetActive(false);
         switch (DataController.instance.allAchievement[index].typeReward[DataController.saveAllAchievement[index].currentLevel - 1])
         {
             case 1:
