@@ -7,7 +7,7 @@ using System;
 public class AchievmentAndDailyQuestPanel : MonoBehaviour
 {
     public Sprite[] rewardSps;
-    public Sprite[] btntabSps;
+    public Sprite[] btntabSps,btnClaim;
     public Button[] btnChangeTabs;
     public GameObject[] Tabs;
 
@@ -34,12 +34,12 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
 
         if (timeCount <= 0)
         {
-            timeText.text = "Refresh in: <color=green>" + "00:00:00" + "</color>";
+            timeText.text = "Refresh in: <color=yellow>" + "00:00:00" + "</color>";
             return;
         }
         timeSpanTemp = TimeSpan.FromSeconds(timeCount);
         timetemp = timeSpanTemp.ToString("hh':'mm':'ss");
-        timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
+        timeText.text = "Refresh in: <color=yellow>" + timetemp + "</color>";
     }
 
     public void ChangeTab(int index)
@@ -51,7 +51,7 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
         {
             case 0:
                 //MenuController.instance.warningDailyQuest.SetActive(false);
-                timeText.text = "Refresh in: <color=green>" + timetemp + "</color>";
+                timeText.text = "Refresh in: <color=yellow>" + timetemp + "</color>";
                 Debug.Log("=============" + DataController.saveIndexQuest.Count);
                 for (int i = 0; i < DataController.saveIndexQuest.Count; i++)
                 {

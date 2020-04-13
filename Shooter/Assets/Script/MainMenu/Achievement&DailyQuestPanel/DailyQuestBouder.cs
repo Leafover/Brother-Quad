@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class DailyQuestBouder : MonoBehaviour
 {
     public Text processText, rewardText, expText, desText,specialDesText;
-    public Image rewardImg, processImg;
-    public GameObject btnClaim, doneObj,rewardObj,processBar;
+    public Image rewardImg, processImg,btnClaimImg;
+    public GameObject /*btnClaim,*/ doneObj,rewardObj,processBar;
     public int index = -1;
 
     public void DisplayStart()
@@ -30,16 +30,19 @@ public class DailyQuestBouder : MonoBehaviour
             if (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass)
             {
                 transform.SetAsFirstSibling();
-                btnClaim.SetActive(true);
+                //   btnClaim.SetActive(true);
+                btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[1];
                 doneObj.SetActive(false);
                 rewardObj.SetActive(false);
             }
             else
             {
-                btnClaim.SetActive(false);
+                //    btnClaim.SetActive(false);
+                btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0];
                 doneObj.SetActive(false);
                 rewardObj.SetActive(true);
             }
+            btnClaimImg.gameObject.SetActive(true);
         }
         else
         {
@@ -47,7 +50,8 @@ public class DailyQuestBouder : MonoBehaviour
             processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
             transform.SetAsLastSibling();
             rewardObj.SetActive(false);
-            btnClaim.SetActive(false);
+            //    btnClaim.SetActive(false);
+            btnClaimImg.gameObject.SetActive(false);
             doneObj.SetActive(true);
         }
 
@@ -68,6 +72,9 @@ public class DailyQuestBouder : MonoBehaviour
 
     public void Claim()
     {
+        if (btnClaimImg.sprite == MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0])
+            return;
+        btnClaimImg.gameObject.SetActive(false);
         switch (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType)
         {
             case 1:
