@@ -139,23 +139,28 @@ public class MenuController : MonoBehaviour
             //Debug.Log("false");
             return false;
         }
+
     }
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.O))
-    //    {
-    //        DataController.instance.DoDailyQuest(1, 1000);
-    //        DataController.instance.DoAchievement(0, 1000);
-    //    }
-    //    //else if(Input.GetKeyDown(KeyCode.H))
-    //    //{
-    //    //    DataUtils.SaveLevel(0, 0);
-    //    //    DataUtils.SaveLevel(0, 1);
-    //    //    DataUtils.SaveLevel(0, 2);
-    //    //    DataUtils.SaveLevel(0, 3);
-    //    //    DataUtils.SaveLevel(0, 4);
-    //    //    DataUtils.SaveLevel(0, 5);
-    //    //    DataUtils.SaveLevel(0, 6);
-    //    //}
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+            DataController.instance.DoAchievement(0, 1000);
+            for(int i = 0;i < DataController.allSaveDailyQuest.Count; i ++)
+            {
+                DataController.instance.DoDailyQuest(i, 1000);
+            }
+        }
+        //else if(Input.GetKeyDown(KeyCode.H))
+        //{
+        //    DataUtils.SaveLevel(0, 0);
+        //    DataUtils.SaveLevel(0, 1);
+        //    DataUtils.SaveLevel(0, 2);
+        //    DataUtils.SaveLevel(0, 3);
+        //    DataUtils.SaveLevel(0, 4);
+        //    DataUtils.SaveLevel(0, 5);
+        //    DataUtils.SaveLevel(0, 6);
+        //}
+    }
 }

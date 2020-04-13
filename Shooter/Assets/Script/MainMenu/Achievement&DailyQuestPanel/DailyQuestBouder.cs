@@ -20,37 +20,33 @@ public class DailyQuestBouder : MonoBehaviour
     public void DisplayMe()
     {
         DisplayStart();
+        processImg.fillAmount = (float)DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber / DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+        processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+        rewardText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards.ToString("#,0");
+        expText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].EXP;
+        rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType - 1];
         if (!DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isDone)
         {
-            processImg.fillAmount = (float)DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber / DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
-            processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
-            rewardText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].SoLuongRewards.ToString("#,0");
-            expText.text = "" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].EXP;
-            rewardImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType - 1];
             if (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].isPass)
             {
                 transform.SetAsFirstSibling();
-                //   btnClaim.SetActive(true);
                 btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[1];
-                doneObj.SetActive(false);
-                rewardObj.SetActive(false);
             }
             else
             {
-                //    btnClaim.SetActive(false);
                 btnClaimImg.sprite = MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0];
-                doneObj.SetActive(false);
-                rewardObj.SetActive(true);
+
+
             }
+            doneObj.SetActive(false);
             btnClaimImg.gameObject.SetActive(true);
+            rewardObj.SetActive(true);
         }
         else
         {
-            processImg.fillAmount = (float)DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber / DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
-            processText.text = DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].currentNumber + "/" + DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].Soluong;
+
             transform.SetAsLastSibling();
             rewardObj.SetActive(false);
-            //    btnClaim.SetActive(false);
             btnClaimImg.gameObject.SetActive(false);
             doneObj.SetActive(true);
         }
@@ -74,7 +70,6 @@ public class DailyQuestBouder : MonoBehaviour
     {
         if (btnClaimImg.sprite == MenuController.instance.achievementAndDailyQuestPanel.btnClaim[0])
             return;
-        btnClaimImg.gameObject.SetActive(false);
         switch (DataController.allSaveDailyQuest[DataController.saveIndexQuest[index]].RewardsType)
         {
             case 1:

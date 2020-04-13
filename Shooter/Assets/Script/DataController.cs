@@ -1223,6 +1223,9 @@ public class DataController : MonoBehaviour
         {
             saveAllAchievement[index].isPass = true;
             saveAllAchievement[index].currentNumber = allAchievement[index].maxNumber[saveAllAchievement[index].currentLevel - 1];
+
+            MenuController.instance.warningAchievment.SetActive(true);
+            MenuController.instance.warningEvent.SetActive(true);
         }
     }
     public void DoDailyQuest(int index, int _numberAdd)
@@ -1234,6 +1237,8 @@ public class DataController : MonoBehaviour
         {
             allSaveDailyQuest[index].isPass = true;
             allSaveDailyQuest[index].currentNumber = allSaveDailyQuest[index].Soluong;
+            MenuController.instance.warningDailyQuest.SetActive(true);
+            MenuController.instance.warningEvent.SetActive(true);
         }
     }
     bool checkDaily, checkAchi;
