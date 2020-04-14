@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.begin;
 
-        int currentChar = 0;
+        int currentChar = DataUtils.HeroIndex();
 
         playerControllers[currentChar].Init();
 
