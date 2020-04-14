@@ -838,8 +838,20 @@ public class EnemyBase : AutoTarget
             case 11:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-
-                if (collision.tag != "bulletW5")
+                if(collision.tag == "bulletW5")
+                {
+                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
+                    explobulletW5.transform.position = collision.transform.position;
+                    SoundController.instance.PlaySound(soundGame.soundexplow6);
+                    explobulletW5.SetActive(true);
+                    collision.gameObject.SetActive(false);
+                }
+                else if (collision.tag == "bulletuav")
+                {
+                    TakeDamage(PlayerController.instance.uav.damageBullet,false,false,false);
+                    collision.gameObject.SetActive(false);
+                }
+                else
                 {
                     takecrithit = Random.Range(0, 100);
                     if (takecrithit <= PlayerController.instance.critRate)
@@ -870,40 +882,42 @@ public class EnemyBase : AutoTarget
                         chainLightning.gameObject.SetActive(true);
                     }
                 }
-                else
-                {
-                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
-                    explobulletW5.transform.position = collision.transform.position;
-                    SoundController.instance.PlaySound(soundGame.soundexplow6);
-                    explobulletW5.SetActive(true);
-                    collision.gameObject.SetActive(false);
-                }
                 break;
             case 14:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
-                if (currentHealth <= 0)
+
+                if (collision.tag == "effectexploboomplane")
                 {
-                    if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
-                        SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
-                    GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
-                    MissionController.Instance.DoMission(1, 1);
-                    DataController.instance.DoAchievement(3, 1);
-                    DataController.instance.DoDailyQuest(1, 1);
-                    PlayerController.instance.countKillByGrenade++;
-                    if (PlayerController.instance.countKillByGrenade >= 3)
+                    TakeDamage(GameController.instance.maybay.damageboom, false, false, false);
+                }
+                else
+                {
+                    TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
+                    if (currentHealth <= 0)
                     {
-                        DataController.instance.DoAchievement(4, 1);
-                        PlayerController.instance.countKillByGrenade = 0;
-                        Debug.LogError("tieu diet 3");
+                        if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
+                            SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
+                        GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
+                        MissionController.Instance.DoMission(1, 1);
+                        DataController.instance.DoAchievement(3, 1);
+                        DataController.instance.DoDailyQuest(1, 1);
+                        PlayerController.instance.countKillByGrenade++;
+                        if (PlayerController.instance.countKillByGrenade >= 3)
+                        {
+                            DataController.instance.DoAchievement(4, 1);
+                            PlayerController.instance.countKillByGrenade = 0;
+                            Debug.LogError("tieu diet 3");
+                        }
                     }
                 }
                 break;
             case 26:
                 if (!incam || enemyState == EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
+
+                    TakeDamage(PlayerController.instance.damgeGrenade, false, false, false);
+
                 break;
             case 27:
                 if (!incam || enemyState == EnemyState.die)

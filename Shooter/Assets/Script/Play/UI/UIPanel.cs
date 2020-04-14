@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
-
-    public GameObject rewardItemEquip;
-    public Image[] rewardItemEquipImg, bouderLevelItemEquipImg;
+    public GameObject[] iconSkills;
+    public GameObject rewardItemEquip,btnSKill;
+    public Image[] rewardItemEquipImg, bouderLevelItemEquipImg, skillFillAmount;
     public GameObject[] bouderRewardEquip;
 
     public AllBossAndMiniBossInfo allbossandminibossInfo;
@@ -20,7 +20,7 @@ public class UIPanel : MonoBehaviour
     public Button btnReviveByGem;
     public List<Text> missionTexts;
     public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel, takeDamgePanel, lowHealth, hackbouder;
-    public Image grenadeFillAmout, fillbouderGrenade;
+    public Image grenadeFillAmout, fillbouderGrenade,fillbouderSKill;
     public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
 
@@ -81,6 +81,12 @@ public class UIPanel : MonoBehaviour
         DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
 
         hackbouder.SetActive(DataController.instance.isHack);
+
+        if(DataUtils.heroInfo.level >= 1)
+        {
+            btnSKill.SetActive(true);
+            iconSkills[GameController.instance.currentChar].gameObject.SetActive(true);
+        }
     }
     void OutPlay(int nextscene, bool showstarterpack)
     {
@@ -115,6 +121,12 @@ public class UIPanel : MonoBehaviour
     public void FillGrenade(float _current, float _max)
     {
         fillbouderGrenade.fillAmount = grenadeFillAmout.fillAmount = _current / _max;
+    }
+    public void FillSkill(float _current, float _max)
+    {
+        if (!btnSKill.activeSelf)
+            return;
+        fillbouderSKill.fillAmount = skillFillAmount[GameController.instance.currentChar].fillAmount = _current / _max;
     }
     public void BtnNext()
     {

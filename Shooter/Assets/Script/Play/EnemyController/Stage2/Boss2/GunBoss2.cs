@@ -96,7 +96,22 @@ public class GunBoss2 : AutoTarget
             case 11:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                if (collision.tag != "bulletW5")
+
+                if (collision.tag == "bulletW5")
+                {
+                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
+                    explobulletW5.transform.position = collision.transform.position;
+                    explobulletW5.SetActive(true);
+                    SoundController.instance.PlaySound(soundGame.soundexplow6);
+                    collision.gameObject.SetActive(false);
+                }
+                else if (collision.tag == "bulletuav")
+                {
+                    TakeDamage(PlayerController.instance.uav.damageBullet, false, false);
+                    myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, false, false);
+                    collision.gameObject.SetActive(false);
+                }
+                else
                 {
                     takecrithit = Random.Range(0, 100);
                     if (takecrithit <= PlayerController.instance.critRate)
@@ -140,28 +155,29 @@ public class GunBoss2 : AutoTarget
                         chainLightning.gameObject.SetActive(true);
                     }
                 }
-                else
-                {
-                    explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
-                    explobulletW5.transform.position = collision.transform.position;
-                    explobulletW5.SetActive(true);
-                    SoundController.instance.PlaySound(soundGame.soundexplow6);
-                    collision.gameObject.SetActive(false);
-                }
                 break;
             case 14:
                 if (!myEnemyBase.incam || myEnemyBase.enemyState == EnemyBase.EnemyState.die)
                     return;
-                TakeDamage(PlayerController.instance.damgeGrenade, false, false);
-                myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true, false);
-                if (currentHealth <= 0)
+
+                if (collision.tag == "effectexploboomplane")
                 {
-                    if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
-                        SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
-                    GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
-                    MissionController.Instance.DoMission(1, 1);
-                    DataController.instance.DoAchievement(3, 1);
-                    DataController.instance.DoDailyQuest(1, 1);
+                    TakeDamage(GameController.instance.maybay.damageboom, false, false);
+                    myEnemyBase.TakeDamage(GameController.instance.maybay.damageboom, false, true, false);
+                }
+                else
+                {
+                    TakeDamage(PlayerController.instance.damgeGrenade, false, false);
+                    myEnemyBase.TakeDamage(PlayerController.instance.damgeGrenade, false, true, false);
+                    if (currentHealth <= 0)
+                    {
+                        if (!GameController.instance.listcirtwhambang[1].gameObject.activeSelf)
+                            SoundController.instance.PlaySound(soundGame.soundGrenadeKill);
+                        GameController.instance.listcirtwhambang[1].DisplayMe(transform.position);
+                        MissionController.Instance.DoMission(1, 1);
+                        DataController.instance.DoAchievement(3, 1);
+                        DataController.instance.DoDailyQuest(1, 1);
+                    }
                 }
                 break;
             case 26:

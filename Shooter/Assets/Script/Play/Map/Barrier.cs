@@ -73,14 +73,8 @@ public class Barrier : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 11:
-                if (collision.tag != "bulletW5")
-                {
-                    TakeDamage(PlayerController.instance.damageBullet);
-                    //Debug.LogError("zoooooooo");
-                    if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
-                        collision.gameObject.SetActive(false);
-                }
-                else
+
+                if (collision.tag == "bulletW5")
                 {
                     explobulletW5 = ObjectPoolerManager.Instance.exploBulletW5Pooler.GetPooledObject();
                     explobulletW5.transform.position = collision.transform.position;
@@ -88,9 +82,28 @@ public class Barrier : MonoBehaviour
                     explobulletW5.SetActive(true);
                     collision.gameObject.SetActive(false);
                 }
+                else if (collision.tag == "bulletuav")
+                {
+                    TakeDamage(PlayerController.instance.uav.damageBullet);
+                    collision.gameObject.SetActive(false);
+                }
+                else
+                {
+                    TakeDamage(PlayerController.instance.damageBullet);
+                    //Debug.LogError("zoooooooo");
+                    if (collision.tag != "shotgun" && collision.tag != "explobulletW5")
+                        collision.gameObject.SetActive(false);
+                }
                 break;
             case 14:
-                TakeDamage(PlayerController.instance.damgeGrenade);
+
+
+                if (collision.tag == "effectexploboomplane")
+                {
+                    TakeDamage(GameController.instance.maybay.damageboom);
+                }
+                else
+                    TakeDamage(PlayerController.instance.damgeGrenade);
                 // Debug.LogError("zoooooooo");
                 break;
             case 26:

@@ -77,7 +77,10 @@ public class MenuController : MonoBehaviour
             warningvideoreward.SetActive(false);
 
         if (DataController.instance.isHack)
-            DataUtils.AddCoinAndGame(100000, 1000);
+        {
+            DataUtils.AddCoinAndGame(1000, 1000);
+            DataUtils.TakeHeroPice("P1", 100);
+        }
 
 
         #region problem
