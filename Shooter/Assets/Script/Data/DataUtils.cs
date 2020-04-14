@@ -1282,6 +1282,26 @@ public class DataUtils
             }
             ChooseHero(heroInfo);
             Debug.LogError("---------- loadheroTH3");
+
+            if (!dicAllHero.ContainsKey("P2"))
+            {
+                Debug.LogError("Chua init P2");
+                HeroDataInfo hero2 = new HeroDataInfo();
+                hero2.id = "P2";
+                hero2.name = "REMITANOOOO";
+                hero2.level = 0;
+                hero2.exp = 0;
+                hero2.hp = GetHeroHPByID("P2");
+                hero2.curStars = 1;
+                hero2.pices = 0;
+                hero2.isUnlock = true;
+                hero2.isEquipped = false;
+
+                if (!dicAllHero.ContainsKey(hero2.id))
+                {
+                    dicAllHero.Add(hero2.id, hero2);
+                }
+            }
         }
         else
         {
@@ -1306,7 +1326,7 @@ public class DataUtils
                 hero2.name = "REMITANOOOO";
                 hero2.level = 0;
                 hero2.exp = 0;
-                hero2.hp = GetHeroHPByID("P1");
+                hero2.hp = GetHeroHPByID("P2");
                 hero2.curStars = 1;
                 hero2.pices = 0;
                 hero2.isUnlock = true;

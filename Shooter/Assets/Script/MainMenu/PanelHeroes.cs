@@ -116,9 +116,13 @@ public class PanelHeroes : MonoBehaviour
     }
     public void FillHeroData(int _hIndex)
     {
-        for (int i = 0; i < DataUtils.playerInfo.level; i++)
+        Debug.LogError(heroSelected.name + " heroSelected.level: " + heroSelected.level);
+        for (int i = 0; i < /*DataUtils.playerInfo.level*/imgAllStars.Length; i++)
         {
-            imgAllStars[i].sprite = sprStar;
+            if (i < heroSelected.level)
+                imgAllStars[i].sprite = sprStar;
+            else
+                imgAllStars[i].sprite = sprStarUnlock;
         }
         FillDataPlayer(_hIndex);
     }
