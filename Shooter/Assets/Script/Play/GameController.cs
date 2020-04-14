@@ -648,6 +648,18 @@ public class GameController : MonoBehaviour
             uiPanel.DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
         }
     }
+    public void TryUseSkill1()
+    {
+        if (PlayerController.instance.stun)
+            return;
+        PlayerController.instance.USESKILL1();
+    }
+    public void TryUseSkill2()
+    {
+        if (PlayerController.instance.stun)
+            return;
+        PlayerController.instance.USESKILL2();
+    }
     public void TryShot()
     {
 

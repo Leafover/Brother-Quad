@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public UAVController uav;
     public GameObject reloadObj;
     public Image reloadImg;
     bool isregen;
@@ -248,7 +249,30 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    public void USESKILL1()
+    {
+        switch(DataUtils.HeroIndex())
+        {
+            case 0:
 
+                break;
+            case 1:
+                uav.gameObject.SetActive(true);
+                break;
+        }
+    }
+    public void USESKILL2()
+    {
+        switch (DataUtils.HeroIndex())
+        {
+            case 0:
+
+                break;
+            case 1:
+
+                break;
+        }
+    }
     public void TryGrenade()
     {
         if (timePreviousGrenade > 0)
@@ -273,8 +297,6 @@ public class PlayerController : MonoBehaviour
         }
         MissionController.Instance.DoMission(4, 1);
         SoundController.instance.PlaySound(soundGame.throwGrenade);
-
-
     }
     public void AddProperties()
     {
