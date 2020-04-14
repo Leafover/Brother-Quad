@@ -1,21 +1,29 @@
-﻿using System.Collections;
+﻿using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UAVController : MonoBehaviour
 {
+    public float damageBullet;
     float timeShoot;
     GameObject bullet;
     Vector2 dirBullet;
     float angle;
     Quaternion rotation;
     float timeLive;
+    public SkeletonAnimation sk;
+    private void Start()
+    {
+        timeLive = 20;
+        damageBullet = 2;
+    }
     void Shoot(float deltaTime)
     {
         timeShoot -= deltaTime;
         if (timeShoot <= 0)
         {
-            timeShoot = 1;
+            timeShoot = 0.3f;
             dirBullet = target - myPos();
             bullet = ObjectPoolerManager.Instance.bulletUAVPooler.GetPooledObject();
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -31,7 +39,7 @@ public class UAVController : MonoBehaviour
         if (timeLive <= 0)
         {
             gameObject.SetActive(false);
-            timeLive = 10;
+            timeLive = 20;
         }
     }
     private void Update()
@@ -80,6 +88,14 @@ public class UAVController : MonoBehaviour
         if (GameController.instance.autoTarget.Count == 0)
             return;
         target = GetTarget();
+        FlipX = GetTarget().x > transform.position.x;
         Shoot(deltaTime);
+
+
+    }
+    public bool FlipX
+    {
+        get { return sk.skeleton.FlipX; }
+        set { sk.skeleton.FlipX = value; }
     }
 }

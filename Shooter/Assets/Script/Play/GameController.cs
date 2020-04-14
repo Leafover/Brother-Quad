@@ -62,6 +62,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public Vector2 movePosition, shootPosition;
     public bool first;
+    public int currentChar;
     private void Awake()
     {
         if (instance == null)
@@ -74,7 +75,7 @@ public class GameController : MonoBehaviour
 #endif
         gameState = GameState.begin;
 
-        int currentChar = DataUtils.HeroIndex();
+        currentChar = DataUtils.HeroIndex();
 
         playerControllers[currentChar].Init();
 
@@ -174,7 +175,7 @@ public class GameController : MonoBehaviour
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
         DisplaySetting();
-        maybay.Begin(currentMap.pointBeginPlayer.transform.position);
+        maybay.Begin(currentMap.pointBeginPlayer.transform.position,true,5);
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
         StartCoroutine(DelayLoadMap());
@@ -607,6 +608,10 @@ public class GameController : MonoBehaviour
         {
             BtnGrenade();
         }
+        else if(Input.GetKeyDown(KeyCode.C))
+        {
+            TryUseSkill();
+        }
 
         if (activeWarningEnemyLeft && !uiPanel.leftwarning.activeSelf)
         {
@@ -648,17 +653,11 @@ public class GameController : MonoBehaviour
             uiPanel.DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
         }
     }
-    public void TryUseSkill1()
+    public void TryUseSkill()
     {
         if (PlayerController.instance.stun)
             return;
-        PlayerController.instance.USESKILL1();
-    }
-    public void TryUseSkill2()
-    {
-        if (PlayerController.instance.stun)
-            return;
-        PlayerController.instance.USESKILL2();
+        PlayerController.instance.USESKILL();
     }
     public void TryShot()
     {

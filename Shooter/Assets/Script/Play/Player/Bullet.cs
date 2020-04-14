@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rid;
     public float speed, existtime;
     public Vector2 dir;
+    public bool uav;
     public enum TYPE
     {
         NORMAL, TARGET
@@ -17,8 +18,16 @@ public class Bullet : MonoBehaviour
         if (PlayerController.instance == null)
             return;
 
-        existtime = PlayerController.instance.attackRange / 10;
-        speed = PlayerController.instance.bulletSpeed / 100;
+        if (!uav)
+        {
+            existtime = PlayerController.instance.attackRange / 10;
+            speed = PlayerController.instance.bulletSpeed / 100;
+        }
+        else
+        {
+            existtime = 10;
+            speed = 3;
+        }
 
         if (type != TYPE.TARGET)
             rid.AddForce(transform.right * speed);

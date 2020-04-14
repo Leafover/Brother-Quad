@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
     [SpineBone]
     public string strboneBarrelGun, strboneHandGrenade;
 
-    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack, timestun;
-    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket, maxtimestun;
+    float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack, timestun, timePreviousSkill;
+    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket, maxtimestun,timedelaySkill;
 
     public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
@@ -249,27 +249,21 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    public void USESKILL1()
+    public void USESKILL()
     {
-        switch(DataUtils.HeroIndex())
+        if (timePreviousSkill > 0)
+            return;
+
+        timePreviousSkill = timedelaySkill;
+        switch (GameController.instance.currentChar)
         {
             case 0:
-
-                break;
-            case 1:
                 uav.gameObject.SetActive(true);
-                break;
-        }
-    }
-    public void USESKILL2()
-    {
-        switch (DataUtils.HeroIndex())
-        {
-            case 0:
-
+                Debug.LogError("use skill");
                 break;
             case 1:
-
+                GameController.instance.maybay.isAttack = true;
+                GameController.instance.maybay.Begin(CameraController.instance.bouders[3].transform.position, false,10);
                 break;
         }
     }
@@ -307,9 +301,9 @@ public class PlayerController : MonoBehaviour
         //speedMoveMax = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed + ((float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
         //maxHealth = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level  : DataUtils.MAX_LEVEL_HERO - 1].hp;
 
-        damgeGrenade = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].DmgGrenade;
-        speedMoveMax = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed + ((float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
-        maxHealth = (float)DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].hp;
+        damgeGrenade = (float)DataController.instance.playerData[GameController.instance.currentChar].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].DmgGrenade;
+        speedMoveMax = (float)DataController.instance.playerData[GameController.instance.currentChar].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed + ((float)DataController.instance.playerData[GameController.instance.currentChar].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemShoes.moveSpeedIncrease / 100) - ((float)DataController.instance.playerData[GameController.instance.currentChar].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].MoveSpeed * DataUtils.itemArmor.speedReduce / 100);
+        maxHealth = (float)DataController.instance.playerData[GameController.instance.currentChar].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].hp;
         Debug.LogError("maxHealth:" + maxHealth);
         Debug.LogError("speedMoveMax:" + speedMoveMax);
         Debug.LogError("damgeGrenade:" + damgeGrenade);
@@ -480,6 +474,7 @@ public class PlayerController : MonoBehaviour
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
         timePreviousMeleeAttack = 0;
+        timePreviousSkill = 10;
 
         // waitBeAttack = new WaitForSeconds(0.075f);
         // currentGun = 0;
@@ -733,6 +728,8 @@ public class PlayerController : MonoBehaviour
         }
         if (timePreviousGrenade > 0)
             timePreviousGrenade -= deltaTime;
+        if (timePreviousSkill > 0)
+            timePreviousSkill -= deltaTime;
         if (timePreviousMeleeAttack >= 0)
         {
             timePreviousMeleeAttack -= deltaTime;
@@ -761,6 +758,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         GameController.instance.uiPanel.FillGrenade(timePreviousGrenade, timedelayGrenade);
+        GameController.instance.uiPanel.FillSkill(timePreviousSkill, timedelaySkill);
         CaculatePosAndRotation();
 
 
