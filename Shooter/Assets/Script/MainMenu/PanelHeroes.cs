@@ -9,6 +9,7 @@ using Spine;
 public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
+    public TextMeshProUGUI txtPlayerName;
     public SkeletonGraphic skleCur;
     public GameObject gP1, gP2;
     public HeroChoose[] allHeroes;
@@ -116,7 +117,7 @@ public class PanelHeroes : MonoBehaviour
     }
     public void FillHeroData(int _hIndex)
     {
-        Debug.LogError(heroSelected.name + " heroSelected.level: " + heroSelected.level);
+        Debug.LogError("heroSelected.level: " + heroSelected.level);
         for (int i = 0; i < /*DataUtils.playerInfo.level*/imgAllStars.Length; i++)
         {
             if (i < heroSelected.level)
@@ -124,6 +125,9 @@ public class PanelHeroes : MonoBehaviour
             else
                 imgAllStars[i].sprite = sprStarUnlock;
         }
+
+        //txtPlayerName.text = heroSelected.name;
+
         FillDataPlayer(_hIndex);
     }
     private void FillDataPlayer(int _heroIndex)
@@ -188,7 +192,7 @@ public class PanelHeroes : MonoBehaviour
     {
         if (DataUtils.playerInfo.coins >= priceUpdate)
         {
-            if (DataUtils.playerInfo.level < DataUtils.MAX_LEVEL_HERO)
+            if (/*DataUtils.playerInfo.level*/heroSelected.level < DataUtils.MAX_LEVEL_HERO)
             {
                 if (DataUtils.dicAllHero[heroSelected.id].pices >= (int)pNext.SoManhYeuCau)
                 {
