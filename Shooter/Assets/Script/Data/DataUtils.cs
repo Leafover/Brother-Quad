@@ -979,7 +979,7 @@ public class DataUtils
     //    return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
     //}
 
-    public static bool IsFirst1Star(int _stage, int level)
+    private static bool IsFirst1Star(int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -993,7 +993,7 @@ public class DataUtils
 
         return PlayerPrefs.HasKey("checkfirsttime1star_" + _stage + "_" + level + "_" + _rs);
     }
-    public static bool IsFirst2Stars(int _stage, int level)
+    private static bool IsFirst2Stars(int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -1014,7 +1014,7 @@ public class DataUtils
         int _t = IsFirst1Star(_stage, level)&& IsFirst2Stars(_stage, level)&& IsFirst3Stars(_stage, level)?3:((IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))?2:1);
         return _t;
     }
-    public static bool IsFirst3Stars(int _stage, int level)
+    private static bool IsFirst3Stars(int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -1028,6 +1028,21 @@ public class DataUtils
 
         return PlayerPrefs.HasKey("checkfirsttime3star_" + _stage + "_" + level + "_" + _rs);
     }
+
+    public static bool First3Star(int _stage,int level)
+    {
+        return IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level);
+    }
+    public static bool First2Star(int _stage, int level)
+    {
+        return (IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level)) || (IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level));
+    }
+    public static bool First1Star(int _stage, int level)
+    {
+        return IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level);
+    }
+
+
     public static void InitFirstTimeStar(int _index,int _stage,int level, bool star)
     {
         PlayerPrefs.SetInt("checkfirsttime" + _index + "star_" + _stage + "_" + level + "_" + star, 1);
