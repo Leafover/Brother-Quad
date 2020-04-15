@@ -738,21 +738,30 @@ public class PlayerController : MonoBehaviour
         }
         if (playerState == PlayerState.Idle)
         {
-            if (timeStand > 0 && !animArrow.GetBool("animarrow"))
+            if (timeStand > 0)
             {
                 timeStand -= deltaTime;
                 if (timeStand <= 0)
                 {
-                    animArrow.SetBool("animarrow", true);
+                    if (!animArrow.GetBool("animarrow"))
+                    {
+                        animArrow.SetBool("animarrow", true);
+                    }
+                    if (apc.chopmatAnim != null)
+                    {
+                        skeletonAnimation.state.SetAnimation(5, apc.chopmatAnim, false);
+                        timeStand = 1f;
+                    }
+
                     //Debug.Log("----chay anim arrow--");
                 }
             }
         }
         else
         {
-            if (timeStand != 6 && animArrow.GetBool("animarrow"))
+            if (timeStand != 2 && animArrow.GetBool("animarrow"))
             {
-                timeStand = 6;
+                timeStand = 2;
                 animArrow.SetBool("animarrow", false);
                 //  Debug.Log("------stop anim arrow----");
             }
@@ -1366,8 +1375,8 @@ public class PlayerController : MonoBehaviour
     {
         //if (!reload)
         //{
-            target = GetTarget();
-            FlipX = GetTarget().x < transform.position.x;
+        target = GetTarget();
+        FlipX = GetTarget().x < transform.position.x;
         //}
         //else
         //{

@@ -7,7 +7,7 @@ using Spine;
 [System.Serializable]
 public class AssetSpinePlayerController
 {
-    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim, winAnim, meleeAttackAnim;
+    public AnimationReferenceAsset waitstandAnim, falldownAnim, jumpAnim, sitAnim, idleAnim, runForwardAnim, runBackAnim, aimTargetAnim, fireAnim, grenadeAnim, dieAnim, reloadAnim, winAnim, meleeAttackAnim, chopmatAnim;
 }
 
 [System.Serializable]
@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour
     public GameObject letgo, uiDisplay;
     public MayBayController maybay;
     public PlayerController[] playerControllers;
+    public NPCController[] listNPCs;
+    [HideInInspector]
     public NPCController npcController;
     public List<Sprite> gunSprite;
 
@@ -78,6 +80,8 @@ public class GameController : MonoBehaviour
         currentChar = DataUtils.HeroIndex();
 
         playerControllers[currentChar].Init();
+
+        npcController = listNPCs[currentChar];
 
     }
     ItemBase coinItem, itemitemdrop;
@@ -460,6 +464,7 @@ public class GameController : MonoBehaviour
     int gemAdd;
     public void WinGame()
     {
+        gemAdd = 0;
         gameState = GameState.gameover;
         WinSound();
         PlayerController.instance.playerState = PlayerController.PlayerState.Win;
@@ -475,7 +480,7 @@ public class GameController : MonoBehaviour
             countStar = 1;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First1Star(DataUtils.modeSelected,DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First1Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap) == false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
                     Debug.LogError("star 1 normal lan dau");
@@ -488,7 +493,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First1Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First1Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap) == false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
                     Debug.LogError("star 1 hard lan dau");
@@ -505,7 +510,7 @@ public class GameController : MonoBehaviour
             countStar++;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap)==false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
                     Debug.LogError("star 2 normal lan dau");
@@ -518,7 +523,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap)==false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
                     Debug.LogError("star 2 hard lan dau");
@@ -535,10 +540,12 @@ public class GameController : MonoBehaviour
             countStar++;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap)==false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
                     Debug.LogError("star 3 normal lan dau");
+                    gemAdd = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem;
+                    DataUtils.AddCoinAndGame(0, gemAdd);
                 }
                 else
                 {
@@ -548,10 +555,12 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap)==false)
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
                     Debug.LogError("star 3 hard lan dau");
+                    gemAdd = Mathf.RoundToInt((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem * 1.5f);
+                    DataUtils.AddCoinAndGame(0, gemAdd);
                 }
                 else
                 {
@@ -580,16 +589,10 @@ public class GameController : MonoBehaviour
             if (DataParam.indexStage == 1)
                 DataController.instance.DoAchievement(9, 1);
         }
-        if (DataUtils.modeSelected == 1)
+        if(DataUtils.modeSelected == 1)
         {
-            gemAdd = Mathf.RoundToInt((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem * 1.5f);
             DataController.instance.DoDailyQuest(4, 1);
         }
-        else
-        {
-            gemAdd = (int)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].bonusgem;
-        }
-        DataUtils.AddCoinAndGame(0, gemAdd);
 
         if (DataController.primeAccout.isVIP)
             DataParam.AddCoin(DataParam.totalCoin / 100 * 20);
@@ -922,6 +925,10 @@ public class GameController : MonoBehaviour
         uiPanel.rewardText[3].text = "" + gemAdd.ToString("#,0");
         uiPanel.rewardImg[2].sprite = uiPanel.rewardSp[0];
         uiPanel.rewardImg[3].sprite = uiPanel.rewardSp[1];
+        if (gemAdd > 0)
+            uiPanel.bouderDiamond.SetActive(true);
+        else
+            uiPanel.bouderDiamond.SetActive(false);
     }
     int randomCertain;
     public void ThemManh()

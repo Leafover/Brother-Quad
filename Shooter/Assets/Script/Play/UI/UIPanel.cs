@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public GameObject[] iconSkills;
-    public GameObject rewardItemEquip,btnSKill;
+    public GameObject rewardItemEquip,btnSKill, bouderDiamond;
     public Image[] rewardItemEquipImg, bouderLevelItemEquipImg, skillFillAmount;
     public GameObject[] bouderRewardEquip;
 
