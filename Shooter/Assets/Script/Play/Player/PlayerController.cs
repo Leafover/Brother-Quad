@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public string strboneBarrelGun, strboneHandGrenade;
 
     float timePreviousAttack, timePreviousGrenade, timePreviousRocket, timePreviousMeleeAttack, timestun, timePreviousSkill;
-    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket, maxtimestun,timedelaySkill;
+    public float timedelayAttackGun, timedelayMeleeAttack, timedelayGrenade, timedelayRocket, maxtimestun, timedelaySkill;
 
     public int numberBullet, maxNumberBullet;
     public float health, maxHealth = 100;
@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         //effectG2.Stop();
         DisableLaser();
 
-        if(GameController.instance.currentMap.isVIPProtect)
+        if (GameController.instance.currentMap.isVIPProtect)
         {
             GameController.instance.npcController.speedmove = 0;
             GameController.instance.npcController.rid.velocity = Vector2.zero;
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case 1:
                 GameController.instance.maybay.isAttack = true;
-                GameController.instance.maybay.Begin(CameraController.instance.bouders[3].transform.position, false,10);
+                GameController.instance.maybay.Begin(CameraController.instance.bouders[3].transform.position, false, 10);
                 break;
         }
     }
@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
         //    Debug.Log(timePreviousGrenade);
         if (playerState != PlayerState.Jump)
         {
-            skeletonAnimation.AnimationState.SetAnimation(1, apc.grenadeAnim, false);
+            skeletonAnimation.AnimationState.SetAnimation(3, apc.grenadeAnim, false);
             GameObject grenade = ObjectPoolerManager.Instance.grenadePooler.GetPooledObject();
             grenade.transform.position = boneHandGrenade.GetWorldPosition(skeletonAnimation.transform);
             grenade.SetActive(true);
@@ -794,7 +794,7 @@ public class PlayerController : MonoBehaviour
 
                 // Debug.LogError("reload active");
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
-                skeletonAnimation.AnimationState.SetAnimation(1, apc.reloadAnim, true);
+                skeletonAnimation.AnimationState.SetAnimation(3, apc.reloadAnim, true);
                 reload = true;
                 SoundController.instance.PlaySound(soundGame.soundreload);
                 timeReload = maxTimeReload;
@@ -807,7 +807,7 @@ public class PlayerController : MonoBehaviour
         DisableLaser();
         if (timeReload <= 0)
         {
-            skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0);
+            skeletonAnimation.AnimationState.SetEmptyAnimation(3, 0);
             AddNumberBullet(-maxNumberBullet);
             reload = false;
             reloadObj.SetActive(false);
@@ -1167,7 +1167,7 @@ public class PlayerController : MonoBehaviour
         }
         DisableLaser();
         timePreviousMeleeAttack = timedelayMeleeAttack;
-        skeletonAnimation.AnimationState.SetAnimation(1, apc.meleeAttackAnim, false);
+        skeletonAnimation.AnimationState.SetAnimation(3, apc.meleeAttackAnim, false);
         meleeAtackBox.transform.position = posGun();
         meleeAtackBox.gameObject.SetActive(true);
     }
@@ -1364,10 +1364,15 @@ public class PlayerController : MonoBehaviour
 
     public void SelectTarget()
     {
-
-        target = GetTarget();
-        FlipX = GetTarget().x < transform.position.x;
-
+        //if (!reload)
+        //{
+            target = GetTarget();
+            FlipX = GetTarget().x < transform.position.x;
+        //}
+        //else
+        //{
+        //    SelectNonTarget(!FlipX ? Vector2.right : Vector2.left);
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
