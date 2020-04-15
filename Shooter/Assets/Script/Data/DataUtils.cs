@@ -956,8 +956,27 @@ public class DataUtils
     public static int modeSelected = 0;
     #region Mode Hard
 
-    public static bool IsFirstTimeStar(int _stage, int level, int star)
+    public static bool IsFirstTimeStar(int _stage, int level)
     {
+        int star = 0;
+        Debug.LogError(_stage + "_" + level + "_" + star);
+
+        if (_stage == 0)
+        {
+            //lstAllStageHard[stage].levels[mapIndex].mission
+            foreach(LVMission mission in lstAllStageNormal[_stage].levels[level].mission)
+            {
+                if (mission.isPass) star++;
+            }
+        }
+        else if(_stage == 1)
+        {
+            foreach (LVMission mission in lstAllStageHard[_stage].levels[level].mission)
+            {
+                if (mission.isPass) star++;
+            }
+        }
+        
         return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
     }
     public static void InitFirstTimeStar(int _stage,int level, int star)
@@ -1107,6 +1126,7 @@ public class DataUtils
     {
         string sData = GetStageTextData();
         JsonData jData = JsonMapper.ToObject(sData);
+        Debug.LogError("sData: "+sData);
         lstAllStageNormal = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
         {
@@ -1138,6 +1158,7 @@ public class DataUtils
 
     public static void SaveLevel(int stage, int mapIndex)
     {
+        Debug.LogError("IsFirstTimeStar: "+ IsFirstTimeStar(stage, mapIndex));
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
