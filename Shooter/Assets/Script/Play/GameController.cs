@@ -475,7 +475,7 @@ public class GameController : MonoBehaviour
             countStar = 1;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First1Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First1Star(DataUtils.modeSelected,DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
                     Debug.LogError("star 1 normal lan dau");
@@ -488,7 +488,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First1Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First1Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
                     Debug.LogError("star 1 hard lan dau");
@@ -505,7 +505,7 @@ public class GameController : MonoBehaviour
             countStar++;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First2Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
                     Debug.LogError("star 2 normal lan dau");
@@ -518,7 +518,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First2Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First2Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
                     Debug.LogError("star 2 hard lan dau");
@@ -535,7 +535,7 @@ public class GameController : MonoBehaviour
             countStar++;
             if (DataUtils.modeSelected == 0)
             {
-                if (DataUtils.First3Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
                     Debug.LogError("star 3 normal lan dau");
@@ -548,7 +548,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                if (DataUtils.First3Star(DataParam.indexStage, DataParam.indexMap))
+                if (DataUtils.First3Star(DataUtils.modeSelected, DataParam.indexStage, DataParam.indexMap))
                 {
                     DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
                     Debug.LogError("star 3 hard lan dau");
