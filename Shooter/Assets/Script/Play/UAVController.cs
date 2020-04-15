@@ -1,4 +1,5 @@
-﻿using Spine.Unity;
+﻿using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,21 @@ public class UAVController : MonoBehaviour
     Quaternion rotation;
     float timeLive;
     public SkeletonAnimation sk;
+    public AnimationReferenceAsset attack, fly;
+
+    private void OnComplete(TrackEntry trackEntry)
+    {
+        if (trackEntry.Animation.Name.Equals(attack.name))
+        {
+            sk.AnimationState.SetAnimation(0, fly, true);
+            Debug.LogError("zoooooooooooooo");
+        }
+    }
     private void Start()
     {
         timeLive = 20;
         damageBullet = 2;
+        sk.AnimationState.Complete += OnComplete;
     }
     void Shoot(float deltaTime)
     {
@@ -30,6 +42,7 @@ public class UAVController : MonoBehaviour
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
             bullet.transform.position = transform.position;
+            sk.state.SetAnimation(0, attack, false);
             bullet.SetActive(true);
         }
     }
@@ -38,6 +51,7 @@ public class UAVController : MonoBehaviour
         timeLive -= deltaTime;
         if (timeLive <= 0)
         {
+            sk.AnimationState.SetAnimation(0, fly, true);
             gameObject.SetActive(false);
             timeLive = 20;
         }
@@ -86,12 +100,13 @@ public class UAVController : MonoBehaviour
     public void SelectTarget(float deltaTime)
     {
         if (GameController.instance.autoTarget.Count == 0)
+        {
+            FlipX = PlayerController.instance.FlipX;
             return;
+        }
         target = GetTarget();
-        FlipX = GetTarget().x > transform.position.x;
+        FlipX = GetTarget().x < transform.position.x;
         Shoot(deltaTime);
-
-
     }
     public bool FlipX
     {

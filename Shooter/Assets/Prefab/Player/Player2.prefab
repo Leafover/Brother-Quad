@@ -1098,12 +1098,12 @@ MonoBehaviour:
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
-  immutableTriangles: 0
+  immutableTriangles: 1
   pmaVertexColors: 1
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
-  singleSubmesh: 0
-  fixDrawOrder: 0
+  singleSubmesh: 1
+  fixDrawOrder: 1
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -1762,6 +1762,7 @@ MonoBehaviour:
     reloadAnim: {fileID: 11400000, guid: 466763d1525206e49a944052e6a1c004, type: 2}
     winAnim: {fileID: 11400000, guid: ada951d4e40970943b389eb5f3c254de, type: 2}
     meleeAttackAnim: {fileID: 11400000, guid: 2979ab2310688e3478478691461edb0a, type: 2}
+    chopmatAnim: {fileID: 0}
   effecthutcoin: {fileID: 2173009055412273714}
   effectsmokeendshot: {fileID: 9201237189833555008}
   effectbeginW7: {fileID: 4338529782063251151}
@@ -2174,11 +2175,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7119871528884121038, guid: d349181c9400fa34e9e2236417366bd9,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6925594791738301484, guid: d349181c9400fa34e9e2236417366bd9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2233,6 +2229,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119871528884121038, guid: d349181c9400fa34e9e2236417366bd9,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d349181c9400fa34e9e2236417366bd9, type: 3}
@@ -2400,6 +2401,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 411570, guid: 831c85159903ac84399ac3c3e1d5c5ad, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 19874298, guid: 831c85159903ac84399ac3c3e1d5c5ad, type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 10
@@ -2415,10 +2420,6 @@ PrefabInstance:
     - target: {fileID: 19993974, guid: 831c85159903ac84399ac3c3e1d5c5ad, type: 3}
       propertyPath: m_SortingOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 411570, guid: 831c85159903ac84399ac3c3e1d5c5ad, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: 19843788, guid: 831c85159903ac84399ac3c3e1d5c5ad, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState

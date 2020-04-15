@@ -79,6 +79,7 @@ public class MenuController : MonoBehaviour
         if (DataController.instance.isHack)
         {
             DataUtils.AddCoinAndGame(1000, 1000);
+            DataUtils.TakeHeroPice("P2", 100);
             DataUtils.TakeHeroPice("P1", 100);
         }
 
