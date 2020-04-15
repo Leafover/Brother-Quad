@@ -162,10 +162,10 @@ public class GameController : MonoBehaviour
         currentMap = Instantiate(listMaps[DataParam.indexStage].listMap[DataParam.indexMap]);
         currentMap.transform.position = Vector2.zero;
 
-     //   Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
+        //   Debug.LogError(currentMap.pointBeginPlayer.transform.position.x + ":" + currentMap.pointBeginPlayer.transform.position.y);
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, currentMap.pointBeginPlayer.transform.position.y, Camera.main.transform.position.z);
 
-    //    Debug.LogError(Camera.main.transform.position);
+        //    Debug.LogError(Camera.main.transform.position);
         uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);
@@ -175,7 +175,7 @@ public class GameController : MonoBehaviour
         auBG.clip = bgClip[DataParam.indexStage];
         auBG.Play();
         DisplaySetting();
-        maybay.Begin(currentMap.pointBeginPlayer.transform.position,true,5);
+        maybay.Begin(currentMap.pointBeginPlayer.transform.position, true, 5);
         uiPanel.gameObject.SetActive(false);
         uiDisplay.gameObject.SetActive(false);
         StartCoroutine(DelayLoadMap());
@@ -474,26 +474,90 @@ public class GameController : MonoBehaviour
         {
             countStar = 1;
             if (DataUtils.modeSelected == 0)
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
+            {
+                if (DataUtils.First1Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star);
+                    Debug.LogError("star 1 normal lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star / 100 * 20);
+                    Debug.LogError("star 1 normal lan sau");
+                }
+            }
             else
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
+            {
+                if (DataUtils.First1Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f);
+                    Debug.LogError("star 1 hard lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f / 100 * 20);
+                    Debug.LogError("star 1 hard lan dau");
+                }
+            }
         }
         if (MissionController.Instance.listMissions[0].isDone)
         {
             countStar++;
             if (DataUtils.modeSelected == 0)
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
+            {
+                if (DataUtils.First2Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star);
+                    Debug.LogError("star 2 normal lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star / 100 * 20);
+                    Debug.LogError("star 2 normal lan sau");
+                }
+            }
             else
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
+            {
+                if (DataUtils.First2Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f);
+                    Debug.LogError("star 2 hard lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f / 100 * 20);
+                    Debug.LogError("star 2 hard lan dau");
+                }
+            }
         }
         if (MissionController.Instance.listMissions[1].isDone)
         {
             countStar++;
             if (DataUtils.modeSelected == 0)
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
+            {
+                if (DataUtils.First3Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star);
+                    Debug.LogError("star 3 normal lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star / 100 * 20);
+                    Debug.LogError("star 3 normal lan sau");
+                }
+            }
             else
             {
-                DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
+                if (DataUtils.First3Star(DataParam.indexStage, DataParam.indexMap))
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f);
+                    Debug.LogError("star 3 hard lan dau");
+                }
+                else
+                {
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f / 100 * 20);
+                    Debug.LogError("star 3 hard lan dau");
+                }
                 DataController.instance.DoDailyQuest(7, 1);
             }
             DataController.instance.DoDailyQuest(2, 1);
@@ -608,7 +672,7 @@ public class GameController : MonoBehaviour
         {
             BtnGrenade();
         }
-        else if(Input.GetKeyDown(KeyCode.C))
+        else if (Input.GetKeyDown(KeyCode.C))
         {
             TryUseSkill();
         }
