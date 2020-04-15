@@ -956,9 +956,9 @@ public class DataUtils
     public static int modeSelected = 0;
     #region Mode Hard
 
-    public static bool IsFirstTimeStar(int level, int star)
+    public static bool IsFirstTimeStar(int _stage, int level, int star)
     {
-        return PlayerPrefs.HasKey("checkfirsttimestar_" + level + "_" + star);
+        return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
     }
     public static void InitFirstTimeStar(int _stage,int level, int star)
     {
