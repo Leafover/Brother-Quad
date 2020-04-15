@@ -979,7 +979,7 @@ public class DataUtils
     //    return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
     //}
 
-    private static bool IsFirst1Star(int _stage, int level)
+    private static bool IsFirst1Star(int _mode, int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -991,9 +991,9 @@ public class DataUtils
             _rs = lstAllStageHard[_stage].levels[level].mission[0].isPass;
         }
 
-        return PlayerPrefs.HasKey("checkfirsttime1star_" + _stage + "_" + level + "_" + _rs);
+        return PlayerPrefs.HasKey("checkfirsttime1star_" + _mode + "_" + _stage + "_" + level + "_" + _rs);
     }
-    private static bool IsFirst2Stars(int _stage, int level)
+    private static bool IsFirst2Stars(int _mode, int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -1005,16 +1005,16 @@ public class DataUtils
             _rs = lstAllStageHard[_stage].levels[level].mission[1].isPass;
         }
 
-        return PlayerPrefs.HasKey("checkfirsttime2star_" + _stage + "_" + level + "_" + _rs);
+        return PlayerPrefs.HasKey("checkfirsttime2star_" + _mode + "_" + _stage + "_" + level + "_" + _rs);
     }
 
-    public static int TotalStarEarn(int _stage, int level)
-    {
-        //(IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))
-        int _t = IsFirst1Star(_stage, level)&& IsFirst2Stars(_stage, level)&& IsFirst3Stars(_stage, level)?3:((IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))?2:1);
-        return _t;
-    }
-    private static bool IsFirst3Stars(int _stage, int level)
+    //public static int TotalStarEarn(int _mode, int _stage, int level)
+    //{
+    //    //(IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))
+    //    int _t = IsFirst1Star(_stage, level)&& IsFirst2Stars(_stage, level)&& IsFirst3Stars(_stage, level)?3:((IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))?2:1);
+    //    return _t;
+    //}
+    private static bool IsFirst3Stars(int _mode, int _stage, int level)
     {
         bool _rs = false;
         if (_stage == 0)
@@ -1026,26 +1026,26 @@ public class DataUtils
             _rs = lstAllStageHard[_stage].levels[level].mission[2].isPass;
         }
 
-        return PlayerPrefs.HasKey("checkfirsttime3star_" + _stage + "_" + level + "_" + _rs);
+        return PlayerPrefs.HasKey("checkfirsttime3star_" + _mode + "_" + _stage + "_" + level + "_" + _rs);
     }
 
-    public static bool First3Star(int _stage,int level)
+    public static bool First3Star(int _mode, int _stage,int level)
     {
-        return IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level);
+        return IsFirst1Star(_mode, _stage, level) && IsFirst2Stars(_mode, _stage, level) && IsFirst3Stars(_mode, _stage, level);
     }
-    public static bool First2Star(int _stage, int level)
+    public static bool First2Star(int _mode, int _stage, int level)
     {
-        return (IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level)) || (IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level));
+        return (IsFirst1Star(_mode, _stage, level) && IsFirst2Stars(_mode, _stage, level) || IsFirst3Stars(_mode, _stage, level)) || (IsFirst1Star(_mode, _stage, level) || IsFirst2Stars(_mode, _stage, level) && IsFirst3Stars(_mode, _stage, level));
     }
-    public static bool First1Star(int _stage, int level)
+    public static bool First1Star(int _mode, int _stage, int level)
     {
-        return IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level);
+        return IsFirst1Star(_mode, _stage, level) || IsFirst2Stars(_mode, _stage, level) || IsFirst3Stars(_mode, _stage, level);
     }
 
 
-    public static void InitFirstTimeStar(int _index,int _stage,int level, bool star)
+    public static void InitFirstTimeStar(int _index, int _mode,int _stage,int level, bool star)
     {
-        PlayerPrefs.SetInt("checkfirsttime" + _index + "star_" + _stage + "_" + level + "_" + star, 1);
+        PlayerPrefs.SetInt("checkfirsttime" + _index + "star_" + _mode+"_"+ _stage + "_" + level + "_" + star, 1);
         PlayerPrefs.Save();
     }
     private static string GetStageHardTextData()
@@ -1066,6 +1066,7 @@ public class DataUtils
         }
         Debug.LogError("FillAllStageHard: " + lstAllStageHard.Count);
     }
+
     public static void SaveStageHard(string stageData)
     {
         PlayerPrefs.SetString(KEY_GAME_STAGE_HARD, stageData);
@@ -1222,7 +1223,7 @@ public class DataUtils
 
     public static void SaveLevel(int stage, int mapIndex)
     {
-        Debug.LogError(IsFirst1Star(stage, mapIndex) + " vs " + IsFirst2Stars(stage, mapIndex) + " vs " + IsFirst3Stars(stage, mapIndex) + " vs " + TotalStarEarn(stage, mapIndex));
+        //Debug.LogError(IsFirst1Star(stage, mapIndex) + " vs " + IsFirst2Stars(stage, mapIndex) + " vs " + IsFirst3Stars(stage, mapIndex) + " vs " + TotalStarEarn(stage, mapIndex));
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
@@ -1272,17 +1273,17 @@ public class DataUtils
             if (!lstAllStageNormal[stage].levels[mapIndex].mission[0].isPass)
             {
                 lstAllStageNormal[stage].levels[mapIndex].mission[0].isPass = true;
-                InitFirstTimeStar(1, stage, mapIndex, true);
+                InitFirstTimeStar(1, modeSelected, stage, mapIndex, true);
             }
             if (!lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass)
             {
                 lstAllStageNormal[stage].levels[mapIndex].mission[1].isPass = miss1;
-                InitFirstTimeStar(2, stage, mapIndex, true);
+                InitFirstTimeStar(2, modeSelected, stage, mapIndex, true);
             }
             if (!lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass)
             {
                 lstAllStageNormal[stage].levels[mapIndex].mission[2].isPass = miss2;
-                InitFirstTimeStar(3, stage, mapIndex, true);
+                InitFirstTimeStar(3, modeSelected, stage, mapIndex, true);
             }
             string jSave = JsonMapper.ToJson(lstAllStageNormal);
             SaveStage(jSave);
@@ -1292,17 +1293,17 @@ public class DataUtils
             if (!lstAllStageHard[stage].levels[mapIndex].mission[0].isPass)
             {
                 lstAllStageHard[stage].levels[mapIndex].mission[0].isPass = true;
-                InitFirstTimeStar(1,stage, mapIndex, true);
+                InitFirstTimeStar(1, modeSelected, stage, mapIndex, true);
             }
             if (!lstAllStageHard[stage].levels[mapIndex].mission[1].isPass)
             {
                 lstAllStageHard[stage].levels[mapIndex].mission[1].isPass = miss1;
-                InitFirstTimeStar(2, stage, mapIndex, true);
+                InitFirstTimeStar(2, modeSelected, stage, mapIndex, true);
             }
             if (!lstAllStageHard[stage].levels[mapIndex].mission[2].isPass)
             {
                 lstAllStageHard[stage].levels[mapIndex].mission[2].isPass = miss2;
-                InitFirstTimeStar(3, stage, mapIndex, true);
+                InitFirstTimeStar(3, modeSelected, stage, mapIndex, true);
             }
             string jSaveHard = JsonMapper.ToJson(lstAllStageHard);
             SaveStageHard(jSaveHard);
