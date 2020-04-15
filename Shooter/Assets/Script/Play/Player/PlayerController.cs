@@ -727,14 +727,20 @@ public class PlayerController : MonoBehaviour
             timePreviousAttack -= deltaTime;
         }
         if (timePreviousGrenade > 0)
+        {
             timePreviousGrenade -= deltaTime;
+        }
         if (timePreviousSkill > 0)
             timePreviousSkill -= deltaTime;
         if (timePreviousMeleeAttack >= 0)
         {
             timePreviousMeleeAttack -= deltaTime;
-            if (timePreviousMeleeAttack <= 0 /*&& meleeAtackBox.gameObject.activeSelf*/)
+            if (timePreviousMeleeAttack <= 0)
+            {
                 meleeAtackBox.gameObject.SetActive(false);
+                if (!reload)
+                    skeletonAnimation.AnimationState.SetEmptyAnimation(3, 0);
+            }
         }
         if (playerState == PlayerState.Idle)
         {
@@ -1023,6 +1029,11 @@ public class PlayerController : MonoBehaviour
         {
             isWaitStand = false;
         }
+        else if (trackEntry.Animation.Name.Equals(apc.grenadeAnim.name))
+        {
+            if (!reload)
+                skeletonAnimation.AnimationState.SetEmptyAnimation(3, 0);
+        }
     }
     public Vector2 GetOriginGun()
     {
@@ -1261,7 +1272,6 @@ public class PlayerController : MonoBehaviour
         }
         if (isShoot || timePreviousAttack > 0)
             return;
-
         skeletonAnimation.AnimationState.SetAnimation(1, apc.fireAnim, false);
         isShoot = true;
         switch (currentGun)
