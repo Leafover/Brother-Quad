@@ -7,6 +7,8 @@ using TMPro;
 public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
+    public Sprite sprCharMale, sprCharFemale;
+    public Image imgChar;
     public ItemSpriteData allSpriteData;
     public Sprite sprNormal, sprUncommon, sprRare, sprEpic, sprLegendary;
     public GameObject gPanelUIButton, gPanelStage, gPanelPopup, gPanelHeroes, gConfirmPanel;
@@ -34,9 +36,11 @@ public class MainMenuController : MonoBehaviour
     {
         Instance = this;
         DataUtils.InitSpriteData(allSpriteData);
-
-
     }
+    public void OnChangeCharAvarta(int _index) {
+        imgChar.sprite = _index == 0 ? sprCharMale : sprCharFemale;
+    }
+
     public void InitLevelSelectEffect(Transform _tr)
     {
         gLevelEffect.transform.SetParent(_tr, true);
@@ -64,6 +68,9 @@ public class MainMenuController : MonoBehaviour
         {
             ShowStarterPack();
         }
+
+
+        OnChangeCharAvarta(DataUtils.HeroIndex());
     }
 
     public void ShowCraftItem(ItemData itemSelected, string _title)

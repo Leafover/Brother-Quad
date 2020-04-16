@@ -287,7 +287,7 @@ public class PanelHeroes : MonoBehaviour
             ChangeAnim(_index + 1);
             MainMenuController.Instance.heroSelectIndex = _index;
             _indexChoose = _index;
-
+            MainMenuController.Instance.OnChangeCharAvarta(_index);
         }
     }
 
