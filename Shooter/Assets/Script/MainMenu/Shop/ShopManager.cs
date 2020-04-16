@@ -43,7 +43,11 @@ public class ShopManager : MonoBehaviour
         MyAnalytics.LogOpenShop();
         ChooseTab(2);
     }
-
+    public void OpenMe()
+    {
+        ChooseTab(2);
+        gameObject.SetActive(true);
+    }
     public void ChooseTab(int _index)
     {
         for (int i = 0; i < btnTabs.Length; i++)

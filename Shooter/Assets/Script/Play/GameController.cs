@@ -559,7 +559,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star / 100 * 10);
                     Debug.LogError("star 1 normal lan sau");
                 }
             }
@@ -572,7 +572,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin1star * 1.5f / 100 * 10);
                     Debug.LogError("star 1 hard lan dau");
                 }
             }
@@ -589,7 +589,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star / 100 * 10);
                     Debug.LogError("star 2 normal lan sau");
                 }
             }
@@ -602,7 +602,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin2star * 1.5f / 100 * 10);
                     Debug.LogError("star 2 hard lan dau");
                 }
             }
@@ -621,7 +621,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star / 100 * 10);
                     Debug.LogError("star 3 normal lan sau");
                 }
             }
@@ -636,7 +636,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f / 100 * 20);
+                    DataParam.AddCoin((float)DataController.instance.allMission[DataParam.indexStage].missionData[DataParam.indexMap].coin3star * 1.5f / 100 * 10);
                     Debug.LogError("star 3 hard lan dau");
                 }
                 DataController.instance.DoDailyQuest(7, 1);
