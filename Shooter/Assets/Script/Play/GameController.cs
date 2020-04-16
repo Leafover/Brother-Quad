@@ -126,7 +126,6 @@ public class GameController : MonoBehaviour
             totalDropCoin -= 15;
         }
         uiPanel.Begin();
-        SoundController.instance.PlaySound(soundGame.soundletgo);
 
         for (int i = 0; i < MissionController.Instance.listMissions.Count; i++)
         {
@@ -196,6 +195,16 @@ public class GameController : MonoBehaviour
         uiPanel.gameObject.SetActive(true);
         uiDisplay.gameObject.SetActive(true);
         CameraController.instance.Init();
+
+        switch (currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundletgo);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundletgonv2);
+                break;
+        }
     }
     public float timeCountCombo, maxtimeCountCombo;
     public void AddCombo()
