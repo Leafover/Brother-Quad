@@ -37,12 +37,14 @@ public class MainMenuController : MonoBehaviour
 
 
     }
-    public void InitLevelSelectEffect(Transform _tr) {
+    public void InitLevelSelectEffect(Transform _tr)
+    {
         gLevelEffect.transform.SetParent(_tr, true);
         gLevelEffect.transform.localScale = new Vector3(25, 25, 25);
         gLevelEffect.transform.localPosition = new Vector3(0, -10, 0);
     }
-    private void InitStageEffect(Transform _tr) {
+    private void InitStageEffect(Transform _tr)
+    {
         gStageEffect.transform.SetParent(_tr, true);
         gStageEffect.transform.localScale = new Vector3(60, 60, 60);
         gStageEffect.gameObject.transform.localPosition = Vector3.zero;
@@ -58,13 +60,14 @@ public class MainMenuController : MonoBehaviour
             dailyGift.PrepareData();
         }
 
-        if(DataParam.showstarterpack)
+        if (DataParam.showstarterpack)
         {
             ShowStarterPack();
         }
     }
 
-    public void ShowCraftItem(ItemData itemSelected, string _title) {
+    public void ShowCraftItem(ItemData itemSelected, string _title)
+    {
         txtConfirmTitle.text = _title;
         bouderConfirm.sprite = DataUtils.GetSpriteByType(itemSelected);
         iconConfirm.sprite = DataUtils.GetSpriteByName(itemSelected.id, allSpriteData);
@@ -111,9 +114,10 @@ public class MainMenuController : MonoBehaviour
 
     private void UpdateStageImage()
     {
+        Debug.LogError("DataUtils.GetStageIndex(): " + DataUtils.GetStageIndex());
         for (int i = 0; i < imgStages.Length; i++)
         {
-            if (i <= DataUtils.GetStageIndex())
+            if (i <= DataUtils.GetStageIndex() && i < 3)
             {
                 imgStages[i].sprite = sprUnlock;
             }
@@ -256,7 +260,7 @@ public class MainMenuController : MonoBehaviour
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
             //dailyGift.ShowDailyGiftPanel();
         }
-        
+
     }
     public void HideAllPanel()
     {
