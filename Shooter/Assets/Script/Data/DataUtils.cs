@@ -5,12 +5,13 @@ using LitJson;
 
 public class DataUtils
 {
-    public const int STAR_UNLOCK_STAGE2 = 15, STAR_UNLOCK_STAGE3 = 40;
+    public const int STAR_UNLOCK_STAGE2 = 18, STAR_UNLOCK_STAGE3 = 45;
+    public const int PART_UNLOCK_P2 = 20;
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON/*, P1 */}
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, LUCKYCHEST }
     public const int TOTAL_STAGE = 3;
-    public const int MAX_LEVEL_HERO = 5;
+    public const int MAX_LEVEL_HERO = 4;
     public const int MAX_STARS = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
@@ -1463,7 +1464,7 @@ public class DataUtils
                 hero2.hp = GetHeroHPByID("P2");
                 hero2.curStars = 1;
                 hero2.pices = 0;
-                hero2.isUnlock = true;
+                hero2.isUnlock = false;
                 hero2.isEquipped = false;
 
                 if (!dicAllHero.ContainsKey(hero2.id))

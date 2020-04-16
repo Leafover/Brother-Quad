@@ -12,6 +12,7 @@ public class PanelHeroes : MonoBehaviour
     public TextMeshProUGUI txtPlayerName;
     public SkeletonGraphic skleCur;
     public GameObject gP1, gP2;
+    public GameObject gButtonUnlock, gButtonLevelUp;
     public HeroChoose[] allHeroes;
 
     private Skin[] skins;
@@ -267,7 +268,13 @@ public class PanelHeroes : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
         }
-        else
+        else if (!heroChoose.isUnLock && heroChoose.heroData != null) {
+            MainMenuController.Instance.ShowMapNotify("Hero not yet unlock and need 20 parts to unlock.");
+            FillHeroData(heroChoose.heroIndex - 1);
+            ChangeAnim(_index + 1);
+            _indexChoose = _index;
+        }
+        else if(heroChoose.isUnLock)
         {
             FillData(heroChoose);
 
@@ -289,6 +296,9 @@ public class PanelHeroes : MonoBehaviour
             _indexChoose = _index;
             MainMenuController.Instance.OnChangeCharAvarta(_index);
         }
+
+        gButtonLevelUp.SetActive(heroChoose.isUnLock);
+        gButtonUnlock.SetActive(!heroChoose.isUnLock);
     }
 
     private void FillData(HeroChoose heroChoose)
@@ -297,5 +307,29 @@ public class PanelHeroes : MonoBehaviour
         heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
         FillHeroData(heroChoose.heroIndex - 1);
         DataUtils.heroInfo = DataUtils.dicAllHero[heroChoose.heroID];
+    }
+
+    public void UnlockHero() {
+        HeroChoose heroChoose = allHeroes[_indexChoose];
+        
+        if (DataUtils.dicAllHero[heroChoose.heroID].pices >= DataUtils.PART_UNLOCK_P2) {
+            heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
+
+
+            DataUtils.dicAllHero[heroChoose.heroID].pices -= DataUtils.PART_UNLOCK_P2;
+            DataUtils.dicAllHero[heroChoose.heroID].isUnlock = true;
+            DataUtils.dicAllHero[heroChoose.heroID].isUnlock = true;
+            heroChoose.isUnLock = true;
+            heroChoose.imgLock.gameObject.SetActive(false);
+
+            DataUtils.SaveAllHero();
+
+
+            HeroOnClick(_indexChoose);
+        }
+        else
+        {
+            MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + " to unlock this hero");
+        }
     }
 }
