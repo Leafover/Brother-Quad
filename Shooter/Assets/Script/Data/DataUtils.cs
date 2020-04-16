@@ -5,6 +5,7 @@ using LitJson;
 
 public class DataUtils
 {
+    public const int STAR_UNLOCK_STAGE2 = 15, STAR_UNLOCK_STAGE3 = 40;
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON/*, P1 */}
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, LUCKYCHEST }
@@ -878,7 +879,7 @@ public class DataUtils
         if (iItemIngame != null && _keyItemIngame.Trim().Length > 0)
         {
             string _key = iItemIngame.id + "_" + iItemIngame.level.ToString() + "_" + iItemIngame.isUnlock + "_" + true;
-            
+
             iItemIngame.isEquipped = true;
 
             string _keyHasEquipped = "";
@@ -897,11 +898,12 @@ public class DataUtils
             dicAllEquipment.Remove(_keyItemIngame);
             dicAllEquipment.Remove(_keyHasEquipped);
 
-            if (iHasEquip != null) {
+            if (iHasEquip != null)
+            {
                 dicAllEquipment.Add(iHasEquip.id + "_" + iHasEquip.level + "_" + iHasEquip.isUnlock + "_" + false, iHasEquip);
                 dicAllEquipment[iHasEquip.id + "_" + iHasEquip.level + "_" + iHasEquip.isUnlock + "_" + false].isEquipped = false;
             }
-            
+
             if (dicEquippedItem.ContainsKey(_keyHasEquipped))
             {
                 dicEquippedItem.Remove(_keyHasEquipped);
@@ -975,7 +977,7 @@ public class DataUtils
     //            if (mission.isPass) star++;
     //        }
     //    }
-        
+
     //    return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
     //}
 
@@ -984,7 +986,7 @@ public class DataUtils
         bool _rs = false;
         if (_stage == 0)
         {
-            _rs= lstAllStageNormal[_stage].levels[level].mission[0].isPass;
+            _rs = lstAllStageNormal[_stage].levels[level].mission[0].isPass;
         }
         else if (_stage == 1)
         {
@@ -1029,7 +1031,7 @@ public class DataUtils
         return PlayerPrefs.HasKey("checkfirsttime3star_" + _mode + "_" + _stage + "_" + level + "_" + _rs);
     }
 
-    public static bool First3Star(int _mode, int _stage,int level)
+    public static bool First3Star(int _mode, int _stage, int level)
     {
         return IsFirst1Star(_mode, _stage, level) && IsFirst2Stars(_mode, _stage, level) && IsFirst3Stars(_mode, _stage, level);
     }
@@ -1043,9 +1045,9 @@ public class DataUtils
     }
 
 
-    public static void InitFirstTimeStar(int _index, int _mode,int _stage,int level, bool star)
+    public static void InitFirstTimeStar(int _index, int _mode, int _stage, int level, bool star)
     {
-        PlayerPrefs.SetInt("checkfirsttime" + _index + "star_" + _mode+"_"+ _stage + "_" + level + "_" + star, 1);
+        PlayerPrefs.SetInt("checkfirsttime" + _index + "star_" + _mode + "_" + _stage + "_" + level + "_" + star, 1);
         PlayerPrefs.Save();
     }
     private static string GetStageHardTextData()
@@ -1064,6 +1066,8 @@ public class DataUtils
             if (!lstAllStageHard.Contains(jStage))
                 lstAllStageHard.Add(jStage);
         }
+
+        //CalculateStageStar(lstAllStageHard);
         Debug.LogError("FillAllStageHard: " + lstAllStageHard.Count);
     }
 
@@ -1169,7 +1173,7 @@ public class DataUtils
     private static void StageIncrease(int _curStage)
     {
         int curStage = GetStageIndex() + 1;
-        if(_curStage >= curStage || GetStageIndex() == 0)
+        if (_curStage >= curStage || GetStageIndex() == 0)
             PlayerPrefs.SetInt(KEY_GAME_STAGE_INDEX, curStage);
     }
     public static bool StageHasInit()
@@ -1191,7 +1195,7 @@ public class DataUtils
     {
         string sData = GetStageTextData();
         JsonData jData = JsonMapper.ToObject(sData);
-        Debug.LogError("sData: "+sData);
+        Debug.LogError("sData: " + sData);
         lstAllStageNormal = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
         {
@@ -1199,10 +1203,46 @@ public class DataUtils
             if (!lstAllStageNormal.Contains(jStage))
             {
                 lstAllStageNormal.Add(jStage);
+
             }
         }
+
+        //CalculateStageStar(lstAllStageNormal);
+        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal));
+
         if (StageHardHasInit())
             FillAllStageHard();
+    }
+
+    private static int totalStar = 0;
+    private static int CalculateStageStar(List<DataStage> dataStages)
+    {
+        totalStar = 0;
+        foreach (DataStage dataStage in dataStages)
+        {
+            if (dataStage.stageHasUnlock)
+            {
+                foreach (MapLevel level in dataStage.levels)
+                {
+                    if (level.hasComplete)
+                    {
+                        if (level.mission[0].isPass && level.mission[1].isPass && level.mission[2].isPass)
+                        {
+                            totalStar += 3;
+                        }
+                        else if ((level.mission[0].isPass && level.mission[1].isPass) || (level.mission[0].isPass && level.mission[2].isPass) || (level.mission[2].isPass && level.mission[1].isPass))
+                        {
+                            totalStar += 2;
+                        }
+                        else
+                        {
+                            totalStar += 1;
+                        }
+                    }
+                }
+            }
+        }
+        return totalStar;
     }
 
 
@@ -1237,7 +1277,21 @@ public class DataUtils
                 Debug.LogError("Stage: " + stage + ", Level: " + mapIndex);
                 UnlockHardMode(stage);
 
-                StageIncrease(stage + 1);
+                if (stage == 0 && CalculateStageStar(lstAllStageNormal) >= STAR_UNLOCK_STAGE2)
+                {
+                    StageIncrease(stage + 1);
+                    Debug.LogError("1:::: " + stage);
+                }
+                else if (stage == 1 && CalculateStageStar(lstAllStageNormal) >= STAR_UNLOCK_STAGE3)
+                {
+                    StageIncrease(stage + 1);
+                    Debug.LogError("2:::: " + stage);
+                }
+                else
+                {
+                    StageIncrease(stage + 1);
+                    Debug.LogError("Else::: " + stage);
+                }
             }
 
             string jSave = JsonMapper.ToJson(lstAllStageNormal);
@@ -1255,14 +1309,16 @@ public class DataUtils
             {
                 lstAllStageHard[(stage + 1 >= lstAllStageHard.Count ? stage : stage + 1)].stageHasUnlock = true;
 
-                StageHardIncrease(stage + 1);
+                if (stage == 0 && CalculateStageStar(lstAllStageHard) >= STAR_UNLOCK_STAGE2)
+                    StageHardIncrease(stage + 1);
+                else if (stage == 1 && CalculateStageStar(lstAllStageHard) >= STAR_UNLOCK_STAGE3)
+                    StageHardIncrease(stage + 1);
             }
 
             string jSave = JsonMapper.ToJson(lstAllStageHard);
             SaveStageHard(jSave);
         }
     }
-
 
 
     public static void SaveStars(int stage, int mapIndex, bool miss1, bool miss2)
