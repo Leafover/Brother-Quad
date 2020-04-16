@@ -1209,14 +1209,14 @@ public class DataUtils
         }
 
         //CalculateStageStar(lstAllStageNormal);
-        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal));
+        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal) + " vs " + CalculateStageStar(lstAllStageHard));
 
         if (StageHardHasInit())
             FillAllStageHard();
     }
 
     private static int totalStar = 0;
-    private static int CalculateStageStar(List<DataStage> dataStages)
+    public static int CalculateStageStar(List<DataStage> dataStages)
     {
         totalStar = 0;
         foreach (DataStage dataStage in dataStages)
@@ -1244,6 +1244,32 @@ public class DataUtils
             }
         }
         return totalStar;
+    }
+    public static int CalculateStarByStage(DataStage dataStage)
+    {
+        int _count = 0;
+        if (dataStage.stageHasUnlock)
+        {
+            foreach (MapLevel level in dataStage.levels)
+            {
+                if (level.hasComplete)
+                {
+                    if (level.mission[0].isPass && level.mission[1].isPass && level.mission[2].isPass)
+                    {
+                        _count += 3;
+                    }
+                    else if ((level.mission[0].isPass && level.mission[1].isPass) || (level.mission[0].isPass && level.mission[2].isPass) || (level.mission[2].isPass && level.mission[1].isPass))
+                    {
+                        _count += 2;
+                    }
+                    else
+                    {
+                        _count += 1;
+                    }
+                }
+            }
+        }
+        return _count;
     }
 
 
@@ -1458,7 +1484,7 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "REMITANOOOO";
+                hero2.name = "Winter Snow";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");
@@ -1493,7 +1519,7 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "REMITANOOOO";
+                hero2.name = "Winter Snow";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");

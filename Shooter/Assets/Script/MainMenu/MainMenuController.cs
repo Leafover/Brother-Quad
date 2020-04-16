@@ -7,6 +7,7 @@ using TMPro;
 public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
+    public Text txtPlayerName;
     public Sprite sprCharMale, sprCharFemale;
     public Image imgChar;
     public ItemSpriteData allSpriteData;
@@ -71,6 +72,8 @@ public class MainMenuController : MonoBehaviour
 
 
         OnChangeCharAvarta(DataUtils.HeroIndex());
+
+        txtPlayerName.text = DataUtils.heroInfo.name;
     }
 
     public void ShowCraftItem(ItemData itemSelected, string _title)
@@ -181,7 +184,16 @@ public class MainMenuController : MonoBehaviour
         }
         else if (stage - 1 > DataUtils.GetStageIndex())
         {
-            ShowMapNotify("You need complete stage " + (stage - 1));
+            int starReacch = stage == 3 ? DataUtils.STAR_UNLOCK_STAGE3 : DataUtils.STAR_UNLOCK_STAGE2;
+            if ((DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) >= starReacch)
+            {
+                ShowMapNotify("You need complete stage " + (stage - 1));
+            }
+            else
+            {
+                //ShowMapNotify("Complete stage " + (stage - 1)+" and get more " + (starReacch - (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard))) + " stars to unlock");
+                ShowMapNotify("Complete stage " + (stage - 1)+"and reach " + (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) +"/"+ starReacch +"<sprite=0> to unlock.");
+            }
         }
         else
         {

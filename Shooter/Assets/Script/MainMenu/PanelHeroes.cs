@@ -133,7 +133,7 @@ public class PanelHeroes : MonoBehaviour
                 imgAllStars[i].sprite = sprStarUnlock;
         }
 
-        //txtPlayerName.text = heroSelected.name;
+        txtPlayerName.text = heroSelected.name;
 
         FillDataPlayer(_hIndex);
     }
@@ -329,7 +329,7 @@ public class PanelHeroes : MonoBehaviour
         }
         else
         {
-            MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + " to unlock this hero");
+            MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + "parts to unlock this hero");
         }
     }
 }
