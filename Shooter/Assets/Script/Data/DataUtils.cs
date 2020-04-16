@@ -5,12 +5,13 @@ using LitJson;
 
 public class DataUtils
 {
-    public const int STAR_UNLOCK_STAGE2 = 15, STAR_UNLOCK_STAGE3 = 40;
+    public const int STAR_UNLOCK_STAGE2 = 18, STAR_UNLOCK_STAGE3 = 45;
+    public const int PART_UNLOCK_P2 = 20;
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
     public enum eType { SHOES, BAG, GLOVES, HELMET, ARMOR, WEAPON/*, P1 */}
     public enum ITEM_SHOP_TYPE { PACKAGE, GEM, LUCKYCHEST }
     public const int TOTAL_STAGE = 3;
-    public const int MAX_LEVEL_HERO = 5;
+    public const int MAX_LEVEL_HERO = 4;
     public const int MAX_STARS = 5;
     const string GAME_KEY = "Alien_Shooter_";
     const string KEY_REMOVE_ADS = GAME_KEY + "KEY_REMOVE_ADS";
@@ -1208,14 +1209,14 @@ public class DataUtils
         }
 
         //CalculateStageStar(lstAllStageNormal);
-        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal));
+        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal) + " vs " + CalculateStageStar(lstAllStageHard));
 
         if (StageHardHasInit())
             FillAllStageHard();
     }
 
     private static int totalStar = 0;
-    private static int CalculateStageStar(List<DataStage> dataStages)
+    public static int CalculateStageStar(List<DataStage> dataStages)
     {
         totalStar = 0;
         foreach (DataStage dataStage in dataStages)
@@ -1243,6 +1244,32 @@ public class DataUtils
             }
         }
         return totalStar;
+    }
+    public static int CalculateStarByStage(DataStage dataStage)
+    {
+        int _count = 0;
+        if (dataStage.stageHasUnlock)
+        {
+            foreach (MapLevel level in dataStage.levels)
+            {
+                if (level.hasComplete)
+                {
+                    if (level.mission[0].isPass && level.mission[1].isPass && level.mission[2].isPass)
+                    {
+                        _count += 3;
+                    }
+                    else if ((level.mission[0].isPass && level.mission[1].isPass) || (level.mission[0].isPass && level.mission[2].isPass) || (level.mission[2].isPass && level.mission[1].isPass))
+                    {
+                        _count += 2;
+                    }
+                    else
+                    {
+                        _count += 1;
+                    }
+                }
+            }
+        }
+        return _count;
     }
 
 
@@ -1457,13 +1484,13 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "REMITANOOOO";
+                hero2.name = "Winter Snow";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");
                 hero2.curStars = 1;
                 hero2.pices = 0;
-                hero2.isUnlock = true;
+                hero2.isUnlock = false;
                 hero2.isEquipped = false;
 
                 if (!dicAllHero.ContainsKey(hero2.id))
@@ -1492,7 +1519,7 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "REMITANOOOO";
+                hero2.name = "Winter Snow";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");

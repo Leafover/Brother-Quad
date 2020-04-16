@@ -7,6 +7,7 @@ using LitJson;
 public class StageManager : MonoBehaviour
 {
     public static StageManager Instance;
+    public Text txtTotalStageStars;
     public Button btnStartMission;
     public Color clUnlock, clNotYetUnlock, clSelected;
     public Sprite imgStar, imgStarNotYetUnlock;
@@ -34,11 +35,14 @@ public class StageManager : MonoBehaviour
     {
         FetchStageData();
         gStages[MainMenuController.Instance.stageSelected - 1].SetActive(true);
+
+        //txtTotalStageStars.text = (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) + "";
+        txtTotalStageStars.text = (DataUtils.CalculateStarByStage(DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1]) + DataUtils.CalculateStarByStage(DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1])) + "/48";
     }
 
     private void Start()
     {
-        //ChooseNormalMode();
+        
     }
     private void FetchStageData()
     {

@@ -23,12 +23,13 @@ public class HeroChoose : MonoBehaviour
         if (DataUtils.dicAllHero.ContainsKey(heroID))
         {
             heroData = DataUtils.dicAllHero[heroID];
-            isUnLock = true;
+            if(heroData.isUnlock)
+                isUnLock = true;
         }
         else
         {
             heroData = null;
-            isUnLock = false;
+            //isUnLock = false;
         }
 
 
