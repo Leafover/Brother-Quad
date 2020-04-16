@@ -287,6 +287,7 @@ public class PanelHeroes : MonoBehaviour
             ChangeAnim(_index + 1);
             MainMenuController.Instance.heroSelectIndex = _index;
             _indexChoose = _index;
+
         }
     }
 
@@ -295,5 +296,6 @@ public class PanelHeroes : MonoBehaviour
         heroChoose.imgSelected.enabled = true;
         heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
         FillHeroData(heroChoose.heroIndex - 1);
+        DataUtils.heroInfo = DataUtils.dicAllHero[heroChoose.heroID];
     }
 }
