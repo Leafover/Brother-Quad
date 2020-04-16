@@ -8,7 +8,7 @@ public enum soundGame
     soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1, soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die,
     soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2, soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun,
     soundBoss3Attack1,soundBoss3Attack3,soundBoss3Attack4,soundBoss3Dead,soundBoss3Begin,soundBoss3Def,soundBoss3HitWhenDef, soundw4truyendien,
-    sounddaonv2,sounddienv2,soundhitnv2,soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2
+    sounddaonv2,sounddienv2,soundhitnv2,soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2,soundreloadnv2
 }
 
 public class SoundController : MonoBehaviour
@@ -23,7 +23,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die, soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2;
     public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun;
     public AudioClip soundBoss3Attack1, soundBoss3Attack3, soundBoss3Attack4, soundBoss3Dead, soundBoss3Begin, soundBoss3Def, soundBoss3HitWhenDef, soundw4truyendien, soundexplow6;
-    public AudioClip sounddaonv2, sounddienv2, soundhitnv2, soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2;
+    public AudioClip sounddaonv2, sounddienv2, soundhitnv2, soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2, soundreloadnv2;
     public AudioSource au;
     void Awake()
     {
@@ -435,6 +435,9 @@ public class SoundController : MonoBehaviour
                     break;
                 case soundGame.soundlosenv2:
                     au.PlayOneShot(instance.soundlosenv2);
+                    break;
+                case soundGame.soundreloadnv2:
+                    au.PlayOneShot(instance.soundreloadnv2);
                     break;
             }
         }

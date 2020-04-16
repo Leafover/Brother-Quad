@@ -25,8 +25,8 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            existtime = 10;
-            speed = 8.5f;
+            existtime = 1f;
+            speed = 8.5f / 100;
         }
 
         if (type != TYPE.TARGET)

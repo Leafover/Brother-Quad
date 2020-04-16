@@ -830,7 +830,16 @@ public class PlayerController : MonoBehaviour
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(3, apc.reloadAnim, true);
                 reload = true;
-                SoundController.instance.PlaySound(soundGame.soundreload);
+                switch(GameController.instance.currentChar)
+                {
+                    case 0:
+                        SoundController.instance.PlaySound(soundGame.soundreload);
+                        break;
+                    case 1:
+                        SoundController.instance.PlaySound(soundGame.soundreloadnv2);
+                        break;
+                }
+
                 timeReload = maxTimeReload;
                 reloadObj.SetActive(true);
             }
