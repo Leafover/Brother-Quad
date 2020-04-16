@@ -44,12 +44,13 @@ public class PrimeAccount : MonoBehaviour
             }
             btnBuy.SetActive(false);
             timeText.text = "Ends after " + DataController.primeAccout.countDay + " days";
-            timeText.gameObject.SetActive(true);
+          //  timeText.gameObject.SetActive(true);
             //nameText.gameObject.SetActive(false);
         }
         else
         {
-            timeText.gameObject.SetActive(false);
+            timeText.text = "Ends after 30 days";
+            //    timeText.gameObject.SetActive(false);
             //nameText.gameObject.SetActive(true);
             btnBuy.SetActive(true);
             btnClaimCoin.SetActive(false);
