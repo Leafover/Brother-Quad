@@ -273,6 +273,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         timePreviousSkill = timedelaySkill;
+        GameController.instance.uiPanel.effectBtnSkill.SetActive(false);
         switch (GameController.instance.currentChar)
         {
             case 0:
@@ -492,7 +493,7 @@ public class PlayerController : MonoBehaviour
         timePreviousGrenade = 0;
         timePreviousAttack = 0;
         timePreviousMeleeAttack = 0;
-        timePreviousSkill = 10;
+        timePreviousSkill = 0;
 
         // waitBeAttack = new WaitForSeconds(0.075f);
         // currentGun = 0;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public GameObject[] iconSkills;
-    public GameObject rewardItemEquip,btnSKill, bouderDiamond;
+    public GameObject rewardItemEquip,btnSKill, bouderDiamond, effectBtnSkill;
     public Image[] rewardItemEquipImg, bouderLevelItemEquipImg, skillFillAmount;
     public GameObject[] bouderRewardEquip;
 
@@ -129,7 +129,12 @@ public class UIPanel : MonoBehaviour
     {
         if (!btnSKill.activeSelf)
             return;
+
         fillbouderSKill.fillAmount = skillFillAmount[GameController.instance.currentChar].fillAmount = _current / _max;
+        if(_current <= 0 && !effectBtnSkill.activeSelf)
+        {
+            effectBtnSkill.SetActive(true);
+        }
     }
     public void BtnNext()
     {
