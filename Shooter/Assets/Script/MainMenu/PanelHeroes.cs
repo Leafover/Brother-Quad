@@ -75,6 +75,10 @@ public class PanelHeroes : MonoBehaviour
                 break;
         }
     }
+    private void Start()
+    {
+        HeroOnClick(0);
+    }
     private void OnEnable()
     {
         ChangeAnim(DataUtils.HeroIndex() + 1);
