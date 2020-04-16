@@ -26,7 +26,7 @@ public class UAVController : MonoBehaviour
     }
     private void Start()
     {
-        timeLive = 20;
+        timeLive = 10;
         damageBullet = 2;
         sk.AnimationState.Complete += OnComplete;
     }
@@ -35,7 +35,7 @@ public class UAVController : MonoBehaviour
         timeShoot -= deltaTime;
         if (timeShoot <= 0)
         {
-            timeShoot = 0.3f;
+            timeShoot = 0.15f;
             dirBullet = target - myPos();
             bullet = ObjectPoolerManager.Instance.bulletUAVPooler.GetPooledObject();
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;

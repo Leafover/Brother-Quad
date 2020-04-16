@@ -82,10 +82,13 @@ public class UIPanel : MonoBehaviour
 
         hackbouder.SetActive(DataController.instance.isHack);
 
+        Debug.LogError("hero level : " + DataUtils.heroInfo.level);
+
         if(DataUtils.heroInfo.level >= 1)
         {
             btnSKill.SetActive(true);
             iconSkills[GameController.instance.currentChar].gameObject.SetActive(true);
+            Debug.LogError("wtf display bntn skill");
         }
     }
     void OutPlay(int nextscene, bool showstarterpack)

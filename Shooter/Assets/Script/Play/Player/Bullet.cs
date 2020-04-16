@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
         else
         {
             existtime = 10;
-            speed = 3;
+            speed = 8.5f;
         }
 
         if (type != TYPE.TARGET)
