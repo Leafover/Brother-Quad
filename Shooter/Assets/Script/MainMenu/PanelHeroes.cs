@@ -41,6 +41,8 @@ public class PanelHeroes : MonoBehaviour
     public Dictionary<string, ItemData> dicAllEquip = new Dictionary<string, ItemData>();
     public HeroDataInfo heroSelected;
 
+    public int _indexChoose = 0;
+
     private PlayerData pData, pNext;
     private double priceUpdate;
 
@@ -120,7 +122,7 @@ public class PanelHeroes : MonoBehaviour
         Debug.LogError("heroSelected.level: " + heroSelected.level);
         for (int i = 0; i < /*DataUtils.playerInfo.level*/imgAllStars.Length; i++)
         {
-            if (i < heroSelected.level)
+            if (i <= heroSelected.level)
                 imgAllStars[i].sprite = sprStar;
             else
                 imgAllStars[i].sprite = sprStarUnlock;
@@ -197,15 +199,18 @@ public class PanelHeroes : MonoBehaviour
                 if (DataUtils.dicAllHero[heroSelected.id].pices >= (int)pNext.SoManhYeuCau)
                 {
                     DataUtils.playerInfo.level += 1;
-                    heroSelected.level += 1;
+                    //heroSelected.level += 1;
                     DataUtils.dicAllHero[heroSelected.id].level += 1;
 
                     DataUtils.dicAllHero[heroSelected.id].pices -= (int)pNext.SoManhYeuCau;
 
                     DataUtils.AddCoinAndGame((int)-priceUpdate, 0);
                     pEvolve.Play();
-                    FillHeroData(DataUtils.HeroIndex());
+
+                    FillHeroData(/*DataUtils.HeroIndex()*/_indexChoose);
                     DataUtils.SavePlayerData();
+
+
                     DataUtils.ChooseHero(DataUtils.dicAllHero[heroSelected.id]);
                     DataUtils.dicAllHero[heroSelected.id] = DataUtils.dicAllHero[heroSelected.id];
                     DataUtils.SaveAllHero();
@@ -277,6 +282,7 @@ public class PanelHeroes : MonoBehaviour
             }
             ChangeAnim(_index + 1);
             MainMenuController.Instance.heroSelectIndex = _index;
+            _indexChoose = _index;
         }
     }
 
