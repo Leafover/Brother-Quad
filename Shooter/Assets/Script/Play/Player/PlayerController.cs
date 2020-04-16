@@ -152,7 +152,16 @@ public class PlayerController : MonoBehaviour
         }
         ShowLineBlood();
         // StartCoroutine(BeAttackFill());
-        SoundController.instance.PlaySound(soundGame.soundplayerhit);
+        switch(GameController.instance.currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundplayerhit);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundhitnv2);
+                break;
+        }
+
         if (health <= 0)
         {
             DEAD();
@@ -163,7 +172,16 @@ public class PlayerController : MonoBehaviour
         GameController.instance.DIE();
         AnimDie();
         playerState = PlayerState.Die;
-        SoundController.instance.PlaySound(soundGame.playerDie);
+        switch(GameController.instance.currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.playerDie);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.sounddienv2);
+                break;
+        }
+
         au.Stop();
         rid.velocity = Vector2.zero;
         speedmove = 0;

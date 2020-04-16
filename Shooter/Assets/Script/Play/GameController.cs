@@ -208,11 +208,29 @@ public class GameController : MonoBehaviour
         countCombo++;
         if (countCombo == 2)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillx2);
+            switch(currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx2);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx2nv2);
+                    break;
+            }
+
         }
         else if (countCombo == 4)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillx4);
+            switch (currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx4);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx4nv2);
+                    break;
+            }
+
         }
         else if (countCombo == 5)
         {
@@ -220,15 +238,42 @@ public class GameController : MonoBehaviour
         }
         else if (countCombo == 6)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillx6);
+            switch (currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx6);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx6nv2);
+                    break;
+            }
+
         }
         else if (countCombo == 8)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillx8);
+            switch (currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx8);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx8nv2);
+                    break;
+            }
+
         }
         else if (countCombo == 10)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillx10);
+            switch (currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx10);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillx10nv2);
+                    break;
+            }
+
         }
         else if (countCombo >= 11)
         {
@@ -236,7 +281,16 @@ public class GameController : MonoBehaviour
         }
         else if (countCombo >= 12)
         {
-            SoundController.instance.PlaySound(soundGame.soundmultikillmax);
+            switch (currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillmax);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundmultikillmaxnv2);
+                    break;
+            }
+
         }
 
         uiPanel.comboNumberText.text = "X" + countCombo;
@@ -455,11 +509,20 @@ public class GameController : MonoBehaviour
     int randonvictorysound;
     public void WinSound()
     {
-        randonvictorysound = Random.Range(0, 2);
-        if (randonvictorysound == 1)
-            SoundController.instance.PlaySound(soundGame.soundwin);
-        else
-            SoundController.instance.PlaySound(soundGame.soundvictory1);
+        //   randonvictorysound = Random.Range(0, 2);
+        //  if (randonvictorysound == 1)
+        switch (currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundwin);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundwinnv2);
+                break;
+        }
+
+        //else
+        //    SoundController.instance.PlaySound(soundGame.soundvictory1);
     }
     int gemAdd;
     public void WinGame()

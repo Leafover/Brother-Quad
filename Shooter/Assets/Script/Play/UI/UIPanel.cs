@@ -154,7 +154,16 @@ public class UIPanel : MonoBehaviour
         DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
 
         defeatPanel.SetActive(true);
-        SoundController.instance.PlaySound(soundGame.soundlose);
+
+        switch (GameController.instance.currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundlose);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundlosenv2);
+                break;
+        }
     }
     public void DisplayDefeat()
     {
@@ -185,7 +194,15 @@ public class UIPanel : MonoBehaviour
             DataUtils.AddCoinAndGame((int)DataParam.totalCoin, 0);
         }
         defeatPanel.SetActive(true);
-        SoundController.instance.PlaySound(soundGame.soundlose);
+        switch (GameController.instance.currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundlose);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundlosenv2);
+                break;
+        }
     }
     public void DisplayFinish(int _countstar)
     {

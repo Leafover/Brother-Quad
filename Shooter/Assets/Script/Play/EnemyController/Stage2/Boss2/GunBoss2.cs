@@ -128,7 +128,17 @@ public class GunBoss2 : AutoTarget
                         }
 
                         if (!GameController.instance.listcirtwhambang[0].gameObject.activeSelf)
-                            SoundController.instance.PlaySound(soundGame.soundCritHit);
+                        {
+                            switch (GameController.instance.currentChar)
+                            {
+                                case 0:
+                                    SoundController.instance.PlaySound(soundGame.soundCritHit);
+                                    break;
+                                case 1:
+                                    SoundController.instance.PlaySound(soundGame.soundcrithitnv2);
+                                    break;
+                            }
+                        }
                         GameController.instance.listcirtwhambang[0].DisplayMe(transform.position);
                     }
                     else
@@ -191,7 +201,17 @@ public class GunBoss2 : AutoTarget
                     return;
                 TakeDamage(PlayerController.instance.damageBullet * 3f, false, false);
                 myEnemyBase.TakeDamage(PlayerController.instance.damageBullet * 3f, false, true, false);
-                SoundController.instance.PlaySound(soundGame.sounddapchao);
+
+
+                switch (GameController.instance.currentChar)
+                {
+                    case 0:
+                        SoundController.instance.PlaySound(soundGame.sounddapchao);
+                        break;
+                    case 1:
+                        SoundController.instance.PlaySound(soundGame.sounddaonv2);
+                        break;
+                }
 
 
                 if (currentHealth <= 0)

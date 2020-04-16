@@ -7,7 +7,8 @@ public enum soundGame
     soundplayerhit, soundjump, sounddoublejump, soundbulletdrop, soundstar1, soundstar2, soundstar3, soundexploboxcantexplo, soundminibossfire, soundbtnclick, soundEatHP, soundEatCoin, sounddapchao, soundCritHit, soundGrenadeKill, soundWham,
     soundmultikillx2, soundmultikillx4, soundmultikillx6, soundmultikillx8, soundmultikillx10, soundmultikillmax, soundletgo, soundvictory1, soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die,
     soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2, soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun,
-    soundBoss3Attack1,soundBoss3Attack3,soundBoss3Attack4,soundBoss3Dead,soundBoss3Begin,soundBoss3Def,soundBoss3HitWhenDef, soundw4truyendien
+    soundBoss3Attack1,soundBoss3Attack3,soundBoss3Attack4,soundBoss3Dead,soundBoss3Begin,soundBoss3Def,soundBoss3HitWhenDef, soundw4truyendien,
+    sounddaonv2,sounddienv2,soundhitnv2,soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2
 }
 
 public class SoundController : MonoBehaviour
@@ -22,6 +23,7 @@ public class SoundController : MonoBehaviour
     public AudioClip soundEN0Attack, soundEN0Move, soundEN1Attack, soundEN1Die, soundEN2die, soundEN3die, soundDisplayMiniBoss2, soundMiniBoss2Attack1, soundMiniBoss2Attack2;
     public AudioClip soundenemygrenadeBoss2, soundmachinegunBoss2, soundrocketBoss2, soundChangeGun;
     public AudioClip soundBoss3Attack1, soundBoss3Attack3, soundBoss3Attack4, soundBoss3Dead, soundBoss3Begin, soundBoss3Def, soundBoss3HitWhenDef, soundw4truyendien, soundexplow6;
+    public AudioClip sounddaonv2, sounddienv2, soundhitnv2, soundcrithitnv2, soundmultikillx2nv2, soundmultikillx4nv2, soundmultikillx6nv2, soundmultikillx8nv2, soundmultikillx10nv2, soundmultikillmaxnv2, soundletgonv2, soundwinnv2, soundlosenv2;
     public AudioSource au;
     void Awake()
     {
@@ -394,6 +396,45 @@ public class SoundController : MonoBehaviour
                     break;
                 case soundGame.soundexplow6:
                     au.PlayOneShot(instance.soundexplow6);
+                    break;
+                case soundGame.soundhitnv2:
+                    au.PlayOneShot(instance.soundhitnv2);
+                    break;
+                case soundGame.sounddienv2:
+                    au.PlayOneShot(instance.sounddienv2);
+                    break;
+                case soundGame.sounddaonv2:
+                    au.PlayOneShot(instance.sounddaonv2);
+                    break;
+                case soundGame.soundcrithitnv2:
+                    au.PlayOneShot(instance.soundcrithitnv2);
+                    break;
+                case soundGame.soundmultikillx2nv2:
+                    au.PlayOneShot(instance.soundmultikillx2nv2);
+                    break;
+                case soundGame.soundmultikillx4nv2:
+                    au.PlayOneShot(instance.soundmultikillx4nv2);
+                    break;
+                case soundGame.soundmultikillx6nv2:
+                    au.PlayOneShot(instance.soundmultikillx6nv2);
+                    break;
+                case soundGame.soundmultikillx8nv2:
+                    au.PlayOneShot(instance.soundmultikillx8nv2);
+                    break;
+                case soundGame.soundmultikillx10nv2:
+                    au.PlayOneShot(instance.soundmultikillx10nv2);
+                    break;
+                case soundGame.soundmultikillmaxnv2:
+                    au.PlayOneShot(instance.soundmultikillmaxnv2);
+                    break;
+                case soundGame.soundletgonv2:
+                    au.PlayOneShot(instance.soundletgonv2);
+                    break;
+                case soundGame.soundwinnv2:
+                    au.PlayOneShot(instance.soundwinnv2);
+                    break;
+                case soundGame.soundlosenv2:
+                    au.PlayOneShot(instance.soundlosenv2);
                     break;
             }
         }

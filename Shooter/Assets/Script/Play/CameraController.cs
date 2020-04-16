@@ -203,7 +203,17 @@ public class CameraController : MonoBehaviour
             nextPointCheck.gameObject.SetActive(true);
             lockCamPos = Camera.main.transform.position.x;
             nextPointCheck.enabled = true;
-            SoundController.instance.PlaySound(soundGame.soundletgo);
+
+            switch(GameController.instance.currentChar)
+            {
+                case 0:
+                    SoundController.instance.PlaySound(soundGame.soundletgo);
+                    break;
+                case 1:
+                    SoundController.instance.PlaySound(soundGame.soundletgonv2);
+                    break;
+            }
+
 
             GameController.instance.ResetActiveLeft();
             GameController.instance.ResetActiveRight();
