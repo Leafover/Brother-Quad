@@ -431,7 +431,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                PlayerController.instance.SelectTarget();
+                PlayerController.instance.SelectTarget(shootPosition);
             }
         }
         else
@@ -456,7 +456,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                PlayerController.instance.SelectTarget();
+                PlayerController.instance.SelectTarget(!PlayerController.instance.FlipX ? Vector2.right : Vector2.left);
             }
         }
     }

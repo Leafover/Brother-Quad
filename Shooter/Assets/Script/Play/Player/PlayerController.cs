@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
         ShowLineBlood();
         // StartCoroutine(BeAttackFill());
-        switch(GameController.instance.currentChar)
+        switch (GameController.instance.currentChar)
         {
             case 0:
                 SoundController.instance.PlaySound(soundGame.soundplayerhit);
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
         GameController.instance.DIE();
         AnimDie();
         playerState = PlayerState.Die;
-        switch(GameController.instance.currentChar)
+        switch (GameController.instance.currentChar)
         {
             case 0:
                 SoundController.instance.PlaySound(soundGame.playerDie);
@@ -829,8 +829,9 @@ public class PlayerController : MonoBehaviour
                 // Debug.LogError("reload active");
                 SoundController.instance.PlaySound(soundGame.soundbulletdrop);
                 skeletonAnimation.AnimationState.SetAnimation(3, apc.reloadAnim, true);
+
                 reload = true;
-                switch(GameController.instance.currentChar)
+                switch (GameController.instance.currentChar)
                 {
                     case 0:
                         SoundController.instance.PlaySound(soundGame.soundreload);
@@ -1402,17 +1403,31 @@ public class PlayerController : MonoBehaviour
 
         return targetTemp;
     }
-    public void SelectNonTarget(Vector2 pos)
+    public void SelectNonTargetWhenReload(Vector2 pos)
     {
         GameController.instance.targetDetectSprite.SetActive(false);
         target = GetTargetFromDirection(pos);
         haveTarget = false;
     }
-
-    public void SelectTarget()
+    public void SelectNonTarget(Vector2 pos)
     {
-        //if (!reload)
-        //{
+        if (reload)
+        {
+            SelectNonTargetWhenReload(pos);
+            return;
+        }
+        GameController.instance.targetDetectSprite.SetActive(false);
+        target = GetTargetFromDirection(pos);
+        haveTarget = false;
+    }
+
+    public void SelectTarget(Vector2 pos)
+    {
+        if (reload)
+        {
+            SelectNonTarget(pos);
+            return;
+        }
         target = GetTarget();
         FlipX = GetTarget().x < transform.position.x;
         //}

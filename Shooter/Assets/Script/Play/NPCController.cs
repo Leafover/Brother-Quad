@@ -37,6 +37,8 @@ public class NPCController : MonoBehaviour
             return;
         sk.AnimationState.SetAnimation(0, win, true);
         currentAnim = win;
+        rid.velocity = Vector2.zero;
+        speedmove = 0;
     }
     public void ResetPosRevive()
     {
