@@ -82,7 +82,7 @@ public class MenuController : MonoBehaviour
             DataUtils.TakeHeroPice("P2", 100);
             DataUtils.TakeHeroPice("P1", 100);
         }
-        DataUtils.AddCoinAndGame(10000, 0);
+     //   DataUtils.AddCoinAndGame(10000, 0);
 
         #region problem
         //DataUtils.FillPlayerDataInfo();
