@@ -1058,7 +1058,6 @@ public class DataUtils
     public static void FillAllStageHard()
     {
         string sData = GetStageHardTextData();
-        Debug.LogError("sData: " + sData);
         JsonData jData = JsonMapper.ToObject(sData);
         lstAllStageHard = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
@@ -1067,9 +1066,6 @@ public class DataUtils
             if (!lstAllStageHard.Contains(jStage))
                 lstAllStageHard.Add(jStage);
         }
-
-        //CalculateStageStar(lstAllStageHard);
-        Debug.LogError("FillAllStageHard: " + lstAllStageHard.Count);
     }
 
     public static void SaveStageHard(string stageData)
@@ -1095,7 +1091,6 @@ public class DataUtils
     }
     public static void UnlockHardMode(int _stageIndex)
     {
-        Debug.LogError("lstAllStageHard: " + lstAllStageHard.Count);
         #region UnlockHardMode
         List<DataStage> lstStagesHard = new List<DataStage>();
         for (int i = 0; i < lstAllStageNormal.Count; i++)
@@ -1154,7 +1149,6 @@ public class DataUtils
             lstAllStageHard[_stageIndex].stageHasUnlock = true;
             jHardSave = JsonMapper.ToJson(lstAllStageHard);
         }
-        Debug.LogError("DataHard: " + jHardSave);
         SaveStageHard(jHardSave);
         #endregion
     }
@@ -1196,7 +1190,6 @@ public class DataUtils
     {
         string sData = GetStageTextData();
         JsonData jData = JsonMapper.ToObject(sData);
-        Debug.LogError("sData: " + sData);
         lstAllStageNormal = new List<DataStage>();
         for (int i = 0; i < jData.Count; i++)
         {
@@ -1207,9 +1200,6 @@ public class DataUtils
 
             }
         }
-
-        //CalculateStageStar(lstAllStageNormal);
-        Debug.LogError("totalStar: " + CalculateStageStar(lstAllStageNormal) + " vs " + CalculateStageStar(lstAllStageHard));
 
         if (StageHardHasInit())
             FillAllStageHard();
@@ -1290,7 +1280,6 @@ public class DataUtils
 
     public static void SaveLevel(int stage, int mapIndex)
     {
-        //Debug.LogError(IsFirst1Star(stage, mapIndex) + " vs " + IsFirst2Stars(stage, mapIndex) + " vs " + IsFirst3Stars(stage, mapIndex) + " vs " + TotalStarEarn(stage, mapIndex));
         if (modeSelected == 0)
         {
             lstAllStageNormal[stage].levels[mapIndex].hasComplete = true;
@@ -1300,24 +1289,19 @@ public class DataUtils
             if (mapIndex == 7)
             {
                 lstAllStageNormal[(stage + 1 >= lstAllStageNormal.Count ? stage : stage + 1)].stageHasUnlock = true;
-
-                Debug.LogError("Stage: " + stage + ", Level: " + mapIndex);
                 UnlockHardMode(stage);
 
                 if (stage == 0 && CalculateStageStar(lstAllStageNormal) >= STAR_UNLOCK_STAGE2)
                 {
                     StageIncrease(stage + 1);
-                    Debug.LogError("1:::: " + stage);
                 }
                 else if (stage == 1 && CalculateStageStar(lstAllStageNormal) >= STAR_UNLOCK_STAGE3)
                 {
                     StageIncrease(stage + 1);
-                    Debug.LogError("2:::: " + stage);
                 }
                 else
                 {
                     StageIncrease(stage + 1);
-                    Debug.LogError("Else::: " + stage);
                 }
             }
 
@@ -1407,7 +1391,6 @@ public class DataUtils
     }
     public static void SetHeroIndex(int index)
     {
-        Debug.LogError("index: " + index);
         PlayerPrefs.SetInt(KEY_HEROES_INDEX, index);
         PlayerPrefs.Save();
     }
@@ -1439,8 +1422,6 @@ public class DataUtils
             playerInfo.isEquipped = true;
 
             lstAllPlayerHeroes.Add(playerInfo);
-
-            Debug.LogError("---------- loadheroTH1");
         }
         else
         {
@@ -1456,7 +1437,6 @@ public class DataUtils
             PlayerDataInfo jPlayerInfo = JsonMapper.ToObject<PlayerDataInfo>(jData[0].ToJson());
             if (!lstAllPlayerHeroes.Contains(jPlayerInfo))
                 lstAllPlayerHeroes.Add(jPlayerInfo);
-            Debug.LogError("---------- loadheroTH2: " + jData.Count);
         }
 
         dicAllHero = new Dictionary<string, HeroDataInfo>();
@@ -1477,11 +1457,9 @@ public class DataUtils
                 dicAllHero.Add(heroInfo.id, heroInfo);
             }
             ChooseHero(heroInfo);
-            Debug.LogError("---------- loadheroTH3");
 
             if (!dicAllHero.ContainsKey("P2"))
             {
-                Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
                 hero2.name = "JESSIE";
@@ -1516,7 +1494,6 @@ public class DataUtils
 
             if (!dicAllHero.ContainsKey("P2"))
             {
-                Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
                 hero2.name = "JESSIE";
@@ -1533,15 +1510,13 @@ public class DataUtils
                     dicAllHero.Add(hero2.id, hero2);
                 }
             }
-
-            Debug.LogError("---------- loadheroTH4: " + jHeroData.Count);
         }
 
-
-        //Debug.LogError("HeroIndex: " + HeroIndex() + " vs " + lstAllPlayerHeroes.Count);
+        
         playerInfo = lstAllPlayerHeroes[/*HeroIndex()*/0];
 
-        heroInfo = DataHero();
+        //heroInfo = DataHero();
+        heroInfo = dicAllHero["P" + (HeroIndex() + 1)];
 
         if (MainMenuController.Instance != null)
         {
