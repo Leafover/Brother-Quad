@@ -1403,17 +1403,17 @@ public class PlayerController : MonoBehaviour
 
         return targetTemp;
     }
-    public void SelectNonTargetWhenReload(Vector2 pos)
+    public void SelectNonTargetWhenReload()
     {
         GameController.instance.targetDetectSprite.SetActive(false);
-        target = GetTargetFromDirection(pos);
+        target = GetTargetFromDirection(!FlipX ? Vector2.right : Vector2.left);
         haveTarget = false;
     }
     public void SelectNonTarget(Vector2 pos)
     {
         if (reload)
         {
-            SelectNonTargetWhenReload(pos);
+            SelectNonTargetWhenReload();
             return;
         }
         GameController.instance.targetDetectSprite.SetActive(false);
@@ -1425,7 +1425,7 @@ public class PlayerController : MonoBehaviour
     {
         if (reload)
         {
-            SelectNonTarget(pos);
+            SelectNonTargetWhenReload();
             return;
         }
         target = GetTarget();

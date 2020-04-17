@@ -58,7 +58,7 @@ public class MenuController : MonoBehaviour
 
 #else
         randomAds = Random.Range(0, 100);
-        if (randomAds < 60)
+        if (randomAds < 80)
         {
             AdsManager.Instance.ShowInterstitial((b) => { });
         }
@@ -82,7 +82,7 @@ public class MenuController : MonoBehaviour
             DataUtils.TakeHeroPice("P2", 100);
             DataUtils.TakeHeroPice("P1", 100);
         }
-
+        DataUtils.AddCoinAndGame(10000, 0);
 
         #region problem
         //DataUtils.FillPlayerDataInfo();
