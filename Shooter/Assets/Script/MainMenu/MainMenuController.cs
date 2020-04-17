@@ -39,6 +39,7 @@ public class MainMenuController : MonoBehaviour
         DataUtils.InitSpriteData(allSpriteData);
     }
     public void OnChangeCharAvarta(int _index) {
+        txtPlayerName.text = DataUtils.heroInfo.name;
         imgChar.sprite = _index == 0 ? sprCharMale : sprCharFemale;
     }
 
@@ -72,8 +73,6 @@ public class MainMenuController : MonoBehaviour
 
 
         OnChangeCharAvarta(DataUtils.HeroIndex());
-
-        txtPlayerName.text = DataUtils.heroInfo.name;
     }
 
     public void ShowCraftItem(ItemData itemSelected, string _title)
@@ -124,7 +123,6 @@ public class MainMenuController : MonoBehaviour
 
     private void UpdateStageImage()
     {
-        Debug.LogError("DataUtils.GetStageIndex(): " + DataUtils.GetStageIndex());
         for (int i = 0; i < imgStages.Length; i++)
         {
             if (i <= DataUtils.GetStageIndex() && i < 3)
@@ -211,6 +209,7 @@ public class MainMenuController : MonoBehaviour
     {
         DataUtils.SetHeroIndex(heroSelectIndex);
         DataUtils.SaveAllHero();
+        OnChangeCharAvarta(DataUtils.HeroIndex());
         g.SetActive(false);
         gPanelUIButton.SetActive(true);
     }
@@ -264,8 +263,8 @@ public class MainMenuController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            DataUtils.TakeItem("W1", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 9, false);
-            //DataUtils.TakeHeroPice("P1", 2);
+            //DataUtils.TakeItem("W1", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 9, false);
+            DataUtils.TakeHeroPice("P2", 16);
             //dailyGift.PrepareData();
         }
 
