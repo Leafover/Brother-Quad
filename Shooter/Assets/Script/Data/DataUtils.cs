@@ -1431,7 +1431,7 @@ public class DataUtils
             playerInfo.exp = 0;
             playerInfo.id = "P1";
             playerInfo.curStars = 1;
-            playerInfo.name = "REMITANO";
+            playerInfo.name = "THOMAS";
             playerInfo.coins = 0;
             playerInfo.gems = 0;
             playerInfo.pices = 0;
@@ -1464,7 +1464,7 @@ public class DataUtils
         {
             heroInfo = new HeroDataInfo();
             heroInfo.id = "P1";
-            heroInfo.name = "REMITANO";
+            heroInfo.name = "THOMAS";
             heroInfo.level = 0;
             heroInfo.exp = 0;
             heroInfo.hp = GetHeroHPByID("P1");
@@ -1484,7 +1484,7 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "Winter Snow";
+                hero2.name = "JESSIE";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");
@@ -1519,7 +1519,7 @@ public class DataUtils
                 Debug.LogError("Chua init P2");
                 HeroDataInfo hero2 = new HeroDataInfo();
                 hero2.id = "P2";
-                hero2.name = "Winter Snow";
+                hero2.name = "JESSIE";
                 hero2.level = 0;
                 hero2.exp = 0;
                 hero2.hp = GetHeroHPByID("P2");

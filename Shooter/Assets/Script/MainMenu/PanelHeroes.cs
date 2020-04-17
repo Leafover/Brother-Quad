@@ -11,6 +11,7 @@ public class PanelHeroes : MonoBehaviour
     public static PanelHeroes Instance;
     public TextMeshProUGUI txtPlayerName;
     public SkeletonGraphic skleCur;
+    public SkeletonGraphic p1Skeleton, p2Skeleton;
     public GameObject gP1, gP2;
     public GameObject gButtonUnlock, gButtonLevelUp;
     public HeroChoose[] allHeroes;
@@ -50,6 +51,7 @@ public class PanelHeroes : MonoBehaviour
     private string keyEquipped;
     ItemData itemEquipped = null;
     private int curWeponStar = 0, nextWeaponStar = 0;
+    private int curWeaponIndex = 0;
 
     private void Awake()
     {
@@ -99,8 +101,9 @@ public class PanelHeroes : MonoBehaviour
         MyAnalytics.LogOpenHeroTab();
         ChooseTab(0);
 
-        FillHeroData(DataUtils.HeroIndex());
+
         InitEquippedItem();
+        FillHeroData(DataUtils.HeroIndex());
 
 
         Debug.LogError(DataController.instance.playerData[DataUtils.HeroIndex()].playerData[DataUtils.heroInfo.level < DataUtils.MAX_LEVEL_HERO ? DataUtils.heroInfo.level : DataUtils.MAX_LEVEL_HERO - 1].DmgGrenade);
@@ -118,6 +121,10 @@ public class PanelHeroes : MonoBehaviour
                     lstEquip[i].imgPart.enabled = false;
                     lstEquip[i].CheckItemUnlock();
                     lstEquip[i].gameObject.SetActive(true);
+                    if (itemData.type.Contains("WEAPON")) {
+                        Debug.LogError("ID: " + itemData.id);
+                        curWeaponIndex = int.Parse(itemData.id.Replace("W", ""));
+                    }
                 }
             }
         }
@@ -136,6 +143,15 @@ public class PanelHeroes : MonoBehaviour
         txtPlayerName.text = heroSelected.name;
 
         FillDataPlayer(_hIndex);
+
+        p1Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
+        p1Skeleton.Skeleton.SetSlotsToSetupPose();
+        p1Skeleton.LateUpdate();
+
+        p2Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
+        p2Skeleton.Skeleton.SetSlotsToSetupPose();
+        p2Skeleton.LateUpdate();
+
     }
     private void FillDataPlayer(int _heroIndex)
     {
