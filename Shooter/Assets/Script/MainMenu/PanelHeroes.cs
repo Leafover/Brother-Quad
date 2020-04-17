@@ -9,6 +9,7 @@ using Spine;
 public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
+    public GameObject gParts;
     public Text txtPlayerName;
     public TextMeshProUGUI txtHealth, txtDamage, txtFireRate, txtCritRate, txtRange, txtMagazine, txtMoveSpeed, txtCritDmg;
     public Image imgHeroSkin;
@@ -284,10 +285,12 @@ public class PanelHeroes : MonoBehaviour
         {
             case 0:
                 gAllEquippedItem.SetActive(false);
+                gParts.SetActive(true);
                 gHeroInfo.SetActive(true);
                 break;
             case 1:
                 gAllEquippedItem.SetActive(true);
+                gParts.SetActive(false);
                 gHeroInfo.SetActive(false);
                 break;
         }
