@@ -189,8 +189,9 @@ public class MainMenuController : MonoBehaviour
             }
             else
             {
-                //ShowMapNotify("Complete stage " + (stage - 1)+" and get more " + (starReacch - (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard))) + " stars to unlock");
-                ShowMapNotify("Complete stage " + (stage - 1)+" and reach " + /*(DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) +"/"+*/ starReacch +"<sprite=0> to unlock.");
+                ////ShowMapNotify("Complete stage " + (stage - 1)+" and get more " + (starReacch - (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard))) + " stars to unlock");
+                //ShowMapNotify("Complete stage " + (stage - 1)+" and reach " + /*(DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) +"/"+*/ starReacch +"<sprite=0> to unlock.");
+                ShowMapNotify("Complete stage " + (stage - 1) + " and \n Get " + starReacch + "<sprite=0> to unlock. \n\n\n <color=yellow>You have " + (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) + "<sprite=0></color>");
             }
         }
         else
