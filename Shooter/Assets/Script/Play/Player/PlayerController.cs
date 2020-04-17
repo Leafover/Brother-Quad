@@ -269,6 +269,8 @@ public class PlayerController : MonoBehaviour
     }
     public void USESKILL()
     {
+        if (GameController.instance.uiPanel.lockSkillObj.activeSelf)
+            return;
         if (timePreviousSkill > 0)
             return;
 

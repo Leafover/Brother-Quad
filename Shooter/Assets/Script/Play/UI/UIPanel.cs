@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIPanel : MonoBehaviour
 {
     public GameObject[] iconSkills;
-    public GameObject rewardItemEquip,btnSKill, bouderDiamond, effectBtnSkill;
+    public GameObject rewardItemEquip, bouderDiamond, effectBtnSkill,lockSkillObj;
     public Image[] rewardItemEquipImg, bouderLevelItemEquipImg, skillFillAmount;
     public GameObject[] bouderRewardEquip;
 
@@ -84,11 +84,17 @@ public class UIPanel : MonoBehaviour
 
         Debug.LogError("hero level : " + DataUtils.heroInfo.level);
 
-        if(DataUtils.heroInfo.level >= 1)
+        iconSkills[GameController.instance.currentChar].gameObject.SetActive(true);
+        if (DataUtils.heroInfo.level >= 1)
         {
-            btnSKill.SetActive(true);
-            iconSkills[GameController.instance.currentChar].gameObject.SetActive(true);
+            lockSkillObj.SetActive(false);
+            effectBtnSkill.SetActive(true);
             Debug.LogError("wtf display bntn skill");
+        }
+        else
+        {
+            effectBtnSkill.SetActive(false);
+            lockSkillObj.SetActive(true);
         }
     }
     void OutPlay(int nextscene, bool showstarterpack)
@@ -127,7 +133,7 @@ public class UIPanel : MonoBehaviour
     }
     public void FillSkill(float _current, float _max)
     {
-        if (!btnSKill.activeSelf)
+        if (lockSkillObj.activeSelf)
             return;
 
         fillbouderSKill.fillAmount = skillFillAmount[GameController.instance.currentChar].fillAmount = _current / _max;
