@@ -37,9 +37,14 @@ public class StageManager : MonoBehaviour
         gStages[MainMenuController.Instance.stageSelected - 1].SetActive(true);
 
         //txtTotalStageStars.text = (DataUtils.CalculateStageStar(DataUtils.lstAllStageNormal) + DataUtils.CalculateStageStar(DataUtils.lstAllStageHard)) + "";
-        txtTotalStageStars.text = (DataUtils.CalculateStarByStage(DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1]) + DataUtils.CalculateStarByStage(DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1])) + "/48";
-    }
 
+        _totalStarNormal = DataUtils.CalculateStarByStage(DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1]);
+        _totalStarHard = (MainMenuController.Instance.stageSelected - 1 > DataUtils.lstAllStageHard.Count ? DataUtils.CalculateStarByStage(DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1]) : 0);
+        txtTotalStageStars.text = (_totalStarNormal + _totalStarHard) + "/48";
+        //txtTotalStageStars.text = (DataUtils.CalculateStarByStage(DataUtils.lstAllStageNormal[MainMenuController.Instance.stageSelected - 1]) + DataUtils.CalculateStarByStage(DataUtils.lstAllStageHard[MainMenuController.Instance.stageSelected - 1])) + "/48";
+    }
+    int _totalStarNormal = 0;
+    int _totalStarHard = 0;
     private void Start()
     {
         
