@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class UAVController : MonoBehaviour
 {
-    public float damageBullet;
+    public float damageBullet,maxTimeLive,maxTimeShoot;
+
     float timeShoot;
     GameObject bullet;
     Vector2 dirBullet;
@@ -39,8 +40,7 @@ public class UAVController : MonoBehaviour
     }
     private void Start()
     {
-        timeLive = 10;
-        damageBullet = 2;
+        timeLive = maxTimeLive;
         sk.AnimationState.Complete += OnComplete;
         stage = STAGE.Begin;
         boneBarrelGun = sk.Skeleton.FindBone(strboneBarrelGun);
@@ -52,7 +52,7 @@ public class UAVController : MonoBehaviour
         timeShoot -= deltaTime;
         if (timeShoot <= 0)
         {
-            timeShoot = 0.15f;
+            timeShoot = maxTimeShoot;
             dirBullet = target - myPos();
             bullet = ObjectPoolerManager.Instance.bulletUAVPooler.GetPooledObject();
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
@@ -91,7 +91,7 @@ public class UAVController : MonoBehaviour
         timeLive -= deltaTime;
         if (timeLive <= -1f)
         {
-            timeLive = 10;
+            timeLive = maxTimeLive;
             sk.AnimationState.SetAnimation(0, fly, true);
             gameObject.SetActive(false);
             GameObject explo = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
