@@ -44,7 +44,7 @@ public class GunMiniBoss2 : AutoTarget
             Dead();
         }
         SpawnHitEffect();
-        SpawnNumberDamageText((int)damage, crit);
+        SpawnNumberDamageText(damage, crit);
     }
     void SpawnNumberMissionText()
     {
@@ -54,11 +54,11 @@ public class GunMiniBoss2 : AutoTarget
         numberText.tmp.color = Color.gray;
         numberText.gameObject.SetActive(true);
     }
-    void SpawnNumberDamageText(int damage, bool crit)
+    void SpawnNumberDamageText(float damage, bool crit)
     {
         numberText = ObjectPoolManagerHaveScript.Instance.numberDamgageTextPooler.GetNumberDamageTextPooledObject();
         numberText.transform.position = transform.position;
-        numberText.Display("" + (int)damage * 10, crit);
+        numberText.Display("" + Mathf.RoundToInt(damage * 10), crit);
         numberText.gameObject.SetActive(true);
     }
     void SpawnHitEffect()
@@ -93,6 +93,12 @@ public class GunMiniBoss2 : AutoTarget
                 {
                     TakeDamage(GameController.instance.uav.damageBullet, false, false);
                     myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, false, false);
+                    collision.gameObject.SetActive(false);
+                }
+                else if (collision.tag == "bulletnpc")
+                {
+                    TakeDamage(GameController.instance.uav.damageBullet/3, false, false);
+                    myEnemyBase.TakeDamage(PlayerController.instance.damageBullet/3, false, false, false);
                     collision.gameObject.SetActive(false);
                 }
                 else

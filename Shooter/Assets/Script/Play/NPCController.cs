@@ -96,7 +96,7 @@ public class NPCController : MonoBehaviour
         {
             timeShoot = 1;
             sk.AnimationState.SetAnimation(1, fire, false);
-            bullet = ObjectPoolerManager.Instance.bulletW1Pooler.GetPooledObject();
+            bullet = ObjectPoolerManager.Instance.bulletnpcPooler.GetPooledObject();
             dirBullet = GetTargetTranform() - posGun();
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);

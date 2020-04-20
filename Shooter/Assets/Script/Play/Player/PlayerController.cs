@@ -404,6 +404,8 @@ public class PlayerController : MonoBehaviour
                             break;
                     }
                 }
+
+                Debug.LogError("damge bullet:" + damageBullet);
             }
             else
             {
@@ -479,6 +481,9 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+
+
+
         animArrow.gameObject.SetActive(false);
         lineBlood.Reset();
         skeletonAnimation.Initialize(true);

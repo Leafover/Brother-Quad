@@ -87,6 +87,11 @@ public class Barrier : MonoBehaviour
                     TakeDamage(GameController.instance.uav.damageBullet);
                     collision.gameObject.SetActive(false);
                 }
+                else if (collision.tag == "bulletnpc")
+                {
+                    TakeDamage(GameController.instance.uav.damageBullet / 3);
+                    collision.gameObject.SetActive(false);
+                }
                 else
                 {
                     TakeDamage(PlayerController.instance.damageBullet);

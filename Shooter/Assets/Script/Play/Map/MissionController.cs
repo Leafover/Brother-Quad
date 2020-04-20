@@ -5,7 +5,7 @@ using UnityEngine;
 public class ListMission
 {
     public int typeMission, valueMission, currentValue;
-    public bool isDone;
+    public bool isDone = false;
 }
 public class MissionController : MonoBehaviour
 {
