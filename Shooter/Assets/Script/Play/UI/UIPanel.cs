@@ -80,7 +80,7 @@ public class UIPanel : MonoBehaviour
 
         DisplayBtnHealth(true, DataUtils.playerInfo.healthPack);
 
-        hackbouder.SetActive(DataController.instance.isHack);
+       // hackbouder.SetActive(DataController.instance.isHack);
 
         Debug.LogError("hero level : " + DataUtils.heroInfo.level);
 
