@@ -14,7 +14,15 @@ public class UAVController : MonoBehaviour
     Quaternion rotation;
     float timeLive;
     public SkeletonAnimation sk;
-    public AnimationReferenceAsset attack, fly;
+    public AnimationReferenceAsset attack, fly, die;
+    public enum STAGE
+    {
+        Begin, Normal, Die
+    }
+    public STAGE stage = STAGE.Begin;
+    Bone boneBarrelGun, boneHandGrenade;
+    [SpineBone]
+    public string strboneBarrelGun;
 
     private void OnComplete(TrackEntry trackEntry)
     {
@@ -23,15 +31,24 @@ public class UAVController : MonoBehaviour
             sk.AnimationState.SetAnimation(0, fly, true);
             Debug.LogError("zoooooooooooooo");
         }
+
+    }
+    Vector2 posGun()
+    {
+        return boneBarrelGun.GetWorldPosition(sk.transform);
     }
     private void Start()
     {
         timeLive = 10;
         damageBullet = 2;
         sk.AnimationState.Complete += OnComplete;
+        stage = STAGE.Begin;
+        boneBarrelGun = sk.Skeleton.FindBone(strboneBarrelGun);
     }
     void Shoot(float deltaTime)
     {
+        if (stage != STAGE.Normal)
+            return;
         timeShoot -= deltaTime;
         if (timeShoot <= 0)
         {
@@ -41,20 +58,47 @@ public class UAVController : MonoBehaviour
             angle = Mathf.Atan2(dirBullet.y, dirBullet.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bullet.transform.rotation = rotation;
-            bullet.transform.position = transform.position;
+            bullet.transform.position = posGun();
             sk.state.SetAnimation(0, attack, false);
             bullet.SetActive(true);
         }
     }
     void Live(float deltaTime)
     {
+        if (stage != STAGE.Normal)
+            return;
         timeLive -= deltaTime;
         if (timeLive <= 0)
         {
+            sk.AnimationState.SetAnimation(0, die, true);
+            stage = STAGE.Die;
+        }
+    }
+    public void CallMe()
+    {
+        stage = STAGE.Begin;
+        transform.position = PlayerController.instance.transform.position;
+        gameObject.SetActive(true);
+    }
+    private void FixedUpdate()
+    {
+        Move(Time.deltaTime);
+    }
+    void Die(float deltaTime)
+    {
+        if (stage != STAGE.Die)
+            return;
+        timeLive -= deltaTime;
+        if (timeLive <= -1f)
+        {
+            timeLive = 10;
             sk.AnimationState.SetAnimation(0, fly, true);
             gameObject.SetActive(false);
-            timeLive = 20;
+            GameObject explo = ObjectPoolerManager.Instance.enemyExploPooler.GetPooledObject();
+            explo.transform.position = gameObject.transform.position;
+            explo.SetActive(true);
         }
+
     }
     private void Update()
     {
@@ -63,6 +107,29 @@ public class UAVController : MonoBehaviour
         var deltaTime = Time.deltaTime;
         Live(deltaTime);
         SelectTarget(deltaTime);
+        Die(deltaTime);
+    }
+    Vector2 posFollow;
+    Vector2 posFollowPlayer()
+    {
+        posFollow.x = PlayerController.instance.GetTranformXPlayer() - 0.3f;
+        posFollow.y = PlayerController.instance.GetTransformPlayer().position.y + 1f;
+        return posFollow;
+    }
+    private void Move(float deltaTime)
+    {
+        if (stage == STAGE.Die)
+            return;
+        if (stage == STAGE.Begin)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, posFollowPlayer(), deltaTime * 2);
+            if (transform.position.y >= posFollow.y)
+                stage = STAGE.Normal;
+        }
+        else
+        {
+            transform.position = Vector2.Lerp(transform.position, posFollowPlayer(), deltaTime * 2);
+        }
     }
     Vector2 myPos()
     {

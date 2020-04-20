@@ -91,7 +91,7 @@ public class GunMiniBoss2 : AutoTarget
                 }
                 else if (collision.tag == "bulletuav")
                 {
-                    TakeDamage(PlayerController.instance.uav.damageBullet, false, false);
+                    TakeDamage(GameController.instance.uav.damageBullet, false, false);
                     myEnemyBase.TakeDamage(PlayerController.instance.damageBullet, false, false, false);
                     collision.gameObject.SetActive(false);
                 }

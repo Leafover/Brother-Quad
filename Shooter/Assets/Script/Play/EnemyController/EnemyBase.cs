@@ -848,7 +848,7 @@ public class EnemyBase : AutoTarget
                 }
                 else if (collision.tag == "bulletuav")
                 {
-                    TakeDamage(PlayerController.instance.uav.damageBullet,false,false,false);
+                    TakeDamage(GameController.instance.uav.damageBullet,false,false,false);
                     collision.gameObject.SetActive(false);
                 }
                 else

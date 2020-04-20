@@ -23,7 +23,7 @@ public class AllMap
 public class GameController : MonoBehaviour
 {
 
-
+    public UAVController uav;
     public int usingHealthPack = 0;
     public GameObject letgo, uiDisplay;
     public MayBayController maybay;

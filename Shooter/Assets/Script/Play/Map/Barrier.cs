@@ -84,7 +84,7 @@ public class Barrier : MonoBehaviour
                 }
                 else if (collision.tag == "bulletuav")
                 {
-                    TakeDamage(PlayerController.instance.uav.damageBullet);
+                    TakeDamage(GameController.instance.uav.damageBullet);
                     collision.gameObject.SetActive(false);
                 }
                 else

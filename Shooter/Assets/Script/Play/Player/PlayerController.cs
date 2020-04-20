@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public UAVController uav;
     public GameObject reloadObj;
     public Image reloadImg;
     bool isregen;
@@ -279,7 +278,7 @@ public class PlayerController : MonoBehaviour
         switch (GameController.instance.currentChar)
         {
             case 0:
-                uav.gameObject.SetActive(true);
+               GameController.instance.uav.CallMe();
                 Debug.LogError("use skill");
                 break;
             case 1:
