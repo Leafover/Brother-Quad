@@ -985,11 +985,11 @@ public class DataUtils
     private static bool IsFirst1Star(int _mode, int _stage, int level)
     {
         bool _rs = false;
-        if (_stage == 0)
+        if (_mode == 0)
         {
             _rs = lstAllStageNormal[_stage].levels[level].mission[0].isPass;
         }
-        else if (_stage == 1)
+        else if (_mode == 1)
         {
             _rs = lstAllStageHard[_stage].levels[level].mission[0].isPass;
         }
@@ -999,11 +999,11 @@ public class DataUtils
     private static bool IsFirst2Stars(int _mode, int _stage, int level)
     {
         bool _rs = false;
-        if (_stage == 0)
+        if (_mode == 0)
         {
             _rs = lstAllStageNormal[_stage].levels[level].mission[1].isPass;
         }
-        else if (_stage == 1)
+        else if (_mode == 1)
         {
             _rs = lstAllStageHard[_stage].levels[level].mission[1].isPass;
         }
@@ -1020,11 +1020,11 @@ public class DataUtils
     private static bool IsFirst3Stars(int _mode, int _stage, int level)
     {
         bool _rs = false;
-        if (_stage == 0)
+        if (_mode == 0)
         {
             _rs = lstAllStageNormal[_stage].levels[level].mission[2].isPass;
         }
-        else if (_stage == 1)
+        else if (_mode == 1)
         {
             _rs = lstAllStageHard[_stage].levels[level].mission[2].isPass;
         }
