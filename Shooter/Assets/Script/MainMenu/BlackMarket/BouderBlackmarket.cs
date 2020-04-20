@@ -78,11 +78,13 @@ public class BouderBlackmarket : MonoBehaviour
         numberText.text = "" + DataController.blackMarketSave[index].countnumber;
         if(DataController.blackMarketSave[index].countnumber == 0)
         {
-            iconCoinImg.color = btnBuyImg.color = priceText.color = Color.gray;      
+            iconCoinImg.color = btnBuyImg.color = /*priceText.color =*/ Color.gray;
+            priceText.color = Color.black;
         }
         else
         {
-            iconCoinImg.color = btnBuyImg.color = priceText.color = Color.white;
+            iconCoinImg.color = btnBuyImg.color = /*priceText.color =*/ Color.white;
+            priceText.color = Color.black;
         }
     }
     public void DisplayItem()
