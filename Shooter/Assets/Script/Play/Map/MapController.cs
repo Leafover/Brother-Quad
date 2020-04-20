@@ -24,6 +24,8 @@ public class MapController : MonoBehaviour
 
     public void SpawnEnemy(float deltaTime)
     {
+        if (isRedZone)
+            return;
         if (!autoSpawn || countspawn == maxSpawn)
             return;
         timeDelay -= Time.deltaTime;
