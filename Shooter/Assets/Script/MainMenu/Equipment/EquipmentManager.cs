@@ -639,7 +639,8 @@ public class EquipmentManager : MonoBehaviour
                     else
                     {
 
-                        MainMenuController.Instance.ShowMapNotify("You need to buy <color=" + DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">" + (pieceEvolve - curPiece) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
+                        //MainMenuController.Instance.ShowMapNotify("You need to buy <color=" + DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">" + (pieceEvolve - curPiece) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
+                        MainMenuController.Instance.ShowMapNotify("Not enough this item part");
                         GetMoreItem();
                     }
                 }
@@ -651,7 +652,8 @@ public class EquipmentManager : MonoBehaviour
                     }
                     else
                     {
-                        MainMenuController.Instance.ShowMapNotify("You need to buy <color=" + DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">" + ((int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[itemKey], true) - DataUtils.dicAllEquipment[itemKey].pices) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
+                        //MainMenuController.Instance.ShowMapNotify("You need to buy <color=" + DataUtils.GetColorByItem(DataUtils.dicAllEquipment[itemKey]) + ">" + ((int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[itemKey], true) - DataUtils.dicAllEquipment[itemKey].pices) + " parts of " + DataUtils.dicAllEquipment[itemKey].itemName + "</color>");
+                        MainMenuController.Instance.ShowMapNotify("Not enough this item part");
                         GetMoreItem();
                     }
                 }

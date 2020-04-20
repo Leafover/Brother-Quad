@@ -9,7 +9,8 @@ using Spine;
 public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
-
+    public Color clUnlock, clNotYetUnlock;
+    public Image imgSkill2;
     public GameObject gParts, gSkillPopup;
     public HeroSkill hSkillDefault, hSkillP1, hSkillP2;
     public Text txtPlayerName;
@@ -95,8 +96,6 @@ public class PanelHeroes : MonoBehaviour
     }
     private void OnEnable()
     {
-        ChangeAnim(DataUtils.HeroIndex() + 1);
-
         for (int i = 0; i < lstEquip.Count; i++)
         {
             if (!dicAllEquip.ContainsKey(lstEquip[i].itemData.type))
@@ -109,9 +108,10 @@ public class PanelHeroes : MonoBehaviour
             heroSelected = DataUtils.heroInfo;
         }
 
+        ChangeAnim(DataUtils.HeroIndex() + 1);
+
         MyAnalytics.LogOpenHeroTab();
         ChooseTab(0);
-
 
         InitEquippedItem();
         FillHeroData(DataUtils.HeroIndex());
@@ -158,6 +158,23 @@ public class PanelHeroes : MonoBehaviour
         p2Skeleton.Skeleton.SetSlotsToSetupPose();
         p2Skeleton.LateUpdate();
 
+        if (heroSelected != null)
+        {
+            Debug.LogError("1: " + heroSelected.level);
+            if (heroSelected.level +1 >= 2)
+            {
+                imgSkill2.color = clUnlock;
+            }
+            else
+            {
+                imgSkill2.color = clNotYetUnlock;
+            }
+        }
+        else
+        {
+            Debug.LogError("2");
+            imgSkill2.color = clNotYetUnlock;
+        }
     }
     private void FillDataPlayer(int _heroIndex)
     {
@@ -261,7 +278,7 @@ public class PanelHeroes : MonoBehaviour
                 }
                 else
                 {
-                    MainMenuController.Instance.ShowMapNotify("Not enough material.");
+                    MainMenuController.Instance.ShowMapNotify("Not enough Character part.");
                 }
             }
             else
@@ -370,7 +387,7 @@ public class PanelHeroes : MonoBehaviour
         }
         else
         {
-            MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + "parts to unlock this hero");
+            MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + " parts to unlock this hero");
         }
     }
     public void ShowSkillInfo(int skillIndex) {
@@ -384,10 +401,19 @@ public class PanelHeroes : MonoBehaviour
             case 1:
                 Debug.LogError("_indexChoose: " + _indexChoose);
                 hSelected = _indexChoose == 0 ? hSkillP1 : hSkillP2;
-
-
                 imgSkillImage.sprite = hSelected.sprSkill;
-                txtSkillTitle.text = hSelected.skillTitle;
+                if (heroSelected.level >= 2)
+                {
+                    txtSkillTitle.text = hSelected.skillTitle;
+                    imgSkillImage.color = clUnlock;
+                }
+                else
+                {
+                    txtSkillTitle.text = hSelected.skillTitle + "   (Upgrade to unlock)";
+                    imgSkillImage.color = clNotYetUnlock;
+                }
+                
+                
                 txtSkillContent.text = hSelected.skillContent;
                 break;
             default:
