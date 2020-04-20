@@ -9,7 +9,7 @@ public class PopupItemInfomation : MonoBehaviour
     public Sprite sprYellowStar, sprWhiteStar;
     public Image imgItemPriview, imgQuality, imgItemLevel, imgPiece, imgItemInfo, imgGloves, imgHelmet,imgBag,imgShoes, imgArmor;
     public TextMeshProUGUI txtItemName, txtItemLevel, txtItemInfo, txtPiece, txtDmg, txtFireRate, txtCritRate, txtCritDmg, txtRange, txtMagazine;
-    public TextMeshProUGUI txtReload, txtCritRateItem, txtCritDmgItem, txtDef, txtFirstAid, txtRegen, txtMoveSpeed, txtJump, txtPartItem;
+    public TextMeshProUGUI txtReload, txtCritRateItem, txtCritDmgItem, txtDef, txtFirstAid, txtRegen, txtMoveSpeed, txtJump, txtPartItem, txtPartWeapon;
 
     public GameObject gWeapon, gItemInfo, gAllStars, gPartSelect;
     public Image[] allStars;
@@ -126,6 +126,7 @@ public class PopupItemInfomation : MonoBehaviour
         else itemData = null;
         txtPiece.text = itemData == null ? "0" : itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
         txtPartItem.text = txtPiece.text;
+        txtPartWeapon.text = txtPiece.text;
 
 
         if (itemData != null)

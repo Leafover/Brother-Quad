@@ -51,7 +51,8 @@ public class PanelHeroes : MonoBehaviour
     public Dictionary<string, ItemData> dicAllEquip = new Dictionary<string, ItemData>();
     public HeroDataInfo heroSelected;
     public Image imgSkillImage;
-    public Text txtSkillTitle, txtSkillContent;
+    public Text  txtSkillContent;
+    public TextMeshProUGUI txtSkillTitle, txtTitleUnlock;
 
     public int _indexChoose = 0;
 
@@ -92,7 +93,7 @@ public class PanelHeroes : MonoBehaviour
     }
     private void Start()
     {
-        HeroOnClick(/*0*/DataUtils.HeroIndex());
+        //HeroOnClick(/*0*/DataUtils.HeroIndex());
     }
     private void OnEnable()
     {
@@ -114,7 +115,11 @@ public class PanelHeroes : MonoBehaviour
         ChooseTab(0);
 
         InitEquippedItem();
-        FillHeroData(DataUtils.HeroIndex());
+
+
+        HeroOnClick(/*0*/DataUtils.HeroIndex());
+
+        //FillHeroData(DataUtils.HeroIndex());
     }
     private void InitEquippedItem()
     {
@@ -129,7 +134,8 @@ public class PanelHeroes : MonoBehaviour
                     lstEquip[i].imgPart.enabled = false;
                     lstEquip[i].CheckItemUnlock();
                     lstEquip[i].gameObject.SetActive(true);
-                    if (itemData.type.Contains("WEAPON")) {
+                    if (itemData.type.Contains("WEAPON"))
+                    {
                         curWeaponIndex = int.Parse(itemData.id.Replace("W", ""));
                     }
                 }
@@ -138,7 +144,7 @@ public class PanelHeroes : MonoBehaviour
     }
     public void FillHeroData(int _hIndex)
     {
-        for (int i = 0; i < /*DataUtils.playerInfo.level*/imgAllStars.Length; i++)
+        for (int i = 0; i < imgAllStars.Length; i++)
         {
             if (i <= heroSelected.level)
                 imgAllStars[i].sprite = sprStar;
@@ -160,8 +166,7 @@ public class PanelHeroes : MonoBehaviour
 
         if (heroSelected != null)
         {
-            Debug.LogError("1: " + heroSelected.level);
-            if (heroSelected.level +1 >= 2)
+            if (heroSelected.level + 1 >= 2)
             {
                 imgSkill2.color = clUnlock;
             }
@@ -190,25 +195,8 @@ public class PanelHeroes : MonoBehaviour
         keyEquipped = itemEquipped.id + "_" + itemEquipped.level;
         curWeponStar = itemEquipped.curStar;
         nextWeaponStar = itemEquipped.curStar + 1 > 4 ? itemEquipped.curStar : itemEquipped.curStar + 1;
-        pData = DataController.instance.playerData[/*0*/_heroIndex].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
-        pNext = DataController.instance.playerData[/*0*/_heroIndex].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
-
-        
-        //txtHealth.text = pData.hp.ToString();
-        //txtHealthUP.text = DataUtils.DisplayRichText(pData.hp, pNext.hp);
-
-        //txtDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
-        //txtDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]) * 10, GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[nextWeaponStar]) * 10);
-
-        //txtAttSpeed.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]).ToString();
-        //txtAttSpeedUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[nextWeaponStar]));
-
-        //txtCritDamage.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]).ToString();
-        //txtCritDamageUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[nextWeaponStar]));
-
-        //txtCritRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]).ToString();
-        //txtCritRateUP.text = DataUtils.DisplayRichText(GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]), GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[nextWeaponStar]));
-
+        pData = DataController.instance.playerData[_heroIndex].playerData[heroSelected.level < DataUtils.MAX_LEVEL_HERO ? heroSelected.level : DataUtils.MAX_LEVEL_HERO - 1];
+        pNext = DataController.instance.playerData[_heroIndex].playerData[heroSelected.level + 1 < DataUtils.MAX_LEVEL_HERO ? heroSelected.level + 1 : DataUtils.MAX_LEVEL_HERO - 1];
         txtCurDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
 
         if (!DataController.primeAccout.isVIP)
@@ -234,8 +222,8 @@ public class PanelHeroes : MonoBehaviour
 
     }
 
-    private void FillTextInfo() {
-        //txtHealth, txtDamage, txtFireRate, txtCritRate, txtRange, txtMagazine, txtMoveSpeed, txtCritDmg;
+    private void FillTextInfo()
+    {
         txtHealth.text = pData.hp + " <sprite=1><color=green>" + pNext.hp + "</color>";
         txtMoveSpeed.text = pData.MoveSpeed + " <sprite=1><color=green>" + pNext.MoveSpeed + "</color>";
         txtDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
@@ -326,14 +314,28 @@ public class PanelHeroes : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
         }
-        else if (!heroChoose.isUnLock && heroChoose.heroData != null) {
+        else if (!heroChoose.isUnLock && heroChoose.heroData != null)
+        {
             MainMenuController.Instance.ShowMapNotify("Hero not yet unlock and need 20 parts to unlock.");
-            //FillHeroData(heroChoose.heroIndex - 1);
             FillData(heroChoose, false);
             ChangeAnim(_index + 1);
             _indexChoose = _index;
+
+            for (int i = 0; i < allHeroes.Length; i++)
+            {
+                HeroChoose _h = allHeroes[i];
+
+                if (_h == heroChoose)
+                {
+                    _h.imgSelected.enabled = true;
+                }
+                else
+                {
+                    _h.imgSelected.enabled = false;
+                }
+            }
         }
-        else if(heroChoose.isUnLock)
+        else if (heroChoose.isUnLock)
         {
             FillData(heroChoose, true);
 
@@ -365,13 +367,16 @@ public class PanelHeroes : MonoBehaviour
         heroChoose.imgSelected.enabled = showSelected;
         heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
         FillHeroData(heroChoose.heroIndex - 1);
-        DataUtils.heroInfo = DataUtils.dicAllHero[heroChoose.heroID];
+        if(heroSelected.isUnlock)
+            DataUtils.heroInfo = DataUtils.dicAllHero[heroChoose.heroID];
     }
 
-    public void UnlockHero() {
+    public void UnlockHero()
+    {
         HeroChoose heroChoose = allHeroes[_indexChoose];
-        
-        if (DataUtils.dicAllHero[heroChoose.heroID].pices >= DataUtils.PART_UNLOCK_P2) {
+
+        if (DataUtils.dicAllHero[heroChoose.heroID].pices >= DataUtils.PART_UNLOCK_P2)
+        {
             heroSelected = DataUtils.dicAllHero[heroChoose.heroID];
 
             DataUtils.dicAllHero[heroChoose.heroID].pices -= DataUtils.PART_UNLOCK_P2;
@@ -390,31 +395,39 @@ public class PanelHeroes : MonoBehaviour
             MainMenuController.Instance.ShowMapNotify("You need " + (DataUtils.PART_UNLOCK_P2 - DataUtils.dicAllHero[heroChoose.heroID].pices) + " parts to unlock this hero");
         }
     }
-    public void ShowSkillInfo(int skillIndex) {
+    public void ShowSkillInfo(int skillIndex)
+    {
         switch (skillIndex)
         {
             case 0:
                 imgSkillImage.sprite = hSkillDefault.sprSkill;
                 txtSkillTitle.text = hSkillDefault.skillTitle;
                 txtSkillContent.text = hSkillDefault.skillContent;
+                txtTitleUnlock.gameObject.SetActive(false);
+                txtSkillTitle.gameObject.SetActive(true);
+                txtSkillContent.gameObject.SetActive(true);
                 break;
             case 1:
-                Debug.LogError("_indexChoose: " + _indexChoose);
                 hSelected = _indexChoose == 0 ? hSkillP1 : hSkillP2;
                 imgSkillImage.sprite = hSelected.sprSkill;
-                if (heroSelected.level >= 2)
+                txtSkillContent.text = hSelected.skillContent;
+                if (heroSelected.level + 1 >= 2)
                 {
                     txtSkillTitle.text = hSelected.skillTitle;
-                    imgSkillImage.color = clUnlock;
+                    txtTitleUnlock.gameObject.SetActive(false);
+                    txtSkillTitle.gameObject.SetActive(true);
+                    txtSkillContent.gameObject.SetActive(true);
                 }
                 else
                 {
-                    txtSkillTitle.text = hSelected.skillTitle + "   (Upgrade to unlock)";
-                    imgSkillImage.color = clNotYetUnlock;
+                    txtTitleUnlock.text = "Upgrade hero to 2<sprite=0> to unlock";
+                    txtSkillTitle.gameObject.SetActive(false);
+                    txtTitleUnlock.gameObject.SetActive(true);
+                    txtSkillContent.gameObject.SetActive(false);
                 }
+
+
                 
-                
-                txtSkillContent.text = hSelected.skillContent;
                 break;
             default:
                 break;
