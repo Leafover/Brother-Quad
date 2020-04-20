@@ -166,13 +166,10 @@ public class EquipmentManager : MonoBehaviour
             EquipmentItem item = gItemClone.GetComponent<EquipmentItem>();
             item.itemKey = key;
             item.imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
-            //Debug.LogError("AAAA: " + DataUtils.dicAllEquipment.ContainsKey(item.itemKey) + " vs " + item.itemKey + " vs " + key);
             item.itemData = DataUtils.dicAllEquipment[item.itemKey];
             gItemClone.SetActive(!item.itemData.isUnlock);
             gItemClone.transform.SetParent(trContain, false);
         }
-
-        //SortingItem();
         ChildAlignment();
     }
 
@@ -372,7 +369,6 @@ public class EquipmentManager : MonoBehaviour
     {
         if (!IsItemHasInit(itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped))
         {
-            //itemNew.isEquipped = false;
             key = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
             gItemClone = Instantiate(gItems);
             gItemClone.name = itemNew.id + "_" + itemNew.level + "_" + itemNew.isUnlock + "_" + itemNew.isEquipped;
@@ -501,7 +497,7 @@ public class EquipmentManager : MonoBehaviour
         }
         else if (DataUtils.playerInfo.coins >= priceUpgrade)
         {
-            if (/*DataUtils.dicAllEquipment[key].curStar < DataUtils.MAX_STARS - 1*/IsReachMaxLevel(DataUtils.dicAllEquipment[key]))
+            if (IsReachMaxLevel(DataUtils.dicAllEquipment[key]))
             {
                 DataUtils.AddCoinAndGame(-(int)priceUpgrade, 0);
                 DataUtils.dicAllEquipment[key].curStar += 1;
@@ -600,6 +596,7 @@ public class EquipmentManager : MonoBehaviour
                         iDataEvolve.level = EvolveItemLevel(curItem.level);
                         iDataEvolve.isUnlock = true;
                         iDataEvolve.pices = 0;
+                        Debug.LogError("curPiece: " + curPiece);
                         iDataEvolve.itemName = curItem.itemName;
                         iDataEvolve.isEquipped = curItem.isEquipped;
 
@@ -685,7 +682,6 @@ public class EquipmentManager : MonoBehaviour
         if (itemData == null)
         {
             gWeaponData.SetActive(false);
-            //txtItemSelectInfo.gameObject.SetActive(false);
             itemSelectInfo.Hide();
             txtDamagePriview.gameObject.SetActive(false);
             gItemSelectPriview.SetActive(false);
@@ -824,7 +820,6 @@ public class EquipmentManager : MonoBehaviour
             {
                 imgCoinItemUpdate.gameObject.SetActive(true);
                 imgPieceEvolve.gameObject.SetActive(false);
-                //txtMaxReach.gameObject.SetActive(false);
                 txtUpgrade.text = "UPGRADE";
             }
             else
@@ -832,8 +827,6 @@ public class EquipmentManager : MonoBehaviour
                 imgCoinItemUpdate.gameObject.SetActive(false);
                 imgPieceEvolve.gameObject.SetActive(true);
                 txtUpgrade.text = "EVOLVE";
-                //txtMaxReach.gameObject.SetActive(true);
-                //MainMenuController.Instance.ShowMapNotify("Item reached max. Evolution to be stronger.");
             }
         }
 
@@ -862,9 +855,11 @@ public class EquipmentManager : MonoBehaviour
         _keyItemSelected = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
         string keyItem = itemData.id + "_" + itemData.level;
         txtItemName.color = GetColorByItem(itemData.level);
-        txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;// "<color=" +DataUtils.GetColorByItem(itemData)+">"+DataUtils.dicAllEquipment[_keyItemSelected].itemName+"</color>";
-        txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
-
+        txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
+        if(DataUtils.dicAllEquipment.ContainsKey(itemData.id + "_" + itemData.level + "_" + false + "_" + false))
+            txtParts.text = DataUtils.dicAllEquipment[itemData.id + "_" + itemData.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
+        else
+            txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
 
 
         foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
@@ -894,13 +889,14 @@ public class EquipmentManager : MonoBehaviour
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
             {
                 txtCurItemName.color = GetColorByItem(itemEquipped.level);
-                txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;// "<color=" +DataUtils.GetColorByItem(itemSelected)+">"+DataUtils.dicEquippedItem[_keyItemEquipped].itemName + "</color>";
+                txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
             }
 
-            txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
+            if(!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+                txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
+            else
+                txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
 
-            //if (itemData.isUnlock)
-            //{
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
             {
@@ -911,22 +907,16 @@ public class EquipmentManager : MonoBehaviour
                 txtCurRange.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar])) + "</color>";
                 txtCurMagazine.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar])) + "</color>";
 
-                //txtItemInfoEquip.gameObject.SetActive(false);
                 itemEquipInfo.AA();
                 itemEquipInfo.Hide();
                 gCurWeaponData.SetActive(true);
                 imgCurDamagePriview.gameObject.SetActive(true);
-
-
-                //imgLevelItemEquip.color = GetColorByItem(itemEquipped.level);
-                //txtLevelItemEquip.text = itemEquipped.level;
             }
             else
             {
                 txtItemInfoEquip.text = DataUtils.GetItemInfo(itemEquipped);
 
                 gCurWeaponData.SetActive(false);
-                //txtItemInfoEquip.gameObject.SetActive(true);
                 itemEquipInfo.ShowInfo(itemEquipped);
                 imgCurDamagePriview.gameObject.SetActive(false);
             }
@@ -950,11 +940,6 @@ public class EquipmentManager : MonoBehaviour
             }
             #endregion
             gCurrentItemEquip.SetActive(true);
-            //}
-            //else
-            //{
-            //    gCurrentItemEquip.SetActive(false);
-            //}
 
 
 
@@ -968,7 +953,6 @@ public class EquipmentManager : MonoBehaviour
                 txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
                 txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
 
-                //txtItemSelectInfo.gameObject.SetActive(false);
                 itemSelectInfo.Hide();
                 gWeaponData.SetActive(true);
                 txtDamagePriview.gameObject.SetActive(true);
@@ -977,7 +961,6 @@ public class EquipmentManager : MonoBehaviour
             {
                 gWeaponData.SetActive(false);
                 txtDamagePriview.gameObject.SetActive(false);
-                //txtItemSelectInfo.gameObject.SetActive(true);
                 itemSelectInfo.ShowInfo(itemData);
             }
             UpdateRotation(itemData, imgItemPriview.GetComponent<RectTransform>());
@@ -993,12 +976,10 @@ public class EquipmentManager : MonoBehaviour
         {
             txtItemSelectInfo.text = DataUtils.GetItemInfo(DataUtils.dicAllEquipment[_keyItemSelected]);
             gWeaponData.SetActive(false);
-            //txtItemSelectInfo.gameObject.SetActive(true);
             itemSelectInfo.ShowInfo(itemData);
         }
         else
         {
-            //txtItemSelectInfo.gameObject.SetActive(false);
             itemSelectInfo.Hide();
         }
 
@@ -1125,7 +1106,6 @@ public class EquipmentManager : MonoBehaviour
             DataUtils.SaveEquipmentData();
 
 
-            //DataUtils.TakeItem(itemSelected, totalPiece);
             for (int i = 0; i < trContain.childCount; i++)
             {
                 EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
