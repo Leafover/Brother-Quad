@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 
 public class HeroChoose : MonoBehaviour
 {
+    [SerializeField]
     public Image imgHeroIcon;
+    [SerializeField]
     public Image imgLock;
+    [SerializeField]
     public Image imgSelected;
+    [SerializeField]
     public string heroID;
+    [SerializeField]
     public bool isUnLock;
+    [SerializeField]
     public HeroDataInfo heroData;
+    [SerializeField]
     public int heroIndex;
 
     //private Button btn;
@@ -19,7 +28,7 @@ public class HeroChoose : MonoBehaviour
         heroIndex = int.Parse(heroID.Replace("P", ""));
 
         //btn = GetComponent<Button>();
-
+        Debug.LogError("-->>>>>> " + DataUtils.dicAllHero.ContainsKey(heroID) + " vs " + heroID);
         if (DataUtils.dicAllHero.ContainsKey(heroID))
         {
             heroData = DataUtils.dicAllHero[heroID];

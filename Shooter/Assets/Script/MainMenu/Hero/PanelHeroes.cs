@@ -307,6 +307,7 @@ public class PanelHeroes : MonoBehaviour
 
     public void HeroOnClick(int _index)
     {
+        Debug.LogError("_index: " + _index);
         HeroChoose heroChoose = allHeroes[_index];
 
         if (heroChoose.heroData == null)
@@ -315,7 +316,7 @@ public class PanelHeroes : MonoBehaviour
         }
         else if (!heroChoose.isUnLock && heroChoose.heroData != null)
         {
-            MainMenuController.Instance.ShowMapNotify("Hero not yet unlock and need 20 parts to unlock.");
+            //MainMenuController.Instance.ShowMapNotify("Hero not yet unlock and need 20 parts to unlock.");
             FillData(heroChoose, false);
             ChangeAnim(_index + 1);
             _indexChoose = _index;
