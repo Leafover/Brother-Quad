@@ -62,6 +62,7 @@ public class UAVController : MonoBehaviour
             sk.state.SetAnimation(0, attack, false);
             bullet.SetActive(true);
         }
+
     }
     void Live(float deltaTime)
     {
