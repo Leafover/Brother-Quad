@@ -7,7 +7,7 @@ using System;
 public class AchievmentAndDailyQuestPanel : MonoBehaviour
 {
     public Sprite[] rewardSps;
-    public Sprite[] btntabSps,btnClaim;
+    public Sprite[] btntabSps, btnClaim;
     public Button[] btnChangeTabs;
     public GameObject[] Tabs;
 
@@ -16,11 +16,16 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
     public AchievementBouder[] achievementBouders;
     public DailyQuestBouder[] dailyquestBouders;
     public TimeSpan timeSpanTemp;
+
+    public ScrollRect[] sc;
+
     public void DisPlayMe(int index)
     {
         //MenuController.instance.warningEvent.SetActive(false);
         ChangeTab(index);
         gameObject.SetActive(true);
+        if (index == 0 || index == 1)
+            sc[index].verticalNormalizedPosition = 1;
         Debug.LogError("wtf");
     }
     string timetemp = "20:20:02";
@@ -77,7 +82,23 @@ public class AchievmentAndDailyQuestPanel : MonoBehaviour
                 btnChangeTabs[i].image.sprite = btntabSps[1];
             }
         }
+
+        if (DataController.saveIndexQuest.Count == 3)
+        {
+            timeText.rectTransform.localPosition = pos3;
+            Debug.LogError("TH1");
+        }
+        else
+        {
+            timeText.rectTransform.localPosition = pos5;
+            Debug.LogError("TH2");
+        }
+
+        if (index == 0 || index == 1)
+            sc[index].verticalNormalizedPosition = 1;
     }
+    Vector3 pos5 = new Vector3(0, 201, 0);
+    Vector3 pos3 = new Vector3(0, 186, 0);
     public void CloseMe()
     {
         SoundController.instance.PlaySound(soundGame.soundbtnclick);

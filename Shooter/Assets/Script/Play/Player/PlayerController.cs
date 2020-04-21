@@ -1225,6 +1225,17 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.AnimationState.SetAnimation(3, apc.meleeAttackAnim, false);
         meleeAtackBox.transform.position = posGun();
         meleeAtackBox.gameObject.SetActive(true);
+        switch(GameController.instance.currentChar)
+        {
+            case 0:
+                SoundController.instance.PlaySound(soundGame.soundmeleeattacknv1);
+                break;
+            case 1:
+                SoundController.instance.PlaySound(soundGame.soundmeleeattacknv2);
+                break;
+        }
+        Debug.LogError("===========chem==========");
+
     }
     bool isShoot;
     public LineRenderer laserRender;
@@ -1340,7 +1351,7 @@ public class PlayerController : MonoBehaviour
                 AddNumberBullet(1);
                 break;
         }
-
+        Debug.LogError("===========ban==========");
 
     }
 
