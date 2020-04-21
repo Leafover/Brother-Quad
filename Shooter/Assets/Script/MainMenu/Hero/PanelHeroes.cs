@@ -307,16 +307,23 @@ public class PanelHeroes : MonoBehaviour
 
     public void HeroOnClick(int _index)
     {
-        Debug.LogError("_index: " + _index);
         HeroChoose heroChoose = allHeroes[_index];
+        if (DataUtils.dicAllHero.ContainsKey(heroChoose.heroID))
+            heroChoose.heroData = DataUtils.dicAllHero[heroChoose.heroID];
+        else
+        {
+            heroChoose.heroData = null;
+        }
 
         if (heroChoose.heroData == null)
         {
+            Debug.LogError("1");
             MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
+            gButtonLevelUp.SetActive(false);
+            gButtonUnlock.SetActive(true);
         }
         else if (!heroChoose.isUnLock && heroChoose.heroData != null)
         {
-            //MainMenuController.Instance.ShowMapNotify("Hero not yet unlock and need 20 parts to unlock.");
             FillData(heroChoose, false);
             ChangeAnim(_index + 1);
             _indexChoose = _index;
@@ -334,9 +341,13 @@ public class PanelHeroes : MonoBehaviour
                     _h.imgSelected.enabled = false;
                 }
             }
+            gButtonLevelUp.SetActive(heroChoose.heroData.isUnlock);
+            gButtonUnlock.SetActive(!heroChoose.heroData.isUnlock);
+            Debug.LogError("2: " + heroChoose.isUnLock);
         }
         else if (heroChoose.isUnLock)
         {
+            Debug.LogError("3");
             FillData(heroChoose, true);
 
             for (int i = 0; i < allHeroes.Length; i++)
@@ -356,10 +367,10 @@ public class PanelHeroes : MonoBehaviour
             MainMenuController.Instance.heroSelectIndex = _index;
             _indexChoose = _index;
             MainMenuController.Instance.OnChangeCharAvarta(_index);
-        }
 
-        gButtonLevelUp.SetActive(heroChoose.isUnLock);
-        gButtonUnlock.SetActive(!heroChoose.isUnLock);
+            gButtonLevelUp.SetActive(true);
+            gButtonUnlock.SetActive(false);
+        }
     }
 
     private void FillData(HeroChoose heroChoose, bool showSelected)

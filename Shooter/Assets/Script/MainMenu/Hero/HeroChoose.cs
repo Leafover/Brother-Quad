@@ -22,17 +22,15 @@ public class HeroChoose : MonoBehaviour
     [SerializeField]
     public int heroIndex;
 
-    //private Button btn;
-    private void OnEnable()
+    private void Awake()
     {
         heroIndex = int.Parse(heroID.Replace("P", ""));
 
         //btn = GetComponent<Button>();
-        Debug.LogError("-->>>>>> " + DataUtils.dicAllHero.ContainsKey(heroID) + " vs " + heroID);
         if (DataUtils.dicAllHero.ContainsKey(heroID))
         {
             heroData = DataUtils.dicAllHero[heroID];
-            if(heroData.isUnlock)
+            if (heroData.isUnlock)
                 isUnLock = true;
         }
         else
@@ -48,6 +46,11 @@ public class HeroChoose : MonoBehaviour
         }
         else
             imgSelected.enabled = false;
+    }
+    //private Button btn;
+    private void OnEnable()
+    {
+
     }
     // Start is called before the first frame update
     void Start()
