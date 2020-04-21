@@ -434,6 +434,7 @@ public class DataController : MonoBehaviour
     {
         DataParam.countdonedailyquest = 0;
         int randomIndex;
+      //  saveIndexQuest.Clear();
         if (!primeAccout.isVIP)
         {
             while (saveIndexQuest.Count < 3)
