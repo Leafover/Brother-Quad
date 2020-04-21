@@ -11,16 +11,16 @@ public class UIPanel : MonoBehaviour
     public GameObject[] bouderRewardEquip;
 
     public AllBossAndMiniBossInfo allbossandminibossInfo;
-    public Sprite nvSprite;
+//    public Sprite nvSprite;
     public GameObject[] bouders, iconPartOfBouderReward;
     public Image[] rewardImg, bouderLevel, allImgHealthBtn;
     public Text[] rewardText;
-    public Sprite[] rewardSp, levelSp;
+    public Sprite[] rewardSp, levelSp,iconChars;
 
     public Button btnReviveByGem;
     public List<Text> missionTexts;
     public GameObject winPanel, defeatPanel, leftwarning, rightwarning, btnReviveByAds, loadingPanel, takeDamgePanel, lowHealth, hackbouder;
-    public Image grenadeFillAmout, fillbouderGrenade,fillbouderSKill;
+    public Image grenadeFillAmout, fillbouderGrenade,fillbouderSKill,iconChar;
     public Text levelText, bulletText, timeText, pricegemText, numberHealthPack;
     public TextMeshProUGUI myGemText;
 
@@ -96,6 +96,7 @@ public class UIPanel : MonoBehaviour
             effectBtnSkill.SetActive(false);
             lockSkillObj.SetActive(true);
         }
+        iconChar.sprite = iconChars[GameController.instance.currentChar];
     }
     void OutPlay(int nextscene, bool showstarterpack)
     {

@@ -127,13 +127,15 @@ public class MenuController : MonoBehaviour
     }
     public void DisplayWarning()
     {
-        warningEvent.SetActive(CheckWarningDisplay());
+
         warningAchievment.SetActive(DataController.instance.CheckWarningAchievement());
         warningDailyQuest.SetActive(DataController.instance.CheckWarningDailyQuest());
+
+        warningEvent.SetActive(CheckWarningDisplay());
     }
     bool CheckWarningDisplay()
     {
-        if (DataController.instance.CheckWarningDailyQuest() || DataController.instance.CheckWarningAchievement())
+        if (warningAchievment.activeSelf || warningDailyQuest.activeSelf)
         {
             //Debug.Log("true");
             return true;

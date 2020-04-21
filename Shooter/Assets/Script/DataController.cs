@@ -269,7 +269,7 @@ public class DataController : MonoBehaviour
             LoadTileQuayManhData(nameDataTiLeQuayManh);
             LoadBlackMarketData(nameBlackMarketData);
             LoadAchievement(nameAchievementData);
-            LoadDailyQuest(nameDailyQuestData);
+            LoadDailyQuestPath(nameDailyQuestData);
 
             #region List need clear
             weaponList.Clear();
@@ -413,7 +413,7 @@ public class DataController : MonoBehaviour
 
         }
     }
-    public void LoadDailyQuest(string path)
+    public void LoadDailyQuestPath(string path)
     {
         if (allDailyQuest.Count == 11)
             return;
@@ -439,7 +439,7 @@ public class DataController : MonoBehaviour
         {
             while (saveIndexQuest.Count < 3)
             {
-                randomIndex = Random.Range(0, allSaveDailyQuest.Count - 5);
+                randomIndex = Random.Range(0, allDailyQuest.Count - 5);
                 if (!saveIndexQuest.Contains(randomIndex))
                     saveIndexQuest.Add(randomIndex);
             }
@@ -448,14 +448,14 @@ public class DataController : MonoBehaviour
         {
             while (saveIndexQuest.Count < 3)
             {
-                randomIndex = Random.Range(0, allSaveDailyQuest.Count - 5);
+                randomIndex = Random.Range(0, allDailyQuest.Count - 5);
                 if (!saveIndexQuest.Contains(randomIndex))
                     saveIndexQuest.Add(randomIndex);
             }
 
             while (saveIndexQuest.Count < 5)
             {
-                randomIndex = Random.Range(allSaveDailyQuest.Count - 5, allSaveDailyQuest.Count);
+                randomIndex = Random.Range(allDailyQuest.Count - 5, allDailyQuest.Count);
                 if (!saveIndexQuest.Contains(randomIndex))
                     saveIndexQuest.Add(randomIndex);
             }
@@ -477,6 +477,8 @@ public class DataController : MonoBehaviour
                 saveIndexQuest[indexTemp] = int2;
             }
         }
+
+        Debug.LogError("===load new quest=====");
     }
     BlackMarketData _tempBlackMarket;
     int randomBlackMarket;
@@ -522,7 +524,10 @@ public class DataController : MonoBehaviour
             DataParam.countdonedailyquest = PlayerPrefs.GetInt(DataParam.COUNTDONEDAILYQUEST);
             strSaveIndexQuest = PlayerPrefs.GetString(DataParam.SAVEINDEXQUEST);
 
+            Debug.LogError("indexquest load:" + strSaveIndexQuest);
+
             string[] slitSaveIndexQuest = strSaveIndexQuest.Split('@');
+
             for (int i = 0; i < slitSaveIndexQuest.Length; i++)
             {
                 if (!string.IsNullOrEmpty(slitSaveIndexQuest[i]))
@@ -549,7 +554,7 @@ public class DataController : MonoBehaviour
                     allSaveDailyQuest[i].isActive = bool.Parse(jData[i]["isActive"].ToString());
                 }
             }
-            Debug.Log("----------- save all daily quest count 0:" + allSaveDailyQuest.Count);
+            Debug.LogError("----------- save all daily quest count 0:" + allSaveDailyQuest.Count);
             return;
         }
         DataParam.oldDateTime = System.DateTime.Now;
@@ -1252,11 +1257,12 @@ public class DataController : MonoBehaviour
     public bool CheckWarningDailyQuest()
     {
         checkDaily = false;
-        for (int i = 0; i < allSaveDailyQuest.Count; i++)
+        for (int i = 0; i < saveIndexQuest.Count; i++)
         {
-            if (allSaveDailyQuest[i].isPass && !allSaveDailyQuest[i].isDone)
+            if (allSaveDailyQuest[saveIndexQuest[i]].isPass && !allSaveDailyQuest[saveIndexQuest[i]].isDone /*&& allSaveDailyQuest[i].isActive*/)
             {
                 checkDaily = true;
+              //  Debug.LogError("daily quest done:" + i + ":" + allSaveDailyQuest[i].currentNumber+ ":"+ allSaveDailyQuest[i].isPass + ":" + allSaveDailyQuest[i].isDone + ":" + allSaveDailyQuest[i].MissionContent);
             }
         }
         return checkDaily;
