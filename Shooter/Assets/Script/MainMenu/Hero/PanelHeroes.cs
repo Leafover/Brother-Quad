@@ -10,7 +10,7 @@ public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
     public Color clUnlock, clNotYetUnlock;
-    public Image imgSkill2;
+    public Image imgSkill2, imgLock;
     public GameObject gParts, gSkillPopup;
     public HeroSkill hSkillDefault, hSkillP1, hSkillP2;
     public Text txtPlayerName;
@@ -168,16 +168,19 @@ public class PanelHeroes : MonoBehaviour
         {
             if (heroSelected.level + 1 >= 2)
             {
-                imgSkill2.color = clUnlock;
+                //imgSkill2.color = clUnlock;
+                imgLock.enabled = false;
             }
             else
             {
-                imgSkill2.color = clNotYetUnlock;
+                //imgSkill2.color = clNotYetUnlock;
+                imgLock.enabled = true;
             }
         }
         else
         {
-            imgSkill2.color = clNotYetUnlock;
+            //imgSkill2.color = clNotYetUnlock;
+            imgLock.enabled = true;
         }
     }
     private void FillDataPlayer(int _heroIndex)

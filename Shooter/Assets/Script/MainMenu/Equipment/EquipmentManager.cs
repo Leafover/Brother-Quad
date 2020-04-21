@@ -491,9 +491,14 @@ public class EquipmentManager : MonoBehaviour
         int total = 0;
         string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
 
+        Debug.LogError("Not enough coin to upgrade this item: " + IsReachMaxLevel(DataUtils.dicAllEquipment[key]) + " vs " + DataUtils.dicAllEquipment[key].curStar);
         if (itemSelected.id.Contains("W7"))
         {
             MainMenuController.Instance.ShowMapNotify("Item use only, cannot upgrade/evolve.");
+        }
+        else if (!IsReachMaxLevel(DataUtils.dicAllEquipment[key]))
+        {
+            EvolveThisItem(key);
         }
         else if (DataUtils.playerInfo.coins >= priceUpgrade)
         {
