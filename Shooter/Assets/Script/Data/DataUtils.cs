@@ -959,29 +959,6 @@ public class DataUtils
     public static int modeSelected = 0;
     #region Mode Hard
 
-    //public static bool IsFirstTimeStar(int _stage, int level)
-    //{
-    //    int star = 0;
-    //    Debug.LogError(_stage + "_" + level + "_" + star);
-
-    //    if (_stage == 0)
-    //    {
-    //        foreach(LVMission mission in lstAllStageNormal[_stage].levels[level].mission)
-    //        {
-    //            if (mission.isPass) star++;
-    //        }
-    //    }
-    //    else if(_stage == 1)
-    //    {
-    //        foreach (LVMission mission in lstAllStageHard[_stage].levels[level].mission)
-    //        {
-    //            if (mission.isPass) star++;
-    //        }
-    //    }
-
-    //    return PlayerPrefs.HasKey("checkfirsttimestar_" + _stage + "_" + level + "_" + star);
-    //}
-
     private static bool IsFirst1Star(int _mode, int _stage, int level)
     {
         bool _rs = false;
@@ -1010,13 +987,6 @@ public class DataUtils
 
         return PlayerPrefs.HasKey("checkfirsttime2star_" + _mode + "_" + _stage + "_" + level + "_" + _rs);
     }
-
-    //public static int TotalStarEarn(int _mode, int _stage, int level)
-    //{
-    //    //(IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))
-    //    int _t = IsFirst1Star(_stage, level)&& IsFirst2Stars(_stage, level)&& IsFirst3Stars(_stage, level)?3:((IsFirst1Star(_stage, level) && IsFirst2Stars(_stage, level) || IsFirst3Stars(_stage, level))||(IsFirst1Star(_stage, level) || IsFirst2Stars(_stage, level) && IsFirst3Stars(_stage, level))?2:1);
-    //    return _t;
-    //}
     private static bool IsFirst3Stars(int _mode, int _stage, int level)
     {
         bool _rs = false;
