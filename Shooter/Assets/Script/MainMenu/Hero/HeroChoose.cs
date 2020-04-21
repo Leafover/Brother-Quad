@@ -11,6 +11,7 @@ public class HeroChoose : MonoBehaviour
     public Image imgHeroIcon;
     [SerializeField]
     public Image imgLock;
+    public Image imgLock_;
     [SerializeField]
     public Image imgSelected;
     [SerializeField]
@@ -56,6 +57,7 @@ public class HeroChoose : MonoBehaviour
     void Start()
     {
         imgLock.gameObject.SetActive(!isUnLock);
+        imgLock_.enabled = !isUnLock;
     }
     private void FillData()
     {

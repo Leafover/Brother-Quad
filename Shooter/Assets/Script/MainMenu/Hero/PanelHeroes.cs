@@ -398,9 +398,10 @@ public class PanelHeroes : MonoBehaviour
             DataUtils.dicAllHero[heroChoose.heroID].isUnlock = true;
             heroChoose.isUnLock = true;
             heroChoose.imgLock.gameObject.SetActive(false);
+            heroChoose.imgLock_.enabled = false;
 
             DataUtils.SaveAllHero();
-
+            pEvolveP2.Play();
 
             HeroOnClick(_indexChoose);
         }
