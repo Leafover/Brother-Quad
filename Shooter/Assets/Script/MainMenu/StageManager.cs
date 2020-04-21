@@ -16,6 +16,7 @@ public class StageManager : MonoBehaviour
     private int _stageSelect = -1, _mapSelect = -1;
     public Transform trAllRewards;
     public Image imgHard, imgNormal;
+    public Image imgItemDiamond;
     public Image[] imgItemReward;
     public Image[] imgMission;
     public Sprite imgMapUnlock, imgMapNotYetUnlock, imgMapSelected, imgModeSelected, imgModeUnSelect;
@@ -291,6 +292,8 @@ public class StageManager : MonoBehaviour
     }
     public void FillMapInfo(Mission mission, int stageSelect, int mapSelect)
     {
+        Debug.LogError("------: " + DataUtils.First3Star(DataUtils.modeSelected,stageSelect,mapSelect));
+        imgItemDiamond.gameObject.SetActive(!DataUtils.First3Star(DataUtils.modeSelected, stageSelect, mapSelect));
         trAllRewards.gameObject.SetActive(true);
         missSelected = mission;
         _stageSelect = stageSelect;

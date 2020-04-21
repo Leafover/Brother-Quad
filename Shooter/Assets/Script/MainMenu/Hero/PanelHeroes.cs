@@ -151,26 +151,19 @@ public class PanelHeroes : MonoBehaviour
             else
                 imgAllStars[i].sprite = sprStarUnlock;
         }
-        //Debug.LogError("txtPlayerName: " + txtPlayerName + " vs " + (heroSelected==null? "heroSelected NULLLLLLL": "heroSelected EO BỊ NULLL"));
         txtPlayerName.text = heroSelected.name;
 
         FillDataPlayer(_hIndex);
-        //Debug.LogError("BEGIN FillDataPlayer");
         p1Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
         p1Skeleton.Skeleton.SetSlotsToSetupPose();
         p1Skeleton.LateUpdate();
-        //Debug.LogError("p1Skeleton: " + (p1Skeleton == null ? "p1Skeleton NULLL" : "p1Skeleton KO NULL"));
 
         if (p2Skeleton.Skeleton != null) {
-            //Debug.LogError("p2Skeleton: " + (p2Skeleton.Skeleton == null ? "p2Skeleton.Skeleton NULLL" : "p2Skeleton.Skeleton KO NULL"));
             p2Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
-            //Debug.LogError("p2Skeleton.Skeleton.SetSkin");
             p2Skeleton.Skeleton.SetSlotsToSetupPose();
-            //Debug.LogError("p2Skeleton.Skeleton.SetSlotsToSetupPose");
             p2Skeleton.LateUpdate();
         }
-
-        //Debug.LogError("Done FillDataPlayer");
+        
         if (heroSelected != null)
         {
             if (heroSelected.level + 1 >= 2)
@@ -184,7 +177,6 @@ public class PanelHeroes : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("2");
             imgSkill2.color = clNotYetUnlock;
         }
     }
