@@ -154,10 +154,12 @@ public class PanelHeroes : MonoBehaviour
         txtPlayerName.text = heroSelected.name;
 
         FillDataPlayer(_hIndex);
-        p1Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
-        p1Skeleton.Skeleton.SetSlotsToSetupPose();
-        p1Skeleton.LateUpdate();
-
+        if (p1Skeleton.Skeleton != null)
+        {
+            p1Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
+            p1Skeleton.Skeleton.SetSlotsToSetupPose();
+            p1Skeleton.LateUpdate();
+        }
         if (p2Skeleton.Skeleton != null) {
             p2Skeleton.Skeleton.SetSkin("G" + curWeaponIndex);
             p2Skeleton.Skeleton.SetSlotsToSetupPose();
