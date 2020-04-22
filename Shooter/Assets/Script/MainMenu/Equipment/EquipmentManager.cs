@@ -529,6 +529,10 @@ public class EquipmentManager : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Not enough coin to upgrade this item");
         }
+
+        priceUpgrade = DataUtils.GetItemPrice(itemSelected);
+        Debug.LogError("PriceUpgrade: " + priceUpgrade);
+        txtPriceUpgrade.text = priceUpgrade.ToString("#,0");
     }
 
     string _strEvolveText = "";
@@ -664,6 +668,8 @@ public class EquipmentManager : MonoBehaviour
                 }
             }
         }
+
+        txtPieceEvolve.text = DataUtils.GetPiceByStar(itemSelected, true).ToString("#,0");
     }
 
     private string EvolveItemLevel(string eLevel)
