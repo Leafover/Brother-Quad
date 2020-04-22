@@ -27,7 +27,7 @@ public class UIPanel : MonoBehaviour
     public Animator animGamOver;
     public HealthBarBoss healthBarBoss;
     public GameObject comboDisplay;
-    public TextMeshProUGUI comboText, comboNumberText;
+    public Text comboText, comboNumberText;
 
     public Slider slideMiniMap;
     public GameObject warning;

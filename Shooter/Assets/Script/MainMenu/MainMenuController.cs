@@ -39,7 +39,7 @@ public class MainMenuController : MonoBehaviour
         DataUtils.InitSpriteData(allSpriteData);
     }
     public void OnChangeCharAvarta(int _index) {
-        txtPlayerName.text = DataUtils.heroInfo.name;
+        txtPlayerName.text = /*DataUtils.heroInfo.name;*/DataUtils.dicAllHero["P" + (_index + 1)].name;
         imgChar.sprite = _index == 0 ? sprCharMale : sprCharFemale;
     }
 
@@ -208,7 +208,11 @@ public class MainMenuController : MonoBehaviour
     }
     public void BackToMain(GameObject g)
     {
-        DataUtils.SetHeroIndex(heroSelectIndex);
+        g.SetActive(false);
+        gPanelUIButton.SetActive(true);
+    }
+    public void BackToMainFromHero(GameObject g) {
+        DataUtils.SetHeroIndex(PanelHeroes.Instance._indexChoose);
         DataUtils.SaveAllHero();
         OnChangeCharAvarta(DataUtils.HeroIndex());
         g.SetActive(false);
@@ -305,8 +309,6 @@ public class MainMenuController : MonoBehaviour
     {
         MenuController.instance.achievementAndDailyQuestPanel.DisPlayMe(0);
         MyAnalytics.LogOpenTabDailyQuest();
-
-        Debug.LogError("wtffffff");
     }
     public void WatchAds()
     {

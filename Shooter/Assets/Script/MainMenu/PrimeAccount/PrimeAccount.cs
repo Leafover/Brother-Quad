@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class PrimeAccount : MonoBehaviour
 {
-    string[] des = { "- 10 Gems daily for 30 days", "- 1.000 Coins daily  for 30 days", "- Mission Coins increased by 20%", "- 2 more special Daily Missions", "- Buy and upgrade cost reduced by 10%", "- Remove Ads" };
+    string[] des = { "10 Gems daily for 30 days", "1.000 Coins daily  for 30 days", "Mission Coins increased by 20%", "2 more special Daily Missions", "Buy and upgrade cost reduced by 10%", "Remove Ads" };
     public int index;
 
     public Text desText/*, nameText*/, timeText;

@@ -169,7 +169,7 @@ public class GameController : MonoBehaviour
         Camera.main.transform.position = new Vector3(currentMap.pointBeginPlayer.transform.position.x + 3, currentMap.pointBeginPlayer.transform.position.y, Camera.main.transform.position.z);
 
         //    Debug.LogError(Camera.main.transform.position);
-        uiPanel.levelText.text = "level:" + (DataParam.indexMap + 1);
+        uiPanel.levelText.text = "Level " + (DataParam.indexMap + 1);
         timeCountPlay = new WaitForSecondsRealtime(1);
         delaywinwait = new WaitForSeconds(2f);
         StartCoroutine(CountTimePlay());
@@ -219,7 +219,7 @@ public class GameController : MonoBehaviour
         countCombo++;
         if (countCombo == 2)
         {
-            switch(currentChar)
+            switch (currentChar)
             {
                 case 0:
                     SoundController.instance.PlaySound(soundGame.soundmultikillx2);
@@ -245,10 +245,12 @@ public class GameController : MonoBehaviour
         }
         else if (countCombo == 5)
         {
+
             DataController.instance.DoDailyQuest(8, 1);
         }
         else if (countCombo == 6)
         {
+
             switch (currentChar)
             {
                 case 0:
@@ -286,19 +288,24 @@ public class GameController : MonoBehaviour
             }
 
         }
-        else if (countCombo >= 11)
+        else if (countCombo >= 6 && countCombo < 12)
         {
-            uiPanel.comboText.text = "UNBELIEVABLE";
+            uiPanel.comboText.text = "MULTIKILL";
         }
-        else if (countCombo >= 12)
+        else if(countCombo >= 12)
+        {
+            uiPanel.comboText.text = "GODLIKE";
+        }
+        if (countCombo == 12)
         {
             switch (currentChar)
             {
                 case 0:
                     SoundController.instance.PlaySound(soundGame.soundmultikillmax);
+
                     break;
                 case 1:
-                    SoundController.instance.PlaySound(soundGame.soundmultikillmaxnv2);
+                    SoundController.instance.PlaySound(soundGame.soundmultikillmaxnv2);          
                     break;
             }
 
@@ -314,7 +321,7 @@ public class GameController : MonoBehaviour
     {
         uiPanel.comboDisplay.SetActive(false);
         countCombo = 0;
-        uiPanel.comboText.text = "Combo Kill";
+        uiPanel.comboText.text = "COMBO";
     }
     //   public EnemyBase currentEnemyTarget;
     public void RemoveTarget(EnemyBase enemy)
@@ -536,7 +543,7 @@ public class GameController : MonoBehaviour
         //    SoundController.instance.PlaySound(soundGame.soundvictory1);
     }
     int gemAdd;
-   
+
     public void WinGame()
     {
         gemAdd = 0;
@@ -564,7 +571,7 @@ public class GameController : MonoBehaviour
         }
 
 
-        if(countStar >= 1)
+        if (countStar >= 1)
         {
             if (DataUtils.modeSelected == 0)
             {
@@ -593,7 +600,7 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-         if(countStar >= 2)
+        if (countStar >= 2)
         {
             if (DataUtils.modeSelected == 0)
             {
@@ -622,7 +629,7 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-         if(countStar == 3)
+        if (countStar == 3)
         {
             if (DataUtils.modeSelected == 0)
             {
@@ -676,7 +683,7 @@ public class GameController : MonoBehaviour
             if (DataParam.indexStage == 1)
                 DataController.instance.DoAchievement(9, 1);
         }
-        if(DataUtils.modeSelected == 1)
+        if (DataUtils.modeSelected == 1)
         {
             DataController.instance.DoDailyQuest(4, 1);
         }

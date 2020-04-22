@@ -246,7 +246,7 @@ public class DataController : MonoBehaviour
         Debug.LogError("làm tròn:" + Mathf.RoundToInt(1.25f));
         if (loadData)
             return;
-        //Debug.unityLogger.logEnabled = isHack;
+        Debug.unityLogger.logEnabled = isHack;
         LoadData();
 
         loadData = true;

@@ -10,6 +10,7 @@ public class PanelHeroes : MonoBehaviour
 {
     public static PanelHeroes Instance;
     public Color clUnlock, clNotYetUnlock;
+    public GameObject gUpgradeText, gMaxText, gPartHero;
     public Image imgSkill2, imgLock;
     public GameObject gParts, gSkillPopup;
     public HeroSkill hSkillDefault, hSkillP1, hSkillP2;
@@ -39,8 +40,6 @@ public class PanelHeroes : MonoBehaviour
     public Text txtPriceUpdate;
     public Text txtPiceSelected;
     public TextMeshProUGUI txtPartsValue;
-    //public TextMeshProUGUI txtHealth, txtDamage, txtAttSpeed, txtCritDamage, txtCritRate, txtDefRate;
-    //public TextMeshProUGUI txtHealthUP, txtDamageUP, txtAttSpeedUP, txtCritDamageUP, txtCritRateUP;
     public ParticleSystem pEvolve, pEvolveP2;
     public Text txtPice;
     public Image imgProgress;
@@ -282,6 +281,19 @@ public class PanelHeroes : MonoBehaviour
         {
             MainMenuController.Instance.ShowMapNotify("Not enough coins to level up.");
         }
+
+        if (DataUtils.dicAllHero[heroSelected.id].level < DataUtils.MAX_LEVEL_HERO)
+        {
+            gMaxText.SetActive(false);
+            gUpgradeText.SetActive(true);
+            gPartHero.SetActive(true);
+        }
+        else
+        {
+            gMaxText.SetActive(true);
+            gUpgradeText.SetActive(false);
+            gPartHero.SetActive(false);
+        }
     }
 
     public void ChooseTab(int index_)
@@ -310,11 +322,25 @@ public class PanelHeroes : MonoBehaviour
         }
     }
 
+
     public void HeroOnClick(int _index)
     {
         HeroChoose heroChoose = allHeroes[_index];
         if (DataUtils.dicAllHero.ContainsKey(heroChoose.heroID))
+        {
             heroChoose.heroData = DataUtils.dicAllHero[heroChoose.heroID];
+            if (DataUtils.dicAllHero[heroChoose.heroID].level < DataUtils.MAX_LEVEL_HERO)
+            {
+                gMaxText.SetActive(false);
+                gUpgradeText.SetActive(true);
+                gPartHero.SetActive(true);
+            }
+            else {
+                gMaxText.SetActive(true);
+                gUpgradeText.SetActive(false);
+                gPartHero.SetActive(false);
+            }
+        }
         else
         {
             heroChoose.heroData = null;
@@ -322,8 +348,7 @@ public class PanelHeroes : MonoBehaviour
 
         if (heroChoose.heroData == null)
         {
-            Debug.LogError("1");
-            MainMenuController.Instance.ShowMapNotify("Hero not yet unlock");
+            MainMenuController.Instance.ShowMapNotify("Hero will comming soon.");
             gButtonLevelUp.SetActive(false);
             gButtonUnlock.SetActive(true);
         }
@@ -348,11 +373,9 @@ public class PanelHeroes : MonoBehaviour
             }
             gButtonLevelUp.SetActive(heroChoose.heroData.isUnlock);
             gButtonUnlock.SetActive(!heroChoose.heroData.isUnlock);
-            Debug.LogError("2: " + heroChoose.isUnLock);
         }
         else if (heroChoose.isUnLock)
         {
-            Debug.LogError("3");
             FillData(heroChoose, true);
 
             for (int i = 0; i < allHeroes.Length; i++)
@@ -376,6 +399,8 @@ public class PanelHeroes : MonoBehaviour
             gButtonLevelUp.SetActive(true);
             gButtonUnlock.SetActive(false);
         }
+
+
     }
 
     private void FillData(HeroChoose heroChoose, bool showSelected)

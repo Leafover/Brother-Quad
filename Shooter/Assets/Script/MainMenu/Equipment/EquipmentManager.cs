@@ -1078,6 +1078,8 @@ public class EquipmentManager : MonoBehaviour
                     EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                     _iEquipData.CheckItemUnlock();
                 }
+
+                txtParts.text = itemSelected.pices + "/" + (int)DataUtils.GetPiceByStar(itemSelected, false);
             }
         });
     }
@@ -1091,6 +1093,7 @@ public class EquipmentManager : MonoBehaviour
             {
                 DataUtils.dicAllEquipment[_key].pices += totalPiece;
                 DataUtils.AddCoinAndGame(0, -_diamond);
+                txtParts.text = DataUtils.dicAllEquipment[_key].pices + "/" + (int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[_key], false);
             }
             else
             {
@@ -1114,6 +1117,7 @@ public class EquipmentManager : MonoBehaviour
                     DataUtils.dicAllEquipment[_keyNew].pices += totalPiece;
                     DataUtils.AddCoinAndGame(0, -_diamond);
                 }
+                txtParts.text = iDataNew.pices + "/" + (int)DataUtils.GetPiceByStar(iDataNew, false);
             }
 
             DataUtils.SaveEquipmentData();

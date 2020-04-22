@@ -1482,7 +1482,7 @@ public class DataUtils
             }
         }
 
-        
+
         playerInfo = lstAllPlayerHeroes[/*HeroIndex()*/0];
 
         //heroInfo = DataHero();
@@ -1523,8 +1523,8 @@ public class DataUtils
         {
             MainMenuController.Instance.UpdateCoinAndGem();
         }
-
-        DataController.instance.DoDailyQuest(6, coinAdded);
+        if (coinAdded > 0)
+            DataController.instance.DoDailyQuest(6, coinAdded);
     }
     public static void AddHPPack(int total_)
     {
