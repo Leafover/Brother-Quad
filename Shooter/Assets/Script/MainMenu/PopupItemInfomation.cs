@@ -151,9 +151,9 @@ public class PopupItemInfomation : MonoBehaviour
             int curStar = itemEquipped == null ? 0 : itemEquipped.curStar < DataUtils.MAX_STARS ? itemEquipped.curStar : 4;
 
             txtDmg.text = DataUtils.GetRealFloat((DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10));
-            txtFireRate.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]);
-            txtCritDmg.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]);
-            txtCritRate.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]);
+            txtFireRate.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + "s";
+            txtCritDmg.text = "+"+DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + "%";
+            txtCritRate.text = "+" + DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + "%";
             txtRange.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]);
             txtMagazine.text = DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]);
 

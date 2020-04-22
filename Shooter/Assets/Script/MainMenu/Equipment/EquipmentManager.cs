@@ -914,9 +914,9 @@ public class EquipmentManager : MonoBehaviour
             if (itemEquipped.type.Contains("WEAPON"))
             {
                 txtCurDamagePriview.text = "" + (DataUtils.GetRealFloat((DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10)));
-                txtCurCritDamage.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar])) + "</color>";
-                txtCurAttSpeed.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar])) + "</color>";
-                txtCurCritRate.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar])) + "</color>";
+                txtCurCritDamage.text = "<color=white>+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar])) + "%</color>";
+                txtCurAttSpeed.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar])) + "s</color>";
+                txtCurCritRate.text = "<color=white>+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar])) + "%</color>";
                 txtCurRange.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar])) + "</color>";
                 txtCurMagazine.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar])) + "</color>";
 
@@ -960,9 +960,9 @@ public class EquipmentManager : MonoBehaviour
             {
                 int itemData_curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
                 txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color>";
-                txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "</color>";
-                txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "</color>";
-                txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "</color>";
+                txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
+                txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
+                txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
                 txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
                 txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
 

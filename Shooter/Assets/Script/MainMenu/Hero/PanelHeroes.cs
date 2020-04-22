@@ -230,11 +230,11 @@ public class PanelHeroes : MonoBehaviour
         txtHealth.text = pData.hp + " <sprite=1><color=green>" + pNext.hp + "</color>";
         txtMoveSpeed.text = pData.MoveSpeed + " <sprite=1><color=green>" + pNext.MoveSpeed + "</color>";
         txtDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
-        txtFireRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]).ToString();
-        txtCritRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]).ToString();
+        txtFireRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]) + "s";
+        txtCritRate.text = "+" + GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]) + "%";
         txtRange.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curWeponStar]).ToString();
         txtMagazine.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].MagazineValue[curWeponStar]).ToString();
-        txtCritDmg.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]).ToString();
+        txtCritDmg.text = "+" + GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curWeponStar]) + "%";
     }
 
 
