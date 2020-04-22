@@ -24,12 +24,12 @@ public class FreeRewardVideoPanel : MonoBehaviour
             rewardText[i].text = "" + freeReward[i].numberReward.ToString("#,0");
             if (i < DataParam.indexRewardVideo)
             {
-                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.gray;
+                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.black;
                 btnvideo[i].gameObject.SetActive(true);
             }
             else
             {
-                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.white;
+                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.black;
                 if (i == DataParam.indexRewardVideo)
                     btnvideo[i].gameObject.SetActive(true);
                 else
