@@ -236,7 +236,7 @@ public class StageManager : MonoBehaviour
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
-            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+         //   MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
             return;
         }
@@ -269,7 +269,7 @@ public class StageManager : MonoBehaviour
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
-            MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
+      //      MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
             #endregion
         }
     }

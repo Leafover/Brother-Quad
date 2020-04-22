@@ -184,6 +184,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(DelayLoadMap());
 
         CameraController.instance.BeginRedZone();
+
+        MyAnalytics.LogEventLevelPlay(DataParam.indexMap, DataParam.indexStage);
     }
     IEnumerator DelayLoadMap()
     {
