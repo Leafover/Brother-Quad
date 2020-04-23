@@ -107,8 +107,8 @@ public class ShowItemInfo : MonoBehaviour
         {
 
             txtReloadTime.text = "-" + _reloadTime + "%";
-            txtCritRate.text = "" + _critRate;
-            txtCritDmg.text = "" + _critDmg;
+            txtCritRate.text = _critRate + "%";
+            txtCritDmg.text = _critDmg + "%";
 
             if (itemData.isEquipped && imgItemInfo != null)
             {

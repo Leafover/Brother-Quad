@@ -212,9 +212,15 @@ public class MainMenuController : MonoBehaviour
         gPanelUIButton.SetActive(true);
     }
     public void BackToMainFromHero(GameObject g) {
-        DataUtils.SetHeroIndex(PanelHeroes.Instance._indexChoose);
-        DataUtils.SaveAllHero();
-        OnChangeCharAvarta(DataUtils.HeroIndex());
+        Debug.LogError("_indexChoose: " + PanelHeroes.Instance._indexChoose);
+        Debug.LogError(DataUtils.dicAllHero["P" + (PanelHeroes.Instance._indexChoose+1)].isUnlock);
+        if(DataUtils.dicAllHero["P" + (PanelHeroes.Instance._indexChoose + 1)].isUnlock)
+        {
+            DataUtils.SetHeroIndex(PanelHeroes.Instance._indexChoose);
+            DataUtils.SaveAllHero();
+            OnChangeCharAvarta(DataUtils.HeroIndex());
+        }
+        
         g.SetActive(false);
         gPanelUIButton.SetActive(true);
     }
@@ -269,19 +275,19 @@ public class MainMenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             //DataUtils.TakeItem("W1", DataUtils.eType.WEAPON, DataUtils.eLevel.Normal, 9, false);
-            DataUtils.TakeHeroPice("P2", 16);
-            //dailyGift.PrepareData();
+            //DataUtils.TakeHeroPice("P2", 16);
+            dailyGift.PrepareData();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            DataUtils.TakeItem("A2", DataUtils.eType.ARMOR, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
+            //DataUtils.TakeItem("A2", DataUtils.eType.ARMOR, DataUtils.eLevel.Normal, (int)UnityEngine.Random.Range(1, 10), false);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Normal, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Uncommon, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Rare, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Epic, 3, true);
             //DataUtils.TakeItem("S1", DataUtils.eType.SHOES, DataUtils.eLevel.Legendary, 3, true);
-            //dailyGift.ShowDailyGiftPanel();
+            dailyGift.ShowDailyGiftPanel();
         }
 
     }
