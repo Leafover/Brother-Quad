@@ -61,10 +61,10 @@ public class MainMenuController : MonoBehaviour
 
         InitStageEffect(imgStages[DataUtils.GetStageIndex()].transform);
 
-        if (!DataUtils.IsClaimReward())
-        {
-            dailyGift.PrepareData();
-        }
+        //if (!DataUtils.IsClaimReward())
+        //{
+        //    dailyGift.PrepareData();
+        //}
 
         if (DataParam.showstarterpack)
         {
