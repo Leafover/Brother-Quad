@@ -17,8 +17,11 @@ public class GiftDailyPanel : MonoBehaviour
 
         btnClaim.SetActive(DataParam.cantakegiftdaily);
         btnClaimX2.SetActive(DataParam.cantakegiftdaily);
+        selectBouder.SetActive(DataParam.cantakegiftdaily);
 
         currentGiftDailyBouder = giftdailyBouder[DataParam.currentGiftDaily];
+
+
     }
     public void OpenMe()
     {
@@ -79,6 +82,7 @@ public class GiftDailyPanel : MonoBehaviour
         DataController.giftDaily[currentGiftDailyBouder.index].isDone = true;
         btnClaim.SetActive(false);
         btnClaimX2.SetActive(false);
+        selectBouder.SetActive(false);
         CloseMe();
     }
 

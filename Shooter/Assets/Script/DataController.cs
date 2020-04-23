@@ -8,7 +8,7 @@ public class GiftDaily
 {
     public int numberReward;
     public bool isDone;
-    public string nameReward;
+    public string nameReward = "";
     public DataUtils.eType eType;
     public DataUtils.eLevel eLevel;
 }
@@ -1155,6 +1155,8 @@ public class DataController : MonoBehaviour
         DataParam.cantakegiftdaily = true;
         DataParam.oldTimeGiftDaily = System.DateTime.Now;
 
+        Debug.LogError("Add new Gift Daily:" + DataParam.oldTimeGiftDaily);
+
         if (DataParam.firsttimegiftdaily)
         {
             for (int i = 0; i < giftDaily.Count; i++)
@@ -1298,7 +1300,7 @@ public class DataController : MonoBehaviour
     {
         if (DataParam.currentGiftDaily >= 5)
         {
-            if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+            if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
             {
                 giftDaily.Clear();
                 for (int i = 0; i < 6; i++)
@@ -1309,17 +1311,20 @@ public class DataController : MonoBehaviour
                 if (DataParam.firsttimegiftdaily)
                     DataParam.firsttimegiftdaily = false;
                 AddNewGiftDaily();
+
+                Debug.LogError("=========TH1======");
             }
         }
         else
         {
             if (!DataParam.cantakegiftdaily)
             {
-                if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
                 {
                     DataParam.currentGiftDaily++;
                     DataParam.cantakegiftdaily = true;
                     DataParam.oldTimeGiftDaily = System.DateTime.Now;
+                    Debug.LogError("=========TH2======");
                 }
             }
         }
@@ -1350,7 +1355,7 @@ public class DataController : MonoBehaviour
 
             if (DataParam.currentGiftDaily >= 5)
             {
-                if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
                 {
                     if (DataParam.firsttimegiftdaily)
                         DataParam.firsttimegiftdaily = false;
@@ -1361,7 +1366,7 @@ public class DataController : MonoBehaviour
             {
                 if (!DataParam.cantakegiftdaily)
                 {
-                    if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                    if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
                     {
                         DataParam.currentGiftDaily++;
                         DataParam.cantakegiftdaily = true;
@@ -1373,9 +1378,13 @@ public class DataController : MonoBehaviour
                 {
                     jData = JsonMapper.ToObject(strGiftDaily);
                     Debug.LogError(":" + strGiftDaily);
+                    Debug.LogError(":" + giftDaily.Count);
                     for (int i = 0; i < jData.Count; i++)
                     {
-                        giftDaily[i] = JsonMapper.ToObject<GiftDaily>(jData[i].ToJson());
+                        if (jData[i] != null)
+                        {
+                            giftDaily[i] = JsonMapper.ToObject<GiftDaily>(jData[i].ToJson());
+                        }
                     }
                 }
             }
