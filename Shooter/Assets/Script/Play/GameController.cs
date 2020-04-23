@@ -963,8 +963,11 @@ public class GameController : MonoBehaviour
 
         if (first)
         {
+
             if (_itemData != null)
             {
+                uiPanel.nameRewardItemEquipText.text = "You got <color=#ffd823>" + _itemData.itemName + "</color>";
+
                 items.Add(_itemData);
 
                 Debug.LogError("co hang");
@@ -982,7 +985,7 @@ public class GameController : MonoBehaviour
             uiPanel.rewardText[index].text = "" + numberAdd(index);
             if (!vatphamnhanduoc[index].ID.Contains("P"))
             {
-
+             //  uiPanel.nameRewardItemEquipText.text = DataUtils.get
                 uiPanel.rewardItemEquipImg[index].sprite = uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
                 uiPanel.bouderLevelItemEquipImg[index].sprite = uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[(int)eLevel];
 
@@ -1000,7 +1003,7 @@ public class GameController : MonoBehaviour
             else
             {
                 // uiPanel.rewardImg[index].sprite = uiPanel.nvSprite;
-                uiPanel.rewardItemEquipImg[index].sprite = uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
+                /*uiPanel.rewardItemEquipImg[index].sprite =*/ uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
                 uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[0];
                 uiPanel.bouderRewardEquip[index].SetActive(false);
 

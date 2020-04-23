@@ -9,6 +9,7 @@ public class UIPanel : MonoBehaviour
     public GameObject rewardItemEquip, bouderDiamond, effectBtnSkill,lockSkillObj;
     public Image[] rewardItemEquipImg, bouderLevelItemEquipImg, skillFillAmount;
     public GameObject[] bouderRewardEquip;
+    public TextMeshProUGUI nameRewardItemEquipText;
 
     public AllBossAndMiniBossInfo allbossandminibossInfo;
 //    public Sprite nvSprite;
