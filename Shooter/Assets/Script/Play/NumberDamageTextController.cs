@@ -17,12 +17,12 @@ public class NumberDamageTextController : MonoBehaviour
     {
         if (!crit)
         {
-            tmp.fontSize = 5;
+            tmp.fontSize = 3;
             tmp.color = Color.red;
         }
         else
         {
-            tmp.fontSize = 8;
+            tmp.fontSize = 5;
             tmp.color = Color.yellow;
         }
         tmp.text = text;
