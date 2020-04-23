@@ -121,7 +121,7 @@ public class GunBoss2 : AutoTarget
                 }
                 else
                 {
-                    takecrithit = Random.Range(0, 100);
+                    takecrithit = Random.Range(1, 100);
                     if (takecrithit <= PlayerController.instance.critRate)
                     {
                         if (collision.tag != "explobulletW5")
