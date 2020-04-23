@@ -881,9 +881,13 @@ public class EquipmentManager : MonoBehaviour
         imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
         _keyItemSelected = itemData.id + "_" + itemData.level + "_" + itemData.isUnlock + "_" + itemData.isEquipped;
         string keyItem = itemData.id + "_" + itemData.level;
+        string keyNextLevel = itemData.id + "_" + DataUtils.GetNextLevelString(itemData.level);
         txtItemName.color = GetColorByItem(itemData.level);
-        txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
-        if(DataUtils.dicAllEquipment.ContainsKey(itemData.id + "_" + itemData.level + "_" + false + "_" + false))
+        if (!DataUtils.dicAllEquipment[_keyItemSelected].itemName.Contains("Rocket"))
+            txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
+        else
+            txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName.Replace(" ", "");
+        if (DataUtils.dicAllEquipment.ContainsKey(itemData.id + "_" + itemData.level + "_" + false + "_" + false))
             txtParts.text = DataUtils.dicAllEquipment[itemData.id + "_" + itemData.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemData, itemData.isUnlock);
         else
             txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, itemData.isUnlock);
@@ -916,7 +920,10 @@ public class EquipmentManager : MonoBehaviour
             if (DataUtils.dicEquippedItem.ContainsKey(_keyItemEquipped))
             {
                 txtCurItemName.color = GetColorByItem(itemEquipped.level);
-                txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
+                if(!DataUtils.dicEquippedItem[_keyItemEquipped].itemName.Contains("Rocket"))
+                    txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
+                else
+                    txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName.Replace(" ","");
             }
 
             if(!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
@@ -973,22 +980,50 @@ public class EquipmentManager : MonoBehaviour
             if (itemData.type.Contains("WEAPON"))
             {
                 int itemData_curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
-                //if (itemData.curStar < DataUtils.MAX_STARS) {
-                //    txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color><sprite=1> " + (DataUtils.GetRealFloat(itemData_curStar + 1< DataUtils.dicWeapon[keyItem].DmgValue.Count? DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar + 1] * 10: DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10));
-                //    txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
-                //    txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar], DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
-                //    txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
-                //    txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
-                //    txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
-                //}
-                //else
+
+                string _clDmg = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]);
+                float _dmgValue = DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10;
+
+                string _clCritDmg = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]);
+                float _critDmgValue = DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar];
+
+                string _clFireRate = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar], DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar]);
+                float _fireRateValue = DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar];
+
+                string _clCritRate = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]);
+                float _critRateValue = DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar];
+
+                string _clRange = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]);
+                float _rangeValue = DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar];
+
+                string _clMagazine = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]);
+                float _magazinevalue = DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar];
+
+                if (/*itemData.curStar < DataUtils.MAX_STARS*/DataUtils.IsCanEvolve(itemData))
                 {
-                    txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color>";
-                    txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
-                    txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar], DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
-                    txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
-                    txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
-                    txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
+
+                    float _nextdmg = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].DmgValue.Count ? DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar + 1] * 10 : DataUtils.dicWeapon[keyNextLevel].DmgValue[0] * 10;
+                    float _nextCritDmg = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].CritDmgValue.Count ? DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar + 1] : DataUtils.dicWeapon[keyNextLevel].CritDmgValue[0];
+                    float _nextFireRate = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].AtksecValue.Count ? DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar + 1] : DataUtils.dicWeapon[keyNextLevel].AtksecValue[0];
+                    float _nextCritRate = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].CritRateValue.Count ? DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].CritRateValue[0];
+                    float _nextRange = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].AtkRangeValue.Count ? DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].AtkRangeValue[0];
+                    float _nextMagazine = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].MagazineValue.Count ? DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].MagazineValue[0];
+
+                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + "</color><sprite=1><color=green>" + _nextdmg;
+                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + "%</color><sprite=1><color=green>" + _nextdmg + "%";
+                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + "s</color><sprite=1><color=green>" + _nextFireRate + "s";
+                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + "%</color><sprite=1><color=green>" + _nextCritRate + "%";
+                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + "</color><sprite=1><color=green>" + _nextRange;
+                    txtMagazine.text = "<color=" +_clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + "</color><sprite=1><color=green>" + _nextMagazine;
+                }
+                else
+                {
+                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + "</color>";
+                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + "%</color>";
+                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + "s</color>";
+                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + "%</color>";
+                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + "</color>";
+                    txtMagazine.text = "<color=" + _clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + "</color>";
                 }
 
                 itemSelectInfo.Hide();
