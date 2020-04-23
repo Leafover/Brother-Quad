@@ -22,14 +22,15 @@ public class FreeRewardVideoPanel : MonoBehaviour
         {
             iconReward[i].sprite = MenuController.instance.achievementAndDailyQuestPanel.rewardSps[freeReward[i].type];
             rewardText[i].text = "" + freeReward[i].numberReward.ToString("#,0");
+            watchText[i].color = Color.black;
             if (i < DataParam.indexRewardVideo)
             {
-                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.black;
+                btnvideo[i].color = iconvideo[i].color = Color.gray;
                 btnvideo[i].gameObject.SetActive(true);
             }
             else
             {
-                btnvideo[i].color = iconvideo[i].color = watchText[i].color = Color.black;
+                btnvideo[i].color = iconvideo[i].color = Color.white;
                 if (i == DataParam.indexRewardVideo)
                     btnvideo[i].gameObject.SetActive(true);
                 else
@@ -76,7 +77,7 @@ public class FreeRewardVideoPanel : MonoBehaviour
         }
 
         DataParam.indexRewardVideo = (index + 1);
-        btnvideo[index].color = iconvideo[index].color = watchText[index].color = Color.gray;
+        btnvideo[index].color = iconvideo[index].color = /*watchText[index].color = */Color.gray;
 
         if (DataParam.indexRewardVideo <= btnvideo.Length - 1)
         {

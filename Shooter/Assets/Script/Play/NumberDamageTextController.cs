@@ -12,12 +12,12 @@ public class NumberDamageTextController : MonoBehaviour
         if (anim == null)
             anim = GetComponent<Animator>();
     }
-
-    public void Display(string text,bool crit)
+    public int random;
+    public void Display(string text, bool crit)
     {
         if (!crit)
         {
-            tmp.fontSize = 3;
+            tmp.fontSize = 2;
             tmp.color = Color.red;
         }
         else
@@ -26,8 +26,14 @@ public class NumberDamageTextController : MonoBehaviour
             tmp.color = Color.yellow;
         }
         tmp.text = text;
-    }
 
+    }
+    public void SetAnim()
+    {
+        random = Random.Range(0, 8);
+        //  Debug.LogError("random anim:" + random);
+        anim.SetInteger("number", random);
+    }
     public void DisableMe()
     {
         gameObject.SetActive(false);

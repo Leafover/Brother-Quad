@@ -96,11 +96,11 @@ public class MyAnalytics
     }
     public static void LogEventLevelPlay(int level, int stage)
     {
-        Parameter[] _pamLevelPlay = {
-                new Parameter(FirebaseAnalytics.ParameterLevel, level),
-                new Parameter("level_stage", stage)
-                };
-        FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_Level_" + (level + 1), _pamLevelPlay);
+        //Parameter[] _pamLevelPlay = {
+        //        new Parameter(FirebaseAnalytics.ParameterLevel, level),
+        //        new Parameter("level_stage", stage)
+        //        };
+        FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelPlay*/);
     }
     public static void LogMoreGame()
     {
@@ -109,21 +109,21 @@ public class MyAnalytics
     #region Call In GamePlay
     public static void LogEventLoseLevel(int level, int checkPointIndex, int stage)//5
     {
-        Parameter[] _pamLevelLose = {
-                new Parameter(FirebaseAnalytics.ParameterLevel, level),
-                new Parameter("checkpoint_index", checkPointIndex),
-                new Parameter("level_stage", stage)
-                };
-        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1) + "_Check Point_" + (checkPointIndex + 1), _pamLevelLose);
+        //Parameter[] _pamLevelLose = {
+        //        new Parameter(FirebaseAnalytics.ParameterLevel, level),
+        //        new Parameter("checkpoint_index", checkPointIndex),
+        //        new Parameter("level_stage", stage)
+        //        };
+        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1) + "_Check Point_" + (checkPointIndex + 1)/*, _pamLevelLose*/);
         //LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
     {
-        Parameter[] _pamLevelComplete = {
-                new Parameter(FirebaseAnalytics.ParameterLevel, level),
-                new Parameter("level_stage", stage)
-                };
-        FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1), _pamLevelComplete);
+        //Parameter[] _pamLevelComplete = {
+        //        new Parameter(FirebaseAnalytics.ParameterLevel, level),
+        //        new Parameter("level_stage", stage)
+        //        };
+        FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelComplete*/);
     }
     //public static void LogEventGameOver(int level, int stage)//3
     //{

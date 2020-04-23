@@ -88,7 +88,7 @@ public class ChainLightning : MonoBehaviour
     {
         for (int i = 0; i < targetPos.Count; i++)
         {
-            takecrithit = Random.Range(0, 100);
+            takecrithit = Random.Range(1, 100);
             if (takecrithit <= PlayerController.instance.critRate)
             {
                 targetPos[i].TakeDamage(PlayerController.instance.damageBullet / 3 + (PlayerController.instance.damageBullet / 3 / 100 * PlayerController.instance.critDamage), true,false,false);
