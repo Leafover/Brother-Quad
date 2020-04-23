@@ -1772,6 +1772,31 @@ public class DataUtils
 
         return cl;
     }
+    public static string GetNextLevelString(string eLevel) {
+        string _str = "";
+        //Normal, Uncommon, Rare, Epic, Legendary
+        switch (eLevel) {
+            case "Normal":
+                _str = "Uncommon";
+                break;
+            case "Uncommon":
+                _str = "Rare";
+                break;
+            case "Rare":
+                _str = "Epic";
+                break;
+            case "Epic":
+                _str = "Legendary";
+                break;
+            case "Legendary":
+                _str = "Legendary";
+                break;
+            default:
+                _str = "Normal";
+                break;
+        }
+        return _str;
+    }
     #endregion
 
 }
