@@ -9,7 +9,7 @@ public class MyAnalytics
     const string EVENT_LOGIN_BY_DAY = "event_login_by_day";
     const string EVENT_TIME_OPEN = "time_open";
     const string EVENT_STAGE_PLAY = "stage_play_";
-    const string EVENT_LOSE_STAGE = "lose_stage_checkpoint_";
+    const string EVENT_LOSE_STAGE = "lose_stage_";
     const string EVENT_INVENTORY = "open_inventory";
     const string EVENT_OPEN_HEROTAB = "open_hero_tab";
     const string EVENT_OPEN_DAILYQUEST = "open_dailyquest_chievement";
