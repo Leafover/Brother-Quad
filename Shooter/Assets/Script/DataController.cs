@@ -3,6 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region DailyGift
+public class GiftDaily
+{
+    public int numberReward;
+    public bool isDone;
+    public string nameReward;
+    public DataUtils.eType eType;
+    public DataUtils.eLevel eLevel;
+}
+#endregion
+
 
 #region Ti le quay manh
 [System.Serializable]
@@ -183,6 +194,8 @@ public class EnemyData
     public double hp, movespeed, dmg1, dmg2, dmg3, atksecond1, atksecond2, atksecond3, bulletspeed1, bulletspeed2pixels, bulletspeed3, atkrange, bulletexisttime, exp;
 }
 #endregion
+
+
 [System.Serializable]
 public class PlayerData
 {
@@ -212,6 +225,7 @@ public class DataController : MonoBehaviour
 {
     public bool isHack;
     public static List<int> levelOfLuckChest = new List<int>();
+    public static List<GiftDaily> giftDaily = new List<GiftDaily>();
     public List<TileQuayManh> tilemanhquay = new List<TileQuayManh>();
     public List<BlackMarketData> blackMarketData = new List<BlackMarketData>();
     public static List<BlackMarketData> blackMarketSave = new List<BlackMarketData>();
@@ -434,7 +448,7 @@ public class DataController : MonoBehaviour
     {
         DataParam.countdonedailyquest = 0;
         int randomIndex;
-      //  saveIndexQuest.Clear();
+        //  saveIndexQuest.Clear();
         if (!primeAccout.isVIP)
         {
             while (saveIndexQuest.Count < 3)
@@ -1134,12 +1148,246 @@ public class DataController : MonoBehaviour
 
         Debug.Log("----------- save all black market count:" + blackMarketSave.Count);
     }
+    int randomTypGiftDaily;
+    void AddNewGiftDaily()
+    {
+        DataParam.currentGiftDaily = 0;
+        DataParam.cantakegiftdaily = true;
+        DataParam.oldTimeGiftDaily = System.DateTime.Now;
+
+        if (DataParam.firsttimegiftdaily)
+        {
+            for (int i = 0; i < giftDaily.Count; i++)
+            {
+                giftDaily[i].isDone = false;
+                switch (i)
+                {
+                    case 0:
+                        giftDaily[i].numberReward = 1000;
+                        break;
+                    case 1:
+                        giftDaily[i].numberReward = 20;
+                        giftDaily[i].nameReward = "P2";
+                        break;
+                    case 2:
+                        giftDaily[i].numberReward = 10;
+                        giftDaily[i].nameReward = "W4";
+                        giftDaily[i].eLevel = DataUtils.eLevel.Rare;
+                        giftDaily[i].eType = DataUtils.eType.WEAPON;
+                        break;
+                    case 3:
+                        giftDaily[i].numberReward = 50;
+                        break;
+                    case 4:
+                        giftDaily[i].numberReward = 5;
+                        break;
+                    case 5:
+                        giftDaily[i].numberReward = 10;
+                        randomTypGiftDaily = Random.Range(0, 4);
+                        switch (randomTypGiftDaily)
+                        {
+                            case 0:
+                                giftDaily[i].nameReward += "A";
+                                giftDaily[i].eType = DataUtils.eType.ARMOR;
+                                break;
+                            case 1:
+                                giftDaily[i].nameReward += "B";
+                                giftDaily[i].eType = DataUtils.eType.BAG;
+                                break;
+                            case 2:
+                                giftDaily[i].nameReward += "H";
+                                giftDaily[i].eType = DataUtils.eType.HELMET;
+                                break;
+                            case 3:
+                                giftDaily[i].nameReward += "G";
+                                giftDaily[i].eType = DataUtils.eType.GLOVES;
+                                break;
+                            case 4:
+                                giftDaily[i].nameReward += "S";
+                                giftDaily[i].eType = DataUtils.eType.SHOES;
+                                break;
+                        }
+                        randomTypGiftDaily = Random.Range(1, 7);
+                        giftDaily[i].nameReward += "" + randomTypGiftDaily;
+                        giftDaily[i].eLevel = DataUtils.eLevel.Rare;
+                        break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < giftDaily.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        randomTypGiftDaily = Random.Range(0, 2);
+                        if (randomTypGiftDaily == 0)
+                            giftDaily[i].numberReward = 2500;
+                        else
+                            giftDaily[i].numberReward = 3000;
+                        break;
+                    case 1:
+                        giftDaily[i].numberReward = 3;
+                        randomTypGiftDaily = Random.Range(0, 2);
+                        if (randomTypGiftDaily == 0)
+                            giftDaily[i].nameReward = "P1";
+                        else
+                            giftDaily[i].nameReward = "P2";
+                        break;
+                    case 2:
+                        giftDaily[i].numberReward = 1;
+                        randomTypGiftDaily = Random.Range(1, 7);
+                        giftDaily[i].nameReward = "W" + randomTypGiftDaily;
+                        giftDaily[i].eType = DataUtils.eType.WEAPON;
+
+                        giftDaily[i].eLevel = DataUtils.eLevel.Legendary;
+
+                        break;
+                    case 3:
+                        randomTypGiftDaily = Random.Range(0, 2);
+                        if (randomTypGiftDaily == 0)
+                            giftDaily[i].numberReward = 30;
+                        else
+                            giftDaily[i].numberReward = 50;
+                        break;
+                    case 4:
+                        randomTypGiftDaily = Random.Range(0, 2);
+                        if (randomTypGiftDaily == 0)
+                            giftDaily[i].numberReward = 3;
+                        else
+                            giftDaily[i].numberReward = 5;
+                        break;
+                    case 5:
+                        giftDaily[i].numberReward = 3;
+                        randomTypGiftDaily = Random.Range(0, 4);
+                        switch (randomTypGiftDaily)
+                        {
+                            case 0:
+                                giftDaily[i].nameReward += "A";
+                                giftDaily[i].eType = DataUtils.eType.ARMOR;
+                                break;
+                            case 1:
+                                giftDaily[i].nameReward += "B";
+                                giftDaily[i].eType = DataUtils.eType.BAG;
+                                break;
+                            case 2:
+                                giftDaily[i].nameReward += "H";
+                                giftDaily[i].eType = DataUtils.eType.HELMET;
+                                break;
+                            case 3:
+                                giftDaily[i].nameReward += "G";
+                                giftDaily[i].eType = DataUtils.eType.GLOVES;
+                                break;
+                            case 4:
+                                giftDaily[i].nameReward += "S";
+                                giftDaily[i].eType = DataUtils.eType.SHOES;
+                                break;
+                        }
+                        randomTypGiftDaily = Random.Range(1, 7);
+                        giftDaily[i].nameReward += "" + randomTypGiftDaily;
+                        giftDaily[i].eLevel = DataUtils.eLevel.Legendary;
+                        break;
+                }
+            }
+        }
+    }
+    string strGiftDaily;
+
+    public void LoadAgainGiftPanel()
+    {
+        if (DataParam.currentGiftDaily >= 5)
+        {
+            if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+            {
+                giftDaily.Clear();
+                for (int i = 0; i < 6; i++)
+                {
+                    GiftDaily _giftDaily = new GiftDaily();
+                    giftDaily.Add(_giftDaily);
+                }
+                if (DataParam.firsttimegiftdaily)
+                    DataParam.firsttimegiftdaily = false;
+                AddNewGiftDaily();
+            }
+        }
+        else
+        {
+            if (!DataParam.cantakegiftdaily)
+            {
+                if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                {
+                    DataParam.currentGiftDaily++;
+                    DataParam.cantakegiftdaily = true;
+                    DataParam.oldTimeGiftDaily = System.DateTime.Now;
+                }
+            }
+        }
+        MenuController.instance.CheckWarningGiftDaily();
+    }
+
+    void LoadGiftDaily()
+    {
+        giftDaily.Clear();
+        for (int i = 0; i < 6; i++)
+        {
+            GiftDaily _giftDaily = new GiftDaily();
+            giftDaily.Add(_giftDaily);
+        }
+
+        if (!PlayerPrefs.HasKey(DataParam.CANTAKEGIFTDAILY))
+        {
+            DataParam.firsttimegiftdaily = true;
+            AddNewGiftDaily();
+        }
+        else
+        {
+            DataParam.cantakegiftdaily = PlayerPrefs.GetInt(DataParam.CANTAKEGIFTDAILY) == 0 ? false : true;
+            DataParam.firsttimegiftdaily = PlayerPrefs.GetInt(DataParam.FIRSTTIMEGIFTDAILY) == 0 ? false : true;
+            DataParam.currentGiftDaily = PlayerPrefs.GetInt(DataParam.CURRENTGIFTDAILY);
+            DataParam.oldTimeGiftDaily = System.Convert.ToDateTime(PlayerPrefs.GetString(DataParam.OLDTIMEGIFTDAILY));
+
+
+            if (DataParam.currentGiftDaily >= 5)
+            {
+                if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                {
+                    if (DataParam.firsttimegiftdaily)
+                        DataParam.firsttimegiftdaily = false;
+                    AddNewGiftDaily();
+                }
+            }
+            else
+            {
+                if (!DataParam.cantakegiftdaily)
+                {
+                    if (DataParam.oldTimeGiftDaily != System.DateTime.Today)
+                    {
+                        DataParam.currentGiftDaily++;
+                        DataParam.cantakegiftdaily = true;
+                        DataParam.oldTimeGiftDaily = System.DateTime.Now;
+                    }
+                }
+                strGiftDaily = PlayerPrefs.GetString(DataParam.GIFTDAILY);
+                if (!string.IsNullOrEmpty(strGiftDaily))
+                {
+                    jData = JsonMapper.ToObject(strGiftDaily);
+                    Debug.LogError(":" + strGiftDaily);
+                    for (int i = 0; i < jData.Count; i++)
+                    {
+                        giftDaily[i] = JsonMapper.ToObject<GiftDaily>(jData[i].ToJson());
+                    }
+                }
+            }
+        }
+    }
     public void SaveData()
     {
         SavePrimeAccount();
         SaveAchievement();
         SaveDailyQuest();
         SaveBlackMarket();
+        SaveGiftDaily();
 
         DataUtils.SavePlayerData();
 
@@ -1157,6 +1405,9 @@ public class DataController : MonoBehaviour
         }
 #endif
     }
+
+
+
     public void LoadData()
     {
         for (int i = 0; i < 4; i++)
@@ -1164,8 +1415,16 @@ public class DataController : MonoBehaviour
         LoadDataPrimeAccount();
         LoadAchievement();
         LoadDailyQuest();
-
+        LoadAgainGiftPanel();
         DataUtils.FillPlayerDataInfo();
+    }
+    void SaveGiftDaily()
+    {
+        PlayerPrefs.SetString(DataParam.OLDTIMEGIFTDAILY, DataParam.oldTimeGiftDaily.ToString());
+        PlayerPrefs.SetInt(DataParam.CANTAKEGIFTDAILY, DataParam.cantakegiftdaily == false ? 0 : 1);
+        PlayerPrefs.SetInt(DataParam.CURRENTGIFTDAILY, DataParam.currentGiftDaily);
+        PlayerPrefs.SetInt(DataParam.FIRSTTIMEGIFTDAILY, DataParam.firsttimegiftdaily == false ? 0 : 1);
+        PlayerPrefs.SetString(DataParam.GIFTDAILY, JsonMapper.ToJson(giftDaily));
     }
     void SaveBlackMarket()
     {
@@ -1262,7 +1521,7 @@ public class DataController : MonoBehaviour
             if (allSaveDailyQuest[saveIndexQuest[i]].isPass && !allSaveDailyQuest[saveIndexQuest[i]].isDone /*&& allSaveDailyQuest[i].isActive*/)
             {
                 checkDaily = true;
-              //  Debug.LogError("daily quest done:" + i + ":" + allSaveDailyQuest[i].currentNumber+ ":"+ allSaveDailyQuest[i].isPass + ":" + allSaveDailyQuest[i].isDone + ":" + allSaveDailyQuest[i].MissionContent);
+                //  Debug.LogError("daily quest done:" + i + ":" + allSaveDailyQuest[i].currentNumber+ ":"+ allSaveDailyQuest[i].isPass + ":" + allSaveDailyQuest[i].isDone + ":" + allSaveDailyQuest[i].MissionContent);
             }
         }
         return checkDaily;

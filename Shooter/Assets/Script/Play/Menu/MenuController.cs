@@ -11,21 +11,17 @@ public class MenuController : MonoBehaviour
     public AchievmentAndDailyQuestPanel achievementAndDailyQuestPanel;
     public GameObject PrimeAccountPanel;
     public BlackMarketPanel blackMarketpanel;
-    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount, warningvideoreward;
+    public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount, warningvideoreward, warningGiftDaily;
     public Text primeText;
+    public GiftDailyPanel giftDailyPanel;
     private void Awake()
     {
-
         if (instance == null)
         {
-
             instance = this;
-
             DataUtils.FillEquipmentData();
-
             //DataUtils.FillPlayerDataInfo();
         }
-
     }
     public void CheckDisplayWarningPrimeAccount()
     {
@@ -82,7 +78,7 @@ public class MenuController : MonoBehaviour
             DataUtils.TakeHeroPice("P2", 100);
             DataUtils.TakeHeroPice("P1", 100);
         }
-     //   DataUtils.AddCoinAndGame(10000, 0);
+        //   DataUtils.AddCoinAndGame(10000, 0);
 
         #region problem
         //DataUtils.FillPlayerDataInfo();
@@ -115,7 +111,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-          DataController.instance.LoadAgainQuestAndBlackMarket();
+            DataController.instance.LoadAgainQuestAndBlackMarket();
             blackMarketpanel.gameObject.SetActive(false);
         }
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
@@ -132,6 +128,13 @@ public class MenuController : MonoBehaviour
         warningDailyQuest.SetActive(DataController.instance.CheckWarningDailyQuest());
 
         warningEvent.SetActive(CheckWarningDisplay());
+
+        CheckWarningGiftDaily();
+    }
+    public void CheckWarningGiftDaily()
+    {
+        if (warningGiftDaily != null)
+            warningGiftDaily.SetActive(DataParam.cantakegiftdaily);
     }
     bool CheckWarningDisplay()
     {
@@ -152,11 +155,12 @@ public class MenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
 
-            DataController.instance.DoAchievement(0, 1000);
-            for(int i = 0;i < DataController.allSaveDailyQuest.Count; i ++)
-            {
-                DataController.instance.DoDailyQuest(i, 1000);
-            }
+            //DataController.instance.DoAchievement(0, 1000);
+            //for (int i = 0; i < DataController.allSaveDailyQuest.Count; i++)
+            //{
+            //    DataController.instance.DoDailyQuest(i, 1000);
+            //}
+            BtnOpenGiftDaily(true);
         }
         //else if(Input.GetKeyDown(KeyCode.H))
         //{
@@ -168,5 +172,13 @@ public class MenuController : MonoBehaviour
         //    DataUtils.SaveLevel(0, 5);
         //    DataUtils.SaveLevel(0, 6);
         //}
+    }
+    public void BtnOpenGiftDaily(bool opem)
+    {
+        SoundController.instance.PlaySound(soundGame.soundbtnclick);
+        if (opem)
+            giftDailyPanel.OpenMe();
+        else
+            giftDailyPanel.CloseMe();
     }
 }

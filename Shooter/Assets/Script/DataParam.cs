@@ -20,7 +20,7 @@ public class DataParam : MonoBehaviour
     public const string INDEXREWARDVIDEO = "indexrewardvideo";
     public const string COUNTDONEDAILYQUEST = "countdonedailyquest";
     public static bool first = true, doneAllDailyQuest = false;
-    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase,countResetBlackMarket = 0, indexRewardVideo = 0,countdonedailyquest;
+    public static int indexMap, nextSceneAfterLoad = 1, indexStage, levelBase, countResetBlackMarket = 0, indexRewardVideo = 0, countdonedailyquest;
     public static float totalCoin;
     public static string[] hints = {"Increase combat power by upgrading character and weapons",
     "Daily free gifts contain many useful items",
@@ -30,10 +30,15 @@ public class DataParam : MonoBehaviour
     "Kill as many enemies as possible to unlock achievements and daily quests",
     "Shotguns may have low attack range but can deal massive damage",
     "Upgrading your character also grants you skill points that can be used in the skill tree",};
-    public static System.DateTime oldDateTime,timeBeginBuyPrimeAccount;
+    public static System.DateTime oldDateTime, timeBeginBuyPrimeAccount;
     public static void AddCoin(float _coin)
     {
         totalCoin += _coin;
     }
     public static bool showstarterpack;
+
+    public static bool firsttimegiftdaily, cantakegiftdaily;
+    public const string GIFTDAILY = "giftdaily", CURRENTGIFTDAILY = "currentgiftdaily", FIRSTTIMEGIFTDAILY = "firsttimegiftdaily", CANTAKEGIFTDAILY = "cantakegiftdaily", OLDTIMEGIFTDAILY= "oldtimegiftdaily";
+    public static int currentGiftDaily = 0;
+    public static System.DateTime oldTimeGiftDaily;
 }
