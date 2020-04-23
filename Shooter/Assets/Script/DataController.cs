@@ -1415,7 +1415,7 @@ public class DataController : MonoBehaviour
         LoadDataPrimeAccount();
         LoadAchievement();
         LoadDailyQuest();
-        LoadAgainGiftPanel();
+        LoadGiftDaily();
         DataUtils.FillPlayerDataInfo();
     }
     void SaveGiftDaily()
