@@ -227,8 +227,16 @@ public class PanelHeroes : MonoBehaviour
 
     private void FillTextInfo()
     {
-        txtHealth.text = pData.hp + " <sprite=1><color=green>" + pNext.hp + "</color>";
-        txtMoveSpeed.text = pData.MoveSpeed + " <sprite=1><color=green>" + pNext.MoveSpeed + "</color>";
+        if (DataUtils.dicAllHero[heroSelected.id].level < DataUtils.MAX_LEVEL_HERO)
+        {
+            txtHealth.text = pData.hp + " <sprite=1><color=green>" + pNext.hp + "</color>";
+            txtMoveSpeed.text = pData.MoveSpeed + " <sprite=1><color=green>" + pNext.MoveSpeed + "</color>";
+        }
+        else
+        {
+            txtHealth.text = pData.hp + "";
+            txtMoveSpeed.text = pData.MoveSpeed + "";
+        }
         txtDamage.text = "" + 10 * GetDoublevalue(DataUtils.dicWeapon[keyEquipped].DmgValue[curWeponStar]);
         txtFireRate.text = GetDoublevalue(DataUtils.dicWeapon[keyEquipped].BulletSpeedValue[curWeponStar]) + "s";
         txtCritRate.text = "+" + GetDoublevalue(DataUtils.dicWeapon[keyEquipped].CritRateValue[curWeponStar]) + "%";
@@ -291,6 +299,11 @@ public class PanelHeroes : MonoBehaviour
         else
         {
             gMaxText.SetActive(true);
+            if (pData != null)
+            {
+                txtHealth.text = pData.hp + "";
+                txtMoveSpeed.text = pData.MoveSpeed + "";
+            }
             gUpgradeText.SetActive(false);
             gPartHero.SetActive(false);
         }
@@ -337,6 +350,11 @@ public class PanelHeroes : MonoBehaviour
             }
             else {
                 gMaxText.SetActive(true);
+                if (pData != null)
+                {
+                    txtHealth.text = pData.hp + "";
+                    txtMoveSpeed.text = pData.MoveSpeed + "";
+                }
                 gUpgradeText.SetActive(false);
                 gPartHero.SetActive(false);
             }

@@ -9,6 +9,7 @@ public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
     public Sprite sprWhite, sprYellow, sprButton, sprButtonCur, sprButtonYellow;
+    public GameObject gitemUpgradeContain, gTextMax;
     public ShowItemInfo itemSelectInfo, itemEquipInfo;
     public Color ClNormal, clUncommon, clRare, clEpic, clLegendary;
     public Image[] allStars;
@@ -23,7 +24,7 @@ public class EquipmentManager : MonoBehaviour
     public Text txtPriceUpgrade, txtPieceEvolve;
     public Text txtUpgrade;
     #region Equipment Selected
-    public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview, imgLevelItem, imgPieceSelected;
+    public Image imgItemPriview, imgDamagePriview, imgItemSelectPriview, imgLevelItem, imgPieceSelected, imgItemPartSelect;
     public TextMeshProUGUI txtItemName, txtDamagePriview, txtAttSpeed, txtCritRate, txtCritDamage, txtRange, txtMagazine, txtParts, txtLevelItem;
     #endregion
     #region Current Equipment
@@ -491,7 +492,6 @@ public class EquipmentManager : MonoBehaviour
         int total = 0;
         string key = itemSelected.id + "_" + itemSelected.level + "_" + itemSelected.isUnlock + "_" + itemSelected.isEquipped;
 
-        Debug.LogError("Not enough coin to upgrade this item: " + IsReachMaxLevel(DataUtils.dicAllEquipment[key]) + " vs " + DataUtils.dicAllEquipment[key].curStar);
         if (itemSelected.id.Contains("W7"))
         {
             MainMenuController.Instance.ShowMapNotify("Item use only, cannot upgrade/evolve.");
@@ -692,6 +692,7 @@ public class EquipmentManager : MonoBehaviour
     string _keySelect1, _keySelect2 = "--";
     public void ChooseItem(ItemData itemData)
     {
+        HideBuyMore();
         if (itemData == null)
         {
             gWeaponData.SetActive(false);
@@ -708,11 +709,12 @@ public class EquipmentManager : MonoBehaviour
                 _iEquipData.imgSingleSelect.enabled = false;
             }
             gAllStarItemSelect.SetActive(false);
-            HideBuyMore();
+            //HideBuyMore();
         }
         else
         {
             itemSelected = itemData;
+            imgItemPartSelect.enabled = !itemData.isUnlock;
 
             if (DataController.primeAccout.isVIP)
             {
@@ -858,6 +860,18 @@ public class EquipmentManager : MonoBehaviour
         UpdateTextDes();
 
         btnUpgrade.interactable = DataUtils.IsCanEvolve(itemSelected);
+        Debug.LogError("can evolve: " + DataUtils.IsCanEvolve(itemSelected));
+        if (!DataUtils.IsCanEvolve(itemSelected))
+        {
+            gitemUpgradeContain.SetActive(false);
+            gTextMax.SetActive(true);
+        }
+        else
+        {
+            gitemUpgradeContain.SetActive(true);
+            gTextMax.SetActive(false);
+
+        }
     }
 
     ItemData itemEquipped;
@@ -870,9 +884,9 @@ public class EquipmentManager : MonoBehaviour
         txtItemName.color = GetColorByItem(itemData.level);
         txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
         if(DataUtils.dicAllEquipment.ContainsKey(itemData.id + "_" + itemData.level + "_" + false + "_" + false))
-            txtParts.text = DataUtils.dicAllEquipment[itemData.id + "_" + itemData.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
+            txtParts.text = DataUtils.dicAllEquipment[itemData.id + "_" + itemData.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemData, itemData.isUnlock);
         else
-            txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, false);
+            txtParts.text = itemData.pices + "/" + (int)DataUtils.GetPiceByStar(itemData, itemData.isUnlock);
 
 
         foreach (ItemData _iData in DataUtils.dicEquippedItem.Values)
@@ -906,9 +920,9 @@ public class EquipmentManager : MonoBehaviour
             }
 
             if(!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
-                txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
+                txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
             else
-                txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, false);
+                txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
 
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
@@ -959,12 +973,23 @@ public class EquipmentManager : MonoBehaviour
             if (itemData.type.Contains("WEAPON"))
             {
                 int itemData_curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
-                txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color>";
-                txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
-                txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
-                txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
-                txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
-                txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
+                //if (itemData.curStar < DataUtils.MAX_STARS) {
+                //    txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color><sprite=1> " + (DataUtils.GetRealFloat(itemData_curStar + 1< DataUtils.dicWeapon[keyItem].DmgValue.Count? DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar + 1] * 10: DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10));
+                //    txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
+                //    txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar], DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
+                //    txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
+                //    txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
+                //    txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
+                //}
+                //else
+                {
+                    txtDamagePriview.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].DmgValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar] * 10)) + "</color>";
+                    txtCritDamage.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritDmgValue[itemData_curStar])) + "%</color>";
+                    txtAttSpeed.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar], DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtksecValue[itemData_curStar])) + "s</color>";
+                    txtCritRate.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar]) + ">+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].CritRateValue[itemData_curStar])) + "%</color>";
+                    txtRange.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar])) + "</color>";
+                    txtMagazine.text = "<color=" + DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]) + ">" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar])) + "</color>";
+                }
 
                 itemSelectInfo.Hide();
                 gWeaponData.SetActive(true);
@@ -1078,8 +1103,10 @@ public class EquipmentManager : MonoBehaviour
                     EquipmentItem _iEquipData = trContain.GetChild(i).gameObject.GetComponent<EquipmentItem>();
                     _iEquipData.CheckItemUnlock();
                 }
-
-                txtParts.text = itemSelected.pices + "/" + (int)DataUtils.GetPiceByStar(itemSelected, false);
+                if (DataUtils.dicAllEquipment.ContainsKey(itemSelected.id + "_" + itemSelected.level + "_" + false + "_" + false))
+                    txtParts.text = DataUtils.dicAllEquipment[itemSelected.id + "_" + itemSelected.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemSelected, itemSelected.isUnlock);
+                else
+                    txtParts.text = itemSelected.pices + "/" + (int)DataUtils.GetPiceByStar(itemSelected, itemSelected.isUnlock);
             }
         });
     }
@@ -1093,7 +1120,17 @@ public class EquipmentManager : MonoBehaviour
             {
                 DataUtils.dicAllEquipment[_key].pices += totalPiece;
                 DataUtils.AddCoinAndGame(0, -_diamond);
-                txtParts.text = DataUtils.dicAllEquipment[_key].pices + "/" + (int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[_key], false);
+                if (DataUtils.dicAllEquipment.ContainsKey(DataUtils.dicAllEquipment[_key].id + "_" + DataUtils.dicAllEquipment[_key].level + "_" + false + "_" + false))
+                    txtParts.text = DataUtils.dicAllEquipment[DataUtils.dicAllEquipment[_key].id + "_" + DataUtils.dicAllEquipment[_key].level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[_key], DataUtils.dicAllEquipment[_key].isUnlock);
+                else
+                    txtParts.text = DataUtils.dicAllEquipment[_key].pices + "/" + (int)DataUtils.GetPiceByStar(DataUtils.dicAllEquipment[_key], DataUtils.dicAllEquipment[_key].isUnlock);
+
+                if (itemEquipped != null) {
+                    if (!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+                        txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                    else
+                        txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                }
             }
             else
             {
@@ -1117,7 +1154,18 @@ public class EquipmentManager : MonoBehaviour
                     DataUtils.dicAllEquipment[_keyNew].pices += totalPiece;
                     DataUtils.AddCoinAndGame(0, -_diamond);
                 }
-                txtParts.text = iDataNew.pices + "/" + (int)DataUtils.GetPiceByStar(iDataNew, false);
+                if (DataUtils.dicAllEquipment.ContainsKey(iDataNew.id + "_" + iDataNew.level + "_" + false + "_" + false))
+                    txtParts.text = DataUtils.dicAllEquipment[iDataNew.id + "_" + iDataNew.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(iDataNew, itemSelected.isUnlock);
+                else
+                    txtParts.text = iDataNew.pices + "/" + (int)DataUtils.GetPiceByStar(iDataNew, itemSelected.isUnlock);
+
+                if (itemEquipped != null)
+                {
+                    if (!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+                        txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                    else
+                        txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                }
             }
 
             DataUtils.SaveEquipmentData();

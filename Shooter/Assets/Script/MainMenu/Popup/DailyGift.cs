@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class DailyGift : MonoBehaviour
 {
+    public GameObject gWeapon, gItem;
+    public TextMeshProUGUI txtDmgUGUI, txtFireRateUGUI, txtCritRateUGUI, txtCritDmgUGUI, txtRangeUGUI, txtMagazineUGUI;
+    public TextMeshProUGUI txtReloadUGUI, txtCritRateItemUGUI, txtCritDmgItemUGUI, txtDefensiveUGUI, txtFirstAidUGUI, txtRegenUGUI, txtMoveSpeedUGUI, txtJumpUGUI;
+    public GameObject gImgReload, gImgCritRate, gImgCritDmg, gImgDef, gImgFirstAid, gImgRegen, gImgMoveSpeed, gImgJump;
     public Image imgQuality, imgItemPriview;
     public TextMeshProUGUI txtItemInfo;
     public Sprite sprNotAvaiable;
@@ -102,20 +106,22 @@ public class DailyGift : MonoBehaviour
 
         if (_eType == DataUtils.eType.WEAPON)
         {
-            txtItemInfo.gameObject.SetActive(false);
-            int curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
-            txtAtk.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtksecValue[curStar].ToString();
-            txtBulletSpeed.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].BulletSpeedValue[curStar].ToString();
-            txtRange.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtkRangeValue[curStar].ToString();
-            txtReload.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].ReloadSpeedValue[curStar].ToString();
-            txtMagazine.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].MagazineValue[curStar].ToString();
-            gItemInfo.SetActive(true);
+            Debug.LogError("ShowWeapon Info");
+            //txtItemInfo.gameObject.SetActive(false);
+            //int curStar = itemData.curStar < DataUtils.MAX_STARS ? itemData.curStar : 4;
+            //txtAtk.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtksecValue[curStar].ToString();
+            //txtBulletSpeed.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].BulletSpeedValue[curStar].ToString();
+            //txtRange.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].AtkRangeValue[curStar].ToString();
+            //txtReload.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].ReloadSpeedValue[curStar].ToString();
+            //txtMagazine.text = DataController.instance.allWeapon[itemIndex - 1].weaponList[(int)_eLevel].MagazineValue[curStar].ToString();
+            //gItemInfo.SetActive(true);
         }
         else
         {
-            gItemInfo.SetActive(false);
-            txtItemInfo.text = DataUtils.GetItemInfo(itemData);
-            txtItemInfo.gameObject.SetActive(true);
+            Debug.LogError("Show Item Info");
+            //gItemInfo.SetActive(false);
+            //txtItemInfo.text = DataUtils.GetItemInfo(itemData);
+            //txtItemInfo.gameObject.SetActive(true);
         }
         imgItemPriview.sprite = DataUtils.GetSpriteByName(itemData.id, MainMenuController.Instance.allSpriteData);
         imgQuality.sprite = DataUtils.GetSpriteByType(itemData);
