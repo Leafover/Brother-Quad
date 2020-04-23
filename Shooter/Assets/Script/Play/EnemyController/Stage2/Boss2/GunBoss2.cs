@@ -68,6 +68,7 @@ public class GunBoss2 : AutoTarget
         numberText.Display("Miss", false);
         numberText.tmp.color = Color.gray;
         numberText.gameObject.SetActive(true);
+        numberText.SetAnim();
     }
     void SpawnNumberDamageText(float damage, bool crit)
     {
@@ -75,6 +76,7 @@ public class GunBoss2 : AutoTarget
         numberText.transform.position = transform.position;
         numberText.Display("" + Mathf.RoundToInt(damage * 10), crit);
         numberText.gameObject.SetActive(true);
+        numberText.SetAnim();
     }
     void SpawnHitEffect()
     {
