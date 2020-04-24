@@ -202,12 +202,14 @@ public class MapLevelControll : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogError("_levelHasComplete: " + _levelHasComplete+ " vs " + DataUtils.modeSelected);
+                            Debug.LogError("_levelHasComplete: " + _levelHasComplete + " vs " + DataUtils.modeSelected);
                             //StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
                             if (!_levelHasComplete && DataUtils.modeSelected == 0)
                             {
-                                Debug.LogError("111111");
-                                StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(false);
+                                if (lstString[i].Contains("P"))
+                                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(true);
+                                else
+                                    StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(false);
                             }
                             else
                             {
@@ -245,7 +247,8 @@ public class MapLevelControll : MonoBehaviour
                 }
             }
         }
-        else if (DataUtils.modeSelected == 1) {
+        else if (DataUtils.modeSelected == 1)
+        {
             for (int i = 0; i < DataController.instance.allTileVatPhamHard.Count; i++)
             {
                 foreach (TileVatPhamList vatPhamList in DataController.instance.allTileVatPhamHard[i].tilevatphamList)

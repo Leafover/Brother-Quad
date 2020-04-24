@@ -1004,7 +1004,7 @@ public class GameController : MonoBehaviour
             {
                 // uiPanel.rewardImg[index].sprite = uiPanel.nvSprite;
                 /*uiPanel.rewardItemEquipImg[index].sprite =*/ uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
-                uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[0];
+                uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[2];
                 uiPanel.bouderRewardEquip[index].SetActive(false);
 
                 Debug.LogError("wtfffffffffffff");
