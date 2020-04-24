@@ -312,9 +312,9 @@ public class GameController : MonoBehaviour
         }
 
         uiPanel.comboNumberText.text = "X" + countCombo;
-        if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo == MissionController.Instance.listMissions[0].valueMission)
+        if (MissionController.Instance.listMissions[0].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[0].valueMission)
             MissionController.Instance.DoMission(2, MissionController.Instance.listMissions[0].valueMission);
-        if (MissionController.Instance.listMissions[1].typeMission == 2 && countCombo == MissionController.Instance.listMissions[1].valueMission)
+        if (MissionController.Instance.listMissions[1].typeMission == 2 && countCombo >= MissionController.Instance.listMissions[1].valueMission)
             MissionController.Instance.DoMission(2, MissionController.Instance.listMissions[1].valueMission);
     }
     public void ResetCombo()
