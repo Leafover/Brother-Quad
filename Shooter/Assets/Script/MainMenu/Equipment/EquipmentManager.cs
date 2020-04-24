@@ -8,6 +8,8 @@ using TMPro;
 public class EquipmentManager : MonoBehaviour
 {
     const string ALL_EQUIP = "ALL";
+    public TextMeshProUGUI txtItemPartCorlor;
+    public GameObject gAllStarsItemSelect;
     public Sprite sprWhite, sprYellow, sprButton, sprButtonCur, sprButtonYellow;
     public GameObject gitemUpgradeContain, gTextMax;
     public ShowItemInfo itemSelectInfo, itemEquipInfo;
@@ -735,6 +737,11 @@ public class EquipmentManager : MonoBehaviour
                 btnReplace.interactable = false;
                 btnRemove.gameObject.SetActive(true);
                 btnUpgrade.gameObject.SetActive(false);
+
+                gAllStarItemSelect.SetActive(false);
+                txtItemPartCorlor.color = GetColorByItem(itemSelected.level);
+                txtItemPartCorlor.gameObject.SetActive(true);
+
                 if (itemSelected.pices >= DataUtils.GetPiceByStar(itemSelected, false))
                 {
                     _keySelect1 = itemSelected.id + "_" + itemSelected.level + "_" + true + "_" + itemSelected.isEquipped;
@@ -765,7 +772,7 @@ public class EquipmentManager : MonoBehaviour
             else
             {
                 gAllStarItemSelect.SetActive(true);
-
+                txtItemPartCorlor.gameObject.SetActive(false);
                 if (itemSelected.isEquipped)
                 {
                     btnReplace.image.sprite = sprButton;
@@ -860,7 +867,6 @@ public class EquipmentManager : MonoBehaviour
         UpdateTextDes();
 
         btnUpgrade.interactable = DataUtils.IsCanEvolve(itemSelected);
-        Debug.LogError("can evolve: " + DataUtils.IsCanEvolve(itemSelected));
         if (!DataUtils.IsCanEvolve(itemSelected))
         {
             gitemUpgradeContain.SetActive(false);
@@ -935,11 +941,11 @@ public class EquipmentManager : MonoBehaviour
             if (itemEquipped.type.Contains("WEAPON"))
             {
                 txtCurDamagePriview.text = "" + (DataUtils.GetRealFloat((DataUtils.dicWeapon[keyEquipped].DmgValue[curStar] * 10)));
-                txtCurCritDamage.text = "<color=white>+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar])) + "%</color>";
-                txtCurAttSpeed.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar])) + "s</color>";
-                txtCurCritRate.text = "<color=white>+" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar])) + "%</color>";
-                txtCurRange.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar])) + "</color>";
-                txtCurMagazine.text = "<color=white>" + (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar])) + "</color>";
+                txtCurCritDamage.text = (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritDmgValue[curStar])) + "%";
+                txtCurAttSpeed.text = (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtksecValue[curStar])) + "s";
+                txtCurCritRate.text = (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].CritRateValue[curStar])) + "%";
+                txtCurRange.text = (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].AtkRangeValue[curStar])) + "";
+                txtCurMagazine.text = (DataUtils.GetRealFloat(DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar])) + "";
 
                 itemEquipInfo.AA();
                 itemEquipInfo.Hide();
@@ -999,7 +1005,7 @@ public class EquipmentManager : MonoBehaviour
                 string _clMagazine = DataUtils.GetColorByItemData(DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar], DataUtils.dicWeapon[keyEquipped].MagazineValue[curStar]);
                 float _magazinevalue = DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar];
 
-                if (/*itemData.curStar < DataUtils.MAX_STARS*/DataUtils.IsCanEvolve(itemData))
+                if (/*itemData.curStar < DataUtils.MAX_STARS*/DataUtils.IsCanEvolve(itemData)&& itemData.isUnlock)
                 {
 
                     float _nextdmg = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].DmgValue.Count ? DataUtils.dicWeapon[keyItem].DmgValue[itemData_curStar + 1] * 10 : DataUtils.dicWeapon[keyNextLevel].DmgValue[0] * 10;
@@ -1009,12 +1015,12 @@ public class EquipmentManager : MonoBehaviour
                     float _nextRange = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].AtkRangeValue.Count ? DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].AtkRangeValue[0];
                     float _nextMagazine = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].MagazineValue.Count ? DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].MagazineValue[0];
 
-                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + "</color><sprite=1><color=green>" + _nextdmg;
-                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + "%</color><sprite=1><color=green>" + _nextdmg + "%";
-                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + "s</color><sprite=1><color=green>" + _nextFireRate + "s";
-                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + "%</color><sprite=1><color=green>" + _nextCritRate + "%";
-                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + "</color><sprite=1><color=green>" + _nextRange;
-                    txtMagazine.text = "<color=" +_clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + "</color><sprite=1><color=green>" + _nextMagazine;
+                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + (_nextdmg!= _dmgValue? "</color><sprite=1><color=green>" + _nextdmg:"");
+                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + (_nextCritDmg != _critDmgValue? "%</color><sprite=1><color=green>" + _nextCritDmg + "%": "%");
+                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + (_nextFireRate != _fireRateValue? "s</color><sprite=1><color=green>" + _nextFireRate + "s":"s");
+                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + (_nextCritRate!= _critRateValue? "%</color><sprite=1><color=green>" + _nextCritRate + "%":"%");
+                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + (_nextRange!= _rangeValue? "</color><sprite=1><color=green>" + _nextRange:"");
+                    txtMagazine.text = "<color=" +_clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + (_nextMagazine != _magazinevalue? "</color><sprite=1><color=green>" + _nextMagazine:"");
                 }
                 else
                 {

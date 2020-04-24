@@ -79,8 +79,8 @@ public class ShowItemInfo : MonoBehaviour
         if (itemData.id.Contains("S"))//Shoes
         {
 
-            txtMoveSpeed.text = "+" + _moveSpeedShoes + "%" + (DataUtils.IsCanEvolve(itemData)&& isSelected ? "<sprite=1><color=green>+" + _nextMoveSpeedShoes + "%" : "");
-            txtJump.text = "+" + _jumpHeight + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>+" + _nextJumpHeight + "%" : "");
+            txtMoveSpeed.text = "+" + _moveSpeedShoes + "%" + (DataUtils.IsCanEvolve(itemData)&& isSelected && itemData.isUnlock&&(_nextMoveSpeedShoes!=_moveSpeedShoes) ? "<sprite=1><color=green>+" + _nextMoveSpeedShoes + "%" : "");
+            txtJump.text = "+" + _jumpHeight + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock &&(_nextJumpHeight != _jumpHeight) ? "<sprite=1><color=green>+" + _nextJumpHeight + "%" : "");
             if (itemData.isEquipped && imgItemInfo != null) {
                 imgItemInfo.enabled = false;
                 imgGloves.gameObject.SetActive(false);
@@ -102,8 +102,8 @@ public class ShowItemInfo : MonoBehaviour
         else if (itemData.id.Contains("B"))//Bag
         {
 
-            txtFirstAid.text = "+" + _firstAid + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>+" + _nextFirstAid : "") + "% HP";
-            txtRegen.text = _regen + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>" + _nextRegen  : "") + "% HP";
+            txtFirstAid.text = "+" + _firstAid + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextFirstAid  != _firstAid? "<sprite=1><color=green>+" + _nextFirstAid : "") + "% HP";
+            txtRegen.text = _regen + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextRegen  != _regen? "<sprite=1><color=green>" + _nextRegen  : "") + "% HP";
 
             if (itemData.isEquipped && imgItemInfo != null)
             {
@@ -127,9 +127,9 @@ public class ShowItemInfo : MonoBehaviour
         else if (itemData.id.Contains("G"))//Gloves
         {
 
-            txtReloadTime.text = "-" + _reloadTime + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>-" + _nextReloadTime + "%" : "");
-            txtCritRate.text = _critRate + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>" + _nextCritRate + "%" : "");
-            txtCritDmg.text = _critDmg + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>" + _nextCritDmg + "%" : "");
+            txtReloadTime.text = "-" + _reloadTime + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextReloadTime  != _reloadTime? "<sprite=1><color=green>-" + _nextReloadTime + "%" : "");
+            txtCritRate.text = _critRate + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock&& _nextCritRate!= _critRate ? "<sprite=1><color=green>" + _nextCritRate + "%" : "");
+            txtCritDmg.text = _critDmg + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextCritDmg  != _critDmg? "<sprite=1><color=green>" + _nextCritDmg + "%" : "");
 
             if (itemData.isEquipped && imgItemInfo != null)
             {
@@ -153,7 +153,7 @@ public class ShowItemInfo : MonoBehaviour
         else if (itemData.id.Contains("H"))//Helmet
         {
 
-            txtDef.text = _defHelmet + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>" + _nextDefHelmet + "%" : "");
+            txtDef.text = _defHelmet + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextDefHelmet != _defHelmet? "<sprite=1><color=green>" + _nextDefHelmet + "%" : "");
 
             if (itemData.isEquipped && imgItemInfo != null)
             {
@@ -177,8 +177,8 @@ public class ShowItemInfo : MonoBehaviour
         else if (itemData.id.Contains("A"))//Armor
         {
 
-            txtDef.text = "+" + _defensiveArmor + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>+" + _nextDefensiveArmor + "%" : "");
-            txtMoveSpeed.text = "-" + _moveSpeedArmor + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected ? "<sprite=1><color=green>-" + _nextMoveSpeedArmor + "%" : "");
+            txtDef.text = "+" + _defensiveArmor + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock&& _nextDefensiveArmor!= _defensiveArmor ? "<sprite=1><color=green>+" + _nextDefensiveArmor + "%" : "");
+            txtMoveSpeed.text = "-" + _moveSpeedArmor + "%" + (DataUtils.IsCanEvolve(itemData) && isSelected && itemData.isUnlock && _nextMoveSpeedArmor != _moveSpeedArmor? "<sprite=1><color=green>-" + _nextMoveSpeedArmor + "%" : "");
 
             if (itemData.isEquipped && imgItemInfo != null)
             {

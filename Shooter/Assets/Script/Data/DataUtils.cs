@@ -5,6 +5,11 @@ using LitJson;
 
 public class DataUtils
 {
+    public static string APP_ID = DataParam.isTest ? "ca-app-pub-3940256099942544~1458002511" : "ca-app-pub-8566745611252640~2786279701";
+    public static string INTERS_ID = DataParam.isTest ? "ca-app-pub-3940256099942544/4411468910" : "ca-app-pub-8566745611252640/8524609975";
+    public static string REWARDED_ID = DataParam.isTest ? "ca-app-pub-3940256099942544/1712485313" : "ca-app-pub-8566745611252640/3333074611";
+    public static string BANNER_ID = DataParam.isTest ? "ca-app-pub-3940256099942544/2934735716" : "ca-app-pub-8566745611252640/2403136325";
+
     public const int STAR_UNLOCK_STAGE2 = 18, STAR_UNLOCK_STAGE3 = 45;
     public const int PART_UNLOCK_P2 = 20;
     public enum eLevel { Normal, Uncommon, Rare, Epic, Legendary }
