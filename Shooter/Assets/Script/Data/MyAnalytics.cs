@@ -125,6 +125,30 @@ public class MyAnalytics
         //        };
         FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelComplete*/);
     }
+    public static void LogEventClaimDailyGift(int day,System.DateTime time)
+    {
+        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Parameter[] _pamClaim = {
+                    new Parameter("In Time:", time.Date.ToString()),
+                    };
+        FirebaseAnalytics.LogEvent("Claim Day" + (day + 1),_pamClaim);
+    }
+    public static void LogEventClaimX2DailyGift(int day, System.DateTime time)
+    {
+        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Parameter[] _pamClaim = {
+                    new Parameter("In Time:", time.Date.ToString()),
+                    };
+        FirebaseAnalytics.LogEvent("ClaimX2 Day" + (day + 1),_pamClaim);
+    }
+    public static void LogEventOpenDailyGift(System.DateTime time)
+    {
+        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Parameter[] _pamOpenDailyGift = {
+                    new Parameter("In Time:", time.Date.ToString()),
+                    };
+        FirebaseAnalytics.LogEvent("Open Daily Gift", _pamOpenDailyGift);
+    }
     //public static void LogEventGameOver(int level, int stage)//3
     //{
     //    Parameter[] _pamLevelEnd = {

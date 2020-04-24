@@ -33,6 +33,7 @@ public class GiftDailyPanel : MonoBehaviour
     {
         DisplayBegin();
         gameObject.SetActive(true);
+        MyAnalytics.LogEventOpenDailyGift(System.DateTime.Now);
     }
     public void CloseMe()
     {
@@ -88,13 +89,22 @@ public class GiftDailyPanel : MonoBehaviour
                 break;
         }
         DataParam.cantakegiftdaily = false;
-        DataParam.oldTimeGiftDaily = System.DateTime.Now;
+        DataParam.oldTimeGiftDaily = System.DateTime.Now;      
         DataController.giftDaily[currentGiftDailyBouder.index].isDone = true;
         btnClaim.SetActive(false);
         btnClaimX2.gameObject.SetActive(false);
         selectBouder.SetActive(false);
         resetText.SetActive(true);
+
+        if(x2)
+        {
+            MyAnalytics.LogEventClaimX2DailyGift(DataParam.currentGiftDaily, DataParam.oldTimeGiftDaily);
+        }
+        else
+            MyAnalytics.LogEventClaimDailyGift(DataParam.currentGiftDaily, DataParam.oldTimeGiftDaily);
+
         CloseMe();
+
     }
 
 }
