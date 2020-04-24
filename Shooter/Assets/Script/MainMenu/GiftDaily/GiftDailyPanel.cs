@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GiftDailyPanel : MonoBehaviour
 {
     public GiftDailyBouder[] giftdailyBouder;
-    public GameObject selectBouder, btnClaim, btnClaimX2;
+    public GameObject selectBouder, btnClaim, btnClaimX2,resetText;
     GiftDailyBouder currentGiftDailyBouder;
     public void DisplayBegin()
     {
@@ -18,7 +18,7 @@ public class GiftDailyPanel : MonoBehaviour
         btnClaim.SetActive(DataParam.cantakegiftdaily);
         btnClaimX2.SetActive(DataParam.cantakegiftdaily);
         selectBouder.SetActive(DataParam.cantakegiftdaily);
-
+        resetText.SetActive(!DataParam.cantakegiftdaily);
         currentGiftDailyBouder = giftdailyBouder[DataParam.currentGiftDaily];
 
 
@@ -84,6 +84,7 @@ public class GiftDailyPanel : MonoBehaviour
         btnClaim.SetActive(false);
         btnClaimX2.SetActive(false);
         selectBouder.SetActive(false);
+        resetText.SetActive(true);
         CloseMe();
     }
 

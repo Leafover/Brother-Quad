@@ -9,7 +9,7 @@ public class LuckChestPanel : MonoBehaviour
     public Image[] rewardImgs, bouderImgs, iconImgs;
     public GameObject PanelConfirmAfterBuy, PanelInfoLuckyChest;
 
-    public Image iconChestInfo, iconPriceInfo;
+    public Image /*iconChestInfo,*/ iconPriceInfo;
     public Text priceTextInfo, nameItemText;
 
     public ScrollRect sc;
@@ -41,7 +41,7 @@ public class LuckChestPanel : MonoBehaviour
         }
 
         priceTextInfo.text = "" + prices[index].ToString("#,0");
-        iconChestInfo.sprite = iconImgs[index].sprite;
+      //  iconChestInfo.sprite = iconImgs[index].sprite;
         nameItemText.text = packText[index].text;
         grids[index].SetActive(true);
         sc.content = grids[index].GetComponent<RectTransform>();
