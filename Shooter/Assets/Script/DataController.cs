@@ -257,7 +257,7 @@ public class DataController : MonoBehaviour
     static bool loadData = false;
     private void Start()
     {
-        Debug.LogError("làm tròn:" + Mathf.RoundToInt(1.25f));
+       // Debug.LogError("làm tròn:" + Mathf.RoundToInt(1.25f));
         if (loadData)
             return;
         Debug.unityLogger.logEnabled = isHack;
@@ -1238,7 +1238,7 @@ public class DataController : MonoBehaviour
                             giftDaily[i].nameReward = "P2";
                         break;
                     case 2:
-                        giftDaily[i].numberReward = 1;
+                        giftDaily[i].numberReward = 3;
                         randomTypGiftDaily = Random.Range(1, 7);
                         giftDaily[i].nameReward = "W" + randomTypGiftDaily;
                         giftDaily[i].eType = DataUtils.eType.WEAPON;
@@ -1300,19 +1300,22 @@ public class DataController : MonoBehaviour
     {
         if (DataParam.currentGiftDaily >= 5)
         {
-            if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
+            if (!DataParam.cantakegiftdaily)
             {
-                giftDaily.Clear();
-                for (int i = 0; i < 6; i++)
+                if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
                 {
-                    GiftDaily _giftDaily = new GiftDaily();
-                    giftDaily.Add(_giftDaily);
-                }
-                if (DataParam.firsttimegiftdaily)
-                    DataParam.firsttimegiftdaily = false;
-                AddNewGiftDaily();
+                    giftDaily.Clear();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        GiftDaily _giftDaily = new GiftDaily();
+                        giftDaily.Add(_giftDaily);
+                    }
+                    if (DataParam.firsttimegiftdaily)
+                        DataParam.firsttimegiftdaily = false;
+                    AddNewGiftDaily();
 
-                Debug.LogError("=========TH1======");
+                    Debug.LogError("=========TH1======");
+                }
             }
         }
         else
@@ -1333,6 +1336,7 @@ public class DataController : MonoBehaviour
 
     void LoadGiftDaily()
     {
+
         giftDaily.Clear();
         for (int i = 0; i < 6; i++)
         {
@@ -1355,11 +1359,48 @@ public class DataController : MonoBehaviour
 
             if (DataParam.currentGiftDaily >= 5)
             {
-                if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
+                if (!DataParam.cantakegiftdaily)
                 {
-                    if (DataParam.firsttimegiftdaily)
-                        DataParam.firsttimegiftdaily = false;
-                    AddNewGiftDaily();
+                    if (DataParam.oldTimeGiftDaily.Date != System.DateTime.Today)
+                    {
+                        if (DataParam.firsttimegiftdaily)
+                            DataParam.firsttimegiftdaily = false;
+                        AddNewGiftDaily();
+                    }
+                    else
+                    {
+                        strGiftDaily = PlayerPrefs.GetString(DataParam.GIFTDAILY);
+                        if (!string.IsNullOrEmpty(strGiftDaily))
+                        {
+                            jData = JsonMapper.ToObject(strGiftDaily);
+                            Debug.LogError(":" + strGiftDaily);
+                            Debug.LogError(":" + giftDaily.Count);
+                            for (int i = 0; i < jData.Count; i++)
+                            {
+                                if (jData[i] != null)
+                                {
+                                    giftDaily[i] = JsonMapper.ToObject<GiftDaily>(jData[i].ToJson());
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    strGiftDaily = PlayerPrefs.GetString(DataParam.GIFTDAILY);
+                    if (!string.IsNullOrEmpty(strGiftDaily))
+                    {
+                        jData = JsonMapper.ToObject(strGiftDaily);
+                        Debug.LogError(":" + strGiftDaily);
+                        Debug.LogError(":" + giftDaily.Count);
+                        for (int i = 0; i < jData.Count; i++)
+                        {
+                            if (jData[i] != null)
+                            {
+                                giftDaily[i] = JsonMapper.ToObject<GiftDaily>(jData[i].ToJson());
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -1389,6 +1430,7 @@ public class DataController : MonoBehaviour
                 }
             }
         }
+        Debug.LogError("current gift daily:" + DataParam.currentGiftDaily);
     }
     public void SaveData()
     {
