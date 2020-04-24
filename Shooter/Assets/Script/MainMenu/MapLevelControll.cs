@@ -199,8 +199,22 @@ public class MapLevelControll : MonoBehaviour
                         if (stageIndex > 0)
                         {
                             StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(true);
-                        }else
-                            StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
+                        }
+                        else
+                        {
+                            Debug.LogError("_levelHasComplete: " + _levelHasComplete+ " vs " + DataUtils.modeSelected);
+                            //StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(_levelHasComplete);
+                            if (!_levelHasComplete && DataUtils.modeSelected == 0)
+                            {
+                                Debug.LogError("111111");
+                                StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                Debug.LogError("22222");
+                                StageManager.Instance.imgItemReward[i].transform.parent.GetChild(lChild).gameObject.SetActive(true);
+                            }
+                        }
                     }
                     StageManager.Instance.imgItemReward[i].sprite = DataUtils.dicSpriteData[lstString[i]];
                     StageManager.Instance.imgItemReward[i].transform.parent.gameObject.SetActive(true);

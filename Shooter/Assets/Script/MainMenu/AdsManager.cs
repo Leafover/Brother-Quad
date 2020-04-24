@@ -46,7 +46,7 @@ public class AdsManager : MonoBehaviour
     {
         // string gameId = Application.platform == RuntimePlatform.Android ? androidAppKey : iosAppKey;
         //Advertisement.Initialize(gameId, false);
-        MobileAds.Initialize(DataParam.APP_ID);
+        MobileAds.Initialize(Application.platform == RuntimePlatform.Android? DataParam.APP_ID:DataUtils.APP_ID);
         InitInterstitial();
         InitRewarded();
         InitBanner();
@@ -55,7 +55,7 @@ public class AdsManager : MonoBehaviour
 
     private void InitBanner()
     {
-        banner = new BannerView(DataParam.BANNER_ID, AdSize.Banner, AdPosition.BottomRight);
+        banner = new BannerView(Application.platform == RuntimePlatform.Android ? DataParam.BANNER_ID:DataUtils.BANNER_ID, AdSize.Banner, AdPosition.BottomRight);
         banner.OnAdLoaded += Banner_OnAdLoaded;
         banner.LoadAd(CreateRequest());
     }
@@ -168,13 +168,13 @@ public class AdsManager : MonoBehaviour
     }
     void InitInterstitial()
     {
-        interstitial = new InterstitialAd(DataParam.INTERS_ID);
+        interstitial = new InterstitialAd(Application.platform == RuntimePlatform.Android ? DataParam.INTERS_ID:DataUtils.INTERS_ID);
         interstitial.OnAdClosed += HandleOnAdClosed;
         interstitial.LoadAd(CreateRequest());
     }
     void InitRewarded()
     {
-        this.rewardedAd = new RewardedAd(DataParam.REWARDED_ID);
+        this.rewardedAd = new RewardedAd(Application.platform == RuntimePlatform.Android ? DataParam.REWARDED_ID:DataUtils.REWARDED_ID);
         // Called when the user should be rewarded for interacting with the ad.
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         this.rewardedAd.OnAdLoaded += RewardedAd_OnAdLoaded;
