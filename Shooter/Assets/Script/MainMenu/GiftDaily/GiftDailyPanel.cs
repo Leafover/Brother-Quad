@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class GiftDailyPanel : MonoBehaviour
 {
     public GiftDailyBouder[] giftdailyBouder;
-    public GameObject selectBouder, btnClaim, btnClaimX2,resetText;
+    public GameObject selectBouder, btnClaim,resetText;
     GiftDailyBouder currentGiftDailyBouder;
+    public Image iconVideo, btnClaimX2;
     public void DisplayBegin()
     {
         for (int i = 0; i < giftdailyBouder.Length; i++)
@@ -16,12 +17,17 @@ public class GiftDailyPanel : MonoBehaviour
         selectBouder.transform.position = giftdailyBouder[DataParam.currentGiftDaily].transform.position;
 
         btnClaim.SetActive(DataParam.cantakegiftdaily);
-        btnClaimX2.SetActive(DataParam.cantakegiftdaily);
+        btnClaimX2.gameObject.SetActive(DataParam.cantakegiftdaily);
         selectBouder.SetActive(DataParam.cantakegiftdaily);
         resetText.SetActive(!DataParam.cantakegiftdaily);
         currentGiftDailyBouder = giftdailyBouder[DataParam.currentGiftDaily];
 
-
+        if(AdsManager.Instance.IsRewardLoaded())
+        {
+            btnClaimX2.color = iconVideo.color = Color.white;
+        }
+        else
+            btnClaimX2.color = iconVideo.color = Color.gray;
     }
     public void OpenMe()
     {
@@ -39,6 +45,9 @@ public class GiftDailyPanel : MonoBehaviour
     }
     public void BtnClaimX2()
     {
+        if(btnClaimX2.color == Color.gray)
+            return;
+
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 #if UNITY_EDITOR
 
@@ -82,7 +91,7 @@ public class GiftDailyPanel : MonoBehaviour
         DataParam.oldTimeGiftDaily = System.DateTime.Now;
         DataController.giftDaily[currentGiftDailyBouder.index].isDone = true;
         btnClaim.SetActive(false);
-        btnClaimX2.SetActive(false);
+        btnClaimX2.gameObject.SetActive(false);
         selectBouder.SetActive(false);
         resetText.SetActive(true);
         CloseMe();
