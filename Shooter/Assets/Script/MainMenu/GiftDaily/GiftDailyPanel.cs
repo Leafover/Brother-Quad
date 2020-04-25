@@ -21,14 +21,17 @@ public class GiftDailyPanel : MonoBehaviour
         selectBouder.SetActive(DataParam.cantakegiftdaily);
         resetText.SetActive(!DataParam.cantakegiftdaily);
         currentGiftDailyBouder = giftdailyBouder[DataParam.currentGiftDaily];
-
-        if(AdsManager.Instance.IsRewardLoaded())
+    }
+    void Update()
+    {
+        if (AdsManager.Instance.IsRewardLoaded())
         {
             btnClaimX2.color = iconVideo.color = Color.white;
         }
         else
             btnClaimX2.color = iconVideo.color = Color.gray;
     }
+
     public void OpenMe()
     {
         DisplayBegin();

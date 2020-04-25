@@ -64,7 +64,6 @@ public class LuckChestPanel : MonoBehaviour
             }
             else
             {
-                CloseInfoLuckyChest();
                 MainMenuController.Instance.shopManager.ChooseTab(0);
             }
         }
@@ -90,11 +89,10 @@ public class LuckChestPanel : MonoBehaviour
             }
             else
             {
-                CloseInfoLuckyChest();
                 MainMenuController.Instance.shopManager.ChooseTab(1);
             }
         }
-
+        CloseInfoLuckyChest();
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
     }
     int randomsIndexName, randomsLevel, total1, total2, total3, total4, total5, total6, totalTake;
