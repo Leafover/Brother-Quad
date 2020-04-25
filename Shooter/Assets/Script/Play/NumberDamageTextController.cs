@@ -13,6 +13,7 @@ public class NumberDamageTextController : MonoBehaviour
             anim = GetComponent<Animator>();
     }
     public int random;
+    Color color = new Color(1, 0.8352941f, 0.1490196f);
     public void Display(string text, bool crit)
     {
         if (!crit)
@@ -23,7 +24,7 @@ public class NumberDamageTextController : MonoBehaviour
         else
         {
             tmp.fontSize = 5;
-            tmp.color = Color.yellow;
+            tmp.color = color;
         }
         tmp.text = text;
 
