@@ -31,7 +31,7 @@ public class EquipmentManager : MonoBehaviour
     #endregion
     #region Current Equipment
     public Image imgCurItemPriview, imgCurDamagePriview, imgItemEquipPriview, imgLevelItemEquip;
-    public TextMeshProUGUI txtCurItemName, txtCurDamagePriview, txtCurAttSpeed, txtCurCritRate, txtCurCritDamage, txtCurRange, txtCurMagazine, txtLevelItemEquip, txtPartsItemEquip;
+    public TextMeshProUGUI txtCurItemName, txtCurDamagePriview, txtCurAttSpeed, txtCurCritRate, txtCurCritDamage, txtCurRange, txtCurMagazine, txtLevelItemEquip, txtPartsItemEquip, txtPartsItem_;
     #endregion
 
     public TextMeshProUGUI txtItemInfoEquip, txtItemSelectInfo;
@@ -892,7 +892,7 @@ public class EquipmentManager : MonoBehaviour
         if (!DataUtils.dicAllEquipment[_keyItemSelected].itemName.Contains("Rocket"))
             txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName;
         else
-            txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName.Replace(" ", "");
+            txtItemName.text = DataUtils.dicAllEquipment[_keyItemSelected].itemName.Replace("Laucher", "Gun");
         if (DataUtils.dicAllEquipment.ContainsKey(itemData.id + "_" + itemData.level + "_" + false + "_" + false))
             txtParts.text = DataUtils.dicAllEquipment[itemData.id + "_" + itemData.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemData, itemData.isUnlock);
         else
@@ -929,13 +929,17 @@ public class EquipmentManager : MonoBehaviour
                 if(!DataUtils.dicEquippedItem[_keyItemEquipped].itemName.Contains("Rocket"))
                     txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName;
                 else
-                    txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName.Replace(" ","");
+                    txtCurItemName.text = DataUtils.dicEquippedItem[_keyItemEquipped].itemName.Replace("Laucher", "Gun");
             }
 
-            if(!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+            if(!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false)) { 
                 txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
-            else
+                txtPartsItem_.text = txtPartsItemEquip.text;
+            }
+            else {
                 txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                txtPartsItem_.text = txtPartsItemEquip.text;
+            }
 
             #region Item Equipped Info
             if (itemEquipped.type.Contains("WEAPON"))
@@ -1015,12 +1019,12 @@ public class EquipmentManager : MonoBehaviour
                     float _nextRange = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].AtkRangeValue.Count ? DataUtils.dicWeapon[keyItem].AtkRangeValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].AtkRangeValue[0];
                     float _nextMagazine = itemData_curStar + 1 < DataUtils.dicWeapon[keyItem].MagazineValue.Count ? DataUtils.dicWeapon[keyItem].MagazineValue[itemData_curStar + 1]: DataUtils.dicWeapon[keyNextLevel].MagazineValue[0];
 
-                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + (_nextdmg!= _dmgValue? "</color><sprite=1><color=green>" + _nextdmg:"");
-                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + (_nextCritDmg != _critDmgValue? "%</color><sprite=1><color=green>" + _nextCritDmg + "%": "%");
-                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + (_nextFireRate != _fireRateValue? "s</color><sprite=1><color=green>" + _nextFireRate + "s":"s");
-                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + (_nextCritRate!= _critRateValue? "%</color><sprite=1><color=green>" + _nextCritRate + "%":"%");
-                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + (_nextRange!= _rangeValue? "</color><sprite=1><color=green>" + _nextRange:"");
-                    txtMagazine.text = "<color=" +_clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + (_nextMagazine != _magazinevalue? "</color><sprite=1><color=green>" + _nextMagazine:"");
+                    txtDamagePriview.text = "<color=" + _clDmg + ">" + (DataUtils.GetRealFloat(_dmgValue)) + (_nextdmg!= _dmgValue? "</color><sprite=1><color="+ _clDmg + ">" + _nextdmg:"");
+                    txtCritDamage.text = "<color=" + _clCritDmg + ">+" + (DataUtils.GetRealFloat(_critDmgValue)) + (_nextCritDmg != _critDmgValue? "%</color><sprite=1><color=" + _clCritDmg + ">" + _nextCritDmg + "%": "%");
+                    txtAttSpeed.text = "<color=" + _clFireRate + ">" + (DataUtils.GetRealFloat(_fireRateValue)) + (_nextFireRate != _fireRateValue? "s</color><sprite=1><color=" + _clFireRate + ">" + _nextFireRate + "s":"s");
+                    txtCritRate.text = "<color=" + _clCritRate + ">+" + (DataUtils.GetRealFloat(_critRateValue)) + (_nextCritRate!= _critRateValue? "%</color><sprite=1><color=" + _clCritRate + ">" + _nextCritRate + "%":"%");
+                    txtRange.text = "<color=" + _clRange + ">" + (DataUtils.GetRealFloat(_rangeValue)) + (_nextRange!= _rangeValue? "</color><sprite=1><color=" + _clRange + ">" + _nextRange:"");
+                    txtMagazine.text = "<color=" +_clMagazine + ">" + (DataUtils.GetRealFloat(_magazinevalue)) + (_nextMagazine != _magazinevalue? "</color><sprite=1><color=" + _clMagazine + ">" + _nextMagazine:"");
                 }
                 else
                 {
@@ -1168,9 +1172,15 @@ public class EquipmentManager : MonoBehaviour
 
                 if (itemEquipped != null) {
                     if (!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+                    {
                         txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                        txtPartsItem_.text = txtPartsItemEquip.text;
+                    }
                     else
+                    {
                         txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                        txtPartsItem_.text = txtPartsItemEquip.text;
+                    }
                 }
             }
             else
@@ -1203,9 +1213,15 @@ public class EquipmentManager : MonoBehaviour
                 if (itemEquipped != null)
                 {
                     if (!DataUtils.dicAllEquipment.ContainsKey(itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false))
+                    {
                         txtPartsItemEquip.text = itemEquipped.pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                        txtPartsItem_.text = txtPartsItemEquip.text;
+                    }
                     else
+                    {
                         txtPartsItemEquip.text = DataUtils.dicAllEquipment[itemEquipped.id + "_" + itemEquipped.level + "_" + false + "_" + false].pices + "/" + (int)DataUtils.GetPiceByStar(itemEquipped, itemEquipped.isUnlock);
+                        txtPartsItem_.text = txtPartsItemEquip.text;
+                    }
                 }
             }
 
