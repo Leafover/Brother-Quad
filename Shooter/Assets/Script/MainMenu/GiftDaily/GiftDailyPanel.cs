@@ -14,8 +14,10 @@ public class GiftDailyPanel : MonoBehaviour
         {
             giftdailyBouder[i].Display(DataParam.firsttimegiftdaily);
         }
-        selectBouder.transform.position = giftdailyBouder[DataParam.currentGiftDaily].transform.position;
-
+        selectBouder.transform.parent = giftdailyBouder[DataParam.currentGiftDaily].transform;
+        selectBouder.transform.localPosition = /*giftdailyBouder[DataParam.currentGiftDaily].transform.position*/Vector3.zero;
+        selectBouder.transform.localScale = Vector3.one;
+       // Debug.LogError(DataParam.currentGiftDaily + ":" + giftdailyBouder[DataParam.currentGiftDaily].transform.position + ":" + selectBouder.transform.position);
         btnClaim.SetActive(DataParam.cantakegiftdaily);
         btnClaimX2.gameObject.SetActive(DataParam.cantakegiftdaily);
         selectBouder.SetActive(DataParam.cantakegiftdaily);
