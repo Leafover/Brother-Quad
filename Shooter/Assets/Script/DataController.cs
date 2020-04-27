@@ -1168,7 +1168,7 @@ public class DataController : MonoBehaviour
                         giftDaily[i].numberReward = 1000;
                         break;
                     case 1:
-                        giftDaily[i].numberReward = 20;
+                        giftDaily[i].numberReward = 10;
                         giftDaily[i].nameReward = "P2";
                         break;
                     case 2:
