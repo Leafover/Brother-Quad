@@ -292,7 +292,7 @@ public class GameController : MonoBehaviour
         {
             uiPanel.comboText.text = "MULTIKILL";
         }
-        else if(countCombo >= 12)
+        else if (countCombo >= 12)
         {
             uiPanel.comboText.text = "GODLIKE";
         }
@@ -305,7 +305,7 @@ public class GameController : MonoBehaviour
 
                     break;
                 case 1:
-                    SoundController.instance.PlaySound(soundGame.soundmultikillmaxnv2);          
+                    SoundController.instance.PlaySound(soundGame.soundmultikillmaxnv2);
                     break;
             }
 
@@ -339,7 +339,8 @@ public class GameController : MonoBehaviour
         if (joystick.GetJoystickState())
         {
             PlayerController.instance.isBouderJoystickMove = joystick.GetDistance() >= 0.9f;
-            OnMove(movePosition);
+            if (PlayerController.instance.isBouderJoystickMove)
+                OnMove(movePosition);
         }
         else
         {
@@ -390,7 +391,6 @@ public class GameController : MonoBehaviour
         var h = axis.x;
         if (angle <= 135f && angle >= -135f)
         {
-
             PlayerController.instance.speedmove = h > 0 ? 1 * getSpeed() : -1 * getSpeed();
 
             if (!PlayerController.instance.dustrun.activeSelf && PlayerController.instance.rid.velocity.x == 0)
@@ -985,7 +985,7 @@ public class GameController : MonoBehaviour
             uiPanel.rewardText[index].text = "" + numberAdd(index);
             if (!vatphamnhanduoc[index].ID.Contains("P"))
             {
-             //  uiPanel.nameRewardItemEquipText.text = DataUtils.get
+                //  uiPanel.nameRewardItemEquipText.text = DataUtils.get
                 uiPanel.rewardItemEquipImg[index].sprite = uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
                 uiPanel.bouderLevelItemEquipImg[index].sprite = uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[(int)eLevel];
 
@@ -1003,7 +1003,8 @@ public class GameController : MonoBehaviour
             else
             {
                 // uiPanel.rewardImg[index].sprite = uiPanel.nvSprite;
-                /*uiPanel.rewardItemEquipImg[index].sprite =*/ uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
+                /*uiPanel.rewardItemEquipImg[index].sprite =*/
+                uiPanel.rewardImg[index].sprite = DataUtils.dicSpriteData[vatphamnhanduoc[index].ID.Replace("M-", "").Trim()];
                 uiPanel.bouderLevel[index].sprite = uiPanel.levelSp[2];
                 uiPanel.bouderRewardEquip[index].SetActive(false);
 

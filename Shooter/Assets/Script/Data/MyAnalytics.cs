@@ -25,56 +25,73 @@ public class MyAnalytics
     const string EVENT_SHOW_PRIME_ACCOUNT = "not_yet_upgrade_prime_account";
 
 
-    public static void LogEvolveItem(string itemID, string itemType, bool isEvolve) {//v
-        FirebaseAnalytics.LogEvent(isEvolve?"evolve_":"upgrade_" + itemID + "_" + itemType);
+    public static void LogEvolveItem(string itemID, string itemType, bool isEvolve)
+    {//v
+        FirebaseAnalytics.LogEvent(isEvolve ? "evolve_" : "upgrade_" + itemID + "_" + itemType);
     }
-    public static void LogNotYetUpgradePrime() {
+    public static void LogNotYetUpgradePrime()
+    {
         FirebaseAnalytics.LogEvent(EVENT_SHOW_PRIME_ACCOUNT);
     }
-    public static void LogPrimeAccount() {//v
+    public static void LogPrimeAccount()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_PRIME_ACCOUNT);
     }
-    public static void LogBuyStarterPack() {//v
+    public static void LogBuyStarterPack()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_STARTERPACK);
     }
-    public static void LogClickFanpage() {//v
+    public static void LogClickFanpage()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_CLICK_FANPAGE);
     }
-    public static void LogFreeReward() {//v
+    public static void LogFreeReward()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_GET_REWARD);
     }
-    public static void LogOpenLuckyChest(string chestName) {
+    public static void LogOpenLuckyChest(string chestName)
+    {
         FirebaseAnalytics.LogEvent(EVENT_OPEN_LUCKYCHEST + chestName);
     }
-    public static void LogOpenShop() {//v
+    public static void LogOpenShop()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_SHOP);
     }
-    public static void LogClickRefresh() {//v
+    public static void LogClickRefresh()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_CLICK_REFRESH);
     }
-    public static void LogRefreshByVideo() {//v
-        FirebaseAnalytics.LogEvent(EVENT_CLICK_REFRESH+"_by_video");
+    public static void LogRefreshByVideo()
+    {//v
+        FirebaseAnalytics.LogEvent(EVENT_CLICK_REFRESH + "_by_video");
     }
-    public static void LogBuyInBlackMarket() {//v
+    public static void LogBuyInBlackMarket()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_BUY_SUCCESS_MARKET);
     }
-    public static void LogOpenBlackMarket() {//v
+    public static void LogOpenBlackMarket()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_BLACKMARKET);
     }
-    public static void LogOpenInventory() {//v
+    public static void LogOpenInventory()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_INVENTORY);
     }
-    public static void LogEventTakeItem(string itemID, string itemType) {//v
+    public static void LogEventTakeItem(string itemID, string itemType)
+    {//v
         string _eventName = "craft_" + itemID + "_" + itemType + "success";
     }
-    public static void LogOpenHeroTab() {//v
+    public static void LogOpenHeroTab()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_HEROTAB);
     }
-    public static void LogOpenTabDailyQuest() {//v
+    public static void LogOpenTabDailyQuest()
+    {//v
         FirebaseAnalytics.LogEvent(EVENT_OPEN_DAILYQUEST);
     }
-    public static void LogEventBuyInapp(string packName) {//v
-        FirebaseAnalytics.LogEvent("buy_inapp_"+packName);
+    public static void LogEventBuyInapp(string packName)
+    {//v
+        FirebaseAnalytics.LogEvent("buy_inapp_" + packName);
     }
 
 
@@ -100,7 +117,7 @@ public class MyAnalytics
         //        new Parameter(FirebaseAnalytics.ParameterLevel, level),
         //        new Parameter("level_stage", stage)
         //        };
-        FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelPlay*/);
+        FirebaseAnalytics.LogEvent(EVENT_STAGE_PLAY + (stage + 1) + "_level_" + (level + 1)/*, _pamLevelPlay*/);
     }
     public static void LogMoreGame()
     {
@@ -114,7 +131,7 @@ public class MyAnalytics
         //        new Parameter("checkpoint_index", checkPointIndex),
         //        new Parameter("level_stage", stage)
         //        };
-        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_Level_" + (level + 1) + "_Check Point_" + (checkPointIndex + 1)/*, _pamLevelLose*/);
+        FirebaseAnalytics.LogEvent(EVENT_LOSE_STAGE + (stage + 1) + "_level_" + (level + 1) + "_checkpoint_" + (checkPointIndex + 1)/*, _pamLevelLose*/);
         //LogEventGameOver(level, stage);
     }
     public static void LogEventLevelComplete(int level, int stage)//6
@@ -125,29 +142,29 @@ public class MyAnalytics
         //        };
         FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelComplete*/);
     }
-    public static void LogEventClaimDailyGift(int day,System.DateTime time)
+    public static void LogEventClaimDailyGift(int day, System.DateTime time)
     {
-        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Debug.LogError("ngay hom do:" + time.Date.ToString("dd-MM-yy"));
         Parameter[] _pamClaim = {
-                    new Parameter("In Time:", time.Date.ToString()),
+                    new Parameter("in_time:", time.Date.ToString("dd-MM-yy")),
                     };
-        FirebaseAnalytics.LogEvent("Claim Day" + (day + 1),_pamClaim);
+        FirebaseAnalytics.LogEvent("claim_day" + (day + 1), _pamClaim);
     }
     public static void LogEventClaimX2DailyGift(int day, System.DateTime time)
     {
-        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Debug.LogError("ngay hom do:" + time.Date.ToString("dd-MM-yy"));
         Parameter[] _pamClaim = {
-                    new Parameter("In Time:", time.Date.ToString()),
+                    new Parameter("in_time:", time.Date.ToString("dd-MM-yy")),
                     };
-        FirebaseAnalytics.LogEvent("ClaimX2 Day" + (day + 1),_pamClaim);
+        FirebaseAnalytics.LogEvent("claimx2_day" + (day + 1), _pamClaim);
     }
     public static void LogEventOpenDailyGift(System.DateTime time)
     {
-        Debug.LogError("ngay hom do:" + time.Date.ToString());
+        Debug.LogError("ngay hom do:" + time.Date.ToString("dd-MM-yy"));
         Parameter[] _pamOpenDailyGift = {
-                    new Parameter("In Time:", time.Date.ToString()),
+                    new Parameter("in_time:", time.Date.ToString("dd-MM-yy")),
                     };
-        FirebaseAnalytics.LogEvent("Open Daily Gift", _pamOpenDailyGift);
+        FirebaseAnalytics.LogEvent("open_daily_gift", _pamOpenDailyGift);
     }
     //public static void LogEventGameOver(int level, int stage)//3
     //{
