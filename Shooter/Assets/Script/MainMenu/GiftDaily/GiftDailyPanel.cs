@@ -52,7 +52,11 @@ public class GiftDailyPanel : MonoBehaviour
     public void BtnClaimX2()
     {
         if(btnClaimX2.color == Color.gray)
+        {
+            MainMenuController.Instance.ShowMapNotify("Video is not available. Check your Internet or try again later");
             return;
+        }
+
 
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 #if UNITY_EDITOR
