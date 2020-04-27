@@ -533,7 +533,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         priceUpgrade = DataUtils.GetItemPrice(itemSelected);
-        Debug.LogError("PriceUpgrade: " + priceUpgrade);
+        //Debug.LogError("PriceUpgrade: " + priceUpgrade);
         txtPriceUpgrade.text = priceUpgrade.ToString("#,0");
     }
 
@@ -607,7 +607,7 @@ public class EquipmentManager : MonoBehaviour
                         iDataEvolve.level = EvolveItemLevel(curItem.level);
                         iDataEvolve.isUnlock = true;
                         iDataEvolve.pices = 0;
-                        Debug.LogError("curPiece: " + curPiece);
+                        //Debug.LogError("curPiece: " + curPiece);
                         iDataEvolve.itemName = curItem.itemName;
                         iDataEvolve.isEquipped = curItem.isEquipped;
 
