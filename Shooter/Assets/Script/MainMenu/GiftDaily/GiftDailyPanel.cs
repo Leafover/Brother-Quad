@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GiftDailyPanel : MonoBehaviour
 {
     public GiftDailyBouder[] giftdailyBouder;
-    public GameObject selectBouder, btnClaim,resetText;
+    public GameObject selectBouder, btnClaim, resetText;
     GiftDailyBouder currentGiftDailyBouder;
     public Image iconVideo, btnClaimX2;
     public void DisplayBegin()
@@ -17,12 +17,17 @@ public class GiftDailyPanel : MonoBehaviour
         selectBouder.transform.parent = giftdailyBouder[DataParam.currentGiftDaily].transform;
         selectBouder.transform.localPosition = /*giftdailyBouder[DataParam.currentGiftDaily].transform.position*/Vector3.zero;
         selectBouder.transform.localScale = Vector3.one;
-       // Debug.LogError(DataParam.currentGiftDaily + ":" + giftdailyBouder[DataParam.currentGiftDaily].transform.position + ":" + selectBouder.transform.position);
+        // Debug.LogError(DataParam.currentGiftDaily + ":" + giftdailyBouder[DataParam.currentGiftDaily].transform.position + ":" + selectBouder.transform.position);
         btnClaim.SetActive(DataParam.cantakegiftdaily);
         btnClaimX2.gameObject.SetActive(DataParam.cantakegiftdaily);
         selectBouder.SetActive(DataParam.cantakegiftdaily);
-        resetText.SetActive(!DataParam.cantakegiftdaily);
+
         currentGiftDailyBouder = giftdailyBouder[DataParam.currentGiftDaily];
+
+        if (DataParam.currentGiftDaily >= 5)
+            resetText.SetActive(!DataParam.cantakegiftdaily);
+        else
+            resetText.SetActive(false);
     }
     void Update()
     {
@@ -51,12 +56,11 @@ public class GiftDailyPanel : MonoBehaviour
     }
     public void BtnClaimX2()
     {
-        if(btnClaimX2.color == Color.gray)
+        if (btnClaimX2.color == Color.gray)
         {
             MainMenuController.Instance.ShowMapNotify("Video is not available. Check your Internet or try again later");
             return;
         }
-
 
         SoundController.instance.PlaySound(soundGame.soundbtnclick);
 #if UNITY_EDITOR
@@ -98,14 +102,14 @@ public class GiftDailyPanel : MonoBehaviour
                 break;
         }
         DataParam.cantakegiftdaily = false;
-        DataParam.oldTimeGiftDaily = System.DateTime.Now;      
+        DataParam.oldTimeGiftDaily = System.DateTime.Now;
         DataController.giftDaily[currentGiftDailyBouder.index].isDone = true;
         btnClaim.SetActive(false);
         btnClaimX2.gameObject.SetActive(false);
         selectBouder.SetActive(false);
         resetText.SetActive(true);
 
-        if(x2)
+        if (x2)
         {
             MyAnalytics.LogEventClaimX2DailyGift(DataParam.currentGiftDaily, DataParam.oldTimeGiftDaily);
         }
