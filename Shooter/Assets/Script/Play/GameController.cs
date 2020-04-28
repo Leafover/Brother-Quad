@@ -338,7 +338,7 @@ public class GameController : MonoBehaviour
         movePosition = new Vector3(joystick.GetHorizontalAxis(), joystick.GetVerticalAxis(), 0);
         if (joystick.GetJoystickState())
         {
-            PlayerController.instance.isBouderJoystickMove = joystick.GetDistance() >= 0.9f;
+            PlayerController.instance.isBouderJoystickMove = joystick.GetDistance() >= 0.2f;
             if (PlayerController.instance.isBouderJoystickMove)
                 OnMove(movePosition);
         }

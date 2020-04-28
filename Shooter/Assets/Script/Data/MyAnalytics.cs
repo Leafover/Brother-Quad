@@ -140,7 +140,7 @@ public class MyAnalytics
         //        new Parameter(FirebaseAnalytics.ParameterLevel, level),
         //        new Parameter("level_stage", stage)
         //        };
-        FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_Level_" + (level + 1)/*, _pamLevelComplete*/);
+        FirebaseAnalytics.LogEvent("stage_complete_" + (stage + 1) + "_level_" + (level + 1)/*, _pamLevelComplete*/);
     }
     public static void LogEventClaimDailyGift(int day, System.DateTime time)
     {
