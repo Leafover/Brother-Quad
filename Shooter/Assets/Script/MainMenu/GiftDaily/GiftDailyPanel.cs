@@ -79,6 +79,7 @@ public class GiftDailyPanel : MonoBehaviour
                 break;
         }
         DataParam.cantakegiftdaily = false;
+        DataParam.oldTimeGiftDaily = System.DateTime.Now;
         DataController.giftDaily[currentGiftDailyBouder.index].isDone = true;
         btnClaim.SetActive(false);
         btnClaimX2.SetActive(false);

@@ -12,12 +12,20 @@ public class GiftDailyBouder : MonoBehaviour
     {
         datyText.text = "Day" + (index + 1);
         if (index == 0 || index == 3 || index == 4)
+        {
+            Debug.LogError("nameReward:" + DataController.giftDaily[index].nameReward);
             rewardText.text = "" + DataController.giftDaily[index].numberReward;
+        }
         else
+        {
+            Debug.LogError("nameReward:" + DataController.giftDaily[index].nameReward);
             rewardText.text = "x" + DataController.giftDaily[index].numberReward;
+        }
+
 
         if (index == 2 || index == 5)
         {
+            Debug.LogError("nameReward:" + DataController.giftDaily[index].nameReward);
             if (firsttime)
             {
                 bouderLevel.sprite = MenuController.instance.blackMarketpanel.levelSp[2];
@@ -30,6 +38,7 @@ public class GiftDailyBouder : MonoBehaviour
         }
         if (index == 1)
         {
+            Debug.LogError("nameReward:" + DataController.giftDaily[index].nameReward);
             iconImg.sprite = DataUtils.dicSpriteData[DataController.giftDaily[index].nameReward];
         }
         doneObj.SetActive(DataController.giftDaily[index].isDone);

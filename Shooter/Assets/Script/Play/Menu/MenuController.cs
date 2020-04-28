@@ -14,6 +14,7 @@ public class MenuController : MonoBehaviour
     public GameObject warningEvent, warningDailyQuest, warningAchievment, warningPrimeAccount, warningvideoreward, warningGiftDaily;
     public Text primeText;
     public GiftDailyPanel giftDailyPanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -50,6 +51,7 @@ public class MenuController : MonoBehaviour
 
         if (!DataParam.first)
         {
+
 #if UNITY_EDITOR
 
 #else
@@ -59,6 +61,11 @@ public class MenuController : MonoBehaviour
             AdsManager.Instance.ShowInterstitial((b) => { });
         }
 #endif
+        }
+        else
+        {
+            if (DataParam.cantakegiftdaily)
+                BtnOpenGiftDaily(true);
         }
 
         DataParam.first = false;
