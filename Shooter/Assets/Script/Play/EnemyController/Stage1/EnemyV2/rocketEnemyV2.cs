@@ -28,7 +28,7 @@ public class rocketEnemyV2 : BulletEnemy
     }
     IEnumerator NoneActiveTarget()
     {
-        yield return new WaitForSeconds(timeExist / 2);
+        yield return new WaitForSeconds(timeExist / 2.5f);
         target = null;
     }
     float timeDelayDetect;
