@@ -426,7 +426,12 @@ public class PlayerController : MonoBehaviour
         isShoot = false;
         timePreviousAttack = 0;
         countbullet = 0;
-        reload = false;
+
+        if (reload)
+        {
+            reload = false;
+            skeletonAnimation.AnimationState.SetEmptyAnimation(3, 0);
+        }
         reloadObj.SetActive(false);
         GameController.instance.uiPanel.bulletText.text = "" + numberBullet;
 
