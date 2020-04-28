@@ -16,7 +16,7 @@ public class rocketEnemyV2 : BulletEnemy
     {
 
         if (wait == null)
-            wait = new WaitForSeconds(0.05f);
+            wait = new WaitForSeconds(0.5f);
         Init(2);
     }
 
@@ -28,10 +28,9 @@ public class rocketEnemyV2 : BulletEnemy
     }
     IEnumerator NoneActiveTarget()
     {
-        yield return new WaitForSeconds(timeExist / 2.5f);
+        yield return new WaitForSeconds(timeExist);
         target = null;
     }
-    float timeDelayDetect;
     private void Update()
     {
         if (!target)
@@ -41,7 +40,6 @@ public class rocketEnemyV2 : BulletEnemy
     Vector3 direction;
     void RotateToTarget()
     {
-
         direction.x = GetTransform().position.x - target.position.x;
         direction.y = GetTransform().position.y - target.position.y /*- 0.5f*/;
         direction.z = 0;
@@ -51,7 +49,6 @@ public class rocketEnemyV2 : BulletEnemy
         rota.y = 0f;
         GetTransform().rotation = Quaternion.Lerp(GetTransform().rotation, rota, turning);
         turning += 0.005f;
-
         rid.velocity = (transform.up * speed);
     }
     public override void OnDisable()
