@@ -16,7 +16,7 @@ public class rocketEnemyV2 : BulletEnemy
     {
 
         if (wait == null)
-            wait = new WaitForSeconds(0.5f);
+            wait = new WaitForSeconds(0.05f);
         Init(2);
     }
 
@@ -28,7 +28,7 @@ public class rocketEnemyV2 : BulletEnemy
     }
     IEnumerator NoneActiveTarget()
     {
-        yield return new WaitForSeconds(timeExist);
+        yield return new WaitForSeconds(timeExist / 2.5f);
         target = null;
     }
     private void Update()
