@@ -807,7 +807,6 @@ public class GameController : MonoBehaviour
             return;
         if (usingHealthPack == 1 && DataUtils.playerInfo.healthPack > 0)
         {
-
             DataUtils.AddHPPack(-1);
             usingHealthPack = 2;
             PlayerController.instance.AddHealth(PlayerController.instance.maxHealth);
